@@ -123,11 +123,24 @@
             </style>                                                            
         </classStyles>
         <versao id="3.0">
-            <classe id="Documento" versao="3.0">
+            <classe id="Documento" versao="4.0">
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="atoOrdinatorio.js" artifact="#{j2.res.mod.atoOrdinatorio}"/>
+
+                <importLib name="bootstrap.css" artifact="#{j2.res.CSS.bootstrap}" scope="EDT"/>
+                <importLib name="jquery3.js" artifact="#{j2.res.lib.jquery3}" scope="EDT"/>
+                <importLib name="popper" artifact="#{j2.res.lib.popper}" scope="EDT"/>
+                <importLib name="bootstrap" artifact="#{j2.res.lib.bootstrap}" scope="EDT"/>
+
                 <importLib name="chosen.jquery.js" artifact="#{j2.res.lib.chosen}" scope="EDT"/> <!-- chosen -->
-                <importLib name="chosen.css" artifact="#{j2.res.CSS.chosen}" scope="EDT"/><!-- chosen -->
+                <importLib name="chosen-bs.css" artifact="#{j2.res.CSS.chosenBS}" scope="EDT"/><!-- chosen -->
+
+                <importLib name="fontawesome.js" artifact="#{j2.res.lib.fontawesome}" scope="EDT"/>
+
+                <constructs param="width" value="500" type="int"/>
+                <constructs param="height" value="625" type="int"/>
+
+
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A5" type="string"/>
                     <classe id="Cabecalho" versao="2.0" >
@@ -159,7 +172,7 @@
                                 <constructs param="textContent" value="CERTIFICO que, por ser(em) meramente ordinatório(s), nesta data pratiquei o(s) seguinte(s) ato(s):" type="string"/>
                                 <constructs param="styleClasses" value="p FntMod Hidden" type="string"/>
                         </classe>
-                        <classe id="Selector" versao="3.0" >
+                        <classe id="Selector" versao="4.0" >
                             <constructs param="newId" value="atoOrdinatorioItens" type="string"/>
                             <constructs param="multiple" value="sim" type="bool"/>
                             <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
@@ -167,6 +180,9 @@
                             <constructs param="onDelAction" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.atoOrdinatorioSelSrc}" type="bool"/>
                             <constructs param="filter" value="true" type="boolean"/>
+                            <!--constructs param="label" value="Atos" type="string"/-->
+                            <constructs param="hideLabel" value="true" type="boolean"/>
+                            
                         </classe>                                             
                         <classe id="Corpo" versao="1.0">
                                 <constructs param="textIndent" value="1cm" type="string"/>
@@ -175,11 +191,11 @@
                                 <constructs param="styleClasses" value="p FntMod Hidden" type="string"/>
                         </classe>
                     </classe>
-                    <classe id="CheckBox" versao="1.0">
-                        <constructs param="newId" value="atoOrdinatorio:CertidaoCheck" type="string"/>
+                    <classe id="CheckBox" versao="4.0">
+                        <constructs param="newId" value="AtoOrdinatorio-CertidaoCheck" type="string"/>
                         <constructs param="label" value="Formatar como certidão de ato ordinatório" type="string"/>
                         <constructs param="evBusEvent" value="AtoOrdinatorio.ComoCertidao" type="string"/>
-                        <constructs param="styleClasses" value="p" type="string"/>
+                        <!--constructs param="styleClasses" value="p" type="string"/-->
                     </classe>
                     
                     <classe id="Space" versao="1.0">
@@ -190,7 +206,7 @@
                         <constructs param="size" value="2" type="int"/>
                     </classe>
                     <classe id="AddtionalControls" versao="1.0"/>
-                    <classe id="BlocoAssinaturas" versao="3.0">
+                    <classe id="BlocoAssinaturas" versao="4.0">
                         <!--constructs param="magistrado" value="sim" type="bool"/-->
                         <constructs param="servidor" value="sim" type="bool"/>
                         <!--constructs param="secretario" value="sim" type="bool"/-->
@@ -199,7 +215,7 @@
                         <!--constructs param="referenciaArtigo" value="Art. 3º, XXVII" type="string"/>
                         <constructs param="cumuladoCom" value="Portaria 2/2017-2JECivel" type="string"/-->
                     </classe>
-                    <classe id="AutoSave" versao="1.1">
+                    <classe id="AutoSave" versao="4.1">
                         <constructs param="containersType" value="fullFrameBody" type="enum"/>
                         <constructs param="saveTimeInterval" value="5000" type="int"/>
                         <!--constructs param="containersExp" value="{ 'atoJudicial': 'atoJudicial' }" type="j2son"/>
@@ -850,14 +866,10 @@
                                 <constructs param="initialMeioComnicacao" value="meioComunicItCentralMandados" type="string"/>
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
-                                <!--constructs param="padraoApresentacaoParteEndereco" 
+                                <constructs param="padraoApresentacaoParteEndereco" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
                                 <constructs param="padraoApresentacaoParteEnderecoTelefone" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
-                                <constructs param="padraoApresentacaoParteEndereco" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
-                                <constructs param="padraoApresentacaoParteEnderecoTelefone" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
                                 <constructs param="padraoApresentacaoParteTelefone" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
                                 
@@ -2627,12 +2639,11 @@
                             <valueAr value="01862527300"/>
                             <valueAr value="05174785440"/>
                             <valueAr value="99138603349"/>
-                            <valueAr value="00641805306"/> <!-- ELMO -->
+                            <valueAr value="00641805306"/>
                             <valueAr value="62280163349"/>
                             <valueAr value="00008506329"/>
                             <valueAr value="18062083349"/>
-                            <valueAr value="03414389282"/>
-                            <valueAr value="01902771303"/><!-- PEDRO -->
+                            <valueAr value="01902771303"/>
                             <valueAr value="96112840391"/>
                             <valueAr value="01682637506"/>
                             <valueAr value="02692854314"/>

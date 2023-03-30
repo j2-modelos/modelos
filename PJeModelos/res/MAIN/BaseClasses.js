@@ -1,4 +1,4 @@
-/* 
+/*                               
  * ASS: Abatimento proporcional do preço
  * DOC: 5230292
  * MOD: BaeClasses.js
@@ -302,7 +302,8 @@ try {
               break;
           };
           
-          pkg.ModalDialog.okCancel(msg, 'Recuperação modelo j2', 'AutoSave.recover.yes', 'AutoSave.recover.no');
+          setTimeout( ()=> pkg.ModalDialog.okCancel(msg, 'Recuperação modelo j2', 'AutoSave.recover.yes', 'AutoSave.recover.no'),
+          1000);
         }
         else
           pkg.AutoSave.new();
@@ -2191,25 +2192,30 @@ try {
     };
     
     pkg.CheckBox = {
-      constructor_ : function(args, el){
+      constructor_ : function(args, el, modElProt){
+        modElProt.versao_ = parseFloat(modElProt.versao);
+
         var win = (args) ? ((args.j2Win) ? args.j2Win : mod.edt): mod.edt;
         var _ = {
-          div : win.gE('CheckBox:Div'),
-          input : win.gE('CheckBox:Input'),
-          labelP : win.gE('CheckBox:Label')
+          div : win.gE( modElProt.versao_ >= 4.0 ? 'CheckBox-Div' : 'CheckBox:Div'),
+          input : win.gE( modElProt.versao_ >= 4.0 ? 'CheckBox-Input' : 'CheckBox:Input'),
+          labelP : win.gE( modElProt.versao_ >= 4.0 ? 'CheckBox-Label' : 'CheckBox:Label'),
+          __modElProt__: modElProt
         };        
         
         if(isObject(args)){
           if(args.newId){
             var c = 0;
             forEach(_, function(e){
-              e.id += ':' + args.newId;
+              e.id += ( modElProt.versao_ >= 4.0 ? '-' : ':') + args.newId;
               c++;
             });
             if(c===0){
               j2.err('A mudança de Ids para o nova classe é obrigatória');
               return;
             }
+            if ( modElProt.versao_ >= 4.0 )
+              _.labelP.setAttribute('for', _.labelP.getAttribute('for') + '-' + args.newId)
           }
           if(args.exporInstancia ==='true' || args.exporInstancia ==='sim'){
             if (!(pkg.CheckBox.instances))
@@ -3206,7 +3212,9 @@ try {
     };
         
     pkg.FerramentasProcesso = {
-      constructor_ : function(args, el){
+      constructor_ : function(args, el, modElProt){
+        modElProt.versao_ = parseFloat(modElProt.versao);
+
         var idP = j2.env.PJeVars.processo.idProcesso;
         var org = mod.par.win.location.origin;
         
@@ -3217,10 +3225,11 @@ try {
           retificar : $(mod.edt.gE('FerramentasProcesso.Retificar')),
           downloadPDF : $(mod.edt.gE('FerramentasProcesso-baixarPDF')),
           downloadPDFPar : $(el.par).find('#FerramentasProcesso-baixarPDF-par'),
-          whatsapp : $(mod.edt.gE('FerramentasProcesso-whatsappTool')) // wa
+          whatsapp : $(mod.edt.gE('FerramentasProcesso-whatsappTool')), // wa
+          __modElProt__ : modElProt
         };        
         
-        if(mod.par.win.location.href.indexOf('newTaskId')!==-1){
+        if(modElProt.versao_ < 4.0 && mod.par.win.location.href.indexOf('newTaskId')!==-1){
           _.tarefa[0] && j2.mod._.styleSetter(_.tarefa[0], 'Hidden');
           /*_.alerta[0] && j2.mod._.styleSetter(_.alerta, 'width50');
           _.retificar[0] && j2.mod._.styleSetter(_.retificar, 'width50');*/
@@ -6142,7 +6151,10 @@ try {
       cookies : new window.j2.mod._.CookieJ2('pkg.Selector.cookie'), // slck
       sources : {},
       instances : [], //wa
-      constructor_ : function(args, el){
+      constructor_ : function(args, el, modElProt){
+        /**
+         * modElProt = moddle Element Prototype
+         */
         /*var _ = { //wa changes
           ctxt : el,
           select : mod.edt.gE('selector'),
@@ -6194,7 +6206,8 @@ try {
             '_SDDel', '_SDAdd', '_SDCtrl',
             'select', 'monitr', 'butAdd',
             'butDel', 'monitr'
-          ], this) 
+          ], this),
+          __modElProt__: modElProt 
         };
         
         el._.__class__ = { // ndgl4 as new
@@ -6362,13 +6375,25 @@ try {
       },
       setEvents : function(args, _){
         args.filter && evBus.on('afterLoadItems.' + _.select.id, function(){ //chosen
+          function bootstrapCssReady() {
+            if( parseFloat(_.__modElProt__.versao) < 4.0 )
+              return true;
+
+            let folhasDeEstilo = mod.edt.doc.styleSheets;
+            for (var i = 0; i < folhasDeEstilo.length; i++) 
+              if (folhasDeEstilo[i].href && folhasDeEstilo[i].href.indexOf('bootstrap.css') > -1)
+                return true;        
+            return false;
+          }
+
           var _$ = mod.edt.win.jQ3;
           var _convertChosen = function(){ //chosen
-            if(_$('<select>').chosen){
+            if(_$('<select>').chosen && bootstrapCssReady() ){
               _.select.jQ3 = _$(_.select);
               _.select.jQ3.chosen({
                 no_results_text : 'Nenhuma finalidade',
-                search_contains : true
+                search_contains : true,
+                inherit_select_classes : true
               });
             }
             else
@@ -6877,25 +6902,40 @@ try {
     };     
     
     pkg.ReferenciaDocumento = {
-      constructor_ : function(args, el){
+      constructor_ : function(args, el, modElProt){
+        modElProt.versao_ = parseFloat(modElProt.versao);
         
-        
-        
-        var _ = {
-          activator : mod.edt.gE('ReferenciaDocumento.Activator'),
-          div : {
-            initial : mod.edt.gE('ReferenciaDocumento.Initial'),
-            activated : mod.edt.gE('ReferenciaDocumento.Activated'),
-            textIdDiv : mod.edt.gE('ReferenciaDocumento.TextIdDiv'),
-            AddIdDiv : mod.edt.gE('ReferenciaDocumento.AddIdDiv')
-          },
-          windowListOpener : mod.edt.gE('ReferenciaDocumento.WindowListOpener'),
-          selectMethod : mod.edt.gE('ReferenciaDocumento.SelectMethod'),
-          textIdInput : mod.edt.gE('ReferenciaDocumento.TextIdInput'),
-          addIdManual : mod.edt.gE('ReferenciaDocumento.AddIdManual'),
-          addId : mod.edt.gE('ReferenciaDocumento.AddId'),
-          checkAutoSearch : mod.edt.gE('ReferenciaDocumento-CheckBox-Input'), // rdp2
-        };
+        var _;
+        if( modElProt.versao_ >= 4.0 ){
+          _ = {
+            activator : mod.edt.gE('ReferenciaDocumento.Activator'),
+            div : {
+              initial : mod.edt.gE('ReferenciaDocumento.Initial'),
+              activated : mod.edt.gE('ReferenciaDocumento.Activated'),
+            },
+            windowListOpener : mod.edt.gE('ReferenciaDocumento.WindowListOpener'),
+            selectMethod : mod.edt.gE('ReferenciaDocumento.SelectMethod'),
+            addId : mod.edt.gE('ReferenciaDocumento.AddId'),
+            addIdPreseted : mod.edt.gE('ReferenciaDocumento-AddId-Preseted'),
+          };
+        }else{
+          _ = {
+            activator : mod.edt.gE('ReferenciaDocumento.Activator'),
+            div : {
+              initial : mod.edt.gE('ReferenciaDocumento.Initial'),
+              activated : mod.edt.gE('ReferenciaDocumento.Activated'),
+              textIdDiv : mod.edt.gE('ReferenciaDocumento.TextIdDiv'),
+              AddIdDiv : mod.edt.gE('ReferenciaDocumento.AddIdDiv')
+            },
+            windowListOpener : mod.edt.gE('ReferenciaDocumento.WindowListOpener'),
+            selectMethod : mod.edt.gE('ReferenciaDocumento.SelectMethod'),
+            textIdInput : mod.edt.gE('ReferenciaDocumento.TextIdInput'),
+            addIdManual : mod.edt.gE('ReferenciaDocumento.AddIdManual'),
+            addId : mod.edt.gE('ReferenciaDocumento.AddId'),
+            checkAutoSearch : mod.edt.gE('ReferenciaDocumento-CheckBox-Input'), // rdp2
+          };
+        }
+        _.__modElProt__ = modElProt;
         
         pkg.ReferenciaDocumento._ = _;
         
@@ -6913,14 +6953,20 @@ try {
         _.addId.onclick = function(event){
           pkg.ReferenciaDocumento.insertId(_, event);
         };
-        _.addIdManual.onclick = _.addId.onclick;
+
+        modElProt.versao_ >= 4.0 && ( _.addIdPreseted.onclick = function(){
+          /*simula enviar o comando ctrl para o método*/
+          pkg.ReferenciaDocumento.insertId(_, { shiftKey : true });
+        } );
+
+        modElProt.versao_ < 4.0 && ( _.addIdManual.onclick = _.addId.onclick );
         
-        _.checkAutoSearch.onclick = function(event){ //rdp2 as new
+        modElProt.versao_ < 4.0 && ( _.checkAutoSearch.onclick = function(event){ //rdp2 as new
           _.checkAutoSearch.setAttribute('disabled', true);
           pkg.ReferenciaDocumento.openWindowListAutoSearch(_);
-        };
+        });
         
-        _.selectMethod.onchange = function(event){
+        modElProt.versao_ < 4.0 && (_.selectMethod.onchange = function(event){
           switch (_.selectMethod.value){
             case "idManual":
               j2.mod._.styleSetter(_.div.textIdDiv, 'Hidden', true);
@@ -6941,7 +6987,7 @@ try {
               _.windowListOpener.click();
               break;
           }
-        };
+        });
         
         pkg.ReferenciaDocumento.setEvents(_);
       },
@@ -7177,6 +7223,7 @@ try {
       },
       prepareHTMLElements : function(keys){
         var imgViewCln = mod.edt.gE('ReferenciaDocumento.View').cloneNode(true);
+        j2.mod._.styleSetter(imgViewCln, 'Hidden', true);
         
         imgViewCln.setAttribute('mce_style', '');
         imgViewCln.style.height = '12px';

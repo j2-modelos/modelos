@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -19,7 +19,7 @@
   --gray: #6c757d;
   --gray-dark: #343a40;
   --primary: #0084ac;
-  --secondary: #6c757d;
+  --secondary: #d6d6d6;
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -2456,15 +2456,15 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  color: #444444;
+  background-color: #d6d6d6;
+  border-color: #d6d6d6;
 }
 
 .btn-secondary:hover {
-  color: #fff;
-  background-color: #5a6268;
-  border-color: #545b62;
+  color: #444444;
+  background-color: #b2b2b2;
+  border-color: #b2b2b2;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -2472,16 +2472,16 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  color: #a3a3a3;
+  background-color: #f7f4f4;
+  border-color: #979797;
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle {
-  color: #fff;
-  background-color: #545b62;
-  border-color: #4e555b;
+  color: #444444;
+  background-color: #b2b2b2;
+  border-color: #b2b2b2;
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
