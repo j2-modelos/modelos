@@ -1,0 +1,507 @@
+<html xmlns="http://www.w3.org/1999/xhtml" class=" js csstransforms3d" style=""><head>
+		
+	
+	<title>Processo · Tribunal de Justiça do Estado do Maranhão - 1º Grau</title>
+	
+	
+	<script src="/pje/a4j/g/3_3_3.Final/org/ajax4jsf/framework.pack.js.seam" type="text/javascript"></script><script src="/pje/a4j/g/3_3_3.Final/org/richfaces/ui.pack.js.seam" type="text/javascript"></script><link class="component" href="/pje/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/basic_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_.seam" rel="stylesheet" type="text/css"><link class="component" href="/pje/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/extended_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_.seam" rel="stylesheet" type="text/css"><link class="component" href="/pje/a4j/s/3_3_3.Final/org/richfaces/skin.xcss/DATB/eAELXT5DOhSIAQ!sA18_.seam" rel="stylesheet" type="text/css"><script id="org.ajax4jsf.queue_script" type="text/javascript">if (typeof A4J != 'undefined') { if (A4J.AJAX) { with (A4J.AJAX) {if (!EventQueue.getQueue('j_id49:org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('j_id49:org.richfaces.queue.global',{'size':2,'sizeExceededBehavior':'dropNew'} ,{'ignoreDupResponses':true,'requestDelay':100} )) };if (!EventQueue.getQueue('org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('org.richfaces.queue.global',null,null)) };}}};</script><script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script><link class="user" href="/pje/stylesheet/estilos/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/dropzone/dropzone.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/estilos/richfaces/tema.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/padrao.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/autos-digitais.css" rel="stylesheet" type="text/css"><script src="/pje/js/modernizr.custom.js" type="text/javascript"></script><script src="/pje/js/jquery-2.1.4.min.js" type="text/javascript"></script><script src="/pje/js/bootstrap/bootstrap.min.js" type="text/javascript"></script><script src="/pje/js/jquery.maskedinput.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/mousetrap.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/plugins/global-bind/mousetrap-global-bind.js" type="text/javascript"></script><script src="/pje/js/pje/menu.js" type="text/javascript"></script><script src="/pje/js/global.js" type="text/javascript"></script><script src="/pje/js/pje.js" type="text/javascript"></script><script src="/pje/js/pjeOffice.js" type="text/javascript"></script><script src="/pje/js/signerApplet.js" type="text/javascript"></script><link rel="apple-touch-icon" sizes="57x57" href="/pje/img/favicon/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/pje/img/favicon/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/pje/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/pje/img/favicon/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/pje/img/favicon/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/pje/img/favicon/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/pje/img/favicon/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/pje/img/favicon/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/pje/img/favicon/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/pje/img/favicon/manifest.json">
+	<link rel="mask-icon" href="/pje/img/favicon/safari-pinned-tab.svg" color="#0078aa">
+	<link rel="stylesheet" href="/pje/stylesheet/estilos/font-awesome/v5.11.2/css/all.min.css">
+	<link rel="stylesheet" href="/pje/stylesheet/estilos/font-awesome/v5.11.2/css/v4-shims.min.css">
+	<meta name="msapplication-TileColor" content="#0078aa">
+	<meta name="msapplication-TileImage" content="/pje/img/favicon/mstile-144x144.png">
+	<meta name="theme-color" content="#0078AA">
+	
+				        
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="processo judicial, processo, audiências, sessão, peticionar, expedientes, magistrado, procurador, oficial de justiça, advogado, perito, retificar autuação, OAB">
+    <meta name="description" content="Processo Judicial Eletrônico - Acompanhe processos judiciais independentemente de tramitações">
+    <meta property="og:title" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="/pje">
+	<meta property="og:image" itemprop="image" content="/pje/img/pjeMini.png">
+	<meta property="og:site_name" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:description" content="Acompanhe processos judiciais independentemente de tramitações">
+	<meta property="og:locale" content="pt_BR">
+	
+	<meta name="Robots" content="INDEX,FOLLOW">
+    <meta name="RESOURCE-TYPE" content="DOCUMENT">
+    <meta name="DISTRIBUTION" content="GLOBAL">
+    <meta name="AUTHOR" content="CNJ">
+    <meta name="COPYRIGHT" content="Copyright (c) CNJ">
+    <meta name="language" content="pt-br">
+    <meta name="RATING" content="GENERAL">
+
+</head>
+
+<body><div id="popUp">
+		<script>
+	    	function abrirPopup(idProcesso){
+	        	openPopUp('_blank', '/pje/Processo/ConsultaProcesso/listAlertas.seam?id='+idProcesso);
+				window.opener.location.reload();
+			}
+	    </script></div><div id="headerDiv" class="detalhe-processo">
+		<div id="bannerMovimentar" class="header-top ">
+			<div id="imagemCabecalhoMovimentar" class="logo"><a href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/paginator.seam?id=759730&amp;ca=e1731b96402601ffc52c4b26cc1e20240f1af7ee9a6c9b6083844bbd1061ef58e17ab88be47b68ee8892591b09034712', 'detail216608', 'location=0, status=0,scrollbars=1,width=1000,height=650');" title="Paginador"><img src="/pje/img/pje2-branco.png" title="Paginador"></a>
+			</div>
+			<div id="barraIcones">
+				<div id="linkPaginadorDiv" class="right-menu"><a href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/listTasksProcesso.seam?cid=216608&amp;id=759730', 'detail216608', 'location=0, status=0,scrollbars=1,width=1000,height=650');" title="Histórico de tarefas"><img src="/pje/img/paginador.png" title="Histórico de tarefas" width="35"></a>
+				</div>
+			</div>
+
+			<div class="info">
+				<div id="localOrgaoDiv">2º Juizado Especial Cível de Imperatriz/Juiz de Direito Titular
+				</div>
+				<div id="processoTarefaDiv"><div id="normalProcessoDiv"><a href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam?id=759730&amp;ca=e1731b96402601ffc52c4b26cc1e20240f1af7ee9a6c9b6083844bbd1061ef58e17ab88be47b68ee8892591b09034712&amp;idTaskInstance=1139350747','detail216608', 'location=0,status=0,scrollbars=1,width=1000,height=650');" title="Autos Digitais">PJEC 0803501-02.2018.8.10.0047</a> - Arquivo definitivo</div>
+				</div>
+				<div id="partesDiv">ELMO DE OLIVEIRA DE MORAES X GLOBO COMUNICACAO E PARTICIPACOES S/A
+				</div>
+			</div>
+		</div></div><span id="_viewRoot:status"><span id="_viewRoot:status.start" style="display: none">
+	        <div class="ajax-loader">
+	   			<div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+	   			<div class="rich-mpnl-panel">
+			        <div class="rich-mp-container">
+			        	<div class="rich-mpnl-content"></div>
+			        </div>
+	   			</div>
+	   		</div></span><span id="_viewRoot:status.stop"></span></span><div id="modalStatus" style="display: none;"><input autocomplete="off" id="modalStatusOpenedState" name="modalStatusOpenedState" type="hidden"><div class="rich-modalpanel ajax-loader" id="modalStatusContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="modalStatusDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="modalStatusFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="modalStatusCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="modalStatusShadowDiv" style=" opacity:0.0; filter:alpha(opacity=0);"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="modalStatusContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="modalStatusContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top"></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="modalStatusResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="modalStatusCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="modalStatusLastHref"></button></div><script type="text/javascript">new ModalPanel('modalStatus',
+				{
+					width: -1,
+					height: -1,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><form id="j_id49" name="j_id49" method="post" action="/pje/Processo/movimentar.seam" target=""><span style="display:none;" id="j_id49:j_id51"><script type="text/javascript">
+A4J.AJAX.Poll('j_id49',{'similarityGroupingId':'j_id49:j_id51','pollId':'j_id49:j_id51','pollinterval':90000,'containerId':'j_id48','parameters':{'j_id49:j_id51':'j_id49:j_id51','ajaxSingle':'j_id49:j_id51'} } );
+</script></span><span style="display:none;" id="j_id49:j_id52"><script type="text/javascript">
+A4J.AJAX.StopPush('T-84nlYKzeKkoGN3pQ7XUOvMufKU2KbOjuw3Mzny/Processo/movimentar.xhtml:j_id49:j_id52');
+</script></span><input type="hidden" autocomplete="off" name="j_id49" value="j_id49"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_j_id49() {
+_clearJSFFormParameters('j_id49','',['j_id49:j_idcl','j_id49:_link_hidden_']);
+}
+function clearFormHiddenParams_j_id49(){clear_j_id49();}
+function clearFormHiddenParams_j_id49(){clear_j_id49();}
+clear_j_id49();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id316" autocomplete="off"></form>
+
+	<style>
+			.index-topo {
+				z-index: 2000 !important;
+			}
+	</style><div id="mpPJeOfficeIndisponivel" style="display: none;"><input autocomplete="off" id="mpPJeOfficeIndisponivelOpenedState" name="mpPJeOfficeIndisponivelOpenedState" type="hidden"><div class="rich-modalpanel index-topo" id="mpPJeOfficeIndisponivelContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpPJeOfficeIndisponivelDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpPJeOfficeIndisponivelCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpPJeOfficeIndisponivelShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpPJeOfficeIndisponivelContentDiv"><div class="rich-mpnl-text rich-mpnl-controls ">
+				<span class="btn-fechar" onclick="Richfaces.hideModalPanel('mpPJeOfficeIndisponivel')" title="Fechar"><i class="icon-fechar"></i></span></div><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpPJeOfficeIndisponivelContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 1%;"><td class="rich-mpnl-header-cell"><div class="rich-mpnl-text rich-mpnl-header " id="mpPJeOfficeIndisponivelHeader" style="white-space: nowrap; cursor: move;">PJeOffice Indisponível</div></td></tr><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">
+								
+		<h3>O aplicativo PJeOffice não está disponível!</h3></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpPJeOfficeIndisponivelCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelLastHref"></button></div><script type="text/javascript">new ModalPanel('mpPJeOfficeIndisponivel',
+				{
+					width: 400,
+					height: 190,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><div id="mpProgresso" style="display: none;"><input autocomplete="off" id="mpProgressoOpenedState" name="mpProgressoOpenedState" type="hidden"><div class="rich-modalpanel modal-small" id="mpProgressoContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpProgressoShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">			
+		<div class="media">
+			<div class="media-left media-middle">
+				<div class="svg-preloader">
+					<svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+				</div>
+			</div>
+			<div class="media-body">
+				<h6>Por favor aguarde</h6>
+			</div>
+		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div><script type="text/javascript">new ModalPanel('mpProgresso',
+				{
+					width: -1,
+					height: 110,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: false,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div>
+	
+	<script type="text/javascript">
+		function showMpProgresso() {
+			Richfaces.showModalPanel('mpProgresso');
+		}
+		function hideMpProgresso() {
+			Richfaces.hideModalPanel('mpProgresso');
+		}
+	</script><div id="j_id65" class="content"><div id="pageBody" class="container-fluid scroll-y principal noIframe"><span id="movimentarRegion:status"><span id="movimentarRegion:status.start" style="display: none"><div id="mpLoadingMovimentar" style="display: none;"><input autocomplete="off" id="mpLoadingMovimentarOpenedState" name="mpLoadingMovimentarOpenedState" type="hidden"><div class="rich-modalpanel ajax-loader" id="mpLoadingMovimentarContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpLoadingMovimentarDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpLoadingMovimentarFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpLoadingMovimentarCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpLoadingMovimentarShadowDiv"></div><div class=" rich-mpnl-content" id="mpLoadingMovimentarContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpLoadingMovimentarContentTable" style="width: 1px;height: 1px;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top"></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpLoadingMovimentarCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpLoadingMovimentarLastHref"></button></div><script type="text/javascript">new ModalPanel('mpLoadingMovimentar',
+				{
+					width: -1,
+					height: -1,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: false,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: true,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div></span><script type="text/javascript">
+window.document.getElementById('movimentarRegion:status.start').onstart=function(){Richfaces.showModalPanel('mpLoadingMovimentar');;};
+</script><span id="movimentarRegion:status.stop"></span><script type="text/javascript">
+window.document.getElementById('movimentarRegion:status.stop').onstop=function(){Richfaces.hideModalPanel('mpLoadingMovimentar');;};
+</script></span>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		var idTaskInstance = "1139350747";
+		var $scope;
+		jQuery_21(document).ready(function() {
+			var testeCorrigeIframe = "";
+			if(testeCorrigeIframe){				
+				trataTransicoes();
+			}
+			var testeAtualiza = "";
+			var newTaskId = "1139350747";
+	        if(testeAtualiza != ''){
+				opener.atualizarTarefasTree();
+				opener.atualizaLocalizacaoCaixa();
+	        }
+	    });
+
+		function trataTransicoes(){
+			var botoes = document.querySelectorAll(".btnTransicao");
+			var textoConcatenado = "";
+			if(botoes.length > 0) {
+				textoConcatenado = trataLista(botoes);
+			}
+			var select = document.querySelector(".selectTransicoes");
+			if(select){
+				textoConcatenado = trataLista(select.options);
+			}
+		}
+
+		function trataLista(element){
+			var txt="";
+			for (var i = 0; i < element.length; i++) {
+				if(element[i].value.indexOf("noSelectionValue") == -1) {
+					txt += element[i].value;
+					if (i < element.length - 1) {
+						txt += ":|:";
+					}
+				}
+			}
+			return txt;
+		}
+
+		function redistribuicao(){
+			opener.window.location='/pje/Painel/painel_usuario/list.seam';
+			openPopUp('paginadorDocumentoProcesso', 'https://pje.tjma.jus.br:443/pje/Processo/ConsultaProcesso/Detalhe/resultadoRedistribuicao.seam?cid=216608');
+			window.close();
+		}
+    	function requestJsf() {
+    		Richfaces.showModalPanel('idModalAguarde');
+	    	request();
+    	}
+
+		function refresh(){
+			document.location.reload();
+		}
+
+
+		function refresh2(){
+			document.location = 'https://pje.tjma.jus.br/pje/Processo/movimentar.seam?idProcesso=759730';
+		}
+    	
+    	function recarregaPai(){
+    		opener.window.location.reload();
+    		window.open('https://pje.tjma.jus.br:443/pje/Processo/ConsultaProcesso/Detalhe/resultadoProtocolacao.seam?cid=216608', 'paginadorDocumentoProcesso', 'width=900,height=450, scroll=yes, scrollbars=yes');
+    		window.close();
+    	}
+    	
+    	window.addEventListener('message', function(event){
+    		if(event.origin != 'https://frontend.prd.cnj.cloud') return;
+    		if(event.data.transitarFrame){
+    			window.transitarFrame(event.data.transitarFrame);
+    		}
+    	});
+		/* ]]> */
+	</script><div id="script">
+		<script type="text/javascript">
+			
+		    function verifyFields() { 			   	
+			   	var taskCompleted = "";
+		        if (taskCompleted != '') {
+		        	var iframe = "false";
+			        if (!iframe) {
+						try {
+							ultimoPainel = 'painel_usuario/list.seam';
+							
+							// Caso a janela que abriu essa popup não possua essa função,
+							// a tela será atualizada por completo mantendo o comportamento anterior.
+							jQuery(document).ready(function () {
+								opener.atualizarPainelUsuario();
+							});
+						} catch (e) {
+							window.opener.location = "/pje/Painel/" + ultimoPainel;
+						}
+				    }
+			        var canClosePanel = "";
+			        if (canClosePanel != '') {
+			        	window.parent.postMessage({respostaIframeTarefaFechar: canClosePanel},'https://frontend.prd.cnj.cloud');
+						window.close();
+			        } else {
+			        	var newTaskId = "1139350747";
+			        	if (newTaskId != '') {
+			        		window.parent.postMessage({respostaIframeTarefa: newTaskId},'https://frontend.prd.cnj.cloud');
+			        		location = "/pje/Processo/movimentar.seam?idProcesso=759730&newTaskId="+newTaskId;
+				        } else {
+				        	location = location.href;
+				        }
+			        }
+		        } else {
+		        	hideLoading();
+		        }
+		    }
+	    </script></div><form id="j_id68" name="j_id68" method="post" action="/pje/Processo/movimentar.seam" target=""><script id="j_id68:j_id69" type="text/javascript">//<![CDATA[
+		clearActorId=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id69','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','parameters':{'j_id68:j_id69':'j_id68:j_id69'} } )};
+		//]]></script><script id="j_id68:j_id70" type="text/javascript">//<![CDATA[
+		refreshPageAposAssinarDoc=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id70','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','parameters':{'j_id68:j_id70':'j_id68:j_id70'} ,'status':'movimentarRegion:status'} )};
+		//]]></script><script id="j_id68:j_id71" type="text/javascript">//<![CDATA[
+		refreshOpener=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id71','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','parameters':{'j_id68:j_id71':'j_id68:j_id71'} ,'status':'movimentarRegion:status'} )};
+		//]]></script><script id="j_id68:j_id72" type="text/javascript">//<![CDATA[
+		alteraMostraMinuta=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id72','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','parameters':{'j_id68:j_id72':'j_id68:j_id72'} } )};
+		//]]></script><script id="j_id68:j_id73" type="text/javascript">//<![CDATA[
+		atualizar=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id73','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){refresh2()},'parameters':{'j_id68:j_id73':'j_id68:j_id73'} } )};
+		//]]></script><script id="j_id68:j_id74" type="text/javascript">//<![CDATA[
+		fecharPaginaFluxoRedistribuicao=function(){A4J.AJAX.Submit('j_id68',null,{'similarityGroupingId':'j_id68:j_id74','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){redistribuicao();},'parameters':{'j_id68:j_id74':'j_id68:j_id74'} ,'status':'movimentarRegion:status'} )};
+		//]]></script><input type="hidden" autocomplete="off" name="j_id68" value="j_id68"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_j_id68() {
+_clearJSFFormParameters('j_id68','',['j_id68:j_idcl','j_id68:_link_hidden_']);
+}
+function clearFormHiddenParams_j_id68(){clear_j_id68();}
+function clearFormHiddenParams_j_id68(){clear_j_id68();}
+clear_j_id68();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id316" autocomplete="off"></form><div id="idModalAguarde" style="display: none;"><input autocomplete="off" id="idModalAguardeOpenedState" name="idModalAguardeOpenedState" type="hidden"><div class="rich-modalpanel " id="idModalAguardeContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="idModalAguardeDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="idModalAguardeFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="idModalAguardeCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="idModalAguardeShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="idModalAguardeContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="idModalAguardeContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">
+		<div class="ajax-loader">
+  			<div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+ 			<div class="rich-mpnl-panel">
+		        <div class="rich-mp-container">
+		        	<div class="rich-mpnl-content"></div>
+		        </div>
+ 			</div>
+ 		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="idModalAguardeCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="idModalAguardeLastHref"></button></div><script type="text/javascript">new ModalPanel('idModalAguarde',
+				{
+					width: -1,
+					height: -1,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: false,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><div id="j_id76">
+		<h5>Fluxo Principal do 1 Grau - Arquivo • Arquivo definitivo</h5></div><div id="taskInstanceDiv" class="divMovimentarProcesso"><div id="msgSaida"><dl id="j_id80" class="rich-messages" style="display: none; "><dt></dt></dl></div><form id="taskInstanceForm" name="taskInstanceForm" method="post" class="edit" enctype="application/x-www-form-urlencoded" action="/pje/Processo/movimentar.seam" target=""><div class="rich-panel " id="taskInstanceForm:j_id81"><div class="rich-panel-header " id="taskInstanceForm:j_id81_header"> </div><div class="rich-panel-body " id="taskInstanceForm:j_id81_body">
+
+	<script type="text/javascript">		
+	(function($) {
+		function getDialogMessageNotEmpty() {
+			return '*[id=dialogMessage]:has(dt span), .modal-popup:has(dt span)';
+		}
+		
+		function getAllDialogMessage() {
+			return '*[id=dialogMessage], .modal-popup';
+		}
+		
+		function hideClosestDialogMessage(element) {
+			hideDialog($(element).closest('*[id=dialogMessage]'));
+		}
+		
+		function showAndCloseDialogMessage() {
+			var functionSetTimeout = setTimeout('hideDialogMessage()', '4000');
+			showDialogMessage(functionSetTimeout);
+		}
+		
+		function showDialogMessage(functionSetTimeout) {
+			cancelAllHideDialogMessages();
+			showDialog(getDialogMessageNotEmpty());
+		}
+		
+		function cancelAllHideDialogMessages() {
+			var functionTimeout = $(window).data('timeoutDialogMessage');
+			if (functionTimeout) {
+				clearTimeout(functionTimeout);
+			}
+		}
+		
+		function hideDialogMessage(element) {
+			if (element) {
+				//ao apertar botao de fechar
+				cancelAllHideDialogMessages();
+				hideClosestDialogMessage(element);
+			} else {
+				//ao fechar sozinho (timeout)
+				hideDialog(getDialogMessageNotEmpty());
+			}
+		}	
+		
+		function actionDialogMessage() {
+			var globalMessages = 'false'; 
+			if(globalMessages == 'true') {	
+				if('false' == 'true') {		
+					if($('dt[class=error]').html() == null) {
+						var functionSetTimeout = setTimeout('hideDialogMessage()', '4000');					
+						showDialogMessage(functionSetTimeout);
+					} else {
+						showDialogMessage();
+					}	
+				}			
+			}	
+		}	
+		
+		function hideDialog(selector) {
+			var $dialog = $(selector);
+			if($dialog.size() == 0) {
+				$dialog = $(getAllDialogMessage());							
+			}
+			
+			$dialog.css('visibility', 'hidden');
+			$dialog.css('opacity', '0');
+		}
+		
+		function showDialog(selector) {
+			var $dialog = $(selector);
+			
+			if($dialog.size() > 0) {
+				$dialog.css('visibility', 'visible');
+				$dialog.css('opacity', '1');
+				if (functionSetTimeout) {
+					$(window).data('timeoutDialogMessage', functionSetTimeout);
+				}
+			}
+		}
+		
+		window.showDialogMessage = showDialogMessage;
+		window.hideDialogMessage = hideDialogMessage;
+		window.showAndCloseDialogMessage = showAndCloseDialogMessage;
+		
+		//Executar o dialog ao fazer uma requisição AJAX ou NÃO-AJAX no formulário.	
+		window.onload = function() {
+			actionDialogMessage();	
+		}		
+		actionDialogMessage();
+	})(jQuery_21);
+	</script>	
+
+	<div id="dialogMessage" class="modal-popup">
+		<div id="title" class="modal-header">Mensagem
+			<span class="btn-fechar" onclick="hideDialogMessage(this);"><i class="icon-fechar"></i></span>
+    	</div>
+    	
+    	<div class="modal-content text-center"><dl id="taskInstanceForm:taskInstanceFormMessage" class="rich-messages" style="display: none; "><dt></dt></dl>
+    	</div>
+	</div><span id="taskInstanceForm:MovimentarEmLote-1139350747"></span>
+			<div class="col-sm-12 clearfix"><div id="taskInstanceForm:divTransicao"><script id="taskInstanceForm:j_id90" type="text/javascript">//<![CDATA[
+		transitar=function(){A4J.AJAX.Submit('taskInstanceForm',null,{'similarityGroupingId':'taskInstanceForm:j_id90','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){verifyFields();},'parameters':{'taskInstanceForm:j_id90':'taskInstanceForm:j_id90'} ,'status':'movimentarRegion:status'} )};
+		//]]></script></div><script id="taskInstanceForm:j_id91" type="text/javascript">//<![CDATA[
+		transitarFrame=function(nomeTransicao){A4J.AJAX.Submit('taskInstanceForm',null,{'similarityGroupingId':'taskInstanceForm:j_id91','eventsQueue':'movimentarQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){showLoading();transitar()},'parameters':{'nomeTransicao':nomeTransicao,'taskInstanceForm:j_id91':'taskInstanceForm:j_id91','ajaxSingle':'taskInstanceForm:j_id91'} ,'status':'movimentarRegion:status'} )};
+		//]]></script><div class="rich-panel col-sm-12 clearfix" id="taskInstanceForm:taskButtonsDiv"><div class="rich-panel-body " id="taskInstanceForm:taskButtonsDiv_body"><input class="btn btn-primary pull-left" id="taskInstanceForm:update" name="taskInstanceForm:update" onclick="if (window.onClickGravar){ if(jQuery(this).data('bypassOnClick') != 'true') {if(onClickGravar(this) === false) return false;} else {jQuery(this).data('bypassOnClick', 'false');}};A4J.AJAX.Submit('taskInstanceForm',event,{'similarityGroupingId':'taskInstanceForm:update','eventsQueue':'editQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){; hideLoading();},'parameters':{'taskInstanceForm:update':'taskInstanceForm:update'} ,'status':'movimentarRegion:status'} );return false;" value="Salvar" onmouseup="showLoading();" type="button">
+		<script type="text/javascript">
+			function confirmaDistribuicao(isDistribuicao){
+				if(isDistribuicao){
+					if(confirm('Deseja realmente distribuir o processo?')){
+						return true;
+					}else{
+						hideLoading();
+						return false;
+					} 
+				}
+				return true;
+			}
+		</script>
+		<small><span class="mt-10 mr-10 ml-20 pull-left text-muted">Próxima ação</span></small>
+					<script type="text/javascript">			
+						var btnAcao = document.getElementsByName('Triagem de desarquivamento definitivo');
+						if(btnAcao.length > 1){
+							btnAcao.data('bypassOnClick', 'false');
+						}
+					</script><input class="btn btn-primary btnTransicao " id="taskInstanceForm:j_id96:0:j_id97" name="taskInstanceForm:j_id96:0:j_id97" onclick="if (window.onClickEnd) { if(jQuery(this).data('bypassOnClick') != 'true') { if(onClickEnd(this) === false) return false;} else {jQuery(this).data('bypassOnClick', 'false');}};;A4J.AJAX.Submit('taskInstanceForm',event,{'similarityGroupingId':'taskInstanceForm:j_id96:0:j_id97','eventsQueue':'editQueue','containerId':'movimentarRegion','oncomplete':function(request,event,data){verifyFields();},'parameters':{'taskInstanceForm:j_id96:0:j_id97':'taskInstanceForm:j_id96:0:j_id97'} ,'status':'movimentarRegion:status'} );return false;" value="Triagem de desarquivamento definitivo" onmouseup="showLoading();" type="button">
+
+			<input name="iframe" type="hidden" value="false"></div></div>
+			</div></div></div><input type="hidden" autocomplete="off" name="taskInstanceForm" value="taskInstanceForm"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_taskInstanceForm() {
+_clearJSFFormParameters('taskInstanceForm','',['taskInstanceForm:j_idcl','taskInstanceForm:_link_hidden_']);
+}
+function clearFormHiddenParams_taskInstanceForm(){clear_taskInstanceForm();}
+function clearFormHiddenParams_taskInstanceForm(){clear_taskInstanceForm();}
+clear_taskInstanceForm();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id316" autocomplete="off"></form></div><div id="divMovimentarPoll"><form id="j_id105" name="j_id105" method="post" action="/pje/Processo/movimentar.seam" target=""><span style="display:none;" id="j_id105:poll"><script type="text/javascript">
+A4J.AJAX.Poll('j_id105',{'similarityGroupingId':'j_id105:poll','pollId':'j_id105:poll','pollinterval':300000,'containerId':'j_id104','parameters':{'j_id105:poll':'j_id105:poll'} } );
+</script></span><input type="hidden" autocomplete="off" name="j_id105" value="j_id105"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_j_id105() {
+_clearJSFFormParameters('j_id105','',['j_id105:_link_hidden_','j_id105:j_idcl']);
+}
+function clearFormHiddenParams_j_id105(){clear_j_id105();}
+function clearFormHiddenParams_j_id105(){clear_j_id105();}
+clear_j_id105();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id316" autocomplete="off"></form></div></div></div>
+
+</body></html>

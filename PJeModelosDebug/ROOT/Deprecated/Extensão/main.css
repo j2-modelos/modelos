@@ -1,0 +1,587 @@
+.divTest{
+	font-size:5pt;
+        display: none;
+}
+
+
+.j2ColorIsOrange{
+	color : orange;
+}
+
+.j2EtiquetaEstilo{
+	color: black;
+	background: #f6d290;
+        border-radius: 0.25em;
+}
+
+.dias15a25{
+	background: #aff1af;
+    color: black;
+    font-weight: bold;
+    border-radius: 0.25em;
+}
+
+.dias25a30{
+	background: #fff38a;
+    color: black;
+    font-weight: bold;
+	/*font-size: 12px;*/
+        border-radius: 0.25em;
+}
+
+.dias30mais{
+	background: #a94442;
+    color: white;
+    font-weight: bold;
+    /*font-size: 14px;*/
+    border-radius: 0.25em;
+}
+
+.dataPadding{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.ePrioridade{
+	background: linear-gradient(45deg, #a9444229, white);
+}
+
+.prioridadeCor{
+	color: #a94442;
+}
+
+.datasProcesso {
+    display: inline-grid;
+}
+
+.isBold{
+    font-weight: bold;
+}
+
+span.nome{
+    --spNomeHeight:inherit;
+}
+
+.tarefaTituloPequeno{
+    font-size: 6pt;
+    float: right;
+    line-height: 1.0;
+    margin-top: -4px;
+}
+
+conteudo-tarefa span.tarefaTituloPequeno{
+    /*font-size: 6pt;*/
+    float: left;
+    /*line-height: 1.0;*/
+    margin-top: unset;
+}
+
+.tarfOrgOpacidade{
+    opacity: 0.5;
+}
+.tarfOrgOpacidade:hover{
+    opacity: 1;
+}
+
+.altNomeListaTarefaAtiva{
+    line-height: 1.0;
+    float: left;
+    font-size: 9px;
+    margin-top: 0px;
+    margin-bottom: -4px;
+}
+
+.propertyViewJ2E{
+    min-height: unset;
+    transition: all .5s ease-out;
+    border-left: 3px solid transparent;
+}
+.propertyViewJ2E:hover{
+   
+    background: #ddebf1;
+    border-left: 3px solid #058ec4;
+}
+
+.j2eSpanAlert{
+    vertical-align: middle;
+    padding-left: 10px;
+    
+    /*filter: hue-rotate(313deg);*/
+}
+
+.j2eADMPanel {
+    margin-bottom: unset;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.j2eADMHeader {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.historicoTarefaIconOpen{
+    margin-left: 5px;
+    vertical-align: bottom;
+    height: 1em;
+    vertical-align: text-top;
+}
+
+.iframeclass {
+    position: absolute;
+    top: 0; left: 0;
+    width:100%;
+    height:100%;
+}
+
+.j2EPseudoTarefa{
+    font-style: italic;
+}
+
+
+
+
+
+
+/*         TESTE */
+pseudo-tarefas .painel-listagem.painel-etiquetas[_ngcontent-mqv-c9] {
+    padding: 5px;
+}
+pseudo-tarefas .painel-listagem[_ngcontent-mqv-c9] {
+    background: #ebf0f3;
+}
+pseudo-tarefas .btn-nova-etiqueta[_ngcontent-mqv-c9] {
+    background: #029bca;
+    color: #fff;
+}
+pseudo-tarefas .btn-nova-etiqueta[_ngcontent-mqv-c9]:focus,
+pseudo-tarefas .btn-nova-etiqueta[_ngcontent-mqv-c9]:hover {
+    background: #0078aa;
+    color: #fff;
+}
+pseudo-tarefas .tipTop[_ngcontent-mqv-c9] {
+    bottom: 70%;
+    left: 80%;
+}
+pseudo-tarefas .btn-pesquisa[_ngcontent-mqv-c9] {
+    height: 34px;
+}
+pseudo-tarefas ul[_ngcontent-mqv-c9] .btn[_ngcontent-mqv-c9] {
+    padding: 0 5px;
+}
+pseudo-tarefas ul[_ngcontent-mqv-c9] .btn-default[_ngcontent-mqv-c9] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4s ease-in-out;
+    font-size: 125%;
+    color: #31708f;
+}
+pseudo-tarefas .rightPanel[_ngcontent-mqv-c9] {
+    background: #ebf0f3;
+    z-index: 1;
+    padding: 0;
+    border-right: 1px solid #cbd7dc;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    display: inline-block;
+    width: 25%;
+}
+pseudo-tarefas .mainPanel[_ngcontent-mqv-c9] {
+    z-index: 1;
+    padding: 0;
+    border-right: 1px solid #cbd7dc;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: inline-block;
+    height: 100%;
+    width: 75%;
+}
+pseudo-tarefas .edicaoEtiquetas[_ngcontent-mqv-c9] {
+    padding: 0 15px 20px;
+}
+pseudo-tarefas .conteudo-abas-etiquetas[_ngcontent-mqv-c9] {
+    padding: 0 !important;
+}
+pseudo-tarefas .lista-etiquetas[_ngcontent-mqv-c9] {
+    height: 85%;
+    overflow: auto;
+}
+pseudo-tarefas .pesquisa-etiquetas[_ngcontent-mqv-c9] {
+    padding: 10px 5px;
+    background: #ebf0f3;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+pseudo-tarefas .abas[_ngcontent-mqv-c9] {
+    background: #fff;
+}
+pseudo-tarefas .etiqueta[_ngcontent-mqv-c9] {
+    padding: 0;
+    border: 1px solid #ccc;
+    border-bottom: 0;
+    border-radius: 0;
+    position: inherit;
+}
+pseudo-tarefas .nome-etiqueta[_ngcontent-mqv-c9] {
+    display: inline-block;
+    cursor: pointer;
+    padding: 9px 5px;
+    word-wrap: break-word;
+    font-size: 13px;
+    color: #666;
+}
+pseudo-tarefas .nome-etiqueta.selecionada[_ngcontent-mqv-c9],
+pseudo-tarefas .nome-etiqueta[_ngcontent-mqv-c9]:hover {
+    font-weight: 700;
+}
+pseudo-tarefas .nenhum-processo[_ngcontent-mqv-c9] {
+    position: absolute;
+    top: 45vh;
+    left: 50vw;
+    color: #666;
+    font-size: 150%;
+}
+pseudo-tarefas .quantidade-processos[_ngcontent-mqv-c9] {
+    background-color: #fff;
+    width: 100%;
+    padding: 3px;
+    margin-top: -20px;
+    z-index: 999;
+}
+pseudo-tarefas .acoes-etiqueta[_ngcontent-mqv-c9] {
+    float: right;
+}
+pseudo-tarefas .formulario[_ngcontent-mqv-c9] {
+    padding: 10px;
+}
+pseudo-tarefas .estrela-favorito[_ngcontent-mqv-c9] {
+    color: #fc0 !important;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: orange;
+}
+pseudo-tarefas .checkbox[_ngcontent-mqv-c9] {
+    padding-top: 9px;
+}
+pseudo-tarefas .botoes-acao-lote[_ngcontent-mqv-c9] .btn[_ngcontent-mqv-c9] {
+    margin: 0 0 0 5px;
+    line-height: 1;
+}
+pseudo-tarefas .dropdown-menu[_ngcontent-mqv-c9] li[_ngcontent-mqv-c9] a[_ngcontent-mqv-c9] {
+    cursor: pointer;
+    background-color: #fff;
+}
+pseudo-tarefas span.fas[_ngcontent-mqv-c9] {
+    font-weight: 600;
+}
+pseudo-tarefas div.marcado[_ngcontent-mqv-c9] li[_ngcontent-mqv-c9] {
+    background-color: beige;
+}
+pseudo-tarefas li.etiqueta[_ngcontent-mqv-c9] input[type="checkbox"][_ngcontent-mqv-c9] {
+    margin-top: 11px;
+}
+pseudo-tarefas #divListaProcessos[_ngcontent-mqv-c9] {
+    padding-top: 20px;
+}
+
+pseudo-tarefas .calendario[_ngcontent-vaj-c10] {
+    top: 25px;
+    right: 10px;
+}
+pseudo-tarefas .titulo[_ngcontent-vaj-c10] {
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin-top: 30px;
+    font-weight: 700;
+}
+pseudo-tarefas .input-group-btn[_ngcontent-vaj-c10] button[_ngcontent-vaj-c10] {
+    top: 12px;
+    height: 35px;
+}
+pseudo-tarefas #tituloEtiquetaForm[_ngcontent-vaj-c10] {
+    margin-bottom: 30px;
+}
+
+pseudo-tarefas .marcado{
+    height: 32px;
+    padding: 6px;
+    padding-left: 20px;
+}
+
+pseudo-tarefas .pseudotarefasLoteOptions{
+    height: 100%;
+}
+
+pseudo-tarefas div.processo-progress-bar{
+    
+}
+
+
+.filtros[_ngcontent-css-c7] {
+    background: #eee !important;
+    height: 40px;
+}
+.filtros[_ngcontent-css-c7] i[_ngcontent-css-c7] {
+    position: absolute;
+    right: 0;
+    margin-right: 5%;
+}
+a[_ngcontent-css-c7] {
+    color: #454545;
+    text-decoration: none;
+    text-indent: 0;
+    padding: 10px 0 12px 15px;
+    font-size: 14px;
+    font-weight: 400;
+    transition: all 0.5s ease;
+}
+.menuItem[_ngcontent-css-c7] {
+    border-bottom: 1px solid #ddd;
+}
+.menuItem[_ngcontent-css-c7] a[_ngcontent-css-c7] {
+    border-left: 3px solid #fff;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 95%;
+    padding: 10px 0;
+    line-height: 1.3;
+}
+.menuItem[_ngcontent-css-c7] a[_ngcontent-css-c7]:hover,
+.menuItem[_ngcontent-css-c7] > div[_ngcontent-css-c7] > a.route-active[_ngcontent-css-c7] {
+    color: #058ec4;
+    background: #ddebf1;
+    border-left: 3px solid #058ec4;
+}
+.menuItem[_ngcontent-css-c7] a[_ngcontent-css-c7]:hover {
+    color: #058ec4;
+    padding: 10px 0;
+}
+.nomeTarefa[_ngcontent-css-c7] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 78%;
+    padding-left: 10px;
+}
+.quantidadeTarefa[_ngcontent-css-c7] {
+    float: right;
+    padding-right: 20px;
+    text-indent: 0;
+    max-width: 22%;
+    width: 22%;
+    text-align: right;
+}
+.nome[_ngcontent-css-c7] {
+    overflow: hidden;
+    display: block;
+    word-wrap: break-word;
+    padding-left: 10px;
+    max-width: 78%;
+    width: 78%;
+}
+.wrapper-filtro-tarefas-pendentes[_ngcontent-css-c7] {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
+    border: 1px solid #ddd;
+}
+#divTarefasPendentes[_ngcontent-css-c7] {
+    height: 100%;
+}
+#group-filtro-tarefas-pendentes[_ngcontent-css-c7],
+#group-filtro-tarefas-pendentes-favoritas[_ngcontent-css-c7] {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 80px;
+}
+.nenhum-resultado[_ngcontent-css-c7],
+.nenhum-resultado[_ngcontent-css-c7] a[_ngcontent-css-c7] {
+    height: 40px;
+    width: 100%;
+}
+.detalheTarefasQuantidade[_ngcontent-css-c7] {
+    display: flex;
+    align-items: stretch;
+}
+.overflowTarefas[_ngcontent-css-c7] {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+
+// Favoritação de tareas
+
+#tarfFavDivContainer{
+    padding: 0;
+    overflow: hidden;
+    height: 5%;
+    border-bottom: 1px solid #ddd;
+}
+
+.tarfFavStarSapn{
+    font-weight: 100;
+    padding: 0px 10px;
+    font-size: 1.5em;
+    line-height: 1.5;
+    float: right;
+}
+
+.tarfFavStarSapn-stared {
+    color: #fc0!important;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: orange;
+    font-weight: 800;
+}
+
+
+
+.datalist-content[_ngcontent-orb-c14] {
+    float: left;
+    width: 100%;
+    padding: 0 10px 10px !important;
+    background: #fff;
+    border-bottom: 1px solid #d8dfe3;
+    border-left: 3px solid #fff;
+    transition: all 0.3s ease-out;
+    margin: 5px 0;
+    box-shadow: 0 0 10px #8cabbd;
+}
+.selecionarProcesso[_ngcontent-orb-c14] [_ngcontent-orb-c14]:hover {
+    cursor: pointer;
+}
+.datalist-content[_ngcontent-orb-c14]:hover,
+.selecionado[_ngcontent-orb-c14] {
+    background: #ddebf1;
+    border-left: 3px solid #35a8ce;
+}
+.date[_ngcontent-orb-c14] {
+    font-size: 11px;
+}
+.tarefa-numero-processo[_ngcontent-orb-c14] {
+    font-size: 13px;
+    font-weight: 700;
+    word-wrap: break-word;
+    float: left;
+    width: 100%;
+    line-height: 1.2em;
+}
+.process[_ngcontent-orb-c14] {
+    font-size: 14px;
+    font-weight: 700;
+    color: #058ec4;
+}
+.orgao[_ngcontent-orb-c14] {
+    font-size: 12px;
+    word-wrap: break-word;
+}
+.tituloNegrito[_ngcontent-orb-c14] {
+    font-weight: 900;
+}
+.local[_ngcontent-orb-c14] {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+.label-etiqueta[_ngcontent-orb-c14] {
+    margin: 2px;
+    float: left;
+}
+.icon-desvincular-tag[_ngcontent-orb-c14] {
+    cursor: pointer;
+}
+.icones[_ngcontent-orb-c14] {
+    border-bottom: 1px solid #ddd;
+}
+.btn[_ngcontent-orb-c14] {
+    padding: 5px 10px;
+}
+.btn-default[_ngcontent-orb-c14] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4 ease-in-out;
+}
+.marcar-todos[_ngcontent-orb-c14] {
+    font-size: 1.25em;
+}
+.botao-selecionar[_ngcontent-orb-c14] {
+    border: none;
+    background: 0 0;
+    padding: 0;
+}
+
+
+
+
+
+.icon.btn-default[_ngcontent-orb-c28] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4s ease-in-out;
+}
+.icon.btn-default[_ngcontent-orb-c28]:hover {
+    background: #ebf0f3;
+}
+.icon.btn[_ngcontent-orb-c28] {
+    padding: 5px 10px;
+}
+.modal[_ngcontent-orb-c28] > .btn[_ngcontent-orb-c28] {
+    line-height: 1.9;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 400;
+}
+button.close[_ngcontent-orb-c28] {
+    font-size: 21px;
+}
+.modal-footer[_ngcontent-orb-c28] button[_ngcontent-orb-c28] {
+    font-size: 13px !important;
+}
+.modal-title[_ngcontent-orb-c28] {
+    font-size: 150%;
+}
+.modal-body[_ngcontent-orb-c28] {
+    max-height: calc(100vh - 175px);
+    overflow: auto;
+}
+.panel-body[_ngcontent-orb-c28] {
+    word-break: break-word;
+}
+
+
+.btn-default[_ngcontent-orb-c29] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4s ease-in-out;
+}
+.btn[_ngcontent-orb-c29] {
+    padding: 5px 10px;
+}
+
+div[j2e-etiquetas-processo]{
+  padding: 4px 0px;
+  padding-top: unset;
+}
+
+.label-etiqueta[_ngcontent-tnv-c13] {
+    margin: 2px;
+    /*float: left;*/
+    display: inline-block;
+    padding: 2px;
+}
+
+.label-etiqueta[_ngcontent-tnv-c13] span{
+    font-size: 11px;
+    font-weight: 700;
+    font-family: "Open Sans","Helvetica Neue",sans-serif;
+    margin: 0 6px;
+    line-height: 1.4;
+    
+}

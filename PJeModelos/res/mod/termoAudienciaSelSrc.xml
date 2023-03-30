@@ -1,0 +1,1284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+        <elemento tag="span" scope="NONE"> 
+            <textHTML scope="NONE">
+                <data>
+                    <![CDATA[#{textContent}<SPAN>&nbsp;</SPAN>]]>
+                </data>
+            </textHTML>
+        </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Fases">
+            <gItem id="trmAud.Fase.Abertura"/>
+            <gItem id="trmAud.Fase.Conciliacao"/>
+            <gItem id="trmAud.Fase.ContestacaoOral"/>
+            <gItem id="trmAud.Fase.Deliberacoes"/>
+            <!--gItem id="trmAud.Fase.Encerramento"/-->
+            <gItem id="trmAud.Fase.Instrucao"/>
+            <gItem id="trmAud.Fase.Julgamento"/>
+            <gItem id="trmAud.Fase.RequerimentoDasPartes"/>
+        </group>
+		<group label="Vídeo Conferência | PJe Mídias">
+            <gItem id="trmAud.Fase.VideoConferencia"/>
+            <gItem id="trmAud.VideoConferencia.Advertimento"/>
+            <gItem id="trmAud.Fase.linkPJe"/>
+            <gItem id="trmAud.linkPJe.InfoLink"/>
+		</group>
+        <group label="Presença">
+            <!-- tappac -->
+            <gItem id="trmAud-Abertura-Presenca-editarFormulario"/>
+            
+            
+            <gItem id="trmAud.Abertura.Presenca.Autor#semadv"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#comadv"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#semadvPrep"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#comadvRepLegal"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#semadvPrep_"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#comadvPrep"/>
+            <gItem id="trmAud.Abertura.Presenca.Reu#semadv"/>
+            <gItem id="trmAud.Abertura.Presenca.Reu#comadv"/>
+            <gItem id="trmAud.Abertura.Presenca.Reu#semadvPrep"/>
+            <gItem id="trmAud.Abertura.Presenca.Reu#comadvPrep"/>
+            <gItem id="trmAud.Abertura.Presenca.Autor#adv"/>
+            <gItem id="trmAud.Abertura.Presenca.Reu#adv"/>
+        </group>
+        <group label="Ausência">
+            <gItem id="trmAud.Abertura.Ausencia.Autor#intimado"/>
+            <gItem id="trmAud.Abertura.Ausencia.Autor#naoIntimado"/>
+            <gItem id="trmAud.Abertura.Ausencia.Reu#intimado"/>
+            <gItem id="trmAud.Abertura.Ausencia.Reu#naoIntimado"/>
+            <gItem id="trmAud.Abertura.Ausencia.Reu#naoIntimadoSemAR"/>
+        </group>        
+        <group label="Conciliação">
+            <gItem id="trmAud.Fase.Conciliacao"/>
+            <gItem id="trmAud.Conciliacao.Exposicao"/>
+            <gItem id="trmAud.Conciliacao.AcordoNaoRealizado"/>
+            <gItem id="trmAud.Conciliacao.SemPropostas"/>
+            <gItem id="trmAud.Conciliacao.AcordoRealizado"/>
+            <gItem id="trmAud.Conciliacao.PropostaPassivo"/>
+            <gItem id="trmAud.Conciliacao.PropostaAtivo"/>
+            <gItem id="trmAud.Conciliacao.Renovacao"/>
+            <gItem id="trmAud.Conciliacao.Frustrada.Demandante"/>
+            <gItem id="trmAud.Conciliacao.Frustrada.Demandado"/>
+        </group>
+        <group label="Conciliação - Termos Acordos">
+            <gItem id="trmAud.Conciliacao.TermosAcordos.PgtoCC"/>
+            <gItem id="trmAud.Conciliacao.TermosAcordos.PgtoDJO"/>
+            <gItem id="trmAud.Conciliacao.TermosAcordos.CancelObjetoLide"/>
+            <gItem id="trmAud.Conciliacao.TermosAcordos.CancelCNRCEMAR"/>
+        </group>
+        <group label="Contestação">
+            <gItem id="trmAud.Fase.ContestacaoOral"/>
+            <gItem id="trmAud.Contestacao.ApresContestacao"/>
+            <gItem id="trmAud.Contestacao.RespostaPrelim"/>
+            <gItem id="trmAud.Contestacao.SemRespostaPrelim"/>
+        </group>
+        <group label="Instrução">
+            <gItem id="trmAud.Fase.Instrucao"/>
+            <gItem id="trmAud.Conciliacao.Renovacao2"/>
+            <gItem id="trmAud.Conciliacao.Renovacao.Not"/>
+            
+            <gItem id="trmAud.Instrucao.InicioSessaoInstrucao"/>
+            
+            <gItem id="trmAud.Instrucao.PartesSemNovasProvas"/>
+            
+            
+            <gItem id="trmAud.Instrucao.Demandado.ContestacaoOral"/>
+            
+            
+            <gItem id="trmAud.Instrucao.DemandanteManifPreliminaresDigitado"/>
+            <gItem id="trmAud.Instrucao.DemandanteManifPreliminaresGravado"/>
+            
+            <gItem id="trmAud.Instrucao.Juntada.Ativo"/>
+            <gItem id="trmAud.Instrucao.Juntada.Passivo"/>
+            
+            <gItem id="trmAud.Instrucao.ProducaoProvaOralAudivisual"/>
+            
+            <gItem id="trmAud.Instrucao.Testemunha.Ativo.justificativa"/>
+            <gItem id="trmAud.Instrucao.Testemunha.Passivo.justificativa"/>
+            
+            
+            
+            <gItem id="trmAud.Instrucao.AtivoDepoimento"/>
+            <gItem id="trmAud.Instrucao.PassivoDepoimento"/>
+            <gItem id="trmAud.Instrucao.TestemunhaAtivo1"/>
+            <gItem id="trmAud.Instrucao.TestemunhaAtivo2"/>
+            <gItem id="trmAud.Instrucao.TestemunhaAtivo3"/>
+            <gItem id="trmAud.Instrucao.TestemunhaPassivo1"/>
+            <gItem id="trmAud.Instrucao.TestemunhaPassivo2"/>
+            <gItem id="trmAud.Instrucao.TestemunhaPassivo3"/>
+            
+            <gItem id="trmAud.Instrucao.DispensaTestemunhas"/>
+            
+            <gItem id="trmAud.Instrucao.AlegFin"/>
+            <gItem id="trmAud.Instrucao.AlegFin.remissivas"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Ativo.remissiva"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Passivo.remissiva"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Ativo.digitado"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Passivo.digitado"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Ativo.gravado"/>
+            <gItem id="trmAud.Instrucao.AlegFin.Passivo.gravado"/>
+                        
+            
+            
+            <gItem id="trmAud.Instrucao.Encerramento"/>
+            
+        </group>
+        
+        <group label="Instrução - Depoimento">
+            <gItem id="trmAud.Instrucao.DepoimentoEmVideo"/>
+            <gItem id="trmAud.Instrucao.DepoimentoPergMagistrado"/>
+            <gItem id="trmAud.Instrucao.DepoimentoPergAdvAtivo"/>
+            <gItem id="trmAud.Instrucao.DepoimentoPergAdvPassivo"/>
+            <gItem id="trmAud.Instrucao.DepoimentoPergAdvAtivoNada"/>
+            <gItem id="trmAud.Instrucao.DepoimentoPergAdvPassivoNada"/>
+        </group>        
+        
+        <group label="Julgamento">
+            <gItem id="trmAud.Fase.Julgamento"/>
+            <gItem id="trmAud.Julgamento.Proferimento"/>
+            <gItem id="trmAud.Julgamento.Contumacia"/>
+            <gItem id="trmAud.Julgamento.Desistencia"/>
+            <gItem id="trmAud.Julgamento.Homologacao-AJG-Sim"/>
+            <gItem id="trmAud.Julgamento.Homologacao-AJG-Nao"/>
+            
+            <!--gItem id="trmAud.Julgamento.ServicoTerceiro"/-->
+            <gItem id="trmAud.Julgamento.ColarSentenca"/>
+            <!--gItem id="trmAud.Conciliacao.Renovacao2"/-->
+        </group>
+        
+        <group label="Deliberações">
+            <gItem id="trmAud.Fase.Deliberacoes"/>
+            
+            <gItem id="trmAud.Deliberacoes.Magistrado.Genérico"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.ConclusaoSentenca"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.RazoesFinaisSentenca"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.DesignaçãoAudiencia"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.JulgamnetoDiligencia"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.JuntadaAR"/>
+            
+            <gItem id="trmAud.Deliberacoes.Conciliador.DesigAudiencia"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.ConclusaoDespacho"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.SecretariaExpediçãoComunicacao"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.ConclusaoSentencaDespacho"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.PrazoAtivoFinalidade"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.PrazoPassivoFinalidade"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.PrazoJuntadaDocumentos"/>
+            <gItem id="trmAud.Deliberacoes.Conciliador.SecretariaProvidencia"/>
+            <gItem id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva"/>
+            
+            
+        </group>     
+        
+        <group label="Requerimentos">
+            <gItem id="trmAud.Fase.RequerimentoDasPartes"/>
+            <gItem id="trmAud.Requerimentos.RenunciaPrazoRecursal"/>
+            <gItem id="trmAud.Requerimentos.Publicacao"/>
+            
+            <gItem id="trmAud.Requerimentos.GenericoAtivo"/>
+            <gItem id="trmAud.Requerimentos.GenéricoPassivo"/>
+            <gItem id="trmAud.Requerimentos.DesistenciaAtivo"/>
+            
+            <gItem id="trmAud.Requerimentos.InstrucaoAtivo"/>
+            <gItem id="trmAud.Requerimentos.InstrucaoPassivo"/>
+            <gItem id="trmAud.Requerimentos.InstrucaoPartes"/>
+            <gItem id="trmAud.Requerimentos.JulgamentoAntcipado"/>
+            <gItem id="trmAud-Requerimentos-Ativa-julgaAntecip"/>
+            <gItem id="trmAud-Requerimentos-Passiva-julgaAntecip"/>
+            <gItem id="trmAud-Requerimentos-Ativa-ManifjulgaAntecip"/>
+            
+        </group>        
+    </groupsDefs>
+    <items>
+        <item id="trmAud.Fase.Abertura" label="Abertura" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DA ABERTURA DA AUDIÊNCIA}}:
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Fase.Conciliacao" label="Conciliação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DA CONCILIAÇÃO}}:
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Fase.ContestacaoOral" label="Contestação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DA CONTESTAÇÃO}}:
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Fase.Deliberacoes" label="Deliberações" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DAS DELIBERAÇÕES}}:
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Fase.Encerramento" label="Encerramento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DO ENCERRAMENTO}}:
+                </data>
+            </itemContent>
+        </item>                
+        <item id="trmAud.Fase.Instrucao" label="Instrução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DA INSTRUÇÃO}}:
+                </data>
+            </itemContent>
+        </item>                
+        <item id="trmAud.Fase.Julgamento" label="Julgamento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DO JULGAMENTO}}:
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Fase.RequerimentoDasPartes" label="Requerimentos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DOS REQUERIMENTOS DAS PARTES}}:
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Fase.VideoConferencia" label="Vídeoconferência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DA VIDEOCONFERÊNCIA}}:
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Fase.linkPJe" label="PJe Mídias" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{ACESSO AO PJE MÍDIAS}}:
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        <item id="trmAud.Abertura.Presenca.Autor#semadv" label="#{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    desacompanhada de advogado.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Autor#comadv" label="#{j2.env.PJeVars.processo.polos.ativo} + Advogado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    acompanhada de advogado(a), o(a) senhor(a) #{j2.env.PJeVars.partes.ativa.advogado.nome_}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Autor#semadvPrep" label="#{j2.env.PJeVars.processo.polos.ativo} (RepLegal)" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    na pessoa de seu representante legal, o(a) senhor(a) #:span@repLegalAtivoNome{XXXXRepresentanteLegalXXXX},
+                    desacompanhada de advogado.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Autor#comadvRepLegal" label="#{j2.env.PJeVars.processo.polos.ativo} (RepLegal) + Advogado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    na pessoa de seu representante legal, o(a) senhor(a) #:span@repLegalAtivoNome{XXXXRepresentanteLegalXXXX},
+                    acompanhada de advogado(a), o(a) senhor(a) #{j2.env.PJeVars.partes.ativa.advogado.nome_}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Abertura.Presenca.Autor#semadvPrep_" label="#{j2.env.PJeVars.processo.polos.ativo} (Preposto)" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    representado por preposto(a), o(a) senhor(a) #:span@repLegalAtivoNome{XXXXPrepostoXXXX},
+                    desacompanhada de advogado.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Autor#comadvPrep" label="#{j2.env.PJeVars.processo.polos.ativo} (Preposto) + Advogado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    representado por preposto(a), o(a) senhor(a) #:span@repLegalAtivoNome{XXXXPrepostoXXXX},
+                    acompanhada de advogado(a), o(a) senhor(a) #{j2.env.PJeVars.partes.ativa.advogado.nome_}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Abertura.Presenca.Reu#semadv" label="#{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.partePassiva}, 
+                    desacompanhada de advogado.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Reu#comadv" label="#{j2.env.PJeVars.processo.polos.passivo} + Advogado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    acompanhada de advogado(a), o(a) senhor(a) XXXNomedoAdovagadoXXXX.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Reu#semadvPrep" label="#{j2.env.PJeVars.processo.polos.passivo} (Preposto)" dataPlus="">
+            <eventFire event="TermoAudiencia.Assign.ToolTipPreposto"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.partePassiva}, 
+                    representada por preposto(a), o(a) senhor(a) #:span@prepPassivoNome{XXXXPrepostoXXXX}
+                    desacompanhada de advogado.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Reu#comadvPrep" label="#{j2.env.PJeVars.processo.polos.passivo} (Preposto) + advogado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença da parte #{j2.env.PJeVars.processo.polos.partePassiva}, 
+                    representada por preposto(a), o(a) senhor(a) #:span@pprepPassivoNome{XXXXPrepostoXXXX}
+                    acompanhada de advogado(a), o(a) senhor(a) XXXNomedoAdovagadoXXXX.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Autor#adv" label="Advogado do #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença do(a) advogado(a) da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, o(a) senhor(a) 
+                    #{j2.env.PJeVars.partes.ativa.advogado.nome_}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Presenca.Reu#adv" label="Advogado do #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verificada a presença do(a) advogado(a) da parte #{j2.env.PJeVars.processo.polos.partePassiva}, 
+                    o(a) senhor(a) #{j2.env.PJeVars.partes.passiva.advogado.nome_}.
+                </data>
+            </itemContent>
+        </item>        
+        
+        
+        <item id="trmAud.Abertura.Ausencia.Autor#intimado" label="#{j2.env.PJeVars.processo.polos.ativo} - intimado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ausente a parte #{j2.env.PJeVars.processo.polos.parteAtiva}, apesar de devidamente intimada para o presente ato.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Ausencia.Autor#naoIntimado" label="#{j2.env.PJeVars.processo.polos.ativo} - não intimado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ausente a parte #{j2.env.PJeVars.processo.polos.parteAtiva}, pois não foi devidamente intimada para o presente ato.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Abertura.Ausencia.Reu#intimado" label="#{j2.env.PJeVars.processo.polos.passivo} - intimado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ausente a parte #{j2.env.PJeVars.processo.polos.partePassiva}, apesar de devidamente intimada para o presente ato.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Ausencia.Reu#naoIntimado" label="#{j2.env.PJeVars.processo.polos.passivo} - não intimado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ausente a parte #{j2.env.PJeVars.processo.polos.partePassiva}, pois não foi devidamente intimada para o presente ato.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Abertura.Ausencia.Reu#naoIntimadoSemAR" label="#{j2.env.PJeVars.processo.polos.passivo} - não intimado | Ausencia AR" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ausente a parte #{j2.env.PJeVars.processo.polos.partePassiva}, todavia ausente a juntada de aviso de recebimento de sua carta de citação e/ou intimação, apesar de o serviço SRO dos correios apontar a entrega da referida correspondência.
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        <!-- CONCILIAÇÃO -->
+        <item id="trmAud.Conciliacao.Exposicao" label="Exposição Motivos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Foi amplamente explicitado por este conciliador o objetivo da presente audiência, bem como 
+                    as vantagens que poderão advir da consecução de uma composição amigável para o fim do presente litígio.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.AcordoNaoRealizado" label="Acordo não realizado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Contudo, as partes não chegaram em acordo.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.AcordoRealizado" label="Acordo realizado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Dessarte, as partes resolveram entabular o seguinte acordo.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.SemPropostas" label="Sem propostas" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Nenhuma Proposta foi apresentada.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.PropostaPassivo" label="Proposta #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    O #{j2.env.PJeVars.processo.polos.passivo} apresentou como proposta de acordo: XXXXPropostaXXXX.
+                    Proposta não aceita pelo #{j2.env.PJeVars.processo.polos.ativo}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.PropostaAtivo" label="Contraproposta #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Como contraproposta, o #{j2.env.PJeVars.processo.polos.ativo} apresentou: XXXXPropostaXXXX.
+                    Proposta não aceita pelo #{j2.env.PJeVars.processo.polos.passivo}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.Renovacao" label="Renovação Conciliação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Inicialmente foi renovada às partes a oportunidade de realizarem CONCILIAÇÃO a fim de encerrar a presente ação.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.Frustrada.Demandante" label="Frustrada - #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Frustrada em razão da ausência da parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.Frustrada.Demandado" label="Frustrada - #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Frustrada em razão da ausência da parte #{j2.env.PJeVars.processo.polos.partePassiva}
+                </data>
+            </itemContent>
+        </item>
+        
+        <!-- CONCILIAÇÃO - TERMOS ACORDOS-->
+        <item id="trmAud.Conciliacao.TermosAcordos.PgtoCC" label="Pagamento Conta Corrente" dataPlus="termoCounter">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{XXXX - A parte #{j2.env.PJeVars.processo.polos.partePassiva} se propõe a pagar a importância de #:span@valorAcordo{R$ XXXXValorXXXX} a fim de encerrar a demandada no prazo de #:span@pgtoAcordoPrazo{XXXXPrazoXXXX dias corridos} mediante depósito em conta de titularidade da autora: #{j2.env.PJeVars.partes.ativa.nome}, CPF XXXCPFXXX, XXXDadosBancariosXXX;}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.TermosAcordos.PgtoDJO" label="Pagamento DJO" dataPlus="termoCounter">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{XXXX - A parte #{j2.env.PJeVars.processo.polos.partePassiva} se propõe a pagar a importância de #:span@valorAcordo{R$ XXXXValorXXXX} a fim de encerrar a demandada no prazo de #:span@pgtoAcordoPrazo{XXXXPrazoXXXX dias corridos} mediante Depósito Judicial em favor da autora: #{j2.env.PJeVars.partes.ativa.nome}, CPF XXXCPFXXX;}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.TermosAcordos.CancelObjetoLide" label="Cancelamento Débitos Lide" dataPlus="termoCounter">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{XXXX - No prazo de no prazo de #:span@obrigacaoAcordoPrazoAcordo{XXXXPrazoXXXX dias corridos} A parte #{j2.env.PJeVars.processo.polos.partePassiva} se compromete a cancelar contrato objeto da lide XXXDescXXXX, bem como todos os débitos e exclusão do nome da autora dos órgãos de restrição de crédito}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.TermosAcordos.CancelCNRCEMAR" label="Cancelamento CNR CEMAR" dataPlus="termoCounter">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{No prazo de até 15 (quinze) dias úteis a parte demandada se compromete a cancelar a fatura de CNR de competência XXXCompetenicaCNRXXX, com vencimento em XXXVencimentoCNRXXXX, no valor de R$ XXXValorXXXX, da conta contrato XXXContaContratoXXX.}
+                </data>
+            </itemContent>
+        </item>
+        
+        <!--- CONTESTACAO -->
+        <item id="trmAud.Contestacao.ApresContestacao" label="Apresentação Contestação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Encerrada a tentativa de composição, o(a) advogado(a) da Parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    requisitou a palavra e passou a apresentar contestação nos seguintes termos: #:B{"#{j2.env.PJeVars.unidade.juiz.MM}, XXXContestacaoXXX"}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Contestacao.RespostaPrelim" label="Resposta ás preliminares/documentos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cedida à palavra o(a) advogado(a) da Parte #{j2.env.PJeVars.processo.polos.parteAtiva},
+                    acerca das preliminares e/ou documentos apresentados em contestação, se manifestou 
+                    nos seguintes termos: #:B{"#{j2.env.PJeVars.unidade.juiz.MM}, XXXManifestacaoXXX"}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Contestacao.SemRespostaPrelim" label="Sem Resposta ás preliminares/documentos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Dada a oportunidade para o(a) advogado(a) da Parte #{j2.env.PJeVars.processo.polos.parteAtiva}, o mesmo deixou de
+                    se manifestar acerca das preliminares e/ou documentos apresentados.
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        
+        <!--- INSTRUÇÃO -->
+        <item id="trmAud.Conciliacao.Renovacao2" label="Renovação Conciliação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Inicialmente foi renovadas às partes a oportunidade de realizarem CONCILIAÇÃO a fim de dar fim a presente ação.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Conciliacao.Renovacao.Not" label="Renovação Conciliação Infrutífera" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Contudo restou infrutífera a tentativa de solução consensual #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.MM}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.PartesSemNovasProvas" label="Nenhum produção de provas" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Todavia, as partes declararam que não desejam produzir novas provas.}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.Demandado.ContestacaoOral" label="Contestação Oral" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Concedida a palavra, a parte #{j2.env.PJeVars.processo.polos.partePassiva} apresentou sua #:B{contestação} na forma que segue: "#:B{MM Juíza, XXXContetaçãoXXX}".
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        <item id="trmAud.Instrucao.InicioSessaoInstrucao" label="Inicio Sessao Instrucao" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ato contínuo, passou-se para a instrução processual #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.MM}. 
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.DemandanteManifPreliminaresDigitado" label="Manifestação Demandante acerca contestação e/ou preliminares - digitado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Foi concedida a palavra ao advodgado da parte #{j2.env.PJeVars.processo.polos.parteAtiva} para se manifestar
+                    acerca da contestação e/ou preliminares, tendo o feito da forma que segue: #:B{"#{j2.env.PJeVars.unidade.juiz.MM}, XXXManifestacao"}.
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="trmAud.Instrucao.DemandanteManifPreliminaresGravado" label="Manifestação Demandante acerca contestação e/ou preliminares - gravado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Foi concedida a palavra ao advodgado da parte #{j2.env.PJeVars.processo.polos.parteAtiva} para se manifestar
+                    acerca da contestação e/ou preliminares, tendo o feito em #:U{gravação audiovisual}, anexa a presente ata (#:U{XXXIDXXX}).
+                </data>
+            </itemContent>
+        </item>        
+        
+        
+        <!-- JUNTADA PARTES -->
+        <item id="trmAud.Instrucao.Juntada.Ativo" label="Juntada Provas #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} #:B{requereu a juntada de documento(s)/mídia(s)} consistentes em #:B{XXXDescreverJuntadaXXXX}, tendo sido deferido o peido
+                    #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.MM} e lhe concedeu o prazo de 6 (seis horas) para promover a juntada no sistema PJe.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.Juntada.Passivo" label="Juntada Provas #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{requereu a juntada de documento(s)/mídia(s)} consistentes em #:B{XXXDescreverJuntadaXXXX}, tendo sido deferido o peido
+                    #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.MM} e lhe concedeu o prazo de 6 (seis horas) para promover a juntada no sistema PJe.
+                </data>
+            </itemContent>
+        </item>
+        
+        <!--- produção prova oral-->
+        <item id="trmAud.Instrucao.ProducaoProvaOralAudivisual" label="Produção de Prova Oral" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Passou-se para a #:B{produção de prova oral} com colheita de depoimento e/ou inquirição de testemunhas apresentadas 
+                    pelas partes, as quais foram ouvidas separadamente na forma que segue adiante. Depoimento(s) tomado(s) em vídeo, anexo ao sistema PJe Midias.
+                    
+                </data>
+            </itemContent>
+        </item>             
+        
+        <item id="trmAud.Instrucao.Testemunha.Ativo.justificativa" label="Justificativa oitiva testemunha(s) #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} requereu a oitiva de testemunha(s) a fim de comprovar XXXXTextoLivreXXXX.
+                </data>
+            </itemContent>
+        </item>             
+        
+        <item id="trmAud.Instrucao.Testemunha.Passivo.justificativa" label="Justificativa oitiva testemunha(s) #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu a oitiva de testemunha(s) a fim de comprovar XXXXTextoLivreXXXX.
+                </data>
+            </itemContent>
+        </item>             
+        
+        
+        <!-- FIXAÇÃO DEPOIMENTOS -->
+        <item id="trmAud.Instrucao.AtivoDepoimento" label="Depoimento #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DEPOIMENTO PESSOAL DA PARTE #{j2.env.PJeVars.processo.polos.parteAtivaUC} #{j2.env.PJeVars.partes.ativa.nomeUC}}}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.PassivoDepoimento" label="Depoimento #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{DEPOIMENTO PESSOAL DA PARTE #{j2.env.PJeVars.processo.polos.partePassivaUC} #{j2.env.PJeVars.partes.passiva.nomeUC}}}
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.TestemunhaAtivo1" label="Testemunha #{j2.env.PJeVars.processo.polos.ativo} 1ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{PRIMEIRA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.parteAtivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.TestemunhaAtivo2" label="Testemunha #{j2.env.PJeVars.processo.polos.ativo} 2ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{SEGUNDA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.parteAtivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.TestemunhaAtivo3" label="Testemunha #{j2.env.PJeVars.processo.polos.ativo} 3ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{TERCEIRA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.parteAtivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>        
+        
+        <item id="trmAud.Instrucao.TestemunhaPassivo1" label="Testemunha #{j2.env.PJeVars.processo.polos.passivo} 1ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{PRIMEIRA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.partePassivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.TestemunhaPassivo2" label="Testemunha #{j2.env.PJeVars.processo.polos.passivo} 2ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{SEGUNDA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.partePassivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.TestemunhaPassivo3" label="Testemunha #{j2.env.PJeVars.processo.polos.passivo} 3ª" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#:U{TERCEIRA TESTEMUNHA DA PARTE #{j2.env.PJeVars.processo.polos.partePassivaUC}, Sr(a). 
+                    XXXNomeTestemunhaXXXX}}, brasileiro(a), XXXEstadoCivilXXX, XXXXProfissãoXXXX, residente e domiciliado(a) à XXXXEndereçoXXXX, nesta cidade, 
+                    portador do RG XXXRGXXXX e CPF XXXCPFXXX. Aos costumes nada disse. Testemunha compromissada na forma da lei.
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        
+        <item id="trmAud.Instrucao.Encerramento" label="Encerramento Instrução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM} declarou encerrada a sessão de instrução processual.
+                </data>
+            </itemContent>
+        </item>         
+        <item id="trmAud.Instrucao.DispensaTestemunhas" label="Dispensa testemunha" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A(s) parte(s) requereu(ram) oitiiva de testemunha durante a instrução processual.
+                    Todavia #{j2.env.PJeVars.unidade.juiz.o} #{j2.env.PJeVars.unidade.juiz.MM} a(s) dispensou por já estar satisfeita com o teor probatório
+                    já produzido pela(s) parte(s) nos atuso.
+                </data>
+            </itemContent>
+        </item>                 
+        <item id="trmAud.Instrucao.AlegFin" label="Apresentar razões finais" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Continuando a sessão de instrução, #{j2.env.PJeVars.unidade.juiz.o} #{j2.env.PJeVars.unidade.juiz.MM} concedeu a palavra aos advogados das partes a fim de apresentarem 
+                    suas razões finais.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmAud.Instrucao.AlegFin.remissivas" label="Razões em remissão inicial e contestação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    As partes o fizeram de forma remissava à exordial e à contestação.
+                </data>
+            </itemContent>
+        </item>             
+        <item id="trmAud.Instrucao.AlegFin.Ativo.remissiva" label="Razções Finais #{j2.env.PJeVars.processo.polos.ativo} remissiva" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} apresentou suas razões finais da forma remissiva à inicial.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmAud.Instrucao.AlegFin.Passivo.remissiva" label="Razções Finais #{j2.env.PJeVars.processo.polos.passivo} remissiva" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} apresentou suas razões finais da forma remissiva à contestação.
+                </data>
+            </itemContent>
+        </item>            
+        <item id="trmAud.Instrucao.AlegFin.Ativo.digitado" label="Razções Finais #{j2.env.PJeVars.processo.polos.ativo} - digitado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} apresentou suas razões finais da forma que segue: #:B{"#{j2.env.PJeVars.unidade.juiz.MM}, XXXRazõesFinaisXXX"}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmAud.Instrucao.AlegFin.Passivo.digitado" label="Razções Finais #{j2.env.PJeVars.processo.polos.passivo} - digitado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} apresentou suas razões finais da forma que segue: #:B{"#{j2.env.PJeVars.unidade.juiz.MM}, XXXRazõesFinaisXXX"}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmAud.Instrucao.AlegFin.Ativo.gravado" label="Razções Finais #{j2.env.PJeVars.processo.polos.ativo} - gravado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} apresentou suas razões finais em gravação audivisual, anexa á presente ata (#:B{XXXIDXXX})
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmAud.Instrucao.AlegFin.Passivo.gravado" label="Razções Finais #{j2.env.PJeVars.processo.polos.passivo} - gravado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} apresentou suas razões finais em gravação audivisual, anexa á presente ata (#:B{XXXIDXXX})
+                </data>
+            </itemContent>
+        </item>     
+        
+        <!-- instrução depoimento -->
+        <item id="trmAud.Instrucao.DepoimentoEmVideo" label="Depoimento em vídeo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Depoimento tomado em vídeo, anexo à presente ata no PJe (XXXIDXXX).
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.DepoimentoPergMagistrado" label="Depoimento perguntas magistrado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{Às perguntas formuladas #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.MM}}, respondeu  XXXRespostasXXX
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.DepoimentoPergAdvAtivo" label="Depoimento perguntas advogado #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{Às perguntas formuladas pelo(a) advogado(a) da parte #{j2.env.PJeVars.processo.polos.parteAtiva}}, respondeu  XXXRespostasXXX
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.DepoimentoPergAdvPassivo" label="Depoimento perguntas advogado #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{Às perguntas formuladas pelo(a) advogado(a) da parte #{j2.env.PJeVars.processo.polos.partePassiva}}, respondeu  XXXRespostasXXX
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Instrucao.DepoimentoPergAdvAtivoNada" label="Depoimento sem perguntas advogado #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{Dada a palavra a(o) advogado(a) da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, nada perguntou}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Instrucao.DepoimentoPergAdvPassivoNada" label="Depoimento sem perguntas advogado #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{Dada a palavra a(o) advogado(a) da parte #{j2.env.PJeVars.processo.polos.partePassiva}, nada perguntou}.
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        
+        
+        
+        
+        <!--- JULGAMENTO -->
+        <item id="trmAud.Julgamento.Proferimento" label="Proferimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Ato contínuo, #{j2.env.PJeVars.unidade.juiz.o} #{j2.env.PJeVars.unidade.juiz.MM} passou a proferir: #:B{SENTENÇA: }
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Julgamento.Contumacia" label="Contumácia" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #{j2.env.PJeVars.partes.ativa.nome} em desfavor de #{j2.env.PJeVars.partes.passiva.nome}, qualificados nos autos
+                    Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    Decido.
+                    Apesar de devidamente intimada, deixou de comparecer a parte autora em audiência uma, #:B{sem apresentar qualquer justificativa}.
+                    Dentre as causas extintivas do processo, tem-se o não comparecimento do autor em qualquer das audiências do processo, conforme dispõe o art. 51, I, da Lei nº 9.099/95.
+                    Isto posto, julgo extinto o processo sem apreciação do mérito, nos termos do art. 51, inciso I, da Lei nº 9.099/95, #:B{sem condenar a parte requerente no pagamento das custas processuais em caso de propositura de nova ação}.
+                    Sem honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    Publique-se. Registre-se. Intime-se as partes.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Julgamento.Desistencia" label="Desistência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #:B{#{j2.env.PJeVars.partes.ativa.nome}} em desfavor de #:B{#{j2.env.PJeVars.partes.passiva.nome}}, qualificados nos autos.
+                    #:B{Dispensado o RELATÓRIO}, nos termos do art. 38 da Lei nº 9.099/95. 
+                    #:B{Decido}. 
+                    Conforme pedido realizado pela parte #{j2.env.PJeVars.processo.polos.parteAtiva}, esta #:B{desistiu} da presente ação. 
+                    Com efeito, extingue-se o processo quando a parte #{j2.env.PJeVars.processo.polos.parteAtiva} desiste da ação, assim como disposto no art. 200, parágrafo único, do Novo Código de Processo Civil. 
+                    Tal ato pode ser homologado mesmo sem a anuência da parte #{j2.env.PJeVars.processo.polos.partePassiva}, como dispõe o Enunciado n. 90 do FONAJE. 
+                    #:B{#:U{Pois a extinção do processo independerá, em qualquer hipótese, de prévia intimação pessoal das partes}}. (art. 51, § 1º, da Lei n. 9.099). 
+                    Diante disto, #:B{#:U{HOMOLOGO} a desistência} requerida pela parte #{j2.env.PJeVars.processo.polos.parteAtiva} e #:B{extingo o processo #:U{sem resolução de mérito}}, com fulcro no art. 485, VIII, do CPC, aplicável por força do art. 51, caput, da Lei. 9.099/95. 
+                    Sem custas e sem honorários nos termos do Art. 55 da Lei nº. 9.099/95. 
+                    Com o trânsito em julgado, dê-se baixa e arquive-se. 
+                    Publicado e Registrado com o lançamento no sistema PJe. 
+                    Intimados presentes em audiência. Em sendo o caso, intimem-se as partes ausentes.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Julgamento.Homologacao-AJG-Sim" label="Homologação - AJG Sim" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Dispensado o relatório nos termos do artigo 38 da Lei 9.099/95.
+                    #:U{Defiro o pedido de assistência gratuita formulado pela parte #{j2.env.PJeVars.processo.polos.parteAtiva}}. Considerando que as partes transigiram de 
+                    livre e espontânea vontade, conforme termo de acordo realizado constante nos autos, #:B{#:U{HOMOLOGO} por sentença} 
+                    para que produza seus jurídicos e legais efeitos o ajuste manifestado pelas partes, e, em consequência, #:B{JULGO 
+                    EXTINTO o processo, #:U{com resolução do mérito}, com fundamento no art. 487, III, "b", do Novo Código de Processo 
+                    Civil}. Não existindo previsão de multa nos termos do acordo, aplica-se multa de 30 % (trinta por cento) do valor 
+                    do acordo em caso de descumprimento de obrigação de pagar e de 30% (trinta por cento) do valor da causa em caso 
+                    de obrigação de fazer, não fazer e dar.Sem custas. Publicado e Registrado com o lançamento no sistema PJe. 
+                    Intimados os presentes. Em havendo pagamento voluntário, expeça-se alvará. Após, arquivem-se os autos.
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="trmAud.Julgamento.Homologacao-AJG-Nao" label="Homologação - AJG Não" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Dispensado o relatório nos termos do artigo 38 da Lei 9.099/95.
+                    #:U{Indefiro o pedido de assistência judiciária gratuita formulado pela parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    uma vez que a profissão e/ou o valor do bem discutido nos autos demonstram que o autor possui boa condição financeira, 
+                    não podendo ser considerado hipossuficiente.}. Considerando que as partes transigiram de 
+                    livre e espontânea vontade, conforme termo de acordo realizado constante nos autos, #:B{#:U{HOMOLOGO} por sentença} 
+                    para que produza seus jurídicos e legais efeitos o ajuste manifestado pelas partes, e, em consequência, #:B{JULGO 
+                    EXTINTO o processo, #:U{com resolução do mérito}, com fundamento no art. 487, III, "b", do Novo Código de Processo 
+                    Civil}. Não existindo previsão de multa nos termos do acordo, aplica-se multa de 30 % (trinta por cento) do valor 
+                    do acordo em caso de descumprimento de obrigação de pagar e de 30% (trinta por cento) do valor da causa em caso 
+                    de obrigação de fazer, não fazer e dar.Sem custas. Publicado e Registrado com o lançamento no sistema PJe. 
+                    Intimados os presentes. Em havendo pagamento voluntário, expeça-se alvará. Após, arquivem-se os autos.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Julgamento.ServicoTerceiro" label="Serviços de Terceiros" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} em face de #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, qualificados nos autos, pleiteando a condenação da reclamada ao pagamento de danos morais e materiais em decorrência da cobrança de serviços de terceiros. 
+#:B{Dispensado o RELATÓRIO}, à luz do artigo 38 da lei nº 9099/95.  
+#:B{FUNDAMENTAÇÃO}  
+#:B{DEFERIMENTO DO BENEFÍCIO DA JUSTIÇA GRATUITA}  
+O art. 98, § 1.º, do CPC/2015, ao prever a gratuidade de justiça, garante a isenção não apenas (i) dos honorários de advogado, (ii) dos honorários do perito, (iii) das custas judiciárias – inclusive em relação a serventuários da justiça – e (iv) das despesas com as publicações de atos oficiais, entre outras.  
+A previsão de gratuidade do art. 98 do CPC deve ser interpretada conforme a Constituição. Nos termos do artigo 5º, LXXIV, da Carta Magna: “#:B{#:I{o Estado prestará assistência jurídica integral e #:U{gratuita aos que comprovarem insuficiência de recursos}}}”. 
+#:U{O juiz poderá indeferir o pedido se houver nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade e deferir se convencido da hipossuficiência da parte. No presente caso entendo caracterizada sua hipossuficiência. }
+Portanto, #:B{#:U{defiro o pedido de assistência judiciária gratuita}} nos termos do art. 98 do NCPC. 
+#:B{DO JULGAMENTO ANTECIPADO DO MÉRITO}  
+O art. 355.  do CPC prevê que "O juiz julgará antecipadamente o pedido, proferindo sentença com resolução de mérito, quando: I - não houver necessidade de produção de outras provas". No presente caso os documentos já apresentados são suficientes para apreciação da controvérsia, motivo pelo qual #:B{#:U{passo ao julgamento antecipado do mérito}}, nos termos do dispositivo acima mencionado.  
+#:B{APLICAÇÃO DO CÓDIGO DE DEFESA DO CONSUMIDOR}  
+Não pairam dúvidas no sentido de que há, nestes autos, explícita relação jurídica de consumo entre as partes. A parte autora #:B{enquadra-se como consumidora}, nos termos do art. 2º do Código de Defesa do Consumidor - CDC (Lei n. 8.078/1990). #:B{A empresa reclamada, por sua vez, reveste-se da condição de fornecedora}, conforme o art. 3º do estatuto em comento. 
+A legislação consumerista assegura, conforme o artigo 6º, inciso VI, do CDC, a efetiva prevenção e reparação de danos patrimoniais e morais, individuais, coletivos e difusos sofridos pelos consumidores. Esse é o viés pelo qual deve-se apreciar a presente demanda.
+#:B{Ressalte-se que, por ser fornecedora, conforme o art. 14 do CDC, responde objetivamente por eventual dano provocado aos usuários, desde que evidenciada a sua conduta ilícita, o nexo de causalidade e o dano.} 
+#:B{ATO ILÍCITO}  
+Consta na inicial que #:B{#:U{a demandante celebrou contrato de prestação de serviços de telefonia com a reclamada}}, contudo foi incluído obrigatoriamente no contrato um serviço de terceiro (em alguns momentos denominado Vivo Controle Serviço Digital II), o que caracterizaria venda casada. 
+Por sua vez, a reclamada apresentou defesa alegando que não houve falha no dever de informação, pois a cobrança do serviço de terceiro estava expressamente prevista na publicidade do site da reclamada, sem nenhuma ofensa ao princípio da autonomia da vontade. Aduz que é possível a contratação do plano sem os serviços agregados, e que o autor paga um valor promocional (reduzido).
+ 
+Alega, ainda, que #:B{#:U{a previsão da cobrança em conjunto é autorizada conforme o Regulamento Geral de Direitos do Consumidor de Serviços de Telecomunicação (Resolução n. 632/2017 da ANATEL), bem como que a migração não gerou qualquer prejuízo em valor ao consumidor}}. 
+Entretanto, #:B{um regulamento infralegal não pode ir de encontro ao previsto no CDC}, que é lei federal, e afirma que condicionar a venda de um produto a outro é prática de venda casada, vedada pelo artigo 39, inciso I, que proíbe ao fornecedor de produtos ou serviços, dentre outras práticas abusivas, "#:B{#:U{#:I{condicionar o fornecimento de produto ou serviço ao fornecimento de outro produto ou serviço, bem como, sem justa causa, a limites quantitativos}}}".
+Ademais, analisando a resolução indicada pela ré, e mesmo o contrato, não é obrigada a inclusão do serviço de terceiro. #:B{#:U{A operadora deveria apresentar ao consumidor o serviço de telefonia (voz, dados e sms) em um contrato e os demais serviços de terceiro em contrato autônomo, com condições e pagamento claramente dissociado da mensalidade regular do plano telefônico, possibilitando ao consumidor escolher pela contratação ou não dos serviços de terceiros,}} o que não ocorreu no presente caso.
+Os documentos apresentados pela reclamada (documentos de tela de computador unilateralmente criados pela empresa) não se mostraram suficientes para provar a contratação do serviço ou sequer que houve negociação das partes nesse sentido. Não ficou comprovado o cumprimento ao disposto na regulamentação supramencionada, ou seja, não apresentou nenhum contrato ou qualquer outro meio idôneo de comprovação da solicitação dos serviços questionados, bem como não provou que comunicou a alteração dos serviços prestados a parte autora através de encaminhamento de mensagem de texto (SMS) e texto inserido em fatura, como alegado em sua defesa.
+Desta forma, considerando que a empresa reclamada não conseguiu se desonerar da obrigação de provar a existência de solicitação da contraprestação questionada na presente demanda e a legitimidade dos débitos realizados em suas faturas, constata-se que houve evidente falha na prestação do serviço.
+
+
+#:B{#:U{A falta de clareza no esclarecimento do que são os serviços de terceiros, sem um contrato próprio, ainda afronta o princípio básico ínsito no art. 6º, III, do Código de Defesa do Consumidor, segundo o qual o usuário tem direito à informação adequada e clara}} sobre os produtos e serviços que está recebendo. Segundo as lições do insigne Rizzatto Nunes (In Curso de Direito do Consumidor, 7ª ed., p. 99):
+“No que tange ao dever de informar das pessoas em geral e das pessoas jurídicas com natureza jurídica privada, é o Código de Defesa do Consumidor que estabelece tal obrigatoriedade ao fornecedor. Tendo em vista que a Lei n. 8.078/90 nasce, como vimos, das determinações constitucionais que obrigam a que seja feita a defesa do consumidor, implantada em meio a uma série de princípios, todos interpretados e aplicáveis de forma harmônica, não resta dúvida de que o dever de informar só podia ser imposto ao fornecedor”
+#:B{#:U{Não há nos autos nenhum contrato assinado pela parte autora concordado em pagar o valor X pelo serviço de telefonia (dados, voz e sms) e o valor Y pelos serviços de terceiros, com clara opção de o cliente escolher um ou outro serviço ou ambos, qualquer outra forma de tentar justificar a cobrança ofende o CDC.}} 
+#:B{#:U{O Consumidor deve ser livre para escolher que serviços quer contratar.}}
+Portanto, dessume-se do apurado nos autos, a #:B{#:U{plena caracterização da conduta ilícita da requerida, qual seja, comercialização de plano telefônico com obrigatoriedade de contratação de serviços de terceiros, o que feriu de forma grave as normas protetivas do CDC}}.
+O acima afirmado se dessume dos seguintes apontamentos jurisprudenciais:
+RECURSO INOMINADO. TELEFONIA. AÇÃO DE CUMPRIMENTO DE CONTRATO C/C RESTITUIÇÃO DE VALORES E INDENIZAÇÃO POR DANOS MORAIS. SERVIÇO NÃO CONTRATADO. APLICAÇÃO DO CDC. #:B{#:U{Não se desincumbindo a parte ré de comprovar a contratação e a regularidade da cobrança dos Serviços De Terceiro Telefonica Data , ônus que lhe incumbia, consoante determina o art. 373, II, do CPC, é de ser reconhecida a inexigibilidade dos valores lançados nas faturas com a respectiva devolução, em dobro, dos valores comprovadamente pagos pela parte autora.}} RECURSO DESPROVIDO (TJRS. Recurso Cível Nº 71007695596, Quarta Turma Recursal Cível, Turmas Recursais, Relator: Silvia Maria Pires Tedesco, Julgado em 21/06/2018).
+APELAÇÃO CÍVEL. OBRIGAÇÃO DE FAZER C/C INDENIZATÓRIA. COBRANÇA DENOMINADA "SERVIÇOS DE TERCEIROS TELEFÔNICA DATA". SERVIÇO NÃO CONTRATADO. DANO MORAL NÃO CONFIGURADO. MERO ABORRECIMENTO. SÚMULA 75 DESTE TJ.
+
+1. Cuida-se de ação objetivando a autora o cancelamento do seguro não solicitado, a condenação da ré na devolução em dobro de todos os valores cobrados referentes ao seguro não contratado, de acordo com o parágrafo único do art. 42 do CDC, além do pagamento de indenização a título de dano moral. Sentença de procedência que foi alvo do apelo da empresa ré pugnando pela improcedência dos pedidos autorais ou, alternativamente, pela redução do quantum indenizatório fixado a título de dano moral.
+
+2. A hipótese é de responsabilidade civil objetiva decorrente de relação de consumo, enquadrando-se autora e ré, respectivamente, nas definições legais de consumidora e fornecedora de serviços, conforme artigos 2º e 3º da Lei nº 8.078/90.
+
+3. Este diploma legal, instituído para atender o disposto pelo art. 5º, inciso XXXII, da C.F., tem por objetivo o equilíbrio das relações de consumo e assegura os direitos do consumidor, garantindo-lhe indenização por danos causados por defeitos relativos à prestação de serviços, independentemente da existência de culpa, na forma do seu art. 14. 
+
+4. #:B{#:U{Depreende-se do conjunto probatório dos autos que houve falha na prestação de serviços ofertados pela empresa de telefonia ré, restando configurada abusividade e ilegalidade em sua conduta, já que a mesma não logrou êxito em comprovar a legitimidade do serviço cobrado. Autora apelada que foi cobrada indevidamente por serviço não contratado (Seguro de Terceiros Telefônica Data). Correta a sentença no item em que condenou a empresa ré na devolução em dobro dos valores indevidamente cobrados e comprovadamente pagos, de acordo com o previsto no art. 42, parágrafo único do CDC.}}
+
+[...]
+(TJRJ. APL 00176516320168190007. OITAVA CÂMARA CÍVEL. Relator MÔNICA MARIA COSTA DI PIERO. Julgamento 13 de Março de 2018)
+ 
+JUIZADOS ESPECIAIS CÍVEIS. PROCESSUAL CIVIL. ÔNUS DA PROVA. #:B{#:U{CONSUMIDOR. COBRANÇA INDEVIDA DE SERVIÇOS NÃO CONTRATADOS. DECLARAÇÃO DE INEXISTÊNCIA DE DÉBITOS ADEQUADAMENTE RECONHECIDA NA ORIGEM}}. RECURSO CONHECIDO E DESPROVIDO. SENTENÇA MANTIDA POR SEUS PRÓPRIOS FUNDAMENTOS. 1. #:B{#:U{Se o consumidor, que possui contrato de telefonia móvel com a empresa ré, ora recorrente, afirma que não contratou o serviço "Serviços de Terceiros Telefônica Data", Códigos nºs. 87038 e 49660, e instrui o feito adequadamente, cumpriria ao fornecedor provar, por prova documental pertinente, a contratação do serviço, nos termos do  art. 373, do Novo Código de Processo Civil[1], haja vista que não se pode imputar à parte o ônus de produzir prova de fato negativo. Inexistindo tal prova nos autos, resta claro que as cobranças realizadas afetas ao serviço não contratado foram indevidas}}. 2. De outro norte, o consumidor não reconheceu a dívida e apresentou prova adequada da solicitação de cancelamento ocorrida em 29-10-2014 (ID 584624), ignorado pela ré, e a continuidade das cobranças. 3. A situação fática foi adequadamente valorada na origem para declarar a inexistência de débitos e determinar que a ré se abstenha de lançar nas próximas faturas as cobranças referentes a serviços de terceiros de SMS (códigos 49660 e 87038). 4. Recurso conhecido e desprovido. Sentença mantida por seus próprios fundamentos. A súmula de julgamento servirá de acórdão conforme regra do art. 46 da Lei n. 9.099/95. Condenada a recorrente ao pagamento das custas e honorários advocatícios em 10% do valor da causa. [1] Sobre as regras do ônus da prova destaco a pertinente observação de Didier Jr., Braga e Oliveira (DIDIER Jr, Fredie; BRAGA, Paula Sarno; OLIVEIRA, Rafael. Curso de Direito Processual Civil, volume 2: Teoria da prova, direito probatório, teoria do precedente, decisão judicial, coisa julgada e antecipação dos efeitos da tutela. 4ª ed. Bahia: Editora JusPodivm, 2009, p. 76.): "As regras do ônus da prova não são regras de procedimento, não são regras que estruturam o processo. O ônus da prova é regra de juízo, isto é, de julgamento, cabendo ao juiz, quando da prolação da sentença, proferir julgamento contrário àquele que tinha o ônus da prova e dele não se desincumbiu." Os renomados autores ressaltam a lição de José Carlos Barbosa( Moreira MOREIRA, José Carlos Barbosa. "Julgamento e ônus da prova". Temas de Direito Processual Civil ? segunda série. São Paulo, 1988, p. 74-75 apud ob. cit. em a nota 3, p. 73-74): ?Explica o ônus subjetivo, BARBOSA MOREIRA: ?O desejo de obter a vitória cria para a litigante a necessidade, antes de mais nada, de pesar os meios de que se poderá valer no trabalho de persuasão, e de esforçar-se, depois, para que tais meios sejam efetivamente utilizados na instrução da causa. Fala-se, ao propósito, de ônus da prova, num primeiro sentido (ônus subjetivo ou formal). E segue comentando o ônus objetivo: ?A circunstância de que, ainda assim, o litígio deva ser decidido torna imperioso que alguma das partes suporte o risco inerente ao mau êxito da prova. Cuida então a lei, em geral, de proceder a uma distribuição de riscos: traça critérios destinados a indicar, conforme o caso, qual dos litigantes terá de suportá-los, arcando com as conseqüências desfavoráveis de não se haver provado o fato que lhe aproveitava. Aqui também se alude a ônus da prova, mas num segundo sentido (ônus objetivo ou material)" A jurisprudência do e. STJ, igualmente, de forma uníssona proclama: "(...) Cabe aos autores o ônus da prova do fato constitutivo do direito e compete à ré constituir prova dos fatos impeditivos, modificativos ou extintivos do direito reclamado. (...)? (AgRg no REsp 908829 / MS; Ministro JOÃO OTÁVIO DE NORONHA; T4 - QUARTA TURMA; DJe 29/03/2010)  
+(TJDFT. Acórdão n.956933, 07052956220158070007, Relator: FLÁVIO FERNANDO ALMEIDA DA FONSECA 3ª Turma Recursal dos Juizados Especiais do Distrito Federal, Data de Julgamento: 26/07/2016, Publicado no DJE: 15/08/2016. Pág.:  Sem Página Cadastrada.)
+
+
+
+
+Portanto, os valores cobrados a título de serviços de terceiro devem ser restituídos.
+#:B{DO DANO MATERIAL}
+O Código de Defesa do Consumidor prevê, no art. 42, parágrafo único, que: 
+"#:I{#:B{O consumidor cobrado em quantia indevida tem direito à repetição do indébito, por valor igual ao dobro do que pagou em excesso}, acrescido de correção monetária e juros legais, salvo hipótese de engano justificável}".  
+Na lide em comento, #:B{foi reconhecida a cobrança indevida de todos os serviços de terceiros. Nos autos o autor alegou pagamento de #:span@danoMaterial-simples{R$121,50(cento e vinte e um reais e cinquenta centavos)} referente aos serviços de terceiros, a ré não nega a cobrança ou informa valor diverso do informado na inicial}. 
+#:B{A quantia deve ser restituída em dobro, totalizando #:span@danoMaterial-dobro{R$ 243,00 (duzentos e quarenta e três reais)}}.
+ #:B{DANO MORAL} 
+Quanto ao prejuízo moral, a jurisprudência vem decidindo reiteradas vezes no sentido de que a cobrança indevida de valores decorrentes de venda casada, especialmente por não ter anuído expressamente com a contratação, gera dano moral. #:B{Na espécie, a falha na prestação onerou sua finança em função de uma quebra de confiança em relação a prestação que esperava do fornecedor}.
+A sequência de defeituosos serviços prestados pela requerida resta tipificado dano moral passível de reparação, por ofensa à dignidade do consumidor (CF, art. 5º, V e X). Veja-se, sobre o tema, o seguinte julgado:
+ 
+RECURSO INOMINADO. AÇÃO DE REPARAÇÃO DE DANOS MORAIS E MATERIAIS. TELEFONIA. COBRANÇA DE SERVIÇOS NÃO CONTRATADOS. SERVIÇOS DE VOZ RECADO. CONTRATAÇÃO ELETRÔNICA. INVERSÃO DO ÔNUS DA PROVA. AUSÊNCIA DE PROVAS DA CONTRATAÇÃO E UTILIZAÇÃO DOS SERVIÇOS. DEVER DE INFORMAÇÃO NÃO OBSERVADO. VULNERABILIDADE DO SISTEMA. PRÁTICA ABUSIVA. APLICAÇÃO DO ENUNCIADO 1.8 DAS TURMAS RECURSAIS DO ESTADO DO PARANÁ. DANO MORAL CONFIGURADO. REPETIÇÃO DO INDÉBITO CABÍVEL. SENTENÇA MANTIDA. Recurso conhecido e desprovido. , decidem os Juízes integrantes da Primeira Turma Recursal do Estado do Paraná, por unanimidade de votos, conhecer e negar provimento ao recurso nos exatos termos deste voto.
+(TJPR - 1ª Turma Recursal - 0011629-31.2014.8.16.0075/0 - Cornélio Procópio - Rel.: Leo Henrique Furtado AraÃºjo - - J. 06.11.2015).
+ 
+APELAÇÃO – #:B{#:U{SERVIÇO DE TELEFONIA – COBRANÇA ABUSIVA – VENDA CASADA – COMBO DIGITAL}} – INEXIGIBILIDADE – REPETIÇÃO DO INDÉBITO – DANOS MORAIS – DESVIO PRODUTIVO – MICRODANO – FUNÇÃO PROPEDÊUTICA DA INDENIZAÇÃO. - Manifestação da vontade – elemento de existência do contrato. Serviço não contratado que denota a inexigibilidade do débito e a ilegitimidade da cobrança perpetrada. Venda casada – prática abusiva consistente no condicionamento do serviço de telefonia ao "combo digital", conduta ilícita na forma do art. 39, I, do Código de Defesa do Consumidor; - Inexigibilidade do débito que permite a restituição em dobro nos exatos termos do artigo 42, parágrafo único, do Código de Defesa do Consumidor; - #:B{#:U{Dever de indenizar (artigos 186 e 927, do Código Civil) – incontroversa a conduta ilícita, o dano decorre do descaso e da negligência com o consumidor – prática abusiva consistente na inserção de cobrança indevida na fatura de todos os consumidores dos planos pós-pago. Responsabilidade civil que tem o condão de punir condutas ilícitas, especialmente quando reiteradamente adotadas por justificativas econômicas ("lucro ilícito" e microdanos). 'Tese do 'desvio produtivo do consumidor'}} – valor fixado em R$10.000,00; RECURSO PROVIDO 
+(TJSP;  Apelação 1001861-29.2017.8.26.0480; Relator (a): Maria Lúcia Pizzotti; Órgão Julgador: 30ª Câmara de Direito Privado; Foro de Presidente Bernardes - Vara Única; Data do Julgamento: 16/05/2018; Data de Registro: 17/05/2018)
+ 
+APELAÇÃO CÍVEL. AÇÃO INDENIZATÓRIA. RELAÇÃO DE CONSUMO. IMPOSIÇÃO DE AQUISIÇÃO DE SEGURO AO ADQUIRIR PRODUTO EM ESTABELECIMENTO COMERCIAL. VENDA CASADA. DANO MORAL I - A venda casada imposta ao consumidor mostra-se abusiva, violando, portanto, o art. 39, inciso I do CDC. #:B{#:U{II - O dano moral está inserido na própria ofensa, decorrente da gravidade do ilícito em si, em face da cobrança de valores incluídos na contratação realizada}}.     (TJMA. Ap 0070752016, Rel. Desembargador(a) JORGE RACHID MUBÁRACK MALUF, PRIMEIRA CÂMARA CÍVEL, julgado em 25/08/2016 , DJe 05/09/2016)
+ 
+Assim, indubitavelmente a conduta da demandada gerou ofensa reparável à parte requerente, conforme a ótica de Sérgio Cavalieri (#:i{In}: Programa de Responsabilidade Civil, 5º Ed. Malheiros, pg. 94), #:I{in verbis}:
+"Enquanto o dano material atinge o patrimônio, o dano moral atinge a pessoa. Este último é a reação psicológica que a pessoa experimenta em razão de uma agressão a um bem integrante de sua personalidade, causando-lhe vexame, sofrimento, humilhação e outras dores do espírito". 
+   #:B{NEXO CAUSAL} 
+O nexo de causalidade consiste em um liame entre a conduta da demandada e o resultado danoso, que somente pode ser elidido pela culpa exclusiva da vítima ou de terceiros, caso fortuito ou força maior.  
+#:B{#:I{In casu}, a par das considerações até aqui realizadas, de logo se evidencia a presença do nexo em questão, pois foi o ato da requerida – venda casada e cobrança de serviços de terceiros – e a consequência desse ato, obrigando a parte autora a pagar por valores não contratados, são os causadores dos danos morais e materiais suportados pelo consumidor.} 
+Neste caso específico, #:B{estando mais do que clara a presença do dano a personalidade advinda de ato do requerido, basta a apuração da cifra reparatória}.
+#:B{DO #:I{QUANTUM} INDENIZATÓRIO}  
+No que concerne ao valor do dano moral, ressalte-se que deve ser arbitrado com moderação, norteando-se o julgador pelos critérios da gravidade e repercussão da ofensa, da posição social do ofendido e da situação econômica do ofensor.
+#:B{O STJ tem consagrado a doutrina da dupla função na indenização do dano moral: compensatória e sancionatória. Dentre os inúmeros julgados que abordam o tema, destaco:} 
+ "(...) A fixação da indenização por dano moral deve revestir-se de caráter indenizatório e sancionatório, adstrito ao princípio da razoabilidade e, de outro lado, há de servir como meio propedêutico ao agente causador do dano; V - Recurso Especial conhecido e provido". (STJ - REsp 582.047 - RS - Proc. 2003/0152697-5 - 3ª T. - Rel. Min. Massami Uyeda)
+Assim, #:B{#:U{deve-se considerar na sua fixação, a dupla finalidade do instituto, cujos objetivos são, por um lado, a punição do ofensor, como forma de coibir a sua reincidência na prática danosa e, por outro, a compensação da vítima pela dor e sofrimento vivenciados}}. Ademais, nunca podendo ser fixado em valor módico, devendo o magistrado, em atenção ao princípio da razoabilidade, abster-se dos dísticos estratosféricos.  
+ Por conseguinte, a fim de atender às funções indenizatória, sancionatória e preventiva, cabíveis ao dever de reparação por danos morais; atentando para a gravidade do dano impingido, levando-se em conta que: 
+#:B{1) #:U{a parte autora não contratou expressamente os serviços de terceiros nem teve opção de escolher se contratava a linha com ou sem os serviços}}; 
+#:B{2) o comportamento do fornecedor, o qual poderia ter evitado todo este imbróglio #:U{vendendo apenas o produto expressamente solicitado pela parte}}; 
+#:B{3) as condições pessoais e econômicas do ofensor, o grau de suportabilidade da indenização pelo promovido;}
+#:B{4) a alteração do posicionamento adotado anteriormente em outros processos, considerando que não restou demonstrada repercussão mais grave.}
+#:B{Fixo, como justa compensação pelos prejuízos morais sofridos, o valor de #:span@danoMoral-fixacao{R$ 1.000,00 (mil reais)}.}
+ 
+#:B{DISPOSITIVO}
+ Diante do exposto, #:B{JULGO PARCIALMENTE PROCEDENTES} os pedidos constantes na inicial, nos termos do art. 487, inc. I, do CPC, para  
+#:B{a) DECLARAR a ilegalidade das cobranças de serviços de terceiros (Vivo Controle Serviço Digital e outros semelhantes) nas faturas da parte promovente, devendo a requerida abster-se de efetuar tais cobranças após o trânsito em julgado da presente decisão}, sob pena de multa de #:span@dispositivo-multaCominatoria{R$ 200,00 (duzentos reais)} por cobrança, mais a restituição em dobro do valor cobrado e pago indevidamente.
+#:B{b) CONDENAR} a requerida #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}} a pagar para a parte autora #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} a #:B{INDENIZAÇÃO POR DANOS MATERIAIS na quantia #:span@dispositivo-danoMaterial{R$ 243,00 (duzentos e quarenta e três reais)}}, correspondente ao dobro do valor cobrado indevidamente;
+#:B{c) CONDENAR} a requerida #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}} a pagar para a parte autora #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} a #:B{INDENIZAÇÃO POR DANOS MORAIS de #:span@dispositivo-danoMoral{R$ 1.000,00 (mil reais)}}. 
+O valor da reparação extrapatrimonial deverá ser corrigido e acrescido de juros de 1% (um por cento) ao mês a partir desta data (Súmula 362 do STJ). O valor do dano material deverá ser corrigido da data do último pagamento e acrescido de juros de 1% (um por cento) ao mês a partir da citação (Art. 405 do Código Civil). #:B{Aplica-se a multa de 10% (dez por cento) caso não seja efetuado o pagamento da cifra reparatória dentro de 15 (quinze) dias após o trânsito em julgado da sentença (art. 523, §1º, do CPC)}. A correção monetária será calculada de acordo com Índice Nacional de Preços ao Consumidor - INPC/IBGE.
+Sem custas nem honorários, ex vi, do art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé.
+Publicada e registrada com o lançamento no sistema. Intime-se.
+#:B{Transitado em julgado, caso não haja pedido de execução ou cumprimento de sentença dentro do prazo legal, dê-se baixa e arquive-se definitivamente}. Ademais, a parte exequente pode se valer do instrumento de cumprimento de sentença ou execução, executando a decisão, sendo que eventual necessidade cópia de sentença pode ser facilmente suprida pela Secretaria Judicial diante da virtualização do registro de sentenças, ficando compilados e salvos no sistema. 
+#:B{Havendo cumprimento voluntário, e não havendo recurso, expeça-se alvará judicial em favor da parte requerente}. Após a entrega do alvará, arquive-se.
+
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Julgamento.ColarSentenca" label="Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span@sentencaCorpo{XXXSentençaXXX}
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        <!-- REQUERIMENTOS -->
+        <item id="trmAud.Requerimentos.RenunciaPrazoRecursal" label="Renúncia Prazo Recursal" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A(s) parte(s) presente(s) requisitou(aram) a renuncia de seu prazo recursal acerca da sentença proferida.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.Publicacao" label="#{j2.env.PJeVars.processo.polos.passivo} Publicações" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu que todas as publicações
+                    sejam encaminhadas ao advogado #:B{XXXXXNomeEOABXXXX}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.GenericoAtivo" label="Genérico #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{A parte #{j2.env.PJeVars.processo.polos.parteAtiva} requereu requereu XXXRequerimentoXXX}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.GenéricoPassivo" label="Genérico #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu XXXRequerimentoXXX.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.DesistenciaAtivo" label="Deistência #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} requereu a #:B{desistência} da presente demandada.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.InstrucaoAtivo" label="Instrução #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} requereu a #:B{designação de 
+                    audiência de Instrução} para produção de novas provas.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.InstrucaoPassivo" label="Instrução #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu a #:B{designação de 
+                    audiência de Instrução} para produção de novas provas.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.InstrucaoPartes" label="Instrução ambas partes" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    As partes requereram a #{designação de audiência de Instrução} para produção de novas provas.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Requerimentos.JulgamentoAntcipado" label="Julgamento antecipado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    As partes declararam que não desejam produzir novas provas, requerendo o julgamento do processo no estado em que se encontra
+                </data>
+            </itemContent>
+        </item>
+        <!-- add 10/08/2022 --> 
+        <item id="trmAud-Requerimentos-Ativa-julgaAntecip" label="Julgamento Antecipado | #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} declarou que 
+                    não deseja produzir novas provas e requereu o julgamento antecipado do processo.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud-Requerimentos-Passiva-julgaAntecip" label="Julgamento Antecipado | #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} declarou que 
+                    não deseja produzir novas provas e requereu o julgamento antecipado do processo.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud-Requerimentos-Ativa-ManifjulgaAntecip" label="Manifestação Defesa e Julgamento Antecipado | #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} declarou que não deseja produzir novas provas, 
+                    mas requereu prazo para manifestação acerca das preliminares e/ou documentos da defesa, 
+                    requerendo o julgamento do processo após a sua manifestação.
+                </data>
+            </itemContent>
+        </item>
+        
+        
+        <!-- DELIBERAÇÕES DO MAGISTRADO-->
+        <item id="trmAud.Deliberacoes.Magistrado.Genérico" label="Magistrado - Genérico" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"XXXMMJuizaXXX"}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Deliberacoes.Magistrado.ConclusaoSentenca" label="Magistrado - Conclusão Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Determino que os autos retornem conclusos para prolação de #:U{SENTENÇA}}".
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Deliberacoes.Magistrado.RazoesFinaisSentenca" label="Magistrado - Concessão Prazo Razões Finais" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Concedo o prazo comum de três dias para que as partes apresentem suas razões finais, 
+                    após, com ou sem manifestação, retornem os autos conclusos para prolaação de #:U{SENTENÇA}"}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Deliberacoes.Magistrado.DesignaçãoAudiencia" label="Magistrado - Designação de Audiência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Designo para o dia XXXDataEHoraXXX a realização de audiência de instrução e julgamento dos presentes autos."}.
+                </data>
+            </itemContent>
+        </item>                
+        <item id="trmAud.Deliberacoes.Magistrado.JulgamnetoDiligencia" label="Masgitrado - Julgamento em diligência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{#{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM} converteu o julgamento em diligência determinando que XXXXXXXXXXXX}.
+                </data>
+            </itemContent>
+        </item> 
+        <item id="trmAud.Deliberacoes.Magistrado.JuntadaAR" label="Masgitrado - FAzer Juntada AR" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Determino que 
+                    os autos voltem à Secretaria Judicial para que seja providenciada a juntada do aviso de recebimento 
+                    que comprove a citação da(s) parte(s) demandada(s), #:U{OFICIANDO AOS CORREIOS} caso seja necessário. 
+                    Após a juntada, confirmada a citação tempestiva da parte demandada, voltem os autos conclusos para 
+                    sentença. Em caso de frustração da citação, intime-se a parte demandada para manifestação, no prazo de quinze dias"}.
+                </data>
+            </itemContent>
+        </item> 
+        
+        
+        
+        <!-- DELIBERAÇÕES DO CONCILIADOR -->
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca" label="Conciliador - Conclusão Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em razão do requerimento e/ou anuência das partes, os autos foram feitos conclusos para #:U{sentença}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoDespacho" label="Conciliador - Conclusão Despacho" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em razão do(s) requerimento(s) formulado(s) pela(s) parte(s) os autos foram 
+                    feitos conclusos para #{j2.env.PJeVars.unidade.juiz.o} #{j2.env.PJeVars.unidade.juiz.MM} proferir #:U{despacho}.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Deliberacoes.Conciliador.SecretariaExpediçãoComunicacao" label="Conciliador - Secretaria Judicial Expedir Comunicacoes" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{À Secretaria Judicial para que providencie a expedição das comunicações necessárias}.
+                </data>
+            </itemContent>
+        </item>         
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentencaDespacho" label="Conciliador - Secretaria Judicial Exp Citação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Os autos foram remetidos à Secretaria Judicial para expedição de citação para o(s) demandado(s).
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoAtivoFinalidade" label="Conciliador - Concessão Prazo #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{XXXPrazoXXX} para que a parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                    #:span@concedPrazoAud{XXXFinalidadeXXX}}.
+                </data>
+            </itemContent>
+        </item>        
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoPassivoFinalidade" label="Conciliador - Concessão Prazo #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{XXXPrazoXXX} para que a parte #{j2.env.PJeVars.processo.polos.partePassiva}
+                    #:span@concedPrazoAud{XXXFinalidadeXXX}}.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoJuntadaDocumentos" label="Conciliador - Concessão Prazo Juntada Documentos Apresentados em audiência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>                    
+                    #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{6 horas} para que a(s) parte(s)
+                    #:span@concedPrazoAud{realize(m) a juntada dos documentos apresentados em audiência}}.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="trmAud.Deliberacoes.Conciliador.DesigAudiencia" label="Conciliador - Designação de Audiência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Designado para o dia XXXXDataEHoraXXXX a realização de audiência de Conciliação, Instrução e Julgamento.}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="trmAud.Deliberacoes.Conciliador.SecretariaProvidencia" label="Conciliador - Secretaria Judicial Providências" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{À Secretaria Judicial para as providências cabíveis}.
+                </data>
+            </itemContent>
+        </item>   
+        <!-- add 2022.08.10 -->
+        <item id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva" label="Conciliador - Secretaria Enviar Documentos #{j2.env.PJeVars.processo.polos.parteAtiva}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Como ato meramente ordinatório, os autos foram encaminhados à Secretaria Judicial, a fim de que sejam disponibilizados à
+                    parte #{j2.env.PJeVars.processo.polos.parteAtiva} os documentos da defesa. Fica intimada a parte #{j2.env.PJeVars.processo.polos.parteAtiva}, 
+                    para juntar aos autos manifestação acerca dos documentos da defesa, no prazo de 2(dois) dias. Após o prazo, 
+                    os autos serão encaminhados #:B{CONCLUSOS PARA DELIBERAÇÃO}.
+                </data>
+            </itemContent>
+        </item>   
+
+
+		<!-- DA VIDEO CONFERENCIA -->
+        <item id="trmAud.VideoConferencia.Advertimento" label="Da Gravação da Vídeoconferência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    As partes foram notificadas que, em conformidade com a PORTARIA-GP – 8142019, o registro audiovisual da presente videoconferência ficará disponível para download por 15 dias, a contar da presente data, após, o arquivo será excluído da base de dados de videoconferências.
+                </data>
+            </itemContent>
+        </item> 		
+        <item id="trmAud.linkPJe.InfoLink" label="Informação Link PJe Mídias" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Para visualização da mídia de gravação desta audiência, deve ser acessado o sistema 
+                    PJE Mídias pelo #:B{link} #:B{XXXXLinkAudienciaPJeMidiasXXXX}, #:B{aba acesso por chave}: Informar CPF e e-mail.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <!-- tappac -->                                                               
+        <item id="trmAud-Abertura-Presenca-editarFormulario" label="Editar no Formulário..." dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span@editorFormulario{XXXXXResultadoXXXXX}
+                </data>
+            </itemContent>
+        </item>
+    </items>
+  </selectorDef>
+</Definitions>

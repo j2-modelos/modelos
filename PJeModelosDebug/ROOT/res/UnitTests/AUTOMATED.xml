@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<Defiinitions
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://j2'
+    xsi:schemaLocation='http://j2 ../XML/j2.xsd'>
+    <classeDef id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+                <innerContent id="" versao=""></innerContent>
+            </element>
+            <classe id="" versao="" enabled="">
+                <constructs param="" value="" type=""></constructs>
+                <constructs param="" value="" type=""></constructs>
+                <constructs param="" value="" type=""></constructs>
+                <constructs param="" value="" type=""></constructs>
+                <constructs param="" value="" type=""></constructs>
+            </classe>
+            <classe id="" versao="" enabled="">
+            </classe>
+            <classe id="" versao="" enabled="">
+            </classe>
+            <classe id="" versao="" enabled="">
+            </classe>
+            <classe id="" versao="" enabled="">
+            </classe>
+            <textHTML></textHTML>
+        </versao>
+    </classeDef>
+    <classeDef id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+            </element>
+            <textHTML></textHTML>
+        </versao>
+    </classeDef>
+    <classeDef id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+            </element>
+            <textHTML></textHTML>
+        </versao>
+    </classeDef>
+    <classeDef id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+            </element>
+            <textHTML></textHTML>
+        </versao>
+    </classeDef>
+    <classeDef id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+            </element>
+            <textHTML></textHTML>
+        </versao>
+    </classeDef>
+    <modelo id="">
+        <versao id="">
+            <element tag="" id="" class="" onclick="">
+            </element>
+            <textHTML></textHTML>
+        </versao>
+    </modelo>
+    <Unidade id="">
+        <modelosAut>
+            <modeloAut id="" version="" name=""></modeloAut>
+            <modeloAut id="" version="" name=""></modeloAut>
+            <modeloAut id="" version="" name=""></modeloAut>
+            <modeloAut id="" version="" name=""></modeloAut>
+            <modeloAut id="" version="" name=""></modeloAut>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="" domain=""></servidorLocal>
+            <dadosServidoresLocal avaliable="">
+                <j2Xml dobBinId="" assuntoId="" libId=""></j2Xml>
+            </dadosServidoresLocal>
+            <globalStyle></globalStyle>
+        </config>
+    </Unidade>
+    <Unidade id="">
+        <modelosAut>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="" domain=""></servidorLocal>
+            <dadosServidoresLocal avaliable="">
+                <j2Xml dobBinId="" assuntoId="" libId=""></j2Xml>
+            </dadosServidoresLocal>
+            <globalStyle></globalStyle>
+        </config>
+    </Unidade>
+    <Unidade id="">
+        <modelosAut>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="" domain=""></servidorLocal>
+            <dadosServidoresLocal avaliable="">
+                <j2Xml dobBinId="" assuntoId="" libId=""></j2Xml>
+            </dadosServidoresLocal>
+            <globalStyle></globalStyle>
+        </config>
+    </Unidade>
+    <Unidade id="">
+        <modelosAut>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="" domain=""></servidorLocal>
+            <dadosServidoresLocal avaliable="">
+                <j2Xml dobBinId="" assuntoId="" libId=""></j2Xml>
+            </dadosServidoresLocal>
+            <globalStyle></globalStyle>
+        </config>
+    </Unidade>
+    <Unidade id="">
+        <modelosAut>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="" domain=""></servidorLocal>
+            <dadosServidoresLocal avaliable="">
+                <j2Xml dobBinId="" assuntoId="" libId=""></j2Xml>
+            </dadosServidoresLocal>
+            <globalStyle></globalStyle>
+        </config>
+    </Unidade>
+    <Usuarios versao="">
+        <Usuario id="" ini="" nome="" cargo=""></Usuario>
+        <Usuario id="" ini="" nome="" cargo=""></Usuario>
+        <Usuario id="" ini="" nome="" cargo=""></Usuario>
+        <Usuario id="" ini="" nome="" cargo=""></Usuario>
+        <Usuario id="" ini="" nome="" cargo=""></Usuario>
+    </Usuarios>
+
+</Defiinitions>

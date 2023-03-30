@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ ASS: Prestação de Serviços
+ DOC: 6162543
+ MOD: classStyles.xml
+  
+ Definições de classes em XML 
+ 
+ Versão 2017.06.02.1
+
+ Depreciado
+-->
+<Definitions
+    id="classStylesDefs"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://j2'
+    xsi:schemaLocation='http://j2 j2.xsd'>
+    <classStyles>
+        <style id="EditTools">
+            <prop name="display" value="table"/>
+            <prop name="border" value="1px solid #BCC1BD"/>
+            <prop name="background" value="background: white"/>
+            <prop name="zIndex" value="10000"/>
+        </style>
+        
+        <style id="highlightText">
+            <prop name="margin" value="15px 0 -68px 0"/>
+            <prop name="fontSize" value="40px"/>
+            <prop name="textDecoration" value="underline"/>
+            <prop name="fontWeight" value="bold"/>
+            <prop name="textAlign" value="right"/>
+        </style>              
+        
+        <style id="AlignCenter">
+            <prop name="textAlign" value="center"/>
+        </style>              
+        <style id="AlignRight">
+            <prop name="textAlign" value="Right"/>
+        </style>              
+        <style id="AlignLeft">
+            <prop name="textAlign" value="left"/>
+        </style>   
+        <style id="AlignJustify">
+            <prop name="textAlign" value="justify"/>
+        </style>   
+        <style id="CenterAlign">
+            <prop name="marginLeft" value="auto"  />
+            <prop name="marginRight" value="auto"  />
+        </style>
+        <style id="CursPnt">
+            <prop name="cursor" value="pointer"/>
+        </style>                  
+        <style id="Hidden">
+            <prop name="display" value="none"/>
+            <!--prop name="visibility" value="hidden"/--> //tappac 
+        </style>
+        <style id="Visible">
+            <prop name="display" value=""/>
+            <prop name="visibility" value=""/>
+        </style>
+        <style id="MrgShtSetMenu">
+            <prop name="padding" value="11px 50px 70px"/>
+            <prop name="minHeight" value="490px"/>
+        </style>
+        <style id="PadTop22px">
+            <prop name="paddingTop" value="22px"/>
+        </style>        
+
+        <style id="paperA4">
+            <prop name="maxWidth" value="740px"/>
+        </style>       
+        <style id="paperA4Paisagem">
+            <prop name="maxWidth" value="940px"/>
+            <prop name="minHeigt" value="740px"/>
+        </style>    
+        
+        <style id="paperA4Content">
+            <prop name="maxWidth" value="640px"/>
+            <prop name="boxSizing" value="unset"/>
+        </style>     
+        
+        <style id="paperA4ContentPaisagem">
+            <prop name="maxWidth" value="840px"/>
+            <prop name="boxSizing" value="unset"/>
+        </style>   
+        
+        <style id="paperA5">
+            <prop name="maxWidth" value="500px"/>
+        </style>           
+        <style id="maxWidth400">
+            <prop name="maxWidth" value="400px"/>
+        </style>   
+        <style id="pad4px">
+            <prop name="padding" value="4px"/>
+        </style>   
+        
+        <style id="PaperShadow">
+            <prop name="boxShadow" value="0 8px 29px  rgba(0, 0, 0, 0.48)"/>
+            <prop name="minHeight" value="500px"/>
+        </style>
+        <style id="pgMarginA4">
+            <prop name="maxWidth" value="740px"/>
+            <prop name="minHeight" value="500px"/>
+        </style>
+        <style id="pgMarginA5">
+            <prop name="maxWidth" value="500px"/>
+            <prop name="minHeight" value="500px"/>
+        </style>
+        <style id="pgMenuShortCut">
+            <prop name="textAlign" value="right"/>
+            <prop name="position" value="relative"/>
+            <prop name="minHeight" value="16px"/>
+        </style>          
+        <style id="WindowEditor">
+            <prop name="width" value="98%"/>
+            <prop name="background" value="white"/>
+            <prop name="minHeight" value="100px"/>
+            <prop name="height" value="auto"/>
+            <prop name="padding" value="2px"/>
+            <prop name="display" value="table"/>
+            <prop name="float" value="left"/>
+        </style>   
+        <style id="WindowEditorTitle">
+            <prop name="background" value="#BED6F8"/>
+            <prop name="display" value="block"/>
+            <prop name="fontWeight" value="bold"/>
+            <prop name="border" value="#BED6F8 solid"/>
+            <prop name="borderRadius" value="2px"/>
+        </style>
+        <style id="width100">
+            <prop name="width" value="100%"/>
+        </style>
+        <style id="width80">
+            <prop name="width" value="80%"/>
+        </style>
+        <style id="width90">
+            <prop name="width" value="90%"/>
+        </style>
+        <style id="lnHght1">
+            <prop name="lineHeight" value="1"/>
+        </style>
+        
+
+        <style id="b">
+            <prop name="fontWeight" value="bold"/>
+        </style>      
+        <style id="fntWeightNormal">
+            <prop name="fontWeight" value="normal"/>
+        </style>    
+        <style id="floatRight">
+            <prop name="float" value="right"/>
+        </style>      
+        <style id="edtCtrl"> <!-- editor control -->
+            <prop name="height" value="23px"/>
+        </style>      
+                
+        <style id="QualfTable">
+            <prop name="lineHeight" value="1"/>
+            <prop name="margin" value="0pt"/>
+            <prop name="width" value="100%"/>
+            <prop name="borderCollapse" value="collapse"/>
+        </style>
+        <style id="QlTbRow">
+            <prop name="verticalAlign" value="textTop"/>
+        </style>
+        
+        
+        <style id="pSpacing8pt">
+            <prop name="marginBottom" value="8pt"/>
+            <prop name="marginTop" value="8pt"/>
+        </style> 
+
+        <style id="Indnt0">
+            <prop name="textIndent" value="0"/>
+        </style> 
+        <style id="Indnt1cm">
+            <prop name="textIndent" value="1cm"/>
+        </style> 
+        <style id="Indnt3cm">
+            <prop name="textIndent" value="3cm"/>
+        </style>         
+        <style id="Indnt15mm">
+            <prop name="textIndent" value="15mm"/>
+        </style>         
+        <style id="Indnt0cm">
+            <prop name="textIndent" value="0cm"/>
+        </style>    
+        
+        <style id="DivEditLimit">
+            <prop name="border" value="1pt solid red"/>
+        </style>                 
+        
+             
+        <style id="underlined">
+            <prop name="textDecoration" value="underline"/>
+        </style>          
+        <style id="u">
+            <prop name="textDecoration" value="underline"/>
+        </style>      
+        
+        <!-- classes associadas a pequenos elementos menos relevantes á aplicação -->       
+        <style id="DivLikeHr">
+            <prop name="border" value="1pt solid gray"/>
+            <prop name="margin" value="3pt"/>
+        </style> 
+        
+        <style id="dispTabl">
+            <prop name="display" value="table"/>
+        </style> 
+        <style id="dispFlex">
+            <prop name="display" value="flex"/>
+        </style> 
+        <style id="dispILTable">
+            <prop name="display" value="inline-table"/>
+        </style> 
+        <style id="dispILFlex">
+            <prop name="display" value="inline-flex"/>
+        </style> 
+        <style id="dispTablCell">
+            <prop name="display" value="table-cell"/>
+        </style> 
+        <style id="width70">
+            <prop name="width" value="70%"/>
+        </style>         
+        <style id="width30">
+            <prop name="width" value="29.9%"/>
+        </style>                
+        <style id="BrdRad3px">
+            <prop name="borderRadius" value="3px"/>
+        </style>            
+        <style id="FntDocEdt">
+            <prop name="fontSize" value="9pt"/>
+        </style> 
+        <style id="FntHighligth">
+            <prop name="fontSize" value="22pt"/>
+        </style>
+        <style id="dispNone">
+            <prop name="display" value="none"/>
+        </style>    
+        <style id="posAbs">
+            <prop name="position" value="absolute"/>
+        </style>    
+        <style id="posRel">
+            <prop name="position" value="relative"/>
+        </style>    
+        
+        
+        <!-- MODAL CLASSES-->
+        <style id="richModalPanel">
+            <prop name="position" value="absolute"/>
+            <prop name="zIndex" value="100"/>
+            <prop name="backgroundColor" value="#E6ECF4"/>
+            <prop name="left" value="0"/>
+            <prop name="top" value="0"/>
+        </style>
+        <style id="richMaskDivOpaque">
+            <prop name="zIndex" value="-1"/>
+            <prop name="opacity" value="0.5"/>
+            <prop name="position" value="fixed"/>
+            <prop name="top" value="0"/>
+            <prop name="left" value="0"/>
+            <prop name="border" value="0"/>
+            <prop name="margin" value="0"/>
+            <prop name="padding" value="0"/>
+            <prop name="width" value="100%"/>
+            <prop name="height" value="100%"/>
+            <prop name="borderStyle" value="none"/>
+            <prop name="backgroundColor" value="#d0d0d0"/>
+        </style>
+        <style id="richPanel">
+            <prop name="position" value="fixed"/>
+            <prop name="margin" value="0"/>
+            <prop name="padding" value="0"/>  
+            <prop name="backgroundColor" value="inherit"/>
+            <prop name="zIndex" value="9"/>         
+            <!--prop name="top" value="0"/-->
+            <!--prop name="left" value="0"/-->
+        </style>
+        <style id="richContainer">
+            <prop name="position" value="absolute"/>
+            <!--prop name="left" value="40px"/--> <!--- são valores variáveis -->
+            <!--prop name="top" value="150px"/--> <!--- são valores variáveis -->
+            <prop name="zIndex" value="9"/>
+        </style>
+        <style id="richShadow">
+            <prop name="position" value="absolute"/>
+            <prop name="height" value="100%"/>
+            <prop name="width" value="100%"/>
+            <prop name="zIndex" value="-1"/>
+            <prop name="top" value="4px"/>
+            <prop name="left" value="4px"/>
+            <prop name="opacity" value="0.1"/>
+            <prop name="backgroundColor" value="black"/>
+        </style>
+        <style id="richContent">
+            <prop name="backgroundColor" value="#FFF"/>
+            <prop name="border-color" value="#BED6F8"/>
+            <prop name="borderWidth" value="1px"/>
+            <prop name="borderStyle" value="solid"/>
+            <prop name="padding" value="1px"/>
+        </style>    
+        <style id="richControls">
+            <prop name="position" value="aboslute"/>
+            <prop name="top" value="3px"/>
+            <prop name="right" value="3px"/>
+            <prop name="zIndex" value="1"/>
+        </style>   
+        <style id="richText">
+            <prop name="fontSize" value="11px"/>
+            <prop name="color" value="#57627E"/>
+            <prop name="fontWeight" value="bold"/>
+            <prop name="fontFamily" value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"/>
+        </style>   
+        <style id="richContentTable">
+            <prop name="width" value="250px"/> <!-- variável -->
+            <prop name="heigth" value="1px"/>
+            <prop name="borderTopWidth" value="0px"/>
+            <prop name="borderRightWidth" value="0px"/>
+            <prop name="borderBottomWidth" value="0px"/>
+            <prop name="borderLeftWidth" value="0px"/>
+            <prop name="display" value="table"/>
+            <prop name="borderCollapse" value="separate"/>
+            <prop name="borderColor" value="grey"/>
+        </style>   
+        <style id="richHeaderCell">
+            <prop name="height" value="20px"/>
+            <prop name="width" value="100%"/>
+            <prop name="verticalAlign" value="middle"/>
+            <prop name="zIndex" value="5"/>
+        </style>                                   
+        <style id="richHeader">
+            <prop name="padding" value="2px"/>
+            <prop name="borderWidth" value="1px"/>
+            <prop name="borderStyle" value="solid"/>
+            <prop name="backgroundPosition" value="top left"/>
+            <prop name="backgroundRepeat" value="repeat-x"/>
+            <prop name="whiteSpace" value="nowrap"/>
+        </style>                                                 
+        <style id="richHeaderColor">
+            <prop name="backgroundColor" value="#BED6F8"/>
+            <prop name="borderColor" value="#BED6F8"/>
+            <prop name="backgroundImage" value="url(https://pje.tjma.jus.br/pje/a4j/g/3_3_3.Finalorg.richfaces.renderkit.html.GradientA/DATB/eAH7!!3Tj2v7mAAZZAV3.seam)"/>
+            <prop name="backgroundPosition" value="top left"/>
+        </style>      
+        <style id="richBody">
+            <prop name="padding" value="10px"/>
+            <prop name="fonSize" value="10px"/>
+            <prop name="color" value="#000"/>
+            <prop name="fontFamily" value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"/>
+
+        </style>
+        
+        <style id="richInputButton">
+            <prop name="height" value="22px !important"/>
+            <prop name="minWidth" value="50px"/>
+            <prop name="margin" value="5px"/>
+            <prop name="padding" value="0px 12px 3px"/>
+            <prop name="backgroundColor" value="transparent"/>
+            <prop name="border" value="solid 1px #C2E9F3"/>
+            <prop name="borderRadius" value="6px"/>
+            <prop name="backgroundImage" value="url(https://pje.tjma.jus.br/pje/a4j/g/3_3_3.Finalorg.richfaces.renderkit.images.TabGradientB/DATB/eAH7!!!!!3vHmAAaGQWj.seam)"/>
+            <prop name="backgroundRepeat" value="repeat-x"/>
+            <prop name="backgroundPosition" value="top"/>
+            <prop name="cursor" value="default"/>
+            <prop name="color" value="#000000"/>
+            <prop name="userSelect" value="none"/>
+        </style>     
+        
+           
+        <!-- POPUP CONTAINER -->          
+        <style id="richModalPanelToPopup">
+            <!--prop name="position" value="absolute"/-->
+            <!--prop name="zIndex" value="100"/-->
+            <prop name="backgroundColor" value="#E6ECF4"/>
+        </style>
+        
+        <style id="unorderedOrderedList">
+            <prop name="padding" value="0px 0px 0px 5mm"/>
+        </style>          
+        
+        <style id="paddingLeft35mm">
+            <prop name="padding" value="0px 0px 0px 35mm"/>
+        </style>          
+        <style id="paddingLeft25mm">
+            <prop name="padding" value="0px 0px 0px 25mm"/>
+        </style>     
+        <style id="paddingLeft15mm">
+            <prop name="padding" value="0px 0px 0px 15mm"/>
+        </style>     
+        
+        <style id="ARHeaderBrasao">
+            <prop name="paddingTop" value="13px"/>
+            <prop name="height" value="36px"/>
+            <prop name="margin" value="0"/>
+            <prop name="textAlign" value="center"/>
+        </style>         
+        <style id="ARHeaderEstado">
+            <prop name="paddingTop" value="16px"/>
+            <prop name="fontSize" value="12pt"/>
+            <prop name="margin" value="0"/>
+        </style>                
+        <style id="ARHeaderUnidade">
+            <prop name="paddingTop" value="0px"/>
+            <prop name="fontSize" value="16pt"/>
+            <prop name="margin" value="0"/>
+        </style>                
+        
+        <style id="fieldError">
+            <prop name="border" value="red 1px solid"/>
+            <prop name="backgroundColor" value="#f8efef"/>
+        </style>
+        
+        <style id="advertenciaUL">
+            <prop name="LineHeight" value="1"/>
+            <prop name="margin" value="0pt"/>
+            <prop name="paddingLeft" value="5mm"/>
+            <prop name="paddingRight" value="0px"/>
+            <prop name="paddingTop" value="0px"/>
+        </style>
+        
+        <style id="AttachementUL">
+            <prop name="margin" value="0pt"/>
+            <prop name="marginLeft" value="15mm"/>
+            <prop name="paddingLeft" value="5mm"/>
+            <prop name="paddingRight" value="0px"/>
+            <prop name="paddingTop" value="0px"/>
+        </style>
+        
+        <style id="FntModAdvertencias">
+            <prop name="fontSize" value="7pt"/>
+        </style>
+
+        <style id="marginAtoJudicial">
+            <prop name="margin" value="6pt 0pt 6pt 0pt"/>
+        </style>
+        <style id="marginJurisprudencia">
+            <prop name="margin" value="0cm 0cm 0cm 5cm"/>
+        </style>
+        <style id="marginJurisprudenciaA5">
+            <prop name="margin" value="0cm 0cm 0cm 3cm"/>
+        </style>
+        
+        <style id="i">
+            <prop name="fontStyle" value="italic"/>
+        </style>
+        
+        <style id="ShortCutMenuPopup">
+            <prop name="overflow" value="visible"/> 
+            <prop name="borderTop" value="#cdcdcd 1px solid"/> 
+            <prop name="borderRight" value="#cdcdcd 1px solid"/> 
+            <prop name="borderBottom" value="#cdcdcd 1px solid"/> 
+            <prop name="position" value="absolute"/> 
+            <prop name="textAlignLast" value="left"/> 
+            <prop name="paddingBottom" value="4px"/> 
+            <prop name="paddingTop" value="4px"/> 
+            <prop name="paddingLeft" value="4px"/> 
+            <prop name="left" value="741px"/> 
+            <prop name="borderLeft" value="#cdcdcd 1px solid"/> 
+            <prop name="zIndex" value="20"/> 
+            <prop name="top" value="15px"/> 
+            <prop name="paddingRight" value="4px"/> 
+            <prop name="backgroundColor" value="#fff"/> 
+            <prop name="boxShadow" value="2px 2px 3px rgba(0, 0, 0, 0.48)"/>
+        </style>
+        
+        <style id="vertAlignBottom">
+            <prop name="verticalAlign" value="bottom"/> 
+        </style>
+        <style id="vertAlignTop">
+            <prop name="verticalAlign" value="top"/> 
+        </style>
+        
+        <style id="ReferenciaDocumento.ReopenButton">
+            <prop name="width" value="10.5%"/> 
+        </style>
+        
+        <style id="ReferenciaDocumento.SelectMethod">
+            <prop name="width" value="78%"/> 
+        </style>
+        
+        <style id="ReferenciaDocumento.SelectMethodB">
+            <prop name="width" value="89%"/> 
+        </style>
+        
+        <style id="width33">
+            <prop name="width" value="33%"/> 
+        </style>
+        <style id="width50">
+            <prop name="width" value="50%"/> 
+        </style>
+        <style id="width49">
+            <prop name="width" value="49%"/> 
+        </style>
+        <style id="width95">
+            <prop name="width" value="95%"/> 
+        </style>
+        <style id="textRed">
+            <prop name="color" value="red"/> 
+        </style>
+        <style id="lightBorder">
+            <prop name="border" value="rgb(190, 214, 248) 1px solid"/> 
+            <prop name="padding" value="2px"/> 
+        </style>
+                
+        <style id="versalete">
+            <prop name="fontVariant" value="small-caps"/> 
+        </style>
+        <style id="ucase">
+            <prop name="text-transform" value="uppercase"/> 
+        </style>
+        
+        <style id="pAsListItem">
+            <prop name="marginLeft" value="30mm"/> 
+        </style>
+        <style id="pTranscricao">
+            <prop name="marginLeft" value="1cm"/> 
+        </style>
+        <style id="pAsListItemHalf">
+            <prop name="marginLeft" value="17mm"/> 
+        </style>
+        
+        <style id="DaynaTitleSpacing">
+            <prop name="margin" value="16pt 0pt"/> 
+        </style>
+        
+        <style id="heading">
+            <prop name="textAlign" value="center"/> 
+            <prop name="fontWeight" value="bold"/> 
+            <prop name="textDecoration" value="underline"/> 
+            <prop name="textIndent" value="0"/>
+            <prop name="margin" value="6pt 2cm"/> 
+        </style>
+        
+        <style id="noMarginBottom">
+            <prop name="marginBottom" value="0"/> 
+        </style>
+        <style id="pLikeListItem">
+            <prop name="margin" value="0 0 0 3.5cm"/> 
+            <prop name="text-indent" value="0"/> 
+            <prop name="display" value="list-item"/> 
+        </style>
+        
+        
+        
+        <style id="SNCMedia2017">
+            <prop name="background" value="linear-gradient(-421deg, rgb(255, 255, 255) -3%,rgba(193, 252, 212, 0.22) 50%,rgb(255, 255, 255) 109%)"/>  
+        </style>
+
+        <style id="popupDiv">
+            <prop name="zIndex" value="20"/>  
+            <prop name="display" value="block"/>  
+            <prop name="position" value="absolute"/>  
+            <prop name="padding" value="5px"/>  
+        </style>
+        
+        <style id="dispBlock"> 
+            <prop name="display" value="block"/>  
+        </style>
+        
+        <style id="ControlesJuntadaAR">
+            <prop name="textAlign" value="justify"/>  
+            <prop name="margin" value="0"/>  
+            <prop name="minHeight" value="170px"/>  
+            <prop name="maxHeight" value="170px"/>  
+            <prop name="overflow" value="scroll"/>  
+            <prop name="borderRadius" value="3px"/>  
+            <prop name="border" value="1pt solid #808080"/>  
+            <prop name="padding" value="3px"/>  
+        </style>
+        
+        <style id="ControlesJuntadaAR.Inactive">
+            <prop name="backgroundColor" value="#D3D3D3"/>  
+        </style>        
+        
+        <style id="lightBorderBlack">
+            <prop name="border" value="1px solid black"/>  
+        </style>
+        
+        <style id="SeloJudicialMargin">
+            <prop name="margin" value="-53px 0 0 0"/>  
+        </style>
+        
+        <style id="regIntIconHeight">
+            <prop name="height" value="40px"/>  
+        </style>
+        <style id="regIntIcon">
+            <prop name="height" value="40px"/>  
+            <prop name="width" value="33%"/>  
+        </style>
+        <style id="juntARRastTable">
+            <prop name="margin" value="auto"/>  
+            <prop name="width" value="85%"/>  
+            <prop name="borderCollapse" value="collapse"/>  
+            <prop name="marginTop" value="10px"/>  
+        </style>
+        <style id="juntARRastTableCellOdd">
+            <prop name="width" value="30%"/>  
+        </style>
+        <style id="zoomHalf">
+            <prop name="zoom" value="0.5"/>  
+        </style>
+        <style id="zoomedEdtP">
+            <prop name="fontSize" value="18pt"/>  
+        </style>
+        <style id="lineHeightUnset">
+            <prop name="lineHeight" value="unset"/>  
+        </style>
+        <style id="heightUnset">
+            <prop name="height" value="unset"/>  
+        </style>
+        <style id="resizeNone">
+            <prop name="resize" value="none"/>  
+        </style>
+        
+        
+        <style id="FntARMP">
+            <prop name="fontSize" value="56pt"/>
+        </style>
+        <style id="DivARMP">
+            <prop name="width" value="19%"/>
+            <prop name="float" value="left"/>
+        </style>
+        
+        <style id="marginTop8px">
+            <prop name="marginTop" value="8px"/>
+        </style> 
+        
+        <style id="height120px"><!-- waup as new -->
+            <prop name="height" value="120px"/>
+        </style> 
+        
+        <style id="pageAR7"><!-- ARD as new -->
+            <prop name="padding" value="unset"/>
+            <prop name="minWidth" value="740px"/>
+        </style> 
+        
+        <style id="marginTopDiligencia">
+            <prop name="marginTop" value="8px"/>
+        </style> 
+        <style id="marginBottomDiligencia">
+            <prop name="marginBottom" value="8px"/>
+        </style> 
+        
+        <style id="pad0"><!-- tappac as new -->
+            <prop name="padding" value="0"/>
+        </style> 
+        
+        <style id="nomeParte"><!-- tappac as new -->
+            <prop name="fontWeight" value="bold"/>
+            <prop name="textDecoration" value="underline"/>
+        </style> 
+        
+        <style id="cursorPointer"><!-- tappac as new -->
+            <prop name="cursor" value="pointer"/>
+        </style> 
+        <style id="marginRight5px"><!-- tappac as new -->
+            <prop name="marginRight" value="5px"  />
+        </style>
+        <style id="paddingRight4px"><!-- tappac as new -->
+            <prop name="paddingRight" value="4px"  />
+        </style>
+        <style id="paddingLikeInput"><!-- tappac as new -->
+            <prop name="paddingTop" value="3px"  />
+            <prop name="paddingLeft" value="3px"  />
+        </style>
+        <style id="noResize"><!-- tappac as new -->
+            <prop name="resize" value="none"  />
+            <prop name="overflow" value="hidden"  />
+        </style>
+        <style id="borderNone"><!-- tappac as new -->
+            <prop name="border" value="none"  />
+        </style>
+        
+    </classStyles>
+</Definitions>

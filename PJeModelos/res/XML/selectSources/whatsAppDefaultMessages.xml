@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions-WhatsappMessages" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="whatsappMessages" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="p" class="p FntModeEditor" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+    </groupsDefs>
+    <!--items initialSelected="termReclReclamacao"-->
+    <items>
+        <item id="wtAppItCumprimento" label="Cumprimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Olá, #{j2.mod._._conversation.bomByHora.captFirst}! Tudo bem com você?#:BR{}#:BR{}
+                    Sou #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2} do *#{j2.env.PJeVars.unidade.identificacao}*.#:BR{}
+                </data>
+            </itemContent>
+        </item>       
+        <item id="wtAppItSegueIntimacao" label="Segue Intimação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   #{j2.mod.clsCnstr.SeletorPessoa.selected.nome}, a seguir encaminhamos sua intimação.#:BR{}
+                   #:BR{}
+                   *Solicitamos que, antes de qualquer questionamento ou esclarecimento, faça a gentileza confirmar recebimento e leitura*.
+                </data>
+            </itemContent>
+        </item>   
+
+        <item id="wtAppItInteiroTeor" label="Inteiro teor" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:BR{}
+                    #:BR{}
+                    ----------------------------------------------------------------------
+                    #:BR{}
+                    #:BR{}
+                    #{j2.mod.clsCnstr.Documento.getTeorExpediente}
+                    #:BR{}
+                    #:BR{}
+                    ----------------------------------------------------------------------
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="wtAppItLinkTarefaProcesso" label="Uso do juizado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:BR{}
+                    #:BR{}
+                    *PARA USO DO JUIZADO*:#:BR{}
+                    #{j2.env.PJeVars.processo.numero}#:BR{}
+                    https://pje.tjma.jus.br/pje/Processo/movimentar.seam?idProcesso=#{j2.env.PJeVars.processo.idProcesso}
+                </data>
+            </itemContent>
+        </item>   
+        
+        
+        <item id="wtAppItHomologacaoDistrato" label="Informação Homologação Distrato" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   #{j2.mod.clsCnstr.SeletorPessoa.selected.nome}, a presente intimação tem como única 
+                   finalidade você tomar conhecimento que o acordo/contrato de distrato realizado com empresa 
+                   de residencial, a qual anteriormente o(a) senhor(a) realizava pagamentos, foi homologada pelo nosso juízo. 
+                   Homologação é como se nossa juíza estivesse também assinando o contrato/acordo que você e a empresa assinaram.
+                   #:BR{}
+                   A presente intimação não tem nenhuma finalidade de promover em seu desfavor qualquer tipo de cobrança.
+                   #:BR{}
+                   Não será preciso que você compareça em nosso juizado.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="wtAppItTransmitir" label="Transmitir cônjuge" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   Em razão de seu/sua cônjuge também fazer parte do presente processo, solicitamos que
+                   transmita a ele/ela a presente intimação.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="wtAppItConfirmarIdentidade" label="Confirmar Identidade" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   Falo com o(a) senhor(a) #{j2.mod.clsCnstr.SeletorPessoa.selected.nome}? 
+                   Caso sim, pedimos a gentileza que continue a leitura sobre assunto de seu interesse. Caso não, solicitamos que
+                   acuse expressamente não ser ou desconhecer a pessoa a que se destina a comunicação.
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="wtAppItLinkSalaAudiencia1" label="Link Sala Audiência 1" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   Sobre sua *audiência*, ela se realizará por *meio de vídeoconferência* pela internet, cujas instruções para acesso são:#:BR{}
+                    • *acessar o link* https://vc.tjma.jus.br/2jecitz (preferencialmente por meio do navegador Google Chrome),#:BR{}
+                    • digitar no campo “login” seu nome de participante,#:BR{}
+                    • inserir a *senha tjma1234* (observar todas as letras em minúsculo),#:BR{}
+                    • ao visualizar a pergunta “como você gostaria de se juntar ao áudio” clicar no ícone do microfone e disponibilizar acesso à câmera do dispositivo que estiver utilizando (computador, notebook, tablet ou celular);#:BR{}
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="wtAppItRemessaDocumentosAudiencia" label="Remessa de deocumentos audiência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Segue(m) documento(s) mencionado(s) em audiência para que, 
+                    no prazo que foi definido, apresente sua manifestação, caso queira.
+                </data>
+            </itemContent>
+        </item>   
+        <!--item id="termReclCumprimentoSentenca" label="Cumprimento de Sentença" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    TERMO DE CUMPRIMENTO DE SENTENÇA
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termReclExecTitExtra" label="Execução de Título Extrajudicial" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    TERMO DE EXECUÇÃO DE TÍTULO EXTRAJUDICIAL
+                </data>
+            </itemContent>
+        </item-->        
+    </items>
+  </selectorDef>
+</Definitions>

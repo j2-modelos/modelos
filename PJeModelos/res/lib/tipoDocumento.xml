@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ ASS: Assemblélia
+ DOC: 5429118
+ MOD: Modelos.xml
+  
+ Definções dos modelos utilizados
+-->
+<Definitions id="modelos" targetNamespace="http://j2" xmlns="http://j2" xsi:schemaLocation='http://j2 ../XML/j2.xsd' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelo id="tipoDocumentoManifestacao">       
+        <versao id="1.0">
+            <classe id="Selector" versao="3.0" >
+                <constructs param="newId" value="tipoDocumentoManifestacaoItems" type="string"/>
+                <constructs param="multiple" value="sim" type="bool"/>
+                <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
+                <constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/>
+                <constructs param="source" value="tipoDocumentoManifestacao" type="bool"/>
+            </classe>       
+        </versao>
+    </modelo>
+</Definitions>

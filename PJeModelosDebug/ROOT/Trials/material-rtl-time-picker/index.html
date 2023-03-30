@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Material Design RTL Time Picker Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="mdtimepicker.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <style>
+        /* Demo Styles */
+        body {
+            font-family: 'Inter';
+            background: #eee;
+        }
+
+        input {
+            font-size: 1.5rem;
+            padding: .5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin: 2rem 0;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .use {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        pre {
+            background: #333;
+            color: #eee;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        a {
+            color: darkslateblue;
+            text-decoration: none;
+        }
+    </style>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div style="text-align: center; margin:150px auto;">
+        <h1>Material Design RTL Time Picker Example</h1>
+        <div id="carbon-block" align="center"  style="margin:30px auto"></div>
+<div align="center" style="margin:30px auto"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+        <p>The RTL version of the jQuery MDTimePicker plugin, which helps you generate Material Design time pickers for webpages whose languages written from right to left (like Hebrew or Arabic).</p>
+
+        <input type="text" id="timepicker" placeholder="Pick a time..." />
+    </div>
+
+
+
+    <script src="mdtimepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#timepicker').mdtimepicker({
+                timeFormat: 'hh:mm:ss.000', // format of the time value (data-time attribute)
+                format: 'hh:mm tt',    // format of the input value
+                readOnly: false,       // determines if input is readonly
+                hourPadding: false,
+                theme: 'green',
+                okLabel: 'تائید',
+                cancelLabel: 'انصراف',
+            });
+        });
+    </script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+</body>
+
+</html>

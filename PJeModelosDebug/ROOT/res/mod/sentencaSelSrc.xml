@@ -1,0 +1,1560 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="p" class="p FntModDefault Indnt3cm marginAtoJudicial" scope="NONE">
+         #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="---------------------------------------">
+            <gItem id="sentItSelecione"/>
+        </group>
+        <!--group label="CEMAR">
+            <gItem id="sentItSelecione"/>
+        </group-->
+        <!--group label="DPVAT">
+            <gItem id="sentItDPVATImprocedencia"/>
+            <gItem id="sentItDPVATImprocedenciaAusentReq"/>
+            <gItem id="sentItDPVATProcedenciaParcial"/>
+            <gItem id="sentItExtincaoInexistLaudIML"/>
+        </group-->
+        <group label="Extinção">
+            <gItem id="sentItExtincaoAbandono"/>
+            <gItem id="sentItExtincaoComplexidade"/>
+            <gItem id="sentItExtincaoContumacia2"/>
+            <gItem id="sentItExtincaoDesistencia"/>
+            <gItem id="sentItExtincaoExecucao"/>
+            <gItem id="sentItExtincaoExecucaoAlvara"/>
+            <gItem id="sentItExtincaoExecucaoBACENJUD"/>
+            <gItem id="sentItExtincaoExecucaoEstorno"/>
+            <gItem id="sentItExtincaoExecucaoPrópriosAutos"/>
+            <gItem id="sentItIncompetenciaTerritorial"/>
+            <gItem id="sentItExtincaoInepciaDocumentoFiscal"/>
+            <gItem id="sentItInépciaEndereco"/>
+            <gItem id="sentItExtincaoPericaGrafo"/>
+            <gItem id="sentItPretensaoResistida"/>
+            <!--<gItem id="sentItExtincaoContratoSuperTeto"/>-->
+        </group>
+        <group label="Homologação">
+            <gItem id="sentItHomologacaoAcordo"/>
+            <gItem id="sentItHomologacaoAcordoAJGSim"/>
+            <gItem id="sentItHomologacaoAcordoAJGNao"/>
+        </group>
+        <group label="TESTES">
+            <gItem id="sentItNormalizacaoExemplo"/>
+            <gItem id="sentItNormalizacaoExemplo2"/>
+        </group>
+    </groupsDefs>
+    <items>
+                
+        
+        <item id="sentItExtincaoContumacia" label="Contumácia" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Vistos etc.,
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Trata-se de #{j2.env.PJeVars.processo.classe} processada pelo rito da Lei dos Juizados 
+                        Especiais (Lei nº 9.099/95).
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Decido.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Apesar de devidamente intimada, o #{j2.env.PJeVars.processo.polos.ativo} deixou de comparecer em audiência, 
+                        #:b{sem apresentar qualquer justificativa}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Dentre as causas extintivas do processo, tem-se o não comparecimento do autor em qualquer das 
+                        audiências do processo, conforme dispõe o art. 51, I, da Lei nº 9.099/95.
+                    </elemento>                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Isto posto, julgo extinto o processo sem apreciação do mérito, nos termos do art. 51, 
+                        inciso I, da Lei nº 9.099/95, #:B{sem condenar a parte requerente no pagamento das custas 
+                        processuais em caso de propositura de nova ação}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Sem honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Publique-se. Registre-se. Intime-se as partes. Anote-se no mapa de captação mensal.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>        
+        
+        <item id="sentItExtincaoExecucaoPrópriosAutos" label="Execução nos próprios autos" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                      Trata-se de #:B{CUMPRIMENTO DE SENTENÇA} processado pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ao teor do art. 52 da Lei n. 9.099, orientado pelos princípios da celeridade, informalidade, simplicidade e economia processual, nos juizados #:B{é desnecessária distribuição do cumprimento de sentença em autos apartados, devendo a fase executiva ocorrer nos mesmos autos da ação principal}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        #:U{Assim, deve ser extinta a presente execução, devendo prosseguir nos autos próprios n. 0801145-34.2018.8.10.0047}. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Outrossim, o art. 925, da Lei Adjetiva Civil prescreve que a extinção somente produz os seus feitos, quando declarada por sentença.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Dessa maneira, considerando o pagamento do débito, #:B{#:U{JULGO EXTINTA A PRESENTE EXECUÇÃO}}, nos termos do artigo 925, do Código de Processo Civil, com aplicação autorizada pelo artigo 52 da Lei 9.099/95.
+                    </elemento>                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Intime-se desta decisão.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Após o trânsito em julgado, dê-se baixa e arquive-se esse feito.
+                    </elemento>
+                    
+                </simpleElementsDefs>
+            </itemContent>
+        </item>        
+                 
+        <item id="sentItSelecione" label="[Selecione]" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    XXXXAtoJudicialXXXX
+                </data>
+            </itemContent>
+        </item>             
+        
+        <item id="sentItDPVATImprocedencia" label="Improcedência" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Vistos, etc.}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Defiro o pedido de gratuidade de justiça (Art. 98 do NCPC).}
+                    </elemento> 
+                    <elemento tag="h" scope="NONE" class="p FntModDefault heading" > 
+                      #:B{RELATÓRIO}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório conforme disposto no artigo 38 da Lei 9.099/95.
+                    </elemento> 
+                    <elemento tag="h" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{FUNDAMENTAÇÃO}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A parte requerente sofreu acidente de trânsito e informa que recebeu o pagamento administrativo parcial no valor de R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos), o qual entende que deve ser complementado.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em sua defesa a seguradora afirmou que já realizou o pagamento total dos valores devidos.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deve ser verificado se a parte autora faz jus a algum outro valor correspondente à lesão ocasionada pelo acidente.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{#:I{De início, indefiro as diligências solicitadas pela seguradora, uma vez que são procrastinatórias, devendo ser observado os Princípios da Simplicidade e Celeridade atinentes aos Juizados Especiais, e em virtude da própria requerida ter possibilidades de, por conta própria, obter as informações desejadas.}
+                    }</elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sobre a possível incompetência do Juizado Especial para julgar a demanda devido a necessidade de prova pericial, o artigo 370 do NCPC e o artigo 5º da Lei 9.099/95 preconizam que o juiz é livre para determinar as provas a serem produzidas, indeferindo às que entender meramente protelatórias, mostrando-se desnecessária a prova pericial, vez que a invalidez do Recorrido está plenamente caracterizada nos autos. Ademais, havendo pagamento na via administrativa, pois, de certa forma, tal fato mostra que a Seguradora concordou com a existência da invalidez permanente e do próprio nexo causal desta com o acidente automobilístico.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        É o entendimento do Superior Tribunal de Justiça na Súmula nº 474/STJ, que reza que seja aplicada a proporcionalidade nos casos de invalidez parcial: #:I{#:B{“Súmula 474: A indenização do seguro DPVAT, em caso de invalidez parcial do beneficiário, será paga de forma proporcional ao grau da invalidez”}}.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Ademais, a jurisprudência estadual norteia a apreciação da matéria neste sentido:}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        AGRAVO REGIMENTAL EM APELAÇÃO CÍVEL. CIVIL E PROCESSO CIVIL. AÇÃO DE COBRANÇA DE SEGURO DPVAT. INVALIDEZ E DEFORMIDADE PERMANENTES. NEXO CAUSAL. COMPROVAÇÃO. CONJUNTO PROBATÓRIO COMPROVANDO A INVALIDEZ PERMANENTE DO AUTOR. LAUDO DO IML. SÚMULA 474 STJ. APLICAÇÃO DA TABELA DE QUANTIFICAÇÃO DO VALOR DA INDENIZAÇÃO. CONDENAÇÃO PROPORCIONAL À LESÃO SOFRIDA. JUROS DE MORA. CORREÇÃO MONETÁRIA. MATÉRIA DE ORDEM PÚBLICA.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I. Obrigatório é o pagamento à vítima de acidente automobilístico, na modalidade invalidez permanente, desde que reste devidamente comprovado o grau das lesões permanentes ou incapacitantes que acometeram o sinistrado, por ser requisito legal para o recebimento da indenização do seguro pessoal (DPVAT).
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        II. #:B{#:B{Na hipótese de invalidez permanente parcial, a indenização deve ser proporcional à extensão do dano experimentado, com fundamento na Medida Provisória nº. 451 /2008, convertida na Lei nº. 11.945 /2009, bem como nos termos do enunciado da Súmula nº 474, do STJ.
+                    }}</elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        III. Na condenação ao pagamento de honorários advocatícios deve ponderar o magistrado aspectos objetivos e subjetivos ligados à causa em si, observando, para tanto, os limites previstos no art. 20 do CPC, de modo que os honorários advocatícios.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        IV. A correção monetária, nesses casos, como meio de manter atualizado o poder aquisitivo da moeda, deve incidir a partir da data do sinistro.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        V. Os juros legais, nesse caso, devem incidir a partir da citação, oportunidade em que a seguradora foi constituída em mora, cujo percentual é de 1% (um por cento) ao mês (CC, art. 405). Inteligência do enunciado da Súmula n.º 426 do STJ.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        VI. Agravo Regimental conhecido e desprovido.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{(TJMA. QUARTA CÂMARA CÍVEL. AGRAVO REGIMENTAL nº 0437502015 na Apelação Cível nº 0027769-73.2013.8.10.0001- SÃO LUÍS/MA. Relator Substituto: Dr. LUIZ GONZAGA ALMEIDA FILHO. J. 27/10/2015)}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        AGRAVO REGIMENTAL. SEGURO DPVAT. INDENIZAÇÃO ARBITRADA. MANUTENÇÃO. INVALIDEZ PERMANENTE. VALOR ADSTRITO AOS PARÂMETROS DA QUANTIFICAÇÃO DA INVALIDEZ DETERMINADO NA LEI N.º 11.482/2007 E PELA TABELA ANEXA INCLUÍDA PLA LEI N.º 11.945/2009, ASSIM COMO PELO LAUDO MÉDICO JUNTADO. PEDIDO DE SUSPENSÃO DO PROCESSO ATÉ JULGAMENTO FINAL DAS ADIN"S N.º 4.350 E N.º 4.627. ACÓRDÃO TRANSITADO EM JULGADO NO E. STF. IMPROCEDÊNCIA. AGRAVO IMPROVIDO.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I - Configurado o dano e o nexo de causalidade, é devida a indenização securitária nos parâmetros da norma vigente à época do sinistro. #:I{#:B{Aplica-se a tabela reducente ao caso concreto, sem perder de vista a dignidade da pessoa humana e a proporcionalidade da medida. Precedentes.
+                    }}</elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{#:B{II - No caso dos autos, o pagamento de seguro DPVAT resulta razoável no valor de R$ 1.417,50 (um mil quatrocentos e dezessete reais e cinquenta centavos), vez que está em consonância com o valor indenizatório fixado para lesões em membro inferior (R$ 13.500 x 70%=R$ 9.450,00), diminuído do percentual de lesão sofrida pelo Autor (R$ 9.450,00 x 40%=R$ 3.780,00), bem como diluído do valor já recebido administrativamente pelo Agravante, no valor de R$ 2.362,50 (R$ 3.780,00 - R$ 2.362,50=R$ 1.417,50).}}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        III - Em decisão exarada pelo E. Relator da ADIN n.º 4.627, o Ministro Luiz Fux, determinou o sobrestamento dos incidentes de inconstitucionalidade que tramitam nos Tribunais Estaduais em que são questionados os mesmo dispositivos legais impugnados na Ação Direta de Inconstitucionalidade n. 4.350 e n. 4.627, até o julgamento final das citadas ações pelo Plenário desta Corte. Ocorre que as supracitadas Ações Diretas de Inconstitucionalidade foram, por maioria, julgadas improcedentes. Não havendo mais discussão sobre a constitucionalidade das supracitadas leis, o pedido de sobrestamento da presente ação não merece guarida judicial.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        IV - Agravo improvido.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        (TJMA. QUINTA CÂMARA CÍVEL. AGRAVO REGIMENTAL n.º 26.688/2014 - Imperatriz. Rel. Desa. MARIA DAS GRAÇAS DE CASTRO DUARTE MENDES. J. 23/02/2015)
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com efeito, o acidente ocorreu durante a vigência da Lei nº 11.945/2009, tornando obrigatória a análise da proporcionalidade da invalidez do segurado.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Por isso, a indenização deve atender o proporcional ao seu grau de invalidez, e a perícia médica realizada constatou que ocorreram danos #:B{no punho} da parte requerente, com percentual de perda de #:B{50 % (cinquenta por cento)}. A lei não contém palavras inúteis e o sentido daquele dispositivo ao usar o termo "até" é justamente indicar a quantificação das lesões e percentuais de tabela para fins de DPVAT. Se esse seguro sempre fosse pago em seu valor integral sequer haveria utilidade para tal disposição.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como não houve perda completa do membro, conforme laudo médico não impugnado, #:B{ocorrendo perda da mobilidade parcial}, a parte requerente faz jus ao o pagamento de #:B{50 % }sobre o 25 % que a lei prevê da indenização total do seguro DPVAT em caso de lesão #:B{no punho}, ou seja, o que equivale a #:B{R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos) (R$ 13.500,00 x 25% x 50%)} quantia esta comprovadamente já adimplida pela seguradora na via administrativa.
+                    </elemento> 
+                    <elemento tag="h1" scope="NONE" class="p FntModDefault heading" > 
+                         #:B{DISPOSITIVO}
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Desta feita, tendo o pagamento administrativo sido efetuado com sucesso, #:B{JULGO IMPROCEDENTE A RECLAMAÇÃO, com fulcro no art. 487, I, do Novo Código de Processo Civil}. Dou esta publicada e registrada com o lançamento no Sistema. Intimem-se as partes. #:B{Transitado em julgado, dê-se baixa e arquive-se.}
+                    </elemento> 
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItDPVATImprocedenciaAusentReq" label="Improcedência | Ausência de Requerimento Administrativo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório conforme disposto no artigo 38 da Lei 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Inicialmente destaco a minha convicção pessoal que externei nas primeiras sentenças sobre o tema, a de que a ameaça ou lesão a direito aptas a ensejar a necessidade de manifestação judiciária do Estado só se caracterizam após o prévio requerimento administrativo. Posteriormente em outros processos, e diante da manifestação, até então dominante do Egrégio Tribunal de Justiça do Estado do Maranhão, decidi, ressalvando meu entendimento, por acompanhar o posicionamento das Turmas Cíveis, conferindo procedência ao pedido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Todavia, recentemente tomei conhecimento que o Supremo Tribunal Federal acolheu meu entendimento esposado desde as primeiras sentenças, em julgamento de dois recursos (Recurso Extraordinário nº 839.314/Maranhão e Recurso Extraordinário nº 839.353/Maranhão), o que encampo, definitivamente e não revela mudança alguma de meu posicionamento, mas apenas a prevalência daquele desde o início manifestado.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sendo assim, da análise do acervo probatório verifico que inexiste nos autos prova de que a indenização pleiteada pela parte autora foi negada pela Seguradora Ré na via administrativa, não havendo que se falar em pretensão resistida a justificar a propositura da presente demanda. O consectário lógico desta afirmação é o fato de que falta uma das condições da presente ação ordinária, qual seja, o interesse processual (art. 17 do CPC/2015). Visto que, se a presente demanda pode ser resolvida pela via administrativa, sem a necessidade da intervenção judicial, não há interesse de agir envolvido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Embora não se desconheça o entendimento em sentido contrário, entendo que, na espécie, não incide o princípio da inafastabilidade da jurisdição, tendo em vista a ausência de lesão ou ameaça de lesão a direito do requerente, mormente porque dito princípio prevê que: #:B{#:I{#:I{"a lei não excluirá da apreciação do Pode Judiciário LESÃO OU AMEAÇA A DIREITO"}}}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Ora, o entendimento extraído de tal afirmação é o de que o Judiciário seria instância cabível apenas quando configurada a lesão ou ameaça a direito. Data vênia, entendimento no sentido contrário nos transforma em meros cobradores de obrigações que a parte interessada não quis buscar pelas vias regulares, conduta que abarrota as prateleiras do Poder Judiciário, com lides desnecessárias.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Não pretendo com a presente decisão exigir o esgotamento das vias administrativas, porém deve ser demonstrado nos autos que tais vias foram minimamente provocadas, obtendo-se como resultado prático a negativa do pagamento da indenização, fato este que origina a pretensão resistida, configurando a necessidade de intervenção do Judiciário.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O Supremo Tribunal Federal, em recente julgado, decidiu neste sentido, senão vejamos:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        “RECURSO EXTRAORDINÁRIO. CIVIL E PROCESSUAL CIVIL. DPVAT. NECESSIDADE DE PRÉVIO REQUERIMENTO ADMINISTRATIVO. INEXISTÊNCIA DE INTERESSE DE AGIR. MATÉRIA COM REPERCUSSÃO GERAL JULGADA PELO PLENÁRIO DO STF NO RE 631.240-RG. 1. #:B{#:I{O estabelecimento de condições para o exercício do direito de ação é compatível com o princípio do livre acesso ao Poder Judiciário, previsto no art. 5.º, XXXV, da Constituição Federal, conforme firmado pelo Plenário da Corte no julgamento de repercussão geral reconhecida nos autos do RE 631.240, Rel. Min. Roberto Barroso. 2. A ameaça ou lesão a direito aptas a ensejar a necessidade de manifestação judiciária do Estado só se caracteriza após o prévio requerimento administrativo, o qual não se confunde com o esgotamento das instâncias administrativas}}. 3. In casu, o acórdão recorrido assentou: “2. Inexiste uma das condições da ação, pois que não houve indícios de que fora realizado qualquer pedido administrativo perante a Seguradora reclamada. 3. Inexiste necessidade do pronunciamento judicial, pois não havendo que se falar em pretensão resistida a justificar a propositura da presente demanda, não há o interesse de se ingressar com a demanda em juízo.” 4.Recurso DESPROVIDO.” (RECURSO EXTRAORDINÁRIO 839.314 MARANHÃO. RELATOR : MIN. LUIZ FUX. Dj 10.10.14)(Destaques e grifos não originais)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Ainda sobre o tema, colaciono o seguinte precedente jurisprudencial:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        “RECURSO EXTRAORDINÁRIO. CIVIL E PROCESSUAL CIVIL. DPVAT. NECESSIDADE DE PRÉVIO REQUERIMENTO ADMINISTRATIVO. INEXISTÊNCIA DE INTERESSE DE AGIR. MATÉRIA COM REPERCUSSÃO GERAL JULGADA PELO PLENÁRIO DO STF NO RE 631.240. RECURSO DESPROVIDO. DECISÃO: Trata-se de recurso extraordinário, interposto por WELHO LOPES DEOLIVEIRABEZERRA, com fundamento no art. 102, III, a, da Constituição Federal, contra acórdão da Turma Recursal Única Cível e Criminal da Comarca de Imperatriz/MA, assim ementado (fl. 157): "SÚMULA DO JULGAMENTO. RECURSO INOMINADO. SEGURO DPVAT. PEDIDO ADMINISTRATIVO NÃO DEMONSTRADO. CARÊNCIA DE AÇÃO. AUSÊNCIA DE INTERESSE DE AGIR DE OFÍCIO. EXTINÇÃO SEM RESOLUÇÃO DO MÉRITO. POR UNANIMIDADE. 1.#:B{#:I{ Inexiste uma das condições da ação, pois não há indício de que fora realizado qualquer pedido administrativo. 2. Princípio da inafastabilidade da jurisdição. As garantias constitucionais devem se submeter às normas infraconstitucionais do direito processual, neste caso, a falta de interesse processual. 3. Necessidade do prévio requerimento administrativo, gerando a pretensão resistida e configurando a necessidade de intervenção do Poder Judiciário}}. 4. Sendo a condição da ação matéria de ordem pública, pode ser examinada ex officio e a qualquer tempo ou grau de jurisdição, inclusive pelas Turmas Recursais. 5. Reconhecimento, de ofício, da falta de interesse de agir e extinção do processo, sem resolução do mérito, nos termos do art. 267, VI, do CPC, excluindo-se a condenação porventura fixada em sentença. 6. Sem condenação em custas e honorários advocatícios. 7. Por unanimidade".” (RECURSO EXTRAORDINÁRIO 839.353 MARANHÃO. RELATOR : MIN. LUIZ FUX. Dj 06.02.15)(Destaque e grifos não originais)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Por essas razões, entendo que na ausência de requerimento administrativo, deve-se reconhecer a ausência de interesse de agir.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Ante o exposto, e tudo mais que dos autos consta, caracterizada a falta de interesse de agir, #:B{#:I{JULGO EXTINTO}} o processo, sem resolução do mérito, na forma do art. 487, I e VI, do CPC/2015.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas, nem honorários advocatícios, conforme art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Após o trânsito em julgado, arquivem-se os presentes autos fazendo-se as devidas baixas e anotações.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publique-se. Registre-se. Intime-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItDPVATAutomatizada" label="Automatizada" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" id="prolog:MiniRelatorio" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        <elemento tag="span" scope="NONE"> 
+                           Trata-se de #:B{#{j2.env.PJeVars.processo.classe}(#{j2.env.PJeVars.processo.assuntos}}) proposta por 
+                           #:B{#{j2.env.PJeVars.partes.ativa.nome}} contra a #:B{#{j2.env.PJeVars.partes.passiva.nome}}, 
+                           qualificados nos autos, com fulcro na Lei nº 6.194/74, 
+                           visando o recebimento da importância de #:B{#{j2.env.PJeVars.processo.valorDaCausa}}, referente</elemento>
+                        <elemento tag="span" scope="NONE" id="causa_naturezaPagamento" > a complementação de pagamento</elemento>
+                        <elemento tag="span" scope="NONE" > do seguro DPVAT.</elemento>
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" id="prolog:justicaGratuita" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Defiro o pedido de gratuidade de justiça (Art. 98 do NCPC).}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Dispensado o RELATÓRIO} na forma do artigo 38 da Lei n. 9099/95.
+                    </elemento> 
+                    
+                    <!-- NO VARIABLE AUTOMATION AT THIS POINT FOWARD -->
+                    <elemento tag="p" scope="NONE" class="p FntModDefault TopicoAtoJudicial" > 
+                        #:B{DO MÉRITO}
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No caso vertente, o fato constitutivo do direito da parte requerente (o acidente de trânsito) ocorreu em 
+                        #:span@causa_dataAcidentespan{03 de julho de 2016}, estando, portanto, vinculado às disposições da Lei nº 11.045/2009, 
+                        que disciplina o valor a ser pago em decorrência de danos pessoais cobertos pelo seguro DPVAT.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Neste sentido, merece destaque o descrito nos incisos I a II do § 1o do art. 3o da Lei n.° 6.194/74, com redação dada pela Lei n.° 11.945/2009, ex vi: 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I  - quando se tratar de invalidez permanente parcial completa, a perda anatômica ou funcional será diretamente enquadrada em um dos segmentos orgânicos ou corporais previstos na tabela anexa. Correspondendo a indenização ao valor resultante da aplicação do percentual ali estabelecido ao valor máximo da cobertura; e (Incluído pela Lei n° 11.945, de 2009). (Produção de efeitos). 
+                        #:BR{ }II- quando se tratar de invalidez permanente parcial incompleta, será efetuado o enquadramento da perda anatômica ou funcional na forma prevista no inciso I deste parágrafo, procedendo-se, em seguida, à redução proporcional da indenização que corresponderá a 75% (setenta e cinco por cento) para as perdas de repercussão intensa, 50% (cinquenta por cento) para as de média repercussão, 25% (vinte e cinco por cento) para as de leve repercussão, adotando-se ainda o percentual de"T 0% (dez por cento), nos casos de sequelas residuais. (Incluído pela Lei n° 11.945, de 2009). (Produção de efeitos). 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dessa forma, a lei passou a classificar as lesões diretamente decorrentes de acidente automobilístico, não suscetíveis de recuperação, em total e parcial, subdividindo a invalidez permanente parcial em completa e incompleta, conforme a extensão das perdas anatômicas ou funcionais. Determinou, ainda, que em caso de invalidez permanente parcial completa, a perda anatômica ou funcional será diretamente enquadrada em um dos segmentos orgânicos ou corporais previstos na tabela anexa, correspondendo a indenização ao valor do percentual ali previsto, e, na hipótese de invalidez permanente parcial incompleta, após o enquadramento da perda anatômica ou funcional, #:B{haverá a redução proporcional da indenização, que corresponderá a 75% para as perdas de repercussão intensa, 50% para as de média repercussão, 25% para as de leve repercussão e 10% nos casos de sequelas residuais}.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Destaco, sem desconsiderar os entendimentos em sentido contrário, que a gradação estabelecida na Lei possui constitucionalidade evidente, não havendo qualquer ofensa aos princípios assegurados pela Constituição Federal, pois em nada fere a dignidade da pessoa humana e reafirma o princípio da igualdade, na medida que garante o tratamento diferenciado a cada pessoa nos exatos limites de suas desigualdades. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sobre o tema, o plenário do Supremo Tribunal Federal (STF), em 23/10/2014, proferindo decisão vinculante, considerou constitucionais as alterações na legislação sobre o Seguro Obrigatório de Danos Pessoais causados por Veículos Automotores de Via Terrestre (DPVAT) questionadas nas Ações Diretas de Inconstitucionalidade (ADI) 4627 e 4350. Assim, #:B{as leis de DPVAT não afrontaram qualquer preceito constitucional e devem ser aplicadas na íntegra}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O Superior Tribunal de Justiça inclusive já pacificou a questão, afirmando-se a legalidade do pagamento do seguro com base em tal gradação mediante a edição da Súmula nº 474: #:B{“A indenização do seguro DPVAT, em caso de invalidez parcial do beneficiário, será paga de forma proporcional ao grau da invalidez.”} 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Então, colocou-se um ponto final na controvérsia sobre a necessidade ou possibilidade da graduação da invalidez permanente, pois ficou estabelecido, com a alteração na redação do art. 3º, da Lei nº 6.194/74 pela MP 451 (hoje Lei nº 11.945/2009) novos critérios para pagamento da indenização por invalidez permanente devido pelo Seguro DPVAT. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Assim, está previsto em Lei graus diferenciados de invalidez permanente, classificados em total ou parcial, esta última subdividida em completa e incompleta, assim como inserida tabela para disciplinar os percentuais das perdas à cobertura securitária.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deste modo, nos sinistros cobertos pelo seguro DPVAT verificados posteriormente a edição da MP nº 451 transformada na Lei nº 11.945/2009, ou seja, #:B{para os sinistros ocorridos após 15/12/2008, para a liquidação do sinistro, em casos de invalidez permanente, total ou parcial, aplicar-se-á a regra do art. 3º}, com a sua nova redação, #:B{inclusive os percentuais sobre o valor máximo} da indenização em vigor, conforme o local, o tipo e a gravidade da perda ou redução de funcionalidade contidos na tabela anexa à lei.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como sabido, a indenização do seguro obrigatório - DPVAT - deve guardar e obedecer às exigências de “comprovação do fato” e do “direito a sua percepção” (legitimidade), contidas nas normas legais pertinentes.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como sabido, a indenização do seguro obrigatório - DPVAT - deve guardar e obedecer às exigências de “comprovação do fato” e do “direito a sua percepção” (legitimidade), contidas nas normas legais pertinentes.
+                    </elemento>
+                    
+                    <!-- VARIABLE WARNING -->
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No caso em análise a existência do fato é irrefutável, assim como o nexo causal e o dano (invalidez), 
+                        estando preenchidos os requisitos exigidos pelo artigo 5º da norma acima citada. 
+                        Consta nos autos o #:B{boletim de ocorrência datado de #:span@causa_BOData{03/07/2016}, prontuário do Hospital 
+                        municipal confirmando entrada do autor no dia #:span@causa_HospitalEntradaData{03/07/2016}}, tendo como causa acidente de 
+                        trânsito}. Tais documentos não deixam dúvida quanto à existência do acidente trânsito e das 
+                        lesões causados ao requerente em sua decorrência. 
+                    </elemento>
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        <elemento tag="span" scope="NONE"> Reforçando que também se extrai dos autos, conforme consta na petição inicial, </elemento>
+                        <elemento tag="span" scope="NONE" id="causa_ConsideracaoPagamento"> 
+                            #:B{que houve pagamento parcial do seguro obrigatório para a parte reclamante}, todavia, ainda, que em caráter parcial, o pagamento demonstra o reconhecimento por parte da própria seguradora da existência de invalidez permanente da parte reclamante oriunda de acidente de trânsito. 
+                        </elemento>
+                    </elemento>
+                    
+                    <!-- NO VARIABLE AUTOMATION AT THIS POINT FOWARD -->
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Incumbe no momento a verificação se o pagamento ocorreu na forma determinada pela legislação pertinente, constante no anexo abaixo:
+                    </elemento>
+                                      
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        TABELA
+                    </elemento>
+                    
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{DISPOSITIVO}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Desta feita, #:B{JULGO PARCIALMENTE PROCEDENTE A RECLAMAÇÃO}, #:B{com fulcro no art. 487, I, do Novo Código de Processo Civil para condenar a seguradora requerida ao pagamento da quantia de R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos)}. Dou esta publicada e registrada com o lançamento no Sistema. Intimem-se as partes.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O valor da condenação deverá ser corrigido monetariamente a partir da data do pagamento inferior e acrescido de juros de 1% (um por cento) ao mês incidentes a partir da citação. #:B{Aplica-se a multa de 10% (dez por cento) caso não seja efetuado o pagamento da cifra reparatória dentro de 15 (quinze) dias após o trânsito em julgado da sentença (art. 523, § 3º, do CPC), sem a necessidade de nova intimação para efetuar o pagamento}. A correção monetária será calculada de acordo com Índice Nacional de Preços ao Consumidor - INPC/IBGE.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Em caso de pagamento voluntário, expeça-se alvará. Sem pedido de execução em 30 (trinta) dias após o trânsito em julgado, arquive-se.}
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItDPVATProcedenciaParcial" label="Procedência Parcial" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                         Vistos, etc.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Defiro o pedido de gratuidade de justiça (Art. 98 do NCPC).}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{RELATÓRIO}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório conforme disposto no artigo 38 da Lei 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{FUNDAMENTAÇÃO}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A parte requerente sofreu acidente de trânsito e informa que recebeu o pagamento administrativo parcial no valor de #:I{R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos)}, o qual entende que deve ser complementado.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em sua defesa a seguradora afirmou que já realizou o pagamento total dos valores devidos.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deve ser verificado se a parte autora faz jus a algum outro valor correspondente à lesão ocasionada pelo acidente.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{#:I{De início, indefiro as diligências solicitadas pela seguradora, uma vez que são procrastinatórias, devendo ser observado os Princípios da Simplicidade e Celeridade atinentes aos Juizados Especiais, e em virtude da própria requerida ter possibilidades de, por conta própria, obter as informações desejadas.}}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sobre a possível incompetência do Juizado Especial para julgar a demanda devido a necessidade de prova pericial, o artigo 370 do NCPC e o artigo 5º da Lei 9.099/95 preconizam que o juiz é livre para determinar as provas a serem produzidas, indeferindo às que entender meramente protelatórias, mostrando-se desnecessária a prova pericial, vez que a invalidez do Recorrido está plenamente caracterizada nos autos. Ademais, havendo pagamento na via administrativa, pois, de certa forma, tal fato mostra que a Seguradora concordou com a existência da invalidez permanente e do próprio nexo causal desta com o acidente automobilístico.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        É o entendimento do Superior Tribunal de Justiça na Súmula nº 474/STJ, que reza que seja aplicada a proporcionalidade nos casos de invalidez parcial: #:B{#:I{#:I{“Súmula 474: A indenização do seguro DPVAT, em caso de invalidez parcial do beneficiário, será paga de forma proporcional ao grau da invalidez”}}}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Ademais, a jurisprudência estadual norteia a apreciação da matéria neste sentido:
+                    }</elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        AGRAVO REGIMENTAL EM APELAÇÃO CÍVEL. CIVIL E PROCESSO CIVIL. AÇÃO DE COBRANÇA DE SEGURO DPVAT. INVALIDEZ E DEFORMIDADE PERMANENTES. NEXO CAUSAL. COMPROVAÇÃO. CONJUNTO PROBATÓRIO COMPROVANDO A INVALIDEZ PERMANENTE DO AUTOR. LAUDO DO IML. SÚMULA 474 STJ. APLICAÇÃO DA TABELA DE QUANTIFICAÇÃO DO VALOR DA INDENIZAÇÃO. CONDENAÇÃO PROPORCIONAL À LESÃO SOFRIDA. JUROS DE MORA. CORREÇÃO MONETÁRIA. MATÉRIA DE ORDEM PÚBLICA.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I. Obrigatório é o pagamento à vítima de acidente automobilístico, na modalidade invalidez permanente, desde que reste devidamente comprovado o grau das lesões permanentes ou incapacitantes que acometeram o sinistrado, por ser requisito legal para o recebimento da indenização do seguro pessoal (DPVAT).
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        II. Na hipótese de invalidez permanente parcial, a indenização deve ser proporcional à extensão do dano experimentado, com fundamento na Medida Provisória nº. 451 /2008, convertida na Lei nº. 11.945 /2009, bem como nos termos do enunciado da Súmula nº 474, do STJ.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        III. Na condenação ao pagamento de honorários advocatícios deve ponderar o magistrado aspectos objetivos e subjetivos ligados à causa em si, observando, para tanto, os limites previstos no art. 20 do CPC, de modo que os honorários advocatícios.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        IV. A correção monetária, nesses casos, como meio de manter atualizado o poder aquisitivo da moeda, deve incidir a partir da data do sinistro.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        V. Os juros legais, nesse caso, devem incidir a partir da citação, oportunidade em que a seguradora foi constituída em mora, cujo percentual é de 1% (um por cento) ao mês (CC, art. 405). Inteligência do enunciado da Súmula n.º 426 do STJ.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        VI. Agravo Regimental conhecido e desprovido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        (TJMA. QUARTA CÂMARA CÍVEL. AGRAVO REGIMENTAL nº 0437502015 na Apelação Cível nº 0027769-73.2013.8.10.0001- SÃO LUÍS/MA. Relator Substituto: Dr. LUIZ GONZAGA ALMEIDA FILHO. J. 27/10/2015)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        AGRAVO REGIMENTAL. SEGURO DPVAT. INDENIZAÇÃO ARBITRADA. MANUTENÇÃO. INVALIDEZ PERMANENTE. VALOR ADSTRITO AOS PARÂMETROS DA QUANTIFICAÇÃO DA INVALIDEZ DETERMINADO NA LEI N.º 11.482/2007 E PELA TABELA ANEXA INCLUÍDA PLA LEI N.º 11.945/2009, ASSIM COMO PELO LAUDO MÉDICO JUNTADO. PEDIDO DE SUSPENSÃO DO PROCESSO ATÉ JULGAMENTO FINAL DAS ADIN"S N.º 4.350 E N.º 4.627. ACÓRDÃO TRANSITADO EM JULGADO NO E. STF. IMPROCEDÊNCIA. AGRAVO IMPROVIDO.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I - Configurado o dano e o nexo de causalidade, é devida a indenização securitária nos parâmetros da norma vigente à época do sinistro. Aplica-se a tabela reducente ao caso concreto, sem perder de vista a dignidade da pessoa humana e a proporcionalidade da medida. Precedentes.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        II - No caso dos autos, o pagamento de seguro DPVAT resulta razoável no valor de R$ 1.417,50 (um mil quatrocentos e dezessete reais e cinquenta centavos), vez que está em consonância com o valor indenizatório fixado para lesões em membro inferior (R$ 13.500 x 70%=R$ 9.450,00), diminuído do percentual de lesão sofrida pelo Autor (R$ 9.450,00 x 40%=R$ 3.780,00), bem como diluído do valor já recebido administrativamente pelo Agravante, no valor de R$ 2.362,50 (R$ 3.780,00 - R$ 2.362,50=R$ 1.417,50).
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        III - Em decisão exarada pelo E. Relator da ADIN n.º 4.627, o Ministro Luiz Fux, determinou o sobrestamento dos incidentes de inconstitucionalidade que tramitam nos Tribunais Estaduais em que são questionados os mesmo dispositivos legais impugnados na Ação Direta de Inconstitucionalidade n. 4.350 e n. 4.627, até o julgamento final das citadas ações pelo Plenário desta Corte. Ocorre que as supracitadas Ações Diretas de Inconstitucionalidade foram, por maioria, julgadas improcedentes. Não havendo mais discussão sobre a constitucionalidade das supracitadas leis, o pedido de sobrestamento da presente ação não merece guarida judicial.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        IV - Agravo improvido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        (TJMA. QUINTA CÂMARA CÍVEL. AGRAVO REGIMENTAL n.º 26.688/2014 - Imperatriz. Rel. Desa. MARIA DAS GRAÇAS DE CASTRO DUARTE MENDES. J. 23/02/2015)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com efeito, o acidente ocorreu durante a vigência da Lei nº 11.945/2009, tornando obrigatória a análise da proporcionalidade da invalidez do segurado.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A indenização deve atender o proporcional ao seu grau de invalidez, e a perícia médica realizada constatou que ocorreu #:B{perda completa da mobilidade do punho da parte requerente}. A lei não contém palavras inúteis e o sentido daquele dispositivo ao usar o termo "até" é justamente indicar a quantificação das lesões e percentuais de tabela para fins de DPVAT. Se esse seguro sempre fosse pago em seu valor integral sequer haveria utilidade para tal disposição.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Conforme laudo médico não impugnado, a parte requerente faz jus ao o pagamento de #:B{25%} sobre o total que a lei prevê para indenização do seguro DPVAT, ou seja, o que equivale a #:B{R$ 3.375,00 (três mil e trezentos e setenta e cinco reais) (R$ 13.500,00 x 25%)}. Administrativamente a seguradora adimpliu R$ 1.687,50, logo, resta para a parte promovente receber mais #:B{R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos)}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{DISPOSITIVO}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Desta feita, #:B{JULGO PARCIALMENTE PROCEDENTE A RECLAMAÇÃO}, #:B{com fulcro no art. 487, I, do Novo Código de Processo Civil para condenar a seguradora requerida ao pagamento da quantia de R$ 1.687,50 (mil e seiscentos e oitenta e sete reais e cinquenta centavos)}. Dou esta publicada e registrada com o lançamento no Sistema. Intimem-se as partes.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O valor da condenação deverá ser corrigido monetariamente a partir da data do pagamento inferior e acrescido de juros de 1% (um por cento) ao mês incidentes a partir da citação. #:B{Aplica-se a multa de 10% (dez por cento) caso não seja efetuado o pagamento da cifra reparatória dentro de 15 (quinze) dias após o trânsito em julgado da sentença (art. 523, § 3º, do CPC), sem a necessidade de nova intimação para efetuar o pagamento}. A correção monetária será calculada de acordo com Índice Nacional de Preços ao Consumidor - INPC/IBGE.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Em caso de pagamento voluntário, expeça-se alvará. Sem pedido de execução em 30 (trinta) dias após o trânsito em julgado, arquive-se.}
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoInepciaDocumentoFiscal" label="Inépcia | Documento Fiscal" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Trata-se de #{j2.env.PJeVars.processo.classe} processada pelo rito da Lei dos Juizados 
+                        Especiais (Lei nº 9.099/95) proposta por 
+                        #:B{#{j2.env.PJeVars.partes.ativa.nome}} contra a #:B{#{j2.env.PJeVars.partes.passiva.nome}}, 
+                    </elemento>
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório nos termos do artigo 38 da Lei supracitada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Passa-se a decidir.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsando os presentes autos, verifica-se que a Parte Promovente foi #:B{intimada para anexar aos autos, no prazo de 5 (cinco) dias, documentos que comprovem a sua qualificação tributaria atualizada e documento fiscal referente ao negócio jurídico objeto da demanda, conforme estabelecido pelo Enunciado 135 do FONAJE}. Contudo, até a presente data, cumpriu a determinação apenas parcialmente, visto que deixou de anexar o documento fiscal referente ao negócio jurídico objeto da demanda.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Prescreve o art. 320 do Novo Código de Processo Civil que a petição inicial será instruída com os documentos indispensáveis à propositura da ação, sendo que conforme parágrafo único do artigo 321, a petição inicial será indeferida quando não for cumprida a diligência. Foi o que ocorreu no presente feito, uma vez que a parte promovente não atendeu integralmente às determinações dos autos.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicado e Registrado com o lançamento no sistema PJe. Intimem-se. Anote-se no mapa de captação mensal.
+                    </elemento>
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="sentItExtincaoAbandono" label="Abandono 30 dias" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Trata-se de #{j2.env.PJeVars.processo.classe} processada pelo rito da Lei dos Juizados 
+                        Especiais (Lei nº 9.099/95) proposta por 
+                        #:B{#{j2.env.PJeVars.partes.ativa.nome}} contra a #:B{#{j2.env.PJeVars.partes.passiva.nome}}, 
+                    </elemento>
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório nos termos do artigo 38 da Lei supracitada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Passa-se a decidir.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsando os presentes autos, verifica-se que a Parte #{j2.env.PJeVars.processo.polos.parteAtiva} foi intimada a cumprir diligência e/ou se manifestar nos autos, contudo, manteve-se inerte até a presente data, sem apresentar qualquer tipo de manifestação e/ou cumprimento à determinação.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Prescreve o art. 485, em seu inciso III, do Novo Código de Processo Civil que se extingue o processo quando, por não promover os atos e diligências que lhe competir, o autor abandonar a causa por mais de trinta dias, foi o que ocorreu no presente feito, vez que o promovente não atendeu às determinações dos autos.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A extinção do processo independerá, em qualquer hipótese, de prévia intimação pessoal das partes. (art. 51, § 1º, da Lei n. 9.099). 
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em havendo decisão de deferimento de medida liminar nos presentes autos, #:B{#:U{REVOGO A TUTELA DE URGÊNCIA}} concedida em favor da parte #{j2.env.PJeVars.processo.polos.parteAtiva}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicado e Registrado com o lançamento no sistema PJe. Intimem-se. Anote-se no mapa de captação mensal.
+                    </elemento>
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="sentItExtincaoContumacia2" label="Contumácia" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Trata-se de #{j2.env.PJeVars.processo.classe} processada pelo rito da Lei dos Juizados 
+                        Especiais (Lei nº 9.099/95) proposta por 
+                        #:B{#{j2.env.PJeVars.partes.ativa.nome}} contra a #:B{#{j2.env.PJeVars.partes.passiva.nome}}, 
+                    </elemento>
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório nos termos do artigo 38 da Lei supracitada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Passa-se a decidir.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Apesar de devidamente intimada, a parte autora deixou de comparecer em audiência de conciliação  designada para o feito, sem apresentar qualquer justificativa.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dentre as causas extintivas do feito tem-se o não comparecimento da parte autora em qualquer das audiências do processo, conforme dispõe o art. 51, I, da Lei nº 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:U{#:B{EXTINGO O PROCESSO SEM APRECIAÇÃO DO MÉRITO}}, nos termos do art. 51, inciso I, da Lei nº 9.099/95.
+                    </elemento> 
+                    
+                   
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas ou honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicado e Registrado com o lançamento no sistema PJe. Intimem-se, observados a revelia ou contumácia das partes. Anote-se no mapa de captação mensal.
+                    </elemento>
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento>
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoExecucao" label="Execução" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de #:B{#{j2.env.PJeVars.processo.classe}} processada pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como se verifica nos autos, houve satisfação do crédito ante o levantamento dos valores em depósito judicial vinculado aos presentes autos mediante a expedição de alvará judicial em favor da exequente.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{Assim, deve ser extinta a presente execução face a quitação do débito}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Outrossim, o art. 925, da Lei Adjetiva Civil prescreve que a extinção somente produz os seus feitos, quando declarada por sentença.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dessa maneira, considerando o pagamento do débito, #:B{#:U{JULGO EXTINTA A PRESENTE EXECUÇÃO}}, nos termos do artigo 924, inciso II, do Código de Processo Civil, com aplicação autorizada pelo artigo 52 da Lei 9.099/95.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Intimem-se. Após o trânsito em julgado, dê-se baixa e arquivem-se os autos.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoExecucaoEstorno" label="Execução (estorno)" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de #:B{#{j2.env.PJeVars.processo.classe}} processada pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como se verifica nos autos, o executado realizou o depósito voluntário no valor da condenação (#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}).
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{Assim, considerando que a quantia depositada é suficiente para satisfazer o crédito da reclamante, deve ser extinta a presente execução face o adimplemento do débito.}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Outrossim, o art. 925, da Lei Adjetiva Civil prescreve que a extinção somente produz os seus feitos, quando declarada por sentença.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dessa maneira, considerando o pagamento do débito, #:B{#:U{JULGO EXTINTA A PRESENTE EXECUÇÃO}}, nos termos do artigo 924, inciso II, do Código de Processo Civil, com aplicação autorizada pelo artigo 52 da Lei 9.099/95.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Desconstituo a penhora realizada no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Oficie-se a instituição bancária para transferência dos valores para a conta informada no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Intimem-se. Após o trânsito em julgado, dê-se baixa e arquivem-se os autos.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoExecucaoAlvara" label="Execução (alvará)" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de #:B{#{j2.env.PJeVars.processo.classe}} processada pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como se verifica nos autos, o executado realizou o depósito voluntário no valor da condenação (#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}).
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Devidamente intimado, o exequente requereu a expedição de alvará para levantamento dos valores.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{Assim, considerando que a quantia depositada é suficiente para satisfazer o crédito da reclamante, deve ser extinta a presente execução face o adimplemento do débito.}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Outrossim, o art. 925, da Lei Adjetiva Civil prescreve que a extinção somente produz os seus feitos, quando declarada por sentença.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dessa maneira, considerando o pagamento do débito, #:B{#:U{JULGO EXTINTA A PRESENTE EXECUÇÃO}}, nos termos do artigo 924, inciso II, do Código de Processo Civil, com aplicação autorizada pelo artigo 52 da Lei 9.099/95.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{Expeça-se Alvará Judicial} para levantamento dos valores em favor do exequente.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Intimem-se. Após o trânsito em julgado, dê-se baixa e arquivem-se os autos.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoExecucaoBACENJUD" label="Execução (BACENJUD)" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de #:B{#{j2.env.PJeVars.processo.classe}} processada pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como se verifica nos autos, foi realizado a penhora via BACENJUD do valor integral da dívida no (#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}), não tendo sido opostos embargos.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dessa maneira, #:b{CONVERTO EM PAGAMENTO a importância sob depósito}, no importe de #:U@valorBacenjud.Sentenca{R$ 0,00 (zero)}, e por se tratar de quantia suficiente para satisfazer o crédito do reclamante, #:B{declaro EXTINTO O PRESENTE FEITO}, na forma preceituada no art. 794, II, do CPC.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{Expeça-se Alvará Judicial}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicada com lançamento no sistema. Intimem-se. Após o trânsito em julgado, dê-se baixa e arquivem-se os autos.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoComplexidade" label="Complexidade" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de Reclamação Cível em trâmite pelo rito da lei dos Juizados Especiais na qual a parte autora requer que a reclamada seja condenada a indenizá-la pelos danos morais sofridos.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsando os autos e analisando os documentos a eles acostados, verifica-se a impossibilidade de dirimir a causa posta em juízo, uma vez que a matéria discutida nos autos não se insere entre aquelas de competência dos Juizados Especiais Cíveis (art. 3º, caput, Lei 9099/95), tendo em vista sua #:B{“complexidade”}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A controvérsia gira em torno de problemas com um produto adquirido pelo requerente, sendo imprescindível a produção de perícia com profissional técnico na área para verificação de que o defeito constatado foi ocasionado por mau uso do aparelho ou em razão de vício na sua fabricação.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No âmbito dos Juizados Especiais é impossível a realização de tal perícia, tendo em vista ser incompatível com o procedimento adotado por esta Justiça Especializada, que preza pela celeridade e informalidade deste rito especial (art. 2º, Lei 9099/95).
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A necessidade da produção de prova pericial no presente caso é inconteste, sendo este um meio indispensável para a elucidação do litígio.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        É neste sentido, aliás, a orientação jurisprudencial pátria e em especial a do Estado do Maranhão através da sua Câmara Recursal:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{JUIZADO ESPECIAL. PERÍCIA EM PROCESSO DE SUA COMPETÊNCIA. DESCABIMENTO. A realização de perícia constitui ato processual complexo, incompatível, portanto, com os princípios da simplicidade e informalidade consagrados pela Lei 9.099/95, não constituindo cerceamento de defesa, com efeito, a não apreciação de pedido de exame pericial formulado no âmbito do processo regido pela Lei 9099/95(...)Recurso conhecido porém improvido (Acórdão 976/99 2a Turma Recursal Civel e Criminal – Relator Juiz VICENTE DE PAULA GOMES DE CASTRO)(IN JUIZADOS ESPECIAL DO MARANHÃO PÁG 125 2001) no mesmo sentido acórdão 1404/00 Rel. Juiz Raimundo Moraes Bogea IN IDEM pág.132)}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Assim, diante da impossibilidade de produção de perícia formal em sede dos juizados especiais, sendo tal prova indispensável para a elucidação da lide, #:B{julgo extinto o processo sem apreciação do mérito}, com fulcro no art. 51, II, da Lei 9099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas nem honorários, ex vi, do art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé. Publicada e registrada com o lançamento no Sistema.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Intime-se. Após o trânsito em julgado, dê baixa e arquive-se.
+                    </elemento>
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+
+        <item id="sentItExtincaoDesistencia" label="Deistência" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Vistos etc.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de #:B{#{j2.env.PJeVars.processo.classe}} processada pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório nos termos do artigo 38 da Lei supracitada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Conforme pedido realizado no documento #:b{#:span@docId{XXXNumeroDoDocumentoXXX}}, o Promovente requereu a desistência da referida ação. Com efeito, extingue-se o processo quando o autor desiste da ação, assim como disposto no art. 200, parágrafo único, do Novo Código de Processo Civil.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Tal ato pode ser homologado mesmo sem a anuência do Promovido, como dispõe o Enunciado n. 90 do FONAJE.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante disto, #:B{#:I{HOMOLOGO} a desistência requerida} pelo Promovente e extingo o processo #:I{sem resolução de mérito}, com fulcro no art. 485, VIII, do CPC, aplicável por força do art. 51, caput, da Lei. 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas nem honorários, ex vi, do art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicado e Registrado com o lançamento no sistema PJe. Intimem-se. Anote-se no mapa de captação mensal.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+                        
+        <item id="sentItExtincaoInexistLaudIML" label="Inexistência Laudo IML" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Relatório dispensado a teor do art. 38, da lei nº 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O Juizado Especial Cível é competente para apreciar a matéria relativa a seguro obrigatório quando dos autos existe boletim de ocorrência relatando o sinistro, laudo do IML identificando o grau de invalidez da parte reclamante e nexo de causalidade entre o acidente e dos danos sofridos, inexistindo a comprovação do grau de invalidez o pedido foge da alçada do Juizado Especial Cível.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Precedente:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{“RECURSO INOMINADO. AÇÃO DE COBRANÇA DE COMPLEMENTAÇÃO DE VALOR DE SEGURO DPVAT. PRELIMINAR DE INCOMPETÊNCIA DO JUIZADO ESPECIAL CÍVEL EM RAZÃO DA NECESSIDADE DE PRODUÇÃO DE PROVA PERICIAL. ALEGAÇÃO DE INVALIDEZ PERMANENTE. AUSÊNCIA DE LAUDO DO IML ATESTANDO A INVALIDEZ PERMANENTE. INCOMPETÊNCIA DOS JECC POR NECESSIDADE DE PROVA PERICIAL. RECURSO PROVIDO. EXTINÇÃO DO PROCESSO SEM EXAME DO MÉRITO. - A autora/vítima, em momento algum, juntou aos autos laudo do Instituto de Medicina Legal (IML), atestando sua invalidez permanente. - A falta do laudo do IML impede o reconhecimento da invalidez permanente e, por conseguinte, o direito ao seguro DPVAT, não sendo suficiente o simples Boletim de Ocorrência ou Relatório Médico. - A avaliação da invalidez, nesse contexto, é dependente de prova pericial, o que induz à complexidade e afasta a competência do JEC. Recurso conhecido e provido. Extinção do processo sem exame do mérito. (Recurso Inominado nº 00112009004580, 2ª Turma Recursal dos Juizados Especiais Cíveis e Criminais/PI, Rel. Eliana Márcia Nunes de Carvalho Couto. j. 21.06.2010, unânime, DJ 08.07.2010).}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{CIVIL E PROCESSUAL CIVIL. AÇÃO DE OBRIGAÇÃO DE FAZER. ACIDENTE DE TRÂNSITO. SEGURO OBRIGATÓRIO/DPVAT. QUESTÃO DE ORDEM. NECESSIDADE DE PERÍCIA EMITIDA POR ÓRGÃO COMPETENTE. PRELIMINAR DE INCOMPETÊNCIA DOS JUIZADOS ESPECIAIS. ACOLHIMENTO. 1. Uma vez que não há nos autos laudo médico emitido por perito do órgão competente, no caso o Instituto Médico Legal, e que o Juizado Especial Cível não dispõe de peritos para a realização deste exame, tem-se, neste contexto, que a causa é complexa para ser dirimida no âmbito deste sistema devendo o processo ser extinto sem resolução de mérito; Inteligência do art. 5º, § 5º, da Lei Federal nº 6.194/74 (redação vigente à época do sinistro); 2. Recurso conhecido e provido para reconhecer a complexidade da causa, ante a falta de Laudo pericial emitido por órgão competente, e por consequência a incompetência dos Juizados Especiais Cíveis, para processar e julgar o presente feito, e assim extinguir o processo sem resolução de mérito, nos termos do art. 51, II, da Lei Federal nº 9.099/95; 3. Sem condenação em custas e honorários advocatícios. (Recurso Inominado nº 0024333-84.2009.8.01.0070 (5.262), 1ª Turma Recursal dos Juizados Especiais Cíveis e Criminais/AC, Rel. Mirla Regina da Silva Cutrim. unânime, DJe 21.10.2011).”}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No rito do Juizado Especial Cível, todas as provas são produzidas na audiência de instrução e julgamento, podendo o juiz limitar ou excluir as que entender excessivas, impertinentes ou protelatórias, consoante o disposto no art. 33, da Lei nº 9.099/95:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{“Art. 33. Todas as provas serão produzidas na audiência de instrução e julgamento, #:I{ainda que não requeridas previamente}, podendo o Juiz limitar ou excluir as que considerar excessivas, impertinentes ou protelatórias.”}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Precedente:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        #:B{“O art. 33, da Lei 9.099/95 estabelece que todas as provas serão produzidas na audiência de instrução e julgamento, logo, pensar em sentido contrário, é confrontar os princípios do contraditório e da ampla defesa. (Processo nº 0086000-73.2009.805.0001-1, 2ª Turma Recursal dos Juizados Especiais Cíveis e Criminais/BA, Rel. Nicia Olga Andrade de Souza Dantas. unânime, DJe 18.03.2013).”}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Do exposto, ante a necessidade de produção de perícia técnica ou documento emitido por perito do órgão competente, no caso o Instituto Médico Legal, ausente no caso em espécie, #:B{JULGO EXTINTO O PROCESSO SEM RESOLUÇÃO DO MÉRITO} pela inadmissibilidade do procedimento dos Juizados Especiais Cíveis, art. 51, II, da Lei nº 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas e Honorários. Intimem-se as partes. Arquive-se após o transito em julgado.
+                    </elemento>
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoPericaGrafo" label="Necessidade Pericia Grafotécnica" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Vistos etc.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Defiro o pedido de assistência judiciária gratuita nos termos do artigo 98 do Novo Código de Processo Civil.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do art. 38, da Lei nº 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de Ação Cível processada sob o rito dos juizados especiais.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{A parte reclamante pleiteia declaração de inexistência de débitos decorrentes de contrato de que alega não ter firmado.}
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsando os autos e analisando os documentos a eles acostados, verifica-se de pronto a impossibilidade de dirimir a causa posta em juízo, tendo em vista sua complexidade.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em sua contestação, o réu alegou que o contrato é legítimo e juntou aos autos o instrumento assinado pela parte autora. A controvérsia passa, então, pela realização ou não do contrato, sendo imprescindível a produção de perícia grafotécnica para verificar se a assinatura aposta no documento colacionado ao feito pertence ao requerente, uma vez que este nega a celebração do negócio jurídico.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No âmbito dos Juizados Especiais é impossível a realização de tal perícia, tendo em vista ser incompatível com o procedimento adotado por esta Justiça Especializada. Ademais, deve-se atentar para os princípios que a regem, quais sejam, a simplicidade, informalidade, celeridade processual e economia processual.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        É neste sentido, aliás, a orientação jurisprudencial pátria:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        RECURSO INOMINADO. AÇÃO DE INDENIZAÇÃO POR DANOS MORAIS C/C REPETIÇÃO DO INDÉBITO E PEDIDO DE LIMINAR. DECISÃO A QUO QUE JULGOU EXINTO O PROCESSO SEM RESOLUÇÃO DE MÉRITO. #:B{#:I{COMPLEXIDADE DA MATÉRIA. NECESSIDADE DE PERÍCIA TÉCNICA}}. SENTENÇA QUE SE MANTÉM NA ÍNTEGRA POR SEUS PRÓPRIOS FUNDAMENTOS JURÍDICOS. POR UNAMIDADE. 1. Trata-se de Ação Declaratória de Inexistência de Débito c/c de indenização alega que em 04/08 foi surpreendida ao perceber que haviam feito indevidamente um empréstimo no valor de R$ 2.173,31, em 60 parcelas de R$ 75,24 através do contrato nº 1888331278, sendo indevidamente cobrada por tal quantia. Afirma que não efetuou nenhum empréstimo nem autorizou terceiros a contratarem em seu nome, mostrando-se indevido o contrato celebrado a sua revelia, vindo a tomar conhecimento da ilegalidade somente ao se dirigir ao banco e confirmar o ocorrido junto ao INSS. Tendo efetuado desconto de 31 parcelas no quantum de R$ 2.332,44. 2. Pleiteia liminar para que o requerido se abstenha de efetuar qualquer desconto no beneficio da requerente, sob pena de multa diária de 500,00, repetição do indébito, condenando-se o requerido a devolver em dobro o indevidamente cobrado, no quantum de R$ 4.664,88, condenação em danos morais e a inexigibilidade do débito cobrado. 3. #:B{#:I{Tendo o Banco apresentado o contrato de empréstimo formalizado, o qual segue assinado pela requerente, e diante da negativa do peticionário de que tenha formulado contrato de empréstimo, fica evidente a controvérsia acerca da autenticidade da firma constante nos referidos documentos, não havendo outra forma para dirimir a questão a não ser através de perícia técnica, procedimento este que devido a sua complexidade, impede o processamento e julgamento do feito perante este Juizado Especial. 4. Apesar do art. 35 da Lei dos Juizados Especiais admitir a utilização de prova pericial informal e realizada em audiência, a mesma não pode ser aplicada ao caso, pois o exame grafotécnico é uma perícia técnica, na qual é colhida a assinatura da parte e realizada análise minuciosa por peritos habilitados com a utilização de equipamentos adequados, procedimento este que não pode ser realizado em audiência devido à sua complexidade}}. 5. Processo julgado extinto sem resolução do mérito, com base no art. 51, II da Lei 9.099/95. 6. Votação por unanimidade. 7. Manutenção da sentença por seus próprios fundamentos jurídicos. 8. Recurso da reclamante conhecido e não provido. 9. Condenação da Reclamante, ora Recorrente, no pagamento das custas processuais e nos honorários advocatícios, estes fixados em R$ 500,00 (quinhentos reais), ficando suspenso o seu pagamento em virtude do deferimento do benefício da assistência judiciária gratuita. 10. Súmula de julgamento que serve de acórdão, nos termos do art. 46, parte final, da Lei nº 9.099/95. (TJMA. Turma Recursal Única Cível e Criminal de Imperatriz. Recurso Inominado n. 54/2012-1. Rel. GENIVALDO PEREIRA SILVA. J. 08/08/2012)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        CIVIL. AÇÃO DECLARATÓRIA DE INEXISTÊNCIA DE DÉBITO C/C INDENIZAÇÃO POR DANO MORAL. INCOMPETÊNCIA DOS JUIZADOS ESPECIAIS. NECESSIDADE PERÍCIA GRAFOTÉCNICA. PRELIMINAR ACOLHIDA DE OFICIO. 1. #:B{#:I{O Juizado Especial é incompetente para processar e julgar matéria complexa, haja vista a necessidade de realização de prova pericial grafotécnica, a qual não se coaduna com o art. 3° da Lei 9099/95.}} 2. Sendo assim, imprescindível reconhecer-se, de ofício, a incompetência absoluta do Juizado Especial Cível, cassar a sentença proferida, declarando-se extinto o feito, sem resolução do mérito, com fulcro no art. 51, II, da Lei 9099/95. (TJDFT. 2ª Turma Recursal. ACJ. N. 2007.01.1.140294-2. Rel. ARLINDO MARES. Julgado em: 03/11/2009)
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Desta forma, o processo deve ser extinto, sem apreciação do mérito, por se tratar de matéria complexa.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, tendo em vista a necessidade de realização de prova pericial, incompatível com o procedimento instituído pela Lei regente dos Juizados Especiais, com arrimo no artigo 51, II da Lei 9099/95, #:B{julgo extinto o processo sem apreciação do mérito}. Fica revogada a liminar anteriormente concedida.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicada e registrada com o lançamento no PJe. Intimem-se.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, arquive-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItHomologacaoAcordo" label="Homologação de Acordo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #{j2.env.PJeVars.partes.ativa.nome} em desfavor de #{j2.env.PJeVars.partes.passiva.nome}, visando a homologação do acordo judicial.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do artigo 38 da Lei nº. 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Analisando os autos verifico que as partes realizaram acordo, nos termos da petição/ata juntada em #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Devo considerar a respeito que, uma vez ocorrendo transação entre as partes, a homologação é medida que se impõe.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante do exposto, considerando que as partes transigiram de livre e espontânea vontade, #:B{#:U{HOMOLOGO} por sentença}, para que surta seus jurídicos e legais efeitos, o acordo firmado entre as partes nos termos em que foram estipulados e, em consequência, #:B{JULGO EXTINTO} o processo com apreciação do mérito, nos termos do artigo 487, III, alínea "b" do Código de Processo Civil.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Não existindo previsão de multa nos termos do acordo, aplica-se multa de 30% (trinta por cento) do valor do acordo em caso de descumprimento.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em havendo penhora/restrição, esta fica desse já desconstituída.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em caso de pagamento voluntário, expeça-se alvará.
+                    </elemento>        
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas. Publicada e registrada com o lançamento no sistema PJE. Intime-se. Após o trânsito em julgado arquive-se.
+                    </elemento>        
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="sentItHomologacaoAcordoAJGSim" label="Homologação de Acordo - com AJG" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #{j2.env.PJeVars.partes.ativa.nome} em desfavor de #{j2.env.PJeVars.partes.passiva.nome}, visando a homologação do acordo judicial.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do artigo 38 da Lei nº. 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Analisando os autos verifico que as partes realizaram acordo, nos termos da petição/ata juntada em #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Devo considerar a respeito que, uma vez ocorrendo transação entre as partes, a homologação é medida que se impõe.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante do exposto, considerando que as partes transigiram de livre e espontânea vontade, #:B{#:U{HOMOLOGO} por sentença}, para que surta seus jurídicos e legais efeitos, o acordo firmado entre as partes nos termos em que foram estipulados e, em consequência, #:B{JULGO EXTINTO} o processo com apreciação do mérito, nos termos do artigo 487, III, alínea "b" do Código de Processo Civil.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Não existindo previsão de multa nos termos do acordo, aplica-se multa de 30% (trinta por cento) do valor do acordo em caso de descumprimento.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em havendo penhora/restrição, esta fica desse já desconstituída.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em caso de pagamento voluntário, expeça-se alvará.
+                    </elemento>        
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Defiro o pedido de assistência judiciária gratuita nos termos do art. 98 do NCPC, vez que não há nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade, de modo que entendo caracterizada sua hipossuficiência, considerando a documentação apresentada na inicial.
+                    </elemento>        
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas. Publicada e registrada com o lançamento no sistema PJE. Intime-se. Após o trânsito em julgado arquive-se.
+                    </elemento>        
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItHomologacaoAcordoAJGNao" label="Homologação de Acordo - sem AJG" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuida-se de #:B{#{j2.env.PJeVars.processo.classe}} proposta por #{j2.env.PJeVars.partes.ativa.nome} em desfavor de #{j2.env.PJeVars.partes.passiva.nome}, visando a homologação do acordo judicial.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dispensado o relatório, nos termos do artigo 38 da Lei nº. 9.099/95.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decido.
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Analisando os autos verifico que as partes realizaram acordo, nos termos da petição/ata juntada em #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Devo considerar a respeito que, uma vez ocorrendo transação entre as partes, a homologação é medida que se impõe.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante do exposto, considerando que as partes transigiram de livre e espontânea vontade, #:B{#:U{HOMOLOGO} por sentença}, para que surta seus jurídicos e legais efeitos, o acordo firmado entre as partes nos termos em que foram estipulados e, em consequência, #:B{JULGO EXTINTO} o processo com apreciação do mérito, nos termos do artigo 487, III, alínea "b" do Código de Processo Civil.
+                    </elemento>                     
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Não existindo previsão de multa nos termos do acordo, aplica-se multa de 30% (trinta por cento) do valor do acordo em caso de descumprimento.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em havendo penhora/restrição, esta fica desse já desconstituída.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em caso de pagamento voluntário, expeça-se alvará.
+                    </elemento>        
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Indefiro o pedido do autor de assistência judiciária gratuita, uma vez que a profissão e/ou o valor do bem da vida discutido nos autos demonstram que o autor possui boa condição financeira, não podendo ser considerado hipossuficiente.
+                    </elemento>        
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas. Publicada e registrada com o lançamento no sistema PJE. Intime-se. Após o trânsito em julgado arquive-se.
+                    </elemento>        
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItIncompetenciaTerritorial" label="Incompetência Territorial" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuidam os autos de ação cível processada pelo rito da lei dos juizados especiais. 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Conforme informações da inicial a requerente é situada no #:B{#:I{Bairro Centro}} desta cidade, portanto, à margem direita da BR 010 (sentido Açailândia a Estreito). 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A Resolução n. 15/2006 do Tribunal de Justiça, ao estabelecer a área de jurisdição de cada Juizado desta Comarca, compreendeu o domicílio das partes na abrangência do 1º Juizado Especial Cível, in verbis: 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                         Art. 1º. Ficam instituídas as seguintes áreas de jurisdição dos Juizados Especiais Cíveis da Comarca de Imperatriz: 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I) – #:B{1º Juizado Especial Cível }– compreende a área dos bairros e povoados do Município de Imperatriz que ficam à margem direita da BR010, sentido Açailândia a Estreito, e dos Municípios de São Pedro da Água Branca e Vila Nova dos Martírios, excetuando-se as localidades denominadas Juçara, Nova Imperatriz, Entroncamento, Bananal, Barra Grande, Lagoa Verde, Loteamento Chaparral e Povoado 1700; 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        II) – #:B{2º Juizado Especial Cível} – compreende a área dos bairros e povoados do Município de Imperatriz que ficam à margem esquerda da BR010, sentido Açailândia a Estreito, incluindo toda a área das localidades denominadas Juçara, Nova Imperatriz, Bananal, Barra Grande, Entroncamento, Lagoa Verde, Loteamento Chaparral, Povoado 1700 e dos Municípios de Davinópolis e Governador Edison Lobão.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deste modo, este juízo não possui competência territorial para apreciar a presente demanda.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O enunciado n. 89 do FONAJE estabelece que "A incompetência territorial pode ser reconhecida de ofício no sistema de juizados especiais cíveis".
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{ISTO POSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em havendo audiência designada para o feito, promova-se o seu cancelamento.
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas e honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicada e Registrada com o lançamento no sistema PJE. Intime-se. Anote-se no mapa de captação mensal.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItExtincaoContratoSuperTeto" label="Valor Causa Superior Teto" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuidam os autos de ação cível processada pelo rito da lei dos juizados especiais. 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Conforme informações da inicial a requerente é situada no #:B{#:I{Bairro Centro}} desta cidade, portanto, à margem direita da BR 010 (sentido Açailândia a Estreito). 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A Resolução n. 15/2006 do Tribunal de Justiça, ao estabelecer a área de jurisdição de cada Juizado desta Comarca, compreendeu o domicílio das partes na abrangência do 1º Juizado Especial Cível, in verbis: 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                         Art. 1º. Ficam instituídas as seguintes áreas de jurisdição dos Juizados Especiais Cíveis da Comarca de Imperatriz: 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        I) – #:B{1º Juizado Especial Cível }– compreende a área dos bairros e povoados do Município de Imperatriz que ficam à margem direita da BR010, sentido Açailândia a Estreito, e dos Municípios de São Pedro da Água Branca e Vila Nova dos Martírios, excetuando-se as localidades denominadas Juçara, Nova Imperatriz, Entroncamento, Bananal, Barra Grande, Lagoa Verde, Loteamento Chaparral e Povoado 1700; 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                        II) – #:B{2º Juizado Especial Cível} – compreende a área dos bairros e povoados do Município de Imperatriz que ficam à margem esquerda da BR010, sentido Açailândia a Estreito, incluindo toda a área das localidades denominadas Juçara, Nova Imperatriz, Bananal, Barra Grande, Entroncamento, Lagoa Verde, Loteamento Chaparral, Povoado 1700 e dos Municípios de Davinópolis e Governador Edison Lobão.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deste modo, este juízo não possui competência territorial para apreciar a presente demanda.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O enunciado n. 89 do FONAJE estabelece que "A incompetência territorial pode ser reconhecida de ofício no sistema de juizados especiais cíveis".
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{ISTO POSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas e honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicada e Registrada com o lançamento no sistema PJE. Intime-se. Anote-se no mapa de captação mensal.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="sentItPretensaoResistida" label="Pretensão resistida" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>                    
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        #:B{Dispensado o RELATÓRIO}, à luz do artigo 38 da lei nº 9099/95.
+                    </elemento>
+                    
+                <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{FUNDAMENTAÇÃO}
+                </elemento>  
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Diante da massificação de demandas e da utilização do Poder Judiciário como primeira via de solução de conflitos, o princípio do amplo acesso à justiça vem sendo objeto de estudos constantes.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Os recentes estudos indicam a necessidade de demonstração de uma pretensão resistida para a caracterização do interesse processual, oriundo da doutrina de Enrico Tullio Liebman, adotada pelo Código de Processo Civil, o qual prevê no art. 17 que #:I{“Para postular em juízo é necessário ter #:B{interesse} e legitimidade”}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        #:B{#:I{“É necessário prévio requerimento administrativo para o acesso ao Poder Judiciário? Seria essa uma condicionante legítima para o acesso ao sistema de Justiça?”}} questiona o processualista e professor Fernando Gajardoni. O autor inicia sua resposta considerando que esta questão, durante longos anos, foi respondida no Brasil de modo negativo, mas tem ganhado novos contornos a partir de diversos precedentes de Tribunais Superiores, em releitura das condições para o exercício do direito de ação, especialmente do interesse processual (interesse de agir). (GAJARDONI, Fernando. In:http://genjuridico.com.br/2020/05/14/previo-requerimento-plataforma-consumidor/).
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Diante destas considerações, a parte autora foi intimada para comprovar o interesse processual, que possui três aspectos: a #:B{necessidade} de buscar o Poder Judiciário; a #:B{utilidade} do provimento judicial ao demandante; e a #:B{adequação} entre o meio processual escolhido pelo requerente e a tutela jurisdicional pretendida. Tal medida é necessária para verificar a necessidade da propositura da ação.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Compulsando os autos, #:B{verifico que a parte requerente não apresentou a comprovação de pretensão resistida}.
+                    </elemento>
+                    
+                    <elemento id="sentItPretensaoResistida-span" tag="span" scope="NONE" > 
+                        
+                    </elemento> 
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Não desconheço que há decisões e posicionamentos que dispensam a comprovação da pretensão resistida para ajuizamento das lides. Todavia, esse não é um entendimento que se coaduna com o princípio da cooperação e da razoável duração do processo.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Com a entrada em vigor do Código de Processo Civil de 2015, houve uma sensível alteração nas balizas mestras que norteiam a solução de conflitos, de modo que os meios alternativos ganharam especial importância, notadamente aqueles cujo desenlace é consensual (autocomposição). Vejamos:
+                    </elemento>
+                    
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{Art. 3º - Não se excluirá da apreciação jurisdicional ameaça ou lesão a direito.[...]}
+                        </elemento>
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{§ 2º O Estado promoverá, sempre que possível, a solução consensual dos conflitos. [...]”}
+                        </elemento>
+                    
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Atento a essa nova percepção do processo civil, que este juízo passou a exigir da parte que ingressa com uma nova ação a comprovação de que minimamente tentou resolver o imbróglio por meios extraprocessuais, tais como: a plataforma pública digital – www.consumidor.gov.br – na forma da recomendação contida na Resolução GP 432017-TJMA, PROCON, canais de intermediação das agências reguladoras (ANEEL, ANATEL, ANS, BACEN, …), e-mail, SAC com o atendimento degravado, requerimento no próprio órgão/instituição por meios oficiais de comunicação ou outro meio comprobatório APTO para obtenção do objeto pleiteado.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Destacamos que atualmente, #:B{80% das reclamações registradas no Consumidor.gov.br são solucionadas pelas empresas, que respondem as demandas dos consumidores em um prazo médio de 7 dias.} O conflito é submetido administrativamente à empresa com o intuito de resolvê-lo de forma mais célere e eficaz. A criação desta plataforma guarda relação com o disposto no artigo 4º, inciso V da Lei nº. 8.078/1990 e artigo 7º, incisos I, II e III do Decreto nº. 7.963/2013.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ressalto que no Procedimento de Controle Administrativo n. 0007010-27.2020.2.00.0000 o CNJ, ao analisar a Resolução 43/2017 do TJMA, ressaltou que a utilização das plataformas públicas de conciliação não impede ou desestimula que a parte seja devidamente assessorada por advogado, e #:I{“não há que se falar em violação às prerrogativas dos advogados quando realizada conciliação ou mediação pré-processual por meio das plataformas digitais, uma vez que tais atividades visam facilitar a transação, ato de autonomia privada reservado a toda pessoa capaz, que permite a prevenção ou a extinção dos litígios”}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Note-se que #:B{a primeira porta para a solução dos conflitos não pode ser o Judiciário}. Isso apenas contribui para o fomento da cultura do litígio e é contrário a rápida, barata e eficiente solução dos problemas nas relações de consumo.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        A sociedade civil não pode suportar o custo de que Judiciário seja a primeira instituição a ser procurada para resolver os mais diversos problemas da vida de relação. Isso porque há um custo orçamentário enorme para a manutenção do Judiciário, que não pode e não deve ser ultrapassado.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Essa moderna visão, cujo principal objetivo é reservar a via judicial para as lides que realmente não comportem solução diversa da contenciosa, já era respaldada, inclusive antes mesmo da vigência da Lei nº. 13.105/15, pelo próprio Supremo Tribunal Federal.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        A Corte Suprema já firmou entendimento afirmando que o estabelecimento de condições para o exercício do direito de ação é compatível com o princípio do livre acesso ao Poder Judiciário, previsto no artigo 5º, XXXV, da Constituição Federal.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nas palavras do Ministro Luiz Fux no julgamento do RE 839.353 #:I{“A ameaça ou lesão a direito aptas a ensejarem a necessidade de manifestação judiciária do Estado só se caracterizam após o prévio requerimento administrativo, o qual não se confunde com o esgotamento das instâncias administrativas”}. Tal entendimento foi firmado em relação às demandas envolvendo seguro DPVAT, em que era comum às partes provocar o Poder Judiciário antes de qualquer tentativa de solução administrativa do conflito.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        O mesmo acontecia com demanda envolvendo benefícios previdenciários do INSS, conforme firmado pelo Plenário da Corte no julgamento de repercussão geral reconhecida nos autos do RE 631.240, Rel. Min. Roberto Barroso, Sessão do dia 03/9/2014, nestes termos: “A instituição de condições para o regular exercício do direito de ação é compatível com o art. 5º, XXXV, da Constituição. Para se caracterizar a presença de interesse em agir, é preciso haver necessidade de ir a juízo”.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Inclusive deste segundo julgado destaco um trecho do voto do Ministro Relator Roberto Barroso:
+                    </elemento>
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{Como se percebe, o interesse em agir é uma condição da ação essencialmente ligada aos princípios da economicidade e da eficiência. Partindo-se da premissa de que #:B{os recursos públicos são escassos, o que se traduz em limitações na estrutura e na força de trabalho do Poder Judiciário, é preciso racionalizar a demanda, de modo a não permitir o prosseguimento de processos que, de plano, revelem-se inúteis, inadequados ou desnecessários. Do contrário, o acúmulo de ações inviáveis poderia comprometer o bom funcionamento do sistema judiciário, inviabilizando a tutela efetiva das pretensões idôneas.}}
+                        </elemento>
+                        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        O entendimento sobre o prévio requerimento também se aplica à exibição de documentos junto a bancos. #:B{O STJ tem decidido que sem a prévia solicitação junto à agência bancária não há o interesse processual/necessidade e, tal exigência, não viola o princípio do acesso à Justiça} (STJ, Resp. 1.349.453-MS, Rel. Min. Luis Felipe Salomão, j. 10.12.2014).
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Acrescento que recentemente, julgando o Recurso Inominado n. 0800255-84.2020.8.10.0028, a Turma Recursal de Imperatriz decidiu por unanimidade no mesmo sentido, do qual devo destacar que julgado pontuou a importância do #:I{“fortalecimento da política da resolução pré-processual e/ou administrativa dos conflitos e na inteligência de que #:B{não se pode mais admitir que demandas que podem e merecem ser resolvidas pela via consensual sejam destinadas a ocupar a pauta do Judiciário de forma direta} como esta em foco, sem que antes tenha a parte comprovado ter intentado, por quaisquer dos meios possíveis e existentes, a prévia resolução do litígio com demonstração de efetiva resistência ao direito que alega ser titular”}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Sobre o assunto, transcrevo ainda algumas outras decisões judiciais de diferentes Tribunais e Turmas recursais:
+                    </elemento>
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{RECURSO INOMINADO. AÇÃO DE INDENIZAÇÃO POR DANOS MORAIS E MATERIAIS. RELAÇÃO DE CONSUMO. COMPRA E VENDA DE TELEVISOR. VÍCIO APARENTE NO PRODUTO. SENTENÇA DE EXTINÇÃO DO PROCESSO SEM RESOLUÇÃO DO MÉRITO. PRELIMINAR DE INCOMPETÊNCIA DOS JUIZADOS ESPECIAIS AFASTADA. #:B{PRELIMINAR DE FALTA DE INTERESSE DE AGIR MANTIDA}. PARTE AUTORA QUE NÃO COMPROVOU O ENVIO DO PRODUTO À ASSISTÊNCIA TÉCNICA. SENTENÇA PARCIALMENTE REFORMADA. Recurso conhecido e parcialmente provido. (TJPR - 1ª Turma Recursal - 0011334-15.2017.8.16.0131 - Pato Branco - Rel.: Juíza Melissa de Azevedo Olivas - J.30.09.2019).}
+                        </elemento>
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{#:B{ADMINISTRATIVO E PROCESSUAL CIVIL. INDEFERIMENTO DA INICIAL. JUNTADA DE DOCUMENTAÇÃO. CDC. ÔNUS DA PROVA. AUSÊNCIA DE INTERESSE. PRETENSÃO RESISTIDA}. 1. Ainda que fossem aplicáveis ao caso as disposições do Código de Defesa do Consumidor, isso não significa que seja automática a inversão do ônus da prova: é necessário que estejam presentes os pressupostos elencados no artigo 6º, VIII, do mesmo diploma legal. 2. Claramente se trata de fato constitutivo do direito alegado pela parte autora, que sustenta possuir direito a indenização por vícios construtivos - o que somente pode ser comprovado por meio da juntada de documentação apta a comprovar a propriedade do imóvel e a existência de contrato de financiamento imobiliário vigente à época dos fatos. 3. #:B{Reputa-se necessária a jurisdição quando retrate a última forma de solução do conflito, ou seja, quando o autor necessita da intervenção da atividade jurisdicional para que a pretensão seja alcançada, pressupondo uma pretensão resistida da parte adversa no plano material. Bem por isso, não merece reparos a sentença que reconhece a ausência de interesse processual em virtude da inexistência do necessário encaminhamento de solução no âmbito administrativo}. (TRF-4 - AC: 50095691220154047001 PR 5009569-12.2015.404.7001, Relator: FERNANDO QUADROS DA SILVA, Data de Julgamento: 25/04/2017, TERCEIRA TURMA)}
+                        </elemento>
+                        <elemento tag="p" scope="NONE" class="p FntModDefault marginJurisprudencia i" > 
+                            #:I{APELAÇÃO CÍVEL. RESPONSABILIDADE CIVIL. AÇÃO DE CONSUMO. SUSPENSÃO DO PROCESSO PARA COMPROVAÇÃO DE TENTATIVA DE CONCILIAÇÃO. PROJETO SOLUÇÃO DIRETA-CONSUMIDOR. COMANDO JUDICIAL NÃO ATENDIDO. PROCESSO EXTINTO SEM JULGAMENTO DE MÉRITO. SENTENÇA MANTIDA. Antes de extinguir o feito, o Julgador singular proferiu decisão determinando a suspensão do processo a fim de que o autor submetesse sua reclamação junto ao Projeto Solução Direta Consumidor, ocasião em que consignou expressamente que a não utilização dessa oportunidade ensejaria a extinção do feito sem julgamento de mérito. O autor, contudo, recusou-se sob o frágil argumento de que o mesmo é facultativo e não obrigatório. Mais: peticionou demonstrando má-vontade, falta de bom-senso e completo desinteresse na solução ágil e amigável do litígio, o que não se mostra razoável. A decisão atacada está de acordo com o telos do CPC/2015, que privilegiou já na sua parte introdutória (Art. 3º, §§ 2º e 3º) a solução consensual dos conflitos, estimulando os magistrados, advogados, defensores públicos e promotores de justiça a utilizarem tais ferramentas inclusive no curso de processos judiciais. Não é demais lembrar que a sociedade civil não pode mais suportar o custo de que o Judiciário seja a primeira instituição a ser procurada para resolver os mais diversos problemas da vida de relação. Isso porque há um custo orçamentário enorme para a manutenção do Judiciário, que não pode e não deve ser ultrapassado. Portanto, o Judiciário deve ser a \"última praia\", ou seja, quando realmente falharem os demais mecanismos disponíveis para solucionar conflitos, tem, sim, a parte, o direito constitucional de acesso à jurisdição. Todavia, quando o sistema propicia mecanismos ágeis, sem custo, para tendencialmente resolver de forma mais efetiva e rápida o litígio, é razoabilíssimo que se exija que a parte deles se utilize antes de ajuizar sua demanda. Assim, a iniciativa da Secretaria Nacional do Consumidor, do Ministério da Justiça, em parceria com o Poder Judiciário, instituindo o projeto \"Solução Direta Consumidor\" está perfeitamente afinada com todas as modernas tendências contemporâneas. Logo, é caso de desprovimento do recurso. APELAÇÃO DESPROVIDA. (Apelação Cível Nº 70071361976, Nona Câmara Cível, Tribunal de Justiça do RS, Relator: Eugênio Facchini Neto, Julgado em 23/11/2016)}
+                        </elemento>
+                        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Assim sendo, há que se exigir o mínimo de interesse de agir, sob pena de se permitir que a parte Requerida responda a processo sem lide, sem ter resistido contra qualquer pretensão e acabe arcando com o ônus de sucumbência sem justo motivo, além de movimentar advogados e o Poder Judiciário local, como todo um custo econômico e de tempo na movimentação das pessoas que trabalham nesse processo, sem falar no incentivo à indústria do dano moral. Utilizar diretamente o Poder Judiciário como se já existisse conflito em relação ao um pedido que nunca foi formalmente feito, muito menos indeferido, é incabível.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Defendendo a nova leitura do princípio do acesso à Justiça concluo que o Judiciário deve mesmo ser a #:{ultima ratio}. Sendo possível a apresentação de prévio requerimento administrativo, como por exemplo perante os órgãos oficiais constituídos (como é o caso da plataforma consumidor.gov.br, de demonstrada eficiência), sem que existam quaisquer óbices nesse sentido, ausente também qualquer prejuízo pelo tempo de resposta destes órgãos, tal requerimento deve ser considerado como condição para o exercício do direito de ação (interesse processual – necessidade) perante o Judiciário.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        O art. 330, III, do CPC dispõe que a petição inicial será indeferida quando o autor carecer de interesse processual. O art. 485, VI, de igual modo, prevê que o juiz não resolverá o mérito quando verificar ausência de legitimidade ou de interesse processual. Diante deste cenário, a extinção é medida que se impõe.
+                    </elemento>
+                    
+                <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        #:B{DISPOSITIVO}
+                </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ante o exposto, #:B{INDEFIRO a petição inicial, nos termos dos artigos 330, III, e JULGO EXTINTO O PROCESSO, sem exame de mérito, ante a ausência de interesse processual, nos termos do artigo 485, inciso I e VI do CPC.}
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        #:B{Em caso de anterior deferimento de tutela provisória, fica revogada a decisão.}
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Promova-se o cancelamento da audiência, caso tenha sido designada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Sem custas nem honorários, ex vi, do art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Defiro o pedido de assistência judiciária gratuita nos termos do art. 98 do NCPC, vez que não há nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade, de modo que entendo caracterizada sua hipossuficiência, considerando a documentação apresentada na inicial.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Publicada e Registrada com o lançamento no sistema. Intime-se as partes. Dispensada a intimação do réu caso ainda não tenha sido citado.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Após o trânsito em julgado, arquive-se.
+                    </elemento>
+                    
+                </simpleElementsDefs>                       
+            </itemContent>
+        </item>       
+        <item id="sentItInépciaEndereco" label="Inépcia | Comprovação Endereço" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Vistos etc.,
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Trata-se de #{j2.env.PJeVars.processo.classe} processada pelo rito da Lei dos Juizados 
+                        Especiais (Lei nº 9.099/95) proposta por 
+                        #:B{#{j2.env.PJeVars.partes.ativa.nome}} contra a #:B{#{j2.env.PJeVars.partes.passiva.nome}}, 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Dispensado o relatório, nos termos do art. 38 da lei supracitada.
+                    </elemento>
+                
+                
+                <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        DA GRATUIDADE DE JUSTIÇA
+                </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A previsão de gratuidade do art. 98 do CPC deve ser interpretada conforme a Constituição. Nos termos do artigo 5º, LXXIV, da Carta Magna: #:b{#:I{“o Estado prestará assistência jurídica integral e #:u{gratuita aos que comprovarem insuficiência de recursos”}}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:u{O juiz poderá indeferir o pedido se houver nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade e deferir se convencido da hipossuficiência da parte. Pelos documentos anexados aos autos, conclui-se que realmente é hipossuficiente.}
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Portanto, defiro o pedido de assistência judiciária gratuita nos termos do art. 98 do NCPC. }
+                    </elemento>                                        
+                
+                <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        DA INÉPCIA DA INICIAL
+                </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsando os presentes autos, verifica-se que a Parte Promovente foi i#:b{ntimada para anexar aos autos, no prazo de 15 (quinze) dias, comprovante de endereço atualizado e/ou justificar a relação que possui com o titular do comprovante de endereço apresentado.} Posteriormente, a parte #{j2.env.PJeVars.processo.polos.parteAtiva} anexou o mesmo documento sem fazer a devida jusiticação.
+                    </elemento>        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Prescreve o art. 320 do Novo Código de Processo Civil que a petição inicial será instruída com os documentos indispensáveis à propositura da ação, dentre eles o comprovante de endereço (artigo 319, II, do CPC/2015) sendo que conforme parágrafo único do artigo 321, a petição inicial será indeferida quando não for cumprida a diligência. Foi o que ocorreu no presente feito, uma vez que a parte promovente não atendeu integralmente às determinações dos autos.
+                    </elemento>    
+                <elemento tag="p" scope="NONE" class="p FntModDefault heading" > 
+                        DISPOSITIVO
+                </elemento>                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Sem custas ou honorários advocatícios, conforme art. 55, caput, da Lei acima citada.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Publicado e Registrado com o lançamento no sistema PJe. Intimem-se. #:B{Em havendo audiência designada nos autos, promova-se o seu cancelamento}.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Com o trânsito em julgado, dê-se baixa e arquive-se.
+                    </elemento>     
+                </simpleElementsDefs>                       
+            </itemContent>
+        </item>       
+        
+        <item id="sentItNormalizacaoExemplo" label="[Normalização Exemplo]" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="div" scope="NONE"> 
+                        <textHTML scope="NONE"> 
+                            <data>
+                                <![CDATA[
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Trata-se de </span></span><b><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">CUMPRIMENTO DE SENTENÇA</span></span></b><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> processado pelo rito da Lei dos Juizados Especiais (Lei nº 9.099/95).</span></span></p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Dispensado o relatório, nos termos do art. 38 da lei supracitada.</span></span></p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Ao teor do art. 52 da Lei n. 9.099, orientado pelos princípios da celeridade, informalidade, simplicidade e economia processual, nos juizados </span></span><b><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">é desnecessária distribuição do cumprimento de sentença em autos apartados, devendo a fase executiva ocorrer nos mesmos autos da ação principal.</span></span></b></p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u>Assim, deve ser extinta a presente execução, devendo prosseguir nos autos próprios n. 0801145-34.2018.8.10.0047.</u></span></span>&nbsp;</p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Outrossim, o art. 925, da Lei Adjetiva Civil prescreve que a extinção somente produz os seus feitos, quando declarada por sentença.</span></span></p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Dessa maneira, considerando o pagamento do débito, </span></span><b><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u>JULGO EXTINTA A PRESENTE EXECUÇÃO</u></span></span></b><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">, nos termos do artigo 925, do Código de Processo Civil, com aplicação autorizada pelo artigo 52 da Lei 9.099/95.</span></span></p>
+                                    <p style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" mce_style="text-indent: 3cm; margin-top: 0.21cm; margin-bottom: 0.21cm;" align="justify"><span style="font-family: Segoe UI, sans-serif;" mce_style="font-family: Segoe UI, sans-serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Intime-se desta decisão. Após o trânsito em julgado, dê-se baixa e arquive-se esse feito.</span></span></p>                            
+                                ]]>
+                            </data>
+                        </textHTML>
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>  
+             
+        <item id="sentItNormalizacaoExemplo2" label="[Normalização Exemplo 2]" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="div" scope="NONE"> 
+                        <textHTML scope="NONE"> 
+                            <data>
+                                <![CDATA[
+                                    <p style="margin: 6pt 0pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-size: 10pt; text-align: justify; text-indent: 3cm;" mce_style="margin: 6pt 0pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-size: 10pt; text-align: justify; text-indent: 3cm;"><br></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Cuida-se de </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>AÇÃO CÍVEL</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> proposta por&nbsp;</span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>BENEDITO CORREA ARAUJO </b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">em face do</span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b> CEMAR, </b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">qualificados nos autos, visando a suspensão de cobranças, restituição de valores e condenação em danos morais.</span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Dispensado o RELATÓRIO</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">, à luz do artigo 38 da lei nº 9099/95.</span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>&nbsp;</b></span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>FUNDAMENTAÇÃO&nbsp;</b></span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="margin-bottom: 0cm; line-height: 100%; orphans: 2; widows: 2;" mce_style="margin-bottom: 0cm; line-height: 100%; orphans: 2; widows: 2;" align="center"><b><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><b>PRELIMINAR DE CONEXÃO</b></span></span></span></span></b></p>
+                                    <p class="western" style="text-indent: 2.9cm; margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%; orphans: 2; widows: 2;" mce_style="text-indent: 2.9cm; margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%; orphans: 2; widows: 2;" align="justify"><b><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><span style="font-weight: normal;" mce_style="font-weight: normal;">Rejeito a prefacial, visto que os processos 0801362-49.2019.8.10.0047 e 0801363-28.2019.8.10.0047 possuem causas de pedir distintas daquela existente nos presentes autos, uma vez que tratam de cobranças de seguro distintas, o que torna impossível a conexão, nos termos do artigo 55, caput, do CPC/2015.</span></span></span></span></span></b><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>&nbsp;&nbsp;</b></span></span></p>
+                                    <p class="western" style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>APLICAÇÃO DO CÓDIGO DE DEFESA DO CONSUMIDOR</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Não pairam dúvidas no sentido de que há, nestes autos, explícita relação jurídica de consumo entre as partes. A parte autora enquadra-se, é cediço, como consumidora, nos termos do art. 2º do Código de Defesa do Consumidor - CDC (Lei n. 8.078/1990). A empresa reclamada, por sua vez, reveste-se da condição de fornecedora, conforme o art. 3º do estatuto em comento.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">A legislação consumerista assegura, conforme o artigo 6º, inciso VI, do CDC, a efetiva prevenção e reparação de danos patrimoniais e morais, individuais, coletivos e difusos sofridos pelos consumidores. Esse é o viés pelo qual deve-se apreciar a presente demanda.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Ressalte-se que, por ser fornecedora, conforme o art. 14 do CDC, a ré responde objetivamente por eventual dano provocado aos usuários, desde que evidenciada a sua conduta ilícita, o nexo de causalidade e o dano.</span></span></p>
+                                    <p class="western" style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>DA INVERSÃO DO ÔNUS A PROVA</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Aplicável para o caso a inversão dos ônus da prova presente no inciso VIII, art. 6º, do CDC, ferramenta processual fundamental para o consumidor e destinada à facilitação da defesa de seus direitos, quando, a critério do juiz, for verossímil a alegação ou quando for ele hipossuficiente, segundo as regras ordinárias de experiências.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Como a autora afirma que não contratou o seguro questionado cujos valores são cobrados, a inversão do ônus da prova, no presente caso, decorre da </b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>possibilidade de a requerida demonstrar, com os contratos, que as cobranças são legítimas.</b></u></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>ATO ILÍCITO</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">A parte autora questiona os valores lançados em suas faturas de energia sob a denominação “Seguro de Vida Mais Premiada”, sob o argumento de não haver contratado.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Segundo a exegese do artigo 14, § 3º, I, do CDC, compete ao fornecedor dos serviços apresentar as evidências de que nenhuma falha existiu na prestação, a parte promovida não se desincumbiu do </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><i>onus probandi</i></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">, </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>uma vez que não apresentou contrato de seguro assinado pela parte requerente.</b></u></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Feita tal consideração, a </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>ré praticou ato ilícito ao debitar na conta da parte autora valores que não foram efetivamente contratados.</b></span></span></p>
+                                    <p class="western" style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>INEXISTÊNCIA DE DANO MORAL</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> &nbsp;</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify">&nbsp;<span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Quanto aos alegados danos extrapatrimoniais, mesmo com o ato ilícito, apenas as cobranças de valores indevidos não é suficiente para configurar lesão à honra e à personalidade da parte autora. </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Destaco que os débitos em questão não são suficientes para afetar a naturalidade da vida cotidiana da parte promovente.</b></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Para verificar-se a ocorrência do dano moral passível de reparação deve-se asseverar, a partir da lucidez da proposta de SÉRGIO CAVALIERI FILHO, que o dano moral:&nbsp;</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">"</span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>À luz da Constituição vigente, nada mais é do que agressão à dignidade</b></u></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">. (...) </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>Se dano moral é agressão a dignidade humana, não basta para configurá-lo qualquer contrariedade</b></u></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">. (...) Nesse linha de principio, só deve ser reputado como dano moral a dor, vexame, sofrimento ou humilhação que, fugindo à normalidade, interfira intensamente no comportamento psicológico do indivíduo, causando-lhe aflições, angústia e desequilíbrio em seu bem-estar. </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>Mero dissabor, aborrecimento, mágoa, irritação ou sensibilidade exacerbada estão fora da órbita do dano moral, porquanto além de fazerem parte da normalidade do nosso dia-a-dia, no trabalho, no trânsito, entre amigos e até no ambiente familiar, tais situações não são intensas e duradouras, a ponto de romper o equilíbrio psicológico do indivíduo</b></u></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">" (In: Programa de Responsabilidade Civil 10. ed. São Paulo: Atlas, 2012, p. 93).&nbsp;</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">HUMBERTO THEODORO JÚNIOR, em outros termos, adverte que:</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">"Viver em sociedade e sob o impacto constante de direitos e deveres, tanto jurídicos como éticos e sociais, provoca, sem dúvida, frequentes e inevitáveis conflitos e aborrecimentos, com evidentes reflexos psicológicos, que, em muitos casos, chegam mesmo a provocar abalos e danos de monta.</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Para, no entanto, chegar-se à configuração do dever de indenizar, não será suficiente ao ofendido demonstrar sua dor. Somente ocorrerá a responsabilidade civil se reunirem todos os seus elementos essenciais: dano, ilicitude e nexo causal.</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Se o incômodo é pequeno (irrelevância) e se, mesmo sendo grave, não corresponde a um comportamento indevido (licitude), obviamente não se manifestará o dever de indenizar" (In: Dano Moral. São Paulo: Juarez de Oliveira, 2001, p. 6).</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">A situação não tornou-se pública. Deste modo, o evento caracteriza-se como mero aborrecimento que não exacerbou à naturalidade dos fatos da vida, nem causou profundas aflições ou angústias ao espírito do demandante. </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">A parte autora não sofreu nenhum outro prejuízo, tal como seria se as cobranças o impedissem de cumprir outros compromissos, comprometesse seu sustento e de sua família ou e os fatos aqui narrados tivessem sido levados ao conhecimento do público por meio de restrição creditícias. Neste sentido, é pacífica a posição dos tribunais pátrios:</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">"Não cabe indenização por dano moral quando os fatos narrados estão no contexto de meros dissabores, sem humilhação, perigo ou abalo à honra e à dignidade do autor".</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">(STJ. 4ª Turma. AgRg no REsp 1470844/RS. Rel. Min. MARCO BUZZI. DJ 14/11/2014).</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Em conclusão, os danos morais surgem em decorrência de uma conduta ilícita ou injusta, que venha a causar sentimento negativo em qualquer pessoa de senso comum, como vexame, constrangimento, humilhação, dor, estresse acima dos níveis normais, etc. Isso, entretanto, não se vislumbra no caso dos autos, uma vez que os aborrecimentos ficaram limitados à indignação do autor, sem qualquer repercussão mais grave.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b><br> DA RESTITUIÇÃO DOS VALORES PAGOS</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp; </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">O Código de Defesa do Consumidor prevê, no art. 42, parágrafo único, que:&nbsp;</span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" mce_style="margin-left: 5cm; margin-bottom: 0cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><i>"O consumidor cobrado em quantia indevida tem direito à repetição do indébito, por valor igual ao dobro do que pagou em excesso, acrescido de correção monetária e juros legais, salvo hipótese de engano justificável".</i></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"> </span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><span style="font-weight: normal;" mce_style="font-weight: normal;">Na lide em comento, ficou provado que a requerida lançou&nbsp; a cobrança indevida de R$ 295,00 (duzentos e noventa e cinco reais), correspondente a 50 (cinquenta) descontos com valores de R$5,90 (cinco reais e noventa centavos).</span></span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>Entretanto, conforme disposição do art. 206, § 3º, V, do Código Civil, prescreve em três anos a pretensão de reparação civil.</b></u></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><span style="font-weight: normal;" mce_style="font-weight: normal;"> O presente caso é de reparação por danos morais e materiais, logo, não pode ocorrer a restituição do valor das parcelas pagas há mais de três anos, conforme extratos juntados.</span></span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.49cm; margin-bottom: 0.21cm; line-height: 100%; orphans: 2; widows: 2;" mce_style="text-indent: 3cm; margin-top: 0.49cm; margin-bottom: 0.21cm; line-height: 100%; orphans: 2; widows: 2;" align="justify"><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="font-weight: normal;" mce_style="font-weight: normal;">A ação foi distribuída em 11/04/2019, logo a restituição não abrangerá as parcelas pagas antes de 11/04/2016, no total de R$147,50 (cento e quarenta e sete reais e cinquenta centavos), conforme extrato de id 18792712.</span></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><span style="font-weight: normal;" mce_style="font-weight: normal;">Logo, R$147,50 (cento e quarenta e sete reais e cinquenta centavos) não deverá ser restituído. Resta a quantia de R$147,50 (cento e quarenta e sete reais e cinquenta centavos).</span></span></span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.49cm; margin-bottom: 0.21cm; line-height: 100%; orphans: 2; widows: 2;" mce_style="text-indent: 3cm; margin-top: 0.49cm; margin-bottom: 0.21cm; line-height: 100%; orphans: 2; widows: 2;" align="justify"><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><b>A quantia deve ser restituída em dobro, totalizando R$295,00 (duzentos e noventa e cinco reais).</b></span></span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%; orphans: 2; widows: 2;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%; orphans: 2; widows: 2;" align="justify"><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><span style="font-weight: normal;" mce_style="font-weight: normal;">Destaco que no presente caso não cabe a aplicação do entendimento jurisprudencial firmado pelo Superior Tribunal de Justiça, segundo o qual as pretensões do credor por inadimplemento contratual prescrevem em 10 (dez) anos, nos termos do artigo 205 do Código Civil (EREsp 1.280.825), </span></span></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b>visto que não houve contratação do seguro questionado nos autos.</b></u></span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="center"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><u><b><br> </b></u></span></span><span style="font-family: Times New Roman, serif;" mce_style="font-family: Times New Roman, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>DISPOSITIVO</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp; </span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Diante do exposto, </span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>JULGO PARCIALMENTE PROCEDENTES </b></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">os pedidos constantes na inicial, nos termos do art. 487, inc. I, do CPC, para</span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b> CONDENAR a CEMAR a restituir a quantia de </b></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><span style="text-decoration: none;" mce_style="text-decoration: none;"><b>R$295,00 (duzentos e noventa e cinco reais)</b></span></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>, </b></span></span></span><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">relativa aos valores lançados indevidamente em suas faturas de energia.</span></span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">O valor da restituição deverá ser corrigido da data do último lançamento e acrescido de juros de 1% (um por cento) ao mês a partir da citação.&nbsp; </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Aplica-se a multa de 10% (dez por cento) caso não seja efetuado o pagamento da cifra reparatória dentro de 15 (quinze) dias após o trânsito em julgado da sentença (art. 523, §1º, do CPC)</b></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">. A correção monetária será calculada de acordo com Índice Nacional de Preços ao Consumidor – INPC/IBGE.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><u>&nbsp;<span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Defiro o pedido de assistência judiciária gratuita nos termos do art. 98 do NCPC, vez que não há nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade, de modo que entendo caracterizada sua hipossuficiência, considerando a documentação apresentada na inicial.</b></span></span></u></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Sem custas nem honorários, </span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><i>ex vi</i></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">, do art. 55 da Lei n. 9.099/95, pois não vislumbro caso de litigância de má-fé.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">Publicada a presente mediante lançamento no sistema PJE. Intime-se as partes.</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Transitado em julgado, caso não haja pedido de execução ou cumprimento de sentença dentro do prazo legal, dê-se baixa e arquive-se definitivamente. Ademais, a parte exequente pode se valer do instrumento de cumprimento de sentença ou execução, executando a decisão, sendo que eventual necessidade cópia de sentença pode ser facilmente suprida pela Secretaria Judicial diante da virtualização do registro de sentenças, ficando compilados e salvos no sistema.</b></span></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" mce_style="text-indent: 3cm; margin-top: 0.18cm; margin-bottom: 0.18cm; line-height: 100%;" align="justify"><a name="__DdeLink__2362_43163651" class="mceItemAnchor"></a> <span style="color: #000000;" mce_style="color: #000000;"><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;"><b>Havendo cumprimento voluntário, e não havendo recurso, expeça-se alvará judicial em favor da parte requerente e arquive-se.</b></span></span></span><span style="font-family: Segoe UI, serif;" mce_style="font-family: Segoe UI, serif;"><span style="font-size: x-small;" mce_style="font-size: x-small;">&nbsp;</span></span></p>
+                                    <p class="western" style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 100%;" mce_style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 100%;"><br> <br></p>
+                                ]]>
+                            </data>
+                        </textHTML>
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>       
+    </items>
+  </selectorDef>
+</Definitions>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+j2
+
+adicionado por oportunidade da implemnetação de Carta Precatória
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="div" class="hidden" scope="NONE">
+        <!--elemento tag="p" class="p highlightText" scope="NONE">
+         #{textContent}
+        </elemento-->
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="---------------------------------------">
+            <gItem id="itTipDocSelecione"/>
+        </group>
+        <!--group label="Assessoria">
+            <gItem id="meioComunicItCorreios"/>
+            <gItem id="meioComunicItCentralMandados"/>
+            <gItem id="meioComunicItDJe"/>
+        </group>
+        <group label="Secretaria">
+            <gItem id="meioComunicItCorreios"/>
+            <gItem id="meioComunicItCentralMandados"/>
+            <gItem id="meioComunicItDJe"/>
+        </group-->
+    </groupsDefs>
+    <items initialSelected="meioComunicItSistema">
+        <item id="itTipDocSelecione" label="[Selecione]" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    [Selecione um tipo de documento válido]
+                </data>
+            </itemContent>
+        </item>        
+        <item id="itTipDoc XXXXXXXXXXXXXXXX" label="XXXXXXXXXXXXXXXXXX" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    XXXXXXXXXXXXXXXXXXXXXXXX
+                </data>
+            </itemContent>
+        </item>        
+        
+    </items>
+  </selectorDef>
+</Definitions>

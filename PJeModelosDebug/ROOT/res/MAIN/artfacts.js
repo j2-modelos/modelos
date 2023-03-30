@@ -1,0 +1,706 @@
+/* 
+ * ASS: Promessa de Compra e Venda
+ * DOC: 5397233
+ * MOD: artfacts.js
+ * 
+ * Decritor de variáeis para PJe
+ * 
+ * versão 2017.06.05.1
+ */
+
+console.log('artfacts.js - módulo compilante');
+
+try {
+  (function () { /* inits autoexec */
+    var evBus = window.j2.mod.eventBus.EventBus;
+    var w = window;
+    var isHttps = function(){
+      return window.location.protocol === 'https:';
+    };
+    
+    /* w.j2.res.MAIN.run = {}; PREVIOUS DEFINIED*/
+    /* w.j2.res.MAIN.artifacts = {}; PREVIOUS DEFINIED*/
+    w.j2.res.MAIN.PJeVars = {
+      'ref': function () { return (w.j2ModDebug)?(w.j2.ut.isHttps())? '0' : '/res/MAIN/PJeVars.js' : 'h8dmrkxtv9pipuf'; 
+      },
+      'lib': 'ROOT/res/MAIN/PJeVars.js',
+      'type': 'j2/javascript',
+      'version' : '1.0', 
+      'fileName' : 'PJeVars.js'
+    }; 
+    w.j2.res.MAIN.baseClasses = {
+      'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/MAIN/BaseClasses.js' : 's0nz7dcqpilpuhn'; }, 
+      'lib': 'ROOT/res/MAIN/BaseClasses.js',
+      'type': 'j2/javascript',
+      'version' : '0.1', 
+      'fileName' : 'BaseClasses.js'
+    };
+    w.j2.res.MAIN.xmlParser = {
+      'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/MAIN/xmlParser.js' : 'wkep5wiskzr3krv'; },
+      'lib': 'ROOT/res/MAIN/xmlParser.js',
+      'type': 'j2/javascript',
+      'version' : '1.5', 
+      'fileName' : 'xmlParser.js'
+    };    
+    w.j2.res.MAIN.builder = { 
+      'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/MAIN/builder.js' : 'l0r6cp3yzlfcut8'; },
+      'lib': 'ROOT/res/MAIN/builder.js',
+      'type': 'j2/javascript',
+      'version' : '0.1', 
+      'fileName' : 'builder.js'
+    };     
+    w.j2.res.MAIN.addtionalControls = { 
+      'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/MAIN/addtionalControls.js' : '5ltstveoxifmek9'; },
+      'lib': 'ROOT/res/MAIN/addtionalControls.js',
+      'type': 'j2/javascript',
+      'version' : '1.0', 
+      'fileName' : 'addtionalControls.js'
+    };     
+
+    /* XML PACKAGE */
+    w.j2.res.XML = { 
+      'baseClasses' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/BaseClasses.xml' : 'h1azyx060uzi1d5'; }, 
+        'lib': 'ROOT/res/XML/BaseClasses.xml',
+        'type': 'j2/xml',
+        'version' : '0.1', 
+        'fileName' : 'BaseClasses.xml'
+      },
+      'modelos' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/Modelos.xml' : 'acsvuziafk1w7jc'; },
+        'lib': 'ROOT/res/XML/Modelos.xml',
+        'type': 'j2/xml',
+        'version' : '0.1', 
+        'fileName' : 'Modelos.xml'
+        
+      },
+      'unidadesAutorizadas' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/UnidadesAutorizadas.xml' : '8rdsdj8msocl88z'; },
+        'lib': 'ROOT/res/XML/UnidadesAutorizadas.xml',
+        'type': 'j2/xml',
+        'version' : '0.1', 
+        'fileName' : 'UnidadesAutorizadas.xml',
+        'storable' : true
+      },
+      'usuarios' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/Usuarios.xml' : 'bei36n9jprcmtvx'; },        
+        'lib': 'ROOT/res/XML/Usuarios.xml',
+        'type': 'j2/xml',
+        'version' : '1.1', 
+        'fileName' : 'Usuarios.xml',
+        'storable' : true
+      },
+      'classStyles' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/classStyles.xml' : 'x2zysocehurfyml'; },                
+        'lib': 'ROOT/res/XML/classStyles.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'classStyles.xml'
+      },
+      'update' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/update.xml' : 'uf79jpyt0oeszi1'; },                
+        'lib': 'ROOT/res/XML/update.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'update.xml',
+        'storable' : false
+      },
+      'addtionalControls' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/addtionalControls.xml' : 'p0i73cfvpgi1s17'; },                
+        'lib': 'ROOT/res/XML/addtionalControls.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'addtionalControls.xml'
+      },
+      'addtionalControlsClsDef' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/addtionalControlsClsDef.xml' : 'q456v2ci3wy8gad'; },                
+        'lib': 'ROOT/res/XML/addtionalControlsDef.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'addtionalControlsClsDef.xml'
+      }
+    };
+    
+    w.j2.res.CSS = {
+      'j2' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/j2.css' : 'vybjjxfohi298q0'; },                
+        'lib': 'ROOT/res/css/j2.css',
+        'type': 'j2/styleSheet',
+        'version' : '1.0', 
+        'fileName' : 'j2.css',
+        injectWins : ['exp', 'edt', 'par'] // hds
+      },
+      'bootstrap' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/bootstrap.css' : 'lmpvyeabc7mjvq5'; },                
+        'lib': 'ROOT/res/css/bootstrap.css',
+        'type': 'j2/styleSheet',
+        'version' : '4.3.1', 
+        'fileName' : 'bootstrap.css',
+        injectWins : ['edt']
+      },
+      'jqueryUi' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery-ui.css' : '0'; },                
+        'lib': 'ROOT/res/css/jquery-ui.css',
+        'type': 'j2/styleSheet',
+        'version' : '4.3.1', 
+        'fileName' : 'jquery-ui.css',
+        injectWins : ['edt']
+      },
+      'jqueryTimePicker' : {  // ndlg2
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery-timepicker.css' : '0'; },                
+        'lib': 'ROOT/res/css/jquery-timepicker.css',
+        'type': 'j2/styleSheet',
+        'version' : '4.3.1', 
+        'fileName' : 'jquery-timepicker.css',
+        injectWins : ['edt']
+      },
+      'chosen' : {  // chosen
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/chosen.css' : '0'; },                
+        'lib': 'ROOT/res/css/chosen.css',
+        'type': 'j2/styleSheet',
+        'version' : '1.8.7', 
+        'fileName' : 'chosen.css'
+        //injectWins : ['exp','edt'] // chosen
+      }
+    };
+    
+
+    w.j2.res.selectSources = {
+      'meiosComunicacao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/meiosComunicacao.xml' : 'cagub7y7z32dp98'; },                
+        'lib': 'ROOT/res/XML/selectSources/meiosComunicacao.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'meiosComunicacao.xml'        
+      },
+      'prioridadeExpedientesItem' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/prioridadeExpedientesItem.xml' : 'gz0c4b8sf9nerfu'; },                
+        'lib': 'ROOT/res/XML/selectSources/prioridadeExpedientesItem.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'prioridadeExpedientesItem.xml'        
+      },
+      'advertencias' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/advertencias.xml' : 'k4lyi4etcedl4p7'; },                
+        'lib': 'ROOT/res/XML/selectSources/advertencias.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'advertencias.xml'        
+      },
+      'termoAudienciaTitulos' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/termoAudienciaTitulos.xml' : 'a6rm54w58nzdm0h'; },                
+        'lib': 'ROOT/res/XML/selectSources/termoAudienciaTitulos.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoAudienciaTitulos.xml'        
+      },
+      'termoReclamacaoTitulos' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/termoReclamacaoTitulos.xml' : 'hzcl29jq0iv1y4q'; },                
+        'lib': 'ROOT/res/XML/selectSources/termoReclamacaoTitulos.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacaoTitulos.xml'        
+      },
+      'mandadoTitulos' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/mandadoTitulos.xml' : 'lcuxeih5sp3017g'; },                
+        'lib': 'ROOT/res/XML/selectSources/mandadoTitulos.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'mandadoTitulos.xml'        
+      },
+      'destinatarios' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/destinatarios.xml' : 'rlctbmddchstli6'; },                
+        'lib': 'ROOT/res/XML/selectSources/destinatarios.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'destinatarios.xml'        
+      },
+      'tiposDocumento' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/tiposDocumento.xml' : 'dftvwkmvnr3l32t'; },                
+        'lib': 'ROOT/res/XML/selectSources/tiposDocumento.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'tiposDocumento.xml'        
+      },
+      'meiosAtendimento' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/meiosAtendimento.xml' : 'd7y9siyon0mo38h'; },                
+        'lib': 'ROOT/res/XML/selectSources/meiosAtendimento.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'meiosAtendimento.xml'        
+      },
+      'whatsAppDefaultMessages' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/whatsAppDefaultMessages.xml' : '0'; },                
+        'lib': 'ROOT/res/XML/selectSources/whatsAppDefaultMessages.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'whatsAppDefaultMessages.xml'        
+      },
+      'whatsAppOjMessages' : { // ndlg
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/selectSources/whatsAppOjMessages.xml' : '00000000000000000000000'; },                
+        'lib': 'ROOT/res/XML/selectSources/whatsAppOjtMessages.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'whatsAppOjMessages.xml'        
+      }
+    };    
+    
+    w.j2.res.mod = {
+      'certidao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '' : '/res/mod/certidao.js' : 'v5bneqbsez8b3ar'; },                
+        'lib': 'ROOT/res/mod/certidao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'certidao.js'        
+      },
+      'certidaoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/certidaoSelSrc.xml' : 'eb6wv63k9f9t0hf'; },                
+        'lib': 'ROOT/res/mod/certidaoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'certidaoSelSrc.xml'        
+      },
+      'citacao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/citacao.js' : 'i9rabezbfml3pes'; },                
+        'lib': 'ROOT/res/mod/citacao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'citacao.js'        
+      },
+      'citacaoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/citacaoSelSrc.xml' : '78kxbht2mdyvalu'; },                
+        'lib': 'ROOT/res/mod/citacaoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'citacaoSelSrc.xml'        
+      },      
+      'intimacao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/intimacao.js' : 'jsbe468owa2cfqu'; },                
+        'lib': 'ROOT/res/mod/intimacao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'intimacao.js'        
+      },
+      'intimacaoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/intimacaoSelSrc.xml' : 'g2el7vq1k141tc5'; },                
+        'lib': 'ROOT/res/mod/intimacaoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'intimacaoSelSrc.xml'        
+      },
+      'AR' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/AR.js' : 'ayscojqrsn88sf3'; },                
+        'lib': 'ROOT/res/mod/AR.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'AR.js'        
+      },
+      'ARDef' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/ARDef.xml' : '03fp4zf95sglkbc'; },                
+        'lib': 'ROOT/res/mod/ARDef.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'ARDef.xml'        
+      },
+      'AR_' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/AR.xml' : 'spkgjcrg3lne9kt'; },                
+        'lib': 'ROOT/res/mod/AR.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'AR.xml'        
+      },
+      'postList' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/postList.js' : '18mg79j9e637e99'; },                
+        'lib': 'ROOT/res/mod/postList.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'postList.js'        
+      },
+      'postListDef' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/postListDef.xml' : 'p0e8julf8tndaf0'; },                
+        'lib': 'ROOT/res/mod/postListDef.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'postListDef.xml'        
+      },
+      'postList_' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/postList.xml' : 've5p2nwppnfr83n'; },                
+        'lib': 'ROOT/res/mod/postList.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'postList.xml'        
+      },      
+      'decisao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/decisao.js' : '7fjakbqhla54nwo'; },                
+        'lib': 'ROOT/res/mod/decisao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'decisao.js'        
+      },
+      'decisaoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/decisaoSelSrc.xml' : 'gv0q30rn6a108wg'; },                
+        'lib': 'ROOT/res/mod/decisaoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'decisaoSelSrc.xml'        
+      },      
+      'decisaoJuizAdmissSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/decisaoJuizAdmissSelSrc.xml' : 'j8tcj69oc2sbc4m'; },                
+        'lib': 'ROOT/res/mod/decisaoJuizAdmissSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'decisaoJuizAdmissSelSrc.xml'        
+      },      
+      'despacho' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/despacho.js' : 'noedk8qakdmc6g0'; },                
+        'lib': 'ROOT/res/mod/despacho.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'despacho.js'        
+      },
+      'despachoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/despachoSelSrc.xml' : 'xtnmvrph92rvplv'; },                
+        'lib': 'ROOT/res/mod/despachoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'despachoSelSrc.xml'        
+      },           
+      'despachoCumSenSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/despachoCumSenSelSrc.xml' : 'qke3i82l2d4is3z'; },                
+        'lib': 'ROOT/res/mod/despachoCumSenSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'despachoCumSenSelSrc.xml'        
+      },   
+      'sentenca' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/sentenca.js' : 'p0q5n27owdvu57e'; },                
+        'lib': 'ROOT/res/mod/sentenca.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'sentenca.js'        
+      },
+      'sentencaSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/sentencaSelSrc.xml' : 'pgvu7qoqcfgc1js'; },                
+        'lib': 'ROOT/res/mod/sentencaSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'sentencaSelSrc.xml'        
+      },      
+      'termoAudiencia' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoAudiencia.js' : 'hdt2muhnvubnluz'; },                
+        'lib': 'ROOT/res/mod/termoAudiencia.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'termoAudiencia.js'        
+      },
+      'termoAudienciaSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoAudienciaSelSrc.xml' : 'c41tmm1swbjorac'; },                
+        'lib': 'ROOT/res/mod/termoAudienciaSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoAudienciaSelSrc.xml'        
+      },      
+      'termoReclamacao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacao.js' : 'ivgv4txz297wigb'; },                
+        'lib': 'ROOT/res/mod/termoReclamacao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacao.js'        
+      },
+      'termoReclamacaoFatosSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacaoFatosSelSrc.xml' : 'e4a2s16ycnvdjlv'; },                
+        'lib': 'ROOT/res/mod/termoReclamacaoFatosSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacaoFatosSelSrc.xml'        
+      },      
+      'termoReclamacaoPedidosSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacaoPedidosSelSrc.xml' : '973lfgy6nl00utx'; },                
+        'lib': 'ROOT/res/mod/termoReclamacaoPedidosSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacaoPedidosSelSrc.xml'        
+      },
+      'termoReclamacaoPartesSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacaoPartesSelSrc.xml' : '67cmk259nk1x0za'; },                
+        'lib': 'ROOT/res/mod/termoReclamacaoPartesSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacaoPartesSelSrc.xml'        
+      },
+      'termoReclamacaoDef' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacaoDef.xml' : 'g4cxqsjyiljcydl'; },                
+        'lib': 'ROOT/res/mod/termoReclamacaoDef.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacaoDef.xml'        
+      },
+      'termoReclamacao_' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoReclamacao.xml' : 'hs4mjgkz0rdx6sk'; },                
+        'lib': 'ROOT/res/mod/termoReclamacao.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoReclamacao.xml'        
+      },      
+      'mandado' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/mandado.js' : 'okw491uqqfd7zk4'; },                
+        'lib': 'ROOT/res/mod/mandado.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'mandado.js'        
+      },
+      'mandadoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/mandadoSelSrc.xml' : 'dvisnypj1hcuz3p'; },                
+        'lib': 'ROOT/res/mod/mandadoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'mandadoSelSrc.xml'        
+      },      
+      'termoPeticao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoPeticao.js' : 'kh3ztdjcwq3bian'; },                
+        'lib': 'ROOT/res/mod/termoPeticao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'termoPeticao.js'        
+      },
+      'termoPeticaoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoPeticaoSelSrc.xml' : 'y1vdo0upyuroizk'; },                
+        'lib': 'ROOT/res/mod/termoPeticaoSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoPeticaoSelSrc.xml'        
+      },      
+      'termo' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoZ.js' : 'odcoj02ks8zxr8i'; },                
+        'lib': 'ROOT/res/mod/termoZ.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'termoZ.js'        
+      },
+      'termoSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/termoZSelSrc.xml' : 'zbtg7ptjeph26as'; },                
+        'lib': 'ROOT/res/mod/termoZSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'termoZSelSrc.xml'        
+      },      
+      'atoOrdinatorio' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/atoOrdinatorio.js' : 'pc0kr0w1muad0s2'; },                
+        'lib': 'ROOT/res/mod/atoOrdinatorio.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'atoOrdinatorio.js'        
+      },
+      'atoOrdinatorioSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/atoOrdinatorioSelSrc.xml' : 'c8zbarwsdnfuq2b'; },                
+        'lib': 'ROOT/res/mod/atoOrdinatorioSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'atoOrdinatorioSelSrc.xml'        
+      },      
+      'oficio' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/oficio.js' : 'qv9cm3r07aq8px0'; },                
+        'lib': 'ROOT/res/mod/oficio.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'oficio.js'        
+      },
+      'oficioSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/oficioSelSrc.xml' : 'lnzpm22j1sahd6i'; },                
+        'lib': 'ROOT/res/mod/oficioSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'oficioSelSrc.xml'        
+      },
+      'alvara' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/alvara.js' : 'atqn3c4oqfydof4'; },                
+        'lib': 'ROOT/res/mod/alvara.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'alvara.js'        
+      },
+      'cartaPrecatoria' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/cartaPrecatoria.js' : 'uma68hes2a8gez8'; },                
+        'lib': 'ROOT/res/mod/cartaPrecatoria.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'cartaPrecatoria.js'        
+      },
+      'cartaPrecatoriaSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/cartaPrecatoriaSelSrc.xml' : 'yojowxosimyg4ir'; },                
+        'lib': 'ROOT/res/mod/cartaPrecatoriaSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'cartaPrecatoriaSelSrc.xml'        
+      },      
+      'sentencaPretensaoResistidaSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/sentencaPretensaoResistidaSelSrc.xml' : 'sx3xo5wdqh1ogng'; },                
+        'lib': 'ROOT/res/mod/sentencaPretensaoResistidaSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'sentencaPretensaoResistidaSelSrc.xml'        
+      },      
+      'diligenciaSelSrc' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/mod/diligenciaSelSrc.xml' : '00000000000'; },                
+        'lib': 'ROOT/res/mod/diligenciaSelSrc.xml',
+        'type': 'j2/xml',
+        'version' : '1.0', 
+        'fileName' : 'diligenciaSelSrc.xml'        
+      },
+      'diligencia' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '' : '/res/mod/diligencia.js' : '00000000000000000'; },                
+        'lib': 'ROOT/res/mod/diligencia.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'diligencia.js'        
+      }
+    };     
+    
+    w.j2.res.lib = {
+      'monetario' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/monetario.js' : '86ut7ypl9u1ys9o'; },                
+        'lib': 'ROOT/lib/monetario.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'monetario.js'        
+      },
+      'menuContent' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/menuContent.j2' : 'rwuz5eyp1yoaqk2'; },                
+        'lib': 'ROOT/lib/menuContent.j2',
+        'type': 'j2/text',
+        'version' : '1.1.4',
+        'fileName' : 'menuContent.j2'        
+      },
+      'menuContentScr' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/menuContent.js' : 't1x2k8sabh4p3fr'; },                
+        'lib': 'ROOT/lib/menuContent.js',
+        'type': 'j2/text',
+        'version' : '1.1.16', 
+        'fileName' : 'menuContent.js'        
+      },
+      'formatacao' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/formatacao.js' : 'hx18wevqyfwgeli'; },                
+        'lib': 'ROOT/lib/formatacao.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'formatacao.js'        
+      },
+      'htmlTools' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/htmlTools.js' : 'in1mu3l0i61xxmj'; },                
+        'lib': 'ROOT/lib/htmlTools.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'htmlTools.js'        
+      },
+      'jquery3' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery3.js' : 'mdqho6wb1q8vyl9'; },                
+        'lib': 'ROOT/lib/jquery3.js',
+        'type': 'j2/javascript',
+        'version' : '3.1.1', 
+        'fileName' : 'jquery3.js',
+        inject : [
+          {
+            win : 'edt',
+            loc : 'body'
+          }  
+        ],
+        injectWins : ['edt', 'exp'] //chosen
+      },
+      'bootstrap' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/bootstrap.js' : 'gli268l1ytg6shg'; },                
+        'lib': 'ROOT/lib/bootstrap.js',
+        'type': 'j2/javascript',
+        'version' : '4.3.1', 
+        'fileName' : 'bootstrap.js',
+        inject : [
+          {
+            win : 'edt',
+            loc : 'body'
+          }  
+        ]        
+      },
+      'popper' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/popper.js' : '55cryy9172o68rf'; },                
+        'lib': 'ROOT/lib/popper.js',
+        'type': 'j2/javascript',
+        'version' : '1.14.7', 
+        'fileName' : 'popper.js',
+        inject : [
+          {
+            win : 'edt',
+            loc : 'body'
+          }  
+        ]        
+      },
+      'inputmask' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/inputmask.js' : '0'; },                
+        'lib': 'ROOT/lib/inputmask.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'inputmask.js',
+        inject : [
+          {
+            win : 'edt',
+            loc : 'body'
+          }  
+        ]        
+      },
+      'jqueryTimePicker' : { // ndlg2
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery-timepicker.js' : '0'; },                
+        'lib': 'ROOT/lib/jqueryTimePicker.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'jquery-timepicker.js',
+        inject : [
+          {
+            win : 'edt',
+            loc : 'body'
+          }  
+        ]        
+      },
+      'jqueryUi' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery-ui_1.js' : '0'; },                
+        'lib': 'ROOT/lib/jquery-ui.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'jquery-ui.js'
+           
+      },
+      'html2pdf' : { //pdf
+        'ref': function () { return (w.j2ModDebug)?(
+                  isHttps())? '0' : '/res/lib/html2pdf.js' : '0'; },                
+        'lib': 'ROOT/lib/html2pdf.js',
+        'type': 'j2/javascript',
+        'version' : '1.0', 
+        'fileName' : 'jsPDF.js'
+      },
+      'chosen' : { //chosen
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/chosen.jquery.js' : '0'; },                
+        'lib': 'ROOT/lib/chosen.jquery.js',
+        'type': 'j2/javascript',
+        'version' : '1.8.7', 
+        'fileName' : 'chosen.jquery.js',
+        /*inject : [
+          {
+            win : 'edt',
+            loc : 'head'
+          }  
+        ],
+        injectWins : ['edt']*/
+      },
+      'QRCode' : { //qrc
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.qrcode.js' : '0'; },                
+        'lib': 'ROOT/lib/jquery.qrcode.js',
+        'type': 'j2/javascript',
+        'version' : '0.0.0', 
+        'fileName' : 'jquery.qrcode.js'
+      }
+    };            
+    
+    /*console.log('ASSERTION: há artefatos que não foram registrado ainda com seus ids do dropbox.');*/
+  })();
+} catch (err) {
+  var t = 'ERROR: ' + err.message + ' | ' + window.j2.res.MAIN.artfacts.lib;
+  alert(t);
+  console.error(t);
+}

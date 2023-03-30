@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>TAREFA</title>
+    <script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="j2Conf.js"></script>
+</head>
+<body>
+  <div id="bannerMovimentar" style="height: 60px; width: 100%; position: fixed !important; top: 0px; left: 0px; z-index: 100000; background-image: url('/pje/styleSkinInfox/vermelho/imagens/site_gradiente.png') !important;background-repeat: repeat-x !important; background-color:#cdcbcc ;">
+		<div id="imagemCabecalhoMovimentar" style="margin: 4px; float: left;"><a tabindex="0" href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/paginator.seam?id=81505&amp;ca=6bb12fd4e5afe5cb8ac55f79e43c46c3673d750e8b4813e862a62a927d6975eacdd7cff05d8d8c9dd21fad3ae5afcfa045d27f38583e4c04', 'detail109513', 'location=0, status=0,scrollbars=1,width=1000,height=650');" style="cursor: pointer !important;" title="Paginador">
+				<img src="/pje/img/cp/cpros.png" height="48" width="48"></a>
+		</div>
+		<div id="barraIcones">
+				<div id="linkPaginadorDiv" style="float: right; cursor: pointer !important; position: relative; margin-top: 3; margin-right: 3"><a tabindex="0" href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/listTasksProcesso.seam?cid=109513', 'detail109513', 'location=0, status=0,scrollbars=1,width=1000,height=650');" style="cursor: pointer !important;" title="Histórico de tarefas"><img src="/pje/img/paginador.png" title="Histórico de tarefas" height="24" width="24"></a>
+			</div><div id="iconeAlertasDiv" style="float: right;"><a tabindex="0" href="/pje/Processo/movimentar.seam?newTaskId=346901041&amp;idProcesso=81505&amp;cid=109513" id="j_id21" onclick="abrirPopup(81505);" title="Alertas" style="cursor: pointer !important; color: ; "><img src="/pje/img/al/secam.png" title="Há alertas para este processo. Clique aqui para visualizar." height="24" width="24"></a></div>
+		</div>
+		<div id="localOrgaoDiv" style="margin: 0; padding: 0; margin-left: 60px;"><span style="font-size:0.9em; line-height: 1.2; color: #8B0000; ">2º Juizado Especial Cível de Imperatriz/Juiz de Direito Titular</span>
+		</div>
+		<div id="processoTarefaDiv" style="margin: 0; padding: 0; margin-left: 60px; font-size: 1.2em; line-height: 1.167;  font-weight: bold; color: #8B0000;">
+                    <div id="normalProcessoDiv">
+                        <a tabindex="0" href="#" onclick="window.open('/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam?id=81505&amp;ca=6bb12fd4e5afe5cb8ac55f79e43c46c3673d750e8b4813e862a62a927d6975eacdd7cff05d8d8c9dd21fad3ae5afcfa045d27f38583e4c04&amp;idTaskInstance=346901041','detail109513', 'location=0,status=0,scrollbars=1,width=1000,height=650');" style="cursor: pointer !important; color: #8B0000; " title="Detalhes do Processo"><span style="color: #8B0000">CumSen 0802197-70.2015.8.10.0047</span></a> - Preparar intimação</div>
+		</div>
+		<div id="partesDiv" style="margin: 0; padding: 0; margin-left: 60px;"><span style="font-size:0.9em; line-height: 1.2; color: #8B0000; ">ERIVAN DA SILVA SANTOS X CNOVA COMERCIO ELETRONICO S.A.</span>
+		</div>
+	</div>
+  <iframe id="mod" src=""style="width:100%; height: 800px; overflow:hidden;     margin-top: 60px;"></iframe>
+  <script>
+    (function(){
+	  if(window.j2ModDebug)
+		document.getElementById('mod').src = 'modeloDebugVars.html';
+      else
+	    document.getElementById('mod').src = 'modelo.html'
+	})();
+  </script>
+</body>
+</html>

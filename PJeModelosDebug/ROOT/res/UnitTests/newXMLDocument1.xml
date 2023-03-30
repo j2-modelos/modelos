@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:Defiinitions
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://j2'
+    >
+    <ns1:classeDef id="">
+        <ns1:versao id="">
+            <ns1:element tag="" id="" j2Tag="" j2Class="" class="" onclick="">
+                <ns1:innerContent id="" versao=""></ns1:innerContent>
+            </ns1:element>
+            <ns1:classe id="" versao="" enabled=""></ns1:classe>
+            <ns1:classe id="" versao="" enabled=""></ns1:classe>
+            <ns1:classe id="" versao="" enabled=""></ns1:classe>
+            <ns1:textHTML></ns1:textHTML>
+        </ns1:versao>
+    </ns1:classeDef>
+    <ns1:classeDef id="">
+        <ns1:versao id="">
+            <ns1:element tag="" id="" j2Tag="" j2Class="" class="" onclick="">
+            </ns1:element>
+            <ns1:textHTML></ns1:textHTML>
+        </ns1:versao>
+    </ns1:classeDef>
+    <ns1:classeDef id="">
+        <ns1:versao id="">
+            <ns1:element tag="" id="" j2Tag="" j2Class="" class="" onclick="">
+            </ns1:element>
+            <ns1:textHTML></ns1:textHTML>
+        </ns1:versao>
+    </ns1:classeDef>
+
+</ns1:Defiinitions>

@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+        <elemento tag="li" class="" scope="NONE">
+            <elemento tag="p" class="p FntModDefault" scope="NONE">
+                #{textContent}
+            </elemento>
+        </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Citação">
+            <gItem id="intmItCitacaoJec"/>
+            <gItem id="intmItCitacaoExecucaoJec"/>
+            <gItem id="intmItCitacaoExecucaoExTiExAudJec"/>
+            <gItem id="intmItCitacaoJecSistema"/>
+            <gItem id="intmItCitacaoVaraCiv"/>
+            <gItem id="intmItCitacaoVaraCivPagamento"/>
+            <gItem id="intmItCitacaoVaraCivBAAF"/>
+            <gItem id="intmItCitacaoVaraCivPrazoConcilicao"/>
+        </group>
+        <group label="Audiencia">
+            <gItem id="intmItAudDesigSemSala"/>
+            <gItem id="intmItAudDesigExTiExSemSala"/>
+            <gItem id="intmItAudRedesigSemSala"/>
+            <gItem id="intmItAudCEJUSC"/>
+        </group>
+        <group label="Intimação">
+            <gItem id="intmItLiminar"/>
+            <gItem id="intmItDespacho"/>
+            <gItem id="intmItDecisao"/>
+            <gItem id="intmItGenerico"/>
+        </group>
+        <group label="Outros">     
+            <!--<gItem id="intmItEndPoloPassivo"/>-->
+            <gItem id="intmItComprimentoPrecatória"/>
+            <gItem id="intmItBuscaApreensao"/>
+            <gItem id="intmItCitacaoVaraCivPagamentoExecucao"/>
+            <gItem id="intmItPenhoraAvaliacao"/>
+            <gItem id="intmItIntExecOferEmbargos"/>
+            <gItem id="intmItOJCertificarContatos"/>
+        </group>
+        <group label="Ente Público">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>            
+            <gItem id="intmItEntPubManifInteresse"/>
+        </group>
+        
+        
+        <group label="Video Conferencia">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>            
+            <gItem id="intmItVideoConferenciaCiencia"/>
+            <gItem id="intmItAudienciaVideoConferenciaSala1"/>
+            <gItem id="intmItAudienciaVideoConferenciaSala2"/>
+        </group>        
+        <!--group label="xxxxxxxxx">
+            <gItem id="intmIt"/>
+            <gItem id="intmIt"/>
+            <gItem id="intmIt"/>
+        </group>
+        <group label="xxxxxxxxx">
+            <gItem id="intmIt"/>
+            <gItem id="intmIt"/>
+            <gItem id="intmIt"/>
+        </group>
+        <group label="xxxxxxxxx">
+            <gItem id="intmIt"/>
+            <gItem id="intmIt"/> 
+            <gItem id="intmIt"/>
+        </group-->
+    </groupsDefs>
+    <items>
+        <item id="intmItComprimentoPrecatória" label="Cumpirmento Precatória" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{FINALIDADE/MEIO IMCOMPATÍVEL}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CUMPRIMENTO} da Carta Precatória anexa ao presente mandado nos termos requisitados pelo juízo deprecante.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item> 
+        
+        <!-- items selectorArray are 'binded' with meioComunicacao.xml 
+            <item id="meioComunicItCorreios" ...
+            <item id="meioComunicItCentralMandados" ...
+            <item id="meioComunicItDJe" ...
+            <item id="meioComunicItPessoamente" ...
+            <item id="meioComunicItSistema" ...
+            <item id="meioComunicItTelefone" ...
+            
+            on inexistance of match keyEl with ids abovre must be choiced 'general'
+        -->
+        <item id="intmItBuscaApreensao" label="Busca e Apreensão" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{[FINALIDADE INCOMPATÍVEL]}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{BUSCA E APREENSÃO} do veículo: XXXDescricaoDoVeiculoXXX, que se encontra em poder da parte requerida acima qualificada, 
+                            entregando-o em seguida em poder do representante legal do Requerente ou a quem este vier a indicar, na qualidade de depositário, mediante o 
+                            competente termo, ficando este advertido de que não poderá usá-lo, tampouco retirá-lo desta Comarca, até o decurso do prazo de cinco (05) 
+                            dias da efetivação da medida liminar e/ou da intimação da Requerida para pagar a dívida, comprometendo-se, entretanto, à guarda e conservação.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <item id="intmItCitacaoJecSistema" label="Citação Sistema" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <advertencias>
+                <advertencia id="advtItCitFinalidadeExpeidente" />
+                <advertencia id="advtItApresentacaoDefesaJec" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaJec" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />                
+                
+            </advertencias>
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
+                            até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
+                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
+                            da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
+                            durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
+                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <item id="intmItCitacaoJec" label="Citação" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidente" />
+                <advertencia id="advtItApresentacaoDefesaJec" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaJec" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItMudancaEndereco" />
+                <advertencia id="advtItPJeListaDocumentoAviso" />
+                <advertencia id="advtItListaDocumentosB" />
+                
+                
+            </advertencias>
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
+                            até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
+                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
+                            da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
+                            durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
+                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <item id="intmItCitacaoVaraCiv" label="Citação" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidenteCivel" />
+                <advertencia id="advtItApresContest" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaCiv" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItPJe" />
+                <advertencia id="advtItListaDocumentosA" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} na forma da Lei, para os termos da ação acima identificada cuja petição inicial segue anexa, 
+                            podendo respondê-la caso queira no prazo de #{j2.env.PJeVars.expediente.prazo}. Cientificado(a) que caso não apresente contestação, 
+                            será considerada revel e serão consideradas verdadeiras as alegações apresentadas pela parte contrária..
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima identificado, na forma da Lei, a fim de ter ciência 
+                            da presente ação, podendo respondê-la caso queira no prazo de #{j2.env.PJeVars.expediente.prazo}. 
+                            Cientificando-o(a) ainda que o não comparecimento à referida audiência, configurará Revelia, considerando verdadeiras as alegações 
+                            apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>        
+        
+        <item id="intmItCitacaoVaraCivPagamentoExecucao" label="Citação Pagamento (Execucao)" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidenteCivel" />
+                <advertencia id="advtItApresContest" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaCiv" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItPJe" />
+                <advertencia id="advtItListaDocumentosA" />
+            </advertencias>               
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} para que, no prazo de 15 dias, 
+                            efetue o pagamento da dívida no valor de #{j2.env.PJeVars.processo.valorDaCausa}, cientificado(a) que desde já que 
+                            os honorários advocatícios a serem 
+                            pagos foram fixados em 10% (dez por cento) sobre o valor da execução (art. 827, CPC/2015); em caso de pagamento no 
+                            prazo estabelecido, serão os honorários fixados em 5% (cinco por cento) (art. 827, §1º, CPC/2015); o valor dos honorários 
+                            poderá ser elevado até 20% (vinte por cento), se rejeitados embargos à execução eventualmente interpostos, podendo a 
+                            majoração, em caso de não oposição de embargos, ocorrer ao final do procedimento executivo, uma vez que se leva em conta 
+                            o trabalho realizado pelo advogado do exeqüente (art. 827, §2º, CPC/2015).
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada para que, no prazo de 15 dias, 
+                            efetue o pagamento da dívida no valor de #{j2.env.PJeVars.processo.valorDaCausa}, cientificando-o(a) que desde já que 
+                            os honorários advocatícios a serem 
+                            pagos foram fixados em 10% (dez por cento) sobre o valor da execução (art. 827, CPC/2015); em caso de pagamento no 
+                            prazo estabelecido, serão os honorários fixados em 5% (cinco por cento) (art. 827, §1º, CPC/2015); o valor dos honorários 
+                            poderá ser elevado até 20% (vinte por cento), se rejeitados embargos à execução eventualmente interpostos, podendo a 
+                            majoração, em caso de não oposição de embargos, ocorrer ao final do procedimento executivo, uma vez que se leva em conta 
+                            o trabalho realizado pelo advogado do exeqüente (art. 827, §2º, CPC/2015).
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>    
+        
+        <item id="intmItCitacaoVaraCivPagamento" label="Citação Pagamento" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidenteCivel" />
+                <advertencia id="advtItApresContest" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaCiv" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItPJe" />
+                <advertencia id="advtItListaDocumentosA" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} de todo o conteúdo do 
+                            despacho e da petição inicial, cujas cópias seguem anexas como parte integrante desta, para que pague a importância 
+                            de #:{j2.env.PJeVars.processo.valorDaCausa} ou ofereça embargos no prazo de #{j2.env.PJeVars.expediente.prazo}, sob 
+                            pena de conversão deste em mandado executivo. Cientificado(a) de que cumprida o que determina esta citação, ficará 
+                            isenta do pagamento das custas processuais e dos honorários advocatícios.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada acerca de todo o conteúdo do 
+                            despacho e da petição inicial, cujas cópias seguem anexas como parte integrante deste, para que pague a importância 
+                            de #:{j2.env.PJeVars.processo.valorDaCausa} ou ofereça embargos no prazo de #{j2.env.PJeVars.expediente.prazo}, sob 
+                            pena de conversão deste em mandado executivo. Cientificando-a de que cumprida o que determina esta citação, ficará 
+                            isenta do pagamento das custas processuais e dos honorários advocatícios.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>    
+        
+        <item id="intmItCitacaoVaraCivBAAF" label="Citação BAAF" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidenteCivel" />
+                <advertencia id="advtItApresContest" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaCiv" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItPJe" />
+                <advertencia id="advtItListaDocumentosA" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} na forma da Lei, a fim de ter ciência da presente ação, cuja petição inicial segue anexa. Cientificado(a) de que poderá 
+                            respondê-la, caso queira, no prazo de 15 dias, contados da data da audiência de medição/conciliação, se não houver solução à presente 
+                            demanda. Cientificado(a) ainda que a eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem 
+                            consideradas verdadeiras as alegações apresentadas pela parte contrária.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada para, querendo, #:b{pagar a dívida}, no prazo de
+                            05 (cinco) dias, sob pena de consolidar-se liminarmente a propriedade e a posse exclusiva do bem no patrimônio do credor fiduciário, 
+                            inclusive com a faculdade de venda antecipada do veículo, salientando-se que no caso de incorporação ao seu patrimônio deverá o 
+                            credor promover a avaliação do veículo #:u{e/ou} querendo, #:b{contestar} a referida ação, no prazo de 15 (quinze) dias, sob pena de revelia 
+                            e demais cominações legais. Cientificando-o(a) desde logo que dispõe o artigo 285 do Código de Processo Civil, que tem 
+                            o seguinte teor: Art. 285 - Não sendo contestada a ação se presumirão aceitos pelo réu, como verdadeiros, os fatos articulados pelo autor.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>                                    
+        
+        <item id="intmItCitacaoVaraCivPrazoConcilicao" label="Citação (Prazo Conciliação)" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidenteCivel" />
+                <advertencia id="advtItApresContest" />
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItReveliaCiv" />
+                <advertencia id="advtItPessoaJuridica" />
+                <advertencia id="advtItInversaoOnus" />
+                <advertencia id="advtItPJe" />
+                <advertencia id="advtItListaDocumentosA" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{[FINALIDADE INCOMPATÍVEL]}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada, na forma da Lei, a fim de ter ciência 
+                            da presente ação. Cientificando-a que poderá respondê-la, caso queira, no prazo de 15 dias, 
+                            contados da data da audiência de medição/conciliação, se não houver solução à presente demanda. Cientificando-a ainda que a 
+                            eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem consideradas verdadeiras as 
+                            alegações apresentadas pela parte contrária.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>       
+        
+        <item id="intmItCitacaoExecucaoJec" label="Citação Execucao" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidente" />
+                <!--advertencia id="DEFESEA DE EXECUÇÃO" /-->
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItPessoaJuridica2" />
+                <advertencia id="advtItMudancaEndereco" />
+                <advertencia id="advtItPJeListaDocumentoAviso" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <eventFire event="Citacao.onSelectItemLinkedExecutionValue"/>
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
+                            por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
+                            conforme chaves de acesso aos documento listados abaixo, para pagar, no prazo 
+                            de #{j2.env.PJeVars.expediente.prazo} o valor acima indicado ou oferecer bem(ns) suficiente(s) 
+                            para a garantia do crédito em execução.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
+                            a fim de ter ciência de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
+                            por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
+                            conforme chaves de acesso aos documento listados abaixo, para que pague, no prazo 
+                            de #{j2.env.PJeVars.expediente.prazo} o valor acima indicado ou ofereça bem(ns) suficiente(s) 
+                            para a garantia do crédito em execução.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>      
+          
+        <item id="intmItCitacaoExecucaoExTiExAudJec" label="Citação Execucao em Audiência" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>   
+            <advertencias>
+                <advertencia id="advtItContraFe" />
+                <advertencia id="advtItCitFinalidadeExpeidente" />
+                <!--advertencia id="DEFESEA DE EXECUÇÃO" /-->
+                <advertencia id="advtItTetoJuizadoAdvogado" />
+                <advertencia id="advtItPessoaJuridica2" />
+                <advertencia id="advtItMudancaEndereco" />
+                <advertencia id="advtItPJeListaDocumentoAviso" />
+                <advertencia id="advtItListaDocumentosB" />
+            </advertencias>               
+            <eventFire event="Citacao.onSelectItemLinkedExecutionValue"/>
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CITADO(A)} de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
+                            por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
+                            conforme chaves de acesso aos documento listados abaixo, para pagar o valor acima indicado no #:B{#:U{prazo de 3 (três) dias},} 
+                            #:B{a contar da audiência de conciliação} ou oferecer bem(ns) 
+                            suficiente(s) para a garantia do crédito em execução.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
+                            a fim de ter ciência de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
+                            por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
+                            conforme chaves de acesso aos documento listados abaixo, para que pague o valor acima indicado no #:B{#:U{prazo de 3 (três) dias}, a contar da audiência de conciliação}, 
+                            ou ofereça bem(ns) suficiente(s) para a garantia do crédito em execução.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>        
+            
+        
+        <item id="intmItAudDesig" label="Designada" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, na #{j2.env.PJeVars.audiencia.sala}, deste Juízo.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, na #{j2.env.PJeVars.audiencia.sala}, deste Juízo.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudDesigExTiEx" label="Designada ExTiEx" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, na #{j2.env.PJeVars.audiencia.sala}, deste Juízo, quando poderá oferecer embargos (art. 52, IX, da Lei 9.099), por escrito ou verbalmente.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, na #{j2.env.PJeVars.audiencia.sala}, deste Juízo, quando poderá oferecer embargos (art. 52, IX, da Lei 9.099), por escrito ou verbalmente.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudDesigExTiExSemSala" label="Designada ExTiEx" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, quando poderá oferecer embargos (art. 52, IX, da Lei 9.099), por escrito ou verbalmente.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}, quando poderá oferecer embargos (art. 52, IX, da Lei 9.099), por escrito ou verbalmente.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        <item id="intmItAudCEJUSC" label="Designada CEJUSC" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="familia"/> 
+            </competencias>
+            <advertencias>
+                <advertencia id="advtItAusenciaConciliacao" />
+                <advertencia id="advtItAdvogagosCumunicaremPartes" />
+            </advertencias>            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #{j2.env.PJeVars.audiencia.data}, na #{j2.env.PJeVars.audiencia.sala}, situado no(a) #{j2.env.PJeVars.unidade.mediacao.enderecoFormal}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, designada para o dia #{j2.env.PJeVars.audiencia.data}, na #{j2.env.PJeVars.audiencia.sala}, situado no(a) #{j2.env.PJeVars.unidade.mediacao.enderecoFormal}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        <item id="intmItAudRedesig" label="Redesignado" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}., na #{j2.env.PJeVars.audiencia.sala}, deste Juízo.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}., na #{j2.env.PJeVars.audiencia.sala}, deste Juízo.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudRedesigSemSala" label="Redesignado" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à Audiência de #{j2.env.PJeVars.audiencia.tipo}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+                    
+        
+        <item id="intmItDecisao" label="Decisão" dataPlus="requireIdElementSet">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCorreios">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, cuja cópia segue anexa.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItDJe">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, a seguir transcrita.
+                        </data>
+                    </arElement>                
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{DECISÃO}} #:span@docId{} proferida por este Juízo, cuja cópia segue anexa.
+                        </data>
+                    </arElement>     
+                </selectorArray>               
+            </itemContent>
+        </item>     
+        
+        <item id="intmItDespacho" label="Despacho" dataPlus="requireIdElementSet">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor do #:B{#:U{DESPACHO}} #:span@docId{}proferido por este Juízo.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCorreios">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor do #:B{#:U{DESPACHO}} #:span@docId{}proferido por este Juízo, cuja cópia segue anexa.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItDJe">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor do #:B{#:U{DESPACHO}} #:span@docId{}proferido por este Juízo, a seguir transcrita.
+                        </data>
+                    </arElement>                
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor  do #:B{#:U{DESPACHO}} #:span@docId{} proferido por este Juízo, cuja cópia segue anexa.
+                        </data>
+                    </arElement>           
+                </selectorArray>         
+            </itemContent>
+        </item>       
+        
+        <item id="intmItIntExecOferEmbargos" label="Intimação Executado Oferecer Embargos" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{[FINALIDADE INCOMPATÍVEL]}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva}, depois de efetivada a 
+                            penhora e respectivo depósito, para, querendo, oferecer embargos no prazo de 15 (quinze) dias, 
+                            a contar do ato intimatório, ficando ciente de que não oferecendo embargos, poderá ser deferida ao 
+                            credor a imediata adjudicação dos bens penhorados. Cientificando-o(a) que caso deposite 30% 
+                            (trinta por cento) do valor da execução, incluindo custas e honorários advocatícios, acrescido de 
+                            correção monetária e juros de 1% (um por cento) ao mês, poderá requerer o pagamento restante em até 
+                            06 (seis) parcelas mensais (art. 916, CPC/2015)..
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item> 
+        
+        <item id="intmItEndPoloPassivo" label="Atualizar endereço Pólo Passivo" dataPlus="">    
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>      
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:U{#:B{FINALIDADE IMCOMPATÍVEL COM O MEIO}}
+                        </data>
+                    </arElement>              
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} do #{j2.env.PJeVars.processo.polos.ativo} acima qualificado para, no prazo de #{j2.env.PJeVars.expediente.prazo}, apontar o #:B{ENDEREÇO ATUAL}
+                            do #{j2.env.PJeVars.processo.polos.passivo}.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>     
+                       
+        <item id="intmItGenerico" label="Genérico" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        
+        <item id="intmItLiminar" label="Liminar" dataPlus="requireIdElementSet">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{Medida Liminar/Antecipação de Tutela}} #:span@docId{}concedido em favor do #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCorreios">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{Medida Liminar/Antecipação de Tutela}} #:span@docId{}concedido em favor do #{j2.env.PJeVars.processo.polos.ativo}, cuja cópia segue anexa.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItDJe">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{Medida Liminar/Antecipação de Tutela}} #:span@docId{}concedido em favor do #{j2.env.PJeVars.processo.polos.ativo}, a seguir transcrita.
+                        </data>
+                    </arElement>                
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{Medida Liminar/Antecipação de Tutela}} #:span@docId{} concedido em favor do #{j2.env.PJeVars.processo.polos.ativo}, cuja cópia segue anexa.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <item id="intmItPenhoraAvaliacao" label="Penhora e Avaliação" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{[FINALIDADE INCOMPATÍVEL]}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{PENHORA e AVALIAÇÃO} dos bens bastantes para a satisfação da dívida, em caso de não realizado o pagamento ou não ofertado 
+                            bens para a garantia da execução, devendo constar no auto também a avaliação dos bens penhorados..
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <item id="intmItIntExecOferEmbargos" label="Intimação Executado Oferecer Embargos" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{[FINALIDADE INCOMPATÍVEL]}
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{PENHORA e AVALIAÇÃO} dos bens bastantes para a satisfação da dívida, em caso de não realizado o pagamento ou não ofertado 
+                            bens para a garantia da execução, devendo constar no auto também a avaliação dos bens penhorados..
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        
+        <!-- VÍDEO CONFERÊNCIA-->
+        <item id="intmItVideoConferenciaCiencia" label="Ciência da video conferência" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{CIENTIFICADO(A)} de que a #:B{audiência} designada será realizada #:B{por meio de videoconferência}, 
+                            nos moldes em que prevê a Lei 13.994/2020, que alterou os arts. 22 e 23 da lei 9.099/99;
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CIENTIFICAÇÃO} das partes de que a #:B{audiência} designada nos autos  para o dia 
+                            #:U{#:B{#{j2.env.PJeVars.audiencia.data}}},  será realizada #:B{por meio de videoconferência}, 
+                            nos moldes em que prevê a Lei 13.994/2020, que alterou os arts. 22 e 23 da lei 9.099/99;
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        
+        <item id="intmItAudienciaVideoConferenciaSala1" label="Sala 1" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <simpleElementsDefs>
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{INTIMADO(A)} de que #:B{na data e hora agendada} para a audiência devem, por 
+                                meio da internet:
+                            </elemento>
+
+                            <elemento tag="ul" scope="NONE" class="p FntModDefault AttachementUL" >
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        #:B{acessar o link} #:U{https://vc.tjma.jus.br/2jecitz} (preferencialmente por meio do navegador Google Chrome), 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        digitar no campo “login” o nome do participante, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        inserir a #:B{senha} tjma1234, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        ao visualizar a pergunta “como você gostaria de se juntar ao áudio” clicar no ícone  do microfone e disponibilizar acesso à câmera 
+                                        do dispositivo que estiver utilizando (computador, notebook, tablet ou celular);
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <simpleElementsDefs>
+                            <elemento tag="p" scope="NONE" class="p FntModDefault marginAtoJudicial" >
+                                #:B{INTIMAÇÃO} das partes de que #:B{na data e hora agendada} para a audiência devem, por 
+                                meio da internet:
+                            </elemento>
+
+                            <elemento tag="ul" scope="NONE" class="p FntModDefault AttachementUL" >
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        #:B{acessar o link} #:U{https://vc.tjma.jus.br/2jecitz} (preferencialmente por meio do navegador Google Chrome), 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        digitar no campo “login” o nome do participante, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        inserir a #:B{senha} tjma1234, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        ao visualizar a pergunta “como você gostaria de se juntar ao áudio” clicar no ícone  do microfone e disponibilizar acesso à câmera 
+                                        do dispositivo que estiver utilizando (computador, notebook, tablet ou celular);
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        <item id="intmItAudienciaVideoConferenciaSala2" label="Sala 2" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <simpleElementsDefs>
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{INTIMADO(A)} de que #:B{na data e hora agendada} para a audiência devem, por 
+                                meio da internet:
+                            </elemento>
+
+                            <elemento tag="ul" scope="NONE" class="p FntModDefault AttachementUL" >
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        #:B{acessar o link} #:U{https://vc.tjma.jus.br/2jecitz2} (preferencialmente por meio do navegador Google Chrome), 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        digitar no campo “login” o nome do participante, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        inserir a #:B{senha} tjma1234, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        ao visualizar a pergunta “como você gostaria de se juntar ao áudio” clicar no ícone  do microfone e disponibilizar acesso à câmera 
+                                        do dispositivo que estiver utilizando (computador, notebook, tablet ou celular);
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <simpleElementsDefs>
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{INTIMAÇÃO} das partes de que #:B{na data e hora agendada} para a audiência devem, por 
+                                meio da internet:
+                            </elemento>
+
+                            <elemento tag="ul" scope="NONE" class="p FntModDefault AttachementUL" >
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        #:B{acessar o link} #:U{https://vc.tjma.jus.br/2jecitz2} (preferencialmente por meio do navegador Google Chrome), 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        digitar no campo “login” o nome do participante, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        inserir a #:B{senha} tjma1234, 
+                                    </elemento>
+                                </elemento>
+                                <elemento tag="li" scope="NONE">
+                                    <elemento tag="p" scope="NONE" class="p FntModDefault " >
+                                        ao visualizar a pergunta “como você gostaria de se juntar ao áudio” clicar no ícone  do microfone e disponibilizar acesso à câmera 
+                                        do dispositivo que estiver utilizando (computador, notebook, tablet ou celular);
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        
+        <item id="intmItOJCertificarContatos" label="Oficial Justiça Certificar Contatos Parte Vinculada" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>     
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{FINALIDADE/MEIO IMCOMPATÍVEL}
+                        </data>
+                    </arElement>      
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CERTIFICAR} o Oficial de justiça as informações de contato telefônico e whatsapp da(s) parte(s) vinculada(s) ao presente mandado, considerando a previsão do Art. 8º da Portaria Conjunta 34/2020.
+                        </data>
+                    </arElement>           
+                </selectorArray>         
+            </itemContent>
+        </item>
+    </items>
+  </selectorDef>
+</Definitions>

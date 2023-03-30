@@ -1,0 +1,58 @@
+/* 
+ * ASS: Previdência Privada
+ * DOC: 6160188
+ * MOD: j2.css
+ * 
+ * Estilos para projeto j2
+ * 
+ * versão 2017.06.02.1
+ */
+
+.HLField {
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    animation-name: highlightField;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite; 
+    border-radius: 5px;	
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes highlightField {
+    0%   {background-color: #ffffff00; box-shadow: 0px 0px 9px 4px red;}
+    50% {background-color: #ffeb3b; box-shadow: 0px 0px 10px 2px #ffeb3b;}
+    100%   {background-color: #ffffff00; box-shadow: 0px 0px 9px 4px red;}
+}
+
+/* Standard syntax */
+@keyframes highlightField {
+    0%   {background-color: #ffffff00; box-shadow: 0px 0px 9px 4px red;}
+    50% {background-color: #ffeb3b; box-shadow: 0px 0px 10px 2px #ffeb3b;}
+    100%   {background-color: #ffffff00; box-shadow: 0px 0px 9px 4px red;}
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+
+}
+::-webkit-scrollbar-track {
+    display: none;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.10);
+}
+::-webkit-scrollbar-thumb:hover {
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.25);
+	
+}
+
+body{
+    overflow: overlay;
+}
+
+
+

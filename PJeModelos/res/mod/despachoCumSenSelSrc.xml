@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="p" class="p FntModDefault Indnt3cm marginAtoJudicial" scope="NONE">
+         #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Títulos">
+            <gItem id="despCumSenItTituloConversaoPerdasDanos"/>
+            <gItem id="despCumSenItTituloDeterminacaoSecretariaJudicial"/>
+            <gItem id="despCumSenItTituloObrigacaoFazer"/>
+            <gItem id="despCumSenItTituloDoPedido"/>
+            
+            <gItem id="despCumSenItTituloObPagMultaEmbargosProtelatorios"/>
+            <gItem id="despCumSenItTituloObPagMultaAcordo"/>
+            <gItem id="despCumSenItTituloObPagMultaAcordoCumpIntempestivo"/>
+            <gItem id="despCumSenItTituloObPagMultaLiminar"/>
+            <gItem id="despCumSenItTituloObPagarQuantumIndenizatorio"/>
+            <gItem id="despCumSenItTituloObPagarLitiganciaMaFe"/>
+            <gItem id="despCumSenItTituloDecisaoIneficaciaIntimacaoo"/>
+        </group>
+        <group label="Do Pedido">
+            <gItem id="despCumSenItPedidoPoloAtivo"/>
+            <gItem id="despCumSenItPedidoPoloPassivo"/>
+            <gItem id="despCumSenItPedidoPoloAtivoAdvogado"/>
+        </group>
+        <group label="Abertura Cumprimento Sentença">
+            <gItem id="despCumSenItAbertura"/>
+            <gItem id="despCumSenItAberturaPROJUDI"/>
+            <gItem id="despCumSenItAberturaInversao"/>
+            <gItem id="despCumSenItExposicaoObjetoExecucao"/>
+            <gItem id="despCumSenItAtosDecido"/>
+            <gItem id="despCumSenItDetermino"/>
+        </group>
+        <group label="Objeto da Execucao">
+            <gItem id="despCumSenItObjectObFazAcordo"/>
+            <gItem id="despCumSenItObjectObFazSentenca"/>
+            <gItem id="despCumSenItObjectExecucaoMultaEmbargosProtelatorios"/>
+            <gItem id="despCumSenItObjectExecucaoMultaIntempestiva"/>
+            <gItem id="despCumSenItObjectExecucaoMultaObFazAcordo"/>
+            <gItem id="despCumSenItObjectExecucaoMultaObFazSentença"/>
+            <gItem id="despCumSenItObjectExecucaoMultaObFazDecisao"/>
+            <gItem id="despCumSenItObjectExecucaoMultaObFazLiminar"/>
+            <gItem id="despCumSenItObjectExecucaoMultaLitiganciaMaFe"/>
+            <gItem id="despCumSenItObjectObPagarParcelasAcordo"/>
+            <gItem id="despCumSenItObjectHonorariosSucumbencia"/>
+            <gItem id="despCumSenItObjectObPagAcordo"/>
+            <gItem id="despCumSenItObjectObPagSentenca"/>
+        </group>
+        <group label="Decisão sobre a Obrigação de Fazer">
+            <gItem id="despCumSenItObFazerAcordoNaoCumprido"/>
+            <gItem id="despCumSenItObFazerSentençaNaoCumprida"/>
+            <gItem id="despCumSenItObFazerObFazerNãoCumprida"/>
+            
+            <gItem id="despCumSenItObFazerDeterminaCumprimentoMultaAFixar"/>
+            <gItem id="despCumSenItObFazerDeterminaCumprimentoMultaFixa"/>
+            <gItem id="despCumSenItObFazerDeterminaCumprimentoMultaMajora"/>
+            <gItem id="despCumSenItObFazerDeterminaCumprimentoMultaFixaOcorrencia"/>
+            <gItem id="despCumSenItObFazerDeterminaCumprimentoMultaMajoraOcorrencia"/>
+            
+            <gItem id="despCumSenItObFazeTranscricao"/>
+            <gItem id="despCumSenItObFazeConvertPerdaDanos"/>
+            
+            <gItem id="despCumSenItAtosDecido"/>
+        </group>
+        
+        <group label="Despachos da obrigação de Pagar">
+            <gItem id="despCumSenItObPagExposicaoObPagQuantiaCerta"/>
+            <gItem id="despCumSenItObPagExposicaoObPagMulta"/>
+            <gItem id="despCumSenItObPagExposicaoObPagMultaIntempestivo"/>
+            <gItem id="despCumSenItObPagExposicaoObPagQuantiaCertaEMulta"/>
+            <gItem id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistenciaRubricasAstreintes"/>
+            
+            <gItem id="despCumSenItObPagAtualizacaoDebitoSecretaria"/>
+            <gItem id="despCumSenItObPagAtualizacaoDebitoExequente"/>
+            <gItem id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistencia"/>
+            <gItem id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistenciaArt523Acordo"/>
+            <gItem id="despCumSenItInitialExecSent"/>
+            <gItem id="despCumSenItInitialExecSentExcutadoHipersuficiente"/>
+        </group>
+        
+        <group label="Outras Diligências/Comandos">
+            <gItem id="despCumSenItAnuenciaExpedicaoAlvara"/>
+            <gItem id="despCumSenItAnuenciaValoresExpedicaoAlvara"/>
+            <gItem id="despCumSenItAnuenciaValoresDesistenticaExpedicaoAlvara"/>
+            
+            <gItem id="despCumSenItCertificarPatronosExecutados"/>
+            
+            <gItem id="despCumSenItExpedicaoAlvaraValorVoluntario"/>
+            <gItem id="despCumSenItExpedicaoAlvaraValorVoluntarioApOsCustas"/>
+
+            <gItem id="despCumSenItIntimarParcesDecisao"/>
+            
+            <gItem id="despCumSenItInativacaoPartes"/>
+            <gItem id="despCumSenItIntimarParcesDecisaoExecutadoPessoal"/>
+            
+            <gItem id="despCumSenItInversaoDosPolos"/>
+            <gItem id="despCumSenItInversaoDosPolosInclulirAdvogadoPoloPassivo"/>
+            
+            <gItem id="despCumSenItAGJDeferimento"/>
+            <gItem id="despCumSenItAGJIndeferimento"/>
+        </group>
+        <group label="Outras">
+            <gItem id="despCumSenItComprovarDescrumpirmento"/>
+            <gItem id="despCumSenItDecisaoIntimacaoSemEficacia410STJ"/>
+            <gItem id="despCumSenItDecisaoConversaoPerdasEDanos"/>
+            <gItem id="despCumSenItIndeferimentoAberturaPagamentoVoluntario"/>
+        </group>
+    </groupsDefs>
+    <items>
+        <!-- GRUPO: TÍTULOS -->         
+        <item id="despCumSenItTituloObrigacaoFazer" label="Obrigação de Fazer" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE FAZER
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloDeterminacaoSecretariaJudicial" label="Determinações à Secretaria Judicial" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    DAS DEMAIS DETERMINAÇÕES À SECRETARIA JUDICIAL
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloConversaoPerdasDanos" label="Da Conversão em perdas e danos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    DA CONVERSÃO EM PERDAS E DANOS
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloDoPedido" label="Do Pedido" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    DO PEDIDO
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloDeterminacoesSecretariaJudicial" label="Outras Diligências à Secretaria Judicial" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    DAS DEMAIS DILIGÊNCIAS À SECRETARIA JUDICIAL
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloObPagMultaAcordoCumpIntempestivo" label="Quanto Obrigação de Pagar Multa Acordo | Cumprimento Intempestivo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR DECORRENTE DA MULTA PELO CUMPRIMENTO INTEMPESTIVO DO ACORDO HOMOLOGADO
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloObPagMultaEmbargosProtelatorios" label="Quanto Obrigação de Pagar Multa Embargos Protelatórios" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR DECORRENTE DA MULTA POR INTERPOSIÇÃO DE EMBARGOS DECLARATÓRIOS
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloObPagMultaAcordo" label="Quanto Obrigação de Pagar Multa Acordo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR DECORRENTE DA MULTA PELO DESCUMPRIMENTO DO ACORDO HOMOLOGADO
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloObPagMultaLiminar" label="Quanto Obrigação de Pagar Multa Liminar" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR DECORRENTE DA MULTA PELO DESCUMPRIMENTO DA LIMINAR
+                </data>    
+            </itemContent>
+        </item> 
+        <item id="despCumSenItTituloObPagarQuantumIndenizatorio" label="Quanto Obrigação de Pagar Dano Moral/Material" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR QUANTIA CERTA DECORRENTE DO QUANTUM INDENIZATÓRIO FIXADO EM SENTENÇA
+                </data>    
+            </itemContent>
+        </item>         
+        <item id="despCumSenItTituloObPagarLitiganciaMaFe" label="Quanto Obrigação de Pagar Multa Litigancia de má fé" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A OBRIGAÇÃO DE PAGAR DECORRENTE DA MULTA POR LITIGÂNCIA DE MÁ FÉ DECRETADA EM DESFAVOR PARTE EXECUTADA
+                </data>    
+            </itemContent>
+        </item>         
+        <item id="despCumSenItTituloDecisaoIneficaciaIntimacaoo" label="Ineficáica da intimação para cumprimento da obrigação de fazer" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="heading">
+                <data>
+                    QUANTO A INEFICÁCIA DA INTIMAÇÃO PARA CUMPRIMENTO DA OBRIGAÇÃO DE FAZER
+                </data>    
+            </itemContent>
+        </item>         
+        
+        
+        <!-- GRUPO: DA DECISÃO DA OBRIGAÇÃO DE FAZER -->         
+        <item id="despCumSenItAtosDecido" label="Decido" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Decido.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObFazerSentençaNaoCumprida" label="Obrigação Fazer Sentença Não cumprida Demonstrada" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    No que concerne a #:U{OBRIGAÇÃO DE FAZER}, verifico que a parte exequente demonstrou que não 
+                    fora não devidamente cumprida a obrigação imposta em sentença à executada, conforme documento 
+                    #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObFazerAcordoNaoCumprido" label="Obrigação Fazer Acordo Não Cumprida Demonstrada" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    No que concerne a #:U{OBRIGAÇÃO DE FAZER}, verifico que a parte exequente demonstrou que não 
+                    fora não devidamente cumprida a obrigação arcada pela executada em acordo homologado por este juízo, 
+                    conforme documento #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObFazerObFazerNãoCumprida" label="Obrigação de Fazer Não Cumprida | Generica" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    No que concerne a #:U{OBRIGAÇÃO DE FAZER}, verifico inexistir nos autos comprovação do seu cumprimento pela 
+                    parte executada. 
+                </data>
+            </itemContent>
+        </item>  
+        
+        
+        <item id="despCumSenItObFazerDeterminaCumprimentoMultaAFixar" label="Determina Cumprimento | Pena Multa a Fixar" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, #:B{DETERMINO} que o executado, no prazo de 5 (cinco) dias, cumpra com a #:U{OBRIGAÇÃO DE FAZER}, 
+                    conforme a seguir transcrita, #:B{sob pena de este juízo fixar #:B{MULTA} por descumprimento}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="despCumSenItObFazerDeterminaCumprimentoMultaFixa" label="Determina Cumprimento | Pena Multa Fixada | 30 dias" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, #:B{DETERMINO} que o executado, no prazo de 5 (cinco) dias, cumpra com a #:U{OBRIGAÇÃO DE FAZER}, 
+                    conforme a seguir transcrita, #:B{sob pena de multa diária a qual FIXO no importe de 
+                    #:U{#:B@despCumSent-Multa-despCumSenItObFazerDeterminaCumprimentoMultaFixa{R$ 0,00 (zero)}}, limitadas a 30 (trinta) dias/multa}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObFazerDeterminaCumprimentoMultaMajora" label="Determina Cumprimento | Pena Multa Majorada | 30 dias" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, #:B{DETERMINO} que o executado, no prazo de 5 (cinco) dias, cumpra com a #:U{OBRIGAÇÃO DE FAZER}, 
+                    conforme a seguir transcrita, #:B{sob pena de MAJORAÇÃO da multa diária para o importe de 
+                    #:U{#:B@despCumSent-Multa-despCumSenItObFazerDeterminaCumprimentoMultaMajora{R$ 0,00 (zero)}}, limitadas a 30 (trinta) dias/multa}.
+                </data>
+            </itemContent>
+        </item>          
+        <item id="despCumSenItObFazerDeterminaCumprimentoMultaFixaOcorrencia" label="Determina Cumprimento | Pena Multa Fixada | Por ocorrência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, #:B{DETERMINO} que o executado, no prazo de 5 (cinco) dias, cumpra com a #:U{OBRIGAÇÃO DE FAZER}, 
+                    conforme a seguir transcrita, #:B{sob pena de multa por cada #:U{ocorrência de descumprimento} a qual FIXO no importe de 
+                    #:U{#:B@despCumSent-Multa-despCumSenItObFazerDeterminaCumprimentoMultaFixaOcorrencia{R$ 0,00 (zero)}}}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObFazerDeterminaCumprimentoMultaMajoraOcorrencia" label="Determina Cumprimento | Pena Multa Majorada | Por ocorrência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, #:B{DETERMINO} que o executado, no prazo de 5 (cinco) dias, cumpra com a #:U{OBRIGAÇÃO DE FAZER}, 
+                    conforme a seguir transcrita, #:B{sob pena de MAJORAÇÃO da por cada #:U{ocorrência de descumprimento} para o importe de 
+                    #:U{#:B@despCumSent-Multa-despCumSenItObFazerDeterminaCumprimentoMultaMajoraOcorrencia{R$ 0,00 (zero)}}, limitadas a 30 (trinta) dias/multa}.
+                </data>
+            </itemContent>
+        </item>          
+        
+        <item id="despCumSenItObFazeTranscricao" label="Trancrição da Obrigação de Fazer" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="marginJurisprudencia i Indnt0cm">
+                <data>
+                    XXXXXTranscriçãoObrigaçãoDeFazerXXXXXXXXX
+                </data>
+            </itemContent>
+        </item>                   
+        <item id="despCumSenItObFazeConvertPerdaDanos" label="Sem cumprimento Retornar para Conversão em Perdas e Danos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Não cumprida a obrigação pela parte demandada, deverá informar a parte 
+                    exequente a este juízo para que os presentes autos me retornem conclusos para 
+                    deliberação sobre decisão para conversão em perdas e danos da obrigação de fazer 
+                    não promovida pela parte executada.
+                </data>
+            </itemContent>
+        </item>                   
+        
+        
+        
+        <!-- GRUPO: DO PEDIDO -->       
+        <item id="despCumSenItPedidoPoloAtivo" label="Pelo #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cuida-se de pedido de Cumprimento de Sentença formulado pela parte 
+                    #{j2.env.PJeVars.processo.polos.parteAtiva} 
+                    #:B{#{j2.env.PJeVars.partes.ativa.nome}} pretendendo executar título judicial
+                    existente nos presentes autos em face da #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    #:B{#{j2.env.PJeVars.partes.passiva.nome}}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="despCumSenItPedidoPoloPassivo" label="Pelo #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cuida-se de pedido de Cumprimento de Sentença formulado pela parte 
+                    #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    #:B{#{j2.env.PJeVars.partes.passiva.nome}} pretendendo executar o título judicial 
+                    existente nos presentes autos em face da #{j2.env.PJeVars.processo.polos.parteAtiva} 
+                    #:B{#{j2.env.PJeVars.partes.ativa.nome}}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="despCumSenItPedidoPoloAtivoAdvogado" label="Advogado do Pelo #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Cuida-se de pedido de Cumprimento de Sentença formulado pelo(a) patrono(a) da parte 
+                    #{j2.env.PJeVars.processo.polos.parteAtiva} 
+                    #:B{#{j2.env.PJeVars.partes.ativa.nome}} pretendendo executar título judicial
+                    existente nos presentes autos em face da #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    #:B{#{j2.env.PJeVars.partes.passiva.nome}}.
+                </data>
+            </itemContent>
+        </item>     
+          
+        <!-- GRUPO: ABERTURA DO CUMPRIMENTO -->         
+        <item id="despCumSenItAberturaPROJUDI" label="Abertura Processo PROJUDI/THEMIS" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Considerando que a parte exequente acostou aos autos a documentação requisitada 
+                    pela Portaria Conjunta 5/2017-TJMA dos autos nº #:U{#:span@numeroProcessoPricipal{XXXXXNumeroProcessoPrincipalXXX}},
+                    cujo julgamento trânsitou livremente em julgado, e o pedido expresso da parte interessada, 
+                    #:B{DECLARO INICIADA A FASE DE CUMPRIMENTO DA SENTENÇA}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAbertura" label="Abertura e evolução classe" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Considerando o trânsito em julgado e o pedido expresso da parte interessada, 
+                    #:B{DECLARO INICIADA A FASE DE CUMPRIMENTO DA SENTENÇA}, assim, DETERMINO à 
+                    Secretaria Judicial que promova a evolução da classe processual do feito para 
+                    Cumprimento de Sentença.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAberturaInversao" label="Abertura, evolução classe e inversão polo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Considerando o trânsito em julgado e o pedido expresso da parte interessada, 
+                    #:B{DECLARO INICIADA A FASE DE CUMPRIMENTO DA SENTENÇA}, assim, DETERMINO à 
+                    Secretaria Judicial que promova a evolução da classe processual do feito 
+                    para Cumprimento de Sentença, bem como promova a inversão dos polos para 
+                    o processamento do cumprimento de sentença.
+                </data>
+            </itemContent>
+        </item>  
+
+        <item id="despCumSenItExposicaoObjetoExecucao" label="Exposição Objeto Execução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="noMarginBottom">
+                <data>
+                    Observo que o cumprimento de sentença versará sobre a(s) situação(ões) pleiteada(s)
+                    pelo parte exequente em sua petição:
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItDetermino" label="Determino" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Isto posto, DETERMINO:
+                </data>
+            </itemContent>
+        </item>  
+        
+        <!-- GRUPO: OBJETO EXECUÇÃO -->         
+        <item id="despCumSenItObject xxxxxxxxxxxxxxxxxx" label="xxxxxxxxxxxxxxxxxxxxxxxxxxxx" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    xxxxxxxxxxxxxxxxxxxxxx
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObjectObPagSentenca" label="Obrigação de Pagar do Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    OBRIGAÇÃO DE PAGAR decorrente de danos materiais/morais morais fixados em sede de julgamento
+                    proferido nos presentes autos.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectObPagAcordo" label="Obrigação de Pagar do Acordo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    OBRIGAÇÃO DE PAGAR decorrente de termo(o) de acordo realizado entre as partes devidamente 
+                    homologado pelo juízo.
+                </data>
+            </itemContent>
+        </item>  
+                
+        <item id="despCumSenItObjectHonorariosSucumbencia" label="Honorários de Sucumbência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DE HONORÁRIOS DE SUCUMBÊNCIA fixados em sede de acórdão proferido pela Egrégia Turma Recursal
+                    em face da recorrida vencida, ora executada;
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObjectObFazAcordo" label="Obrigação de Fazer do Acordo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    OBRIGAÇÃO DE FAZER de termo da avença não cumprido pela parte executada em 
+                    acordo homologado por este juízo;
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectObFazSentenca" label="Obrigação de fazer da Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    OBRIGAÇÃO DE FAZER de determinação judicial não cumprida pela parte executada em 
+                    sentença proferida por este juízo;
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObjectExecucaoMultaIntempestiva" label="Execução Multa fixado em Acordo | por intempestividade" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA pelo cumprimento intempestivo da obrigação de fazer/pagar fixada em sede de acordo
+                    entabulado entre as partes.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectExecucaoMultaObFazAcordo" label="Execução Multa Obrigação de Fazer fixado em Acordo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA pelo descumprimento da obrigação de fazer/pagar antes referida fixada em sede de acordo
+                    entabulado entre as partes.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectExecucaoMultaObFazSentença" label="Execução Multa Obrigação de Fazer fixado em Sentença" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA pelo descumprimento da obrigação de fazer antes referida fixada em sede de sentença
+                    proferida nos autos.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectExecucaoMultaObFazDecisao" label="Execução Multa Obrigação de Fazer fixado em Decisão" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA pelo descumprimento da obrigação de fazer antes referida fixada em sede de decisão
+                    interlocutórida proferida nos autos.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObjectExecucaoMultaObFazLiminar" label="Execução Multa Obrigação de Fazer fixado em Tutela Antecipada" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA pelo DESCUMPRIMENTO DE TUTELA ANTECIPADA/LIMINAR proferida e confirmada no julgamento prolatado na presente ação judicial.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItObjectExecucaoMultaLitiganciaMaFe" label="Execução Multa Litigancia de Má Fé" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA de litigância de ma fé em desfavor da parte executada decretada em decisão/julgamento proferida neste juízo. 
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectExecucaoMultaEmbargosProtelatorios" label="Execução Multa Embargos Protelatórios" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DA MULTA aplicada em desfavor da parte executada por interposição de embargos de declaração declarados 
+                    protelatórios declarados protelatórios por este juízo.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItObjectObPagarParcelasAcordo" label="Execução Parcelas Acordo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="pLikeListItem">
+                <data>
+                    EXECUÇÃO DE PARCELAS NÃO ADIMPLIDAS acerca obrigação de pagar fixada em sede de acordo entabulado entre as partes.
+                </data>
+            </itemContent>
+        </item>  
+        
+                           
+                               
+        <!-- GRUPO: OUTROS -->        
+        <item id="despCumSenItCertificarPatronosExecutados" label="Certificar Patronos Executados" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                  Certifique a Secretaria Judicial que os patronos da parte executada indicados pela parte 
+                  exequente estão devidamente habilitados nos autos principais. Em caso positivo, proceda sua 
+                  habilitação como causídicos da parte executada. Em caso negativo, intime-se a parte exequente 
+                  para juntar os instrumentos devidos da representação da parte executada.                
+                </data>
+            </itemContent>
+        </item>               
+        <item id="despCumSenItIntimarParcesDecisao" label="Intimar Partes Decisão" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Intimem-se as partes desta decisão}.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItIntimarParcesDecisaoExecutadoPessoal" label="Intimar Partes Decisão | Executado Pessalamente" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Intimem-se as partes desta decisão}, observando a Secretaria Judicial que a intimação ao executado deverá ser feita pessoalmente e na pessoa de seu advogado, se houver.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAnuenciaExpedicaoAlvara" label="Arquivamento autos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Após, arquivem-se os presentes autos, com as cautelas de estilo.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAnuenciaValoresExpedicaoAlvara" label="Anuencia valor depositado | Expedição Alvará" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Considerando que a parte parte #{j2.env.PJeVars.processo.polos.parteAtiva} #:B{#{j2.env.PJeVars.partes.ativa.nome}}
+                    anuiu expressamente com os valores depositados pela parte demandada, INDEFIRO a abertura da fase de cumprimento de 
+                    Sentença. Expeça-se alvará(s) judicial(is) para levantamento dos importes disponíveis em conta judicial vinculada
+                    aos presentes autos. 
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAnuenciaValoresDesistenticaExpedicaoAlvara" label="Anuencia valor depositado | Homologação Desistência | Expedição Alvará" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Considerando que a parte parte #{j2.env.PJeVars.processo.polos.parteAtiva} #:B{#{j2.env.PJeVars.partes.ativa.nome}}
+                    anuiu expressamente com os valores depositados pela parte demandada, HOMOLOGO a desistência requerida acerca do 
+                    pedido de abertura da fase de cumprimento de 
+                    Sentença. Expeça-se alvará(s) judicial(is) para levantamento dos importes disponíveis em conta judicial vinculada
+                    aos presentes autos. 
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItInativacaoPartes" label="Inativacao Parte" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Verifico que existem partes nesta fase de cumprimento que não mais possuem interesse ou obrigação 
+                    a cumprir nesta nova fase processual. Por isto, determinado que a Secretaria Judicial promova a 
+                    #:B{inativação da(s) parte(s) XXXXXXXXXXXXXXXXXXXXXX}, bem como, certifique nos autos e inclua-se alertas
+                    neste sistema PJe.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItInversaoDosPolos" label="Inversão dos Polos" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A #:B{RETIFICAÇÃO} dos autos para promover a inversão dos polos ativo/passivo do feito.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItInversaoDosPolosInclulirAdvogadoPoloPassivo" label="Inversão dos Polos | Incluir advogado polo passivo" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A #:B{RETIFICAÇÃO} dos autos para promover a inversão dos polos ativo/passivo do feito, incluindo-se o patrono do ora 
+                    executado como parte passiva.
+                </data>
+            </itemContent>
+        </item>  
+        
+        <item id="despCumSenItExpedicaoAlvaraValorVoluntario" label="Expedição Alvará Valores Depositados Voluntariamente" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Expeça-se Alvará Judicial} para levantamento dos valores depositados voluntariamente pela parte executada
+                    à disposição deste juízo em conta judicial vinculada aos presentes autos.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAGJDeferimento" label="Justiça Gratuita | Deferimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   Defiro o pedido de assistência judiciária gratuita nos termos do art. 98 do NCPC, vez que não há nos autos elementos que evidenciem a falta dos pressupostos legais para a concessão de gratuidade, de modo que entendo caracterizada sua hipossuficiência, considerando a documentação apresentada na inicial.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItAGJIndeferimento" label="Justiça Gratuita | Indeferimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Indefiro o pedido de assistência judiciária gratuita, uma vez que a profissão e o valor do bem da vida discutido nos autos demonstram que o autor possui boa condição financeira, não podendo ser considerado hipossuficiente.
+                </data>
+            </itemContent>
+        </item>  
+        <item id="despCumSenItExpedicaoAlvaraValorVoluntarioApOsCustas" label="Após pagamento custas, expeição Alvará Valores Depositados Voluntariamente" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Apos recolhimento das custas pelo interessado, #:B{expeça-se Alvará Judicial} para levantamento dos valores depositados voluntariamente pela parte executada
+                    à disposição deste juízo em conta judicial vinculada aos presentes autos.
+                </data>
+            </itemContent>
+        </item>  
+        
+        
+        <!-- GRUPO: DEPACHO OBRIGAÇÃO DE PAGAR -->         
+        <item id="despCumSenItObPagExposicaoObPagQuantiaCerta" label="Determinação Obrigação de Pagar | Quantia Certa" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em relação à #:B{EXECUÇÃO DA OBRIGAÇÃO DE PAGAR QUANTIA CERTA}, defiro o pedido, tendo em vista o descumprimento do(a) sentença/acordo pela parte executada e DETERMINO:
+                </data>
+            </itemContent>
+        </item> 
+        <item id="despCumSenItObPagExposicaoObPagMulta" label="Determinação Obrigação de Pagar | Multa" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em relação à #:B{EXECUÇÃO DA MULTA}, defiro o pedido, tendo em vista o descumprimento do(a) sentença/acordo pela parte executada e DETERMINO:
+                </data>
+            </itemContent>
+        </item> 
+        <item id="despCumSenItObPagExposicaoObPagMultaIntempestivo" label="Determinação Obrigação de Pagar | Multa | Intempestiva" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em relação à #:B{EXECUÇÃO DA MULTA}, defiro o pedido, tendo em vista o cumprimento intempestivo do(a) sentença/acordo pela parte executada e DETERMINO:
+                </data>
+            </itemContent>
+        </item> 
+        <item id="despCumSenItObPagExposicaoObPagQuantiaCertaEMulta" label="Determinação Obrigação de Pagar | Quantia Certa E Multa" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em relação à #:B{EXECUÇÃO DA OBRIGAÇÃO DE PAGAR QUANTIA CERTA E EXECUÇÃO DA MULTA}, defiro o pedido, tendo em vista o descumprimento do(a) sentença/acordo pela parte executada e DETERMINO:
+                </data>
+            </itemContent>
+        </item> 
+        
+        
+        
+        <item id="despCumSenItObPagAtualizacaoDebitoSecretaria" label="Atualização do Débito | Secretaria" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{Atualização do débito}, pela Secretaria Judicial, uma vez que a parte desassistida por advogado não apresentou memória de cálculo.
+                </data>
+            </itemContent>
+        </item>      
+        
+        <item id="despCumSenItObPagAtualizacaoDebitoExequente" label="Atualização do Débito |  Advodgado Exequente" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                  #:B{INTIMAÇÃO} a parte exequente para apresentar, no prazo de 05 (cinco) dias,  promover a 
+                  #:B{Atualização do débito}, conforme o Art. 798, I, b, aplicável por força do art. 513 do CPC  
+                </data>
+            </itemContent>
+        </item>      
+        <item id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistencia" label="Atualização do Débito | Advodgado Exequente com Incosistência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                  Com relação a memória do débito, verifico que os cálculos apresentam inconsistências referentes ao pedido de 
+                  honorários advocatícios, incompatível com a Lei 9.099/99. Portanto, intime-se a parte autora para que apresente 
+                  novos cálculos acerca do valor exequendo, devendo promover a exclusão dos valores de honorários de sucumbência.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistenciaArt523Acordo" label="Atualização do Débito | Advodgado Exequente com Incosistência | Acordo Art 523" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Com relação a memória do débito, verifico que os cálculos apresentam inconsistências referentes ao pedido de honorários 
+                    advocatícios E aplicação de multa prevista no art. 523 do CPF e outras multas avulsas, incompatível com a Lei 9.099/99 
+                    e com o título executivo originado de acordo homologado. Portanto, determino a #:B{INTIMAÇÃO} a parte autora para que apresente 
+                    novos cálculos acerca do valor exequendo, devendo promover a exclusão da(s) rubrica(s) mencionadas(s).
+                </data>
+            </itemContent>
+        </item>   
+        <item id="despCumSenItObPagAtualizacaoDebitoExequenteInconsistenciaRubricasAstreintes" label="Atualização do Débito | Advodgado Exequente com Incosistência | Rubricas nas Astreintes" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Com relação a memória do débito, verifico que os cálculos apresentam inconsistências referentes à(s) rubrica(s) à 
+                    título de multa, incompatível com a obrigação de pagar quantia não líquida e certa, conforme posicionamento 
+                    jurisprudencial do STJ. Portanto, proceda-se à #:B{INTIMAÇÃO} da parte exequente  para que apresente novos 
+                    cálculos acerca do valor exequendo, devendo promover a exclusão da(s) rubrica(s) mencionadas(s).
+                </data>
+            </itemContent>
+        </item>   
+                
+        
+        <item id="despCumSenItInitialExecSent" label="Parte Comum do Despacho de Cumprimento de Sentença" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{REALIZAÇÃO de PENHORA ON-LINE} no sistema SISBAJUD, sendo este o primeiro na ordem de preferência 
+                        do artigo 835, do Novo Código de Processo Civil. Em sendo o resultado #:U{positivo}, 
+                        #:B{intime-se a executada} para, querendo, apresentar embargos no prazo legal. Transcorrido 
+                        #:I{in albis} o prazo para impugnar a penhora, fica desde já autorizada a expedição de 
+                        alvará a favor de credor.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Na hipótese de #:U{não} serem encontrados ativos nas contas da executada, determino, de logo, 
+                        #:b{CONSULTA} no sistema RENAJUD e sendo o resultado positivo, expeça-se mandado ou carta precatória de penhora e avaliação do veículo. 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Persistindo resultado negativo e #:U{em se tratando de parte 
+                        desacompanhada de advogado}, deverá ser de imediato #:B{expedido mandado de penhora, avaliação 
+                        e intimação de bens pertencentes ao executado}. Em sendo a parte assistida por advogado, 
+                        #:B{intime-se a parte credora}, no prazo de 10 (dez) dias, para que indique bens do devedor passíveis 
+                        de penhora e sua respectiva localização, sob pena de extinção e arquivamento do feito, ou requerer 
+                        a expedição de mandado de penhora de bens a ser cumprida no domicílio da parte demandada. 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Lembrando que a indisponibilidade do patrimônio do devedor deve recair sobre bens certos e 
+                        determináveis, os quais devem ser indicados pelo próprio exequente, sendo incabível transferir 
+                        ao Poder Judiciário o ônus de diligenciar junto aos órgãos responsáveis pelo controle e registro 
+                        de bens móveis ou imóveis.
+                    </elemento> 
+                </simpleElementsDefs>
+            </itemContent>
+        </item>      
+          
+        <item id="despCumSenItInitialExecSentExcutadoHipersuficiente" label="Parte Comum do Despacho de Cumprimento de Sentença | Executado Hipersuficiente" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{REALIZAÇÃO de PENHORA ON-LINE} no sistema SISBAJUD, sendo este o primeiro na ordem de preferência 
+                        do artigo 835, do Novo Código de Processo Civil. Em sendo o resultado #:U{positivo}, 
+                        #:B{intime-se a executada} para, querendo, apresentar embargos no prazo legal. Transcorrido 
+                        #:I{in albis} o prazo para impugnar a penhora, fica desde já autorizada a expedição de 
+                        alvará a favor de credor.
+                    </elemento> 
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>        
+        <item id="despCumSenItComprovarDescrumpirmento" label="Comprovar Descumprimento | Conta Bancária" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cuida-se de pedido para abertura da fase de Cumprimento de Sentença formulado pela parte demandante em desfavor do demandado.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Apesar de ter declarado a parte demandante o descumprimento pelo réu do acordo firmado, deixou o autor de comprovar o alegado. 
+                        Considerando que os termos fixados consignaram o pagamento em conta bancária própria em nome do autor ou terceiro, é imperativo 
+                        a demonstração do descumprimento da obrigação. 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Assim, determino à parte demandante que, no prazo de 5 (cinco) dias,  faça juntada dos extratos bancário referentes ao período da avença entabulada  
+                        a fim de demonstrar efetivamente o inadimplemento da parte demandada.
+                    </elemento> 
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>        
+      
+        <item id="despCumSenItDecisaoIntimacaoSemEficacia410STJ" label="Decisão Intimação sem Eficácia | Súmula 410 STJ" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Trata-se de pedido de execução de multa por descumprimento de decisão cumulado com pedido de majoração da multa cominatória proposta por #:B{#{j2.env.PJeVars.partes.ativa.nome}} em face de #:B{#{j2.env.PJeVars.partes.passiva.nome}}..
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        À luz da súmula jurisprundencial do Egrégio Superior Tribunal de Justiça nº 410, nas espécias de cumprimento de obrigação de fazer emandadas decisão judicial a intimação pessoal da parte é condição necessária para que se possa configurar a incorrência de multa coercitiva em desfavor da própria parte.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p marginJurisprudencia i Indnt0cm" > 
+                        “Súmula 410 - A prévia intimação pessoal do devedor constitui condição necessária para a cobrança de multa pelo descumprimento de obrigação de fazer ou não fazer.”
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsado detidamente os autos, verifico que a executada deixou de ser intimada pessoalmente da decisão proferida. Assim, não poderá ser imputada à parte executada obrigação de pagar  decorrente da fixação/majoração da multa astreinte.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:{reputo sem eficácia a intimação #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} e DETERMINO a Secretaria Judicial deste juízo #:U{intime a parte executada pessoalmente} e na pessoa de seu patrono, se houver, para que cumpra fielmente a decisão XXXIdDecisãoXXXXX.
+                    </elemento> 
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>      
+          
+        <item id="despCumSenItDecisaoConversaoPerdasEDanos" label="Decisão Conversão em perdas e Danos" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A parte exequente juntou petição informando que não houve o cumprimento da obrigação de fazer 
+                        determinado em sede de julgamento, a seguir transcrita.                    
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p marginJurisprudencia i Indnt0cm" > 
+                        XXXXTranscriçãoObrigaçãoDeFazerXXXXX
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Assim, tendo em vista o descumprimento da determinação proferida por este juízo, bem como a 
+                      impossível a obtenção do resultado prático correspondente, faz-se necessária a conversão da 
+                      obrigação em perdas e danos, conforme autorizado pelo art. 861, do CPC. 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Por estas razões, #:B{converto a obrigação em perdas e danos, a qual fixo no importe de 
+                        #:U{#:B@despCumSent-Multa-despCumSenItDecisaoConversaoPerdasEDanos{R$ 0,00 (zero)}}}, 
+                        sem prejuízo da multa cominatória incorrida em desfavor do executado. Fica o executado 
+                        desonerando de dar cumprimento á obrigação de fazer. 
+                    </elemento> 
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>        
+                                   
+        <item id="despCumSenItIndeferimentoAberturaPagamentoVoluntario" label="Indeferimento abertura | Pagamento Voluntario" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Compulsado detidamente os autos, verifico que a parte demandada juntou comprovação de pagamento 
+                        da obrigação imposta em sede de sentença, mesmo antes de decorrido o prazo legal para cominação 
+                        da multa prevista no artigo 523 do código de processo civil. Assim, o indefrimento do pleito da 
+                        parte demandante é medida que se impõe.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Isto posto, #:B{INDEFIRO} a abertura da fase de cumprimento de sentença em desfavor da 
+                        demandada em razão de inexistirem obrigações a serem executadas nos presentes autos.
+                    </elemento> 
+
+                </simpleElementsDefs>
+            </itemContent>
+        </item>                                                                          
+                     
+    </items>
+  </selectorDef>
+</Definitions>

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>PROCESSO</title>
+    <script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="j2Conf.js"></script>
+</head>
+<body>
+    <iframe id="mod" src=""style="width:100%; overflow:hidden"></iframe>
+  <script>
+    (function(){
+	  if(window.j2ModDebug)
+		document.getElementById('mod').src = 'modeloDebug.html';
+      else
+	    document.getElementById('mod').src = 'modelo.html'
+	})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<html class=" js csstransforms3d" xmlns="http://www.w3.org/1999/xhtml"><head>
+		
+	
+	<title>Detalhes da Parte · Tribunal de Justiça do Estado do Maranhão - 1º Grau</title>
+	
+	
+	<script src="/pje/ng/a4j/g/3_3_3.Final/org/ajax4jsf/framework.pack.js" type="text/javascript"></script><script src="/pje/ng/a4j/g/3_3_3.Final/org/richfaces/ui.pack.js" type="text/javascript"></script><link class="component" href="/pje/ng/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/basic_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><link class="component" href="/pje/ng/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/extended_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><link class="component" href="/pje/ng/a4j/s/3_3_3.Final/org/richfaces/skin.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><script id="org.ajax4jsf.queue_script" type="text/javascript">if (typeof A4J != 'undefined') { if (A4J.AJAX) { with (A4J.AJAX) {if (!EventQueue.getQueue('j_id28:org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('j_id28:org.richfaces.queue.global',{'size':2,'sizeExceededBehavior':'dropNew'} ,{'ignoreDupResponses':true,'requestDelay':100} )) };if (!EventQueue.getQueue('org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('org.richfaces.queue.global',null,null)) };}}};</script><script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script><link class="user" href="/pje/stylesheet/estilos/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/estilos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/dropzone/dropzone.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/estilos/richfaces/tema.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/padrao.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/autos-digitais.css" rel="stylesheet" type="text/css"><script src="/pje/js/modernizr.custom.js" type="text/javascript"></script><script src="/pje/js/jquery-2.1.4.min.js" type="text/javascript"></script><script src="/pje/js/bootstrap/bootstrap.min.js" type="text/javascript"></script><script src="/pje/js/jquery.maskedinput.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/mousetrap.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/plugins/global-bind/mousetrap-global-bind.js" type="text/javascript"></script><script src="/pje/js/pje/menu.js" type="text/javascript"></script><script src="/pje/js/global.js" type="text/javascript"></script><script src="/pje/js/pje.js" type="text/javascript"></script><script src="/pje/js/pjeOffice.js" type="text/javascript"></script><script src="/pje/js/signerApplet.js" type="text/javascript"></script><link rel="apple-touch-icon" sizes="57x57" href="/pje/img/favicon/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/pje/img/favicon/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/pje/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/pje/img/favicon/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/pje/img/favicon/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/pje/img/favicon/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/pje/img/favicon/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/pje/img/favicon/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/pje/img/favicon/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/pje/img/favicon/manifest.json">
+	<link rel="mask-icon" href="/pje/img/favicon/safari-pinned-tab.svg" color="#0078aa">
+	<meta name="msapplication-TileColor" content="#0078aa">
+	<meta name="msapplication-TileImage" content="/pje/img/favicon/mstile-144x144.png">
+	<meta name="theme-color" content="#0078AA">
+	
+				        
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="processo judicial, processo, audiências, sessão, peticionar, expedientes, magistrado, procurador, oficial de justiça, advogado, perito, retificar autuação, OAB">
+    <meta name="description" content="Processo Judicial Eletrônico - Acompanhe processos judiciais independentemente de tramitações">
+    <meta property="og:title" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="/pje">
+	<meta property="og:image" itemprop="image" content="/pje/img/pjeMini.png">
+	<meta property="og:site_name" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:description" content="Acompanhe processos judiciais independentemente de tramitações">
+	<meta property="og:locale" content="pt_BR">
+	
+	<meta name="Robots" content="INDEX,FOLLOW">
+    <meta name="RESOURCE-TYPE" content="DOCUMENT">
+    <meta name="DISTRIBUTION" content="GLOBAL">
+    <meta name="AUTHOR" content="CNJ">
+    <meta name="COPYRIGHT" content="Copyright (c) CNJ">
+    <meta name="language" content="pt-br">
+    <meta name="RATING" content="GENERAL">
+	</head>
+
+	<body>	
+		
+		
+		<nav class="navbar navbar-default navbar-static-top navtop">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<div class="navbar-brand">
+						<a href="/pje/home.seam" class="logo"><img src="/pje/img/pje2-branco.png" alt="Tribunal de Justiça do Estado do Maranhão - 1º Grau"></a>
+						<span class="titulo">Detalhes da Parte</span>
+					</div>
+				</div>
+			</div>
+		</nav><form target="" id="j_id28" name="j_id28" method="post" action="/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam"><span style="display:none;" id="j_id28:j_id30"><script type="text/javascript">
+A4J.AJAX.Poll('j_id28',{'similarityGroupingId':'j_id28:j_id30','pollId':'j_id28:j_id30','pollinterval':90000,'containerId':'j_id27','parameters':{'j_id28:j_id30':'j_id28:j_id30','ajaxSingle':'j_id28:j_id30'} } );
+</script></span><span style="display:none;" id="j_id28:j_id31"><script type="text/javascript">
+A4J.AJAX.StopPush('vrAaTnzPO9I9Y_Hh1YYlHXp3mKCbVrhN9giMWXZ5/Processo/ConsultaProcesso/Detalhe/detalheParte.xhtml:j_id28:j_id31');
+</script></span><input autocomplete="off" name="j_id28" value="j_id28" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_j_id28() {
+_clearJSFFormParameters('j_id28','',['j_id28:j_idcl','j_id28:_link_hidden_']);
+}
+function clearFormHiddenParams_j_id28(){clear_j_id28();}
+function clearFormHiddenParams_j_id28(){clear_j_id28();}
+clear_j_id28();</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form><span id="_viewRoot:status"><span id="_viewRoot:status.start" style="display: none">
+	        <div class="ajax-loader">
+	   			<div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+	   			<div class="rich-mpnl-panel">
+			        <div class="rich-mp-container">
+			        	<div class="rich-mpnl-content"></div>
+			        </div>
+	   			</div>
+	   		</div></span><span id="_viewRoot:status.stop"></span></span><div id="modalStatus" style="display: none;"><input autocomplete="off" id="modalStatusOpenedState" name="modalStatusOpenedState" type="hidden"><div class="rich-modalpanel ajax-loader" id="modalStatusContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="modalStatusDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="modalStatusFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="modalStatusCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="modalStatusShadowDiv" style=" opacity:0.0; filter:alpha(opacity=0);"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="modalStatusContentDiv"><table class="rich-mp-content-table" id="modalStatusContentTable" style="height: 100%; width: 100%;" border="0" cellpadding="0" cellspacing="0"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top"></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="modalStatusResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="modalStatusCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="modalStatusLastHref"></button></div><script type="text/javascript">new ModalPanel('modalStatus',
+				{
+					width: -1,
+					height: -1,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><div id="mpPJeOfficeIndisponivel" style="display: none;"><input autocomplete="off" id="mpPJeOfficeIndisponivelOpenedState" name="mpPJeOfficeIndisponivelOpenedState" type="hidden"><div class="rich-modalpanel " id="mpPJeOfficeIndisponivelContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpPJeOfficeIndisponivelDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpPJeOfficeIndisponivelCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpPJeOfficeIndisponivelShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpPJeOfficeIndisponivelContentDiv"><div class="rich-mpnl-text rich-mpnl-controls ">
+				<span class="btn-fechar" onclick="Richfaces.hideModalPanel('mpPJeOfficeIndisponivel')" title="Fechar"><i class="icon-fechar"></i></span></div><table class="rich-mp-content-table" id="mpPJeOfficeIndisponivelContentTable" style="height: 100%; width: 100%;" border="0" cellpadding="0" cellspacing="0"><tbody><tr style="height: 1%;"><td class="rich-mpnl-header-cell"><div class="rich-mpnl-text rich-mpnl-header " id="mpPJeOfficeIndisponivelHeader" style="white-space: nowrap; cursor: move;">PJeOffice Indisponível</div></td></tr><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">
+								
+		<h3>O aplicativo PJeOffice não está disponível!</h3></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpPJeOfficeIndisponivelCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelLastHref"></button></div><script type="text/javascript">new ModalPanel('mpPJeOfficeIndisponivel',
+				{
+					width: 400,
+					height: 190,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><div id="mpProgresso" style="display: none;"><input autocomplete="off" id="mpProgressoOpenedState" name="mpProgressoOpenedState" type="hidden"><div class="rich-modalpanel modal-small" id="mpProgressoContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpProgressoShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv"><table class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;" border="0" cellpadding="0" cellspacing="0"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">			
+		<div class="media">
+			<div class="media-left media-middle">
+				<div class="svg-preloader">
+					<svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+				</div>
+			</div>
+			<div class="media-body">
+				<h6>Por favor aguarde</h6>
+			</div>
+		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div><script type="text/javascript">new ModalPanel('mpProgresso',
+				{
+					width: -1,
+					height: 110,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: false,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div>
+	
+	<script type="text/javascript">
+		function showMpProgresso() {
+			Richfaces.showModalPanel('mpProgresso');
+		}
+		function hideMpProgresso() {
+			Richfaces.hideModalPanel('mpProgresso');
+		}
+	</script><div id="pageBody" class="principal"><div id="j_id44" class="content"><div id="j_id45" class="container-fluid scroll-y scroll-default">
+	<div class="conteudo"><div id="j_id47" class="faixa-superior"></div>	
+		<div class="col-xs-12 col-sm-12 pb-80"><form target="" id="j_id49" name="j_id49" method="post" action="/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam"><script id="j_id49:j_id50" type="text/javascript">//<![CDATA[
+		endBeforeRedirect=function(){A4J.AJAX.Submit('j_id49',null,{'similarityGroupingId':'j_id49:j_id50','parameters':{'j_id49:j_id50':'j_id49:j_id50','ajaxSingle':'j_id49:j_id50'} } )};
+		//]]></script>
+        <script type="text/javascript">
+             window.onunload = endBeforeRedirect;
+        </script><input autocomplete="off" name="j_id49" value="j_id49" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_j_id49() {
+_clearJSFFormParameters('j_id49','',['j_id49:j_idcl','j_id49:_link_hidden_']);
+}
+function clearFormHiddenParams_j_id49(){clear_j_id49();}
+function clearFormHiddenParams_j_id49(){clear_j_id49();}
+clear_j_id49();</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form>
+
+	<div>
+<form id="pessoaFisicaViewView" name="pessoaFisicaViewView" method="post" action="/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam" class="edit" enctype="application/x-www-form-urlencoded">
+<input name="pessoaFisicaViewView" value="pessoaFisicaViewView" type="hidden">
+
+			<div class="rich-stglpanel " id="pessoaFisicaViewView:j_id54"><script type="text/javascript">SimpleTogglePanelManager.add(new SimpleTogglePanel("pessoaFisicaViewView:j_id54", 
+            													"true",{onexpand: '',oncollapse: ''}
+            													
+            							 ));</script><div class="rich-stglpanel-header " id="pessoaFisicaViewView:j_id54_header" onclick="SimpleTogglePanelManager.toggleOnClient(event,'pessoaFisicaViewView:j_id54');"><div class="rich-stglpanel-marker"><div class="rich-stglpnl-marker" id="pessoaFisicaViewView:j_id54_switch_on">«</div><div class="rich-stglpnl-marker" id="pessoaFisicaViewView:j_id54_switch_off" style="display: none">»</div></div>Detalhes da Parte</div><div style="display: none;"><input autocomplete="off" id="pessoaFisicaViewView:j_id54_input" name="pessoaFisicaViewView:j_id54" value="true" type="hidden"></div><div class="rich-stglpanel-body " id="pessoaFisicaViewView:j_id54_body"><table width="100%">
+<tbody>
+<tr>
+<td class="viewColumn"><span id="pessoaFisicaViewView:j_id57"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+CPF</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			635.017.403-87
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id68"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nome</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			RYELTON GERMANO FRANCO
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id79"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+E-mail</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id90"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Etnia</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+</tr>
+<tr>
+<td class="viewColumn"><span id="pessoaFisicaViewView:j_id101"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Estado civil</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id112"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Profissão</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id123"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Escolaridade</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id134"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Sexo</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			Masculino
+        </div>
+    </div></span></td>
+</tr>
+<tr>
+<td class="viewColumn"><span id="pessoaFisicaViewView:j_id145"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Data de nascimento</label>
+        </div>
+        
+        <div class="value col-sm-12 ">20/10/1980
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id156"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nome do genitor</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id167"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nome da genitora</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			MARIA DE FATIMA GERMANO DE BRITO
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id178"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Título eleitoral</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			34566672780
+        </div>
+    </div></span></td>
+</tr>
+<tr>
+<td class="viewColumn"><span id="pessoaFisicaViewView:j_id189"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Naturalidade</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id200"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Data de óbito</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id211"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nº celular</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			991501252
+        </div>
+    </div></span></td>
+<td><span id="pessoaFisicaViewView:j_id222"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nº residencial</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+</tr>
+<tr>
+<td class="viewColumn"><span id="pessoaFisicaViewView:j_id233"> 
+  
+    <div class="propertyView ">
+        <div class="name"><label>
+Nº comercial</label>
+        </div>
+        
+        <div class="value col-sm-12 ">
+			
+        </div>
+    </div></span></td>
+</tr>
+</tbody>
+</table>
+</div></div><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden">
+</form><div id="j_id247" class="mt-5"></div><div id="enderecoPessoaGridDiv"><div class="rich-panel col-sm-12" id="j_id248"><div class="rich-panel-header " id="j_id248_header">Endereço(s) no processo</div><div class="rich-panel-body panel" id="j_id248_body"><span id="enderecoPessoaGrid">
+					<div class="grid"><table class="rich-table clearfix" id="enderecoPessoaGridList" border="0" cellpadding="0" cellspacing="0"><colgroup span="6"></colgroup><thead class="rich-table-thead"><tr class="rich-table-subheader "><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id252header"><div id="enderecoPessoaGridList:j_id252header:sortDiv"><span id="enderecoPessoaGridList:j_id253"><form target="" id="enderecoPessoaGridList:j_id253:j_id254" name="enderecoPessoaGridList:j_id253:j_id254" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id253:j_id254',{'similarityGroupingId':'enderecoPessoaGridList:j_id253:j_id254','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id253:j_id254':'enderecoPessoaGridList:j_id253:j_id254'} } )">Logradouro<input autocomplete="off" name="enderecoPessoaGridList:j_id253:j_id254" value="enderecoPessoaGridList:j_id253:j_id254" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id253_3Aj_id254() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id253:j_id254','',['enderecoPessoaGridList:j_id253:j_id254:_link_hidden_','enderecoPessoaGridList:j_id253:j_id254:j_idcl']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id253_3Aj_id254(){clear_enderecoPessoaGridList_3Aj_id253_3Aj_id254();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id253_j_id254(){clear_enderecoPessoaGridList_3Aj_id253_3Aj_id254();}
+clear_enderecoPessoaGridList_3Aj_id253_3Aj_id254();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id253:j_id254');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id266header"><div id="enderecoPessoaGridList:j_id266header:sortDiv"><span id="enderecoPessoaGridList:j_id267"><form target="" id="enderecoPessoaGridList:j_id267:j_id268" name="enderecoPessoaGridList:j_id267:j_id268" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id267:j_id268',{'similarityGroupingId':'enderecoPessoaGridList:j_id267:j_id268','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id267:j_id268':'enderecoPessoaGridList:j_id267:j_id268'} } )">Número<input autocomplete="off" name="enderecoPessoaGridList:j_id267:j_id268" value="enderecoPessoaGridList:j_id267:j_id268" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id267_3Aj_id268() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id267:j_id268','',['enderecoPessoaGridList:j_id267:j_id268:_link_hidden_','enderecoPessoaGridList:j_id267:j_id268:j_idcl']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id267_3Aj_id268(){clear_enderecoPessoaGridList_3Aj_id267_3Aj_id268();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id267_j_id268(){clear_enderecoPessoaGridList_3Aj_id267_3Aj_id268();}
+clear_enderecoPessoaGridList_3Aj_id267_3Aj_id268();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id267:j_id268');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id280header"><div id="enderecoPessoaGridList:j_id280header:sortDiv"><span id="enderecoPessoaGridList:j_id281"><form target="" id="enderecoPessoaGridList:j_id281:j_id282" name="enderecoPessoaGridList:j_id281:j_id282" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id281:j_id282',{'similarityGroupingId':'enderecoPessoaGridList:j_id281:j_id282','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id281:j_id282':'enderecoPessoaGridList:j_id281:j_id282'} } )">Complemento<input autocomplete="off" name="enderecoPessoaGridList:j_id281:j_id282" value="enderecoPessoaGridList:j_id281:j_id282" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id281_3Aj_id282() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id281:j_id282','',['enderecoPessoaGridList:j_id281:j_id282:j_idcl','enderecoPessoaGridList:j_id281:j_id282:_link_hidden_']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id281_3Aj_id282(){clear_enderecoPessoaGridList_3Aj_id281_3Aj_id282();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id281_j_id282(){clear_enderecoPessoaGridList_3Aj_id281_3Aj_id282();}
+clear_enderecoPessoaGridList_3Aj_id281_3Aj_id282();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id281:j_id282');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id294header"><div id="enderecoPessoaGridList:j_id294header:sortDiv"><span id="enderecoPessoaGridList:j_id295"><form target="" id="enderecoPessoaGridList:j_id295:j_id296" name="enderecoPessoaGridList:j_id295:j_id296" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id295:j_id296',{'similarityGroupingId':'enderecoPessoaGridList:j_id295:j_id296','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id295:j_id296':'enderecoPessoaGridList:j_id295:j_id296'} } )">Bairro<input autocomplete="off" name="enderecoPessoaGridList:j_id295:j_id296" value="enderecoPessoaGridList:j_id295:j_id296" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id295_3Aj_id296() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id295:j_id296','',['enderecoPessoaGridList:j_id295:j_id296:j_idcl','enderecoPessoaGridList:j_id295:j_id296:_link_hidden_']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id295_3Aj_id296(){clear_enderecoPessoaGridList_3Aj_id295_3Aj_id296();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id295_j_id296(){clear_enderecoPessoaGridList_3Aj_id295_3Aj_id296();}
+clear_enderecoPessoaGridList_3Aj_id295_3Aj_id296();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id295:j_id296');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id308header"><div id="enderecoPessoaGridList:j_id308header:sortDiv"><span id="enderecoPessoaGridList:j_id309"><form target="" id="enderecoPessoaGridList:j_id309:j_id310" name="enderecoPessoaGridList:j_id309:j_id310" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id309:j_id310',{'similarityGroupingId':'enderecoPessoaGridList:j_id309:j_id310','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id309:j_id310':'enderecoPessoaGridList:j_id309:j_id310'} } )">Município<input autocomplete="off" name="enderecoPessoaGridList:j_id309:j_id310" value="enderecoPessoaGridList:j_id309:j_id310" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id309_3Aj_id310() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id309:j_id310','',['enderecoPessoaGridList:j_id309:j_id310:j_idcl','enderecoPessoaGridList:j_id309:j_id310:_link_hidden_']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id309_3Aj_id310(){clear_enderecoPessoaGridList_3Aj_id309_3Aj_id310();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id309_j_id310(){clear_enderecoPessoaGridList_3Aj_id309_3Aj_id310();}
+clear_enderecoPessoaGridList_3Aj_id309_3Aj_id310();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id309:j_id310');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="enderecoPessoaGridList:j_id322header"><div id="enderecoPessoaGridList:j_id322header:sortDiv"><span id="enderecoPessoaGridList:j_id323"><form target="" id="enderecoPessoaGridList:j_id323:j_id324" name="enderecoPessoaGridList:j_id323:j_id324" method="post" action="javascript:A4J.AJAX.SubmitForm('enderecoPessoaGridList:j_id323:j_id324',{'similarityGroupingId':'enderecoPessoaGridList:j_id323:j_id324','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'enderecoPessoaGridList:j_id323:j_id324':'enderecoPessoaGridList:j_id323:j_id324'} } )">CEP (99999-999)<input autocomplete="off" name="enderecoPessoaGridList:j_id323:j_id324" value="enderecoPessoaGridList:j_id323:j_id324" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_enderecoPessoaGridList_3Aj_id323_3Aj_id324() {
+_clearJSFFormParameters('enderecoPessoaGridList:j_id323:j_id324','',['enderecoPessoaGridList:j_id323:j_id324:_link_hidden_','enderecoPessoaGridList:j_id323:j_id324:j_idcl']);
+}
+function clearFormHiddenParams_enderecoPessoaGridList_3Aj_id323_3Aj_id324(){clear_enderecoPessoaGridList_3Aj_id323_3Aj_id324();}
+function clearFormHiddenParams_enderecoPessoaGridList_j_id323_j_id324(){clear_enderecoPessoaGridList_3Aj_id323_3Aj_id324();}
+clear_enderecoPessoaGridList_3Aj_id323_3Aj_id324();</script><script type="text/javascript">A4J.setupForm('enderecoPessoaGridList:j_id323:j_id324');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th></tr></thead><tfoot><tr class="rich-table-footer  "><td class="rich-table-footercell  " colspan="6" scope="colgroup"></td></tr></tfoot><tbody id="enderecoPessoaGridList:tb"><tr class="rich-table-row rich-table-firstrow "><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id252"><span id="enderecoPessoaGridList:0:j_id262">
+		
+		<div class="col-sm-12 ">Rua A
+		</div></span></td><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id266"><span id="enderecoPessoaGridList:0:j_id276">
+		
+		<div class="col-sm-12 ">21
+		</div></span></td><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id280"><span id="enderecoPessoaGridList:0:j_id290">
+		
+		<div class="col-sm-12 ">AO LADO JARDIM DAS OLIVEIRAS
+		</div></span></td><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id294"><span id="enderecoPessoaGridList:0:j_id304">
+		
+		<div class="col-sm-12 ">Sítio Engenho Velho/VILA ESMERALDA
+		</div></span></td><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id308"><span id="enderecoPessoaGridList:0:j_id318">
+		
+		<div class="col-sm-12 ">IMPERATRIZ
+		</div></span></td><td class="rich-table-cell " id="enderecoPessoaGridList:0:j_id322"><span id="enderecoPessoaGridList:0:j_id332">
+		
+		<div class="col-sm-12 ">65905-530
+		</div></span></td></tr></tbody></table><span class="pull-right text-muted">1 resultados encontrados</span>
+					</div></span></div></div></div><div id="meioContatoPessoaGridDiv"><div class="rich-panel col-sm-12" id="j_id345"><div class="rich-panel-header " id="j_id345_header">Meio(s) de Contato</div><div class="rich-panel-body panel" id="j_id345_body"><span id="meioContatoPessoaGrid">
+					<div class="grid"><table class="rich-table clearfix" id="meioContatoPessoaGridList" border="0" cellpadding="0" cellspacing="0"><colgroup span="2"></colgroup><thead class="rich-table-thead"><tr class="rich-table-subheader "><th class="rich-table-subheadercell  " scope="col" id="meioContatoPessoaGridList:j_id349header"><div id="meioContatoPessoaGridList:j_id349header:sortDiv"><span id="meioContatoPessoaGridList:j_id350"><form target="" id="meioContatoPessoaGridList:j_id350:j_id351" name="meioContatoPessoaGridList:j_id350:j_id351" method="post" action="javascript:A4J.AJAX.SubmitForm('meioContatoPessoaGridList:j_id350:j_id351',{'similarityGroupingId':'meioContatoPessoaGridList:j_id350:j_id351','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'meioContatoPessoaGridList:j_id350:j_id351':'meioContatoPessoaGridList:j_id350:j_id351'} } )">Tipo de Contato<input autocomplete="off" name="meioContatoPessoaGridList:j_id350:j_id351" value="meioContatoPessoaGridList:j_id350:j_id351" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_meioContatoPessoaGridList_3Aj_id350_3Aj_id351() {
+_clearJSFFormParameters('meioContatoPessoaGridList:j_id350:j_id351','',['meioContatoPessoaGridList:j_id350:j_id351:j_idcl','meioContatoPessoaGridList:j_id350:j_id351:_link_hidden_']);
+}
+function clearFormHiddenParams_meioContatoPessoaGridList_3Aj_id350_3Aj_id351(){clear_meioContatoPessoaGridList_3Aj_id350_3Aj_id351();}
+function clearFormHiddenParams_meioContatoPessoaGridList_j_id350_j_id351(){clear_meioContatoPessoaGridList_3Aj_id350_3Aj_id351();}
+clear_meioContatoPessoaGridList_3Aj_id350_3Aj_id351();</script><script type="text/javascript">A4J.setupForm('meioContatoPessoaGridList:j_id350:j_id351');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th><th class="rich-table-subheadercell  " scope="col" id="meioContatoPessoaGridList:j_id363header"><div id="meioContatoPessoaGridList:j_id363header:sortDiv"><span id="meioContatoPessoaGridList:j_id364"><form target="" id="meioContatoPessoaGridList:j_id364:j_id365" name="meioContatoPessoaGridList:j_id364:j_id365" method="post" action="javascript:A4J.AJAX.SubmitForm('meioContatoPessoaGridList:j_id364:j_id365',{'similarityGroupingId':'meioContatoPessoaGridList:j_id364:j_id365','actionUrl':'/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam','parameters':{'meioContatoPessoaGridList:j_id364:j_id365':'meioContatoPessoaGridList:j_id364:j_id365'} } )">Identificação<input autocomplete="off" name="meioContatoPessoaGridList:j_id364:j_id365" value="meioContatoPessoaGridList:j_id364:j_id365" type="hidden"><input autocomplete="off" name="autoScroll" value="" type="hidden"><script type="text/javascript">function clear_meioContatoPessoaGridList_3Aj_id364_3Aj_id365() {
+_clearJSFFormParameters('meioContatoPessoaGridList:j_id364:j_id365','',['meioContatoPessoaGridList:j_id364:j_id365:_link_hidden_','meioContatoPessoaGridList:j_id364:j_id365:j_idcl']);
+}
+function clearFormHiddenParams_meioContatoPessoaGridList_3Aj_id364_3Aj_id365(){clear_meioContatoPessoaGridList_3Aj_id364_3Aj_id365();}
+function clearFormHiddenParams_meioContatoPessoaGridList_j_id364_j_id365(){clear_meioContatoPessoaGridList_3Aj_id364_3Aj_id365();}
+clear_meioContatoPessoaGridList_3Aj_id364_3Aj_id365();</script><script type="text/javascript">A4J.setupForm('meioContatoPessoaGridList:j_id364:j_id365');</script><input name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id82" autocomplete="off" type="hidden"></form></span></div></th></tr></thead><tfoot><tr class="rich-table-footer  "><td class="rich-table-footercell  " colspan="2" scope="colgroup"></td></tr></tfoot><tbody id="meioContatoPessoaGridList:tb">
+  
+  
+  <tr class="rich-table-row rich-table-firstrow "><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id349"><span id="meioContatoPessoaGridList:0:j_id359">
+		
+		<div class="col-sm-12 ">Telefone
+		</div></span></td><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id363"><span id="meioContatoPessoaGridList:0:j_id373">
+		
+		<div class="col-sm-12 ">(99)9119-8884
+		</div></span></td></tr>
+  
+  <tr class="rich-table-row rich-table-firstrow "><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id349"><span id="meioContatoPessoaGridList:0:j_id359">
+		
+		<div class="col-sm-12 ">Telefone
+		</div></span></td><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id363"><span id="meioContatoPessoaGridList:0:j_id373">
+		
+		<div class="col-sm-12 ">(99)9000-1234
+		</div></span></td></tr>
+  
+<tr class="rich-table-row rich-table-firstrow "><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id349"><span id="meioContatoPessoaGridList:0:j_id359">
+		
+		<div class="col-sm-12 ">E-mail
+		</div></span></td><td class="rich-table-cell " id="meioContatoPessoaGridList:0:j_id363"><span id="meioContatoPessoaGridList:0:j_id373">
+		
+		<div class="col-sm-12 ">abcdefghijklmnopq@abcdef.abcde.com
+		</div></span></td></tr>  
+
+</tbody></table><span class="pull-right text-muted">1 resultados encontrados</span>
+					</div></span></div></div></div>
+	</div>
+		</div>	
+	</div></div></div></div>
+	
+</body></html>

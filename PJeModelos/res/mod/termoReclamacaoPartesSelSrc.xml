@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+        <elemento tag="span" scope="NONE"> 
+            <textHTML scope="NONE">
+                <data>
+                    <![CDATA[#{textContent}<SPAN>&nbsp;</SPAN>]]>
+                </data>
+            </textHTML>
+        </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Polo Ativo">
+            <gItem id="poloAtivo.Demandante"/>
+            <gItem id="poloAtivo.Demandante2"/>
+        </group>
+        <group label="Polo Passivo">
+            <gItem id="poloPassivo.Demandado"/>
+            <gItem id="poloPassivo.Demandado2"/>
+            <gItem id="poloPassivo.Demandado.CAEMA"/>
+            <gItem id="poloPassivo.Demandado.CEMAR"/>
+        </group>     
+    </groupsDefs>
+    <items>
+        <item id="poloAtivo.Demandante" label="Primeiro Demandante" dataPlus="{ 'polo':'partesPoloAtivo' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{PRIMEIRO DEMANDANTE}
+                </data>
+            </itemContent>
+        </item>
+        <item id="poloAtivo.Demandante2" label="Segundo Demandante" dataPlus="{ 'polo':'partesPoloAtivo' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{SEGUNDO DEMANDANTE}
+                </data>
+            </itemContent>
+        </item>
+        
+
+        
+        <item id="poloPassivo.Demandado" label="Primeiro Demandado" dataPlus="{'polo':'partesPoloPassivo'}">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{PRIMEIRO DEMANDADO}
+                </data>
+            </itemContent>
+        </item>
+        <item id="poloPassivo.Demandado2" label="Segundo Demandado" dataPlus="{'polo':'partesPoloPassivo'}">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{SEGUNDO DEMANDADO}
+                </data>
+            </itemContent>
+        </item>        
+        
+        <!-- POLOS PASSIVOS NOTÁVEIS -->
+        <!--item id="poloPassivo.Demandado.CAEMA" label="CAEMA" dataPlus="{ 'polo' : 'partesPoloAtivo', 'opt' : { 'endAut' : true, 'blckTpPs'  : true } }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{CAEMA}, COMPANHIA DE SANEAMENTO AMBIENTAL DO MARANHÃO
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo.Demandado.CEMAR" label="CEMAR" dataPlus="{ 'polo'    : 'partesPoloAtivo', 'opt' : { 'endAut' : true, 'blckTpPs'  : true } }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{CEMAR}, COMPANHIA ENERGÉTICA DO MARANHÃO
+                </data>
+            </itemContent>
+        </item-->   
+                        
+    </items>
+  </selectorDef>
+</Definitions>

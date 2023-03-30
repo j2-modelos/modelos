@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!--item id="advtItListaDocumentosA" label="ListaDocumentos" dataPlus="">
+    <competencias>
+        <competencia id="civel"/>
+        <competencia id="juizado"/>
+        <competencia id="familia"/>
+    </competencias>
+    <itemContent type="plainText" addClassStyles="">
+        <data>
+            Abaixo seguem listados os documentos que acompanham a presente inicial que segue anexa a esta carta. 
+            Os documentos poderão ser acessados através do endereço web https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam 
+            com  a utilização da respectiva chave de acesso.
+        </data>
+    </itemContent>
+</item-->
+        
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+        <elemento tag="li" class="" scope="NONE">
+            <elemento tag="p" class="p FntModAdvertencias" scope="NONE">
+                #{textContent}
+            </elemento>
+        </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <!--group label="TUDO">
+            <gItem id="advtItListaDocumentosA"/>
+            <gItem id="intmItDespacho"/>
+            <gItem id="intmItDecisao"/>
+            <gItem id="intmItGenerico"/>
+            <gItem id="intmItLiminar"/>
+        </group-->
+    </groupsDefs>
+    <items>        
+
+        <item id="advtItContraFe" label="Contrafé Eletronica" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #:U{POR FORÇA DO PROVIMENTO PROV 392018, CÓDIGO DE VALIDAÇÃO F7828BD8F3, QUE IMPLANTOU A CONTRAFÉ ELETRÔNICA} NO
+                    ÂMBITO DA JUSTIÇA COMUM DO 1º GRAU DE JURISDIÇÃO DO TJMA, #:B{A CONTRAFÉ} (CÓPIA DA PETIÇÃO INICIAL) DA PRESENTE 
+                    AÇÃO JUDICIAL #:B{DEVERÁ SER OBTIDA POR MEIO DO SÍTIO #:U{HTTP://WWW.TJMA.JUS.BR/CONTRAFE1G}} MEDIANTE A UTILIZAÇÃO DAS #:B{CHAVES 
+                    DE ACESSO} DOS DOCUMENTOS ABAIXO LISTADAS. EM CASO DE VOSSA SENHORIA NÃO DISPUSER DE ACESSO À REDE MUNDIAL 
+                    DE COMPUTADORES (INTERNET), DEVERÁ COMPARECER A ESTE JUIZADO ESPECIAL CÍVEL PARA RECEBIMENTO DE CÓPIA DA
+                    CONTRAFÉ.
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="advtItAtermacaoContumacia" label="AtermacaoContumacia" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Fica desde logo a parte #{j2.env.PJeVars.processo.polos.parteAtiva} cientificada que o não comparecimento injustificado a qualquer
+                    da audiências designadas ou a ser designadas no presente processo implicará na EXTINÇÃO DO PROCESSO sem resolução do mérito.
+                </data>
+            </itemContent>
+        </item>   
+         
+        <item id="advtItMudancaPedidos" label="MudancaPedidos" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Os pedidos só poderão ser alterados após a citação e antes da audiência com a autorização da parte contrária; o pedido não pode ser alterado 
+                    durante a audiência e depois dela.udiência realizada é UNA, portanto, se não houver acordo, as provas deverão ser apresentadas nesta ocasião
+                </data>
+            </itemContent>
+        </item>   
+                        
+        <item id="advtItAusenciaConciliacao" label="AusenciaConciliação" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="familia"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Fica o #{j2.env.PJeVars.processo.polos.ativo} advertida que o não comparecimento injustificado à audiência de conciliação é 
+                    considerado ato atentatório à dignidade da justiça e será sancionado com multa de até 2% (dois por 
+                    cento) da vantagem econômica pretendida ou do valor da causa (art. 334, CPC/15).
+                </data>
+            </itemContent>
+        </item>    
+        
+        <item id="advtItApresentacaoDefesaJec" label="CDC" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:u{#:b{A CONTESTAÇÃO, DEVERÁ SER APRESENTADA ATÉ A DATA ACIMA ESPECIFICADA}}, por escrito ou oralmente, por si ou através de 
+                   advogado, e na oportunidade de audiência de instrução, terá oportunidade de produzir todas as provas admitidas no sistema dos Juizados 
+                   Especiais, inclusive testemunhal, podendo apresentar em banca até três testemunhas maiores, ou, caso seja 
+                   necessária à intimação, o requerimento deverá ser encaminhado à Secretaria deste Juizado no mínimo até 05 (cinco) 
+                   dias antes da data agendada para realização dessa audiência,
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItAdvogagosCumunicaremPartes" label="AdvogadosComunicaremPartes" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="familia"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                     Deverão os advogados comunicarem seus constituintes para comparecerem ao ato acima designado.
+                </data>
+            </itemContent>
+        </item>    
+                        
+        <item id="advtItApresContest" label="ApresContest" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="familia"/>
+            </competencias>            
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:B{#:U{A DEFESA, DEVERÁ SER APRESENTADA através de advogado}}, no prazo estipulado no corpo deste expediente.
+                </data>
+            </itemContent>
+        </item>
+                                                                
+        <item id="advtItCitacao" label="Citacao" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="juizadoCivel"/>
+                <competencia id="familia"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    A presente carta tem a finalidade de citar Vossa Senhoria, ente público, empresa ou firma individual de todo 
+                    o conteúdo do pedido formulado pela(s) parte(s) requerente(s) (cópia anexa) perante este juízo
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItAlvSelo" label="Selo Judicial em Alvará" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+                <competencia id="juizadoCivel"/>
+                <competencia id="familia"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    A ausência de #:B{Selo de Fiscalização Judicial} acarreta a invalidade do presente alvará judicial. (Resolução 34/2007, Art. 2º, parágrafo único)
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItListaExamesIML" label="Citacao" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    A fim de eralizar o exame de corpo de delito a parte deverá ir munido(a) com cópias dos seguintes documentos:
+                    #:U{OCORRÊNCIA, IDENTIDADE, CPF, COMPROVANTE DE RESIDENCIA, PRONTUÁRIO MÉDICO HOSPITALAR, LAUDO DO RAIO-X (ATUAL)}
+                </data>
+            </itemContent>
+        </item>
+                
+        <item id="advtItPessoaJuridica" label="PessoaJuridica" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:B{#:U{A PESSOA JURÍDICA DEVERÁ APRESENTAR OS ATOS CONSTITUTIVOS DA EMPRESA OU FIRMA INDIVIDUAL}} 
+                    e, caso deseje se fazer representar pela figura de preposto, também deverá apresentar, 
+                    nessa mesma ocasião, a respectiva #:B{CARTA DE PREPOSIÇÃO}, sob pena de revelia;
+                </data>
+            </itemContent>
+        </item>
+
+        <item id="advtItPessoaJuridica2" label="PessoaJuridica2" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:B{#:U{A PESSOA JURÍDICA DEVERÁ APRESENTAR OS ATOS CONSTITUTIVOS DA EMPRESA OU FIRMA INDIVIDUAL}} 
+                   e, caso deseje se fazer representar pela figura de preposto, também deverá apresentar a 
+                   respectiva #:B{CARTA DE PREPOSIÇÃO};
+                </data>
+            </itemContent>
+        </item>
+                        
+        <item id="advtItCDC" label="CDC" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Nos litígios que versarem sobre relação de consumo, em sendo malograda a conciliação, 
+                    poderá ser aplicada a inversão do ônus da prova, na forma do art. 6° VIII, da Lei n° 8.078/90;
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItCitFinalidadeExpeidente" label="CitFinalidadeExpeidente" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   A(O) presente carta/madado tem a finalidade de citar Vossa Senhoria, empresa ou firma individual de todo 
+                   o conteúdo do pedido formulado pelo #{j2.env.PJeVars.processo.polos.ativo} (cópia anexa) 
+                   perante este(a) #{j2.env.PJeVars.unidade.id};
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItCitFinalidadeExpeidenteCivel" label="CitFinalidadeExpeidenteCivel" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   A(O) presente carta/madado tem a finalidade de citar Vossa Senhoria, empresa, firma individual ou ente público de todo 
+                   o conteúdo do pedido formulado pelo #{j2.env.PJeVars.processo.polos.ativo} (cópia anexa) 
+                   perante este(a) #{j2.env.PJeVars.unidade.id};
+                </data>
+            </itemContent>
+        </item>        
+        
+        <item id="advtItInversaoOnus" label="InversaoOnus" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Nos litígios que versarem sobre relação de consumo, em sendo malograda a conciliação, 
+                   poderá ser aplicada a inversão do ônus da prova, na forma do art. 6° VIII, da Lei n° 8.078/90;
+                </data>
+            </itemContent>
+        </item>                
+                                
+        <item id="advtItListaDocumentosA" label="ListaDocumentosA" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Abaixo seguem listados os documentos que acompanham a presente inicial que segue anexa a esta carta. 
+                    Os documentos poderão ser acessados através do endereço web https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam 
+                    com  a utilização da respectiva chave de acesso.
+                </data>
+            </itemContent>
+        </item>
+        
+        <item id="advtItListaDocumentoAviso" label="advtItPJAtosConstitutivos" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #:B{#:U{A PESSOA JURÍDICA DEVERÁ APRESENTAR OS ATOS CONSTITUTIVOS DA EMPRESA OU FIRMA INDIVIDUAL}} e, caso deseje se fazer 
+                    representar pela figura de preposto, também deverá apresentar, nessa mesma ocasião, a respectiva #:B{CARTA DE PREPOSIÇÃO}, 
+                    sob pena de revelia;
+                </data>
+            </itemContent>
+        </item>  
+                
+        <item id="advtItListaDocumentosB" label="ListaDocumentosB" dataPlus="">
+            <eventFire event="Advertencias.onAddDocumentosProcesso"/>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #{j2.env.PJeVars.processo.documentos}
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="advtItPJeListaDocumentoAviso" label="PJeListaDocumentoAviso" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #:U{Este processo tramita através do sistema PJe (Processo Judicial eletrônico)}, cujo 
+                    endereço na web é https://pje.tjma.jus.br/. Abaixo seguem listados os documentos que 
+                    acompanham a presente inicial que segue anexa a esta carta. Os documentos poderão ser 
+                    acessados através do endereço web https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam com  
+                    a utilização da respectiva chave de acesso.
+                </data>
+            </itemContent>
+        </item>  
+                
+        <item id="advtItMudancaEndereco" label="MudancaEndereco" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:U{Caso mude de endereço, deverá comunicar a este Juizado}, sob pena de serem 
+                   consideradas eficazes as intimações encaminhadas ao endereço anteriormente 
+                   indicado, conforme previsto no parágrafo 2° do art. 19 da Lei n° 9.099/95.
+                </data>
+            </itemContent>
+        </item>              
+        
+        <item id="advtItPJe" label="PJe" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:U{Este processo tramita através do sistema PJe (Processo Judicial eletrônico)}, 
+                   cujo endereço na web é https://pje.tjma.jus.br/. Todos as preças processuais deverão 
+                   ser protocolados pelo advogado que for constituído exclusivamente pelo sistema Pje.
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="advtItIdadeComrpovEndereco" label="IdadeComrpovanteEndereco" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   A fim de comprovação de endereço serão admitido apenas documentos que tenham sido expedidos até 
+                   90 dias.
+                </data>
+            </itemContent>
+        </item>   
+        
+        <item id="advtItPJAtosConstitutivos" label="advtItPJAtosConstitutivos" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #:B{#:U{A PESSOA JURÍDICA DEVERÁ APRESENTAR OS ATOS CONSTITUTIVOS DA EMPRESA OU FIRMA INDIVIDUAL}} e, caso deseje se fazer 
+                    representar pela figura de preposto, também deverá apresentar, nessa mesma ocasião, a respectiva #:B{CARTA DE PREPOSIÇÃO}, 
+                    sob pena de revelia;
+                </data>
+            </itemContent>
+        </item>            
+        
+        <item id="advtItLocacaoComrpovEndereco" label="LocacaoComrpovanteEndereco" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Em caso de a parte residir em imóvel alugado, deverá juntar também o contrato de locação ou 
+                   declaração do proprietário do imóvel acerca locação e residência do parte.
+                </data>
+            </itemContent>
+        </item>      
+        
+        <item id="advtItIndicarBensExecutado" label="IndicarBensExecutado" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    A parte exequente deve ter ciência que a indisponibilidade do patrimônio do devedor deve recair sobre 
+                    bens certos e determináveis, os quais devem ser indicados pelo próprio exequente, 
+                    sendo incabível transferir ao Poder Judiciário o ônus de diligenciar junto aos órgãos 
+                    responsáveis pelo controle e registro de bens móveis ou imóveis.
+                </data>
+            </itemContent>
+        </item>    
+        
+        <item id="advtItReveliaJec" label="ReveliaJec" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Em não comparecendo na data e hora designadas, assistida ou não de advogado, pessoalmente ou por intermédio 
+                    de preposto regularmente credenciado, presumir-se-ão aceitos, como verdadeiros, os fatos alegados pelo #{j2.env.PJeVars.processo.polos.ativo}, ensejando o julgamento de plano, nos termos da Lei n° 9.099/95; circunstância também extensiva 
+                    para a hipótese de ausência de contestação escrita ou oral, na audiência de instrução e julgamento, ainda 
+                    que presente à mesma, nas causas de valor superior a 20 (vinte) salários mínimos (Enunciado n° 11);
+                </data>
+            </itemContent>
+        </item>      
+        
+        <item id="advtItReveliaCiv" label="ReveliaCiv" dataPlus="">
+            <competencias>
+                <competencia id="civel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Em não comparecendo na data e hora designadas, assistida ou não de advogado, pessoalmente ou por intermédio 
+                    de preposto regularmente credenciado, presumir-se-ão aceitos, como verdadeiros, os fatos alegados pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                </data>
+            </itemContent>
+        </item>            
+        
+        <item id="advtItTetoJuizadoAdvogado" label="TetoJuizadoAdvogado" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Nas causas de valor até 20 (vinte) salários mínimos, as partes deverão comparecer pessoalmente, 
+                    com ou sem a assistência de advogado(s); 
+                    #:B{#:U{NAS DE VALOR SUPERIOR A 20 (VINTE) SALÁRIOS MÍNIMOS, A ASSISTÊNCIA DE ADVOGADO É OBRIGATÓRIA}};
+                </data>
+            </itemContent>
+        </item>    
+        
+        <item id="advtItTestemunhas" label="CDC" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Na oportunidade de audiência de instrução, terá a parte a oportunidade de produzir todas as provas admitidas no sistema dos Juizados 
+                   Especiais, inclusive testemunhal, podendo apresentar em banca até três testemunhas maiores, ou, caso seja 
+                   necessária à intimação, o requerimento deverá ser encaminhado à Secretaria deste Juizado no mínimo até 05 (cinco) 
+                   dias antes da data agendada para realização dessa audiência,
+                </data>
+            </itemContent>
+        </item>                                                                                                
+        
+        <item id="advtItWAAcusarRecebimento" label="WAReceb" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Favor acusar o recebimento da mensagem, sendo que Vossa Senhoria poderá utilizar frases como "Recebi a mensagem", "Acuso o recebimento", "Ciente", "Lido"
+                </data>
+            </itemContent>
+        </item>    
+        
+        <item id="advtItWAIdentidade" label="WAIdent" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Favor confirmar sua identidade. Identifique-se por seu nome completo mais número de seu CPF após receber a mensagem
+                </data>
+            </itemContent>
+        </item>    
+                
+        <item id="advtItWAToJec" label="ToJEC" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Vossa Senhoria deverá comparecer pessoalmente ao Juizado a fim de cumprir as ordens judiciais e/ou obter esclarecimentos. Informações processuais somente serão prestadas exclusivamente pessoalmente.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <item id="advtItLocacaoComrpovanteEndereco" label="ContrtLocacao" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Em caso de residência em imóvel objeto de locação, deverá a parte fazer juntada também do contrato de locação ou do delcaração do proprietário do imóvel acerca da locação entre as pares juntamente com o comprovante de endereço a ser apresentado aos autos.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <item id="advtItIdadeComrpovanteEndereco" label="IdadeDocumento" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   Observar que não serão admitidos comprovantes de endereço com mais de 90 dias.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <item id="advtItSuspensaoAtendimentoPresencialPortariaCOVID19" label="SuspensaoAtendimentoPresencialPortariaCOVID19" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Em virtude da Portaria Conjunta (TJMA e CGJ) nº 14/2020 (validação 84E344DA0F), expedida em 23/03/2020, o atendimento
+                    presencial está suspenso até 30/04/2020, desse modo, qualquer dúvida deverá se dirimida mediante contato telefônico:
+                    (99) 3523-7592 e (99) 9 9989-6346.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <item id="advtItAcusarNaoSerODestinatario" label="AcusarNaoSerODestinatario" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Em virtude ainda da mesma Portaria Conjunta, você esta recebendo excepcionalmente a presente intmação via WhatsApp. Em não sendo Vossa Senhoria o destinatário
+                    desta intimação, favor acusar expressamente.
+                </data>
+            </itemContent>
+        </item>         
+        
+    </items>
+  </selectorDef>
+</Definitions>

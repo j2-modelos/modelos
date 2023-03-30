@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<Definitions
+    id="classeDefs"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://j2'
+    xsi:schemaLocation='http://j2 ../XML/j2.xsd'
+    targetNamespace="http://j2">
+    
+    <classeDef id="SeletorTipoDocumentoManifestacao">
+        <versao id="1.0">
+            <classeImp id="Selector" versao="3.0" scope="EDT" >
+                <constructs param="newId" value="tipoDocumentoManifestacaoItems" type="string"/>
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/>
+                <constructs param="source" value="tipoDocumentoManifestacao" type="bool"/>
+            </classeImp>    
+        </versao>
+    </classeDef>
+    
+    
+</Definitions>

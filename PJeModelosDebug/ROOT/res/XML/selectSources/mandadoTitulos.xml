@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="span" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+    </groupsDefs>
+    <items initialSelected="mandTitMandado">
+        <item id="mandTitMandado" label="Mandado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitDiligencia" label="Diligencia" dataPlus="">
+            <!--eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/-->
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE DILIGÊNCIA
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitConstatacao" label="Constação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE CONSTATAÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitPenhora" label="Penhora" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE PENHORA
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitPenhoraAvaliacao" label="Penhora e Avaliação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE PENHORA E AVALIAÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitBuscaApreencao" label="Busca e Apreeensão" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE BUSCA E APREENSÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="mandTitAdjudicacao" label="Adjudicação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    MANDADO DE ADJUDICAÇÃO
+                </data>
+            </itemContent>
+        </item>        
+    </items>
+  </selectorDef>
+</Definitions>

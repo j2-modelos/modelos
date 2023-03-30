@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions-WhatsappMessages" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="whatsappMessages" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="p" class="p FntModeEditor" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Interno">
+            <gItem id="wtAppItCumprimentoInterno"/>
+            <gItem id="wtAppItLinkRegistrarTelefone"/>
+            <gItem id="wtAppItLinkInteiroTeorCertidao"/>
+            
+                        
+            <gItem id="wtAppItLinkTarefaProcesso"/>
+        </group>
+        <group label="Externo">
+            <gItem id="wtAppItCumprimento"/>
+        </group>
+    </groupsDefs>
+    <!--items initialSelected="termReclReclamacao"-->
+    <items>
+        <item id="wtAppItCumprimento" label="Cumprimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Olá, #{j2.mod._._conversation.bomByHora.captFirst}! Tudo bem com você?#:BR{}#:BR{}
+                    Sou #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2} do *#{j2.env.PJeVars.unidade.identificacao}*.#:BR{}
+                </data>
+            </itemContent>
+        </item>     
+        <item id="wtAppItCumprimentoInterno" label="Cumprimento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Olá, #{j2.mod._._conversation.bomByHora.captFirst}! Tudo bem, colega?#:BR{}#:BR{}
+                </data>
+            </itemContent>
+        </item>    
+        <item id="wtAppItLinkRegistrarTelefone" label="Informar Telefone" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Gentileza registrar o *telefone da parte* citada/intimada. Segue certidão.#:BR{}#:BR{}
+                </data>
+            </itemContent>
+        </item> 
+        <item id="wtAppItLinkInteiroTeorCertidao" label="Teor Certidão" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ----------------------------------------------------------------------
+                    #:BR{}
+                    #{j2.mod.clsCnstr.Documento.getTeorExpediente}
+                    #:BR{}
+                    ----------------------------------------------------------------------
+                </data>
+            </itemContent>
+        </item> 
+        <item id="wtAppItLinkTarefaProcesso" label="Uso do juizado" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:BR{}
+                    #:BR{}
+                    *PARA USO DO JUIZADO*:#:BR{}
+                    #{j2.env.PJeVars.processo.numero}#:BR{}
+                    https://pje.tjma.jus.br/pje/Processo/movimentar.seam?idProcesso=#{j2.env.PJeVars.processo.idProcesso}
+                </data>
+            </itemContent>
+        </item> 
+    </items>
+  </selectorDef>
+</Definitions>

@@ -1,0 +1,119 @@
+{
+	"manifest_version": 3,
+	"version": "0.1.0",
+	"name": "j2",
+	"description": "Extensão Modelos j2",
+	"author": "Elmo de Moraes",
+	"action": {
+
+		"default_icon": {
+			"16": "icon.png",
+			"24": "icon.png",
+			"32": "icon.png"
+		}
+	},
+	"icons": {
+
+
+		"16": "icon.png",
+		"24": "icon.png",
+		"32": "icon.png",
+		"128": "icon.png"		
+	},
+	"permissions": [
+            "storage",
+            "activeTab",
+            "scripting",
+            "tabs"
+            
+	],
+	"host_permissions": [
+		"https://pje.tjma.jus.br/*", 
+		"https://frontend.prd.cnj.cloud/*", 
+		"https://web.whatsapp.com/*" 
+	],
+	"content_scripts": [
+		{
+                    "matches": [
+                        "https://pje.tjma.jus.br/*", 
+                        "https://frontend.prd.cnj.cloud/*"
+                    ],
+                    "js": [
+                        "background.js",
+                        "lib.js",
+                        "jquery3.js", 
+                        "moment.js", 
+                        "jquery.initialize.js", 
+                        "jquery.observe.js", 
+                        "jquery-ui.js",
+                        "main.frontend.js", 
+                        "main.pje.js",
+                        "main.js"
+                    ],
+                    "css" : [
+
+                    ],
+                    "all_frames" : true
+		},
+		{
+                    "matches": [
+                        "https://web.whatsapp.com/*"
+                    ],
+                    "js": [
+                        "lib.js",
+                        "main.whatsapp.js",
+                        "background.js"
+                    ],
+                    "css" : [
+
+                    ],
+                    "all_frames" : true
+		},
+                		{
+                "matches": [
+                        "https://frontend.prd.cnj.cloud/*"
+                    ],
+                    "js": [
+                        "jquery.lazy.js"
+                    ],
+                    "all_frames" : true
+		}
+	], 
+        "web_accessible_resources": [
+          {
+            "resources": [ 
+                "main.css", 
+                "pjeUtil.js",
+                "jquery-ui.css"
+            ],
+            "matches": [
+                "https://pje.tjma.jus.br/*", 
+                "https://frontend.prd.cnj.cloud/*" 
+            ],
+            "use_dynamic_url": true
+          },
+            {
+                "resources": [ 
+                    "t/pseudotarefaLista.html",
+                    "pje/19.js",
+                    "pje/main.js"
+                ],
+                "matches": [
+                    "https://frontend.prd.cnj.cloud/*" 
+                ],
+                "use_dynamic_url": true
+            }
+        ],
+        "externally_connectable": {
+            "matches": [
+                "https://pje.tjma.jus.br/*", 
+		"https://frontend.prd.cnj.cloud/*", 
+		"https://web.whatsapp.com/*" 
+            ],
+            "ids" : ["*"]
+        },
+        "background": {
+            "service_worker": "background.js",
+            "type" : "module"
+        }
+}

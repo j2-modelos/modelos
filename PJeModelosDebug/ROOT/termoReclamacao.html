@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>12:Termo de Reclamação</title>
+    <script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="j2Conf.js"></script>
+</head>
+<body>
+  <iframe id="mod" src="termoReclamacaoFrame.html" style="width:100%; overflow:hidden;" frameBorder="1"></iframe>
+  <script>
+      setInterval(function(){
+          var body = document.body,
+              html = document.documentElement;
+
+          var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                                 html.clientHeight, html.scrollHeight, html.offsetHeight );
+          
+        document.getElementById('mod').height = html.clientHeight - 25;
+      },100)
+  </script>
+</body>
+</html>

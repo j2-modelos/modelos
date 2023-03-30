@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!--item id="advtItListaDocumentosA" label="ListaDocumentos" dataPlus="">
+    <competencias>
+        <competencia id="civel"/>
+        <competencia id="juizado"/>
+        <competencia id="familia"/>
+    </competencias>
+    <itemContent type="plainText" addClassStyles="">
+        <data>
+            Abaixo seguem listados os documentos que acompanham a presente inicial que segue anexa a esta carta. 
+            Os documentos poderão ser acessados através do endereço web https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam 
+            com  a utilização da respectiva chave de acesso.
+        </data>
+    </itemContent>
+</item-->
+        
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="meiosAtendimientoSeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+<!--    <eventFire event="signatario.onChange"/>-->
+    <itemFormats>
+      <elemento tag="span" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <!--group label="TUDO">
+            <gItem id="advtItListaDocumentosA"/>
+            <gItem id="intmItDespacho"/>
+            <gItem id="intmItDecisao"/>
+            <gItem id="intmItGenerico"/>
+            <gItem id="intmItLiminar"/>
+        </group-->
+    </groupsDefs>
+    <items>        
+      
+        <item id="meAtItPresencialmente" label="Presencialmente" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    compareceu a esta
+                </data>
+            </itemContent>
+        </item>         
+        
+        <item id="meAtItWhatsapp" label="WhatsApp" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    mediante contato via whatsapp institucional desta
+                </data>
+            </itemContent>
+        </item>         
+        
+        <item id="meAtItEmail" label="E-mail" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    mediante correspondência recebida via e-mail institucional desta
+                </data>
+            </itemContent>
+        </item>         
+        
+        <item id="meAtItTelefone" label="Telefone" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    mediante contato telefônico com esta
+                </data>
+            </itemContent>
+        </item>      
+    </items>
+  </selectorDef>
+</Definitions>

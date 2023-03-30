@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="span" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+    </groupsDefs>
+    <items initialSelected="termAudTitConcInstJulg">
+        <item id="termAudTitAudiencia" label="Audiência" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitConciliacao" label="Conciliação" dataPlus="">
+            <!--eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/-->
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA DE CONCILIAÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitConciInstru" label="Conciliação e Instrução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA DE CONCILAÇÃO E INSTRUÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitConcInstJulg" label="Conciliação, Instrução e Julgamento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA DE CONCILIAÇÃO, INSTRUÇÃO E JULGAMENTO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitInstrução" label="Instrução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA DE INSTRUÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitInstJulg" label="Instrução e Julgamento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA DE INSTRUÇÃO E JULGAMENTO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termAudTitUNA" label="UNA" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    ATA DE AUDIÊNCIA UNA
+                </data>
+            </itemContent>
+        </item>        
+    </items>
+  </selectorDef>
+</Definitions>

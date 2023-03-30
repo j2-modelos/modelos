@@ -1,0 +1,55 @@
+<HEAD>
+    <META name=GENERATOR content="MSHTML 11.00.10586.589">
+    <SCRIPT type=text/javascript src="root.js"></SCRIPT>
+</HEAD>
+<DIV id="modeloBooterBody" style="TEXT-ALIGN: center; PADDING-TOP: 22px; MARGIN-LEFT: auto; MARGIN-RIGHT: auto" >
+    <INPUT id="idModelo" type=hidden value="SentencaUnica" name=434>
+    <BUTTON onclick="try{ RUN(event);}catch(err){ alert('Exce&ccedil;&atildeo capturada: ' + err.message + ' | on-click de id 730037.'); }" id="booter" style="FONT-SIZE: 15px; CURSOR: pointer; HEIGHT: 50px; WIDTH: 300px; FONT-WEIGHT: bold; MIN-HEIGHT: 50px"> 
+        Carregar Modelo
+    </BUTTON>
+    <DIV id="PJeVarsXML" style="DISPLAY: none; VISIBILITY: hidden">
+        <DIV id=PJeVars>
+            <DIV id=assuntosProcesso>#{processoTrfHome.instance.assuntoTrfListStr}</DIV>
+            <DIV id=audienciaProcesso>#{processoTrfHome.processoAudienciaListStr}</DIV>
+            <DIV id=cidadeOrgaoJulgadorProcesso>#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio}</DIV>
+            <DIV id=classeProcesso>#{processoTrfHome.instance.classeJudicial}</DIV>
+            <DIV id=dataAtualAbreviada>#{dataAtualAbreviada}</DIV>
+            <DIV id=dataAtualFormatada>#{dataAtual}</DIV>
+            <DIV id=dataAtualPorExtenso>#{dataAtualExtenso}</DIV>
+            <DIV id=dataAudiencia>#{processoTrfHome.dataAudiencia}</DIV>
+            <DIV id=dataEHoraAtual>#{currentDatetime}</DIV>
+            <DIV id=destinatarioExpediente>#{processoExpedienteHome.nomeEnderecoPartesSelecionadas}</DIV>
+            <DIV id=documentosProcesso>#{processoTrfHome.tabelaHashDocumentos}</DIV>
+            <DIV id=enderecoAdvogadoPoloAtivo>#{processoTrfHome.advogadoEnderecoPoloAtivoStr}</DIV>
+            <DIV id=enderecoAdvogadoPoloPassivo>#{processoTrfHome.advogadoEnderecoPoloPassivoStr}</DIV>
+            <DIV id=enderecoOrgaoJulgadorProcesso>#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.enderecoCompleto}</DIV>
+            <DIV id=enderecoPartePoloAtivo>#{preparaAtoComunicacaoAction.destinatariosEnderecoPoloAtivoExpedienteStr}</DIV>
+            <DIV id=enderecoPartePoloPassivo>#{preparaAtoComunicacaoAction.destinatariosEnderecoPoloPassivoExpedienteStr}</DIV>
+            <DIV id=enderecoSalaAudiencia>#{processoTrfHome.enderecoSalaAudiencia}</DIV>
+            <DIV id=horaAtual>#{currentTime}</DIV>
+            <DIV id=localizacaoUsuarioLogado>#{usuarioLogadoLocalizacaoAtual.estrutura}</DIV>
+            <DIV id=loginUsuarioLogado>#{usuarioLogado.login}</DIV>
+            <DIV id=nomeAdvogadoPoloAtivo>#{processoTrfHome.instance.tipoNomeAdvogadoAutorList}</DIV>
+            <DIV id=nomeAdvogadoPoloAtivoCPF>#{processoTrfHome.nomeCpfAutorList}</DIV>
+            <DIV id=nomeAdvogadoPoloPassivo>#{processoTrfHome.instance.tipoNomeAdvogadoReuList}</DIV>
+            <DIV id=nomeJuizOrgaoJulgador>#{processoTrfHome.nomeJuizOrgaoJulgador}</DIV>
+            <DIV id=nomePoloAtivo>#{processoTrfHome.instance.nomeAutorAtivoProcesso}</DIV>
+            <DIV id=nomePoloPassivo>#{processoTrfHome.instance.nomeReuProcesso}</DIV>
+            <DIV id=numeroProcesso>#{processoTrfHome.instance.numeroProcesso}</DIV>
+            <DIV id=orgaoJulgadoProcesso>#{processoTrfHome.instance.orgaoJulgador}</DIV>
+            <DIV id=papelUsarioLogado>#{usuarioLogadoLocalizacaoAtual.papel}</DIV>
+            <DIV id=partesDetalhadaPoloAtivo>#{processoTrfHome.processoPartePoloAtivoDetalhadoStr}</DIV>
+            <DIV id=partesDetalhadaPoloPasssivo>#{processoTrfHome.processoPartePassivoAtivoDetalhadoStr}</DIV>
+            <DIV id=partesPoloAtivo>#{processoTrfHome.processoPartePoloAtivoSemAdvogadoStr}</DIV>
+            <DIV id=partesPoloPassivo>#{processoTrfHome.processoPartePoloPassivoSemAdvogadoStr}</DIV>
+            <DIV id=prazoDaParte>#{processoExpedienteHome.partePrazoList}</DIV>
+            <DIV id=processosAssociados>#{processoTrfHome.instance.processoTrfConexaoListStr}</DIV>
+            <DIV id=salaAudiencia>#{processoTrfHome.salaAudiencia}</DIV>
+            <DIV id=telefoneOrgaoJulgador>#{processoTrfHome.instance.orgaoJulgador.numeroTelefoneFormatado}</DIV>
+            <DIV id=tipoAudiencia>#{processoTrfHome.tipoAudiencia}</DIV>
+            <DIV id=UFOrgaoJulgador>#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio.estado.codEstado}</DIV>
+            <DIV id=usuarioLogado>#{usuarioLogado.nome}</DIV>
+            <DIV id=valorCausaProcesso>#{processoTrfHome.instance.valorCausaStr}</DIV>
+        </DIV>
+    </DIV>
+</DIV>

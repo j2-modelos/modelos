@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="span" scope="NONE"> 
+            <textHTML scope="NONE">
+                <data>
+                    #{textContent}
+                </data>
+            </textHTML>
+        </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="-------------------">
+            <gItem id="ofcItFinalidade"/>
+        </group>
+        <group label="Diversas">
+            <gItem id="ofcItAverbacaoPenhora"/>
+            <gItem id="ofcItEstornoValores"/>
+            <gItem id="ofcItExclusaoSERASA"/>
+            <gItem id="ofcItImpedimento"/>
+            <gItem id="ofcItInstaurarPADOAB"/>
+            <gItem id="ofcItReforçoPolicial"/>
+            <gItem id="ofcItRequisicaoInquerito"/>
+            <gItem id="ofcItRequisicaoInqueritoFalsoTestemunho"/>
+        </group>
+        <group label="Carta Precatória">
+            <gItem id="ofcItComunicacaoRedesignacoDeprecado"/>
+            <gItem id="ofcItSolicitDevolucaoPrecatoriaPJe"/>
+            <gItem id="ofcItSolicitDevolucaoPrecatoriaMalote"/>
+        </group>        
+    </groupsDefs>
+    <items>        
+        <item id="ofcItFinalidade" label="[Selecionar a Finalidade do Ofício]" dataPlus="{ 'assunto': 'XXXXAssuntoXXXX' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    XXXXFinalidade
+                </data>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItEstornoValores" label="Estorno de Valores" dataPlus="{ 'assunto': 'Solicitação de Estorno de Valores', 'queVirgula' : true }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    no prazo de 48 (quarenta e oito) horas, transfira a importância de #:B{#:U{#:span@valor-Oficio{R$ 0,00 (zero)}}}, com os acréscimos porventura existentes, depositada na #:B{conta judicial nº XXXNumeroDaContaXXX}, 
+                    agência 0554, para a #:B{conta corrente nº XXXNumeroContaCorrenteXXX, agência nº XXXAgenciaXXX, 
+                    do Banco XXXNomeDoBancoXXX}. Conta de titularidade do(a) XXXTitularidadeXXX, CNPJ nº: XXXCnpjTitularXXX, 
+                    conforme indicação realizada pela Parte Promovida que se encontra em nosso poder
+                </data>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItExclusaoSERASA" label="Exclusão SERASA" dataPlus="{ 'assunto': 'Solicitação de Exclusão de Registro', 'queVirgula' : true }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    no prazo de 48 (quarenta e oito) horas, promova a #:B{#:U{EXCLUSÃO}} do nome da Parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                    #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}}, inscrita no CPF #:B{#{j2.env.PJeVars.partes.ativa.CPF}}
+                    dos registro dessa instituição, incluida pela Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}
+                </data>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItReforçoPolicial" label="Reforço Policial" dataPlus="{ 'assunto': 'Solicitação de força policial para cumprimento de diligência' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    disponibilize a este juízo, com máxima urgência possível, #:B{força policial} para fins de cumprimento pelo Oficial de Justiça LUDUGERO PEREIRA DE SÁ NETO ,  
+                    do #:b{mandado de avaliação, intimação e penhora} expedido nos autos (#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}), a ser cumprido 
+                    no endereço dos bens da parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
+                    conforme determinação judicial que segue anexa
+                </data>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItRequisicaoInquerito" label="Requisição Abertura Inquérito - Falsidade Documental" dataPlus="{ 'assunto': 'REQUISIÇÃO para INSTAURAÇÃO DE INQUÉRITO POLICIAL ' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        realize a #:B{INSTAURAÇÃO DE #:u{INQUÉRITO POLICIAL}} para apuração da possível prática de #:B{CRIME DE FALSIDADE DOCUMENTAL}  cometidos pelo(a) advogado(a) #:B{#{j2.env.PJeVars.partes.ativa.advogado.nomeOAB}}
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Os indícios quanto à possível prática do crime acima mencionada foram evidenciados neste e/ou em outros autos, conforme inteiro teor da certidão #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} expedida nos presentes autos pela Secretaria Judicial deste juízo, anexa a este expediente, em que detalha e especifica prováveis montagens para adulteração do titular dos documentos. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Possivelmente, os referidos indícios de crime estão sendo praticadas para tentar deslocar a competência do processo para este juízo, que é regulamentada pela Resolução TJMA  015/2006.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItRequisicaoInqueritoFalsoTestemunho" label="Requisição Abertura Inquérito - falso testemunho" dataPlus="{ 'assunto': 'REQUISIÇÃO para INSTAURAÇÃO DE INQUÉRITO POLICIAL ' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        realize a INSTAURAÇÃO DE #:U{NQUÉRITO POLICIAL} para apuração da possível prática de #:B{CRIME DE FALSO TESTEMUNHO} cometido por XXXNomeTestemunhaXX (XXXXqualificaçãoXXXXXXXX).
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Os indícios quanto à possível prática do crime acima mencionado foram evidenciados no processo em epígrafe, conforme teor da ata de audiência e gravação de depoimentos.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Para instrução do presente ofício, segue mídia de dvd/cd contendo a relação dos documentos processuais, inclusive a gravação de depoimento colhidos na instrução do processo em questão.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>                                                  
+        
+        <item id="ofcItAverbacaoPenhora" label="Averbação de Penhora" dataPlus="{ 'assunto': 'Registro de Averbação - matrícula XXXMatriculaXXX' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        proceda com a devida averbação de penhora do(s) imóvel(eis) relativo(s) à(s) matrícula(s) XXMatriculaXX, localizados no Livro X (XXLivroXX)
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Os indícios quanto à possível prática do crime acima mencionado foram evidenciados no processo em epígrafe, conforme teor da ata de audiência e gravação de depoimentos.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Para instrução do presente ofício, segue mídia de dvd/cd contendo a relação dos documentos processuais, inclusive a gravação de depoimento colhidos na instrução do processo em questão.
+                    </elemento>
+                    <elemento tag="table" id="QlfcTable" scope="NONE" class="QualfTable width70 CenterAlign width90">   
+                        <HTMLAttribute name="border" value="1"/>
+                        <HTMLAttribute name="cellpadding" value="2"/>
+                        <HTMLAttribute name="cellspacing" value="0"/>
+                        
+                        <elemento tag="tbody" scope="NONE">
+                             <!--Linha da numero do processo--> 
+                            <elemento tag="tr" scope="NONE" class="QlTbRow">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" value="30%"/>
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Processo nº:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" value="70%"/>
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">#{j2.env.PJeVars.processo.numero}</elemento>
+                                </elemento>                        
+                            </elemento>
+<!--                             linha da classificação 
+-->                            <elemento tag="tr" scope="NONE" class="QlTbRow" id="classeCNJRow">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Juízo:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">#{j2.env.PJeVars.unidade.nomeFormal} </elemento>
+                                </elemento>                        
+                            </elemento><!--
+                             linha da classificação 
+-->                            <elemento tag="tr" scope="NONE" class="QlTbRow" id="assuntosRow">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Magistrado:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">#{j2.env.PJeVars.unidade.juiz.nome} </elemento>
+                                </elemento>                        
+                            </elemento>                    <!--
+                             linha do polo ativo 
+-->                         <elemento tag="tr" scope="NONE" class="QlTbRow" id="QualificacaoTable-poloAtivo-Linha">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Nome das partes:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">#{j2.env.PJeVars.processo.polos.ativo} #{j2.env.PJeVars.partes.ativa.nome} (CPF/CNPJ XXXCpfCnpjXXX) X #{j2.env.PJeVars.processo.polos.passivo} #{j2.env.PJeVars.partes.passiva.nome} (CPF/CNPJ XXXCpfCnpjXXX)</elemento>
+                                </elemento>                        
+                            </elemento><!--
+                             Linha do polo ativo advogado 
+-->                         <elemento tag="tr" scope="NONE" class="QlTbRow" id="advPoloAtivoRow" >
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Natureza do processo:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">XXXNaturezaDoProcessoXXX</elemento>
+                                </elemento>                        
+                            </elemento><!--
+                             Linha do polo passivo 
+-->                         <elemento tag="tr" scope="NONE" class="QlTbRow" id="QualificacaoTable-poloPassivo-Linha">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">cutas:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width"/>
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">concedida justiça gratuita</elemento>
+                                </elemento>                        
+                            </elemento><!--
+                             Linha do pólo passivo advogado 
+-->                            <elemento tag="tr" scope="NONE" class="QlTbRow" id="advPoloPassivoRow">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Valor da Dívida:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">R$ XXXValorXXX (XXXValorExtensoXXX)</elemento>
+                                </elemento>                        
+                            </elemento>        <!--
+                             linha do horário da audiência 
+-->                            <elemento tag="tr" scope="NONE" class="QlTbRow" id="audienciaRow">
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 b Indnt0">Identificação do depositário do bem penhorado:</elemento>
+                                </elemento>
+                                <elemento tag="td" scope="NONE">
+                                    <HTMLAttribute name="width" />
+                                    <elemento tag="p" scope="NONE" class="p FntMod1 Indnt0">XXXIdentificaçãoDepositarioXXX</elemento>
+                                </elemento>                        
+                            </elemento>                            
+                             <!--fim das linhas da tabela-->                                                                                            
+                        </elemento>
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Para fins de instrução do presente, segue(m) o(s) documento(s) anexo(s).
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Ao expedir resposta, fineza mencionar o número do processo.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>    
+        
+        <item id="ofcItInstaurarPADOAB" label="Instauração de Procedimento Administrativo - Falsidade Documental" dataPlus="{ 'assunto': 'Instauração de procedimento administrativo' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        para ciência e providências cabíveis, inclusive #:B{instauração de procedimento disciplinar}, a decisão prolatada nos autos acima epigrafados, em desfavor do(a) Advogado(a) #:B{#{j2.env.PJeVars.partes.ativa.advogado.nomeOAB}}, em razão da infração cometida, prevista artigo 34 do Estatuto da Ordem, conforme certidão e demais cópias anexas
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Comunico, ainda, que foi expedido ofício ao Delegado Regional de Imperatriz, para instauração de inquérito policial para apuração da possível prática de crime de falsidade documental. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Favor mencionar o número do processo e o número do ofício ao expedir resposta ao presente.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>                                                  
+        <item id="ofcItImpedimento" label="Impedimento juiz(a)" dataPlus="{ 'assunto': 'Impedimento de juiz(a)', 'imperativo':false, 'slcOrdSelect':'OficioCorpo.Corpo.controls.solicitacaoOrdem.select.comunicacao' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        me declarei impedida de exercer minhas funções nos autos em epígrafe, nos termos do art. 144, IX, do CPC/2015.
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Desse modo, solicito que essa  Corregedoria designe juiz(a) para presidir o presente feito.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>       
+        
+        <item id="ofcItComunicacaoRedesignacoDeprecado" label="Comunicação de Redesignação Audiência ao Deprecado" dataPlus="{ 'assunto': 'Redesignação de audiência no feito deprecante' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    a audiência de #{j2.env.PJeVars.audiencia.tipo} designado neste feito fora redesignada 
+                    para o dia #{j2.env.PJeVars.audiencia.data}, na #{j2.env.PJeVars.audiencia.sala}, deste Juízo. Isto posto SOLICITO que o presente expediente seja juntado à missiva 
+                    encaminhado a vosso juízo para fins de cumprimento pelo senhor(a) oficial(a) de justiça
+                </data>
+            </itemContent>
+        </item>      
+        
+        <item id="ofcItSolicitDevolucaoPrecatoriaPJe" label="Devolução de Carta Precatória (PJe)" dataPlus="{ 'assunto': 'Devolução de Carta Precatória', 'queVirgula' : false }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                    #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} e Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
+                    enviada a esse juízo via PJe e tombada sob nº XXXNumeroNoJuizoDeprecadoXXXXXX
+                </data>
+            </itemContent>
+        </item>    
+        
+        <item id="ofcItSolicitDevolucaoPrecatoriaMalote" label="Devolução de Carta Precatória (Malote Digital)" dataPlus="{ 'assunto': 'Devolução de Carta Precatória', 'queVirgula' : false }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                    #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} e Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
+                    enviada a esse juízo via Malote Digital em XXXDataEnvioMaloteXXX (código de rastreabilidade nº  XXXCodigoRastreabilidadeXXX)
+                </data>
+            </itemContent>
+        </item>       
+                                                
+    </items>
+  </selectorDef>
+</Definitions>

@@ -1,0 +1,493 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="p" class="p FntModDefault Indnt3cm marginAtoJudicial" scope="NONE">
+         #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="---------------------------------------">
+            <gItem id="sentItSelecione"/>
+        </group>
+        <group label="Inicial">
+            <gItem id="despItApresDocFiscual"/>
+            <gItem id="despItAprsTituloExecutivo"/>
+            <!--gItem id="despItInitPrecatoria"/-->
+            <gItem id="despItInitialtituloExecutivo"/>
+            <!--<gItem id="despItInitialtituloExecutivoComConciliacao"/>-->
+            <gItem id="despItPretensaoResistida"/>
+            <gItem id="despItPretensaoResistidaEndereco"/>
+        </group>
+        <group label="Execução">
+            <!--gItem id="despItSuspOITelemar"/-->
+            <!--gItem id="despItInitialExecAcord"/-->
+            <gItem id="despItInitialExecSent"/>
+            <gItem id="despItCumprimentoSentencaIterativo"/>
+            <gItem id="despItInitialExecSentObFazObPg"/>
+        </group>
+        <group label="Liminar Convertida em diligência">
+            <gItem id="despItConvLimEnderecoBoleto"/>
+            <gItem id="despItConvLimEnderecoConjuge"/>
+            <gItem id="despItConvLimEnderecoDesatualizado"/>
+            <gItem id="despItConvLimEnderecoGenitor"/>
+            <gItem id="despItConvLimEnderecoIlegivel"/>
+            <gItem id="despItConvLimEnderecoTerceiro"/>
+        </group>
+    </groupsDefs>
+    <items>
+        <item id="despItPretensaoResistidaEndereco" label="Pretensão resistida + comprovante de endereço" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O princípio do amplo acesso à justiça vem sendo objeto de estudos constantes, diante da massificação de demandas, e da utilização do Poder Judiciário como primeira via de solução de conflitos. Os recentes estudos indicam a necessidade de demonstração de uma pretensão resistida para a caracterização do interesse processual, oriundo da doutrina de Liebman, adotada pelo Código de Processo Civil.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        As mais recentes decisões do STF, já estabelecidas no RE 839353 já enfatizaram que o prévio requerimento administrativo não significa afronta ao princípio do acesso à justiça. Inclusive em recente julgado, a Turma Recursal de Imperatriz decidiu por unanimidade no sentido de que #:I{#:B{“não se pode mais admitir que demandas que podem e merecem ser resolvidas pela via consensual sejam destinadas a ocupar a pauta do Judiciário de forma direta} como esta em foco, sem que antes tenha a parte comprovado ter intentado, por quaisquer dos meios possíveis e existentes, a prévia resolução do litígio com demonstração de efetiva resistência ao direito que alega ser titular”} (Recurso Inominado n. 0800255-84.2020.8.10.0028).
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Ressalto que no Procedimento de Controle Administrativo n. 0007010-27.2020.2.00.0000 o CNJ, ao analisar a Resolução 43/2017 do TJMA, ressaltou que a utilização das plataformas públicas de conciliação não impede ou desestimula que a parte seja devidamente assessorada por advogado, e “não há que se falar em violação às prerrogativas dos advogados quando realizada conciliação ou mediação pré-processual por meio das plataformas digitais, uma vez que tais atividades visam facilitar a transação, ato de autonomia privada reservado a toda pessoa capaz, que permite a prevenção ou a extinção dos litígios”.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Da análise dos autos, verifica-se que a parte autora não apresentou comprovação acerca da existência de pretensão resistida com relação à presente demanda.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante destas considerações, para se comprovar o interesse processual, intime-se a parte autora para, #:B{#:U{no prazo de 15 (quinze) dias`}, EMENDAR A PETIÇÃO INICIAL}, completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente em relação aos danos morais alegados}, tais como: a plataforma pública digital – www.consumidor.gov.br – na forma da recomendação contida na Resolução GP 432017-TJMA, PROCON, canais de intermediação das agências reguladoras (ANEEL, ANATEL, ANS, BACEN, …), e-mail, SAC com o atendimento degravado, requerimento no próprio órgão/instituição por meios oficiais de comunicação ou outro meio comprobatório APTO para obtenção do objeto pleiteado, com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior a 30 dias após a apresentação da reclamação administrativa.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:U{#:I{Deverá também, no prazo da emenda, juntar aos autos comprovante de endereço atualizado, legível e em seu nome}}
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Caso a parte demandante já tenha apresentado pedido administrativo de resolução do conflito, não obtendo êxito em solucionar a demanda, poderá peticionar nos autos demonstrando o fato para o regular prosseguimento do feito.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Comprovada a ausência de resposta satisfativa à demanda administrativa, proceda-se, mediante ato ordinatório, a designação de audiência UNA, citando-se e intimando-se na forma da lei processual.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Não havendo manifestação da parte autora e/ou não demonstrada e prévia tentativa de solução administrativa, voltem conclusos para sentença de extinção. }
+                    </elemento>   
+                </simpleElementsDefs>
+            </itemContent>
+        </item>  
+        
+        <item id="despItPretensaoResistida" label="Pretensão resistida" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O princípio do amplo acesso à justiça vem sendo objeto de estudos constantes, diante da massificação de demandas, e da utilização do Poder Judiciário como primeira via de solução de conflitos. Os recentes estudos indicam a necessidade de demonstração de uma pretensão resistida para a caracterização do interesse processual, oriundo da doutrina de Liebman, adotada pelo Código de Processo Civil.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        As mais recentes decisões do STF, já estabelecidas no RE 839353 já enfatizaram que o prévio requerimento administrativo não significa afronta ao princípio do acesso à justiça. Inclusive em recente julgado, a Turma Recursal de Imperatriz decidiu por unanimidade no sentido de que #:I{#:B{“não se pode mais admitir que demandas que podem e merecem ser resolvidas pela via consensual sejam destinadas a ocupar a pauta do Judiciário de forma direta} como esta em foco, sem que antes tenha a parte comprovado ter intentado, por quaisquer dos meios possíveis e existentes, a prévia resolução do litígio com demonstração de efetiva resistência ao direito que alega ser titular”} (Recurso Inominado n. 0800255-84.2020.8.10.0028).
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Ressalto que no Procedimento de Controle Administrativo n. 0007010-27.2020.2.00.0000 o CNJ, ao analisar a Resolução 43/2017 do TJMA, ressaltou que a utilização das plataformas públicas de conciliação não impede ou desestimula que a parte seja devidamente assessorada por advogado, e “não há que se falar em violação às prerrogativas dos advogados quando realizada conciliação ou mediação pré-processual por meio das plataformas digitais, uma vez que tais atividades visam facilitar a transação, ato de autonomia privada reservado a toda pessoa capaz, que permite a prevenção ou a extinção dos litígios”.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Da análise dos autos, verifica-se que a parte autora não apresentou comprovação acerca da existência de pretensão resistida com relação à presente demanda.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante destas considerações, para se comprovar o interesse processual, intime-se a parte autora para, #:B{#:U{no prazo de 15 (quinze) dias`}, EMENDAR A PETIÇÃO INICIAL}, completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente em relação aos danos morais alegados}, tais como: a plataforma pública digital – www.consumidor.gov.br – na forma da recomendação contida na Resolução GP 432017-TJMA, PROCON, canais de intermediação das agências reguladoras (ANEEL, ANATEL, ANS, BACEN, …), e-mail, SAC com o atendimento degravado, requerimento no próprio órgão/instituição por meios oficiais de comunicação ou outro meio comprobatório APTO para obtenção do objeto pleiteado, com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior a 30 dias após a apresentação da reclamação administrativa.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Caso a parte demandante já tenha apresentado pedido administrativo de resolução do conflito, não obtendo êxito em solucionar a demanda, poderá peticionar nos autos demonstrando o fato para o regular prosseguimento do feito.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Comprovada a ausência de resposta satisfativa à demanda administrativa, proceda-se, mediante ato ordinatório, a designação de audiência UNA, citando-se e intimando-se na forma da lei processual.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Não havendo manifestação da parte autora e/ou não demonstrada e prévia tentativa de solução administrativa, voltem conclusos para sentença de extinção. }
+                    </elemento>   
+                </simpleElementsDefs>
+            </itemContent>
+        </item>  
+        
+        <item id="despItCumprimentoSentencaIterativo" label="Cumprimento de Sentença Iterativo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Vistos, etc.
+                    </elemento>   
+                    <elemento id="despItCumprimentoSentencaIterativo-span" tag="span" scope="NONE" > 
+                        
+                    </elemento> 
+
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        #:B{Intimem-se as partes dessa decisão. Cumpra-se}.
+                    </elemento-->   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cumpra-se.
+                    </elemento>   
+                </simpleElementsDefs>
+            </itemContent>
+        </item>  
+        
+        <item id="despItConvLimEnderecoBoleto" label="Comprovante de Endereço Boleto" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de documento que não comprova o domicílio do demandante, uma vez que o boleto não foi entregue em sua residência.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}.
+                    </elemento>                  
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>                  
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItConvLimEnderecoDesatualizado" label="Comprovante de Endereço Desatualizado" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de comprovante de endereço emitido anteriormente aos últimos três meses.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}. 
+                    </elemento>       
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>             
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItConvLimEnderecoIlegivel" label="Comprovante de Endereço Ilegível" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de comprovante de endereço ilegível.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}. 
+                    </elemento>      
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>                           
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItConvLimEnderecoTerceiro" label="Comprovante de Endereço Terceiro" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de comprovante de endereço no nome de  pessoa estranha à lide.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}. 
+                    </elemento>      
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>                           
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItConvLimEnderecoConjuge" label="Comprovante de Endereço Conjuge" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de comprovante de endereço em nome de seu(sua) cônjuge. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}, ou alternativamente, comprovante atualizado e legível no nome de seu(sua) cônjuge carreado com outro documento no nome do demandante capaz de corroborar seu domicílio.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}. 
+                    </elemento>     
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>                            
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItConvLimEnderecoGenitor" label="Comprovante de Endereço Genitor" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                         Da análise dos autos, verifico que a parte #{j2.env.PJeVars.processo.polos.parteAtiva} fez juntada de comprovante de endereço em nome de de seu(sua) genitora.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em razão disto, #:B{#:U{intime-se}} a parte #{j2.env.PJeVars.processo.polos.parteAtiva} para que, no prazo de 15 (quinze) dias, #:U{emende a inicial para #:B{juntar comprovante de endereço atualizado, legível e em seu nome}}, ou alternativamente, comprovante atualizado e legível no nome de seu(sua) genitor(a) carreado com outro documento no nome do demandante capaz de corroborar seu domicílio.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        #:B{Promova-se o CANCELAMENTO da audiência designada até ulterior deliberação}. 
+                    </elemento>     
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
+                    </elemento>                            
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+         <item id="despItApresDocFiscual" label="Apresentar Documento Fiscal" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Conforme o ENUNCIADO 135 do FONAJE: "O acesso da microempresa ou empresa de pequeno porte no sistema dos juizados especiais depende da comprovação de sua qualificação tributária atualizada e documento fiscal referente ao negócio jurídico objeto da demanda". Destarte, intime-se a parte promovente para apresentar, no prazo de 10 (dez) dias, nota ou outro documento fiscal comprovando a relação jurídica narrada na inicial.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItAprsTituloExecutivo" label="Apresentar Título Executivo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Intime-se o autor, por meio de seu advogado, para apresentar, no prazo de 10 (dez), dias o título original em secretaria a fim de ser carimbado ou depositado em Secretaria (Enunciado n. 126 do FONAJE).
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Após, o cumprimento da medida, retornem-me conclusos para a análise do pedido inicial.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        Cumpra-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitialtituloExecutivoComConciliacao" label="Inicial Título Executivo com Conciliação" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        1. Cuida-se de Execução de Título Extrajudicial, o qual possui peculiaridades diferenciadas, bem como a previsão de somente agendar-se audiência de conciliação com a efetivação da penhora. 
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        2. Todavia, devo destacar que de acordo com o espírito do Novo Código de Processo civil, aplicado subsidiariamente a Lei n. 9099/95, e atendo aos princípios insculpidos nessa lei, notadamente da celeridade, e tentativa de solução do conflito, entendo ser o caso de também adotar-se a fase de conciliação prévia. Referido procedimento será adotado de forma experimental por esta magistrada, e uma vez constatado o sucesso de tal aplicação, tornado definitivo no âmbito deste Juizado Especial. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        3. Dessa forma, #:B{determino a inclusão do feito em pauta de audiência de conciliação, intimando-se as partes}. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        4. A parte demandada deverá ser citada para, no prazo de 03 (três) dias, efetuar o pagamento do débito (artigo 829, CPC), #:B{salientando-se que o prazo começará a fluir da data da audiência de conciliação}. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        5. #:B{Não efetuado tempestivamente o pagamento, deverá ser expedido MANDADO DE PENHORA E AVALIAÇÃO DOS BENS}, intimando o executado da penhora. Deverá, nesse sentido, ser observada a ordem preferencial constante no artigo 835 do CPC, mediante #:B{PENHORA de dinheiro via SISBAJUD}, e os bens elencados posteriormente no referido artigo.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        6. #:B{Efetuada a penhora}, agende-se #:B{nova} audiência de conciliação, intimando as partes e cientificando o executado que poderá apresentar embargos por escrito ou verbalmente, nos termos do art. 53, §1° da Lei 9.099/95.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        7. Não encontrados bens penhoráveis, #:B{intime-se o exequente} para indicar bens no prazo de 10 (dez) dias. Não indicado bens, voltem os autos conclusos para extinção.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+        <item id="despItSuspOITelemar" label="Suspensão OI Telemar" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Suspenda-se a execução/cumprimento de sentença em face da requerida pelo prazo de 180 (cento e oitenta) dias, a contar de 21/06/2016, conforme liminar nos autos da recuperação judicial n. 0203711-65.2016.8.19.0001 da 7ª Vara Empresarial da Comarca do Rio de Janeiro.
+                    </elemento>                        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                        
+                        Intime-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitPrecatoria" label="Inicial Precatória" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Cumpra-se a ordem deprecada na forma determinada pelo juízo depcrecante.
+                    </elemento>                        
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                        
+                        Após, devolvam-se os autos ao juízo deprecante com as devidas homenagens.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitialtituloExecutivo" label="Inicial Título Executivo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        1. #:B{Cite-se o executado} para, no prazo de 03 (três) dias, efetuar o pagamento do débito (artigo 829, CPC). 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        2. #:B{Não efetuado tempestivamente o pagamento}, deverá, nesse sentido, ser observada a ordem preferencial constante no artigo 835 do CPC, mediante #:B{PENHORA de dinheiro via SISBAJUD}, e os bens elencados posteriormente no referido artigo.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        3. Na hipótese de #:U{não} serem encontrados ativos nas contas da executada, determino, de logo, 
+                        consulta no sistema RENAJUD e sendo o resultado positivo, expeça-se mandado ou carta precatória de penhora e avaliação do veículo.. 
+                        Persistindo resultado negativo e #:U{em se tratando de parte 
+                        desacompanhada de advogado}, deverá ser de imediato #:B{expedido mandado ou carta precatória de penhora, avaliação 
+                        e intimação de bens pertencentes ao executado}. Em sendo a parte assistida por advogado, 
+                        #:B{intime-se a parte credora}, no prazo de 10 (dez) dias, para que indique bens do devedor passíveis 
+                        de penhora e sua respectiva localização, sob pena de extinção e arquivamento do feito.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        4. #:B{Efetuada a penhora, #:U{agende-se audiência de conciliação}}, intimando as partes e cientificando o executado que poderá apresentar embargos por escrito ou verbalmente, nos termos do art. 53, §1° da Lei 9.099/95.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
+                        5. Não encontrados bens penhoráveis, #:B{intime-se o exequente} para indicar bens no prazo de 10 (dez) dias. Não indicado bens, voltem os autos conclusos para extinção.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitialExecAcord" label="Inicial Execução Acordo" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Vistos, etc. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                        
+                        Defiro o pedido de execução, tendo em vista o descumprimento do acordo homologado em Juízo.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                            
+                        Promova-se a retificação da classe processual do feito para Cumprimento de Sentença. Atualize-se o débito, e considerando que a penhora on line representa o bloqueio de valores em dinheiro da parte executada, sendo este o primeiro na ordem de preferência do artigo 835, do Novo Código de Processo Civil, determino a realização do procedimento através do sistema Bacen Jud.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                            
+                        Frutífera tal medida, intime-se a executada para, querendo, apresentar embargos no prazo legal. Transcorrido in albis o prazo para impugnar a penhora, fica desde já autorizada a expedição de alvará a favor de credor.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                            
+                        Caso não sejam encontrados ativos nas contas da executada, intime-se a parte credora, no prazo de 10 (dez) dias, para que indique bens do devedor passíveis de penhora e sua respectiva localização, sob pena de extinção e arquivamento do feito. Lembrando que a indisponibilidade do patrimônio do devedor deve recair sobre bens certos e determináveis, os quais devem ser indicados pelo próprio exequente, sendo incabível transferir ao Poder Judiciário o ônus de diligenciar junto aos órgãos responsáveis pelo controle e registro de bens móveis ou imóveis. Indicados os bens, expeça-se mandado de penhora, avaliação e depósito.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >                            
+                        Cumpra-se.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitialExecSent" label="Inicial Execução Sentença" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Considerando o trânsito em julgado e o pedido expresso da parte interessada, 
+                        #:B{DECLARO INICIADA A FASE DE CUMPRIMENTO DE SENTENÇA} e determino:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        1- a #:B{Evolução da classe processual} do feito para Cumprimento de Sentença;
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        2 - #:B{Atualização do débito}, caso o exequente não possua advogado habilitado nos autos. Em não tendo sido apresentados os
+                        cálculos pelo patrono do exequente, intime-se para apresentar, no prazo de 05 (cinco) dias,  demonstrativo do débito atualizado, 
+                        conforme o Art. 798, I, b, aplicável por força do art. 513 do CPC.
+;
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        3 – #:B{REALIZAÇÃO de PENHORA ON-LINE} no sistema SISBAJUD, sendo este o primeiro na ordem de preferência 
+                        do artigo 835, do Novo Código de Processo Civil. Em sendo o resultado #:U{positivo}, 
+                        #:B{intime-se a executada} para, querendo, apresentar embargos no prazo legal. Transcorrido 
+                        #:I{in albis} o prazo para impugnar a penhora, fica desde já autorizada a expedição de 
+                        alvará a favor de credor.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        4 - Na hipótese de #:U{não} serem encontrados ativos nas contas da executada, determino, de logo, 
+                        consulta no sistema RENAJUD e sendo o resultado positivo, expeça-se mandado ou carta precatória de penhora e avaliação do veículo.. 
+                        Persistindo resultado negativo e #:U{em se tratando de parte 
+                        desacompanhada de advogado}, deverá ser de imediato #:B{expedido mandado ou carta precatória de penhora, avaliação 
+                        e intimação de bens pertencentes ao executado}. Em sendo a parte assistida por advogado, 
+                        #:B{intime-se a parte credora}, no prazo de 10 (dez) dias, para que indique bens do devedor passíveis 
+                        de penhora e sua respectiva localização, sob pena de extinção e arquivamento do feito.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Lembrando que a indisponibilidade do patrimônio do devedor deve recair sobre bens certos e 
+                        determináveis, os quais devem ser indicados pelo próprio exequente, sendo incabível transferir 
+                        ao Poder Judiciário o ônus de diligenciar junto aos órgãos responsáveis pelo controle e registro 
+                        de bens móveis ou imóveis.
+                    </elemento> 
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItInitialExecSentObFazObPg" label="Inicial Execução Sentença ObFaz ObPg" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Considerando o trânsito em julgado e o pedido expresso da parte interessada, 
+                        #:B{DECLARO INICIADA A FASE DE CUMPRIMENTO DE SENTENÇA} e determino:
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        1- a #:B{Retificação da classe processual} do feito para Cumprimento de Sentença;
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        2 - #:B{Atualização do débito}, caso o exequente não possua advogado habilitado nos autos. Em não tendo sido apresentados os
+                        cálculos pelo patrono do exequente, intime-se para apresentar, no prazo de 05 (cinco) dias,  demonstrativo do débito atualizado, 
+                        conforme o Art. 798, I, b, aplicável por força do art. 513 do CPC.
+;
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        3 – #:B{REALIZAÇÃO de PENHORA ON-LINE} no sistema SISBAJUD, sendo este o primeiro na ordem de preferência 
+                        do artigo 835, do Novo Código de Processo Civil. Em sendo o resultado #:U{positivo}, 
+                        #:B{intime-se a executada} para, querendo, apresentar embargos no prazo legal. Transcorrido 
+                        #:I{in albis} o prazo para impugnar a penhora, fica desde já autorizada a expedição de 
+                        alvará a favor de credor.
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        4 - Na hipótese de #:U{não} serem encontrados ativos nas contas da executada, determino, de logo, 
+                        consulta no sistema RENAJUD. Persistindo resultado negativo e #:U{em se tratando de parte 
+                        desacompanhada de advogado}, deverá ser de imediato #:B{expedido mandado de penhora, avaliação 
+                        e intimação de bens pertencentes ao executado}. Em sendo a parte assistida por advogado, 
+                        #:B{intime-se a parte credora}, no prazo de 10 (dez) dias, para que indique bens do devedor passíveis 
+                        de penhora e sua respectiva localização, sob pena de extinção e arquivamento do feito, ou requerer 
+                        a expedição de mandado de penhora de bens a ser cumprida no domicílio da parte demandada. 
+                    </elemento> 
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Lembrando que a indisponibilidade do patrimônio do devedor deve recair sobre bens certos e 
+                        determináveis, os quais devem ser indicados pelo próprio exequente, sendo incabível transferir 
+                        ao Poder Judiciário o ônus de diligenciar junto aos órgãos responsáveis pelo controle e registro 
+                        de bens móveis ou imóveis.
+                    </elemento> 
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        
+     
+        <item id="despItSelecione" label="[Selecione]" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    XXXXAtoJudicialXXXX
+                </data>
+            </itemContent>
+        </item>             
+    </items>
+  </selectorDef>
+</Definitions>

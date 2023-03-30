@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" class=" js csstransforms3d" style=""><head>
+		
+	
+	<title>0800567-71.2018.8.10.0047 · Tribunal de Justiça do Estado do Maranhão - 1º Grau</title>
+	
+	
+	<script src="/pje/ng/a4j/g/3_3_3.Final/org/ajax4jsf/framework.pack.js" type="text/javascript"></script><script src="/pje/ng/a4j/g/3_3_3.Final/org/richfaces/ui.pack.js" type="text/javascript"></script><link class="component" href="/pje/ng/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/basic_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><link class="component" href="/pje/ng/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/extended_classes.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><link class="component" href="/pje/ng/a4j/s/3_3_3.Final/org/richfaces/skin.xcss/DATB/eAELXT5DOhSIAQ!sA18_" rel="stylesheet" type="text/css"><script id="org.ajax4jsf.queue_script" type="text/javascript">if (typeof A4J != 'undefined') { if (A4J.AJAX) { with (A4J.AJAX) {if (!EventQueue.getQueue('j_id34:org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('j_id34:org.richfaces.queue.global',{'size':2,'sizeExceededBehavior':'dropNew'} ,{'ignoreDupResponses':true,'requestDelay':100} )) };if (!EventQueue.getQueue('org.richfaces.queue.global')) { EventQueue.addQueue(new EventQueue('org.richfaces.queue.global',null,null)) };}}};</script><script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script><link class="user" href="/pje/stylesheet/estilos/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/estilos/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/dropzone/dropzone.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/estilos/richfaces/tema.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/padrao.css" rel="stylesheet" type="text/css"><link class="user" href="/pje/stylesheet/autos-digitais.css" rel="stylesheet" type="text/css"><script src="/pje/js/modernizr.custom.js" type="text/javascript"></script><script src="/pje/js/jquery-2.1.4.min.js" type="text/javascript"></script><script src="/pje/js/bootstrap/bootstrap.min.js" type="text/javascript"></script><script src="/pje/js/jquery.maskedinput.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/mousetrap.min.js" type="text/javascript"></script><script src="/pje/js/mousetrap/plugins/global-bind/mousetrap-global-bind.js" type="text/javascript"></script><script src="/pje/js/pje/menu.js" type="text/javascript"></script><script src="/pje/js/global.js" type="text/javascript"></script><script src="/pje/js/pje.js" type="text/javascript"></script><script src="/pje/js/pjeOffice.js" type="text/javascript"></script><script src="/pje/js/signerApplet.js" type="text/javascript"></script><link rel="apple-touch-icon" sizes="57x57" href="/pje/img/favicon/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/pje/img/favicon/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/pje/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/pje/img/favicon/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/pje/img/favicon/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/pje/img/favicon/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/pje/img/favicon/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/pje/img/favicon/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/pje/img/favicon/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/pje/img/favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/pje/img/favicon/manifest.json">
+	<link rel="mask-icon" href="/pje/img/favicon/safari-pinned-tab.svg" color="#0078aa">
+	<meta name="msapplication-TileColor" content="#0078aa">
+	<meta name="msapplication-TileImage" content="/pje/img/favicon/mstile-144x144.png">
+	<meta name="theme-color" content="#0078AA">
+	
+				        
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="processo judicial, processo, audiências, sessão, peticionar, expedientes, magistrado, procurador, oficial de justiça, advogado, perito, retificar autuação, OAB">
+    <meta name="description" content="Processo Judicial Eletrônico - Acompanhe processos judiciais independentemente de tramitações">
+    <meta property="og:title" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="/pje">
+	<meta property="og:image" itemprop="image" content="/pje/img/pjeMini.png">
+	<meta property="og:site_name" content="PJe - Processo Judicial Eletrônico">
+	<meta property="og:description" content="Acompanhe processos judiciais independentemente de tramitações">
+	<meta property="og:locale" content="pt_BR">
+	
+	<meta name="Robots" content="INDEX,FOLLOW">
+    <meta name="RESOURCE-TYPE" content="DOCUMENT">
+    <meta name="DISTRIBUTION" content="GLOBAL">
+    <meta name="AUTHOR" content="CNJ">
+    <meta name="COPYRIGHT" content="Copyright (c) CNJ">
+    <meta name="language" content="pt-br">
+    <meta name="RATING" content="GENERAL">
+</head>
+<body><div id="headerDiv" class="navbar navbar-default navbar-static-top navtop ">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="navbar-brand"><a href="#" class="logo pull-left"><img src="/pje/img/pje2-branco.png" alt="Tribunal de Justiça do Estado do Maranhão - 1º Grau"></a>
+					<div id="bannerMovimentar" class="pull-left">
+						<div class="info pull-left">
+							<div id="processoIdentificadorDiv"><div id="divHeaderProcesso">
+<form id="j_id28" name="j_id28" method="post" action="/pje/Painel/painel_usuario/popup/visualizarExpediente.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_id28" value="j_id28">
+<a href="#" id="j_id28:j_id29" name="j_id28:j_id29" onclick="A4J.AJAX.Submit('j_id28',event,{'similarityGroupingId':'j_id28:j_id29','parameters':{'idProcessoSelecionado':511477,'j_id28:j_id29':'j_id28:j_id29'} } );return false;" style="box-sizing: border-box;font-size: 18px;color: #FFF;line-height: 20px;font-family: 'Open Sans regular',Arial,Verdana,sans-serif;" title="Ver autos digitais">PJEC 0800567-71.2018.8.10.0047  - Seguro</a><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id176" autocomplete="off">
+</form></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div></div><div id="divAcaovisualizarProcesso"></div><span id="_viewRoot:status"><span id="_viewRoot:status.start" style="display: none">
+	        <div class="ajax-loader">
+	   			<div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+	   			<div class="rich-mpnl-panel">
+			        <div class="rich-mp-container">
+			        	<div class="rich-mpnl-content"></div>
+			        </div>
+	   			</div>
+	   		</div></span><span id="_viewRoot:status.stop"></span></span><div id="modalStatus" style="display: none;"><input autocomplete="off" id="modalStatusOpenedState" name="modalStatusOpenedState" type="hidden"><div class="rich-modalpanel ajax-loader" id="modalStatusContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="modalStatusDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="modalStatusFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="modalStatusCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="modalStatusShadowDiv" style=" opacity:0.0; filter:alpha(opacity=0);"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="modalStatusContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="modalStatusContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top"></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="modalStatusResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="modalStatusResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="modalStatusCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="modalStatusLastHref"></button></div><script type="text/javascript">new ModalPanel('modalStatus',
+				{
+					width: -1,
+					height: -1,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><form id="j_id34" name="j_id34" method="post" action="/pje/Painel/painel_usuario/popup/visualizarExpediente.seam" target=""><span xmlns="http://www.w3.org/1999/xhtml" style="display:none;" id="j_id34:j_id36"><script type="text/javascript">//<![CDATA[
+A4J.AJAX.Poll('j_id34',{'similarityGroupingId':'j_id34:j_id36','pollId':'j_id34:j_id36','pollinterval':90000,'containerId':'j_id33','parameters':{'j_id34:j_id36':'j_id34:j_id36','ajaxSingle':'j_id34:j_id36'} } );
+//]]>
+</script></span><span style="display:none;" id="j_id34:j_id37"><script type="text/javascript">
+A4J.AJAX.StopPush('tX8wa0WawYl6eKRzWLTMDBAzU-bO1mRuoOVNJL6W/Painel/painel_usuario/popup/visualizarExpediente.xhtml:j_id34:j_id37');
+</script></span><input type="hidden" autocomplete="off" name="j_id34" value="j_id34"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_j_id34() {
+_clearJSFFormParameters('j_id34','',['j_id34:j_idcl','j_id34:_link_hidden_']);
+}
+function clearFormHiddenParams_j_id34(){clear_j_id34();}
+function clearFormHiddenParams_j_id34(){clear_j_id34();}
+clear_j_id34();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id176" autocomplete="off"></form><div id="j_id38" class="principal pb-80">
+		<div class="content"><div id="pageBody" class="container-fluid scroll-y">
+	<div class="conteudo"><div id="j_id41" class="faixa-superior"></div>	
+		<div class="col-xs-12 col-sm-12 pb-80"><div id="j_id43"><div id="areaExpediente" class="folha ml-10"> 
+			   <br><br><br>
+				   <b>Intimação </b>(1270282)
+				   <br>
+				   <b>Destinatário </b>COMPANHIA EXCELSIOR DE SEGUROS
+				   <br>
+			   <b>Fechado? </b>SIM
+			   <br></div><div id="j_id60" style="font-size: 0px;"><div class="rich-separator " style="height: 2px; background-image: url(/pje/ng/a4j/g/3_3_3.Finalorg.richfaces.renderkit.html.images.SimpleSeparatorImage/DATB/eAFjYDp-!goLAAdFAnE_); null;"></div></div><br><form id="detalhesDocumento" name="detalhesDocumento" method="post" action="/pje/Painel/painel_usuario/popup/visualizarExpediente.seam" target=""><div id="detalhesDocumento:tituloDocumento" class="titulo-documento col-md-12">
+					
+					<div class="navbar mb-10">
+						<div class="container-fluid">
+							<div class="navbar-header">
+							</div>
+							<ul class="nav navbar-nav navbar-right btn-documento">		
+                                <li><a href="#" id="detalhesDocumento:j_id72" name="detalhesDocumento:j_id72" onclick="window.open('/pje/Processo/lembretes.seam?idProcessoDocumento=');A4J.AJAX.Submit('detalhesDocumento',event,{'similarityGroupingId':'detalhesDocumento:j_id72','parameters':{'detalhesDocumento:j_id72':'detalhesDocumento:j_id72'} } );return false;" title="Incluir lembretes">
+                                        <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                                        <span class="sr-only ">Ícone de lembrete</span></a>
+                                </li>
+								<li>
+<script type="text/javascript" language="Javascript">function dpf(f) {var adp = f.adp;if (adp != null) {for (var i = 0;i < adp.length;i++) {f.removeChild(adp[i]);}}};function apf(f, pvp) {var adp = new Array();f.adp = adp;var i = 0;for (k in pvp) {var p = document.createElement("input");p.type = "hidden";p.name = k;p.value = pvp[k];f.appendChild(p);adp[i++] = p;}};function jsfcljs(f, pvp, t) {apf(f, pvp);var ft = f.target;if (t) {f.target = t;}f.submit();f.target = ft;dpf(f);};</script>
+<a id="detalhesDocumento:download" href="#" title="Download" onclick="var a=function(){if (!confirm('Confirma o download dos autos do processo? Essa operação pode demorar alguns minutos.')) return false;};var b=function(){if(typeof jsfcljs == 'function'){jsfcljs(document.getElementById('detalhesDocumento'),{'detalhesDocumento:download':'detalhesDocumento:download','idProcesso':'511477'},'');}return false};return (a()==false) ? false : b();">
+										<i class="fa fa-download" aria-hidden="true"></i>								
+										<span class="sr-only ">Ícone de download</span></a>
+								</li>
+								<li role="presentation" class="dropdown drop-menu dropdown-assinaturas"><a href="/pje/Processo/Consulta/assinaDocumento.seam?urlOpenner=https%3A%2F%2Fpje.tjma.jus.br%2Fpje%2FPainel%2Fpainel_usuario%2Fpopup%2FvisualizarExpediente.seam%3Fid%3D%26tab%3D%26cid%3D61777&amp;cid=61777&amp;conversationPropagation=join" id="detalhesDocumento:j_id79" target="idJan" onclick="openPopUp('idJan', 'about:blank');" title="Assinar documento">
+											<i class="fa fa-unlock" aria-hidden="true"></i></a>
+									<span class="sr-only">Ícone de cadeado</span>
+								</li>
+							</ul>
+						</div>
+					</div></div><input type="hidden" autocomplete="off" name="detalhesDocumento" value="detalhesDocumento"><input type="hidden" autocomplete="off" name="autoScroll" value=""><script type="text/javascript">function clear_detalhesDocumento() {
+_clearJSFFormParameters('detalhesDocumento','',['detalhesDocumento:j_idcl','detalhesDocumento:_link_hidden_']);
+}
+function clearFormHiddenParams_detalhesDocumento(){clear_detalhesDocumento();}
+function clearFormHiddenParams_detalhesDocumento(){clear_detalhesDocumento();}
+clear_detalhesDocumento();</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id176" autocomplete="off"></form>
+            
+		<div id="pagina" class="container-fluid content impresso">
+			<div class="folha"><img alt="" class="rich-spacer " height="50" id="j_id90" src="/pje/ng/a4j/g/3_3_3.Finalimages/spacer.gif" width="1"><span class="text-justified"><p>&nbsp;</p>
+<div id="j2Data">
+<div id="j2Data" style="display: none; visibility: hidden;"><input id="j2Data.idProcesso" type="text" value="511477"></div>
+</div>
+<div id="j2Exp">
+<div id="p1">
+<div id="CenteringDiv">
+<div id="textMargins" style="margin-left: auto; margin-right: auto; box-shadow: 0px 8px 29px rgba(0, 0, 0, 0.48); min-height: 500px; max-width: 740px;">
+<div id="PagesSections" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; max-width: 640px; padding: 11px 50px 70px; min-height: 490px;"><button id="Reloader" style="display: none; visibility: hidden;">Recarregar Edição</button>
+<div id="SDLinkedElementprioridadeExpedientesItems">
+<div id="priordItAudiencia_li">
+<p style="margin: 15px 0px -68px; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 40px; text-align: right; text-decoration: underline; font-weight: bold;">AUDIÊNCIA</p>
+</div>
+</div>
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: center;"><img src="http://sistemas.tjma.jus.br/sentinela/images/brasao.png" alt="" width="60" height="59"></p>
+<p id="firma" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 8pt; text-align: center;"><strong>PODER JUDICIÁRIO                                <br>ESTADO DO MARANHÃO                                <br>COMARCA DE IMPERATRIZ                                          <br>2º JUIZADO ESPECIAL CÍVEL</strong></p>
+<div id="CabecEnd">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 8pt; text-align: center;">Avenida Prudente de Morais, s/n, Residencial Kubitscheck, Bloco Zulica Leite (1º Pavimento) - Devry | FACIMP</p>
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 8pt; text-align: center;">Imperatriz-MA CEP: 65912-901 | telefone: (99) 3523-7592 | e-mail: juizciv2_itz@tjma.jus.br</p>
+</div>
+<hr size="1">
+<table id="QlfcTable" style="line-height: 1; margin: 0pt; width: 100%; border-collapse: collapse;" border="0" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td width="20%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">Processo nº:</p>
+</td>
+<td width="80%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">0800567-71.2018.8.10.0047</p>
+</td>
+</tr>
+<tr>
+<td width="20%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">Classe CNJ:</p>
+</td>
+<td width="80%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;">PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL (436)</p>
+</td>
+</tr>
+<tr id="assuntosRow">
+<td width="20%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">Assuntos CNJ:</p>
+</td>
+<td width="80%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;">Ato / Negócio Jurídico, Seguro</p>
+</td>
+</tr>
+<tr>
+<td width="20%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">Demandante:</p>
+</td>
+<td width="80%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;">BRUNO MONTES SOUSA</p>
+</td>
+</tr>
+<tr>
+<td width="20%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; font-weight: bold;">Demandado:</p>
+</td>
+<td width="80%">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;">COMPANHIA EXCELSIOR DE SEGUROS</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p id="expTitle" style="margin: 8pt 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 11pt; text-align: center; font-weight: bold; text-decoration: underline;">CARTA DE CITAÇÃO</p>
+<div id="secao.destinatarioSup">
+<p id="singleBody.destinatarioExpediente" style="margin-top: 0pt; margin-right: 0pt; margin-bottom: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; text-indent: 0px;"><span id="vocativoPreText">Destinatário</span> <br> DEMANDADA: COMPANHIA EXCELSIOR DE SEGUROS<br>Avenida Marquês de Olinda, 175, 4 andar, Recife, RECIFE - PE - CEP: 50030-000</p>
+<span id="space.0.19151018184520574">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><span>&nbsp;</span></p>
+</span></div>
+<span id="space.destinatarioSup.spacing">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><span>&nbsp;</span></p>
+</span>
+<div id="normalizeFormtas">
+<p id="porOrdemExpediente" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; text-indent: 3cm;">De Ordem de Sua Excelência a Doutora <strong>DAYNA LEÃO TAJRA REIS TEIXEIRA</strong>, Juíza de Direito Titular deste 2º Juizado Especial Cível de Imperatriz, fica Vossa Senhoria, empresa ou ente público através desta <span style="text-decoration: underline;">devidamente</span>:</p>
+<ul id="SDLinkedElementcitacaoItens" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; padding: 0px 0px 0px 35mm;">
+<li id="intmItCitacaoJec_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><strong>CITADO(A)</strong> para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la  até a data da audiência de Conciliação, Instrução e Julgamento, durante o próprio ato, inclusive.. Cietificada(a) que o não comparecimento à audiência importará em sua revelia e confissão quanto á materia de fato, sendo considerados verdadeiros as alegações apresentadas pelo Demandante.</p>
+</li>
+<li id="intmItAudDesig_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><strong>INTIMADO(A)</strong> a comparecer à Audiência de Conciliação, Instrução e Julgamento, designada para o dia <span style="text-decoration: underline;"><strong>18/05/2018 10:50</strong></span>, na 1a. Sala de Audiências UNA, deste Juízo.</p>
+</li>
+</ul>
+</div>
+<span id="space.0.28476580915951566">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><span>&nbsp;</span></p>
+</span>
+<p id="LocalEData.default" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: center;">Imperatriz-MA, 20 de março de 2018</p>
+<span id="space.0.9176426874975734">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify;"><span>&nbsp;</span></p>
+</span>
+<p id="assinatura" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: center;"><strong>ELDER RIBEIRO OLIVEIRA</strong><br> Auxiliar Judiciário <br>Matrícula 119024<span id="BlocoAssinaturas.SpanPorProvimento"> <br>(Autorizado pelo, Provimento 1/2007-CGJMA, Art. 3º, XXVII, Portaria 2/2017-2JECivel)</span></p>
+<div id="divFirmaPje"><span style="display: none;">&nbsp;</span></div>
+<div id="advertencias">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify; text-decoration: underline; font-weight: bold;">ADVERTÊNCIAS</p>
+<ul id="listAdvertencia" style="margin: 0pt; padding-left: 5mm; padding-right: 0px; padding-top: 0px; font-size: 6pt;">
+<li id="advtItCitFinalidadeExpeidente_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;">A(O) presente carta/madado tem a finalidade de citar Vossa Senhoria, empresa ou firma individual de todo o conteúdo do pedido formulado pelo Demandante (cópia anexa) perante este(a) 2º Juizado Especial Cível de Imperatriz;</p>
+</li>
+<li id="advtItApresentacaoDefesaJec_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;"><span style="text-decoration: underline;"><strong>A CONTESTAÇÃO, DEVERÁ SER APRESENTADA ATÉ A DATA ACIMA ESPECIFICADA</strong></span>, por escrito ou oralmente, por si ou através de advogado, e na oportunidade de audiência de instrução, terá oportunidade de produzir todas as provas admitidas no sistema dos Juizados Especiais, inclusive testemunhal, podendo apresentar em banca até três testemunhas maiores, ou, caso seja necessária à intimação, o requerimento deverá ser encaminhado à Secretaria deste Juizado no mínimo até 05 (cinco) dias antes da data agendada para realização dessa audiência,</p>
+</li>
+<li id="advtItTetoJuizadoAdvogado_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;">Nas causas de valor até 20 (vinte) salários mínimos, as partes deverão comparecer pessoalmente, com ou sem a assistência de advogado(s); <strong><span style="text-decoration: underline;">NAS DE VALOR SUPERIOR A 20 (VINTE) SALÁRIOS MÍNIMOS, A ASSISTÊNCIA DE ADVOGADO É OBRIGATÓRIA</span></strong>;</p>
+</li>
+<li id="advtItReveliaJec_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;">Em não comparecendo na data e hora designadas, assistida ou não de advogado, pessoalmente ou por intermédio de preposto regularmente credenciado, presumir-se-ão aceitos, como verdadeiros, os fatos alegados pelo Demandante, ensejando o julgamento de plano, nos termos da Lei n° 9.099/95; circunstância também extensiva para a hipótese de ausência de contestação escrita ou oral, na audiência de instrução e julgamento, ainda que presente à mesma, nas causas de valor superior a 20 (vinte) salários mínimos (Enunciado n° 11);</p>
+</li>
+<li id="advtItPessoaJuridica_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;"><strong><span style="text-decoration: underline;">A PESSOA JURÍDICA DEVERÁ APRESENTAR OS ATOS CONSTITUTIVOS DA EMPRESA OU FIRMA INDIVIDUAL</span></strong> e, caso deseje se fazer representar pela figura de preposto, também deverá apresentar, nessa mesma ocasião, a respectiva <strong>CARTA DE PREPOSIÇÃO</strong>, sob pena de revelia;</p>
+</li>
+<li id="advtItInversaoOnus_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;">Nos litígios que versarem sobre relação de consumo, em sendo malograda a conciliação, poderá ser aplicada a inversão do ônus da prova, na forma do art. 6° VIII, da Lei n° 8.078/90;</p>
+</li>
+<li id="advtItMudancaEndereco_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;"><span style="text-decoration: underline;">Caso mude de endereço, deverá comunicar a este Juizado</span>, sob pena de serem consideradas eficazes as intimações encaminhadas ao endereço anteriormente indicado, conforme previsto no parágrafo 2° do art. 19 da Lei n° 9.099/95.</p>
+</li>
+<li id="advtItPJeListaDocumentoAviso_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;"><span style="text-decoration: underline;">Este processo tramita através do sistema PJe (Processo Judicial eletrônico)</span>, cujo endereço na web é https://pje.tjma.jus.br/. Abaixo seguem listados os documentos que acompanham a presente inicial que segue anexa a esta carta. Os documentos poderão ser acessados através do endereço web https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam com a utilização da respectiva chave de acesso.</p>
+</li>
+<li id="advtItListaDocumentosB_li">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 6pt; text-align: justify;">&nbsp;</p>
+<p style="font-family: Arial, Verdana, Sans-serif; font-size: 8pt;">Documentos associados ao processo</p>
+<table style="border: 1px solid black; border-collapse:collapse;" border="0">
+<tbody>
+<tr>
+<th style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Título</th><th style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Tipo</th><th style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Chave de acesso**</th>
+</tr>
+<tr>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Petição Inicial</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Petição Inicial</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">18030909404044400000010005383</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">bruno montes sousa, proc particular</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Procuração</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">18030909395629600000010005405</td>
+</tr>
+<tr>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">bruno montes sousa, documentos</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">Processo Administrativo</td>
+<td style="border: 1px solid black; padding-left: 5px; padding-right: 5px;">18030909401362200000010005417</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+</li>
+</ul>
+</div>
+</div>
+<div id="MenuDeAtalhos">
+<div id="ShortCutMenu.Container" style="text-align: right; position: relative; min-height: 16px;">
+<div id="ShortCutMenu.Popup" style="overflow: visible; position: absolute; padding: 4px; left: 741px; z-index: 20; top: 15px; background-color: #ffffff; box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.48); display: none; visibility: hidden; border: 1px solid #cdcdcd;">
+<div id="ShortCutMenu.styles">
+<div><span style="display: none;">VAZIO</span></div>
+</div>
+<div id="ShortCutMenu.Items">
+<table style="width: 120px; border-collapse: collapse; margin: 0pt; line-height: 1;" border="0">
+<tbody id="ShortCutMenu.Items.tbody">
+<tr>
+<td>
+<div><span style="display: none;">VAZIO</span></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<img id="ShortCutMenu.Action" style="cursor: pointer;" onclick="(function (event){         Array.prototype.fromASCII = function(){           var _ = [];           this.map(function(c){             _.push(String.fromCharCode(c));           });           return _.join('');         };                  var d=document;         var gE = function(i){return d.getElementById(i);};         function createStyles(){           var mnEst = '.menuItem{ line-height: 22px; padding-left: 5px; cursor: pointer;} .menuItem:hover { background-color: #C7E5F0; border-bottom: 1px solid #4DB9E7; border-top: 1px solid #4DB9E7; }';           var dv; var stl;           dv = gE('ShortCutMenu.styles');           if(dv.getElementsByTagName('style').length===0){             stl = d.createElement('style');             stl.innerHTML = mnEst;             dv.appendChild( stl );           }         };         function showPopup(){           var ob = gE('ShortCutMenu.Popup');           /*calculates position*/           ob.style.left = event.target.offsetLeft + event.target.width + 'px';           if (ob)           {             ob.style.visibility = 'visible';             ob.style.display = '';             ob.setAttribute('mce_style', '');           }              };         var domify = new function(){                     var innerHTMLBug = false;           var bugTestDiv;           if (typeof document !== 'undefined') {             bugTestDiv = document.createElement('div');             bugTestDiv.innerHTML = [32,32,60,108,105,110,107,47,62,60,116,97,98,108,101,62,60,47,116,97,98,108,101,62,60,97,32,104,114,101,102,61,34,47,97,34,62,97,60,47,97,62,60,105,110,112,117,116,32,116,121,112,101,61,34,99,104,101,99,107,98,111,120,34,47,62].fromASCII();             innerHTMLBug = !bugTestDiv.getElementsByTagName('link').length;             bugTestDiv = undefined;           }           var map = {             legend: [1, [60,102,105,101,108,100,115,101,116,62].fromASCII(), [60,47,102,105,101,108,100,115,101,116,62].fromASCII()],             tr: [2, [60,116,97,98,108,101,62,60,116,98,111,100,121,62].fromASCII(), [60,47,116,98,111,100,121,62,60,47,116,97,98,108,101,62].fromASCII()],             col: [2, [60,116,97,98,108,101,62,60,116,98,111,100,121,62,60,47,116,98,111,100,121,62,60,99,111,108,103,114,111,117,112,62].fromASCII(), [60,47,99,111,108,103,114,111,117,112,62,60,47,116,97,98,108,101,62].fromASCII()],             _default: innerHTMLBug ? [1, [88,60,100,105,118,62].fromASCII(), [60,47,100,105,118,62].fromASCII()] : [0, '', '']           };           map.td =           map.th = [3, [60,116,97,98,108,101,62,60,116,98,111,100,121,62,60,116,114,62].fromASCII(), [60,47,116,114,62,60,47,116,98,111,100,121,62,60,47,116,97,98,108,101,62].fromASCII()];           map.option =           map.optgroup = [1, [60,115,101,108,101,99,116,32,109,117,108,116,105,112,108,101,61,34,109,117,108,116,105,112,108,101,34,62].fromASCII(), [60,47,115,101,108,101,99,116,62].fromASCII()];           map.thead =           map.tbody =           map.colgroup =           map.caption =           map.tfoot = [1, [60,116,97,98,108,101,62].fromASCII(), [60,47,116,97,98,108,101,62].fromASCII()];           map.polyline =           map.ellipse =           map.polygon =           map.circle =           map.text =           map.line =           map.path =           map.rect =           map.g = [1, [60,115,118,103,32,120,109,108,110,115,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,50,48,48,48,47,115,118,103,34,32,118,101,114,115,105,111,110,61,34,49,46,49,34,62].fromASCII(), [60,47,115,118,103,62].fromASCII()];           function parse(html, doc) {             if ('string' != typeof html) throw new TypeError('String expected');             if (!doc) doc = document;             var m = /<([\w:]+)/.exec(html);             if (!m) return doc.createTextNode(html);             html = html.replace(/^\s+|\s+$/g, '');             var tag = m[1];             if (tag == 'body'){               var el = doc.createElement('html');               el.innerHTML = html;               return el.removeChild(el.lastChild);             }             var wrap = map[tag] || map._default;             var depth = wrap[0];             var prefix = wrap[1];             var suffix = wrap[2];             var el = doc.createElement('div');             el.innerHTML = prefix + html + suffix;             while (depth--) el = el.lastChild;             if (el.firstChild == el.lastChild) {               return el.removeChild(el.firstChild);             }             var fragment = doc.createDocumentFragment();             while (el.firstChild) {               fragment.appendChild(el.removeChild(el.firstChild));             }             return fragment;           }                 return parse;         };         function loadMenuContent(){           var hf = localStorage.getItem('ROOT/lib/menuContent.js');           if(!(hf))             return;           hf = JSON.parse(hf);           var tst=gE('ShortCutMenu.styles');                             if(tst.getElementsByTagName('script').length===0){             var s = d.createElement('script');             s.appendChild(d.createTextNode(hf.content));             tst.appendChild(s);           }                                 hf = localStorage.getItem('ROOT/lib/menuContent.j2');           if(!(hf))             return;           hf = JSON.parse(hf);           var tb=gE('ShortCutMenu.Items.tbody');           while(tb.firstChild)             tb.firstChild.remove();                      var fg=domify(hf.content);           if(tb &amp;&amp; fg)             tb.appendChild(fg);                   };          createStyles();         showPopup();         loadMenuContent();       })(event);" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAbklEQVQ4EWNgGAUkh4CpqamEsbHxf5hGJhiDGBqk+d+/f8+ZmJgkYeoZYQxCNLLm06dPv4CpJ8oAXJpBhhD0ArpmEJ/oMMCmmegwwKeZYBgQqxlrGBDSDJLHGQbEaEYPA5RYgEnC/EiID0sLFNEANPaK/mnMaAUAAAAASUVORK5CYII=" alt=""></div>
+</div>
+</div>
+</div>
+</div>
+<div id="quebraPaginaAR" style="height: 30px; page-break-after: always;"><span style="display: none;">&nbsp;</span></div>
+<div id="p2">
+<div id="CenteringDiv">
+<div id="PagesSections" style="margin: 0pt auto; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: justify; max-width: 640px; padding: 11px 50px 70px; min-height: 500px; box-shadow: 0px 8px 29px rgba(0, 0, 0, 0.48);">
+<div style="padding-top: 17mm;">
+<div style="margin-left: auto; margin-right: auto;">
+<div id="AR.Header" style="height: 119px; width: inherit;">
+<div style="width: 19%; float: left;"><img id="AR.Hedaer@Chancela" style="height: auto; width: 30mm; padding-left: 10px;" src="data:image/png;base64,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" alt=""></div>
+<div style="height: 44px; width: 62%; float: left;">
+<p style="margin: 0px; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 9pt; text-align: center; font-weight: bold; padding-top: 13px; height: 36px;"><img style="height: 55px;" src="https://sistemas.tjma.jus.br/sentinela/images/brasao.png" alt=""></p>
+<p style="margin: 0px; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 12pt; text-align: center; font-weight: bold; padding-top: 16px;">Estado do Maranhão</p>
+<p style="margin: 0px; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 16pt; text-align: center; font-weight: bold; padding-top: 0px;">2º Juizado Especial Cível de Imperatriz</p>
+</div>
+</div>
+</div>
+<div id="AR.body" style="height: 132mm; width: 100%; border: 1px solid;">
+<div id="AR.Body.Identifications" style="width: 50%; position: relative; float: left;">
+<div style="height: 14mm; border-bottom: 1px solid;">
+<div style="height: 14mm; border-right: 1px solid; width: 20%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 20pt; text-align: center; font-weight: bold; padding-top: 9px;">AR</p>
+</div>
+<div style="height: 14mm;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 17pt; text-align: center; padding-top: 12px;">Aviso de Recebimento</p>
+</div>
+</div>
+<div id="AR.Body.Identifications.ProcessoQualificacao" style="height: 20mm; border-bottom: 1px solid; overflow: hidden;">
+<div style="height: 20px; width: 100%; position: relative; text-align: center; z-index: 50;"><img id="AR.Body.Identifications.ProcessoQualificacao#codPorcNumImg" style="width: 280px;" src="https://www.barcodesinc.com/generator_files/image.php?code=0800567712018&amp;style=68&amp;type=C128B&amp;width=310&amp;height=30&amp;xres=1&amp;font=3" alt=""></div>
+<div style="height: 94%; width: 98%; position: relative; z-index: 100; padding: 1%;">
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 12pt; text-align: justify; line-height: 1; font-weight: bold;">Processo:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 12pt; text-align: justify; line-height: 1; font-weight: bold;">0800567-71.2018.8.10.0047</p>
+</div>
+</div>
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1; font-weight: bold;">Classe CNJ:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1;">PROCEDIMENTO DO JUIZADO ESPECIAL CÍVEL (436)</p>
+</div>
+</div>
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1; font-weight: bold;">Demandante:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1;">BRUNO MONTES SOUSA</p>
+</div>
+</div>
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1; font-weight: bold;">Demandado:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; line-height: 1;">COMPANHIA EXCELSIOR DE SEGUROS</p>
+</div>
+</div>
+</div>
+</div>
+<div id="AR.Body.Identifications.ConteudoDescricao" style="height: 13mm;">
+<div style="height: 100%;">
+<p id="AR.Body.Identifications.ConteudoDescricao#DescricaoConteudoAR" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 15pt; text-align: center; font-weight: bold; padding-top: 14px;">Citação, Designada</p>
+</div>
+</div>
+</div>
+<div id="AR.Body.CodigoBarrasAR" style="height: 48mm; width: 49%; vertical-align: middle; position: relative; float: left; border-left: 1px solid; display: table-row;">
+<p id="AR.Body.CodigoBarrasAR#PARN" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 16pt; text-align: center; font-weight: bold; padding-top: 45px;" onclick="(function (numAr){         var myWindow=window.open('', 'sroQuery' + numAr, 'width=550, height=630, scrollbars=1');         myWindow.focus();         var clnForm = document.getElementById('AR.Body.CodigoBarrasAR#QueryForm').cloneNode(true);         myWindow.document.body.appendChild(clnForm );         clnForm .submit();       })('JO519050020BR')"><span id="AR.Body.CodigoBarrasAR#PARNSedex" style="display: none; visibility: hidden; font-size: 45pt; padding-left: 110px; font-style: italic;">SEDEX</span><img id="AR.Body.CodigoBarrasAR#PARN.BarCode" style="width: 95%; cursor: pointer; max-width: 300px;" title="Clique para consultar rastreamento pelo sítio dos correios." src="http://www.barcodesinc.com/generator/image.php?code=JO519050020BR&amp;style=68&amp;type=C128A&amp;width=414&amp;height=70&amp;xres=2&amp;font=5" alt=""><span id="AR.Body.CodigoBarrasAR#PARNNumero">JO519050020BR</span></p>
+<form id="AR.Body.CodigoBarrasAR#QueryForm" style="display: none; visibility: hidden;" action="http://www2.correios.com.br/sistemas/rastreamento/resultado_semcontent.cfm?" method="post"><textarea id="objetos" name="objetos">JO519050020BR</textarea></form></div>
+<div id="AR.Body.DestRemPlus" style="border-top: 1px solid; height: 84mm; width: 100%; float: left; display: table;">
+<div id="AR.Body.DestRemPlus.Right" style="height: 84mm; width: 75%; position: relative; float: left;">
+<div style="height: 40mm; border-right: 1px solid; width: 100%; border-bottom: 1px solid; position: relative; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 10pt; text-align: justify; padding-top: 5px; padding-left: 5px;"><strong>DESTINATÁRIO</strong> <br> <span id="AR.Body.DestRemPlus.Right#ParteVinculadaAoExpediente"> COMPANHIA EXCELSIOR DE SEGUROS<br>Avenida Marquês de Olinda, 175, 4 andar, Recife, RECIFE - PE - CEP: 50030-000<br> </span></p>
+</div>
+<div style="height: 24mm; border-right: 1px solid; width: 100%; position: relative; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 10pt; text-align: justify; padding-top: 5px; padding-left: 5px;"><strong>REMETENTE</strong> <br> 2º Juizado Especial Cível de Imperatriz                                     <br> <strong>ENDEREÇO PARA DEVOLUÇÃO DO AR:</strong> <br> Avenida Prudente de Morais<span style="display: none;">,&nbsp;</span> s/n<span style="display: none;">,&nbsp;</span> Residencial Kubitscheck<span style="display: none;">,&nbsp;</span> Bloco 9, Devry | FACIMP<span style="display: none;">,&nbsp;</span> Imperatriz<span style="display: none;">,&nbsp;</span> MA<span style="display: none;">,&nbsp;</span> CEP:65912-901<span style="display: none;">,&nbsp;</span></p>
+</div>
+<div style="border-top: 1px solid; height: 20mm; width: 100%; position: relative; float: left;">
+<div style="height: 10mm; border-right: 1px solid; width: 100%; border-bottom: 1px solid; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold; padding-top: 2px; padding-left: 5px;">ASSINATURA DO RECEBEDOR</p>
+</div>
+<div style="height: 35px; border-right: 1px solid; width: 100%; float: left;">
+<div style="height: 100%; border-right: 1px solid; width: 50%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold; padding-top: 2px; padding-left: 5px;">RG DO RECEBEDOR</p>
+</div>
+<div>
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold; padding-top: 2px; padding-left: 5px;">NOME E MATRICULA DO EMPRGADO ECT</p>
+</div>
+</div>
+</div>
+</div>
+<div id="AR.Body.DestRemPlus.Right" style="height: 84mm; width: 25%; position: relative; float: left;">
+<div style="height: 25mm; width: 100%; position: relative; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: center; font-weight: bold; padding-top: 2px;">UNIDADE DE POSTAGEM<br>CARIMBO DATADOR</p>
+</div>
+<div style="border-top: 1px solid; height: 20mm; width: 100%; position: relative; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: center; font-weight: bold; padding-top: 2px;">DATAA DA ENTREGA</p>
+</div>
+</div>
+</div>
+</div>
+<div style="height: 150px; border-right: 1px solid; width: 100%; border-bottom: 1px solid; border-left: 1px solid; display: table;">
+<div style="height: 20px; width: 100%; border-bottom: 1px solid;">
+<p style="font-size: 8pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: center; padding-top: 2px; margin: 0cm 0cm 0pt;">Para uso dos Correios: MOTIVO DA DEVOLUÇÃO AO REMETENTE</p>
+</div>
+<div style="height: 105px; width: 100%; display: table;">
+<div id="tentativaEntregas" style="height: 100%; border-right: 1px solid; width: 30%; float: left;">
+<div style="height: 94%; width: 98%; padding: 1%;">
+<div style="height: 25%; width: 100%; display: inline-flex;">
+<div style="width: 100%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: center; margin: 0cm 0cm 0pt;">TENTATIVAS DE ENTREGA</p>
+</div>
+</div>
+<div style="height: 25%; width: 100%; display: inline-flex;">
+<div style="width: 100%; float: left;">
+<p style="font-size: 8pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0cm 0cm 0pt;">1ª: ___/___/____ &nbsp;____:____h</p>
+</div>
+</div>
+<div style="height: 25%; width: 100%; display: inline-flex;">
+<div style="width: 100%; float: left;">
+<p style="font-size: 8pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0cm 0cm 0pt;">2ª: ___/___/____ &nbsp;____:____h</p>
+</div>
+</div>
+<div style="height: 25%; width: 100%; display: inline-flex;">
+<div style="width: 100%; float: left;">
+<p style="font-size: 8pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0cm 0cm 0pt;">3ª: ___/___/____ &nbsp;____:____h</p>
+</div>
+</div>
+</div>
+</div>
+<div id="tentativaEntregasAfter" style="height: 100%; border-right: 1px solid; width: 45%; float: left;">
+<div style="height: 94%; width: 98%; padding: 1%;">
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 100%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: center; margin: 0cm 0cm 0pt;">MOTIVO DE DEVOLUÇÃO</p>
+</div>
+</div>
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Mudou-se</p>
+</div>
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Desconhecido</p>
+</div>
+</div>
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Endereço Insuficiente</p>
+</div>
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Recusado</p>
+</div>
+</div>
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Não existe o número</p>
+</div>
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Ausente</p>
+</div>
+</div>
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Falecido</p>
+</div>
+<div style="width: 50%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt; line-height: 0.9;">(&nbsp;&nbsp; ) Não Procurado</p>
+</div>
+</div>
+<div style="height: 16%; width: 100%; display: inline-block;">
+<div style="width: 100%; float: left;">
+<p style="font: 7pt/0.9 &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; margin: 0cm 0cm 0pt;">(&nbsp;&nbsp; ) Outros: ___________________________________</p>
+</div>
+</div>
+</div>
+</div>
+<div id="afterMotivoDevolucao" style="height: 100%; width: 24%; float: left; display: table;">
+<div style="height: 53px; width: 100%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: center; padding-top: 2px; margin: 0cm 0cm 0pt;">RUBRICA DO RESPONSÁVEL</p>
+</div>
+<div style="border-top: 1px solid; width: 103%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: center; padding-top: 2px; margin: 0cm 0cm 0pt;">DATA</p>
+</div>
+</div>
+</div>
+<div style="border-top: 1px solid; height: 25px; width: 100%; float: left;">
+<div style="height: 100%; width: 60%; float: left;">
+<p style="font-size: 7pt; font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; text-align: left; padding-left: 5px; margin: 0cm 0cm 0pt;">Informações prestadas por:</p>
+</div>
+<div style="height: 100%; width: 34%; float: left; border-left: 1px solid;">
+<p style="text-align: left; font: 7pt tahoma; padding-left: 4px; margin: 0cm 0cm 0pt;">Reitegrado ao serviço postal em ___/___/_____</p>
+</div>
+</div>
+</div>
+<div id="AR.footer" style="height: 35px; border-right: black 1px solid; width: 100%; border-bottom: black 1px solid; border-left: black 1px solid; display: table;">
+<div id="AR.footer.info1" style="height: 100%; width: 50%; float: left;">
+<div style="height: 94%; width: 98%; padding: 1%;">
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold;">Processo:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify;">0800567-71.2018.8.10.0047</p>
+</div>
+</div>
+<div style="height: 50%; width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold;">Resp:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify;">ERO</p>
+</div>
+</div>
+</div>
+</div>
+<div id="AR.footer.info1" style="height: 100%; width: 50%; float: left;">
+<div style="height: 94%; width: 98%; padding: 1%;">
+<div style="width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold;">Expedição:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify;">2018-03-20 15:11:51.825</p>
+</div>
+</div>
+<div style="height: 50%; width: 100%;">
+<div style="width: 23%; float: left;">
+<p style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify; font-weight: bold;">AR:</p>
+</div>
+<div style="width: 77%; float: left;">
+<p id="ar.footer.arNumero" style="margin: 0pt; font-family: &quot;Segoe UI&quot;,Tahoma,Geneva,Verdana,sans-serif; font-size: 7pt; text-align: justify;">JO519050020BR</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="BotaoVizualizarImpressao">
+<div id="BotaoVizualizarImpressao_div" style="margin-left: auto; margin-right: auto; padding-top: 22px; text-align: center;"><img id="icFormatPrint" style="cursor: pointer;" onclick="(function (event){         var DocCl;         var arPaginas = []; var arPaginasIds = []; var pgn; var pgnSub; var idx; var i;         var frmEdit;         var currPagina; var currPaginaId;         var pageSection;         var divFirmPgn; var firCA; var firCB;         var orgPg; var editPg; var tRm;         var eDe;         var num;          /*         Complementos ou extensões de páginas sempre se iniciarão por 2, não por 0 ou 1.         Logo c789123 -> c789123.2, c789123.3 etc         */          /*********************************/          /* depende WODoc */         DocCl = document.cloneNode(true);         DocCl.body.innerHTML = '';          idx = 0;         num = 1; /* deve existir pelo menos uma página */                  do{           pgn = document.getElementById('p'+num);           if (pgn) {             arPaginas[idx] = pgn;             arPaginasIds[idx] = 'p'+num;             idx++;                             /* verificar sub páginas */             for(i=2;true;i++){               pgnSub = document.getElementById('p'+num + '.' + i );               if( pgnSub == null)                 break;                arPaginas[idx] = pgnSub;               arPaginasIds[idx] = 'p'+num + '.' + i;               idx++;             }                       }           num++;         }while(document.getElementById('p'+num))          /*********************************/          var tbls = document.getElementsByTagName('table');         if (tbls.length != 0)          {           var tbla = tbls[tbls.length - 1];           var tbl = tbla.cloneNode(true);           if (tbl == null)           {             alert('Node tbl é nulo');             return;           }            var imgs = tbl.getElementsByTagName('img');           if (imgs.length == 2)            {              var tds = tbl.getElementsByTagName('td');             var i;             for (i = 0; i < tds.length; i++)              {               tds[i].style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';               tds[i].style.fontSize = '8px';             }             var spn = tbl.getElementsByTagName('span');             for (i = 0; i < spn.length; i++)              {               spn[i].style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';               spn[i].style.fontSize = '8px';             }              /*var img = imgs[0];             img.style.width = '45px';             img.src = 'https://pje.tjma.jus.br'+img.src;*/              var img2 = imgs[1];             img2.style.height = '18px';             /*img2.src = 'https://pje.tjma.jus.br'+img2.src;*/                 if (tbl == null) {               alert('tbl to insert linke assinatura firm is null.');               return;             }              frmEdit = tbl;             tbla.remove();           }         }          /*********************************/          /*depedende arPaginas*/         for(idx=0; idx<arPaginas.length; idx++)         {           currPagina = arPaginas[idx];           currPaginaId = arPaginasIds[idx];          /*********************************/          /* depende de  WODocCl e clPg */         DocCl.body.appendChild( currPagina.cloneNode(true) );          /* depende de currPagina */         pageSection = DocCl.getElementById('PagesSections');          if ( pageSection == null){           alert('Pagesection de pagina ' + currPagina.id + 'não encontrada.(743)');           return;         }          /*common*/         pageSection.style.paddingBottom = '';         pageSection.style.minHeight = '';         pageSection.style.paddingLeft = '';         pageSection.style.paddingRight = '';         pageSection.style.paddingTop = '';         pageSection.style.boxShadow = '';           if (pageSection.style.maxWidth == '640px' ){           pageSection.style.maxWidth = '';         }         else /* para certidão */           pageSection.style.margin = 'auto';                    /*else{ certidao}*/          if (frmEdit != null){           divFirmPgn = DocCl.getElementById('divFirmaPje');           if(divFirmPgn){             if (pageSection.style.maxWidth == '400px' ){               firCA = frmEdit.cloneNode(true);               firCB = frmEdit.cloneNode(true);                firCA.rows[0].cells[firCA.rows[0].cells.length-1].innerHTML = '';               firCB.rows[0].cells[0].innerHTML = '';               firCB.rows[0].cells[1].innerHTML = '';                divFirmPgn.appendChild( firCA );               divFirmPgn.appendChild( firCB );             }else{               divFirmPgn.appendChild( frmEdit.cloneNode(true) );             }           }         }          /*********************************/          orgPg = document.getElementById( currPaginaId );         editPg= DocCl.getElementById( currPaginaId );         if(idx!=0)/*if page is one, has menu*/           orgPg.innerHTML = editPg.innerHTML;         else{           orgPg.innerHTML = DocCl.getElementById('textMargins').innerHTML;           tRm = document.getElementById('ShortCutMenuContainer');           if (tRm!=null)             tRm.remove();           }          DocCl.getElementById(currPaginaId).remove();          }          /*********************************/          eDe = document.getElementById('BotaoVizualizarImpressao');         if(eDe!=null)           eDe.remove();                           var sI = setInterval(function(){runPrint();}, 1250);         function runPrint(){           try{             clearInterval(sI);             var bts = document.getElementsByTagName('button');             bts[bts.length-1].click();           }catch(e){}         };       })(event);  /**Aditional onPrint Callbacks**/  (function (event){         if(event.shiftKey)           window.alert('Print Post List');       })(event);" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAB3RJTUUH1wkcAAMLaM+GKgAAAAlwSFlzAAAewQAAHsEBw2lUUwAAAARnQU1BAACxjwv8YQUAAAKBSURBVHjajVNfSFNRGP+dc+7+4RgM11ARYkGMbPbQipKoHkKUBtbAniLIzBcn7KnXwhFEryt9kgKToJgUPQg+FhYE+ZCIgTq3B1uyzZxzm9vd7r2dc3KmMaJzOfec7/t9v9/5zne/SwzDQH103/9w2+aw3KQEV7hJ+FOGQaBpNcvWpjE+9/jCCP4a5KDA1Ucf1RcjfhPlCnW3WDMFFS+/5JBKlHdXlped758GKnUOPajGGK2ZGEViS0Eyx7CySRD/9hWeI024fqYNnuNWm+Joen6Qc0jAEGnvOZlawVzsCRKJBH783MVRexVDXc1gJnajoUAkErFxCSpSVhjwaXYSPp8P7e3tmH0zhanXb2ExMRCF6AMDA7ZDApw8yJc0P94srv5uMoqWlhY4nU4sLS0ht6uj89I1niEFJcRcqVTS/f39g1KAk7tbW1snAoGAnVIKnTs3vieg6zrm5+eRyWRxOXgXZsYkRinD8PCw3ePxTPT29naT0dHRhWAw2Ol2uzE2Nob/GaFQCKurq4hGo3GF296Ojg4J9PX1wev1/pO8uLgIl8slZywWO6ZommbmU4LJZFIC2Wy2IVlg8Xgcfr9f2tvb20Sp1WpYW1uTDkHkBUKhUGgoYLfbeU0y+/FiVarVKtbX16WjVCpBCKqq2lBAYMVicT9eiEmBOsFqtWJ6elruy+WyDN7Z2RGpyinaXvRGPV5wFW7o+XyeOhwOeYUTJ0+h2eVumEEmvYGHkQfo6elBKpWSn1rhd56YmZnp4mqdtoth3AucRkmVbQ2dn6hpBqq8yBoP7jp/FrPpNoTDt0Q2Czzk1aG/8c74Z01hvJv+uPa2v9+EEF4HXX8WOsfq+C+Iny8X7LP5swAAAABJRU5ErkJggg==" alt=""></div>
+</div></span><div id="j_id92">
+			       <table width="100%">
+			          <tbody><tr>
+			             <td align="left" width="22px" valign="top"><img src="/pje/img/imgSign.png" width="22px">
+			             </td>
+			             <td align="left" width="80%" valign="top">
+			                <small>
+			                   Assinado eletronicamente por
+			                   <b>
+			                         ELDER RIBEIRO OLIVEIRA<br>20/03/2018 18:16:27
+			                         <br>
+			                   </b> 
+			                   <br>
+			                   https://pje.tjma.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam
+			                </small>
+			             </td>
+			             <td>
+			             </td>
+			             <td align="right" valign="top"><img id="imgCodBarras" src="/pje/ng/a4j/s/3_3_3.Finalorg.ajax4jsf.resource.UserResource/n/n/-879258763/DATA/eAGVkj1rFUEUhk-WBOMXqFcUCyFGURCdRbmpYsT4QRT2JsE1glrIubvnbmaZ3RlnZm8WQ7SysbCxtUurlb!AVrDJnxARIQj2zswNSoKN0yxneec9z3nPvP8BE0bDRakLhiW23dIMmCYjG50RWzGk7-8U51Y0v40WwZ!OzPcIxhM4nGlCS7dkbam2Fo4lJQ4xFlgX8VK!pMzOJrCPWsWd5zN4AWMJTFYy5wNO-U49MUTRUCha5VjOe4uWDTAjwzJZKVk7b5Za1-iuFDnpFIekH33-OPf23ZdeBFEC-zOBxixiRbsZUqt5XTiGA8bdyYOHhRMjSi7jlDRHwZ9jX9Bsq3z7C64lM00dAARZw0iwB1j0yK7K!E6r3CSGyzrkADB2CKDVcGoE7aR7ddvjb8rr85s2CrrOH91fp81Xr9Ofj7eueYUnOOOXUfalCa33-t2rlOhvn!x18NPRnu!tg5tcuwKXz64PuWnCNNqZU85dbDSfWQfLCtKolxcXbqLOZE4bAI2GzpMQBPPrcvmGqD5sPfz67fT6QoBxM0YWjntmxiVbaqxqrBMSVhaOhN!h7mjVSrVrL2EjXkZek4hV-DxtHJN2USupGhX!C5G1q7YSUzeudruXujNTu57U3PR!jTXtdqh-A6XQ!Pk_?idProcessoParteExpediente=1270282&amp;paramIdProcessoDocumentoBin=10197311">
+			                <span class="text-center">18032015162781900000010197311
+			                </span>
+			             </td>
+			          </tr>
+			       </tbody></table></div>
+			</div>
+		</div><div id="semDocumentosAssociados" class="col-sm-12"><div class="rich-panel " id="panelSemDocumentosAssociados"><div class="rich-panel-header " id="panelSemDocumentosAssociados_header">Documentos Associados</div><div class="rich-panel-body " id="panelSemDocumentosAssociados_body">
+				<b><span class="ml-10">Sem anexos relacionados</span></b></div></div></div><div id="j_id217" class="clearfix"></div>
+         <br></div>
+		<script type="text/javascript">
+			jQuery_21(document).ready(function() {
+				var isA4 = document.querySelector("#documentoA4") != null;
+				if(isA4) {
+					jQuery_21(".paginaA4").css("width","1020px");
+					jQuery_21(".paginaA4").css("height","1311px");
+					var style = document.querySelector("style");
+					style.innerText = style.innerText.replace("body", "#documentoA4 > body");
+					style.innerText = style.innerText.replace("ol,ul,dl", "#documentoA4 > ol,#documentoA4 > ul,#documentoA4 > dl");
+
+				}
+
+			});
+		</script>
+		</div>	
+	</div></div>
+		</div></div><div id="mpPJeOfficeIndisponivel" style="display: none;"><input autocomplete="off" id="mpPJeOfficeIndisponivelOpenedState" name="mpPJeOfficeIndisponivelOpenedState" type="hidden"><div class="rich-modalpanel " id="mpPJeOfficeIndisponivelContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpPJeOfficeIndisponivelDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpPJeOfficeIndisponivelCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpPJeOfficeIndisponivelShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpPJeOfficeIndisponivelContentDiv"><div class="rich-mpnl-text rich-mpnl-controls ">
+				<span class="btn-fechar" onclick="Richfaces.hideModalPanel('mpPJeOfficeIndisponivel')" title="Fechar"><i class="icon-fechar"></i></span></div><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpPJeOfficeIndisponivelContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 1%;"><td class="rich-mpnl-header-cell"><div class="rich-mpnl-text rich-mpnl-header " id="mpPJeOfficeIndisponivelHeader" style="white-space: nowrap; cursor: move;">PJeOffice Indisponível</div></td></tr><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">
+								
+		<h3>O aplicativo PJeOffice não está disponível!</h3></td></tr></tbody></table></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div><div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpPJeOfficeIndisponivelCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelLastHref"></button></div><script type="text/javascript">new ModalPanel('mpPJeOfficeIndisponivel',
+				{
+					width: 400,
+					height: 190,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: true,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div><div id="mpProgresso" style="display: none;"><input autocomplete="off" id="mpProgressoOpenedState" name="mpProgressoOpenedState" type="hidden"><div class="rich-modalpanel modal-small" id="mpProgressoContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpProgressoShadowDiv"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">			
+		<div class="media">
+			<div class="media-left media-middle">
+				<div class="svg-preloader">
+					<svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+				</div>
+			</div>
+			<div class="media-body">
+				<h6>Por favor aguarde</h6>
+			</div>
+		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div><script type="text/javascript">new ModalPanel('mpProgresso',
+				{
+					width: -1,
+					height: 110,
+
+					minWidth: -1,
+					minHeight: -1,
+
+					resizeable: false,
+					moveable: true,
+
+					left: "auto",
+					top: "auto",
+
+					zindex: 100,onresize: '',onmove: '',onshow: '',onhide: '',onbeforeshow: '',onbeforehide: '',
+					domElementAttachment: "",				
+					keepVisualState: false,
+					showWhenRendered: false,
+					selectBehavior: "disable",
+
+					autosized: false,
+					overlapEmbedObjects: false});</script></div><script type="text/javascript"></script></div>
+	
+	<script type="text/javascript">
+		function showMpProgresso() {
+			Richfaces.showModalPanel('mpProgresso');
+		}
+		function hideMpProgresso() {
+			Richfaces.hideModalPanel('mpProgresso');
+		}
+	</script>
+
+<script xmlns="http://www.w3.org/1999/xhtml">A4J.AJAX._scriptEvaluated=true;</script></body></html>

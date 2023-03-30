@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="span" scope="NONE">
+          #{textContent}
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+    </groupsDefs>
+    <items initialSelected="termReclReclamacao">
+        <item id="termReclReclamacao" label="Reclamacao" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    TERMO DE RECLAMAÇÃO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termReclCumprimentoSentenca" label="Cumprimento de Sentença" dataPlus="">
+            <!--eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/-->
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    TERMO DE CUMPRIMENTO DE SENTENÇA
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termReclExecTitExtra" label="Execução de Título Extrajudicial" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    TERMO DE EXECUÇÃO DE TÍTULO EXTRAJUDICIAL
+                </data>
+            </itemContent>
+        </item>        
+    </items>
+  </selectorDef>
+</Definitions>

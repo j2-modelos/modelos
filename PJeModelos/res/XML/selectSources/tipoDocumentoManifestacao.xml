@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="selectorBlocoAssinaturas" grouped="false">
+    <eventFire event="signatario.onChange"/>
+    <itemFormats>
+      <elemento tag="div" class="" scope="NONE">
+        <elemento tag="p" class="p highlightText" scope="NONE">
+         #{textContent}
+        </elemento>
+      </elemento>
+    </itemFormats>
+    <groupsDefs>
+        <group label="Assinalar Prioridade">
+            <gItem id="priordItIndefinido"/>
+            <gItem id="priordItAudiencia"/>
+            <gItem id="priordItIdoso"/>
+            <gItem id="priordItLiminar"/>
+            <gItem id="priordItUrgente"/>
+        </group>
+    </groupsDefs>
+    <items>
+        <item id="priordItUrgente" label="Urgente" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    URGENTE
+                </data>
+            </itemContent>
+        </item>        
+        <item id="priordItIdoso" label="Idoso" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    IDOSO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="priordItLiminar" label="Liminar" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    LIMINAR
+                </data>
+            </itemContent>
+        </item>        
+        <item id="priordItAudiencia" label="Audiência" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    AUDIÊNCIA
+                </data>
+            </itemContent>
+        </item>
+        <item id="priordItIndefinido" label="[sem prioridade]" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeNaoSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    [sem prioridade]
+                </data>
+            </itemContent>
+        </item>        
+    </items>
+  </selectorDef>
+</Definitions>

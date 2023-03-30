@@ -1,0 +1,121 @@
+<body id="tinymce" class="mceContentBody " dir="ltr">
+  <div id="c730035" style="text-align: center; padding-top: 22px; margin-left: auto; margin-right: auto;" mce_style="text-align: center; padding-top: 22px; margin-left: auto; margin-right: auto;">
+    <input id="c730043" name="434" value="0" type="hidden"><input id="c730036" style="font-size: 15px; cursor: pointer; height: 50px; width: 300px; font-weight: bold; min-height: 50px;" name="1134" value="Carregar Modelo" onclick="try {
+  if (!window.jQ) window.jQ = window.$ || window.parent.jQuery;
+  var w = window;
+  w.j2 = {};
+  w.j2.res = {};
+  w.j2.res.MAIN = {};
+  w.j2.mod = {};
+  w.j2.mod.com = {}; /* general */
+  w.j2.res.MAIN.run = {
+    'ref': function() {
+      return (w.j2ModDebug) ? 'res/MAIN/run.js' : 4915386;
+    },
+    'lib': 'ROOT/res/MAIN/run.js'
+  };
+  w.j2.mod.com.scrpGen = function(data, lib) {
+    var scrp = document.createElement('script');
+    scrp.type = 'text/javascript';
+    scrp.charset = 'UFT-8';
+    scrp.defer = true;
+    scrp.async = true;
+    if (lib) {
+      scrp.id = lib;
+      scrp.text = data;
+      scrp.onload = function() {
+        console.log('script ' + lib + ' is loaded.');
+      };
+      console.log('script ' + lib + ' is created.');
+    } else {
+      scrp.id = data.lib;
+      scrp.src = data.ref();
+      scrp.onload = function() {
+        console.log('script ' + data.lib + ' is loaded.');
+      };
+      console.log('script ' + data.lib + ' is created.');
+    }
+    return scrp;
+  };
+  w.j2.mod.com.URLGetter = new function(id) {
+    var URL_PATERN;
+    if (w.j2ModDebug) URL_PATERN = 'http://pje/';
+    else URL_PATERN = 'https://pje.tjma.jus.br/pje/Painel/painel_usuario/documentoHTML.seam?idBin=';
+
+    function getURL(id) {
+      return URL_PATERN + id;
+    };
+    return getURL;
+  }; /*********************************/
+  w.j2.mod.com.libLoader = function(art) { /* artfact */ 
+    if (document.getElementById(art.lib)) return;
+    if (!w.j2ModDebug) { /* NOT DEBUG MODE */
+      jQ.ajax({
+        type: 'get',
+        url: w.j2.mod.com.URLGetter(art.ref()),
+        dataType: 'html',
+        success: function(data) {
+          document.head.appendChild(w.j2.mod.com.scrpGen(jQ(data).find('#scriptSource').text(), art.lib));
+          console.log('CORE LOAD SUCCESS');
+        },
+        error: function() {
+          var e = 'Erro ao carregar ' + art.lib + '.';
+          alert(e);
+          console.error(e);
+        }
+      });
+    } else {
+      document.head.appendChild(w.j2.mod.com.scrpGen(art));
+    }
+  };
+  w.j2.mod.com.libLoader(w.j2.res.MAIN.run);
+} catch (err) {
+  alert('Exceç&amp;atildeo capturada: ' + err.message + ' | on-click de id 730052.');
+}" type="submit">
+    <div id="c730070" style="display: none; visibility: hidden;" mce_style="display: none; visibility: hidden;">
+      <div id="PJeVars">
+        <div id="assuntosProcesso">#{processoTrfHome.instance.assuntoTrfListStr}</div>
+        <div id="audienciaProcesso">#{processoTrfHome.processoAudienciaListStr}</div>
+        <div id="cidadeOrgaoJulgadorProcesso">#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio}</div>
+        <div id="classeProcesso">#{processoTrfHome.instance.classeJudicial}</div>
+        <div id="dataAtualAbreviada">#{dataAtualAbreviada}</div>
+        <div id="dataAtualFormatada">#{dataAtual}</div>
+        <div id="dataAtualPorExtenso">#{dataAtualExtenso}</div>
+        <div id="dataAudiencia">#{processoTrfHome.dataAudiencia}</div>
+        <div id="dataEHoraAtual">#{currentDatetime}</div>
+        <div id="destinatarioExpediente">#{processoExpedienteHome.nomeEnderecoPartesSelecionadas}</div>
+        <div id="documentosProcesso">#{processoTrfHome.tabelaHashDocumentos}</div>
+        <div id="enderecoAdvogadoPoloAtivo">#{processoTrfHome.advogadoEnderecoPoloAtivoStr}</div>
+        <div id="enderecoAdvogadoPoloPassivo">#{processoTrfHome.advogadoEnderecoPoloPassivoStr}</div>
+        <div id="enderecoOrgaoJulgadorProcesso">#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.enderecoCompleto}</div>
+        <div id="enderecoPartePoloAtivo">#{preparaAtoComunicacaoAction.destinatariosEnderecoPoloAtivoExpedienteStr}</div>
+        <div id="enderecoPartePoloPassivo">#{preparaAtoComunicacaoAction.destinatariosEnderecoPoloPassivoExpedienteStr}</div>
+        <div id="enderecoSalaAudiencia">#{processoTrfHome.enderecoSalaAudiencia}</div>
+        <div id="horaAtual">#{currentTime}</div>
+        <div id="localizacaoUsuarioLogado">#{usuarioLogadoLocalizacaoAtual.estrutura}</div>
+        <div id="loginUsuarioLogado">#{usuarioLogado.login}</div>
+        <div id="nomeAdvogadoPoloAtivo">#{processoTrfHome.instance.tipoNomeAdvogadoAutorList}</div>
+        <div id="nomeAdvogadoPoloAtivoCPF">#{processoTrfHome.nomeCpfAutorList}</div>
+        <div id="nomeAdvogadoPoloPassivo">#{processoTrfHome.instance.tipoNomeAdvogadoReuList}</div>
+        <div id="nomeJuizOrgaoJulgador">#{processoTrfHome.nomeJuizOrgaoJulgador}</div>
+        <div id="nomePoloAtivo">#{processoTrfHome.instance.nomeAutorAtivoProcesso}</div>
+        <div id="nomePoloPassivo">#{processoTrfHome.instance.nomeReuProcesso}</div>
+        <div id="numeroProcesso">#{processoTrfHome.instance.numeroProcesso}</div>
+        <div id="orgaoJulgadoProcesso">#{processoTrfHome.instance.orgaoJulgador}</div>
+        <div id="papelUsarioLogado">#{usuarioLogadoLocalizacaoAtual.papel}</div>
+        <div id="partesDetalhadaPoloAtivo">#{processoTrfHome.processoPartePoloAtivoDetalhadoStr}</div>
+        <div id="partesDetalhadaPoloPasssivo">#{processoTrfHome.processoPartePassivoAtivoDetalhadoStr}</div>
+        <div id="partesPoloAtivo">#{processoTrfHome.processoPartePoloAtivoSemAdvogadoStr}</div>
+        <div id="partesPoloPassivo">#{processoTrfHome.processoPartePoloPassivoSemAdvogadoStr}</div>
+        <div id="prazoDaParte">#{processoExpedienteHome.partePrazoList}</div>
+        <div id="processosAssociados">#{processoTrfHome.instance.processoTrfConexaoListStr}</div>
+        <div id="salaAudiencia">#{processoTrfHome.salaAudiencia}</div>
+        <div id="telefoneOrgaoJulgador">#{processoTrfHome.instance.orgaoJulgador.numeroTelefoneFormatado}</div>
+        <div id="tipoAudiencia">#{processoTrfHome.tipoAudiencia}</div>
+        <div id="UFOrgaoJulgador">#{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio.estado.codEstado}</div>
+        <div id="usuarioLogado">#{usuarioLogado.nome}</div>
+        <div id="valorCausaProcesso">#{processoTrfHome.instance.valorCausaStr}</div>
+      </div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ ASS: Prestação de Serviços
+ DOC: 6162543
+ MOD: classStyles.xml
+  
+ Definições de classes em XML 
+ 
+ Versão 2017.06.02.1
+
+ Depreciado
+-->
+<Definitions id="classStylesDefs" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://j2' xsi:schemaLocation='http://j2 j2.xsd'>
+    <update forceUpdateNextLoad="true" currentRevision="13"/>
+</Definitions>
