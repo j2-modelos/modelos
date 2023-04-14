@@ -95,7 +95,8 @@ try {
               j2Win : orgContext.j2Win,
               _ : orgContext._,
               thisContext : orgContext.thisContext,
-              par : orgContext.par // pc
+              par : orgContext.par, // pc
+              parBottom : orgContext.parBottom
             };
             break;
           case 'EDT':
@@ -109,7 +110,8 @@ try {
               j2Win : orgContext.j2Win,
               _ : orgContext._,
               thisContext : orgContext.thisContext,
-              par : orgContext.par // pc
+              par : orgContext.par, // pc
+              parBottom : orgContext.parBottom
             };             
             break;
           case 'EDT_CORE':
@@ -123,7 +125,8 @@ try {
               j2Win : orgContext.j2Win,
               _ : orgContext._,
               thisContext : orgContext.thisContext,
-              par : orgContext.par  // pc
+              par : orgContext.par,  // pc
+              parBottom : orgContext.parBottom
             };         
           case 'EDT_BOTTOM':
             return {
@@ -136,7 +139,8 @@ try {
               j2Win : orgContext.j2Win,
               _ : orgContext._,
               thisContext : orgContext.thisContext,
-              par : orgContext.par // pc
+              par : orgContext.par, // pc
+              parBottom : orgContext.parBottom
             };                     
             break;     
           case 'PAR':
@@ -150,9 +154,26 @@ try {
               j2Win : orgContext.j2Win,
               _ : orgContext._,
               thisContext : orgContext.thisContext,
-              par : orgContext.par.appendChild(e) 
+              par : orgContext.par.appendChild(e),
+              parBottom : orgContext.parBottom 
             };   
             break;
+          case 'PAR_BOTTOM':
+            return {
+              uuid : orgContext.uuid, // tappac
+              load : orgContext.load, // tappac
+              exp : orgContext.exp,
+              edt : orgContext.edt,
+              edtCore : orgContext.edtCore,
+              edtBottom : orgContext.edtBottom,
+              j2Win : orgContext.j2Win,
+              _ : orgContext._,
+              thisContext : orgContext.thisContext,
+              par : orgContext.par,
+              parBottom : orgContext.parBottom.appendChild(e) 
+            };   
+            break;            
+
           case 'NONE':
             return orgContext = orgContext.appendChild(e);      
         };        
@@ -359,7 +380,7 @@ try {
                 args[c.param] = JSON.parse(c.value.split("'").join('"'));
                 break;
               default:
-                args[c.param] = c.value || c.valueAr;
+                args[c.param] = c.value || c.valueAr || c.constructKeyPair;
                 break;
             }
             
@@ -487,6 +508,45 @@ try {
             j2ParRow.insertBefore(table.find('tr.mceLast'));
             j2ParRow.append(j2Td);
             return j2Td[0];
+          })(),
+          parBottom : context.parBottom || (function(){ // pc as new
+            if(!(j2.modelo.par.win.jQuery))
+              return $('<div>', { id : 'j2ParBottom'})[0];
+            
+            if(j2.modelo.par.win.jQuery('#j2ParBottom').length)
+              return j2.modelo.par.win.jQuery('#j2ParBottom')[0]; // pamm
+            
+              
+
+            //Apenas no PAC
+            var div = j2.modelo.par.win.jQuery('div.rich-panel-body').map(function(idx, el) {
+              var regexp = /taskInstanceForm:Processo_Fluxo_prepararExpediente-\d+:edicaoExpedientePanel/;
+              if (regexp.test(el.id)) {
+                return el;
+              }
+            })
+
+            if(! div.length )
+              return $('<div>', { id : 'j2ParBottom'})[0];
+
+            div = div.find('> div:last');
+
+            var j2ParBottom = $('<div>', { 
+              id : 'j2ParBottom'
+            });
+            j2.mod._.styleSetter ( j2ParBottom[0], 'parBottonPAC')
+            j2ParBottom.insertBefore(div)
+
+            j2.modelo.par.win.jQuery('select').map(function(idx, el) {
+              var regexp = /taskInstanceForm:Processo_Fluxo_prepararExpediente-\d+:j_id\d+/;
+              if (regexp.test(el.name)) {
+                return el;
+              }
+            }).mousedown(()=>{
+              j2ParBottom.empty()
+            })
+              
+            return j2ParBottom[0]
           })()
         };
         

@@ -2412,8 +2412,47 @@ setInterval(function() {
       var rep;
       
       vn = '#:' + tag + '{' + vn + '}';
-      tag = (tag.indexOf('@')===-1) ? tag : tag.replace('@', ' id="') +'"';
+      //tag = (tag.indexOf('@')===-1) ? tag : tag.replace('@', ' id="') +'"';
+      if(tag.indexOf('@')!==-1){
+        if(tag.indexOf('[')===-1){
+          tag = tag.replace('@', ' id="') +'"'
+        }
+        else{
+          const startIndex = tag.indexOf('@') + 1;
+          const endIndex = tag.indexOf('[');
+          const id = tag.substring(startIndex, endIndex);
+  
+          tag = tag.replace(`@${id}`, ` id="${id}"`)
+        }
+      }
+
       tag = (tag.indexOf('!')===-1) ? tag : tag.replace('!', ' name="') +'"';
+
+      if(tag.indexOf('[')!==-1){
+        function styleSetter(element, classesAsString){
+          classesAsString.split(' ').forEach(function(clss){
+            j2.mod.builder.getStyleClass(clss).prop.forEach(function(prop){
+              if(element.style[prop.name] !== 'undefinied')
+                element.style[prop.name] = prop.value;
+              else
+                j2.log('A propriedade ' + prop.value + ' não pode ser associada às definições de estilo. Classe: ' + clss);
+            });
+          });
+        };
+
+        const startIndex = tag.indexOf('[') + 1;
+        const endIndex = tag.indexOf(']');
+        const classList = tag.substring(startIndex, endIndex);
+
+        let _div = document.createElement('div')
+        styleSetter(_div, classList)
+        const tagStyle = _div.getAttribute('style');
+        delete _div
+
+        tag = tag.replace(`[${classList}]`, ` style="${tagStyle}"`)
+      }
+      
+      
       /*if(tag.match(pPat)[1].length!==0){
         var att = tag.match(pPat)[1];
         tag = tag.replace('(' + tag.match(pPat)[1] + ')', ' name="') +'"';  
@@ -3211,6 +3250,13 @@ window.j2.mod._._j2ExpHTMLToPlainText = function($j2Exp, toAppendHTML){
   return str;
 };
 
+window.j2.mod._._extend = function(obj, extension){
+  for (const key in extension) {
+    obj[key] = extension[key];
+  }
+  return obj;
+};
+
 /* these are the noble modules */
 (function () {
   if (window.j2.mod._ === 'undefined') {
@@ -3362,6 +3408,10 @@ try {
     };
     window.j2.err = function (t) {
       console.error('Modelo ' + window.j2.env.modId.id + ': ' + t);
+      console.trace();
+    };
+    window.j2.warn = function (t) {
+      console.warn('Modelo ' + window.j2.env.modId.id + ': ' + t);
       console.trace();
     };
 

@@ -945,7 +945,7 @@ try {
            }
          },
          util: {
-           UFByCEP : function(cep){
+          UFByCEP : function(cep){
             var _ = parseInt(cep.toString().substring(0,3));
             var d = [
               [ 10, 199, { uf: 'SP', est : 'São Paulo'}],
@@ -982,6 +982,37 @@ try {
             for(var i in d)
               if( d[i][0] <= _ && _ <= d[i][1]) 
                 return d[i][2];
+          },
+          UFExtensoByUF : function(uf){
+            var d = {
+              'SP': 'São Paulo',
+              'RJ': 'Rio de Janeiro',
+              'MG': 'Minas Gerais',
+              'BA': 'Bahia',
+              'SE': 'Sergipe',
+              'PE': 'Pernambuco',
+              'AL': 'Alagoas',
+              'PB': 'Paraíba',
+              'RN': 'Rio Grande do Norte',
+              'CE': 'Ceará',
+              'PI': 'Piauí',
+              'MA': 'Maranhão',
+              'PA': 'Pará',
+              'AP': 'Amapá',
+              'AM': 'Amazonas',
+              'RR': 'Roraima',
+              'AC': 'Acre',
+              'DF': 'Distrito Federal',
+              'GO': 'Goiás',
+              'RO': 'Rondônia',
+              'TO': 'Tocantins',
+              'MT': 'Mato Grosso',
+              'MS': 'Mato Grosso do Sul',
+              'PR': 'Paraná',
+              'SC': 'Santa Catarina',
+              'RS': 'Rio Grande do Sul'
+            };
+            return d[uf];
           },
           urlParams : { // ndlg2
             par : window.j2.mod._._getJsonFromUrl(window.parent.location.href)

@@ -689,5 +689,31 @@
             <prop name="justifyContent" value="center"/>
         </style> 
         
+        <style id="width100minus100px">
+            <prop name="width" value="calc(100% - 105px)"/>
+        </style> 
+
+        <style id="justifyContentSpaceBetween">
+            <prop name="justifyContent" value="space-between"/>
+        </style> 
+
+        <style id="centralMandadosDestinatarios">
+            <prop name="justifyContent" value="space-between"/>
+            <prop name="display" value="flex"/>
+        </style> 
+        <style id="centralMandadosQRCodes">
+            <prop name="paddingLeft" value="8px"/>
+        </style> 
+        <style id="centralMandadosQRCode">
+            <prop name="display" value="flex"/>
+            <prop name="alignItems" value="flex-start"/>
+        </style> 
+
+        <style id="parBottonPAC">
+            <prop name="display" value="inline-block"/>
+            <prop name="paddingTop" value="10px"/>
+        </style> 
+
+
     </classStyles>
 </Definitions>

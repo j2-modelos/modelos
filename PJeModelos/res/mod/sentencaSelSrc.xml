@@ -76,7 +76,7 @@ and open the template in the editor.
                         audiências do processo, conforme dispõe o art. 51, I, da Lei nº 9.099/95.
                     </elemento>                    
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
-                        Isto posto, julgo extinto o processo sem apreciação do mérito, nos termos do art. 51, 
+                        Diante do exposto, julgo extinto o processo sem apreciação do mérito, nos termos do art. 51, 
                         inciso I, da Lei nº 9.099/95, #:B{sem condenar a parte requerente no pagamento das custas 
                         processuais em caso de propositura de nova ação}.
                     </elemento>
@@ -584,7 +584,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                        Diante do exposto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -628,7 +628,7 @@ and open the template in the editor.
                     </elemento> 
                     
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                        Diante do exposto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         Em havendo decisão de deferimento de medida liminar nos presentes autos, #:B{#:U{REVOGO A TUTELA DE URGÊNCIA}} concedida em favor da parte #{j2.env.PJeVars.processo.polos.parteAtiva}.
@@ -671,7 +671,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Isto posto, #:U{#:B{EXTINGO O PROCESSO SEM APRECIAÇÃO DO MÉRITO}}, nos termos do art. 51, inciso I, da Lei nº 9.099/95.
+                        Diante do exposto, #:U{#:B{EXTINGO O PROCESSO SEM APRECIAÇÃO DO MÉRITO}}, nos termos do art. 51, inciso I, da Lei nº 9.099/95.
                     </elemento> 
                     
                    
@@ -1009,7 +1009,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Isto posto, tendo em vista a necessidade de realização de prova pericial, incompatível com o procedimento instituído pela Lei regente dos Juizados Especiais, com arrimo no artigo 51, II da Lei 9099/95, #:B{julgo extinto o processo sem apreciação do mérito}. Fica revogada a liminar anteriormente concedida.
+                        Diante do exposto, tendo em vista a necessidade de realização de prova pericial, incompatível com o procedimento instituído pela Lei regente dos Juizados Especiais, com arrimo no artigo 51, II da Lei 9099/95, #:B{julgo extinto o processo sem apreciação do mérito}. Fica revogada a liminar anteriormente concedida.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -1198,7 +1198,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{ISTO POSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
+                        #:B{DIANTE DO EXPOSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -1256,7 +1256,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{ISTO POSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
+                        #:B{DIANTE DO EXPOSTO}, preenchidos os requisitos do artigo 51, inciso III, da Lei nº 9.099/95, #:B{#:I{JULGO EXTINTO} o processo, sem apreciação do mérito}.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -1316,7 +1316,7 @@ and open the template in the editor.
                         DISPOSITIVO
                 </elemento>                    
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Isto posto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
+                        Diante do exposto, #:B{#:I{JULGO EXTINTO o processo sem apreciação do mérito}}, nos termos do art. 485, III, do Código de Processo Civil, aplicável por força do art. 51, da Lei nº 9.099/95.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         Sem custas ou honorários advocatícios, conforme art. 55, caput, da Lei acima citada.

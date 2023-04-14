@@ -105,6 +105,9 @@
                 <constructs param="maxDate" value="+180D" type="string"/>
             </classe>
         </versao>
+        <versao id="4.0">
+            <classe id="General.DatePicker" versao="4.0"/>
+        </versao>
     </modelo>
     
     <modelo id="FerramentasProcessos.whatsappTools"> <!-- wa as new -->
@@ -282,5 +285,55 @@
             
             
         </versao>
+    
+        <versao id="4.0">
+            <classe id="Calendario" versao="empty">
+                <constructs value="Certifico, ainda, que #:span@certItPrazoSemExpedienteForense-emCurso{no(s) dia(s) #:span@certItPrazoSemExpedienteForense-data{XX/XX/XXXX} 
+                        #:U{não #:span@certItPrazoSemExpedienteForense-verHaver{houve/haverá} #:span@certItPrazoSemExpedienteForense-tipo{expediente forense no TJMA}} (#:span@certItPrazoSemExpedienteForense-data_{Dia do XXX}), 
+                        #:span@certItPrazoSemExpedienteForense-transf{}} nos termos do(a) #:span@certItPrazoSemExpedienteForense-atoRes{Resolução GP 662021}." 
+                    param="itemFormats" type="string"/>
+                <constructs param="itemFormatsClass" value="p FntModDefault Indnt1cm marginAtoJudicial"  type="string" />
+                <constructs param="mesesPraFrenteEPraTras" value="3"  type="string" />
+                <constructs param="mostrarVazio" value="sim"  type="string" />
+                
+            </classe>
+                        
+            <!--elemento tag="p" scope="EDT" class="p FntDocEdt AlignCenter width100 lineHeightUnset marginTop8px">
+                <elemento tag="span" scope="EDT">   
+                    Datas suspensão expediente forense
+                </elemento>
+            </elemento-->
+                        
+            <classe id="Selector" versao="4.1" >
+              <constructs param="newId" value="prazoSemExpedienteItens" type="string"/>
+              <!--constructs param="linkedElTag" value="UL" type="string"/-->
+              <constructs param="linkedElement" value="certItPrazoSemExpedienteForense-divContents" type="string"/>
+              
+              
+              <constructs param="multiple" value="sim" type="bool"/>
+              <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
+              <constructs param="onAddAction" value="default" type="string"/>
+              <constructs param="onDelAction" value="default" type="string"/>
+              <constructs param="changeList" value="default" type="string"/>
+              <!--constructs param="source" value="semExpedienteForenseSelSrc" type="bool"/-->
+              <constructs param="source" value="#{j2.mod.clsCnstr.Calendario.selectorSource}" type="string"/>
+              <constructs param="sourceLoadByExternalEvent" value="Calendario.afterParseSelectorXML" type="string"/>
+              <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+              <!--constructs param="filter" value="true" type="boolean"/-->
+              <!--constructs param="label" value="Atos" type="string"/-->
+              <constructs param="hideLabel" value="true" type="boolean"/>
+            </classe> 
+            
+            
+        </versao>
     </modelo>  
+
+    <modelo id="Editor-Endereco-PAC">
+        <versao id="1.0">
+            <classe id="Fragment-Loader" versao="1.0">
+                <constructs param="lib" value="#{j2.res.lib.fragEndereco}" type="string"/>
+                <constructs param="oneInstance" value="true" type="boolean"/>
+            </classe>
+        </versao>
+    </modelo>
 </Definitions>

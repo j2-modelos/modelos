@@ -801,6 +801,20 @@ try {
         'type': 'j2/javascript',
         'version' : '6.3.0', 
         'fileName' : 'fontawesome.js'
+      },
+      'qrious' : {  // https://github.com/neocotic/qrious
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/qrious.js' : 'ww1xkmavb5dfb29'; },                
+        'lib': 'ROOT/lib/qrious.js',
+        'type': 'j2/javascript',
+        'version' : '4.0.2', 
+        'fileName' : 'qrious.js'
+      },
+      'fragEndereco' : {  // 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/fragEndereco.html' : '0u9a7zjd61xetp2'; },                
+        'lib': 'ROOT/lib/fragEndereco.html',
+        'type': 'j2/text',
+        'version' : '1.0.0', 
+        'fileName' : 'fragEndereco.html'
       }
     };      
     

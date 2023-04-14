@@ -3329,6 +3329,31 @@
               'name': 'valueAr',
               'isMany': true,
               'type': 'valueAr'
+            },
+            {
+              'name': 'constructKeyPair',
+              'isMany': true,
+              'type': 'constructKeyPair'
+            },
+          ]
+        },    
+        {
+          'name': 'constructKeyPair',
+          'properties': [    
+            {
+               'name': 'key',
+               'isAttr': true,
+               'type': 'String'
+            },
+            {
+               'name': 'type',
+               'isAttr': true,
+               'type': 'String'
+            },                        
+            {
+               'name': 'value',
+               'isAttr': true,
+               'type': 'String'
             }
           ]
         },                                       

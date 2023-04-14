@@ -972,7 +972,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item>       
         
-        <item id="certItPrazoSemCump" label="Decurso sem Cumpriento" dataPlus="{ 'descricaoAppend': 'Prazo decorrido' }">
+        <item id="certItPrazoSemCump" label="Decurso sem Cumprimento" dataPlus="{ 'descricaoAppend': 'Prazo decorrido' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, nesta data, que #:U{#:span@certItPrazoSemCump-prazoExtenso{} decorreu #:I{in albis} o prazo} para a parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}

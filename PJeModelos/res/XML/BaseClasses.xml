@@ -1805,6 +1805,13 @@
             </elemento>
         </versao>
     </classeDef>
+
+    <classeDef id="monetario">
+        <versao id="default">
+            <elemento tag="div" scope="EDT" class="Hidden">
+            </elemento>
+        </versao>
+    </classeDef>
     
     <classeDef id="NormalizarFormatacao">
         <versao id="3.0">
@@ -3124,6 +3131,30 @@
                 <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorPessoa.selectorSource}" type="string"/>
             </classeImp>    
         </versao>
+        <versao id="4.0">
+            <!-- BASED IN SELECTOR 1.0-sel-3.0-->
+            <elemento tag="p" id="selectorPessoaTextP" scope="EXP" class="p Indnt3cm">                 
+                <textHTML scope="EXP">
+                    <data>
+                        <![CDATA[
+                            <span id="selectorPessoaTextSpan">[indefinido]</span>
+                        ]]>
+                    </data>
+                </textHTML>
+            </elemento>    
+            
+            <classeImp id="Selector" versao="4.0" scope="EDT" >
+                <constructs param="newId" value="Pessoa" type="string"/>
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="linkedElement" value="selectorPessoaTextSpan" type="string"/>
+                <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorPessoa.selectorSource}" type="string"/>
+                <!--constructs param="label" value="Atos" type="string"/-->
+                <constructs param="hideLabel" value="true" type="boolean"/>
+            </classeImp>    
+        </versao>
         <versao id="1.0-Alvara">
             <elemento tag="p" id="selectorPessoaTextP" scope="EXP" class="p Indnt3cm">                 
                 <textHTML scope="EXP">
@@ -3405,6 +3436,71 @@
             </elemento>
 
         </versao>                
+
+        <versao id="4.1">
+            <elemento tag="div" scope="EXP" id="SDLinkedElement"/>
+            <elemento tag="div" classBS="container" id="selector-container-" scope="EDT">
+
+                <elemento tag="form" classBS="needs-validation mb-1" id="selector-form-" scope="EDT">
+                    <elemento tag="fieldset" scope="EDT" id="selector-form-fieldset-">
+
+                        <elemento tag="div" id="seletor-inputGroup-" classBS="input-group mb-1" scope="EDT">
+                            <!-- LABEL -->
+                            <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="EDT">
+                                <elemento tag="span" classBS="input-group-text" id="seletor-label-text-" scope="EDT">[Texto]</elemento>
+                            </elemento>
+
+                            <!--input type="text" class="form-control" id="myInput" placeholder="Digite para pesquisar"-->
+                            <!--elemento tag="input" id="selector-input" classBS="form-control" scope="EDT">
+                                <elemento tag="type" scope="text"></elemento>
+                                <elemento tag="placeholder" scope="Digite para pesquisar"></elemento>
+                            </elemento-->  
+
+                            <!-- SELECT -->
+                            <!--elemento tag="div" scope="EDT" id="SDCtrl">
+                            <HTMLAttribute name="style" value="width:90%"/-->
+                            <elemento tag="select" id="selector" classBS="form-control" scope="EDT">
+                                <elemento tag="option" scope="EDT"></elemento>
+                                <elemento tag="option" scope="EDT">[Carregando...]</elemento>
+                            </elemento>                          
+                            <!--/elemento-->
+
+                            <!-- ADD BUTTON -->
+                            <elemento tag="div" scope="EDT" id="SDAdd">
+                                <HTMLAttribute name="style" value=" width:15%"/>
+                                <elemento tag="button" id = "selectorAdd" classBS="form-control btn btn-light" scope="EDT">
+                                    <HTMLAttribute name="type" value="button"/>
+                                    <elemento tag="img" scope="EDT" >
+                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/add.gif"/>
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </elemento>
+
+                        <elemento tag="div" id="SDDel" classBS="input-group mb-1" scope="EDT">
+                            <!-- SELECT MONITOR -->
+                            <elemento tag="select" id="selectorMonitor" classBS="form-control" scope="EDT">
+                                <HTMLAttribute name="multiple"/>
+                                <HTMLAttribute name="size" size="4"/>
+                                <HTMLAttribute name="class" value="form-control"/>
+                            </elemento>                        
+                            <!-- DELL BUTTON MONITOR -->
+                            <elemento tag="div" scope="EDT" id="">
+                                <HTMLAttribute name="style" value="float:right"/>
+                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-light" scope="EDT" >
+                                    <HTMLAttribute name="type" value="button"/>
+                                    <HTMLAttribute name="disabled" value=""/>
+                                    <elemento tag="img" scope="EDT" >
+                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/remove.png"/>
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </elemento>
+                    </elemento>
+                </elemento>
+            </elemento>
+
+        </versao>      
     </classeDef>
         
     <classeDef id="Space">

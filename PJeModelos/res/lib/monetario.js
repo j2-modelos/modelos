@@ -35,10 +35,14 @@ try {
     //window.j2.mod.j2Moddle;
     var builder = j2.mod.builder;
     var this_ = pkg.monetario;
-        
-    pkg.monetario = {
+    var extend = window.j2.mod._._extend;
+    
+    pkg.monetario = extend(pkg.monetario || {}, {        
+
       imputSetMonetario : function(id, label){
-        return  '<Definitions id="classeDefs" targetNamespace="http://j2" xmlns="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n' +
+        var _this = pkg.monetario;
+
+        var _ver_1_0 = '<Definitions id="classeDefs" targetNamespace="http://j2" xmlns="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n' +
                   '<simpleElementsDefs>\n'+
                     '<elemento tag="div" id="'+ id +'" class="dispTabl width100 edtCtrl" scope="NONE">\n' + 
                       '<elemento tag="div" class="dispTablCell width30" scope="NONE">\n' + 
@@ -57,9 +61,47 @@ try {
                       '</elemento>\n' +
                     '</simpleElementsDefs>\n'+
                   '</Definitions>';
-      },
-      contructor_ : function(args){
-        
+
+        var _ver_4_0 = `
+        <Definitions id="classeDefs" targetNamespace="http://j2" xmlns="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <simpleElementsDefs>
+              <elemento tag="div" classBS="container" id="${id}" scope="NONE">
+                <elemento tag="form" classBS="needs-validation mb-1" scope="NONE">
+                  <elemento tag="fieldset" scope="NONE">
+                    <elemento tag="div" classBS="input-group mb-1" scope="NONE">
+                      <!-- LABEL -->
+                      <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="NONE">
+                          <elemento tag="span" classBS="input-group-text" id="seletor-label-text-" scope="NONE">
+                            ${label}
+                          </elemento>
+                      </elemento>
+                      
+                      <!-- INPUT -->
+                      <elemento tag="input" scope="NONE" 
+                        classBS="form-control" class="AlignCenter">
+                        <HTMLAttribute name="type" value="text"/>
+                        <HTMLAttribute name="placeholder" value="12.354,75"/>
+                        <HTMLAttribute name="align" value="middle"/>
+                        <HTMLAttribute name="aria-label" value="Definir um valor monetário"/>
+                        <HTMLAttribute name="aria-describedby" value="Definir um valor monetário para a escrita por extenso"/>
+                      </elemento>     
+                    </elemento>
+                  </elemento>
+                </elemento>
+              </elemento>
+            </simpleElementsDefs>
+          </Definitions>
+        `;
+
+        switch(_this.modelDefVersion){
+          case 1.0:
+            return _ver_1_0;
+          case 4.0:
+            return _ver_4_0;
+          default:
+            alert('lib monetário: a versão do modeldef é desconhecido. Carregada versão padrão')
+            return _ver_1_0;
+        }
       },
       inputMask : function(){
         
@@ -89,7 +131,7 @@ try {
         window.j2.mod.j2Moddle.fromXML(pkg.monetario.imputSetMonetario(id, label), 'j2:Definitions', function(err, definitions, context){
           if(definitions){
             builder.j2ElementParse(definitions.simpleElementsDefs.elemento[0], container);
-            forEach(container.childNodes, function(div){
+            /*forEach(container.childNodes, function(div){
               if(div.id === id){
                 if(div.firstChild.nextSibling.firstChild){
                   var ip = div.firstChild.nextSibling.firstChild;
@@ -110,7 +152,33 @@ try {
                   }
                 }
               }
-            });
+            });*/
+            var selQ = container.querySelectorAll(`#${id}`);
+            if(selQ.length){
+              var div = selQ[0];
+
+              var selQ = div.querySelectorAll('input');
+              if(selQ.length){
+                var ip = selQ[0];
+
+                ip.onkeypress = function(event){
+                  pkg.monetario.formatation.filtraNumeros(ip, 16, event);
+                };
+                ip.onkeyup = function(event){
+                  pkg.monetario.formatation.formataValor(ip, 16, event);
+                  pkg.monetario.writeExtense(fieldWriteExtenso, ip);
+                };        
+                ip.onchange = function(event){
+                  pkg.monetario.formatation.formataValor(ip, 16, event);
+                  pkg.monetario.writeExtense(fieldWriteExtenso, ip);                
+                };         
+                if(initialValue){
+                  ip.value = initialValue;
+                  ip.onchange();
+                }  
+              }
+            }
+
             evBus.fire('afterCreateMonetarioControls.' + id);
           }
           else
@@ -162,13 +230,13 @@ try {
           return pkg.monetario.formatation.trioextenso(num) + ((num != 1)?" centavos":" centavo") + ((numero < 1)?" de real":"");          
         },
         dinheiroExtenso : function(numero){
-          var milhar = new Array("", "mil", "milh&otilde;es", "bilh&otilde;es", "trilh&otilde;es", "quatrilh&otilde;es");
+          var milhar = new Array("", "mil", "milhões", "bilhões", "trilhões", "quatrilhões");
           var ext = pkg.monetario.formatation.centavosextenso(numero);
           if (numero < 1) {return ext;}
           //var num = Math.floor(numero)
           var inteiro = numero;
           var num = numero;
-          ext = ((num > 1)?"reais":"real") + ((ext != "")?" e ":"") + ext;
+          ext = ((num > 1.99999999999)?"reais":"real") + ((ext != "")?" e ":"") + ext;
           var trio = 0;
           var i = 0;
           var mi = "";
@@ -179,7 +247,7 @@ try {
             num = pkg.monetario.formatation.movePontoEsquerda(num);
             if (trio != 0)
             {
-            if (i != 0) {mi = (((trio != 1) || (i == 1))?milhar[i]+" ":milhar[i].substring(0,milhar[i].length-3) + "&atilde;o ");}
+            if (i != 0) {mi = (((trio != 1) || (i == 1))?milhar[i]+" ":milhar[i].substring(0,milhar[i].length-3) + "ão ");}
             ext = pkg.monetario.formatation.trioextenso(trio) + " " + mi + (((ext.substring(0,6)=="reais") && (i > 1))?"de ":"") + ext;
             }
             i++;
@@ -284,7 +352,7 @@ try {
           campo.value = s;          
         }
       }
-    };
+    });
     
 
     

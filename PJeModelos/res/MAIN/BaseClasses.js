@@ -38,6 +38,7 @@ try {
     var last = new window.j2.mod._._87; // pmc
     var defer = new window.j2.mod._._101;
     var guid = window.j2.mod._._guid;
+    var extend = window.j2.mod._._extend;
     
     function styleSetter(element, classesAsString){
       forEach(classesAsString.split(' '), function(clss){
@@ -49,6 +50,17 @@ try {
         });
       });
     };
+
+    pkg.AddtionalControls = {
+      constructor_ : function(args){
+        var _this = pkg.AddtionalControls;
+        
+        args.modelRegisteredVersions && forEach(args.modelRegisteredVersions, kp => {
+          _this.modelRegisteredVersions[kp.key] = kp.value
+        })
+      },
+      modelRegisteredVersions : {}
+    }
 
     pkg.AlvaraControls = {
       constructor_ : function(args, el){            
@@ -2371,6 +2383,7 @@ try {
               pkg.DestinatarioExpedienteFrameComunicacao.processarNovosDestinatarios(_, args);
             });
       },
+      processedEnderecos : [],
       processarNovosDestinatarios : function(_, args, meioComnicacao){
         if(!(meioComnicacao))
           meioComnicacao = (args.initialMeioComnicacao) ? args.initialMeioComnicacao : 'meioComunicItSistema';  // nct
@@ -2389,13 +2402,56 @@ try {
           
           return lns.replace(/[(]|[)]/g, '').match( new RegExp(_pssNome.replace(/[(]|[)]/g, ''))) !== null;
         }
+
+        var iteLastPess;
+        var _it;
         forEach(selPessTodas, function(pss){
+          _it  = {
+            pss : false,
+            end : false,
+            break : false
+          }
           forEach(lines, function(lns){
+            if(_it.break)
+              return;
+
             if(resolveMatch(lns, pss.nome)){
               newDests[newDests.length] = pss;
               pss.idFrmComId = 'idFrmComId' + idFrmComId;
               idFrmComId++;
+              iteLastPess = pss;
+              _it.pss = true;
+              return;
             }
+
+            if(_it.pss && resolveMatch(lns, 'CEP:')){
+              pss.enderecoPAC = pkg.Utilidades.parseEnderecosFrameComunicacao(lns)
+              pss.enderecoPAC.map( puEnd => pkg.DestinatarioExpedienteFrameComunicacao.processedEnderecos.push(puEnd) )
+              pss.enderecoPAC._ = ()=>{
+                var res = '';
+                var _this = pss.enderecoPAC;
+
+                _this.forEach( itEnd =>{
+                  _this.iterator = itEnd;
+
+                  var frag = domify( j2Conv(j2.mod.builder.parseVars( args.padraoEnderecoPAC )) )
+                  frag.querySelector('#selPesEnd').setAttribute('j2-id', itEnd.uuid )
+
+                  
+                  var temp = document.createElement('div');
+                  temp.appendChild(frag);
+
+                  res += temp.innerHTML;
+                } )
+
+                return res;
+              }
+
+              _it.end = true;
+            }
+
+            if(_it.end && lns.length === 0)
+              _it.break = true;
           });
         });
         
@@ -2427,13 +2483,34 @@ try {
           
           var pt = prtP;
           if(dest.OAB)
-            pt += ' #:B{- OAB#{j2.mod.clsCnstr.SeletorPessoa.selected.OAB}}';
+            if(pt.indexOf('#:SPAN@oab{}') !== -1)
+              pt = pt.replace('#:SPAN@oab{}', '#:SPAN@oab{ #:B{- OAB#{j2.mod.clsCnstr.SeletorPessoa.selected.OAB}}}')
+            else
+              pt += ' #:B{- OAB#{j2.mod.clsCnstr.SeletorPessoa.selected.OAB}}';
           pt += (args.separador) ? '#:span@sep{}' : '';
           
           if(flgOnce)
             _.pDestVocativo.innerHTML += j2Conv('#:BR{}');
             
           _.pDestVocativo.innerHTML += j2Conv(j2.mod.builder.parseVars(pt)); 
+
+          if( meioComnicacao==='meioComunicItCentralMandados'){ 
+            if( typeof QRious === 'undefined'){
+              
+              j2.mod.com.libLoader(j2.res.lib.jqueryUi);
+              j2.mod.com.libLoader(j2.res.CSS.jqueryUi);
+              evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function(){
+                j2.mod.com.libLoader(j2.res.lib.qrious);
+
+                evBus.on('loaded-'+ j2.res.lib.qrious.lib, function(){
+                  pkg.DestinatarioExpedienteFrameComunicacao.createCentralMandadoQRCode(_.pDestVocativo)
+                });
+              })
+              
+            }else{
+              pkg.DestinatarioExpedienteFrameComunicacao.createCentralMandadoQRCode(_.pDestVocativo);
+            }
+          }
           
           forEach(_.pDestVocativo.querySelectorAll('#PJeVars-renderedWhatsApp'), function(e){ // lwapac
             jQ3(e).addClass('HLField');
@@ -2490,6 +2567,296 @@ try {
           });
           evBus.off('beforeFihishEdition',cb);
         }); 
+
+        evBus.on('onFinishEdition', 900, function(){
+          jQ3('.ui-helper-hidden-accessible').remove()
+          jQ3('[j2-tooltiped]').removeAttr('title')
+          mod.par.$('#Fragment-Loader-div').remove()
+          jQ3('#vocativo .HLField').removeClass('HLField')
+        })
+      },
+      treateEnderecoParaQRCodeURL: endereco =>{
+        endereco = endereco.replaceAll(',', '')
+        endereco = endereco.replaceAll('  ', ' ')
+        /*if( endereco.indexOf("CEP") !== -1 ){
+          const posicaoCep = endereco.indexOf("CEP");
+          endereco = endereco.substring(0, posicaoCep).trim();
+        }
+        const uf = endereco.split('-').pop();
+        const ufIndex = endereco.lastIndexOf(uf);
+        const nomeEstado = j2.env.PJeVars.util.UFExtensoByUF(uf)
+        endereco = `${endereco.substring(0, ufIndex-1)} ${nomeEstado}`;*/
+
+        endereco = endereco.split(' ').map( ii=> encodeURIComponent(ii) )
+        endereco = endereco.join('+')
+
+        return endereco;
+      },
+      createCentralMandadoQRCode : frag =>{
+        var $frag = jQ3(frag)
+        if(!($frag.length))
+          return;
+
+        var treateEndereco = pkg.DestinatarioExpedienteFrameComunicacao.treateEnderecoParaQRCodeURL;
+        
+        function displayQRsAdjust($qrs){
+          const sepBase = 8;
+          let $codes = jQ3( $qrs.get(0).querySelectorAll('#qr-code') );
+          let hg = {
+            qrs : 0,
+            pss : 0
+          }
+          
+          switch($codes.length){
+            case 1:
+              return;
+            
+            case 2:
+              $codes.find('span[div]').each( (i, d) => hg.qrs += jQ3(d).height() )
+              hg.pss = $qrs.prev().find('> span').height() + sepBase
+              
+              let isBigger = hg.qrs > hg.pss;
+              
+              $qrs.css({
+                display: isBigger ? 'inline-flex' : ''
+              })
+              
+              $codes.each((idx, el) => {
+                if (idx % 2 === 0)
+                  jQ3(el).css({
+                    marginRight: isBigger ? `${sepBase}px` : '' 
+                  })
+                else
+                  jQ3(el).css({
+                    marginTop: isBigger ? '' : `${sepBase}px`
+                  })
+              })
+              return;
+              
+            default:
+              if( $qrs.find('#col-A').length !== 0 )
+                return;
+
+              let colA = jQ3('<span>', {
+                id : 'col-A',
+                css: {
+                  display: 'grid',
+                  justifyItems: 'center'
+                }
+              })
+              let colB = jQ3('<span>', {
+                id : 'col-B',
+                css: {
+                  paddingLeft: `${sepBase}px`,
+                  display: 'grid',
+                  justifyItems: 'center'
+                }
+              })
+              
+              $qrs.append(colA);
+              $qrs.append(colB);
+              
+              $qrs.css({
+                display: 'inline-flex'
+              })
+                            
+              $codes.each((idx, el) => {
+                let $el = jQ3(el)
+                if (idx % 2 === 0){
+                  colA.append($el)
+                  if( colA.children().length > 1) 
+                    $el.css({ marginTop: `${sepBase}px`})
+                }else{
+                  colB.append($el)
+                  if( colB.children().length > 1) 
+                    $el.css({ marginTop: `${sepBase}px`})
+                }
+              })
+              return;
+          }  
+        }
+        
+        var $qrs = jQ3( $frag.get(0).querySelectorAll('#qr-codes') );
+        $qrs.each((ixd, el)=>{
+          $sp = jQ3(el);
+          var $qrT = $sp.find('#qr-code:first').detach()
+          $sp.empty();
+
+          var $enderecoPAC = $sp.parent().find('#enderecoPAC') 
+          var $selPesEnd_ar = jQ3( $enderecoPAC.get(0).querySelectorAll('#selPesEnd') );
+
+          function proceedEnd( $endereco /* as selPesEnd*/, $qr_ ){
+            $endereco.on( 'DOMSubtreeModified',()=>{
+              var $img = $endereco.$img
+              var $end = $endereco.$end
+              var $a   = $endereco.$a
+
+              if( !($end.text().length) )
+                return
+
+              var endU = treateEndereco(pkg.Utilidades.parseEnderecosFrameComunicacaoToQRCodeGoogleMaps($end.text()));
+              var url = `https://www.google.com/maps/search/${endU}`;
+
+              var uqr = new QRious({
+                value: url,
+                padding: 0,
+                level: 'H',
+                size: 'auto'
+              });
+
+              $img.attr('src', uqr.toDataURL())
+              $a.attr('onclick', `
+                window.open( '${url}', 'consultaEnderecoGMaps-${$endereco.uuid}', 'width=1315, height=740, scrollbars=yes').focus();
+              `);
+
+              displayQRsAdjust($sp)
+            })
+
+            var endereco = treateEndereco(pkg.Utilidades.parseEnderecosFrameComunicacaoToQRCodeGoogleMaps($endereco.text()))
+            var uuid = $endereco.attr('j2-id')
+
+            
+            var url = `https://www.google.com/maps/search/${endereco}`
+
+            var qr = new QRious({
+              value: url,
+              padding: 0,
+              level: 'H',
+              size: 'auto'
+            });
+
+            var $img = jQ3('<img>', {
+              src : qr.toDataURL(),
+              "j2-id" : uuid
+            });
+            var $a = jQ3('<a>', {
+              css : {
+                cursor: 'pointer'
+              },
+              title: 'Clique para fazer consulta diretamente no GoogleMaps',
+              href: 'javascript:void(0);',
+              onclick : `
+                window.open( '${url}', 'consultaEnderecoGMaps-${uuid}', 'width=1315, height=740, scrollbars=yes').focus();
+              `
+            });
+            var $div = jQ3('<span>', {
+              css : {
+                "border-radius": "2px",
+                "box-shadow": "rgb(0 0 0 / 50%) 0px 0px 2px 2px",
+                padding: "3px"
+              },
+              div: ''
+            });
+
+            $endereco.$img = $img
+            $endereco.$end = $endereco
+            $endereco.$a = $a
+            $endereco.uuid = uuid
+
+            $div.append($a)
+            $a.append($img)          
+            $qr_.append($div)
+            $sp.append($qr_)
+
+            $qr_.attr("j2-id-qr", uuid)
+          }
+
+          $selPesEnd_ar.each((idx, el)=>{
+            let $el = jQ3( el )
+
+            $el.attr('title', `A edição direta deste endereço foi desabilitada 
+              para preservar a integridade do(s) QRcode(s) ao lado. 
+              Clique para editar este endereço no painel abaixo do editor.`);
+            $el.attr('contenteditable','false')  
+            $el.attr('j2-tooltiped','true')  
+            
+            
+            !($el.attr('j2-dblclick')) && $el.click(function(event){
+              var uuid_f = $el.attr('j2-id')
+
+              evBus.once(`FragmentLoader.onloadFragment.uuid-${uuid_f}`, (ev, _FragIns) => {                
+                j2.mod.clsCnstr.DestinatarioExpedienteFrameComunicacao.manipularPainelEdicaoEndereco(_FragIns, $el, uuid_f)
+              })
+
+              if(pkg.AddtionalControls)
+                pkg.AddtionalControls.append(jQ3.extend({ uuid : uuid_f }, pkg.AddtionalControls.defaultContainer() ), 
+                  'Editor-Endereco-PAC');
+            });
+
+            $el.attr('j2-dblclick', '_c')
+
+            proceedEnd( $el, $qrT.clone().empty().css({
+              marginRight: '',
+              marginTop: '',
+            })  )
+          })
+          
+          displayQRsAdjust($sp)
+        })
+        
+        jQ3('body').tooltip();
+      },
+      manipularPainelEdicaoEndereco : (_FragIns, $selEnd, _uuid) => {
+        var pkgProcEnds = j2.mod.clsCnstr.DestinatarioExpedienteFrameComunicacao.processedEnderecos;
+        var $frag = _FragIns.$fragRaw;
+
+        var itEnd = filter(pkgProcEnds, {uuid : _uuid});
+        itEnd = (itEnd.length) ? itEnd[0]: null;
+
+        if(  ! (itEnd) ){
+          j2.warn('Não foi localizado o endereço pré-processado.');
+          return;
+        }
+
+        function updateQRCode(){
+          if( !($selEnd.text().length) )
+                return
+
+          var endU = pkg.DestinatarioExpedienteFrameComunicacao.treateEnderecoParaQRCodeURL( 
+            pkg.Utilidades.parseEnderecosFrameComunicacaoToQRCodeGoogleMaps($selEnd.text()) 
+          );
+          var url = `https://www.google.com/maps/search/${endU}`;
+
+          var uqr = new QRious({
+            value: url,
+            padding: 0,
+            level: 'H',
+            size: 'auto'
+          });
+
+          $frag.find('#qr-code img').attr('src', uqr.toDataURL() )
+          $frag.find('#qr-code a').attr('onclick', `
+            window.open( '${url}', 'consultaEnderecoGMaps-${_uuid}', 'width=1315, height=740, scrollbars=yes').focus();
+          `);
+
+          $frag.find('#enderecoQRCode').val( pkg.Utilidades.parseEnderecosFrameComunicacaoToQRCodeGoogleMaps($selEnd.text()) )
+        }
+
+        forEach(itEnd, (val, prop) => {
+          let $fld = $frag.find(`#${prop}`);
+          $fld.val(val).change(()=>{
+            itEnd[prop] = $fld.val()
+            $selEnd.html(itEnd._())
+
+            updateQRCode()
+          })
+        })
+
+        updateQRCode()
+
+
+        $selEnd.parents('#vocativo').find('.HLField').removeClass('HLField')
+        var $qrc = $selEnd.parents('#vocativo').find(`[j2-id-qr='${_uuid}']`)
+
+        $selEnd.addClass('HLField')
+        $qrc.addClass('HLField')
+
+
+        $frag.find('#bntEncerrarEdicao').click(()=>{
+          $selEnd.removeClass('HLField')
+          $qrc.removeClass('HLField')
+          $frag.hide()
+        })
       }
     };
     
@@ -4016,6 +4383,15 @@ try {
       }
     };
     
+    pkg.monetario = {
+      constructor_ : function(args){
+        var _this = pkg.monetario;
+        
+        args.modelDefVersion && (_this.modelDefVersion = parseFloat(args.modelDefVersion))
+      },
+      modelDefVersion : 1.0
+    }
+
     pkg.NormalizarFormatacao = {
       constructor_ : function(args, el){
         pkg.NormalizarFormatacao.setEvents();
@@ -7593,6 +7969,115 @@ try {
             }
           }
         }
+      },
+      parseEnderecosFrameComunicacaoToQRCodeGoogleMaps : end =>{
+        var pEnd = {
+          existe : true,
+          uuid : guid()
+        };
+        var split1 = end.split(', ')
+        var cidUfCepBlock = split1.pop();
+
+        cidUfCepBlock = cidUfCepBlock.split(' - ')
+
+        pEnd.CEP = cidUfCepBlock.pop().split(': ')[1]
+        pEnd.UF = cidUfCepBlock.pop()
+        pEnd.municipio = cidUfCepBlock.join(' - ')
+        pEnd.numero = ''
+
+        switch(split1.length){
+          case 2:
+            pEnd.logradouro = split1[0]
+            pEnd.bairro = split1[1]
+            break;
+          case 3:
+            pEnd.logradouro = split1[0]
+            pEnd.numero = split1[1]
+            pEnd.bairro = split1[2]
+            break;
+          
+          default: // Rua Marechal, 1420, entre Pará e maranhão,  Beira Rio
+            pEnd.bairro = split1.pop()
+            pEnd.logradouro = split1.shift()
+            pEnd.numero = split1.shift()
+            break;
+        }
+
+        pEnd.UF = j2.env.PJeVars.util.UFExtensoByUF(pEnd.UF);
+
+        var _this = pEnd;
+
+        return  _this.logradouro + ((_this.logradouro.length === 0)         ? '': ', ') + 
+                _this.numero      + ((_this.numero.length === 0)             ? '': ', ') + 
+                _this.bairro      + ((_this.bairro.length === 0)             ? '': ', ') + 
+                _this.municipio   + ((_this.municipio.length === 0)          ? '': ', ') + 
+                _this.UF          
+
+      },
+      parseEnderecosFrameComunicacao : endStr =>{
+        function splitEnds(str) {
+          const partes = str.split(/(?<=CEP:.*);/);
+          return partes.map((parte) => parte.trim());
+        }
+
+        const ends = splitEnds(endStr)
+
+        ends.forEach( (end, idx, ends) => {
+          var pEnd = {
+            existe : true,
+            uuid : guid()
+          };
+          var split1 = end.split(', ')
+          var cidUfCepBlock = split1.pop();
+
+          cidUfCepBlock = cidUfCepBlock.split(' - ')
+
+          pEnd.CEP = cidUfCepBlock.pop().split(': ')[1]
+          pEnd.UF = cidUfCepBlock.pop()
+          pEnd.municipio = cidUfCepBlock.join(' - ')
+          pEnd.complemento = ''
+          pEnd.numero = ''
+
+          switch(split1.length){
+            case 2:
+              pEnd.logradouro = split1[0]
+              pEnd.bairro = split1[1]
+              break;
+            case 3:
+              pEnd.logradouro = split1[0]
+              pEnd.numero = split1[1]
+              pEnd.bairro = split1[2]
+              break;
+            
+            default: // Rua Marechal, 1420, entre Pará e maranhão,  Beira Rio
+              pEnd.bairro = split1.pop()
+              
+              pEnd.logradouro = split1.shift()
+              pEnd.numero = split1.shift()
+              pEnd.complemento = split1.join(', ')
+              
+              break;
+          }
+
+          pEnd._ = ()=>{
+            var _this = pEnd
+
+            if(!_this.existe)
+              return '(sem endereço cadastrado)';
+
+            return _this.logradouro + ((_this.logradouro.length === 0)         ? '': ', ') + 
+                  _this.numero      + ((_this.numero.length === 0)             ? '': ', ') + 
+                  _this.complemento + ((_this.complemento.length === 0)        ? '': ', ') + 
+                  _this.bairro      + ((_this.bairro.length === 0)             ? '': ', ') + 
+                  _this.municipio   + ((_this.municipio.length === 0)          ? '': ' - ') + 
+                  _this.UF          + ((_this.UF.length === 0)                 ? '': ' - CEP: ') + 
+                  _this.CEP;
+          }
+
+          ends[idx] = pEnd;
+        })
+
+        return ends;
       }
     };
     

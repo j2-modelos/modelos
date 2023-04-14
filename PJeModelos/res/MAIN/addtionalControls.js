@@ -36,8 +36,9 @@ try {
     var inherits = window.j2.mod._._inherits; // tappac as new
     var isFunction = new window.j2.mod._._198; // tappac as new
     var j2Conv = window.j2.mod._._j2TagsConverter; // tappac as new
+    var extend = window.j2.mod._._extend;
     
-    pkg.AddtionalControls = {
+    pkg.AddtionalControls = extend(pkg.AddtionalControls || {}, {
       constructor_ : function(){
         var args = null; // ndlg
         var _ = filter(j2.mod.builder.deferConstructings, {classe : 'AddtionalControls'}); // ndlg
@@ -141,6 +142,15 @@ try {
         return _;
       },
       append : function(container, controlsDefName, ver, ops){
+        var _this = pkg.AddtionalControls;
+
+        /**
+         * A versão a ser usado terá precedência absoluta a definida no xml do modelo.
+         */
+
+        if(_this.modelRegisteredVersions[controlsDefName])
+          ver = _this.modelRegisteredVersions[controlsDefName];
+
         if(!isObject(ops))
           ops = {
             resizeOnFinish : true
@@ -198,7 +208,7 @@ try {
       defaultContainer : function(){
         return { edt : mod.edt.gE('modAddtCtrls') };
       }
-    };
+    });
     
     pkg.WhatsAppInputs = {
       constructor_ : function(){
@@ -992,7 +1002,7 @@ try {
     pkg.InputTelefone = { // ndlg2
       _ : [],
       constructor_ : function(args, el){
-        var _ = pkg.GeneralDatePicker._[pkg.GeneralDatePicker._.length] = {
+        var _ = pkg.InputTelefone._[pkg.InputTelefone._.length] = {
           uuid : window.j2.mod._._guid(),
           inputField : $(el.edt).find('#telefoneParte-input'),
           div : $(el.edt).find('#InputTelefone-div'),
@@ -1077,6 +1087,7 @@ try {
         var _$ = mod.edt.win.jQ3;
         _$( _.inputField ).datepicker({
           numberOfMonths: 1,
+          "z-index" : 9999,
           showButtonPanel: false,
           maxDate: args.maxDate || "+0D", // fdt
           minDate: args.minDate || null, // fdt
@@ -2255,6 +2266,38 @@ try {
        
       }
     };     
+
+    
+    pkg.FragmentLoader = { // tappac as new
+      _ : [],
+      constructor_ : function(args, el, classModdle, ___){  
+        if(!args.lib)
+          console.error('#########Error: pkg.FragmentLoader - classe mal definida.')
+
+        let lib = parseVar(args.lib);
+        let $parBottom = jQ3(el.parBottom)
+        
+
+        j2.mod.com.libLoader(lib);
+        evBus.once('loaded-'+ lib.lib, function(ev, fragRaw){
+          let $contnr = $parBottom.find('div#Fragment-Loader-div');
+          let $fragRaw = jQ3(fragRaw)
+          $contnr .append($fragRaw)
+
+          if(args.oneInstance && args.oneInstance === 'true'){
+            $parBottom.find('div#Fragment-Loader-div[j2-inst]').remove()
+          }
+          $contnr.attr('j2-inst', '_o')
+
+          evBus.fire(`FragmentLoader.onloadFragment.uuid-${el.uuid}`, {
+            $fragRaw : $fragRaw,
+            args : args,
+            el: el,
+            $contnr : $contnr
+          })
+        });
+      }
+    }
     
     evBus.once('loaded-'+ window.j2.res.MAIN.addtionalControls.lib, function(){
       //pkg.AddtionalControls.constructor_();

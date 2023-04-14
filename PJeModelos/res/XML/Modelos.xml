@@ -302,7 +302,7 @@
             </classe>
         </versao>
         <versao id="3.1">
-            <classe id="Documento" versao="3.0">
+            <classe id="Documento" versao="4.0">
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/>
                 <importLib name="certidao.js" artifact="#{j2.res.mod.certidao}"/>
@@ -310,11 +310,23 @@
                 
                 <importLib name="jquery3.js" artifact="#{j2.res.lib.jquery3}" scope="EDT"/>
                 <importLib name="jqueryUi.js" artifact="#{j2.res.lib.jqueryUi}" scope="EDT"/>
+                <importLib name="popper" artifact="#{j2.res.lib.popper}" scope="EDT"/>
+                <importLib name="bootstrap" artifact="#{j2.res.lib.bootstrap}" scope="EDT"/>
                 
+                <importLib name="bootstrap.css" artifact="#{j2.res.CSS.bootstrap}" scope="EDT"/>
                 <importLib name="jquery-ui.css" artifact="#{j2.res.CSS.jqueryUi}" scope="EDT"/>
-                
+
                 <importLib name="chosen.jquery.js" artifact="#{j2.res.lib.chosen}" scope="EDT"/> <!-- chosen -->
-                <importLib name="chosen.css" artifact="#{j2.res.CSS.chosen}" scope="EDT"/><!-- chosen -->
+                <importLib name="chosen-bs.css" artifact="#{j2.res.CSS.chosenBS}" scope="EDT"/><!-- chosen -->
+
+                <importLib name="fontawesome.js" artifact="#{j2.res.lib.fontawesome}" scope="EDT"/>
+
+                <constructs param="width" value="500" type="int"/>
+                <constructs param="height" value="625" type="int"/>
+
+                <classe id="monetario" versao="default">
+                    <constructs param="modelDefVersion" value="4.0" type="float"/>
+                </classe>
                 
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A5" type="string"/>
@@ -331,7 +343,7 @@
                     </classe>       
                     
                     <classe id="NormalizarFormatacao" versao="3.0">
-                        <classe id="Selector" versao="3.0" >
+                        <classe id="Selector" versao="4.0" >
                             <constructs param="newId" value="certidaoItens" type="string"/>
                             <constructs param="multiple" value="sim" type="bool"/>
                             <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
@@ -340,6 +352,8 @@
                             <constructs param="source" value="#{j2.res.mod.certidaoSelSrc}" type="bool"/>
                             <constructs param="salvarUltimaEscolha" value="true" type="bool"/>
                             <constructs param="filter" value="true" type="boolean"/>
+                            <!--constructs param="label" value="Atos" type="string"/-->
+                            <constructs param="hideLabel" value="true" type="boolean"/>
                         </classe>                                             
                         <classe id="Corpo" versao="1.0">
                             <constructs param="newId" value="oReferidoEVerdade" type="string"/>
@@ -348,7 +362,7 @@
                         </classe>
                     </classe>
                     
-                    <classe id="SeletorPessoa" versao="1.0-sel-3.0">
+                    <classe id="SeletorPessoa" versao="4.0">
                         <constructs param="hideLinkedEleent" value="true" type="bool"/>
                         <!--constructs param="changedId" value="selectorPeticionante" type="string"/-->
                         <constructs param="propagateChanges" value="selParte" type="string"/>
@@ -362,13 +376,19 @@
                     <classe id="Space" versao="1.0">
                         <constructs param="size" value="2" type="int"/>
                     </classe>
-                    <classe id="AddtionalControls" versao="1.0"/>
-                    <classe id="BlocoAssinaturas" versao="3.0">
+                    <classe id="AddtionalControls" versao="1.0">
+                        <constructs param="modelRegisteredVersions" value="" type="key-pair">
+                            <constructKeyPair key="General.DatePicker" value="4.0" type="string"/>
+                            <constructKeyPair key="Prazo-Sem-Expediente-Forense" value="4.0" type="string"/>
+                        </constructs>
+                    </classe>
+
+                    <classe id="BlocoAssinaturas" versao="4.0">
                         <!--constructs param="magistrado" value="sim" type="bool"/-->
                         <constructs param="servidor" value="sim" type="bool"/>
                         <!--constructs param="secretario" value="sim" type="bool"/-->
                     </classe>
-                    <classe id="AutoSave" versao="1.1">
+                    <classe id="AutoSave" versao="4.1">
                         <constructs param="containersType" value="fullFrameBody" type="enum"/>
                         <constructs param="saveTimeInterval" value="5000" type="int"/>
                         <!--constructs param="containersExp" value="{ 'atoJudicial': 'atoJudicial' }" type="j2son"/>
@@ -1545,8 +1565,20 @@
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
+                                <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
                                 <constructs param="padraoApresentacaoParteEnderecoTelefone" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
+                                            value="#:SPAN[centralMandadosDestinatarios]{
+                                                        #:SPAN@pessoa{ #:SPAN{
+                                                            #:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}#:SPAN@oab{} 
+                                                            #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} 
+                                                            #:SPAN@enderecoPAC{#{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}}
+                                                            #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}
+                                                        }}
+                                                        #:SPAN@qr-codes[centralMandadosQRCodes]{
+                                                          #:SPAN@qr-code[centralMandadosQRCode]{}
+                                                        }
+                                                    }" type="string"/>                                            
                                 <constructs param="padraoApresentacaoParteTelefone" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
                                 <!-- lwapac -->
@@ -1557,6 +1589,7 @@
                                             value="#:BR{}#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.parte.UCase}}: #{j2.mod.clsCnstr.SeletorPessoa.selected.nome} - OAB#{j2.mod.clsCnstr.SeletorPessoa.selected.OAB}" type="string"/>
                               
                                 <constructs param="separador" value="#:BR{}" type="string"/>
+                                <constructs param="padraoEnderecoPAC" value="#:U{ENDEREÇO:} #:SPAN@selPesEnd{#{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC.iterator._}} #:BR{} " type="string"/>
                         </classe>
                         
                         <classe id="Secao" versao="1.0">
@@ -1651,7 +1684,11 @@
                     <classe id="Space" versao="1.0">
                         <constructs param="size" value="1" type="int"/>
                     </classe>
-                    <classe id="AddtionalControls" versao="1.0"/>
+                    <classe id="AddtionalControls" versao="1.0">
+                        <constructs param="modelRegisteredVersions" value="" type="key-pair">
+                            <constructKeyPair key="Editor-Endereco-PAC" value="1.0" type="string"/>
+                        </constructs>
+                    </classe>
                     <classe id="DJeControls" versao="3.0">
                         <constructs param="linkedElement" value="SDLinkedElementintimacaoItens" type="string"/>
                     </classe>
@@ -2205,8 +2242,23 @@
             </style>                                                
         </classStyles>
         <versao id="3.0">
-            <classe id="Documento" versao="3.0">
+            <classe id="Documento" versao="4.0">
                 <importLib name="termoZ.js" artifact="#{j2.res.mod.termo}"/>
+
+                <importLib name="bootstrap.css" artifact="#{j2.res.CSS.bootstrap}" scope="EDT"/>
+                <importLib name="jquery3.js" artifact="#{j2.res.lib.jquery3}" scope="EDT"/>
+                <importLib name="popper" artifact="#{j2.res.lib.popper}" scope="EDT"/>
+                <importLib name="bootstrap" artifact="#{j2.res.lib.bootstrap}" scope="EDT"/>
+
+                <importLib name="chosen.jquery.js" artifact="#{j2.res.lib.chosen}" scope="EDT"/> <!-- chosen -->
+                <importLib name="chosen-bs.css" artifact="#{j2.res.CSS.chosenBS}" scope="EDT"/><!-- chosen -->
+
+                <importLib name="fontawesome.js" artifact="#{j2.res.lib.fontawesome}" scope="EDT"/>
+
+                <constructs param="width" value="500" type="int"/>
+                <constructs param="height" value="550" type="int"/>
+
+
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A5" type="string"/>
                     <classe id="Cabecalho" versao="2.0" >
@@ -2221,7 +2273,7 @@
                         <constructs param="text" value="TERMO" type="string"/>
                     </classe>          
                     <classe id="NormalizarFormatacao" versao="3.0">
-                        <classe id="Selector" versao="3.0" >
+                        <classe id="Selector" versao="4.0" >
                             <constructs param="newId" value="termoItens" type="string"/>
                             <constructs param="multiple" value="sim" type="bool"/>
                             <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
@@ -2231,6 +2283,8 @@
                             
                             <constructs param="linkedElTag" value="P" type="string"/>
                             <constructs param="linkedElStyleClasses" value="p FntModDefault Indnt1cm" type="string"/>
+                            <!--constructs param="label" value="Atos" type="string"/-->
+                            <constructs param="hideLabel" value="true" type="boolean"/>
                         </classe>                                             
                         
                     </classe>
@@ -2243,12 +2297,12 @@
                         <constructs param="size" value="2" type="int"/>
                     </classe>
                     <classe id="AddtionalControls" versao="1.0"/>
-                    <classe id="BlocoAssinaturas" versao="3.0">
+                    <classe id="BlocoAssinaturas" versao="4.0">
                         <!--constructs param="magistrado" value="sim" type="bool"/-->
                         <constructs param="servidor" value="sim" type="bool"/>
                         <!--constructs param="secretario" value="sim" type="bool"/-->
                     </classe>
-                    <classe id="AutoSave" versao="1.1">
+                    <classe id="AutoSave" versao="4.1">
                         <constructs param="containersType" value="fullFrameBody" type="enum"/>
                         <constructs param="saveTimeInterval" value="5000" type="int"/>
                         <!--constructs param="containersExp" value="{ 'atoJudicial': 'atoJudicial' }" type="j2son"/>
