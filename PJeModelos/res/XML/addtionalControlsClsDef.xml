@@ -18,6 +18,19 @@
                 </elemento>     
             </elemento>
         </versao>
+
+        <versao id="4.0">
+            <elemento tag="div" scope="EDT" id="General-DatePicker-Div" classBS="container">
+                <elemento tag="input" scope="EDT" id="General-DatePicker-input" 
+                    classBS="form-control" class="AlignCenter">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Definir uma data"/>
+                    <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="aria-label" value="Definir uma data"/>
+                    <HTMLAttribute name="aria-describedby" value="Definir a data conforme uso da finalidade"/>
+                </elemento>     
+            </elemento>
+        </versao>
     </classeDef>
     
     <classeDef id="General-TimePicker"> <!-- ndlg2 -->
@@ -1360,6 +1373,14 @@
                     #:span@FPAdvogado-OAB{OAB#:span@UF{MA} #:span@Num{123456}}#:span@FPAdvogado-separador{}
             </elemento>
         
+        </versao>
+    </classeDef>
+
+    <classeDef id="Fragment-Loader"><!-- tappac as new-->
+        <versao id="1.0">
+            <elemento tag="div" scope="PAR_BOTTOM" class="" id="Fragment-Loader-div">
+                
+            </elemento>
         </versao>
     </classeDef>
     
