@@ -117,11 +117,52 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
+    /*console.log(sender.tab ?
                 "from a content script:" + sender.tab.url :
                 "from the extension");
     if (request.greeting === "hello")
-      sendResponse({farewell: "goodbye"});
+      sendResponse({farewell: "goodbye"});*/
+    if(!(request.j2Action))
+      return;
+
+    switch(request.j2Action){
+      case 'shareMessage':
+        if(!(j2E.sharedMessages[sender.origin]))
+          j2E.sharedMessages[sender.origin] = {}
+
+        //if(!(j2E.sharedMessages[sender.origin][request.messageName]))
+        j2E.sharedMessages[sender.origin][request.messageName] = { 
+          message : request.message,
+          validade : request.validade
+        }
+        break;
+      case 'getSharedMessage':
+          if(!(j2E.sharedMessages[request.from])){
+            sendResponse({
+              j2Action: 'MessagemCompartilhadaInexistente',
+              j2: true
+            })
+            break;
+          }
+
+          let smg = j2E.sharedMessages[request.from][request.messageName] || { noMessage: true }
+  
+          if(smg.noMessage){
+            sendResponse({
+              j2Action: 'MessagemCompartilhadaInexistente',
+              j2: true
+            })
+            break;
+          }
+
+          sendResponse({
+            j2Action: 'getSharedMessageResponse',
+            j2: true,
+            response : smg,
+            callerAction: request
+          })
+          break;
+    }
   }
 );
 
@@ -137,6 +178,9 @@ chrome.runtime.onMessage.addListener(
           else
             i++;
       }
+    },
+    sharedMessages:{
+
     }
   };
   

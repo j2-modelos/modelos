@@ -6,6 +6,8 @@
 
 
 function pjeLoad(){    
+  var _responseBus = {};
+
   (function _default(){
     j2E.mods.shortcuts();
     
@@ -65,6 +67,25 @@ function pjeLoad(){
       }
     
     }
+
+    function __listenMessageHandlerFromServiceWorkder(_load){
+      if(!(_load.j2))
+        return;
+
+      console.log('message from service worker : ', _load);
+      
+
+      var _act = (_load.fowarded) ? _load.j2Action : _load;
+
+      switch(_act.action){
+        case 'getSharedMessageResponse':
+          getSharedMessageResponse(_act, _load);
+          break;
+      }
+    
+    }
+
+    chrome.runtime.onMessage.addListener(__listenMessageHandlerFromServiceWorkder)
     
     //window messagin listening
     window.addEventListener('message', __listenMessageHandler);
@@ -77,6 +98,16 @@ function pjeLoad(){
         data : message
       });});
    });
+  }
+
+  function getSharedMessageResponse(action){
+    var _ticket = action.callerAction.responseBusTicket;
+    if( _responseBus[_ticket].callback ){
+      _responseBus[_ticket].callback(action);
+      defer(function(){
+        delete _responseBus[_ticket];
+      });
+    }
   }
   
   function fowardNotifyPseudotarefaMovimentarLoaded(action, _load){
@@ -1475,6 +1506,22 @@ function pjeLoad(){
     else 
       jQ3(iframe).prop('contentWindow').postMessage(load, 'https://frontend.prd.cnj.cloud');
   }
+
+  function __sendMessageToServiceWorder(load, responseCallback){
+    if(!(load.j2)) 
+      load.j2 = true;
+    if(!(load.pathname)) 
+      load.pathname = window.location.pathname;
+    if(!(load.origin)) 
+      load.origin = window.location.origin;
+
+            
+    lg('https://pje.tjma.jus.br sending message to Service Workder', load );  
+
+    // Envia uma mensagem para o Service Worker
+    chrome.runtime.sendMessage( load, responseCallback || void 0 );
+  }
+
   
   function requisitarDadosSeTarefaEPersonalisar(){	
     if(window.location.pathname !== "/pje/Processo/movimentar.seam")	
@@ -1826,6 +1873,496 @@ function pjeLoad(){
       a.attr('onclick', sp.join('/') );
     });
   }
+
+  function observeParaARDigital(){
+    var idProc = j2E.env.urlParms.idProcesso,	
+        idTask = j2E.env.urlParms.newTaskId,	
+        PACTarefas = [
+          'Preparar intimação'
+        ],
+        checkedEnderecos = 0
+    j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
+      if(!(data.length))
+        return;
+      
+      if(PACTarefas.indexOf(data[data.length-1]) < 0)
+        return;
+
+      jQ3.initialize('.rich-panel-header', function(){
+        var $div = jQ3(this);
+        if ($div.text().toLowerCase() !== 'definição de endereços')
+          return;
+        if ( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+          return;
+
+        //observar se uusário irá ativar endereços adicionais
+        
+        var destinatarioAtual = () => { return jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:enderecosPanel_header`).text().split(' - ')[1].trim()}
+        
+        jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
+          var $chk = jQ3(this);
+          checkedEnderecos = 0
+
+          var endsSelectedByUser = []
+          function __triage($target, event){
+            if (!($target.is('input') && $target.is(":checked") && $target.prop('id').match(/taskInstanceForm:Processo_Fluxo_prepararExpediente-\d+:tabelaEnderecosPessoa:\d+:check/)))
+              return;
+            
+            if(event)
+              event.preventDefault()
+
+            var $tr = $target.parents('tr')
+            if( $tr.is("[j2-with-linked-tr]") )
+              return;
+            
+            $tr.attr('j2-with-linked-tr', 'sim')
+
+            var data = {
+              //destinatario : $tr.find('td:nth-child(2)').text().trim(),
+              destinatario : destinatarioAtual(),
+              endereco : $tr.find('td:nth-child(3)').text().trim()
+            }
+
+            endsSelectedByUser.push({
+              data : data,
+              $tr: $tr,
+              $target: $target
+            })
+
+          }
+
+          /*$chk.click((event)=>{
+            var $target = jQ3(event.target);
+            __triage($target, event)
+          })*/
+          
+          $chk.find('input').each((idx, el)=>{
+            __triage(jQ3(el))
+          })
+
+          if(endsSelectedByUser.length)
+            _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)
+        })
+
+               
+        __sendMessageToServiceWorder({
+          j2Action: 'getSharedMessage',
+          from: 'https://sistemas.tjma.jus.br',
+          messageName : 'sentinelaToken'
+        }, response => {
+          if (jQ3('[j2-ardigital-panel]').length){
+            if(response.j2Action === 'getSharedMessageResponse')
+              j2E.ARDigital.api.ajax.setToken(response.response.message)
+            return;
+          }  
+            
+
+          $div.parent().parent().prepend('<span style="font-size: 5px;">&nbsp;</span>');
+          var ARDigitalPanel = $div.parent().parent().prepend(j2EUi.createPanel('AR Digital',(function(){
+            if(response.j2Action !== 'getSharedMessageResponse'){
+              return j2EUi.createWarnElements(`
+                Não localizado o token de acesso ao ARdigital. Acesse o sistema
+                <a href="https://sistemas.tjma.jus.br" target="_blank">https://sistemas.tjma.jus.br</a>
+                `)
+            }
+              
+            j2E.ARDigital.api.ajax.setToken(response.response.message)
+            
+            /*var inpChk = '<input id="plp-new" class="checkbox" type="checkbox">'
+            return j2EUi.createTable([
+              [ '', 'Nº PLP', 'Listas de postagem' ],
+              [ inpChk, 'Criar uma nova lista de postagem']
+            ]);*/
+            return j2EUi.spinnerHTML()
+          })(), 'j2-ARDigital-panel'))
+          $div.parent().parent().prepend(`
+            <style>
+              div[j2-ui-content] table tr td:first-child{
+                text-align:center !important
+              }
+            </style>`);
+
+          if(response.j2Action !== 'getSharedMessageResponse')
+            return;
+
+          ARDigitalPanel.$content = ARDigitalPanel.find('[j2-ui-content]')
+
+          j2E.ARDigital.api.plp.listar((res)=>{
+            var tableSet = [
+              [ '<img src="/pje/img/toolbox.png" title="Seleciontar lista de postagem ou criar nova">', 
+                'Nº PLP', 'Objetos', 'Data de postagem' ]
+            ]
+            res.result.forEach( plp =>{
+              if (false || plp.status === 'ABERTA'){
+                var inpChk = jQ3(`<input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" />`)
+                inpChk.data('j2E', {
+                  plp : plp
+                })
+                var dtaPostagem = plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')
+                tableSet.push([inpChk, plp.numeroPlp, plp.qtdeObjetos, dtaPostagem ])
+              }
+            })
+            
+            let hoje = new Date().toISOString().split("T")[0];
+            var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" />`
+            var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" />`
+            tableSet.push([inpChk, '-', 'Criar uma nova lista de postagem', inpDat])
+
+            ARDigitalPanel.$content.empty()
+            ARDigitalPanel.$content.append( j2EUi.createTable(tableSet) )
+          }, (errRes)=>{
+            ARDigitalPanel.$content.empty()
+            ARDigitalPanel.$content.append(j2EUi.createWarnElements(`
+              Erro ao recuperar as PLP's no AR Digital. (${errRes})
+            `));
+          })
+
+          ARDigitalPanel.mouseup(event => {
+            var $el = jQ3(event.target)
+            if(!$el.is('input[type="radio"]'))
+              return
+
+            $el.parents('tbody').find('.success').removeClass('success')
+            $el.parents('tr').find('td').addClass('success')
+          })
+
+        })
+
+
+      });
+    });	
+
+    function __getDestinatarioEnderecoResolvido(idDestinatario, data){
+      var deferred = jQ3.Deferred();
+
+      j2E.ARDigital.api.destinatarios.getById(idDestinatario, res =>{
+        deferred.resolve( res )  
+      }, error => deferred.reject(error) )
+
+      return deferred.promise();
+    }
+
+    function __getDestinatarioForCheckedPosition(data, checkedEnderecosOrder){
+      var deferred = jQ3.Deferred();
+
+      j2E.ARDigital.api.destinatarios.consultar(data.destinatario, res =>{
+        if(res.totalCount < checkedEnderecosOrder){
+
+          __criarDestinatario(data)
+          .done( _res => {
+            __getDestinatarioEnderecoResolvido(_res.id, data)
+            .done( res => deferred.resolve(res) )
+            .fail( error => deferred.reject(error) )
+          } )
+          .fail( err => deferred.reject(err) )
+
+        }else{
+          __getDestinatarioEnderecoResolvido(res.result[checkedEnderecosOrder-1].id, data)
+          .done( res2 => deferred.resolve(res2) )
+          .fail( error2 => deferred.reject(error2) )
+        }
+      }, (error)=>{
+        deferred.reject(error);
+      })
+
+      return deferred.promise();
+    }
+
+    function __criarDestinatario(data){
+      var deferred = jQ3.Deferred();
+
+      j2E.ARDigital.api.destinatarios.criar({
+        enderecos : [
+          j2E.ARDigital.util.conformarEnderecoARDigigal(data.endereco)
+        ],
+        nome : data.destinatario
+      }, __res => deferred.resolve(__res),
+        _err => deferred.reject(_err)
+      )
+
+      return deferred.promise();
+    }
+
+    function __getDescricaoPadrao(){
+      var deferred = jQ3.Deferred()
+      var idProcesso = j2E.env.urlParms.idProcesso
+
+      const ___finalidade = 'carta de intimação'
+      
+      function ____proceed(autosDigitaisHTML){
+        const _a = jQ3('<div>').append(jQ3.parseHTML(autosDigitaisHTML)).find('a.titulo-topo.dropdown-toggle.titulo-topo-desktop')
+        if(!(_a.length)){
+          deferred.reject(`${___text} - ${___finalidade}`)
+          return;
+        }
+
+        const ___text = _a.text().trim().split('\n')[0]
+        if( ___text.length )
+          lockrSes.set(`proc.${idProcesso}.classeENumero`, ___text )
+
+        deferred.resolve(`${___text} - ${___finalidade}`)
+      }
+
+      let procClsNumero = lockrSes.get(`proc.${idProcesso}.classeENumero`, { noData : true })
+
+      if( procClsNumero.noData ){
+        j2EPJeRest.processo.getChaveAcesso( idProcesso )
+        .done( ca =>{
+          j2EPJeRest.processo.getAutosDigitais( idProcesso, ca )
+          .done( res => {
+            ____proceed( res )
+          })
+          .fail( deferred.reject(`${___finalidade}`) )
+        })
+        .fail(()=>{
+          deferred.reject(`${___finalidade}`)
+        })
+      }else{
+        deferred.resolve(`${procClsNumero} - ${___finalidade}`)
+      }
+
+      return deferred.promise()
+    }
+
+    function __adicionarObjetoServicoPadrao(destData){
+      var deferred = jQ3.Deferred();
+
+      function ____onDone(res){
+        __getDescricaoPadrao().always( observacaoTarefa => {
+          var objeto = j2E.ARDigital.util.getDefaultServico(destData, observacaoTarefa)
+          var cepDest = destData.enderecos.filter( _it => { return _it.indAtivo })[0].cep
+          j2E.ARDigital.api.servicos.verificarDisponibilidade(cepDest)
+          .done( res11 => { 
+            if ( ! Boolean(res11.resultado) ){
+              deferred.reject(`Erro ao verificar disponibilidade de serviço: (${res11.resultado})`)
+              return
+            }
+            if(Boolean(res11.resultado) === false){
+              deferred.reject('Não há disponibilidade de serviço para o CEP destino')
+              return
+            }
+
+            deferred.resolve(objeto) 
+          } )
+          .fail( err9 => deferred.reject( err9 ) )
+        })
+      }
+
+      if(destData.enderecos){
+        ____onDone(destData)
+        return deferred.promise();  
+      }else{
+        j2E.ARDigital.api.destinatarios.getById(destData.id)
+        .done( ____onDone )
+        .fail(()=> deferred.reject('Destinatario nao encontrado') )
+      }
+      return deferred.promise();
+    }
+
+    function __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, plp){
+      let frag = `<tr class="rich-table-row "><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left"><input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" checked /></span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left"></span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left">${plp.objetos.length}</span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left">${plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')}</span></div></td></tr>`;
+      
+      //let newTR = jQ3(frag)
+      linkedPLP.parents('tr').replaceWith(frag)
+    }
+
+    function __adicionarAPLPSelecionada(data){
+      let deferred = jQ3.Deferred();
+
+      let linkedPLP = jQ3('[j2-ardigital-panel]').find('input:checked')
+      if(!(linkedPLP).length){
+        deferred.reject('Nenhuma lista de postagem foi selecionada')
+        return deferred.promise();
+      }
+
+      function ____defaultFail( response ){
+        deferred.reject(`Erro ao criar/salvar a lista de postagem. (${response})`)
+      }
+
+      const objetos = (()=>{
+        let _ojbs = []
+        data.forEach( dt => _ojbs.push(dt.objetoCorreios) )
+        return _ojbs
+      })()
+      
+      if( linkedPLP.prop('id') === 'plp-new' ){
+        let dataPostagem = jQ3('#plp-date').val()
+        dataPostagem = moment(dataPostagem, 'YYYY-MM-DD')
+        if(!dataPostagem.isValid()){
+          deferred.reject('A data de postagem deve ser definida para cirar uma nova lista de postagem.')
+          return deferred.promise();
+        }
+        
+
+        j2E.ARDigital.api.plp.criar(dataPostagem, objetos)
+        .done( res98 => j2E.ARDigital.api.plp.getById(res98.id)
+          .done( newPlp => {
+            //debugger;
+            __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, newPlp)
+            deferred.resolve(newPlp)
+          })
+          .fail( ____defaultFail ))
+        .fail( ____defaultFail  )
+
+      }
+      else{
+        let idPlp = linkedPLP.prop('id').split('-')[1]
+
+        j2E.ARDigital.api.plp.getById(idPlp)
+        .done( resPLP =>{
+          const plpAntes = JSON.stringify(resPLP).hashCode()
+
+          objetos.forEach( _obj => {
+            function plpNaoPossuiObjeto () { 
+              return resPLP.objetos.filter(__obj => { 
+                return j2E.ARDigital.util.compararObjetosCorreios(_obj, __obj)
+              }).length === 0
+            }
+
+            if( plpNaoPossuiObjeto() )
+              resPLP.objetos.push(_obj)
+          })
+
+          const plpDepois = JSON.stringify(resPLP).hashCode()
+
+          if(plpDepois !== plpAntes)
+            j2E.ARDigital.api.plp.atualizar(resPLP)
+            .done( upPlp => deferred.resolve(upPlp) )
+            .fail( ____defaultFail )
+          else
+            deferred.resolve(resPLP)
+        })
+        .fail( ____defaultFail )   
+      }
+
+
+      return deferred.promise();
+    }
+
+    var ___delayCall = new DelayedCall(150, 500);
+    function _treatDestinatarioEEnderecoARDigital(enderecosSelected){
+    //function _treatDestinatarioEEnderecoARDigital(data, $tr, $target){
+      
+      let destinatarioResolvidoDefer = jQ3.Deferred()
+
+      function checkResolution(){
+        let ___flag = true
+
+        for (let index = 0; index < enderecosSelected.length; index++) {
+          const element = enderecosSelected[index];
+          
+          ___flag = ___flag && typeof element.enderecoResolvido !== 'undefined'
+          ___flag = ___flag && typeof element.objetoCorreios !== 'undefined'
+          
+          if(!___flag)
+            break;
+        }
+        return ___flag;
+      }
+
+      enderecosSelected.forEach((endSel, idx) =>{ 
+        let checkedEnderecos = idx + 1
+        let data = endSel.data
+        let $tr = endSel.$tr
+        let $target = endSel.$target
+        
+        function ____defaultFail(err){
+          destinatarioResolvidoDefer.reject()
+          $td.empty()
+          $td.append(j2EUi.createWarnElements(`
+                Erro ao consultar destinaráio. (${err})
+          `))
+        }
+        
+        var $trLinked = jQ3('<tr>', { class : 'rich-table-row' } )
+        $trLinked.append(jQ3('<td>', { class : 'rich-table-cell' }))
+        var $td = jQ3('<td>', { class : 'rich-table-cell', colspan: '3'/*, text : 'TEXT TEMPLATE'*/ })
+        $td.append( j2EUi.spinnerHTML() )
+        $trLinked.append($td)
+        $tr.after($trLinked)
+        $tr.prop('j2E', { $trLinked : $trLinked })
+        endSel.$td = $td
+
+
+        ___delayCall((data, $td, checkedEnderecos)=>{
+          __getDestinatarioForCheckedPosition(data, checkedEnderecos)
+          .done( destinatarioComEnderecoResolvido => {
+            endSel.enderecoResolvido = destinatarioComEnderecoResolvido
+
+            __adicionarObjetoServicoPadrao(destinatarioComEnderecoResolvido)
+            .done(objDone => {
+              //objDone = j2E.ARDigital.util.conformObjtoToAddInPLP(objDone)
+              endSel.objetoCorreios = objDone
+
+              $td.empty()
+              ____obj = {
+                maoPropria : true,
+                descricao : 'PJEC 0800123-56.2023.8.10.0047 - Intimação'
+              }
+              $td.append(j2EUi.createPanel('Objeto', _ARDigitalObjFields(____obj)))
+  
+              if( checkResolution() )
+                destinatarioResolvidoDefer.resolve()
+            })
+            .fail( ____defaultFail )
+          })
+          .fail( ____defaultFail)
+        }, data, $td, checkedEnderecos)
+
+      })
+
+      function ____defaultFail(err){
+        enderecosSelected.forEach((endSel, idx) =>{ 
+          let $td = endSel.$td
+          
+          $td.empty()
+          $td.append(j2EUi.createWarnElements(`
+                Erro ao consultar destinaráio. (${err})
+          `))
+        })
+      }
+
+      destinatarioResolvidoDefer.done(()=>{
+        __adicionarAPLPSelecionada(enderecosSelected)
+        .done( plp => { 
+          let linkedPLP = jQ3('[j2-ardigital-panel]').find('input:checked')
+          __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, plp)
+
+          jQ3('[j2-ardigital-panel]').find('input').attr('disabled', 'disabled')
+
+        })
+        .fail( ____defaultFail )
+      })
+      .fail( ____defaultFail )
+    }
+
+    function _ARDigitalObjFields(obj){
+      let frag = `
+      <div id="objeto-fields">
+        <div class="propertyView col-sm-4">
+          <div class="name">
+            <label for="objeto-mao-propria" class="">Mão Própria? <small class="text-muted text-lowercase"></small></label>
+          </div>
+          <div class="value col-sm-12">
+            <input type="checkbox" id="objeto-mao-propria" ${obj.maoPropria ? 'checked' : ''}>
+          </div>
+        </div><div class="propertyView col-sm-8">
+          <div class="name">
+            <label for="objeto-descricao" class="">Descrição do Objeto <small class="text-muted text-lowercase"></small></label>
+          </div>
+          <div class="value col-sm-12">
+            <input id="objeto-descricao" type="text" maxlength="80" value="${obj.descricao}" class="readonly inputText" style="/* width: 250px; */">
+          </div>
+        </div>
+        
+      </div>
+      `
+
+      return jQ3(frag)
+    }
+
+    return;
+  }
   
   function registrarServiceWorker(){
     
@@ -1968,6 +2505,7 @@ function pjeLoad(){
       requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
       observeSeEModeloJ2();
+      observeParaARDigital();
       break;
     
     case '/pje/ConsultaPrazos/listView.seam':

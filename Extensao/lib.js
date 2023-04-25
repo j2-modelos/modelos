@@ -549,12 +549,24 @@ String.prototype.replaceOrd = function(){
 
 
 var j2EUi = {
-  createPanel : function(titleAsString, bodyAsJQuery){
-    return  jQ3('<div>', {class : 'rich-panel col-sm-12'}).append(
+  createPanel : function(titleAsString, bodyAsJQuery, j2Attr){
+    var divDef = {
+      class : 'rich-panel col-sm-12'
+    }
+    if(j2Attr)
+      divDef[j2Attr] = j2Attr
+
+    return  jQ3('<div>', divDef).append(
               jQ3('<div>', {class : 'rich-panel-header', text : titleAsString})
             ).append(
-              jQ3('<div>', {class : 'rich-panel-body panel'}).append(bodyAsJQuery)
+              jQ3('<div>', {class : 'rich-panel-body panel', 'j2-ui-content':'j2'}).append(bodyAsJQuery)
             );
+  },
+  createWarnElements : function(warnTextOr$, severityClass){
+    severityClass = severityClass || 'text-danger'
+    var $set = jQ3(`<img src="/pje/img/al/secam.png"><span class="${severityClass}"></span>`)
+    jQ3($set[1]).append(warnTextOr$)
+    return $set
   },
   createTable : function(data){
     var table = jQ3('<table>', {class : 'rich-table'});
@@ -593,6 +605,29 @@ var j2EUi = {
     });
     
     return table;
+  },
+  spinnerHTML : ()=> { return `
+    <style id="uS1">
+      .pLog{font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;text-align:center; margin: 0; font-weight:bold;} 
+      .divCont{width:100%;margin: auto;text-align: center;}
+      .svg-preloader{margin:auto;font-size:0;display:inline-block;-webkit-animation:outer 6.6s linear infinite;animation:outer 6.6s linear infinite} 
+      .svg-preloader svg{-webkit-animation:inner 1.32s linear infinite;animation:inner 1.32s linear infinite}
+      .svg-preloader svg  circle{fill:none;stroke:#448AFF;stroke-linecap:square;-webkit-animation:arc 1.32s cubic-bezier(.8,0,.4,.8) infinite;animation:arc 1.32s cubic-bezier(.8,0,.4,.8) infinite}
+      @-webkit-keyframes outer{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+      @keyframes outer{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+      @-webkit-keyframes inner{0%{-webkit-transform:rotate(-100.8deg);transform:rotate(-100.8deg)}100%{-webkit-transform:rotate(0);transform:rotate(0)}}
+      @keyframes inner{0%{-webkit-transform:rotate(-100.8deg);transform:rotate(-100.8deg)}100%{-webkit-transform:rotate(0);transform:rotate(0)}}
+      @-webkit-keyframes arc{0%{stroke-dasharray:1 210.49px;stroke-dashoffset:0}40%{stroke-dasharray:151.55px,210.49px;stroke-dashoffset:0}100%{stroke-dasharray:1 210.49px;stroke-dashoffset:-151.55px}}
+      @keyframes arc{0%{stroke-dasharray:1 210.49px;stroke-dashoffset:0}40%{stroke-dasharray:151.55px,210.49px;stroke-dashoffset:0}100%{stroke-dasharray:1 210.49px;stroke-dashoffset:-151.55px}}
+    </style>
+    <div class="divCont">
+      <div class="svg-preloader">
+          <svg version="1.1" height="30" width="30" viewBox="0 0 75 75">
+              <circle cx="37.5" cy="37.5" r="33.5" stroke-width="8">
+              </circle>
+          </svg>
+      </div>
+    </div>     ` 
   }
 };
 
@@ -2178,7 +2213,7 @@ function j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallb
 window.j2EPJeRest =  {
   ajax : {
     get : function(url, sucCB, errCB, dataType){
-      jQ3.ajax({
+      return jQ3.ajax({
         url : url,
         type : 'get',
         dataType: dataType || 'json',
@@ -2208,7 +2243,7 @@ window.j2EPJeRest =  {
       });
     },
     post : function(url, data, sucCB, errCB){
-      jQ3.ajax({
+      return jQ3.ajax({
         url : url,
         type : 'post',
         data : data,
@@ -2333,7 +2368,26 @@ window.j2EPJeRest =  {
     }
   },
   processo : {
-    getCredentials : j2EQueryGetProcessoCredentials
+    getCredentials : j2EQueryGetProcessoCredentials,
+    getChaveAcesso : (idProcesso,sucCB, errCB) =>{
+      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
+                          sucCB, errCB, 'text');
+    },
+    getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
+      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
+                          sucCB, errCB, 'html');
+    }
+  },
+  fluxo : {
+    listarTransicoes : function(idTarefa, sucCB, errCB){
+      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/transicoes/${idTarefa}`, 
+                          sucCB, errCB);
+    },
+    movimentar : function(idTarefa, transicao, sucCB, errCB){
+      transicao = encodeURI(transicao)
+      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/movimentar/${idTarefa}/${transicao}`, 
+                          sucCB, errCB);
+    },
   }
 };
 
