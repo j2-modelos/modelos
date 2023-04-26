@@ -2340,6 +2340,7 @@
         <versao id="3.0">
             <classe id="Documento" versao="3.0">
                 <importLib name="termoAudiencia.js" artifact="#{j2.res.mod.termoAudiencia}"/>
+                <importLib name="addtionalControls.js" artifact="#{j2.res.MAIN.addtionalControls}"/>
                 <!--importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/-->
                 <!--importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/-->
                 <importLib name="chosen.jquery.js" artifact="#{j2.res.lib.chosen}" scope="EDT"/> <!-- chosen -->
