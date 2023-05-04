@@ -1880,13 +1880,50 @@ function pjeLoad(){
         PACTarefas = [
           'Preparar intimação'
         ],
-        checkedEnderecos = 0
+        checkedEnderecos = 0,
+        deferPLPQuery
     j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
       if(!(data.length))
         return;
       
       if(PACTarefas.indexOf(data[data.length-1]) < 0)
         return;
+      
+      deferPLPQuery = jQ3.Deferred()
+      j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`p-#${idProc}#`)
+      .done( alerta => { 
+        if (! (alerta.length))
+          return;
+        
+        jQ3.extend(j2E.env,  JSON.parse(alerta) )
+
+        if ( ! (j2E.env[`p-#${idProc}#`].PLP ) )
+          return;
+
+        //deferPLPQuery.__queries = j2E.env[`p-#${idProc}#`].PLP.length
+        var promisses = []
+        
+        j2E.env[`p-#${idProc}#`].PLP.forEach( plp => {
+          //j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`id-${plp}`)
+          let _prom = j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`id-${plp}`)
+          .done( plpJson => {
+            if (! plpJson.length)
+              return;
+
+            if( ! (j2E.env.PLP ))
+              j2E.env.PLP = []
+
+            j2E.env.PLP.push( JSON.parse(plpJson)[`id-${plp}`] )   
+            /*deferPLPQuery.__queries--
+            if( deferPLPQuery.__queries === 0 )
+              deferPLPQuery.resolve( j2E.env.PLP )*/
+          })
+          promisses.push(_prom)
+        })
+        
+        jQ3.when(...promisses).done( ress => deferPLPQuery.resolve( j2E.env.PLP ) )
+        
+      })  
 
       jQ3.initialize('.rich-panel-header', function(){
         var $div = jQ3(this);
@@ -1967,7 +2004,7 @@ function pjeLoad(){
             }
               
             j2E.ARDigital.api.ajax.setToken(response.response.message)
-            
+            j2E.env.extAccToken = response.response.message
             /*var inpChk = '<input id="plp-new" class="checkbox" type="checkbox">'
             return j2EUi.createTable([
               [ '', 'Nº PLP', 'Listas de postagem' ],
@@ -1986,17 +2023,35 @@ function pjeLoad(){
             return;
 
           ARDigitalPanel.$content = ARDigitalPanel.find('[j2-ui-content]')
+          
+          var deferPLPListar = j2E.ARDigital.api.plp.listar()
 
-          j2E.ARDigital.api.plp.listar((res)=>{
+          jQ3.when( deferPLPListar, deferPLPQuery).done ((res, storedPLPs)=>{
+            let matachedList
+            res[0].result.some(item =>  { 
+              return j2E.env.PLP.filter(item2 => { 
+                if( item2.id !== item.id )
+                  return false;
+                
+                matachedList = {
+                  id : item.id,
+                  plp : item,
+                  store : item2
+                }
+                return true
+              }).length !== 0 } 
+            ) 
+
             var tableSet = [
               [ '<img src="/pje/img/toolbox.png" title="Seleciontar lista de postagem ou criar nova">', 
                 'Nº PLP', 'Objetos', 'Data de postagem' ]
             ]
-            res.result.forEach( plp =>{
+            res[0].result.forEach( plp =>{
               if (false || plp.status === 'ABERTA'){
-                var inpChk = jQ3(`<input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" />`)
+                var inpChk = jQ3(`<input id="plp-${plp.id}" class="checkbox " type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''}  ${ matachedList.id == plp.id ? 'checked="checked"' : ''} />`)
                 inpChk.data('j2E', {
-                  plp : plp
+                  plp : plp,
+                  matachedList : matachedList
                 })
                 var dtaPostagem = plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')
                 tableSet.push([inpChk, plp.numeroPlp, plp.qtdeObjetos, dtaPostagem ])
@@ -2004,13 +2059,18 @@ function pjeLoad(){
             })
             
             let hoje = new Date().toISOString().split("T")[0];
-            var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" />`
-            var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" />`
+            var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''} />`
+            var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" ${ matachedList ? 'disabled="disabled"' : ''} />`
             tableSet.push([inpChk, '-', 'Criar uma nova lista de postagem', inpDat])
 
+            let uiTable = j2EUi.createTable(tableSet)
             ARDigitalPanel.$content.empty()
-            ARDigitalPanel.$content.append( j2EUi.createTable(tableSet) )
-          }, (errRes)=>{
+            ARDigitalPanel.$content.append( uiTable )
+
+            uiTable.find('input:checked').parents('tr').find('td').addClass('success')
+          })
+
+          deferPLPListar.fail(errRes=>{
             ARDigitalPanel.$content.empty()
             ARDigitalPanel.$content.append(j2EUi.createWarnElements(`
               Erro ao recuperar as PLP's no AR Digital. (${errRes})
@@ -2025,6 +2085,8 @@ function pjeLoad(){
             $el.parents('tbody').find('.success').removeClass('success')
             $el.parents('tr').find('td').addClass('success')
           })
+
+
 
         })
 

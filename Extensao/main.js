@@ -447,6 +447,7 @@ function init(){
         fronendLoad();
         break;
       case 'https://pje.tjma.jus.br':
+        loadPJeRestAndSeamInteraction()
         pjeLoad();
         break;
     }  	

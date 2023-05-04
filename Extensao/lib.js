@@ -2210,186 +2210,335 @@ function j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallb
   }
 }
 
-window.j2EPJeRest =  {
-  ajax : {
-    get : function(url, sucCB, errCB, dataType){
-      return jQ3.ajax({
-        url : url,
-        type : 'get',
-        dataType: dataType || 'json',
-        success : function(data, status, xhr){
-          if(sucCB)
-            sucCB(data, status, xhr);
-        },
-        error : function(a, b, c, d){
-          if(errCB)
-            errCB(a, b, c, d);
-        },
-        headers : {
-          "Content-Type": "application/json",
-          "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-          "x-no-sso": "true",
-          "x-pje-legacy-app": "pje-tjma-1g",
-          "x-pje-cookies": document.cookie,
-          xhrFields: {
-            withCredentials: true
+function loadPJeRestAndSeamInteraction(){
+  window.j2EPJeRest =  {
+    ajax : {
+      get : function(url, sucCB, errCB, dataType){
+        return jQ3.ajax({
+          url : url,
+          type : 'get',
+          dataType: dataType || 'json',
+          success : function(data, status, xhr){
+            if(sucCB)
+              sucCB(data, status, xhr);
+          },
+          error : function(a, b, c, d){
+            if(errCB)
+              errCB(a, b, c, d);
+          },
+          headers : {
+            "Content-Type": "application/json",
+            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
+            "x-no-sso": "true",
+            "x-pje-legacy-app": "pje-tjma-1g",
+            "x-pje-cookies": document.cookie,
+            xhrFields: {
+              withCredentials: true
+            }
+          },
+          beforeSend : function(xhr, set){
+            delete set.accepts.xml;
+            delete set.accepts.script;
+            delete set.accepts.html;
           }
-        },
-        beforeSend : function(xhr, set){
-          delete set.accepts.xml;
-          delete set.accepts.script;
-          delete set.accepts.html;
-        }
-      });
-    },
-    post : function(url, data, sucCB, errCB){
-      return jQ3.ajax({
-        url : url,
-        type : 'post',
-        data : data,
-        dataType: 'json',
-        success : function(data, status, xhr){
-          if(sucCB)
-            sucCB( data, status, xhr);
-        },
-        error : function(a, b, c, d){
-          if(errCB)
-            errCB(a, b, c, d);
-        },
-        headers : {
-          "Content-Type": "application/json",
-          "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-          "x-no-sso": "true",
-          "x-pje-legacy-app": "pje-tjma-1g",
-          "x-pje-cookies": document.cookie,
-          xhrFields: {
-            withCredentials: true
+        });
+      },
+      post : function(url, data, sucCB, errCB){
+        return jQ3.ajax({
+          url : url,
+          type : 'post',
+          data : data,
+          dataType: 'json',
+          success : function(data, status, xhr){
+            if(sucCB)
+              sucCB( data, status, xhr);
+          },
+          error : function(a, b, c, d){
+            if(errCB)
+              errCB(a, b, c, d);
+          },
+          headers : {
+            "Content-Type": "application/json",
+            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
+            "x-no-sso": "true",
+            "x-pje-legacy-app": "pje-tjma-1g",
+            "x-pje-cookies": document.cookie,
+            xhrFields: {
+              withCredentials: true
+            }
+          },
+          beforeSend : function(xhr, set){
+            delete set.accepts.xml;
+            delete set.accepts.script;
+            delete set.accepts.html;
           }
-        },
-        beforeSend : function(xhr, set){
-          delete set.accepts.xml;
-          delete set.accepts.script;
-          delete set.accepts.html;
-        }
-      });
-    }
-  },
-  etiquetas : {
-    listar : function(queryCriteria, sucCB, errCB){
-
-      function _data(){
-        return JSON.stringify(jQ3.extend({
-          maxResults : 30,
-          page :  0,
-          tagsString : ""
-        }, queryCriteria || {} ));
-      };
-      
-      j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
-                            _data(), sucCB, errCB);
-    },
-    processosDaEtiqueta : function(idEtiqueta, sucCB, errCB){
-      if(!(idEtiqueta)){
-        throw new Error("Não existe id da etiqueta definido para consulta"); 
-        return;
-      }
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
-                            sucCB, errCB);
-    },
-    inserir : function(idProcesso, etiqueta, sucCB, errCB) {
-      function _data(){
-        return JSON.stringify({
-          'idProcesso' : idProcesso,
-          'tag' : etiqueta
         });
       }
-      j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
-                            _data(), sucCB, errCB);
+    },
+    etiquetas : {
+      listar : function(queryCriteria, sucCB, errCB){
+
+        function _data(){
+          return JSON.stringify(jQ3.extend({
+            maxResults : 30,
+            page :  0,
+            tagsString : ""
+          }, queryCriteria || {} ));
+        };
+        
+        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
+                              _data(), sucCB, errCB);
+      },
+      processosDaEtiqueta : function(idEtiqueta, sucCB, errCB){
+        if(!(idEtiqueta)){
+          throw new Error("Não existe id da etiqueta definido para consulta"); 
+          return;
+        }
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
+                              sucCB, errCB);
+      },
+      inserir : function(idProcesso, etiqueta, sucCB, errCB) {
+        function _data(){
+          return JSON.stringify({
+            'idProcesso' : idProcesso,
+            'tag' : etiqueta
+          });
+        }
+        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
+                              _data(), sucCB, errCB);
+      }
+      
+    },
+    tarefas : {
+      _baseQuery : function(){
+        return {
+          "numeroProcesso": "", "classe": null,"tags": [],"tagsString": null,
+          "poloAtivo": null,"poloPassivo": null,"orgao": null,"ordem": null,
+          "page": 0,"maxResults": 30,"idTaskInstance": null,"apelidoSessao": null,
+          "idTipoSessao": null,"dataSessao": null,"somenteFavoritas": null,
+          "objeto": null,"semEtiqueta": null,"assunto": null,"dataAutuacao": null,
+          "nomeParte": null,"nomeFiltro": null,"numeroDocumento": null,
+          "competencia": "","relator": null,"orgaoJulgador": null,"somenteLembrete": null,
+          "somenteSigiloso": null,"somenteLiminar": null,"eleicao": null,
+          "estado": null,"municipio": null,"prioridadeProcesso": null,"cpfCnpj": null,
+          "porEtiqueta": null,"conferidos": null
+        };
+      },
+      listar : function(sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+                            sucCB, errCB);
+      },
+      historico : function(idProcesso, sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
+                            sucCB, errCB);
+      },
+      descricaoNoFluxo : function(idTarefa, idProcesso, sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
+                            sucCB, errCB);
+      },
+      recuperarEtiquetasQuantitativoProcessoTarefaPendente : function(tarefa, query, sucCB, errCB){
+        var baseQuery = j2EPJeRest.tarefas._baseQuery();
+        
+        var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarEtiquetasQuantitativoProcessoTarefaPendente/$/false';
+        nHref = nHref.replaceOrd('$', encodeURI(tarefa));
+        
+        baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+
+        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+      },
+      recuperarProcessosTarefaPendenteComCriterios : function(tarefa, query, sucCB, errCB){
+        var baseQuery = j2EPJeRest.tarefas._baseQuery();    
+        
+        var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarProcessosTarefaPendenteComCriterios/$/false';
+        nHref = nHref.replaceOrd('$', encodeURI(tarefa));
+        
+        baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+
+        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+      },
+      painelUsuario : function(query, sucCB, errCB){
+        var baseQuery ={
+            numeroProcesso: "",
+            competencia: "",
+            etiquetas: []
+        };
+        baseQuery = JSON.stringify( jQ3.extend(baseQuery, query) );
+        
+        j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+                            baseQuery, sucCB, errCB);
+      }
+    },
+    processo : {
+      getCredentials : j2EQueryGetProcessoCredentials,
+      getChaveAcesso : (idProcesso,sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
+                            sucCB, errCB, 'text');
+      },
+      getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
+                            sucCB, errCB, 'html');
+      }
+    },
+    fluxo : {
+      listarTransicoes : function(idTarefa, sucCB, errCB){
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/transicoes/${idTarefa}`, 
+                            sucCB, errCB);
+      },
+      movimentar : function(idTarefa, transicao, sucCB, errCB){
+        transicao = encodeURI(transicao)
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/movimentar/${idTarefa}/${transicao}`, 
+                            sucCB, errCB);
+      },
     }
+  };
+
+
+  if( typeof window.j2E === 'undefined')
+    window.j2E = {}
+
+  j2E.SeamIteraction = ( $ => { var _this = {
+    session : {},
+    util : {
+      conformPayload : PAYLOAD =>{
+        PAYLOAD=PAYLOAD.split('\n').map( function(_i ) { 
+          _i = _i.replace(': ','=')
+          return _i.trim()
+        })
     
-  },
-  tarefas : {
-    _baseQuery : function(){
-      return {
-        "numeroProcesso": "", "classe": null,"tags": [],"tagsString": null,
-        "poloAtivo": null,"poloPassivo": null,"orgao": null,"ordem": null,
-        "page": 0,"maxResults": 30,"idTaskInstance": null,"apelidoSessao": null,
-        "idTipoSessao": null,"dataSessao": null,"somenteFavoritas": null,
-        "objeto": null,"semEtiqueta": null,"assunto": null,"dataAutuacao": null,
-        "nomeParte": null,"nomeFiltro": null,"numeroDocumento": null,
-        "competencia": "","relator": null,"orgaoJulgador": null,"somenteLembrete": null,
-        "somenteSigiloso": null,"somenteLiminar": null,"eleicao": null,
-        "estado": null,"municipio": null,"prioridadeProcesso": null,"cpfCnpj": null,
-        "porEtiqueta": null,"conferidos": null
-      };
+        PAYLOAD.shift()
+        PAYLOAD.pop()
+    
+        return encodeURI(PAYLOAD.join('&') )
+      }
     },
-    listar : function(sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
-                          sucCB, errCB);
-    },
-    historico : function(idProcesso, sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
-                          sucCB, errCB);
-    },
-    descricaoNoFluxo : function(idTarefa, idProcesso, sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
-                          sucCB, errCB);
-    },
-    recuperarEtiquetasQuantitativoProcessoTarefaPendente : function(tarefa, query, sucCB, errCB){
-      var baseQuery = j2EPJeRest.tarefas._baseQuery();
-      
-      var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarEtiquetasQuantitativoProcessoTarefaPendente/$/false';
-      nHref = nHref.replaceOrd('$', encodeURI(tarefa));
-      
-      baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+    alertas : {
+      requestsIteractions : {
+        baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
+        listView : () =>{
+          var def = $.Deferred()
 
-      j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
-    },
-    recuperarProcessosTarefaPendenteComCriterios : function(tarefa, query, sucCB, errCB){
-      var baseQuery = j2EPJeRest.tarefas._baseQuery();    
-      
-      var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarProcessosTarefaPendenteComCriterios/$/false';
-      nHref = nHref.replaceOrd('$', encodeURI(tarefa));
-      
-      baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+          if( _this.session.viewId ){
+            def.resolve( _this.alertas.requestsIteractions ) 
+            return def.promise()
+          }
 
-      j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
-    },
-    painelUsuario : function(query, sucCB, errCB){
-      var baseQuery ={
-          numeroProcesso: "",
-          competencia: "",
-          etiquetas: []
-      };
-      baseQuery = JSON.stringify( jQ3.extend(baseQuery, query) );
-      
-      j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
-                          baseQuery, sucCB, errCB);
-    }
-  },
-  processo : {
-    getCredentials : j2EQueryGetProcessoCredentials,
-    getChaveAcesso : (idProcesso,sucCB, errCB) =>{
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
-                          sucCB, errCB, 'text');
-    },
-    getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
-                          sucCB, errCB, 'html');
-    }
-  },
-  fluxo : {
-    listarTransicoes : function(idTarefa, sucCB, errCB){
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/transicoes/${idTarefa}`, 
-                          sucCB, errCB);
-    },
-    movimentar : function(idTarefa, transicao, sucCB, errCB){
-      transicao = encodeURI(transicao)
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/movimentar/${idTarefa}/${transicao}`, 
-                          sucCB, errCB);
-    },
-  }
-};
+
+          $.get(_this.alertas.requestsIteractions.baseURL)
+          .done( (xml)=> { 
+            var $html = $(xml)
+            var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+            _this.session.viewId = viewId
+
+            def.resolve( _this.alertas.requestsIteractions ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        tabFormSelection : ()=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            javax.faces.ViewState: ${_this.session.viewId}
+            form: form
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        addAlerta : (alerta, criticidade)=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            alertaForm:alerta:j_id286:alerta: ${alerta}
+            alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+            alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: true
+            alertaForm:saveH: Incluir
+            alertaForm: alertaForm
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewId}
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => def.resolve( _this.alertas.requestsIteractions ) )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        searchAlerta : (query, criticidade, ativo)=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            AJAXREQUEST: j_id137
+            alertaGridSearchForm:page: 1
+            alertaGridSearchForm:searching: true
+            alertaGridSearchForm:j_id141:ativoDecoration:ativo: ${ativo || ''}
+            alertaGridSearchForm:j_id152:inCriticidadeDecoration:inCriticidade: ${ criticidade || 'org.jboss.seam.ui.NoSelectionConverter.noSelectionValue'}
+            alertaGridSearchForm:j_id162:j_id164:alerta: ${query}
+            alertaGridSearchForm: alertaGridSearchForm
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewId}
+            alertaGridSearchForm:search: alertaGridSearchForm:search
+            AJAX:EVENTS_COUNT: 1
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( xml => def.resolve( xml, _this.alertas.requestsIteractions)  )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        }
+      },
+      acoes : {
+        adicionarUmAlertaSemAssociarProcesso : textoAlerta => {
+          var def = $.Deferred()
+
+          _this.alertas.requestsIteractions.listView()
+          .done( 
+            it => it.tabFormSelection()
+            .done( 
+              it => it.addAlerta( textoAlerta )
+              .done( it => def.resolve() )
+              .fail( err => def.reject(err) )
+
+            ).fail( err => def.reject(err) )
+          )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        pesquisarAlerta : (query, criticidade, ativo) => {
+          var def = $.Deferred()
+          var acoes = _this.alertas.acoes
+
+          _this.alertas.requestsIteractions.listView()
+          .done( 
+            it => it.searchAlerta(query, criticidade, ativo)
+            .done( xml => { 
+              var alerta = $(xml).find('#alertaGridList\\:tb').find('tr:first-child >td:nth-child(2)').text()
+              def.resolve(alerta, xml, acoes ) 
+            } )
+            .fail( err => def.reject(err) )
+          )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        }
+      }
+    }}
+    return _this
+  })(jQ3)
+}
 
 openPopUp = function (id, url, width, height) {
   function guid() {
