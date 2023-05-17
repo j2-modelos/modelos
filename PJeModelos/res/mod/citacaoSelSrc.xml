@@ -27,6 +27,7 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
+            <gItem id="intmItAudDesigSemSalaSEC"/>
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudCEJUSC"/>
@@ -639,6 +640,8 @@ and open the template in the editor.
         </item>                
         
         <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">
@@ -654,6 +657,25 @@ and open the template in the editor.
                 </selectorArray>               
             </itemContent>
         </item>
+        <item id="intmItAudDesigSemSalaSEC" label="Designada (Ad Hoc SEC)" dataPlus="">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+
         <item id="intmItAudDesigExTiExSemSala" label="Designada ExTiEx" dataPlus="">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>

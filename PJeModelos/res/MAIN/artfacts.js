@@ -84,13 +84,21 @@ try {
         'fileName' : 'Modelos.xml'
       },
       'unidadesAutorizadas' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/UnidadesAutorizadas.xml' : 'rynf0qbcnvxmu44'; },
+        'lib': 'ROOT/res/XML/UnidadesAutorizadas.xml',
+        'type': 'j2/xml',
+        'version' : '1.1', 
+        'fileName' : 'UnidadesAutorizadas.xml',
+        //'storable' : true
+      },
+      /*'unidadesAutorizadas' : { 
         'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/UnidadesAutorizadas.xml' : '8rdsdj8msocl88z'; },
         'lib': window.j2Extension ? 'ROOT/res/XML/UnidadesAutorizadas.xml' : 'ROOT/res/XML/UnidadesAutorizadas.js',
         'type': window.j2Extension ? 'j2/xml' : 'j2/javascript',
         'version' : '0.1', 
         'fileName' : window.j2Extension ? 'UnidadesAutorizadas.xml' : 'UnidadesAutorizadas.js',
         'storable' : true
-      },
+      },*/
       /*'usuarios' : {
         'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/Usuarios.xml' : 'bei36n9jprcmtvx'; },        
         'lib': window.j2Extension ? 'ROOT/res/XML/Usuarios.xml' : 'ROOT/res/XML/Usuarios.js',

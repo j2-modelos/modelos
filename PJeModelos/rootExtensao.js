@@ -81,7 +81,7 @@ function RUN(e) {
   };
       
   if (!window.jQ)
-    window.jQ = window.$ || window.parent.jQuery;
+    window.jQ = window.$ || window.parent.jQuery_21 || window.parent.jQuery;
   
     window.j2.mod.com._.rootConversation = {
     'msgBuilder' : function(_tx, clear){

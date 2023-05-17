@@ -16,14 +16,14 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
       </elemento>
     </itemFormats>
     <groupsDefs>
-        <group label="Ad Hoc">
+        <!--group label="Ad Hoc"-->
             <!--gItem id="certSuspensaoExpedicaoMandados"/-->
 			      <!--<gItem id="certMandadoAPartir20211020"/>-->
             <!--<gItem id="certItPortariaCOVID19"/>-->
             <!--<gItem id="certItErroPje"/>-->
-            <gItem id="certItCorreicaoAnual"/>
+            <!-- gItem id="certItCorreicaoAnual"/-->
             <!--<gItem id="certConclusaoCorreicao2020"/>-->
-        </group>           
+        <!-- /group -->           
                     
         <group label="Comuns">
             <gItem id="certItGenerico"/>

@@ -17,7 +17,7 @@ function init(){
             },
             headers : {
               'sentinela-token': `${j2E.ARDigital.api.ajax.accessToken.token}`,
-              'X-KL-Ajax-Request': 'Ajax_Request'
+              /*'X-KL-Ajax-Request': 'Ajax_Request'*/
             },
             /*beforeSend : function(xhr, set){
               delete set.accepts.xml;
@@ -44,7 +44,7 @@ function init(){
               'sentinela-token': `${j2E.ARDigital.api.ajax.accessToken.token}`,
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'X-KL-Ajax-Request': 'Ajax_Request'
+              /*'X-KL-Ajax-Request': 'Ajax_Request'*/
             },
             /*beforeSend : function(xhr, set){
               delete set.accepts.xml;
@@ -71,7 +71,7 @@ function init(){
               'sentinela-token': `${j2E.ARDigital.api.ajax.accessToken.token}`,
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'X-KL-Ajax-Request': 'Ajax_Request'
+             /* 'X-KL-Ajax-Request': 'Ajax_Request'*/
             },
             /*beforeSend : function(xhr, set){
               delete set.accepts.xml;

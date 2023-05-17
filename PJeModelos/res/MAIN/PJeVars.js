@@ -126,6 +126,24 @@ try {
         'audiencia': {
           'listar' : gVG('audienciaProcesso'),
           'data' : gVG('dataAudiencia'),
+          dataIso : (()=>{
+            try{
+              const dataHora = gVG('dataAudiencia');
+              if(!( dataHora.length ) )
+                return ''
+
+              const [data, hora] = dataHora.split(' ');
+
+              const [dia, mes, ano] = data.split('/');
+              const [horaStr, minuto] = hora.split(':');
+
+              const dataISO = `${ano}-${mes}-${dia}T${horaStr}:${minuto}:00.000Z`
+
+              return dataISO;
+            }catch(e){
+              return '';
+            }
+          })(),
           'endereco' : gVG('enderecoSalaAudiencia'),
           'sala' : (function(){
             try{

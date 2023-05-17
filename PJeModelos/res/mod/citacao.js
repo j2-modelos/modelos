@@ -60,21 +60,29 @@ try {
           tools.hide(pkg.Citacao.containers.exp.OJ());
           tools.hide(pkg.Citacao.containers.edt.seletorOJ());
         }*/
+        var meio = pkg.Citacao.containers.edt.meio()
+        function __updateSeletorMeioComunicacao(){
           
-        pkg.Citacao.containers.edt.meio().value = "meioComunicItCentralMandados";
-        pkg.SeletorOJ.isVisible = true;
-        
-        var _ = [
-                 'meioComunicItDJe', 
-                 'meioComunicItPessoalmente',
-                 'meioComunicItTelefone', 
-                 'meioComunicItWhatsApp'];
-        var os = pkg.Citacao.containers.edt.meio().options;
+          meio.value = "meioComunicItCentralMandados";
+          pkg.SeletorOJ.isVisible = true;
+          
+          var _ = [
+                  'meioComunicItDJe', 
+                  'meioComunicItPessoalmente',
+                  'meioComunicItTelefone', 
+                  'meioComunicItWhatsApp'];
+          var os = meio.options;
 
-        forEach(_, function(di){
-            if(os[di])
-              os[di].remove();
-        });
+          forEach(_, function(di){
+              if(os[di])
+                os[di].remove();
+          });
+        }
+
+        if(jQ3(meio).find('#meioComunicItCorreios').length)
+          __updateSeletorMeioComunicacao();
+        else
+          evBus.on('Selector.loadSelectSource.meiosComunicacao', __updateSeletorMeioComunicacao)
       },
       setEvents : function(){
         var cb = function(event, closer){

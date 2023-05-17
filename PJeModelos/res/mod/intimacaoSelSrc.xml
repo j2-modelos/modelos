@@ -34,6 +34,7 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
+            <gItem id="intmItAudDesigSemSalaSEC"/>
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudCEJUSC"/>
@@ -243,6 +244,8 @@ and open the template in the editor.
         </item>
         
         <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">
@@ -253,6 +256,24 @@ and open the template in the editor.
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudDesigSemSalaSEC" label="Designada (Ad Hoc SEC)" dataPlus="{ 'isAdHoc': true }">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -1481,8 +1502,8 @@ and open the template in the editor.
                             #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
                             completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
-                            em relação aos danos morais alegados}, por meio da plataforma pública digital de interlocução 
+                            ação apresentou requerimento(s) administrativo(s) para solução da demanda,  inclusive em relação ao pedido 
+                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
@@ -1494,8 +1515,8 @@ and open the template in the editor.
                             #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
                             completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
-                            em relação aos danos morais alegados}, por meio da plataforma pública digital de interlocução 
+                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, inclusive em relação ao pedido 
+                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior

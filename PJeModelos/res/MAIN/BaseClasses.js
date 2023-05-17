@@ -8099,6 +8099,60 @@ try {
         j2.mod._.styleSetter(_.el, 'Hidden', true);
       }
     };     
+
+
+    /**
+     * COMMON GLOBAL EVENTS
+     */
+    evBus.on('na-finalidade-de-audiencia-disparada', function(ev, arg, finItem, b, c){ 
+      let data = j2.env.PJeVars.audiencia.dataIso; 
+      if(!(data.length))
+        return;
+
+      data = new Date(data); 
+      const inicioIntervalo = new Date('2023-06-12T00:00:00.000Z'); 
+      const fimIntervalo =    new Date('2023-06-16T23:59:59.000Z'); 
+      //const inicioIntervalo = new Date('2023-07-15T00:00:00.000Z'); 
+      //const fimIntervalo =    new Date('2023-07-20T23:59:59.000Z'); 
+
+      if (data >= inicioIntervalo && data <= fimIntervalo) {
+        let audTipo = j2.env.PJeVars.audiencia.tipo;
+
+        if ( audTipo === "Conciliação, Instrução e Julgamento" ){
+          var text = [
+            'Observar que este processo possui audiência designada para a ',
+            'Semana Estadual de Conciliação (12/06/2023 a 16/06/2023). #:BR{}#:BR{}',
+            'Contudo, foi designada como Conciliação, Instrução e Julgamento neste sistema PJe.',
+            'Deverá ser retificada o tipo da audiência'
+          ]
+          pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+        }
+        else if( audTipo === "Conciliação" ){
+          var text = [
+            'Observar que este processo possui audiência designada para a ',
+            'Semana Estadual de Conciliação (12/06/2023 a 16/06/2023). #:BR{}#:BR{}',
+            'Deverá ser utilizada',
+            'a finalidade #:B{Designada (Ad Hoc SEC) do agrupamento Audiências} para assegurar',
+            'que as partes sejam regularmente intimadas para audiência',
+            'UNA / Conciliação, Instrução e Julgamento.'
+          ]
+
+          if( ! finItem.dataPlus.length){
+            pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+            return;
+          }else{
+            var dpl = j2.mod._._j2JSONparse(finItem.dataPlus);
+
+            if( dpl.isAdHoc )
+              return;
+
+              pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+          }
+        }
+      }
+
+      
+    })
     
   })();
 } catch (err) {
