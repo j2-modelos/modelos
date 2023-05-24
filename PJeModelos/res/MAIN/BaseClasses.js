@@ -2571,7 +2571,7 @@ try {
         evBus.on('onFinishEdition', 900, function(){
           jQ3('.ui-helper-hidden-accessible').remove()
           jQ3('[j2-tooltiped]').removeAttr('title')
-          mod.par.$('#Fragment-Loader-div').remove()
+          mod.par.jQ3('#Fragment-Loader-div').remove()
           jQ3('#vocativo .HLField').removeClass('HLField')
         })
       },
@@ -3394,9 +3394,9 @@ try {
           ctxt : el,
           open : $(mod.edt.gE('ExpedienteVinculado-ExpedienteOpener')),
           openerLinkedActions : {
-            editar : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]'),
-            openExpediente : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').prev(),
-            openProcesso : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').next()
+            editar : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]'),
+            openExpediente : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').prev(),
+            openProcesso : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').next()
           }
         };        
         
@@ -3411,7 +3411,7 @@ try {
         jQ3.get(_.openerLinkedActions.openExpediente.attr('href'), function(data, textStatus, jqXHR){ // ndlg2 as new
           if(textStatus==='success'){
             _.expediente$ = jQ3(data);
-            pkg.ExpedienteVinculado.expediente.$ = _.expediente$;
+            pkg.ExpedienteVinculado.expediente.jQ3 = _.expediente$;
           }
           if(textStatus==='error'){
             var e = 'Erro ao carregar html do expediente vinculado.';
@@ -7410,19 +7410,19 @@ try {
         var dlasJ2Win = j2.modelo.sup.docListAutoSearch;
           
           dlasJ2Win.win.addEventListener('load', function() {
-            j2.modelo.sup.docListAutoSearch.$ = jQ3Factory(j2.modelo.sup.docListAutoSearch.win, true);
+            j2.modelo.sup.docListAutoSearch.jQ3 = jQ3Factory(j2.modelo.sup.docListAutoSearch.win, true);
             dlasJ2Win.searchClone = {
               tbl : jQ3('<table>'),
               tBodyPrevHash : 0
             };
             setInterval(function(){ 
-              var currHsh = dlasJ2Win.$('#processoDocumentoGridList\\:tb').text().hashCode();
+              var currHsh = dlasJ2Win.jQ3('#processoDocumentoGridList\\:tb').text().hashCode();
               if(currHsh === dlasJ2Win.searchClone.tBodyPrevHash)
                 return;
               
               dlasJ2Win.searchClone.tBodyPrevHash = currHsh;
               
-              var cln = dlasJ2Win.$('#processoDocumentoGridList\\:tb').clone(true);
+              var cln = dlasJ2Win.jQ3('#processoDocumentoGridList\\:tb').clone(true);
               
               cln.find('tr').each(function(a, b, c){
                 b.id = jQ3(b).find('td:first').text().trim();
@@ -7430,7 +7430,7 @@ try {
               
               dlasJ2Win.searchClone.tbl.append(cln);
               
-              var a =dlasJ2Win.$('.rich-inslider-inc-horizontal')[0]; 
+              var a =dlasJ2Win.jQ3('.rich-inslider-inc-horizontal')[0]; 
               a.dispatchEvent(new Event('mousedown')); 
               a.dispatchEvent(new Event('mouseup'));
               
@@ -7510,12 +7510,168 @@ try {
         
         _ctrls.winReference = w;
         
+        j2.modelo.sup.docList.win.addEventListener('load', function() {
+        /*  var $wFrame = _jQ3('#frameHtml')*/
+
+          /*j2.modelo.sup.docList.htmlFrame = {
+            $ : jQ3Factory($wFrame.prop('contentWindow'), true),
+            win : $wFrame.prop('contentWindow'),
+            doc : $wFrame.prop('contentDocument')
+          }*/
+          var context = {
+            doc : j2.modelo.sup.docList.doc(),
+            loc : 'head'
+          }
+
+          var jquidef = jQ3.Deferred()
+          var jqinitdef = jQ3.Deferred()
+
+          evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function() {  jquidef.resolve() })
+          evBus.on('loaded-'+ j2.res.lib.jqueryInitialize.lib, function() {   
+            var wdl = j2.modelo.sup.docList
+            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc())
+            
+            jqinitdef.resolve() 
+          })
+          
+          jQ3.when(jquidef, jqinitdef).done( ()=>{
+            var _jQ3 = j2.modelo.sup.docList.jQ3
+            
+            function initializeFrameHTML(initial){
+              var wdl = j2.modelo.sup.docList
+              var $wFrame = _jQ3('#frameHtml')
+
+              function loadedFrame(){
+                wdl.htmlFrame = {
+                  jQ3 : jQ3Factory($wFrame.prop('contentWindow'), true),
+                  win : $wFrame.prop('contentWindow'),
+                  doc : () => { return $wFrame.prop('contentDocument') }
+                }
+                $wFrame.prop('contentWindow').jQ3 = wdl.htmlFrame.jQ3
+
+                var context = {
+                  doc : wdl.htmlFrame.doc(),
+                  loc : 'head'
+                }
+
+                var jquidef = jQ3.Deferred()
+                var jqctxmendef = jQ3.Deferred()
+                var jqctxmencssdef = jQ3.Deferred()
+                var jqsloaded = jQ3.Deferred()
+
+                evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function __lcb() { 
+                  jquidef.resolve()
+                  evBus.off('loaded-'+ j2.res.lib.jqueryUi.lib, __lcb)
+
+                  j2.mod.com.libLoader(j2.res.lib.jqueryContextMenu, context)
+                  j2.mod.com.libLoader(j2.res.CSS.jqueryContextMenu, context)
+                })
+                evBus.on('loaded-'+ j2.res.lib.jqueryContextMenu.lib, function __lcb2() { 
+                  jqctxmendef.resolve()
+                  evBus.off('loaded-'+ j2.res.lib.jqueryContextMenu.lib, __lcb2)
+                })
+                evBus.on('loaded-'+ j2.res.CSS.jqueryContextMenu.lib, function __lcb3() { 
+                  jqctxmencssdef.resolve()
+                  evBus.off('loaded-'+ j2.res.CSS.jqueryContextMenu.lib, __lcb3)
+                })
+
+                function checkJQueryLibsLoaded() { // tappac as new
+                  if (typeof wdl.htmlFrame.jQ3.ui !== 'undefined'
+                  &&  typeof wdl.htmlFrame.jQ3.contextMenu !== 'undefined'
+                  ) {
+                    jqsloaded.resolve()
+                  }
+                  else {
+                      window.setTimeout( checkJQueryLibsLoaded, 50 );
+                  }
+                }
+                checkJQueryLibsLoaded()
+                
+                jQ3.when(jquidef, jqctxmendef, jqctxmencssdef, jqsloaded).done(function() {  
+                  var $ = wdl.htmlFrame.jQ3
+                  var doc = wdl.htmlFrame.doc()
+
+                  //$(doc).ready(function() {
+                  //$(doc).ready(function() {
+                    $("body").on("mouseup", function() {
+                      var selectedText = getSelectedText();
+                      if (selectedText !== "") {
+                        abrirMenuSuspenso(selectedText);
+                      }
+                    });
+                 // });
+
+                 loadContextMenu($)
+                  
+                })
+
+                setTimeout( () => { 
+                  //j2.mod.com.libLoader(j2.res.lib.jquery3, context);
+                  j2.mod.com.libLoader(j2.res.lib.jqueryUi, context)
+                  j2.mod.com.libLoader(j2.res.lib.fontawesome, context);
+                }, 250 )
+              }
+
+              $wFrame.on('load', loadedFrame)
+              if(initial.firstIteraction)
+                loadedFrame()
+            }
+
+            _jQ3.initialize('#frameHtml', initializeFrameHTML)
+            initializeFrameHTML({ firstIteraction : true })
+            
+          })
+
+          j2.mod.com.libLoader(j2.res.lib.jqueryInitialize, context);
+          j2.mod.com.libLoader(j2.res.lib.jqueryUi, context);
+        })
+
+        function loadContextMenu($){
+          $.contextMenu({
+            selector: 'body', 
+            callback: function(key, options) {
+                var m = "clicked: " + key;
+                window.console && console.log(m) || alert(m); 
+            },
+            items: {
+               /* "edit": {name: "Edit", icon: "edit"},
+                "cut": {name: "Cut", icon: "cut"},
+               copy: {name: "Copy", icon: "copy"},*/
+                "pasteFinalidade": {name: "Colar em XXXFinalidadeXXX", icon: "paste", faClass : 'fa-solid fa-paste'},
+             /*   "delete": {name: "Delete", icon: "delete"},*/
+               /* "sep1": "---------",*/
+                /*"quit": {name: "Quit", icon: function(){
+                    return 'context-menu-icon context-menu-icon-quit';
+                }}*/
+            }
+          })
+            
+        }
+
+        function getSelectedText() {
+          var wdl = j2.modelo.sup.docList
+          var win = wdl.htmlFrame.win
+          var doc = wdl.htmlFrame.doc()
+
+          var text = "";
+          if (typeof win.getSelection !== "undefined") {
+            text = win.getSelection().toString();
+          } else if (typeof doc.selection !== "undefined" && doc.selection.type === "Text") {
+            text = doc.selection.createRange().text;
+          }
+          return text;
+        }
+      
+        
+        
+        
+        
         
         
         /* Depreciado com a atualizaão da versão do PJe
          * if(_ctrls.selectMethod.value === 'docAutos'){
           j2.modelo.sup.docList.win.addEventListener('load', function() {
-            j2.modelo.sup.docList.$ = jQ3Factory(j2.modelo.sup.docList.win, true);
+            j2.modelo.sup.docList.jQ3 = jQ3Factory(j2.modelo.sup.docList.win, true);
             setInterval(function(){ 
               j2.modelo.sup.docList.$('ul.tree').each(function(i, _dv){
                 //jQ3(_dv).find('li').not('[j2ruled="true"]').each(function(i, e){ // rdp2
