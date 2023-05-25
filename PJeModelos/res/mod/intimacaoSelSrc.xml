@@ -22,6 +22,7 @@ and open the template in the editor.
             <gItem id="intmItGenerico"/>
             <gItem id="intmItLiminar"/>
             <gItem id="intmItAtoOrdinatorio"/>
+            <gItem id="intmItDecisaoObrigacaoFazer"/>
             <gItem id="intmItSentencaObrigacaoFazer"/>
         </group>
         <group label="Alvará | Certidão | Portaria 29922022">
@@ -62,7 +63,7 @@ and open the template in the editor.
             <gItem id="intmItJuntExtratoBancario"/>
             <gItem id="intmItOJCertificarContatos"/>
             <gItem id="intmItManifestarSe"/>
-            <gItem id="intmItManifestarSeReplica"/>
+            <!--gItem id="intmItManifestarSeReplica"/-->
             <gItem id="intmItPretensaoResistida"/>
             <gItem id="intmItCienciaDiligenciaNegativa"/>
             
@@ -1146,6 +1147,39 @@ and open the template in the editor.
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{SENTENÇA}} #:span@docId{} proferida por este Juízo, 
                             #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no julgado}},
+                            cuja cópia segue anexa.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        <item id="intmItDecisaoObrigacaoFazer" label="Decisão | Obrigação" dataPlus="requireIdElementSet">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido ato judicial}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCorreios">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
+                            cuja cópia segue anexa.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItDJe">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
+                            a seguir transcrita.
+                        </data>
+                    </arElement>                
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{DECISÃO}} #:span@docId{} proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
                             cuja cópia segue anexa.
                         </data>
                     </arElement>            
