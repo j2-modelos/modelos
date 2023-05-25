@@ -7593,12 +7593,12 @@ try {
 
                   //$(doc).ready(function() {
                   //$(doc).ready(function() {
-                    $("body").on("mouseup", function() {
+              /*      $("body").on("mouseup", function() {
                       var selectedText = getSelectedText();
                       if (selectedText !== "") {
                         abrirMenuSuspenso(selectedText);
                       }
-                    });
+                    });*/
                  // });
 
                  loadContextMenu($)
@@ -7627,23 +7627,113 @@ try {
         })
 
         function loadContextMenu($){
+          
           $.contextMenu({
             selector: 'body', 
-            callback: function(key, options) {
-                var m = "clicked: " + key;
-                window.console && console.log(m) || alert(m); 
-            },
-            items: {
-               /* "edit": {name: "Edit", icon: "edit"},
-                "cut": {name: "Cut", icon: "cut"},
-               copy: {name: "Copy", icon: "copy"},*/
-                "pasteFinalidade": {name: "Colar em XXXFinalidadeXXX", icon: "paste", faClass : 'fa-solid fa-paste'},
-             /*   "delete": {name: "Delete", icon: "delete"},*/
-               /* "sep1": "---------",*/
-                /*"quit": {name: "Quit", icon: function(){
-                    return 'context-menu-icon context-menu-icon-quit';
-                }}*/
-            }
+            build: function($triggerElement, e){
+              var $this = this;
+
+              var static = {
+                /* "edit": {name: "Edit", icon: "edit"},
+                 "cut": {name: "Cut", icon: "cut"},
+                copy: {name: "Copy", icon: "copy"},*/
+                 "pasteFinalidade": {
+                  name: "Colar em XXXFinalidadeXXX", 
+                  icon: "paste", 
+                  faClass : 'fa-solid fa-paste',
+                  disabled : function(key, opt){
+                    return j2.modelo.exp.gE('finalidade-colador') === null
+                  }
+                },
+              /*   "delete": {name: "Delete", icon: "delete"},*/
+                /* "sep1": "---------",*/
+                 /*"quit": {name: "Quit", icon: function(){
+                     return 'context-menu-icon context-menu-icon-quit';
+                 }}*/
+              }
+
+              var dyna = (function(){
+                return jQ3.extend(
+                (function(){
+                  var selText = getSelectedText()
+                  var selMenuItems = {
+                    selectionFold : {
+                      name : 'Seleção',
+                      items : {}
+                    }
+                  }
+
+                  $this.itemData = {}
+                  selText = selText.split(',')
+                  if(selText.length > 1)
+                    selText.forEach( function(txt){
+                      var _g = guid()
+                      selMenuItems.selectionFold.items[_g] = { 
+                        name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
+                        type: 'checkbox', 
+                        selected: true,
+                        fullText : txt
+                      }
+                      $this.itemData[_g] = txt
+                    })
+                  else
+                  selMenuItems = { 
+                    noText : {
+                      name : '[Nenhum texto selecionado]',
+                      disabled : true
+                    }
+                  }
+
+                  return selMenuItems
+                })(),
+                {
+                  "sep1": "---------"
+                })
+              })()
+
+              return {
+                callback: function(key, options) {
+                  //var m = "clicked: " + key;
+                  //window.console && console.log(m) || alert(m); 
+                  
+                  switch(key){
+                    case 'pasteFinalidade':
+                      const obj = options.inputs
+                      let pasteText = []
+
+                      Object.entries(obj).forEach(function([key, value]) {
+                        if(value.$input.is(':checked'))
+                          pasteText.push(value.fullText)
+                      });
+
+                      pasteText = pasteText.join(',')
+
+                      jQ3(j2.modelo.exp.gE('finalidade-colador')).text(pasteText)
+                      break;
+                  }
+                },
+                items : jQ3.extend(dyna, static),
+                events: {
+                  /*show: function(opt) {
+                    // this is the trigger element
+                    var $this = this;
+                    // import states from data store 
+                    $.contextMenu.setInputValues(opt, $this.data());
+                    // this basically fills the input commands from an object
+                    // like {name: "foo", yesno: true, radio: "3", &hellip;}
+                  }, */
+               /*   hide: function(opt) {
+                    // this is the trigger element
+                    //var $this = this;
+                    // export states to data store
+                    $.contextMenu.getInputValues(opt, $this.data());
+                    // this basically dumps the input commands' values to an object
+                    // like {name: "foo", yesno: true, radio: "3", &hellip;}
+                  }*/
+                }
+      
+              }
+            }            
           })
             
         }
