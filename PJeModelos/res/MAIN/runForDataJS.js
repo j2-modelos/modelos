@@ -3391,15 +3391,18 @@ try {
           j2.modelo.sup[name] = {};
           j2.modelo.sup[name].name = name; // tappac as new
           j2.modelo.sup[name].win = method();
-          j2.modelo.sup[name].doc = j2.modelo.sup[name].win.document;
-          j2.modelo.sup[name].gE = function(e){
-            return j2.modelo.sup[name].win.document.getElementById(e);
-          };
-          
-          j2.modelo.sup[name].$ = jQ3Factory(j2.modelo.sup[name].win, true);
-          j2.modelo.sup[name].$_ = function(){ // tappac as new
-            return j2.modelo.sup[name].win.jQ3;
-          };
+          j2.modelo.sup[name].win.addEventListener('load', function() {
+            j2.modelo.sup[name].doc = () => { return j2.modelo.sup[name].win.document };
+            j2.modelo.sup[name].gE = function(e){
+              return j2.modelo.sup[name].win.document.getElementById(e);
+            };
+            
+            j2.modelo.sup[name].jQ3 = jQ3Factory(j2.modelo.sup[name].win, true);
+            j2.modelo.sup[name].win.jQ3 = j2.modelo.sup[name].jQ3
+            j2.modelo.sup[name].$_ = function(){ // tappac as new
+              return j2.modelo.sup[name].win.jQ3;
+            };
+          })
         }
       }
     };
