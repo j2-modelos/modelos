@@ -221,6 +221,13 @@ try {
         'type': 'j2/styleSheet',
         'version' : '1.8.7', 
         'fileName' : 'chosen-bs.css'
+      },
+      'jqueryContextMenu' : {  // chosen
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery.contextMenu.css' : '-11111111111111111111111'; },                
+        'lib': 'ROOT/res/css/jquery.contextMenu.css',
+        'type': 'j2/styleSheet',
+        'version' : '2.9.2', 
+        'fileName' : 'jquery.contextMenu.css'
       }
     };
     
@@ -787,6 +794,22 @@ try {
         'type': 'j2/javascript',
         'version' : '1.0', 
         'fileName' : 'jquery-ui.js'
+           
+      },
+      'jqueryInitialize' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.initialize.js' : '-1111111111111111111111111111'; },                
+        'lib': 'ROOT/lib/jquery.initialize.js',
+        'type': 'j2/javascript',
+        'version' : '0.0.0', 
+        'fileName' : 'jquery.initialize.js'
+           
+      },
+      'jqueryContextMenu' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.contextMenu.js' : '-1111111111111111111111111111'; },                
+        'lib': 'ROOT/lib/jquery.contextMenu.js',
+        'type': 'j2/javascript',
+        'version' : '2.9.2', 
+        'fileName' : 'jquery.contextMenu.js'
            
       },
       'html2pdf' : { //pdf
