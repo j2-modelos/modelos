@@ -7362,8 +7362,10 @@ try {
       },
       setEvents : function(_){        
         evBus.on('beforeFihishEdition', 9999, function(event, closer){          
-          if(mod.sup.docList)
-            mod.sup.docList.win.close();
+          forEach(mod.sup, function(_sup){                
+            if(_sup.ESuplementarDeDocList)
+              _sup.win.close()
+          })
           if(mod.sup.docListAutoSearch) // rdp
             mod.sup.docListAutoSearch.win.close(); // rdp
         });
@@ -7484,11 +7486,19 @@ try {
                 :
                 j2.env.PJeVars.j2Api.URLs.autosDigitaisURL;
 
-        var w;
-        mod.sup.open('docList', function(){          
+        
+        forEach(mod.sup, function(_sup){                
+          if(_sup.ESuplementarDeDocList)
+            _sup.jQ3('#pageBody > div.navbar').css({ background : 'gray' })
+        })
+
+        var w
+        var winName = 'docList-' + guid()
+          
+        mod.sup.open(winName, function(){          
           var _ = {
             url : url,
-            name : 'wndDocList',
+            name : `wnd${winName}`,
             idProcesso : j2.env.PJeVars.processo.idProcesso,
             winSize : {
               width : screen.width * 0.6,
@@ -7502,17 +7512,13 @@ try {
         });
         
         _ctrls.winReference = w;
-        
-        j2.modelo.sup.docList.win.addEventListener('load', function() {
-        /*  var $wFrame = _jQ3('#frameHtml')*/
 
-          /*j2.modelo.sup.docList.htmlFrame = {
-            $ : jQ3Factory($wFrame.prop('contentWindow'), true),
-            win : $wFrame.prop('contentWindow'),
-            doc : $wFrame.prop('contentDocument')
-          }*/
+        var currWinSup = j2.modelo.sup[winName]
+        currWinSup.ESuplementarDeDocList = true
+        
+        function loadedDocListSub () {
           var context = {
-            doc : j2.modelo.sup.docList.doc,
+            doc : currWinSup.doc(),
             loc : 'head'
           }
 
@@ -7522,16 +7528,15 @@ try {
           evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function() {  jquidef.resolve() })
           evBus.on('loaded-'+ j2.res.lib.jqueryInitialize.lib, function() {   
             var wdl = j2.modelo.sup.docList
-            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc)
-            
+            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc)            
             jqinitdef.resolve() 
           })
           
           jQ3.when(jquidef, jqinitdef).done( ()=>{
-            var _jQ3 = j2.modelo.sup.docList.jQ3
+            var _jQ3 = currWinSup.jQ3
             
             function initializeFrameHTML(initial){
-              var wdl = j2.modelo.sup.docList
+              var wdl = currWinSup
               var $wFrame = _jQ3('#frameHtml')
 
               function loadedFrame(){
@@ -7582,24 +7587,12 @@ try {
                 
                 jQ3.when(jquidef, jqctxmendef, jqctxmencssdef, jqsloaded).done(function() {  
                   var $ = wdl.htmlFrame.jQ3
-                  var doc = wdl.htmlFrame.doc
 
-                  //$(doc).ready(function() {
-                  //$(doc).ready(function() {
-              /*      $("body").on("mouseup", function() {
-                      var selectedText = getSelectedText();
-                      if (selectedText !== "") {
-                        abrirMenuSuspenso(selectedText);
-                      }
-                    });*/
-                 // });
-
-                 loadContextMenu($)
+                 loadContextMenu($, wdl)
                   
                 })
 
                 setTimeout( () => { 
-                  //j2.mod.com.libLoader(j2.res.lib.jquery3, context);
                   j2.mod.com.libLoader(j2.res.lib.jqueryUi, context)
                   j2.mod.com.libLoader(j2.res.lib.fontawesome, context);
                 }, 250 )
@@ -7617,9 +7610,24 @@ try {
 
           j2.mod.com.libLoader(j2.res.lib.jqueryInitialize, context);
           j2.mod.com.libLoader(j2.res.lib.jqueryUi, context);
-        })
+        }
 
-        function loadContextMenu($){
+        currWinSup.win.addEventListener('pageshow', loadedDocListSub )
+
+        function loadContextMenu($, wdl){
+
+          function getSelectedText() {
+            var win = wdl.htmlFrame.win
+            var doc = wdl.htmlFrame.doc()
+  
+            var text = "";
+            if (typeof win.getSelection !== "undefined") {
+              text = win.getSelection().toString();
+            } else if (typeof doc.selection !== "undefined" && doc.selection.type === "Text") {
+              text = doc.selection.createRange().text;
+            }
+            return text;
+          }
           
           $.contextMenu({
             selector: 'body', 
@@ -7627,9 +7635,6 @@ try {
               var $this = this;
 
               var static = {
-                /* "edit": {name: "Edit", icon: "edit"},
-                 "cut": {name: "Cut", icon: "cut"},
-                copy: {name: "Copy", icon: "copy"},*/
                  "pasteFinalidade": {
                   name: "Colar em XXXFinalidadeXXX", 
                   icon: "paste", 
@@ -7637,12 +7642,7 @@ try {
                   disabled : function(key, opt){
                     return j2.modelo.exp.gE('finalidade-colador') === null
                   }
-                },
-              /*   "delete": {name: "Delete", icon: "delete"},*/
-                /* "sep1": "---------",*/
-                 /*"quit": {name: "Quit", icon: function(){
-                     return 'context-menu-icon context-menu-icon-quit';
-                 }}*/
+                }
               }
 
               var dyna = (function(){
@@ -7685,10 +7685,7 @@ try {
               })()
 
               return {
-                callback: function(key, options) {
-                  //var m = "clicked: " + key;
-                  //window.console && console.log(m) || alert(m); 
-                  
+                callback: function(key, options) {                  
                   switch(key){
                     case 'pasteFinalidade':
                       const obj = options.inputs
@@ -7707,22 +7704,7 @@ try {
                 },
                 items : jQ3.extend(dyna, static),
                 events: {
-                  /*show: function(opt) {
-                    // this is the trigger element
-                    var $this = this;
-                    // import states from data store 
-                    $.contextMenu.setInputValues(opt, $this.data());
-                    // this basically fills the input commands from an object
-                    // like {name: "foo", yesno: true, radio: "3", &hellip;}
-                  }, */
-               /*   hide: function(opt) {
-                    // this is the trigger element
-                    //var $this = this;
-                    // export states to data store
-                    $.contextMenu.getInputValues(opt, $this.data());
-                    // this basically dumps the input commands' values to an object
-                    // like {name: "foo", yesno: true, radio: "3", &hellip;}
-                  }*/
+                  
                 }
       
               }
@@ -7730,21 +7712,6 @@ try {
           })
             
         }
-
-        function getSelectedText() {
-          var wdl = j2.modelo.sup.docList
-          var win = wdl.htmlFrame.win
-          var doc = wdl.htmlFrame.doc
-
-          var text = "";
-          if (typeof win.getSelection !== "undefined") {
-            text = win.getSelection().toString();
-          } else if (typeof doc.selection !== "undefined" && doc.selection.type === "Text") {
-            text = doc.selection.createRange().text;
-          }
-          return text;
-        }
-      
         
         
         
