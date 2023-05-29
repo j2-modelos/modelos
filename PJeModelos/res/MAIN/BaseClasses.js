@@ -3381,7 +3381,7 @@ try {
         
         if(!(j2.modelo.opn)){
           j2.modelo.opn = {
-            $ : jQ3Factory(j2.modelo.par.win.opener, true),
+            jQ3 : jQ3Factory(j2.modelo.par.win.opener, true),
             doc : j2.modelo.par.win.opener.document,
             gE : function(id){
               return j2.modelo.opn.getElementById(id);
@@ -3392,7 +3392,7 @@ try {
         
         var _ = { 
           ctxt : el,
-          open : $(mod.edt.gE('ExpedienteVinculado-ExpedienteOpener')),
+          open : jQ3(mod.edt.gE('ExpedienteVinculado-ExpedienteOpener')),
           openerLinkedActions : {
             editar : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]'),
             openExpediente : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').prev(),
@@ -3494,23 +3494,16 @@ try {
             });
           };
           
-          var _ = {
-            selectMethod : { 
-              value : 'docAutos'
-            }, 
-            ids : pkg.ExpedienteVinculado.expediente.ids
-          };
           var doc = {
-            id : pkg.ExpedienteVinculado.expediente.ids.doc,
             url : null
           };
+          jQ3.extend(doc, pkg.ExpedienteVinculado.expediente.ids)
           
-          pkg.ReferenciaDocumento.findURL(doc, _);
-          doc.url = window.location.origin + doc.url;
+          pkg.ReferenciaDocumento.findURL(doc);
           pkg.ReferenciaDocumento.prepareHTMLElements(doc);
           
           var txN = getTextNodesIn(doc.html.spn);
-          txN[0].textContent += ' (Expediente ' + _.ids.exp + ')';         
+          txN[0].textContent += ' (Expediente ' + doc.exp + ')';         
          
           return doc.html.spn.outerHTML;
         },
@@ -3522,7 +3515,7 @@ try {
             return 'Mandado';
         })(),
         verbosCumprimento : function(){
-          var _ = pkg.ExpedienteVinculado.expediente.$.find('#expTitle');
+          var _ = pkg.ExpedienteVinculado.expediente.jQ3.find('#expTitle');
           var _v = {
             passado : 'diligenciei',
             infinitivo : 'diligenciar'
@@ -3721,7 +3714,7 @@ try {
           return j2.mod._._opW.corner( _.url, _.name, null, _.winSize );
         });
 
-        var j2ExpC = $(mod.exp.doc.getElementById('j2Exp')).clone(true);
+        var j2ExpC = jQ3(mod.exp.doc.getElementById('j2Exp')).clone(true);
         //j2ExpC.find('#textMargins').css('box-shadow', '');
         j2ExpC.find('div').filter(function() {
             return $(this).css('box-shadow').length > 0;
@@ -3730,7 +3723,7 @@ try {
         j2ExpC.find('#normalizeFormtas').css('border', '');
 
         var _pdfWin = mod.sup.FerramentasProcessoBaixarPDF;
-        var _wB = _pdfWin.$('body');
+        var _wB = _pdfWin.jQ3('body');
         _wB.empty();
         _wB.append(j2ExpC);
 
@@ -3744,7 +3737,7 @@ try {
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          _pdfWin.win.html2pdf().set(opt).from(_pdfWin.$('#j2Exp')[0]).save(null, mod.exp.doc);
+          _pdfWin.win.html2pdf().set(opt).from(_pdfWin.jQ3('#j2Exp')[0]).save(null, mod.exp.doc);
           setTimeout(function(){_pdfWin.win.close();},250);
         });
         
@@ -7519,7 +7512,7 @@ try {
             doc : $wFrame.prop('contentDocument')
           }*/
           var context = {
-            doc : j2.modelo.sup.docList.doc(),
+            doc : j2.modelo.sup.docList.doc,
             loc : 'head'
           }
 
@@ -7529,7 +7522,7 @@ try {
           evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function() {  jquidef.resolve() })
           evBus.on('loaded-'+ j2.res.lib.jqueryInitialize.lib, function() {   
             var wdl = j2.modelo.sup.docList
-            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc())
+            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc)
             
             jqinitdef.resolve() 
           })
@@ -7545,12 +7538,12 @@ try {
                 wdl.htmlFrame = {
                   jQ3 : jQ3Factory($wFrame.prop('contentWindow'), true),
                   win : $wFrame.prop('contentWindow'),
-                  doc : () => { return $wFrame.prop('contentDocument') }
+                  doc : $wFrame.prop('contentDocument')
                 }
                 $wFrame.prop('contentWindow').jQ3 = wdl.htmlFrame.jQ3
 
                 var context = {
-                  doc : wdl.htmlFrame.doc(),
+                  doc : wdl.htmlFrame.doc,
                   loc : 'head'
                 }
 
@@ -7589,7 +7582,7 @@ try {
                 
                 jQ3.when(jquidef, jqctxmendef, jqctxmencssdef, jqsloaded).done(function() {  
                   var $ = wdl.htmlFrame.jQ3
-                  var doc = wdl.htmlFrame.doc()
+                  var doc = wdl.htmlFrame.doc
 
                   //$(doc).ready(function() {
                   //$(doc).ready(function() {
@@ -7706,7 +7699,7 @@ try {
                           pasteText.push(value.fullText)
                       });
 
-                      pasteText = pasteText.join(',')
+                      pasteText = pasteText.join(',').trim()
 
                       jQ3(j2.modelo.exp.gE('finalidade-colador')).text(pasteText)
                       break;
@@ -7741,7 +7734,7 @@ try {
         function getSelectedText() {
           var wdl = j2.modelo.sup.docList
           var win = wdl.htmlFrame.win
-          var doc = wdl.htmlFrame.doc()
+          var doc = wdl.htmlFrame.doc
 
           var text = "";
           if (typeof win.getSelection !== "undefined") {
