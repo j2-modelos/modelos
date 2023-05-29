@@ -7518,7 +7518,7 @@ try {
         
         function loadedDocListSub () {
           var context = {
-            doc : currWinSup.doc(),
+            doc : currWinSup.doc,
             loc : 'head'
           }
 
@@ -7527,7 +7527,7 @@ try {
 
           evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function() {  jquidef.resolve() })
           evBus.on('loaded-'+ j2.res.lib.jqueryInitialize.lib, function() {   
-            var wdl = j2.modelo.sup.docList
+            var wdl = currWinSup 
             wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc)            
             jqinitdef.resolve() 
           })
@@ -7618,7 +7618,7 @@ try {
 
           function getSelectedText() {
             var win = wdl.htmlFrame.win
-            var doc = wdl.htmlFrame.doc()
+            var doc = wdl.htmlFrame.doc
   
             var text = "";
             if (typeof win.getSelection !== "undefined") {
