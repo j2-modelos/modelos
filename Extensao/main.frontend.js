@@ -1517,7 +1517,6 @@ function fronendLoad(){
           
           return;
         }
-;
       });
     };
     
@@ -1714,6 +1713,7 @@ function fronendLoad(){
           formatarPrioridade(this);
           formatarEDestacarPrazo(this);
           inserirFolder(this);
+          aplicarFiltrosJ2(this);
           destacarUltimoMovimentoDoProcesso(this);
 
           jQ3.initialize('div.label.label-info.label-etiqueta.ng-star-inserted', function(){
@@ -1784,9 +1784,57 @@ function fronendLoad(){
         j2E.env.tempData.processoDaTarefaAtivaSelecionado = $trg.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
       });
     }
+
+    function aplicarFiltrosJ2(_this){
+      var $li = jQ3(_this)
+
+          
+      var num = $li.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
+      num = num ? num[0] : { semNumero : true }
+
+      if( num.semNumero ){
+        return;
+      }
+
+      var toRemove = false
+      switch( jQ3('select#expressaoNumero').val() ){
+        case 'digito-impar':
+          toRemove = (num.substring(8,10) % 2) == 0
+          break;
+        case 'digito-par':
+          toRemove = (num.substring(8,10) % 2) == 1
+          break;
+      }
+      if(toRemove)
+        $li.remove();
+    }
+
+    function personalisarFiltroTarefas(_this){
+      var $filtro = jQ3(_this).parents('#filtro-tarefas')
+      var $recolherPorParidadeDigito = $filtro.find('#cargoJudicial').parents('.col-md-4.form-group').clone()
+
+      $recolherPorParidadeDigito.find('label').text('Expressão do número')
+      var $option = $recolherPorParidadeDigito.find('option:first').detach()
+      $recolherPorParidadeDigito.find('option').remove()
+      $recolherPorParidadeDigito.find('select').attr('id', 'expressaoNumero')
+      $recolherPorParidadeDigito.find('select').attr('name', 'expressaoNumero')
+      $recolherPorParidadeDigito.find('select')
+      .append($option)
+      .append($option.clone().attr('value', 'digito-impar').text('Dígito ímpar'))
+      .append($option.clone().attr('value', 'digito-par').text('Dígito par'))
+      
+      $recolherPorParidadeDigito.insertBefore($filtro.find('fieldset > div:last-child'))
+
+      /*$recolherPorParidadeDigito.find('select').change(()=>{
+        $filtro.parents('processos-tarefa').find('p-datalist ul.ui-datalist-data li').filter(function() {
+
+        });
+      })*/
+    }
     
     function inicializacaoformatarNomeAlternativoListaTrefaAtiva(){
       jQ3.initialize('processos-tarefa', function(){
+        var _processos_tarefa = this
         jQ3.initialize('filtro-tarefas span.text-truncate.uppercase.nome-tarefa:first-child', function(){          
           formatarNomeAlternativoListaTrefaAtiva(this);
           prepararPseudotarefaAtiva(this);
@@ -1798,10 +1846,28 @@ function fronendLoad(){
         jQ3.initialize('div.row.lista-processos', function(){          
           formatarExibicaoTarefaFavorita(this);
           registrarListeners(this);
+
+          //jQ3.initialize('span.badge.pull-right', function(){          
+          jQ3.initialize('ul.ui-datalist-data', function(){          
+            var $ul = jQ3( this )
+            var $badge = jQ3( 'span.badge.pull-right', _processos_tarefa )
+            $ul.observe('childlist', ()=> { 
+              $badge.text( $ul.find('> li').length )
+            })
+          },
+          {target : this});
+
         },
         {target : this});
+
+        jQ3.initialize('#filtro-tarefas #cargoJudicial', function(){          
+          personalisarFiltroTarefas( this )
+        },
+        {target : this});
+
       });
     }
+
        
     inicializacaoEtiqueta();
     inicializacaoformatarNomeAlternativoListaTrefaAtiva();

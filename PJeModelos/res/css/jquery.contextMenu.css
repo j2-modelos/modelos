@@ -182,8 +182,8 @@
   max-width: 26em;
   padding: .25em 0;
   margin: .3em;
-  font-family: inherit;
-  font-size: inherit;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1em;
   list-style-type: none;
   background: #fff;
   border: 1px solid #bebebe;

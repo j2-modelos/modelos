@@ -223,7 +223,7 @@ try {
         'fileName' : 'chosen-bs.css'
       },
       'jqueryContextMenu' : {  // chosen
-        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery.contextMenu.css' : '-11111111111111111111111'; },                
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery.contextMenu.css' : 'ep504t2p761f423'; },
         'lib': 'ROOT/res/css/jquery.contextMenu.css',
         'type': 'j2/styleSheet',
         'version' : '2.9.2', 
@@ -797,7 +797,7 @@ try {
            
       },
       'jqueryInitialize' : {
-        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.initialize.js' : '-1111111111111111111111111111'; },                
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.initialize.js' : '7zuwec0wrmvuxxv'; },                
         'lib': 'ROOT/lib/jquery.initialize.js',
         'type': 'j2/javascript',
         'version' : '0.0.0', 
@@ -805,7 +805,7 @@ try {
            
       },
       'jqueryContextMenu' : {
-        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.contextMenu.js' : '-1111111111111111111111111111'; },                
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.contextMenu.js' : 'pm8l59lftz1bphu'; },                
         'lib': 'ROOT/lib/jquery.contextMenu.js',
         'type': 'j2/javascript',
         'version' : '2.9.2', 

@@ -3391,8 +3391,8 @@ try {
           j2.modelo.sup[name] = {};
           j2.modelo.sup[name].name = name; // tappac as new
           j2.modelo.sup[name].win = method();
-          j2.modelo.sup[name].win.addEventListener('load', function() {
-            j2.modelo.sup[name].doc = () => { return j2.modelo.sup[name].win.document };
+          function ___sub() {
+            j2.modelo.sup[name].doc = /*() => { return*/ j2.modelo.sup[name].win.document /*};*/
             j2.modelo.sup[name].gE = function(e){
               return j2.modelo.sup[name].win.document.getElementById(e);
             };
@@ -3402,7 +3402,10 @@ try {
             j2.modelo.sup[name].$_ = function(){ // tappac as new
               return j2.modelo.sup[name].win.jQ3;
             };
-          })
+          }
+
+          j2.modelo.sup[name].win.addEventListener('load', ___sub)
+          ___sub()
         }
       }
     };
@@ -3791,6 +3794,10 @@ try {
     
     evBus.once('afterLoadRunLibs', function(event, definitiions){
       console.log('fired afterLoadRunLibs');
+      var mod = window.j2.modelo;
+      mod.par.jQ3 = jQ3Factory(mod.par.win, true)
+      mod.exp.jQ3 = jQ3Factory(mod.exp.win, true)
+
       var b = window.j2.modelo.edt.doc.body;
 
       while (b.firstChild) {
