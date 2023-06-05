@@ -926,6 +926,59 @@ function pjeLoad(){
       }, { target : this });
     });
   }
+
+  function observarParaAcrescentarRecarregadorDeDocumento(){
+
+    jQ3.initialize('select', function(){
+      var matches = false
+      var html_set = 1
+      var jEl = jQ3(this);
+
+      if(jEl.prop('id')==='modTDDecoration:modTD')
+        matches = true
+      if( jEl.prop('id').match(/^taskInstanceForm.*selectModeloDocumento$/) )
+        matches = true
+      if( jEl.prev().is('label') && jEl.prev().attr('for').match(/^taskInstanceForm.*modeloCombo$/) ){
+        matches = true
+        html_set = 2
+      }
+        
+
+      if(!matches)
+        return;
+      
+      switch(html_set){
+        case 1:
+          var $aRefsh = jQ3(`
+            <div class="value col-sm-1">
+              <a class="btn btn-primary j2-refresh-loader-autos" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+            </div>
+          `
+          )
+          jEl.parent().after($aRefsh)
+          jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+
+        case 2:
+          var $aRefsh = jQ3(`
+              <a class="btn btn-primary j2-refresh-loader-autos framePAC" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+          `
+          )
+          jEl.after($aRefsh)
+          jEl.css({
+            width : 'calc(100% - 40px)'
+          })
+          //jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+      }
+    });
+  }
   
   function observeSelectTipoDocumento(){
     
@@ -1861,6 +1914,14 @@ function pjeLoad(){
       }, { target : this});
     });
   }
+
+  function destacarNomeUnidade(){
+    jQ3.initialize('li.menu-usuario small', function(){
+      var $this = jQ3(this)
+      var text = $this.text().split(' / ')[0]
+      jQ3('.titulo').text( text )
+    })
+  }
   
   function personalizarUpdateRetificacaoAutuacao(){
     jQ3.initialize('[title="Paginador"]', function(){
@@ -2451,6 +2512,7 @@ function pjeLoad(){
       //verificarSePaginaDeuErro();
       //verificarSePaginaExpirou();
       observeSelectTipoDocumento();
+      observarParaAcrescentarRecarregadorDeDocumento()
       //observeTarefaComPAC();
       //requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
@@ -2458,6 +2520,7 @@ function pjeLoad(){
       //registrarServiceWorker();
       break;
     case '/pje/ng2/dev.seam':
+      destacarNomeUnidade()
       if(!(j2E.env.urlParms.j2pseudotarefaMovimentar)){
         personaliazarMenu();
       }else
@@ -2506,6 +2569,7 @@ function pjeLoad(){
       listenMessages();
       observeSeEModeloJ2();
       observeParaARDigital();
+      observarParaAcrescentarRecarregadorDeDocumento()
       break;
     
     case '/pje/ConsultaPrazos/listView.seam':
