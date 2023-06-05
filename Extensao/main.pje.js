@@ -1008,10 +1008,10 @@ function pjeLoad(){
         return
 
       var $i = jQ3('<i>', {
-        class : 'fa fa-clipboard copiar-clipboard',
+        class : 'fa fa-clipboard copiar-clipboard j2-qualificacao-icon',
         title : 'Copiar nome, cpf e participação para área de trnasferência',
         css : {
-          paddingLeft: (parent === 'dropdown-menu') ? 'unset' : '2px'
+          paddingLeft: (parent === 'dropdown-menu') ? '1px' : '2px'
         }
       })
       $i.click((ev)=>{
@@ -1023,7 +1023,7 @@ function pjeLoad(){
         return
         
 			var $i_cpf = jQ3('<i>', {
-        class : 'fa fa-id-card-o copiar-clipboard',
+        class : 'fa fa-id-card-o copiar-clipboard j2-qualificacao-icon',
         title : 'Copiar cpf/cnpj para área de trnasferência',
         css : {
           paddingLeft: '4px'

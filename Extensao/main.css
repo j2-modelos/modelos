@@ -894,6 +894,10 @@ a[_ngcontent-bdb-c14]:visited {
 }
 
 
+.j2-qualificacao-icon:hover{
+    color:#23527c
+}
+
 .mat-progress-spinner {
     display: block;
     position: relative;
