@@ -1064,7 +1064,7 @@ function pjeLoad(){
         class : 'fa fa-clipboard copiar-clipboard j2-qualificacao-icon',
         title : 'Copiar nome, cpf e participação para área de trnasferência',
         css : {
-          paddingLeft: (parent === 'dropdown-menu') ? '1px' : '2px'
+          paddingLeft: '2px'
         }
       })
       $i.click((ev)=>{
