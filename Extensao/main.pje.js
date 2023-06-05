@@ -927,6 +927,115 @@ function pjeLoad(){
     });
   }
   
+  
+  function observeQualificacaoPartes(){
+    var sels = [
+      'ul.dropdown-menu #poloAtivo a', 
+      'ul.dropdown-menu #poloPassivo a', 
+      'ul.dropdown-menu #outrosInteressados a',
+      '#pessoaFisicaViewView label',
+      '#pessoaJuridicaViewView label',
+    ]
+
+    function _copyToClipboard(text, $i) {
+      navigator.clipboard.writeText(text)
+        .then(function() {
+          var $iVisto = jQ3('<i>', {
+            class : 'fa fa-check text-success',
+            css : {
+              display : 'none',
+              paddingLeft: '3px'
+            }
+          })
+
+          $i.after($iVisto)
+          $iVisto.show(250).promise().done(()=>{
+            setTimeout(()=> $iVisto.hide('250').promise().done(()=>$iVisto.remove()), 3000)
+          })
+          
+        })
+        .catch(function(error) {
+          console.error('Erro ao copiar texto para a área de transferência:', error);
+        });
+    }
+
+    function _extrairDocumento(texto) {
+      var padraoCpf = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
+      var padraoCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
+      var cpf = texto.match(padraoCpf);
+      var cnpj = texto.match(padraoCnpj);
+    
+      if (cpf) {
+        return cpf[0];
+      } else if (cnpj) {
+        return cnpj[0];
+      } else {
+        return undefined;
+      }
+    }
+    
+
+    jQ3.initialize(sels.join(','), function(a, b, c){
+      var $obj = jQ3(this)
+      var $this
+      var naoCopiarDocumento = true;
+      var parent
+
+      if($obj.parents('.dropdown-menu ').length){ 
+        parent = 'dropdown-menu'
+        $this = $obj
+        naoCopiarDocumento = false
+      }
+      else if($obj.parents('#pessoaFisicaViewView').length){
+        if(! ( $obj.is(':contains("CPF")') || $obj.is(':contains("Nome civil")') ) )
+          return;
+        
+        parent = 'pessoaFisicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+      }
+      else if($obj.parents('#pessoaJuridicaViewView').length){
+        if(! ( $obj.is(':contains("CNPJ")') || $obj.is(':contains("Nome")')  ) )
+          return;
+        
+        parent = 'pessoaJuridicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+        if( ! $this.text().trim().length )
+          return;
+      }
+      else
+        return
+
+      var $i = jQ3('<i>', {
+        class : 'fa fa-clipboard copiar-clipboard',
+        title : 'Copiar nome, cpf e participação para área de trnasferência',
+        css : {
+          paddingLeft: (parent === 'dropdown-menu') ? 'unset' : '2px'
+        }
+      })
+      $i.click((ev)=>{
+        _copyToClipboard($this.text().trim(), $i)
+      })
+      $this[(parent === 'dropdown-menu') ? 'after' : 'append']($i)
+
+      if( naoCopiarDocumento || _extrairDocumento($this.text().trim()) === undefined)
+        return
+        
+			var $i_cpf = jQ3('<i>', {
+        class : 'fa fa-id-card-o copiar-clipboard',
+        title : 'Copiar cpf/cnpj para área de trnasferência',
+        css : {
+          paddingLeft: '4px'
+        }
+      })					
+      $i_cpf.click((ev)=>{
+        _copyToClipboard(_extrairDocumento($this.text().trim()), $i_cpf)
+      })
+      $i.after($i_cpf)
+    })
+  }
+
   function observeSelectTipoDocumento(){
     
     
@@ -2451,6 +2560,7 @@ function pjeLoad(){
       //verificarSePaginaDeuErro();
       //verificarSePaginaExpirou();
       observeSelectTipoDocumento();
+      observeQualificacaoPartes();
       //observeTarefaComPAC();
       //requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
@@ -2473,6 +2583,7 @@ function pjeLoad(){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam':
       personalizarTelefonesDasPartes();
+      observeQualificacaoPartes()
       break;
       
     case '/pje/Processo/update.seam':
