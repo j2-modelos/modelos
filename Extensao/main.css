@@ -918,6 +918,10 @@ nav.main-menu, #divSideBar{
     width: calc(100% - 50px) !important;
 }
 
+.j2-qualificacao-icon:hover{
+    color:#23527c
+}
+
 .mat-progress-spinner {
     display: block;
     position: relative;
