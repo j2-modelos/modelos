@@ -893,6 +893,34 @@ a[_ngcontent-bdb-c14]:visited {
     margin: auto;
 }
 
+.j2-refresh-loader-autos{
+    margin:0;
+    height: 40px;
+    padding: 6px;
+}
+
+.j2-refresh-loader-autos i{
+    padding-top: 7px;
+}
+
+.framePAC{
+    margin-top: -3px;
+}
+
+nav.main-menu, #divSideBar{
+    width: 50px !important;
+}
+#divLiTarefas, #divLiMinhasTarefas, #divLiAssinatura{
+    left: 50px !important;
+}
+
+#divRightPanel{
+    width: calc(100% - 50px) !important;
+}
+
+.j2-qualificacao-icon:hover{
+    color:#23527c
+}
 
 .mat-progress-spinner {
     display: block;

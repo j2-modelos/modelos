@@ -926,7 +926,169 @@ function pjeLoad(){
       }, { target : this });
     });
   }
+
+  function observarParaAcrescentarRecarregadorDeDocumento(){
+
+    jQ3.initialize('select', function(){
+      var matches = false
+      var html_set = 1
+      var jEl = jQ3(this);
+
+      if(jEl.prop('id')==='modTDDecoration:modTD')
+        matches = true
+      if( jEl.prop('id').match(/^taskInstanceForm.*selectModeloDocumento$/) )
+        matches = true
+      if( jEl.prev().is('label') && jEl.prev().attr('for').match(/^taskInstanceForm.*modeloCombo$/) ){
+        matches = true
+        html_set = 2
+      }
+        
+
+      if(!matches)
+        return;
+      
+      switch(html_set){
+        case 1:
+          var $aRefsh = jQ3(`
+            <div class="value col-sm-1">
+              <a class="btn btn-primary j2-refresh-loader-autos" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+            </div>
+          `
+          )
+          jEl.parent().after($aRefsh)
+          jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+
+        case 2:
+          var $aRefsh = jQ3(`
+              <a class="btn btn-primary j2-refresh-loader-autos framePAC" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+          `
+          )
+          jEl.after($aRefsh)
+          jEl.css({
+            width : 'calc(100% - 40px)'
+          })
+          //jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+      }
+    });
+  }
   
+  
+  function observeQualificacaoPartes(){
+    var sels = [
+      'ul.dropdown-menu #poloAtivo a', 
+      'ul.dropdown-menu #poloPassivo a', 
+      'ul.dropdown-menu #outrosInteressados a',
+      '#pessoaFisicaViewView label',
+      '#pessoaJuridicaViewView label',
+    ]
+
+    function _copyToClipboard(text, $i) {
+      navigator.clipboard.writeText(text)
+        .then(function() {
+          var $iVisto = jQ3('<i>', {
+            class : 'fa fa-check text-success',
+            css : {
+              display : 'none',
+              paddingLeft: '3px'
+            }
+          })
+
+          $i.after($iVisto)
+          $iVisto.show(250).promise().done(()=>{
+            setTimeout(()=> $iVisto.hide('250').promise().done(()=>$iVisto.remove()), 3000)
+          })
+          
+        })
+        .catch(function(error) {
+          console.error('Erro ao copiar texto para a área de transferência:', error);
+        });
+    }
+
+    function _extrairDocumento(texto) {
+      var padraoCpf = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
+      var padraoCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
+      var cpf = texto.match(padraoCpf);
+      var cnpj = texto.match(padraoCnpj);
+    
+      if (cpf) {
+        return cpf[0];
+      } else if (cnpj) {
+        return cnpj[0];
+      } else {
+        return undefined;
+      }
+    }
+    
+
+    jQ3.initialize(sels.join(','), function(a, b, c){
+      var $obj = jQ3(this)
+      var $this
+      var naoCopiarDocumento = true;
+      var parent
+
+      if($obj.parents('.dropdown-menu ').length){ 
+        parent = 'dropdown-menu'
+        $this = $obj
+        naoCopiarDocumento = false
+      }
+      else if($obj.parents('#pessoaFisicaViewView').length){
+        if(! ( $obj.is(':contains("CPF")') || $obj.is(':contains("Nome civil")') ) )
+          return;
+        
+        parent = 'pessoaFisicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+      }
+      else if($obj.parents('#pessoaJuridicaViewView').length){
+        if(! ( $obj.is(':contains("CNPJ")') || $obj.is(':contains("Nome")')  ) )
+          return;
+        
+        parent = 'pessoaJuridicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+        if( ! $this.text().trim().length )
+          return;
+      }
+      else
+        return
+
+      var $i = jQ3('<i>', {
+        class : 'fa fa-clipboard copiar-clipboard j2-qualificacao-icon',
+        title : 'Copiar nome, cpf e participação para área de trnasferência',
+        css : {
+          paddingLeft: '2px'
+        }
+      })
+      $i.click((ev)=>{
+        _copyToClipboard($this.text().trim(), $i)
+      })
+      $this[(parent === 'dropdown-menu') ? 'after' : 'append']($i)
+
+      if( naoCopiarDocumento || _extrairDocumento($this.text().trim()) === undefined)
+        return
+        
+			var $i_cpf = jQ3('<i>', {
+        class : 'fa fa-id-card-o copiar-clipboard j2-qualificacao-icon',
+        title : 'Copiar cpf/cnpj para área de trnasferência',
+        css : {
+          paddingLeft: '4px'
+        }
+      })					
+      $i_cpf.click((ev)=>{
+        _copyToClipboard(_extrairDocumento($this.text().trim()), $i_cpf)
+      })
+      $i.after($i_cpf)
+    })
+  }
+
   function observeSelectTipoDocumento(){
     
     
@@ -1861,6 +2023,14 @@ function pjeLoad(){
       }, { target : this});
     });
   }
+
+  function destacarNomeUnidade(){
+    jQ3.initialize('li.menu-usuario small', function(){
+      var $this = jQ3(this)
+      var text = $this.text().split(' / ')[0]
+      jQ3('.titulo').text( text )
+    })
+  }
   
   function personalizarUpdateRetificacaoAutuacao(){
     jQ3.initialize('[title="Paginador"]', function(){
@@ -2451,6 +2621,8 @@ function pjeLoad(){
       //verificarSePaginaDeuErro();
       //verificarSePaginaExpirou();
       observeSelectTipoDocumento();
+      observarParaAcrescentarRecarregadorDeDocumento()
+      observeQualificacaoPartes();
       //observeTarefaComPAC();
       //requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
@@ -2458,6 +2630,7 @@ function pjeLoad(){
       //registrarServiceWorker();
       break;
     case '/pje/ng2/dev.seam':
+      destacarNomeUnidade()
       if(!(j2E.env.urlParms.j2pseudotarefaMovimentar)){
         personaliazarMenu();
       }else
@@ -2473,6 +2646,7 @@ function pjeLoad(){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam':
       personalizarTelefonesDasPartes();
+      observeQualificacaoPartes()
       break;
       
     case '/pje/Processo/update.seam':
@@ -2506,6 +2680,7 @@ function pjeLoad(){
       listenMessages();
       observeSeEModeloJ2();
       observeParaARDigital();
+      observarParaAcrescentarRecarregadorDeDocumento()
       break;
     
     case '/pje/ConsultaPrazos/listView.seam':

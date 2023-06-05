@@ -25,13 +25,16 @@
             "activeTab",
             "scripting",
             "tabs",
-            "nativeMessaging"
+            "nativeMessaging",
+            "clipboardRead",
+            "clipboardWrite"
             
 	],
 	"host_permissions": [
 		"https://pje.tjma.jus.br/*", 
 		"https://frontend.prd.cnj.cloud/*", 
-		"https://web.whatsapp.com/*" 
+		"https://web.whatsapp.com/*", 
+        "https://*.bb.com.com/*"
 	],
 	"content_scripts": [
         {
@@ -103,6 +106,7 @@
 		},
 		{
                     "matches": [
+                        "https://*.bb.com.br/*",
                         "https://web.whatsapp.com/*",
                         "https://sistemas.tjma.jus.br/*",
                         
@@ -218,17 +222,28 @@
                     ],
                     "all_frames" : true
 		},
+        {
+            "matches": [
+                "https://*.bb.com.br/*"             
+            ],
+            "js": [
+                "Extensao/main.banco-do-brasil.js"
+            ],
+            "css" : [
+            ],
+            "all_frames" : true
+		},
 		{
-                    "matches": [
-                        "https://web.whatsapp.com/*"             
-                    ],
-                    "js": [
-                        "Extensao/main.whatsapp.js"
-                    ],
-                    "css" : [
-                        "Extensao/main.whatsapp.css"
-                    ],
-                    "all_frames" : true
+            "matches": [
+                "https://web.whatsapp.com/*"             
+            ],
+            "js": [
+                "Extensao/main.whatsapp.js"
+            ],
+            "css" : [
+                "Extensao/main.whatsapp.css"
+            ],
+            "all_frames" : true
 		},
         {
             "matches": [                        
