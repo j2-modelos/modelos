@@ -7488,8 +7488,10 @@ try {
 
         
         forEach(mod.sup, function(_sup){                
-          if(_sup.ESuplementarDeDocList)
+          if(_sup.ESuplementarDeDocList){
             _sup.jQ3('#pageBody > div.navbar').css({ background : 'gray' })
+            _sup.ESuplementarDeDocList = 'inactive'
+          }
         })
 
         var w
@@ -7514,7 +7516,7 @@ try {
         _ctrls.winReference = w;
 
         var currWinSup = j2.modelo.sup[winName]
-        currWinSup.ESuplementarDeDocList = true
+        currWinSup.ESuplementarDeDocList = 'active'
         
         function loadedDocListSub () {
           var context = {
@@ -7906,7 +7908,7 @@ try {
         return true;
       },
       getIdBasedOnMethod : function (_){
-        var win = _.winReference || j2.modelo.sup.docList;
+        var win = _.winReference || (()=>{const [sup] = filter( j2.modelo.sup, { ESuplementarDeDocList : 'active' }); return sup})();
         var winDoc = win.document || win.doc;
         var a = winDoc.querySelectorAll('h3.media-heading a');
         if(a.length === 0)
