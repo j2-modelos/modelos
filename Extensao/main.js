@@ -136,7 +136,72 @@ var TarefasProps = {
     }
   },
   'Expedir alvará' : {
-    ADMGrupo : 'exps'
+    ADMGrupo : 'exps',
+    personalizacao : {
+       ADM : {
+         estenderControlarAudiencia : true
+       },
+       painel : [
+         {
+           appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+           header : 'Ações da tarefa Expedir Alvará',
+           body : [
+            {
+              tipo : 'table',
+              data : [
+                ["Ação", "Executar"],
+                [
+                  "Criar certidão de encaminhamento para expedição de alvará", 
+                  j2EUi.createButton({
+                    textoButton : "Executar ação", 
+                    classButton : 'btn-primary', 
+                    callback : () => { alert('TESTE BEM SUCEDIDO') }, 
+                  })
+                ],
+                [
+                  "Criar certidão de alvará expedido encaminha para assinatura", 
+                  j2EUi.createButton({
+                    textoButton : "Executar ação", 
+                    classButton : 'btn-primary', 
+                    callback : () => { alert('TESTE BEM SUCEDIDO 2') }, 
+                  })
+                ]
+              ]
+            }
+          ]
+         },
+         {
+          appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+          header : 'Atalhos',
+          body : [
+            {
+              tipo : 'button',
+              data : {
+                classButton : 'btn-primary',
+                onclickAttr : "window.open('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp')",
+                id : 'j2-abrir-siscondej',
+                tag : 'a',
+                textoButton : 'Abrir SISCONDJ'
+              }
+            },
+            {
+              tipo : 'button',
+              data : {
+                classButton : 'btn-primary',
+                onclickAttr : "window.open('https://www63.bb.com.br/portalbb/djo/login.bbx')",
+                id : 'j2-abrir-siscondej',
+                tag : 'a',
+                textoButton : 'Abrir Depósitos Judicais Banco do Brasil'
+              }
+            }
+          ]
+        }
+       ],
+       /*removeDoCorpo : [
+         "form#taskInstanceForm table tr:first td:first div:first"
+       ],*/
+       limpaCorpoTarefa : true,
+     }
   },
   'Expedir alvará 1' : {
     ADMGrupo : 'exps'

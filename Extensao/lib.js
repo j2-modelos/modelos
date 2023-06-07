@@ -628,6 +628,29 @@ var j2EUi = {
           </svg>
       </div>
     </div>     ` 
+  },
+  createButton : (textoButtonOrData, classButton, onclickAttr, id, tag, callback) =>{    
+        
+    if (typeof textoButtonOrData === "object" && textoButtonOrData !== null) {
+      classButton = textoButtonOrData.classButton
+      onclickAttr = textoButtonOrData.onclickAttr
+      id = textoButtonOrData.id
+      tag = textoButtonOrData.tag
+      callback = textoButtonOrData.callback
+      textoButtonOrData = textoButtonOrData.textoButton
+    }
+
+    var $newBut =  jQ3(`<${tag || 'button'}>`, {
+      id : id || guid(),
+      text : textoButtonOrData || '[TEXTO DO BOTÃO]',
+      class : `btn ${classButton || ''}`,
+      onclick : onclickAttr || 'event.preventDefault();'
+    });
+
+    if(callback)
+      $newBut.click( callback )
+
+    return $newBut
   }
 };
 

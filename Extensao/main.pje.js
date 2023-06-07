@@ -436,20 +436,35 @@ function pjeLoad(){
           jQ3(val).remove();
         });
       };
-      var _criarPainel = function(){
-        jQ3.each(_tarfProp.personalizacao.painel, function(key, painel){
+      var _criarPainel = function(subPanel){
+        var jPOut
+        jQ3.each(subPanel?.painel || _tarfProp.personalizacao.painel, function(key, painel){
           var _body = jQ3('<div>');
           jQ3.each(painel.body, function(key, el){
             switch(el.tipo){
               case 'table':
                 _body.append( j2EUi.createTable(el.data) );
                 break;
+              case 'button':
+                _body.append( j2EUi.createButton(el.data) );
+                break;
+              case 'painel':
+                var subPanel = _criarPainel(el)
+                _body.append( subPanel );
+                break;
             }
           });
           
           var jP = j2EUi.createPanel(painel.header, _body);
-          jQ3(painel.appendTo).append( jP );
+
+          if( ! (subPanel ))
+            jQ3(painel.appendTo).append( jP );
+          else
+            jPOut = jP
         });
+
+        if( subPanel )
+          return jPOut
       };
            
       _tarfProp.personalizacao.removeDoCorpo                             && _removeDoCorpo();
