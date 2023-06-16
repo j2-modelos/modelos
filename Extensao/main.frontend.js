@@ -70,7 +70,7 @@ function fronendLoad(){
         jQ3(this).css({
           //filter : 'blur(5px)',
           width : '100%'
-        });
+        }).attr('j2-view-pseudo-tarefa', 'true');
         
         jQ3.initialize('div#divProcessosTarefa', function(){
           jQ3(this).hide();

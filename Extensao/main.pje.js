@@ -474,6 +474,7 @@ function pjeLoad(){
               var _gruposSet = {
                 padrao : [
                   { text : 'Audiência', j2eG : 'aud'},
+                  { text : 'Certificar', j2eG : 'certfc'},
                   { text : 'Consultas', j2eG : 'cnslts'},
                   { text : 'Expedientes', j2eG : 'exps'},
                   { text : 'Outras Ações', j2eG : 'outac'},
@@ -2659,7 +2660,7 @@ function pjeLoad(){
             return;
           num = num[0];
 
-          if( ! digitos.includes( num.substring(9,10)) ) 
+          if( ! digitos.includes( num.substring(8,9)) ) 
             return;
 
           var $a = $tr.find('a[title="Autos digitais"]')

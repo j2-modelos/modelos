@@ -7636,15 +7636,15 @@ try {
             build: function($triggerElement, e){
               var $this = this;
 
-              var static = {
+              var static = {/*
                  "pasteFinalidade": {
                   name: "Colar em XXXFinalidadeXXX", 
                   icon: "paste", 
                   faClass : 'fa-solid fa-paste',
                   disabled : function(key, opt){
-                    return j2.modelo.exp.gE('finalidade-colador') === null
+                    return (j2.modelo.exp.gE('finalidade-colador') === null) || (getSelectedText().length === 0)
                   }
-                }
+                }*/
               }
 
               var dyna = (function(){
@@ -7658,31 +7658,54 @@ try {
                     }
                   }
 
+                  if(selText.length === 0){
+                    selMenuItems = { 
+                      noText : {
+                        name : '[Nenhum texto selecionado]',
+                        disabled : true
+                      }
+                    }
+                    return selMenuItems
+                  }
+
                   $this.itemData = {}
                   selText = selText.split(',')
-                  if(selText.length > 1)
-                    selText.forEach( function(txt){
-                      var _g = guid()
-                      selMenuItems.selectionFold.items[_g] = { 
-                        name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
-                        type: 'checkbox', 
-                        selected: true,
-                        fullText : txt
-                      }
-                      $this.itemData[_g] = txt
-                    })
-                  else
-                  selMenuItems = { 
-                    noText : {
-                      name : '[Nenhum texto selecionado]',
-                      disabled : true
+                  
+                  selText.forEach( function(txt){
+                    var _g = guid()
+                    selMenuItems.selectionFold.items[_g] = { 
+                      name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
+                      type: 'checkbox', 
+                      selected: true,
+                      fullText : txt
                     }
+                    $this.itemData[_g] = txt
+                  })
+
+                  selMenuItems.selectionFold.items["sep1"] = "---------"  
+                  
+                  var _g = guid()
+                  var txt = 'conforme despacho XXXXIdXXX'
+                  selMenuItems.selectionFold.items[_g] = {
+                    name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
+                      type: 'checkbox', 
+                      selected: false,
+                      fullText : txt
                   }
+                  $this.itemData[_g] = txt
 
                   return selMenuItems
                 })(),
                 {
-                  "sep1": "---------"
+                  "sep1": "---------",
+                  "pasteFinalidade": {
+                    name: "Colar em XXXFinalidadeXXX", 
+                    icon: "paste", 
+                    faClass : 'fa-solid fa-paste',
+                    disabled : function(key, opt){
+                      return (j2.modelo.exp.gE('finalidade-colador') === null) || (getSelectedText().length === 0)
+                    }
+                  }
                 })
               })()
 

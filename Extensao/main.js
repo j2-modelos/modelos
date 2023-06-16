@@ -35,12 +35,12 @@ var TarefasProps = {
     orgNome : 'Análise de perícia',
     ADMGrupo : {
       org : 'dmsTrf',
-      alt : 'agdStt'
+      alt : 'certfc'
     },
-    altNome : 'Aguardando perícia do IML',
+    altNome : 'Certificar tempestividade de recurso',
     personalizacao : {
       ADM : {
-        altNomeLabel : 'Aguardar perícia do IML'
+        altNomeLabel : 'Certificar tempestividade de recurso'
       },
       transicaoManterApenasIgnorarESairTarefa : true,
       mostraAutosDigitais : true
@@ -66,8 +66,11 @@ var TarefasProps = {
       mostraAutosDigitais : true
     }
   },
+  'Cerificar juízo digital' : {
+    ADMGrupo : 'certfc'
+  },
   'Certificar trânsito em julgado' : {
-    ADMGrupo : 'exps'
+    ADMGrupo : 'certfc'
   },
   'Certificar consulta INFOJUD' : {
     altNomeADM : 'Consultar INFOJUD',
