@@ -373,13 +373,13 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>        
-        <item id="atoOrdItGenerico" label="Genérico" dataPlus="">
+        <item id="atoOrdItGenerico" label="Intimação Genérica" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    #:B{XXXXDiligênciaXXXX}, XXXXXXXXXXXX.
+                    #:B{INTIMAÇÃO} da parte XXXXXXXXXXXX.
                 </data>
             </itemContent>
-        </item>        
+        </item>             
 
         <item id="atoOrdItReiterarCitação" label="Reiterar Citação" dataPlus="{ 'descricaoAppend': 'Reiteração Citação' }">
             <itemContent type="plainText" addtClassStyles="">

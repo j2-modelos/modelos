@@ -25,18 +25,20 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <!--<gItem id="certConclusaoCorreicao2020"/>-->
         <!-- /group -->           
                     
-        <group label="Comuns">
+        <group label="#Comuns">
             <gItem id="certItGenerico"/>
             <gItem id="certItArquivamento"/>
-            <gItem id="certItDesarquivamento"/>
+            <!--gItem id="certItDesarquivamento"/-->
         </group>
         <group label="Alvara">
-            <gItem id="certItAlvaraEntregaParte"/>
-            <gItem id="certItAlvaraEntregaAdvogado"/>
-            <gItem id="certItAlvaraEntregaAdvogadoHabilitado"/>
-            <gItem id="certItAdvogadoHabilitado"/>
-            <gItem id="certItAlvaraRemessaEmail"/>
-            <gItem id="certItAlvaraCumrpimentoBB"/>
+            <!--gItem id="certItAlvaraEntregaParte"/-->
+            <!--gItem id="certItAlvaraEntregaAdvogado"/-->
+            <!--gItem id="certItAlvaraEntregaAdvogadoHabilitado"/-->
+            <!--gItem id="certItAdvogadoHabilitado"/-->
+            <!--gItem id="certItAlvaraRemessaEmail"/-->
+            <!--gItem id="certItAlvaraCumrpimentoBB"/-->
+            <gItem id="certItAlvaraCadastradoSISCONDJ"/>
+            <gItem id="certItAlvaraEncaminhamentoExpedicao"/>
             <gItem id="certItAlvaraProcuracaoSemPoderes"/>
         </group>
         <group label="Análise de Juntadas">
@@ -71,34 +73,40 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItCustasPendentes"/>
             <gItem id="certItCustasRecolhidas"/> 
         </group>      
-        <group label="Execuçção">
+        <group label="Encaminhamento">
+            <gItem id="certItAlvaraEncaminhamentoContadoriaReferidoID"/>
+            <gItem id="certItAlvaraEncaminhamentoContadoriaCustasFinais"/>
+            <gItem id="certItEncaminhamentoExpedicaoCartaDeIntimacao"/>
+        </group>
+        <!--group label="Execução">
             <gItem id="certItSuspensTelemar"/>
             <gItem id="certItADPFCaema"/>
             <gItem id="certItADPFCaemaBloq"/>
             <gItem id="certItDocAusenciaCumSen"/>
-        </group>
+        </group-->
         <group label="Intimacao">
             <!--gItem id="certItLiminarConcessao"/>
             <gItem id="certItLiminarNaoConcessao"/>
             <gItem id="certItSentenca"/-->
-            <gItem id="certItPublicacaoDJe"/>
+            <!--gItem id="certItPublicacaoDJe"/-->
             <gItem id="certItIntimacaoTelefoneInfrutifera"/>
             <gItem id="certItIntimacaoWhatsAppInfrutifera"/>
-            <gItem id="certItRemessaExpedienteViaEMail"/>
-        </group>
-        <group label="Intimação - Não Expedição">
-            <!--gItem id="certItNaoIntEndDeconhecido"/-->
             <gItem id="certItNaoIntRevelia"/>
             <gItem id="certItNaoIntNaoCitacao"/>
+            <gItem id="certItRemessaExpedienteViaEMail"/>
         </group>
+        <!--group label="Intimação - Não Expedição">
+            <gItem id="certItNaoIntEndDeconhecido"/>
+            <gItem id="certItNaoIntRevelia"/>
+            <gItem id="certItNaoIntNaoCitacao"/>
+        </group-->
         <group label="Justiça Gratuita">
             <gItem id="certItConclusaoDeliberacaoJusticaGratuita"/>
             <gItem id="certItSemRequerimentoSemJusticaGratuita"/>
         </group>        
         <group label="Outros">
             <!--<gItem id="certItApresentacaoTituloExecutivo"/>-->
-            <gItem id="certItEncaminhamentoExpedicaoCartaDeIntimacao"/>            
-            <gItem id="certItRemessaPorAR"/>
+            <!--gItem id="certItRemessaPorAR"/-->
             <gItem id="certItDesentranhamento"/>
             <gItem id="certItRemessaDocsAudiencia"/>
             <gItem id="certItExpedienteReputadoEficaz"/>
@@ -170,7 +178,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItIntimacaoWhatsAppInfrutifera"/>
         </group>      
     </groupsDefs>
-    <items>
+    <items initialSelected="certItGenerico">
         <item id="certItRemessaExpedienteViaEMail" label="Remessa expediente via e-mail" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -750,6 +758,46 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item> 
+        <item id="certItAlvaraEncaminhamentoExpedicao" label="Encaminhamento para expedição" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento para expedição de alvará' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Nesta data, considerando a autorização contida em sentença, o pagamento voluntário e a 
+                    concordância da parte autora, encaminho os autos para expedição de alvará no sistema 
+                    SISCONDJ, implementado pelo TJMA, nos termos da Resolução GP 75.2022.
+                </data>
+            </itemContent>
+        </item> 
+        
+        <item id="certItAlvaraCadastradoSISCONDJ" label="Cadastrado no SISCONDJ" 
+            dataPlus="{ 'descricaoAppend': 'Alvará(s) cadastrado(s) no SISCONDJ' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, para os devidos fins, que nos termos da Resolução GP 75.2022, 
+                    efetuei o #:B{cadastro de alvará(s) no sistema SISCONDJ}, 
+                    referente aos autos, cuja juntada no PJE será efetuada após a assinatura 
+                    eletrônica.
+                </data>
+            </itemContent>
+        </item> 
+        <item id="certItAlvaraEncaminhamentoContadoriaCustasFinais" label="Contadoria | Custas finais" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento à Contadoria para elaboração de cálculo de custas finais' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, nesta data, que encaminhei os autos 
+                    para #:B{a Contadoria Judicial}, para fins de confecção de #:B{cálculo de custas finais}.
+                </data>
+            </itemContent>
+        </item> 
+        <item id="certItAlvaraEncaminhamentoContadoriaReferidoID" label="Contadoria | Cálculo do id XXX" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento à Contadoria para elaboração cálculo' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, nesta data, que encaminhei os autos para #:B{a Contadoria Judicial}, 
+                    para fins de realização dos cálculos mencionados no #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}.
+                </data>
+            </itemContent>
+        </item> 
         
         <item id="certItAlvaraEntregaParte" label="Selamento e Entrega a Parte" dataPlus="{ 'descricaoAppend': 'Entrega de Alvará' }">
             <itemContent type="plainText" addtClassStyles="">
@@ -987,7 +1035,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item>
-        <item id="certItPrazoSemExpedienteForense" label="Sem expeidente forense" dataPlus="{ 'descricaoAppend': 'Sem expediente forense' }">
+        <item id="certItPrazoSemExpedienteForense" label="Sem expediente forense" dataPlus="{ 'descricaoAppend': 'Sem expediente forense' }">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs> 
                     <elemento tag="div" id="certItPrazoSemExpedienteForense-divContents" scope="NONE">
@@ -1057,7 +1105,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item>  
         
-        <item id="certItRemessaDocsAudiencia" label="Remssa documentos" dataPlus="{ 'descricaoAppend': 'Remessa documento(s) de intimação em audiência' }">
+        <item id="certItRemessaDocsAudiencia" label="Remessa documentos" dataPlus="{ 'descricaoAppend': 'Remessa documento(s) de intimação em audiência' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico nesta data que remeti à parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}
@@ -1337,7 +1385,8 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item>  
         
-        <item id="certItEncaminhamentoExpedicaoCartaDeIntimacao" label="Encaminhamento para expedição de carta de intimação" dataPlus="{ 'descricaoAppend': 'Encaminhamento para Expedição de carta de intimação' }">
+        <item id="certItEncaminhamentoExpedicaoCartaDeIntimacao" label="Expedição de carta de intimação" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento para Expedição de carta de intimação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, nesta data, em atenção ao teor da certidão do oficial de justiça do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, referente à citação por hora certa,  
