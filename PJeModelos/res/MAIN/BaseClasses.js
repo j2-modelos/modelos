@@ -731,7 +731,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
@@ -7221,13 +7221,19 @@ try {
         }
                 
 
-        function itrGroup(arGp, appd, arI){
+        function itrGroup(arGp, appd, arI, naoOrdenado){
+          if(!(naoOrdenado))
+            arGp.sort((a, b)=>{
+              var _a = a.label.toLowerCase()
+              var _b = b.label.toLowerCase()
+              return _a.localeCompare(_b);
+            })
           forEach(arGp, function(it){
             if (eCompetencia(it)){
               var g = groupToOptionGroup(it);
               appd.appendChild(g);
-              forEach(it.gItem, function(it){
-                forEach(arI, function(it_item){
+              forEach(arI, function(it_item){
+                forEach(it.gItem, function(it){
                   if(it_item.id === it.id && eCompetencia(it_item))
                     g.appendChild( itemToOption(it_item)) ;
                 });
@@ -7245,10 +7251,17 @@ try {
         if(selectorDefModdle.selectorDef.items.initialSelected)
           selectedId = selectorDefModdle.selectorDef.items.initialSelected;
         
+        if(!(selectorDefModdle.selectorDef.items.naoOrdenado))
+          selectorDefModdle.selectorDef.items.item.sort((a, b)=>{
+            var _a = a.label.toLowerCase()
+            var _b = b.label.toLowerCase()
+            return _a.localeCompare(_b);
+          })
+
         if(selectorDefModdle.selectorDef.groupsDefs)
           if(selectorDefModdle.selectorDef.groupsDefs.group)
             if(selectorDefModdle.selectorDef.groupsDefs.group.length){
-              itrGroup(selectorDefModdle.selectorDef.groupsDefs.group, selct, selectorDefModdle.selectorDef.items.item, selct);
+              itrGroup(selectorDefModdle.selectorDef.groupsDefs.group, selct, selectorDefModdle.selectorDef.items.item, selectorDefModdle.selectorDef.groupsDefs.naoOrdenado);
               _selInst.__loadedItems = true;
               defer(function(){evBus.fire('afterLoadItems.' + selct.id);});
               // slck
