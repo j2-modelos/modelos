@@ -408,6 +408,7 @@
         <xs:element ref="j2:group" minOccurs="1" xmlns:j2="http://j2" />
       </xs:sequence>
     </xs:complexType>
+    <xs:attribute name="j2:naoOrdenado" type="xs:boolean"/>
   </xs:element>  
 
   <xs:element name="group">
@@ -432,6 +433,7 @@
       </xs:sequence>
     </xs:complexType>
     <xs:attribute name="j2:initialSelected" type="xs:string"/>
+    <xs:attribute name="j2:naoOrdenado" type="xs:boolean"/>
   </xs:element>      
 
   <xs:element name="item">

@@ -15,7 +15,7 @@ and open the template in the editor.
         </elemento>
     </itemFormats>
     <groupsDefs>
-        <group label="Comuns">
+        <group label="#Comuns">
             <gItem id="intmItSentenca"/>
             <gItem id="intmItDespacho"/>
             <gItem id="intmItDecisao"/>
@@ -35,7 +35,7 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
-            <gItem id="intmItAudDesigSemSalaSEC"/>
+            <!--gItem id="intmItAudDesigSemSalaSEC"/-->
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudCEJUSC"/>
@@ -114,7 +114,7 @@ and open the template in the editor.
             <gItem id="intmIt"/>
         </group-->
     </groupsDefs>
-    <items>
+    <items initialSelected="intmItSentenca">
         <!-- items selectorArray are 'binded' with meioComunicacao.xml 
             <item id="meioComunicItCorreios" ...
             <item id="meioComunicItCentralMandados" ...
@@ -813,7 +813,7 @@ and open the template in the editor.
             </itemContent>
         </item>
         
-        <item id="intmItPenhoraOnLineOferecerEmbargos" label="Penhora Online - Oferecer Embargos" dataPlus="">
+        <item id="intmItPenhoraOnLineOferecerEmbargos" label="Oferecer Embargos" dataPlus="">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">1

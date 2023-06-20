@@ -3761,7 +3761,12 @@
               'name': 'group',
               'isMany' : true,
               'type': 'group'
-            }            
+            },
+            {
+              'name': 'naoOrdenado',
+              'type': 'Boolean',
+              'isAttr': true
+            }     
           ]
         },         
         {
@@ -3919,7 +3924,12 @@
               'name': 'initialSelected',
               'isAttr' : true,
               'type': 'String'
-            }            
+            },
+            {
+              'name': 'naoOrdenado',
+              'type': 'Boolean',
+              'isAttr': true
+            }         
           ]
         },               
         {

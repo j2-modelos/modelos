@@ -35,7 +35,7 @@ var TarefasProps = {
     orgNome : 'Análise de perícia',
     ADMGrupo : {
       org : 'dmsTrf',
-      alt : 'agdStt'
+      alt : 'certfc'
     },
     altNome : 'Certificar tempestividade de recurso',
     personalizacao : {
@@ -175,8 +175,11 @@ var TarefasProps = {
       mostraAutosDigitais : true
     }
   },
+  'Cerificar juízo digital' : {
+    ADMGrupo : 'certfc'
+  },
   'Certificar trânsito em julgado' : {
-    ADMGrupo : 'exps'
+    ADMGrupo : 'certfc'
   },
   'Certificar consulta INFOJUD' : {
     altNomeADM : 'Consultar INFOJUD',

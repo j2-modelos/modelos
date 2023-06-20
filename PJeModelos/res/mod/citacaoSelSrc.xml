@@ -15,7 +15,7 @@ and open the template in the editor.
         </elemento>
     </itemFormats>
     <groupsDefs>
-        <group label="Citação">
+        <group label="#Citação">
             <gItem id="intmItCitacaoJec"/>
             <gItem id="intmItCitacaoExecucaoJec"/>
             <!--gItem id="intmItCitacaoExecucaoExTiExAudJec"/-->
@@ -27,7 +27,7 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
-            <gItem id="intmItAudDesigSemSalaSEC"/>
+            <!--gItem id="intmItAudDesigSemSalaSEC"/-->
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudCEJUSC"/>
@@ -80,7 +80,7 @@ and open the template in the editor.
             <gItem id="intmIt"/>
         </group-->
     </groupsDefs>
-    <items>
+    <items initialSelected="intmItCitacaoJec">
         <item id="intmItComprimentoPrecatória" label="Cumpirmento Precatória" dataPlus="">
             <advertencias>
                 <advertencia id="advtItPJeListaDocumentoAviso" />

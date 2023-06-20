@@ -914,7 +914,7 @@ nav.main-menu, #divSideBar{
     left: 50px !important;
 }
 
-#divRightPanel{
+#divRightPanel:not([j2-view-pseudo-tarefa]){
     width: calc(100% - 50px) !important;
 }
 

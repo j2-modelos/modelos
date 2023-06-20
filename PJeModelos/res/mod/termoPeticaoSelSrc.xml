@@ -43,7 +43,7 @@ and open the template in the editor.
             <gItem id="petItRenunciaPrazoContrarrazoes"/>
         </group>
     </groupsDefs>
-    <items>
+    <items initialSelected="petItJuntada">
         <item id="petItConcordImportExpAlvara" label="Concordância Importe Expedição de Alvará" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
