@@ -1909,10 +1909,10 @@ try {
 
           if (soma > 9) {
             dia=(d+e-9);
-            mes=03;
+            mes=3;
           }else {
             dia=(d+e+22);
-            mes=02;
+            mes=2;
           }
 
           var _pascDate = new Date(ano,mes,dia);  
@@ -3085,6 +3085,9 @@ try {
       proceedFinish : false,
       close : function () {
         pkg.ModalDialog.okCancel('Fechar o editor?', 'Modelos j2 - Confrimação', 'docEditorCore.closeConfirmation', 'docEditorCore.onCancelClose');
+      },
+      closeByRobot : () =>{
+        evBus.fire('onFinishEdition');
       }
     };
     

@@ -349,10 +349,23 @@ function pjeLoad(){
   }
   
   var _preiousSource = '';
+  if(!(j2E.env?.deferring))
+    j2E.env.deferring= {}
+
+  j2E.env.deferring.personalizacaoTarefa = {
+    carregarAutosDigitais : jQ3.Deferred(),
+    carregarExpedientes : jQ3.Deferred(),
+    prepararInteracoes : {
+      autosDigitaisCarregados : jQ3.Deferred(),
+      remoteJ2DocCreate : jQ3.Deferred()
+    }
+  };
+
   function personalizarTarefa(_load){
       var _tarf = _load.at(-1);
       var _tarfProp = TarefasProps[_tarf];
       var _delayCall = new DelayedCall(10, 10);
+      var _defTarf = j2E.env.deferring.personalizacaoTarefa
       
       if(!(_tarfProp))
         return;
@@ -372,6 +385,8 @@ function pjeLoad(){
           this.contentWindow.jQ3('body').attr('j2E', 'mostrarSoExpedientes');
           
           this.contentWindow.jQ3('a#navbar\\:linkAbaExpedientes1')[0].click();
+
+          defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
         });
       };
       var _autosDigitaisJuntarDocumento = function(height){
@@ -410,11 +425,13 @@ function pjeLoad(){
         idProc = idProc[0].split('=')[1].split('&')[0];
 
         defer(function(){j2EQueryGetChaveAcesso(idProc, function(ca){
-          var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
+          var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$&j2Expedientes=true';
           _url = _url.replace('$', idProc).replace('$', ca);
 
           iframe.attr('src', _url).css('width' , '100%').css('height', window.screen.height * 0.77);   
           body.append(iframe);	
+          
+          defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
         })});
       };
       var _limparCorpo = function(){
@@ -436,22 +453,83 @@ function pjeLoad(){
           jQ3(val).remove();
         });
       };
-      var _criarPainel = function(){
-        jQ3.each(_tarfProp.personalizacao.painel, function(key, painel){
+      var _criarPainel = function(subPanel){
+        var jPOut
+        jQ3.each(subPanel?.painel || _tarfProp.personalizacao.painel, function(key, painel){
           var _body = jQ3('<div>');
           jQ3.each(painel.body, function(key, el){
             switch(el.tipo){
               case 'table':
                 _body.append( j2EUi.createTable(el.data) );
                 break;
+              case 'button':
+                _body.append( j2EUi.createButton(el.data) );
+                break;
+              case 'painel':
+                var subPanel = _criarPainel(el)
+                _body.append( subPanel );
+                break;
             }
           });
           
           var jP = j2EUi.createPanel(painel.header, _body);
-          jQ3(painel.appendTo).append( jP );
+
+          if(painel.events){
+            jQ3.each(painel.events, function(key, eventCallback){
+              eventCallback(jP)
+            })
+          }
+
+          if( ! (subPanel ))
+            jQ3(painel.appendTo).append( jP );
+          else
+            jPOut = jP
         });
+
+        if( subPanel )
+          return jPOut
       };
+      var _prepararInteracoes = function(){
+        jQ3.each(_tarfProp.personalizacao.prepararInteracoes, function(key, interaction){
+          switch(interaction){
+              case 'seam-processo':
+                j2E.SeamIteraction.processo.acoes.abrirProcesso()
+                .done( (int)=> { 
+                  defer(()=>evBus.fire('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int))
+                  defer(()=>_defTarf.prepararInteracoes.autosDigitaisCarregados.resolve(int))
+                  j2E.env.tempData.prepararInteracoes = { 
+                    evBusTriggered : true,
+                    interactionObject :  int
+                  }
+                })
+                break;
+              
+              case 'remote-j2Doc-create':
+                addScript('Extensao/j2-external.js')
+                j2E.mods.remoteJ2DocCreatorInit()
+                window.postMessage({
+                   j2Action: true, 
+                   pageXContent : true,
+                   message: "initialize-remote-j2Doc-create" 
+                }, "*")
+
+                jQ3('#taskInstanceDiv').append(`
+                  <iframe id="pseudoEdt" j2-pseudo-iframe>
+                `)
+                jQ3('#taskInstanceDiv').append(`
+                  <iframe id="pseudoExp" j2-pseudo-iframe>
+                `)
+
+                setTimeout(()=>{ //preguiça, apenas isso
+                  defer(()=>evBus.fire('Tarefa.Personalizacao.prepararInteracoes.remote-j2Doc-created'))
+                  defer(()=>_defTarf.prepararInteracoes.remoteJ2DocCreate.resolve())
+                }, 100);
+                break;
+            }
+        })
+      }
            
+      _tarfProp.personalizacao.prepararInteracoes                        && _prepararInteracoes();
       _tarfProp.personalizacao.removeDoCorpo                             && _removeDoCorpo();
       _tarfProp.personalizacao.limpaCorpoTarefa                          && _limparCorpo();
       _tarfProp.personalizacao.mostraAutosDigitais                       && _autosDigitais();
@@ -948,11 +1026,12 @@ function pjeLoad(){
       if(!matches)
         return;
       
+      var script = 'debugger; event.preventDefault()';
       switch(html_set){
         case 1:
           var $aRefsh = jQ3(`
             <div class="value col-sm-1">
-              <a class="btn btn-primary j2-refresh-loader-autos" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+              <a class="btn btn-primary j2-refresh-loader-autos" onclick="${script}"><i class="fa fa-refresh"></i></a>
             </div>
           `
           )
@@ -965,7 +1044,7 @@ function pjeLoad(){
 
         case 2:
           var $aRefsh = jQ3(`
-              <a class="btn btn-primary j2-refresh-loader-autos framePAC" onclick="event.preventDefault()"><i class="fa fa-refresh"></i></a>
+              <a class="btn btn-primary j2-refresh-loader-autos framePAC" onclick="${script}"><i class="fa fa-refresh"></i></a>
           `
           )
           jEl.after($aRefsh)
@@ -974,6 +1053,7 @@ function pjeLoad(){
           })
           //jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
           $aRefsh.click(()=>{
+            debugger;
             jEl[0].dispatchEvent(new Event('change'))
           })
           break;
@@ -1273,11 +1353,13 @@ function pjeLoad(){
     
     jQ3.initialize('table#panelDetalhesProcesso', function(){
       var _parentThisTable = jQ3(this);
-      
+      var tdPosShift = 0 //usado para discriminar que houve a adicição ou não de coluna na tabela
+
       jQ3('#processoExpedienteTab table.rich-table.clearfix a[title="Visualizar ato"]', _parentThisTable).each(function(idx, el){
 
         var jEl = jQ3(el);
-        var $tr = jEl.parents('tr');
+        var $tr = jEl.parents('tr:first');
+        
         
         function _adicionarComandoParaFecharOPrazo(){
           if(jEl.parents('td').next().find('div[j2="editarExpediente"]').length !== 0 || jEl.parents('td').next().text().includes('SIM'))
@@ -1311,6 +1393,59 @@ function pjeLoad(){
           _a.append(_i);
           jEl.parents('td').next().find('span').append(_div);
         }
+
+        function _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2(){
+          function _converterParaISO(dataHora) {
+            const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
+            //const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
+            const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
+            return dataISO;
+          }
+          function _extrairDataHora(html) {
+            const regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
+            let match;
+            match = regex.exec(html)
+            let [dataHora] = match;
+            
+            return dataHora;
+          }
+
+          var EstaVencido = false
+          var $h6Data = $tr.find('td:nth-child(2) > span:first h6:first')
+          if( $h6Data.text().length ){
+
+          var data = _extrairDataHora($h6Data.text())
+          var dataISO = _converterParaISO(data)
+          var jsData = new Date(dataISO)
+          var jsAgora = new Date()
+          EstaVencido = jsAgora > jsData
+          
+          if(! EstaVencido)
+            $tr.find('td:nth-child(2) > span:first h6').addClass('text-success')
+          }
+
+          //Seletor
+          if(!(j2E?.env?.urlParms?.j2Expedientes))
+            return;
+          if( ! $tr.parents('table:first').find('> thead[j2]').length ){
+            $tr.parents('table:first').find('> thead').attr('j2', '')
+            .find('tr').prepend('<th j2-seletor-expediente></td>')
+
+            $tr.parents('tbody:first').mouseup((ev)=>{
+              var $el = jQ3(ev.target)
+              if(!$el.is('input[j2-seletor-expediente]'))
+                return
+
+              $el.parents('tr:first')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+              .find('td')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+            })
+
+            tdPosShift = 1
+          }
+
+          var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
+          $tr.prepend($seletor)
+        }
         
         function _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao(){
           if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
@@ -1323,6 +1458,7 @@ function pjeLoad(){
         }
         
         _adicionarComandoParaFecharOPrazo();
+        _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2()
         _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao();
       });
       
@@ -1361,19 +1497,19 @@ function pjeLoad(){
 
               _div.append(_a);
               _a.append(_i);
-              $tr.find('td:nth-child(3)').append(_div);
-              $tr.find('td:nth-child(1) > span > div > span').append(`<br>Disponibilizado em: ${items[i].datadisponibilizacao}`)
+              $tr.find(`td:nth-child(${3 + tdPosShift})`).append(_div);
+              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Disponibilizado em: ${items[i].datadisponibilizacao}`)
               
               const pubDataISO = j2E.mods.Calendario.contarPrazo(new Date(`${items[i].data_disponibilizacao}T00:00:00.000-03:00`), 1)
               const pubData = pubDataISO.split('-').reverse().join('/')
-              $tr.find('td:nth-child(1) > span > div > span').append(`<br>Publicado em: ${pubData}`)
+              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Publicado em: ${pubData}`)
 
 
 
-              if ( $tr.find('td:nth-child(2) > span > div:first').text().length && ( $tr.find('td:nth-child(1) > span > div:first').text().toLowerCase().includes('o sistema registrou ciência')  ) )
+              if ( $tr.find(`td:nth-child(${2 + tdPosShift}) > span > div:first`).text().length && ( $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div:first`).text().toLowerCase().includes('o sistema registrou ciência')  ) )
                 return;
 
-              let _parsePrazo = $tr.find('td:nth-child(1)').text().split('Prazo: ')[1].split(' dias')
+              let _parsePrazo = $tr.find(`td:nth-child(${1 + tdPosShift})`).text().split('Prazo: ')[1].split(' dias')
               
               if( isNaN(_parsePrazo[0] ) )
                 return;
@@ -1394,7 +1530,7 @@ function pjeLoad(){
                   color: #a94442;
               ">(para manifestação)</span></h6></div></span></div></span>`;
 
-              $tr.find('td:nth-child(2)').append(htmlTemplate);
+              $tr.find(`td:nth-child(${2 + tdPosShift})`).append(htmlTemplate);
             });
           }
         }
@@ -2610,6 +2746,22 @@ function pjeLoad(){
     });
   }
 
+
+  function personalizarAtalhosADireitaAutosDigitais(){
+    jQ3.initialize('#navbar\\:ajaxPanelAlerts .icone-menu-abas', function(){
+      var $liMenuTracinhos = jQ3(this)
+
+      var $aExibirTarefasProcessoClone = $liMenuTracinhos.find('a#navbar\\:linkExibirTarefaAtualProcesso').clone()
+      $aExibirTarefasProcessoClone.text('')
+      $aExibirTarefasProcessoClone.attr('title', 'Exibir tarefa atual do processo')
+      $aExibirTarefasProcessoClone.append('<i class="fa fa-project-diagram">')
+      
+      var $newLi = jQ3('<li>').append($aExibirTarefasProcessoClone)
+
+      $liMenuTracinhos.parents('ul.navbar-right').find('li:first').after($newLi)
+    })
+  }
+
   function preparComandoDeEtiquetagemDeAnaliseJuntada(){
     var delayCall = new DelayedCall(150, 250);
     jQ3.initialize('#processoDocumentoNaoLidoDiv .rich-stglpanel-body table.rich-table', function(){
@@ -2691,6 +2843,7 @@ function pjeLoad(){
       if( typeof stVal.noData === 'undefined') 
         $this.find('#j2-etiqueta-digito-filter').val(stVal.value)
     });
+
   }
   
   switch(window.location.pathname){
@@ -2712,6 +2865,7 @@ function pjeLoad(){
       listenMessages();
       //personaliazarMenu();
       //registrarServiceWorker();
+      personalizarAtalhosADireitaAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()
@@ -2795,3 +2949,16 @@ function pjeLoad(){
   }
 };
 
+// No content.js (content script)
+window.addEventListener("message", function(event) {
+  if (event.source === window && event.data.type === "MensagemDoContentScript") {
+    // Tratar a mensagem recebida do código da página
+    console.log("TESTAR: Mensagem recebida da página:", event.data.message);
+
+    // Enviar uma resposta para o código da página
+    event.source.postMessage({ type: "RespostaDoContentScript", message: "TESTAR: Resposta do content script" }, event.origin);
+  }
+});
+
+// Enviar uma mensagem para o código da página
+setTimeout(()=>{window.postMessage({ type: "MensagemParaAPagina", message: "TESTAR: Olá página!" }, "*");}, 3000)
