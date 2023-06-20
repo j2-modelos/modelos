@@ -37,13 +37,122 @@ var TarefasProps = {
       org : 'dmsTrf',
       alt : 'agdStt'
     },
-    altNome : 'Aguardando perícia do IML',
+    altNome : 'Certificar tempestividade de recurso',
     personalizacao : {
       ADM : {
-        altNomeLabel : 'Aguardar perícia do IML'
+        altNomeLabel : 'Certificar tempestividade de recurso'
       },
       transicaoManterApenasIgnorarESairTarefa : true,
       mostraAutosDigitais : true
+    }
+  },
+  'Arquivo definitivo' : {
+    personalizacao : { // Personalização de teste baeada em Expedir Alvará
+      prepararInteracoes : [
+        'seam-processo',
+        'remote-j2Doc-create'
+      ],
+      /*ADM : {
+        estenderControlarAudiencia : true
+      },*/
+       painel : [
+         {
+           appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+           header : '[UNIDADE DE TESTE]',
+           body : [
+            {
+              tipo : 'table',
+              data : [
+                ["Ação", "Executar"],
+                [
+                  "[TESTE DE AUTO CRIAÃO DE DOCUMENTO]", 
+                  j2EUi.createButton({
+                    textoButton : "Executar ação", 
+                    classButton : 'btn-primary', 
+                    callback : () => { console.log('Callback da construção do botão: acioinado') }, 
+                    id : 'j2-teste-auto-criacao',
+                    moreAttrs : {
+                      disabled : true
+                    }
+                  })
+                ],
+              ]
+            }
+          ],
+          events : [
+            ($thisPanel, seamProcIteraction) => {
+              function __routine($thisPanel){
+
+                const ids = [
+                  '#j2-teste-auto-criacao'
+                ]
+                $thisPanel.find(ids.join(', ')).removeAttr('disabled')
+
+                const [testeAutoCriacao] = ids
+
+                $thisPanel.find(testeAutoCriacao).click(async ()=>{
+                  try{
+                    const idModelo = 'j2Certidao'
+                    const pjeTipoDocumento = 'certidão'
+                    const versao = '3.0'
+                    const descricao = '[Teste]'
+                    const fonteDocumento = 'text/html'
+                    const numeroDocumento = 1
+                    const robot = { 
+                      executarNoEvento : {
+                        evento : 'afterLoadItems.selectorPessoa',
+                        atrasar : 250
+                      },
+                      passos : [
+                        {
+                          tipo : 'iterarSelector',
+                          instanceId: 'certidaoItens',
+                          items: [
+                            'certItPrazoSemCump'
+                          ]
+                        },                        
+                        //todo robô deve ter como ultimo passo o fechamento do edt
+                        {
+                          tipo : 'avaliacaoDeString',
+                          string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+                        }
+                      ]
+                    }
+
+                    /*const PJeVarsHTML = await j2E.SeamIteraction.processo.acoes.acaoObterVariaveisParaExtensao()
+                    const html = await j2E.mods.remoteJ2DocCreator(idModelo, versao, PJeVarsHTML, robot)   */
+                    const html = '<P>TESTE</P>'
+                    j2E.SeamIteraction.processo.acoes.acaoJuntarDocumento(pjeTipoDocumento, descricao, fonteDocumento, {
+                      html : html
+                    }, numeroDocumento)
+                    .done( ()=>{
+                      $.Toast("Juntar num clique", "Juntado com sucesso.", "success")
+                    } )
+                    .fail( (err)=>{
+                      $.Toast("Erro ao Juntar num clique", err, "error")
+                    } )
+                  }catch(err){
+                    $.Toast("Erro ao Juntar num clique", err, "error")
+                  }
+                })
+
+                $.Toast("Juntar num clique", "Pronto para juntar.", "success")
+              }
+
+              if( j2E.env.tempData?.prepararSeamIteraction?.evBusTriggered )
+                __routine($thisPanel, j2E.env.tempData?.prepararSeamIteraction.interactionObject)
+              else
+                evBus.on('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int => { 
+                  __routine($thisPanel, int)
+                }) 
+            }
+          ]
+         }
+       ],
+       /*removeDoCorpo : [
+         "form#taskInstanceForm table tr:first td:first div:first"
+       ],*/
+       limpaCorpoTarefa : true,
     }
   },
   'Avaliar determinações do magistrado' :{
@@ -138,9 +247,12 @@ var TarefasProps = {
   'Expedir alvará' : {
     ADMGrupo : 'exps',
     personalizacao : {
-       ADM : {
-         estenderControlarAudiencia : true
-       },
+      prepararSeamIteraction : [
+        'processo'
+      ],
+      /*ADM : {
+        estenderControlarAudiencia : true
+      },*/
        painel : [
          {
            appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
@@ -156,6 +268,10 @@ var TarefasProps = {
                     textoButton : "Executar ação", 
                     classButton : 'btn-primary', 
                     callback : () => { alert('TESTE BEM SUCEDIDO') }, 
+                    id : 'j2-acoes-expedir-certidao-encaminhamento',
+                    moreAttrs : {
+                      disabled : true
+                    }
                   })
                 ],
                 [
@@ -164,9 +280,43 @@ var TarefasProps = {
                     textoButton : "Executar ação", 
                     classButton : 'btn-primary', 
                     callback : () => { alert('TESTE BEM SUCEDIDO 2') }, 
+                    id : 'j2-acoes-expedir-certidao-para-assinatura',
+                    disabled : true,
+                    moreAttrs : {
+                      disabled : true
+                    }
                   })
                 ]
               ]
+            }
+          ],
+          events : [
+            ($thisPanel) => {
+              function __routine($thisPanel){
+                const ids = [
+                  '#j2-acoes-expedir-certidao-encaminhamento',
+                  '#j2-acoes-expedir-certidao-para-assinatura'
+                ]
+                $thisPanel.find(ids.join(', ')).removeAttr('disabled')
+
+                const [encaminhamento, paraAssinatura] = ids
+
+                $thisPanel.find(encaminhamento).click(()=>{
+                  alert('alteracaoCallbackSuccess encaminhamento') 
+                })
+                $thisPanel.find(paraAssinatura).click(()=>{
+                  alert('alteracaoCallbackSuccess paraAssinatura') 
+                })
+              }
+
+              const _tarfProp = TarefasProps['Expedir alvará']
+
+              if( _tarfProp.personalizacao?.prepararSeamIteraction?.evBusTriggered )
+                __routine($thisPanel, _tarfProp.personalizacao.prepararSeamIteraction.___int)
+              else
+                evBus.on('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int => { 
+                  __routine($thisPanel, int)
+                }) 
             }
           ]
          },
@@ -201,7 +351,7 @@ var TarefasProps = {
          "form#taskInstanceForm table tr:first td:first div:first"
        ],*/
        limpaCorpoTarefa : true,
-     }
+    }
   },
   'Expedir alvará 1' : {
     ADMGrupo : 'exps'
@@ -373,11 +523,13 @@ var TarefasProps = {
     }
   },
   'Processo com prazo decorrido' : {
-    personalizacao : {
+    /*personalizacao : {
       'mostraAutosDigitais' : true,
       'mostraExpedientes' : true,
       'limpaCorpoTarefa' : true
-    }
+    }*/
+    //Personalização extendida de Processo com prazo em curso
+    //após definição de TarefasProps
   },
   'Processo com prazo em curso' : {
     altNomeADM : 'Verificar decurso de prazo',
@@ -385,7 +537,187 @@ var TarefasProps = {
     personalizacao : {
       'mostraAutosDigitais' : true,
       'mostraExpedientes' : true,
-      'limpaCorpoTarefa' : true
+      'limpaCorpoTarefa' : true,
+
+      //personalização avançada 2023.06
+      prepararInteracoes : [
+        'seam-processo',
+        'remote-j2Doc-create'
+      ],
+      painel : [
+        {
+          appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+          header : 'Tarefa em um clique',
+          body : [
+           {
+             tipo : 'table',
+             data : [
+               ["Ação", "Executar"],
+               [
+                 "Certificar o decurso de prazo dos expedientes abaixo selecionados", 
+                 j2EUi.createButton({
+                   textoButton : "Juntar certidão de decurso de prazo", 
+                   classButton : 'btn-primary', 
+                   callback : () => { console.log('Callback da construção do botão: acioinado') }, 
+                   id : 'j2-juntar-certidao-decurso-prazo',
+                   moreAttrs : {
+                     disabled : true
+                   }
+                 })
+               ],
+             ]
+           }
+         ],
+         events : [
+           ($thisPanel) => {
+              var _deferToRoutine = jQ3.Deferred()
+
+             function __routine($thisPanel, seamProcIteraction, expedientesIFrame){
+
+               const ids = [
+                 '#j2-juntar-certidao-decurso-prazo'
+               ]
+               $thisPanel.find(ids.join(', ')).removeAttr('disabled')
+
+               var [$JuntCertDecPrazo] = ids
+
+               $JuntCertDecPrazo = $thisPanel.find($JuntCertDecPrazo).click(async ($event)=>{
+                if( ! $event.ctrlKey ){
+                  $.Toast("Confirme para juntar em um clique.", "Pressione ctrl e clique para gerar o documento.", "info")
+
+                  return;
+                }
+
+                 var $this = $JuntCertDecPrazo
+                 $this.attr('disabled', 'true')
+                 j2EUi.createRichModal()
+                 $this.disabledDef = jQ3.Deferred()
+                 $this.disabledDef.done( ()=> setTimeout(()=>{
+                  $this.removeAttr('disabled')
+                  j2EUi.removeModal()
+                }, 500 ))
+                 
+                 var dadosExpedientes
+                 var $inps
+                 function _obterCargaDaIframe(){
+                    var $jQ3i = expedientesIFrame.prop('contentWindow').jQ3
+                    if(!($jQ3i)){
+                      $.Toast("Erro ao Juntar em um clique.", "Expedientes não estão prontos.", "error")
+                      return false;
+                    }
+
+                    $inps = $jQ3i.find('input[j2-seletor-expediente]:checked')
+                    if(! $inps.length){
+                      $.Toast("Erro ao Juntar em um clique.", "Nenhum expediente selecionado.", "error")
+                      return false;
+                    }
+
+                    dadosExpedientes = j2E.Expedientes.util.parseLinhaDeExpedientesSelecionados($inps)
+
+                    $inps = jQ3($inps)
+            
+                    return true;
+                 }
+
+                 if(! _obterCargaDaIframe()){
+                  $this.disabledDef.resolve()
+                  return;
+                 }
+
+
+                 
+                  const idModelo = 'j2Certidao'
+                  const pjeTipoDocumento = 'certidão'
+                  const versao = '3.0'
+                  const descricao = `Prazo decorrido (${j2E.Expedientes.util.enumerarParteEVencimentoDoExpedientes(dadosExpedientes)})`
+                  const fonteDocumento = 'text/html'
+                  const numeroDocumento = ''
+                  const robot = { 
+                    executarNoEvento : {
+                      evento : 'afterLoadItems.selectorPessoa',
+                      atrasar : 250
+                    },
+                    passos : [
+                      {
+                        tipo : 'iterarSelector',
+                        instanceId: 'certidaoItens',
+                        items: [
+                          'certItPrazoSemCump'
+                        ]
+                      },             
+                      {
+                        tipo: 'copiarElmento',
+                        elemento: '#certItPrazoSemCump_li',
+                        copias: dadosExpedientes.length - 1
+                      }, 
+                      {
+                        tipo: 'iterarCopias',
+                        elemento: '#certItPrazoSemCump_li',
+                        mapaSubstituicao : {
+                            '#certItPrazoSemCump-prazoExtenso': 'it.dataEm',
+                            '#pessoa-polo-parte-LCase': '_obterPoloParte(it.parte).parte.LCase',
+                            '#selParte': 'it.parte',
+                            '#docId': 'it.idDocumentoLink'
+                        },
+                        fonte : dadosExpedientes
+                      },         
+                      //todo robô deve ter como ultimo passo o fechamento do edt
+                      {
+                        tipo : 'avaliacaoDeString',
+                        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+                      }
+                    ]
+                  }
+
+                  try{
+                   const PJeVarsHTML = await j2E.SeamIteraction.processo.acoes.acaoObterVariaveisParaExtensao()
+                   const html = await j2E.mods.remoteJ2DocCreator(idModelo, versao, PJeVarsHTML, robot)   
+                   
+                   j2E.SeamIteraction.processo.acoes.acaoJuntarDocumento(pjeTipoDocumento, descricao, fonteDocumento, {
+                     html : html
+                   }, numeroDocumento)
+                   .done( ()=>{
+                     $.Toast("Juntar num clique", "Juntado com sucesso.", "success")
+
+                     $inps.each((idx, el)=>{
+                      jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
+                     }) 
+                     $inps.attr('disabled','')
+                   } )
+                   .fail( (err)=>{
+                     $.Toast("Erro ao Juntar num clique", err, "error")
+                   } )
+                   .always(()=>{
+                      $this.disabledDef.resolve()
+                   })
+                 }catch(err){
+                   $.Toast("Erro ao Juntar num clique", err, "error")
+                   $this.disabledDef.resolve()
+                 }
+               })
+
+               $.Toast("Tarefa em um clique", "Pronto para executar.", "success")
+             }
+
+             if( j2E.env.tempData?.prepararSeamIteraction?.evBusTriggered )
+               _deferToRoutine.resolve(j2E.env.tempData?.prepararSeamIteraction.interactionObject)
+             else
+               evBus.on('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int => { 
+                 _deferToRoutine.resolve(int)
+               }) 
+             
+             var _defTarf = j2E.env.deferring.personalizacaoTarefa
+             jQ3.when(_deferToRoutine, 
+                      _defTarf.carregarExpedientes, 
+                      _defTarf.prepararInteracoes.remoteJ2DocCreate
+                      )
+             .done( (int, expIFrame)=>{
+                __routine($thisPanel, int, expIFrame) 
+             })
+           }
+         ]
+        }
+      ],
     }
   },
   'Publicar ato do magistrado - DJE' : {
@@ -491,6 +823,9 @@ var TarefasProps = {
   }
 };
 
+//Extensão de personalizações
+TarefasProps['Processo com prazo decorrido'].personalizacao = TarefasProps['Processo com prazo em curso'].personalizacao
+
 
 
 function init(){
@@ -512,6 +847,7 @@ function init(){
         fronendLoad();
         break;
       case 'https://pje.tjma.jus.br':
+        loadPJeRestAndSeamInteraction()
         pjeLoad();
         break;
     }  	

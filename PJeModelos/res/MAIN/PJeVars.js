@@ -478,7 +478,8 @@ try {
 //            else 
 //              detURL = window.j2.modelo.par.win.location.href;
 
-            detURL = window.location.origin + '/pje/Processo/movimentar.seam?idProcesso=' + getIdProcesso();
+            
+            detURL = (!(j2?.api?.origin) ? window.location.origin : j2.api.origin ) + '/pje/Processo/movimentar.seam?idProcesso=' + getIdProcesso();
             
             jQ.get(detURL, '', function(data, textStatus, jqXHR){
               try{

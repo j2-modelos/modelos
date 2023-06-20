@@ -9,8 +9,10 @@ console.log('banco-do-brasil em j2E');
 
 
 function init(){
+
+  addScript('Extensao/j2-external.js')
   
-  
+
   j2E.mods.registerNumeroUnicoReplacer();
 
   
@@ -31,6 +33,17 @@ function init(){
       // Define o valor do input com os dígitos numéricos
       $this.val( digitsOnly)
     })
+
+    if(jQ3('#TESTADOR').length)
+      return;
+
+    var but = jQ3('<input>', { 
+      value : '[EM ABIENTE DE TESTES]', 
+      class : 'btn btn-azul',
+      id : 'TESTADOR',
+      onclick : 'j2.api.actions.visualizarTestador()'
+     })
+    but.insertAfter( '#formularioRD02' )
   });
 }
   

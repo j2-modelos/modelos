@@ -164,8 +164,13 @@ setInterval(function() {
 
     var slice = Array.prototype.slice;
 
+    var fireLogging = true
+
     function EventBus() {
       this._listeners = {};
+      this._fireLogging = []
+      if(!fireLogging)
+      this._fireLogging = 'DISABLED'
 
       this.on('diagram.destroy', 1, this._destroy, this);
     };
@@ -261,11 +266,18 @@ setInterval(function() {
         throw new Error('no event type specified');
       }
 
+      var _toLog = {}
+      _toLog[type] = undefined
+      if(fireLogging)
+        this._fireLogging.push(_toLog)
+
       listeners = this._listeners[type];
 
       if (!listeners) {
         return;
       }
+
+      _toLog[type] = listeners
 
       if (data instanceof Event) {
         event = data;
@@ -2548,8 +2560,10 @@ setInterval(function() {
       }
   };
   
-  if (document.getElementById('PJeVarsXML'))
-    window.j2.mod._.PJeVars = new DOMParser().parseFromString(document.getElementById('PJeVarsXML').innerHTML, 'text/html');
+  if (_windowDocument.getElementById('PJeVarsXML'))
+    window.j2.mod._.PJeVars = new DOMParser().parseFromString(_windowDocument.getElementById('PJeVarsXML').innerHTML, 'text/html');
+  else if (j2?.api?.PJeVarsHTML)
+    window.j2.mod._.PJeVars = new DOMParser().parseFromString(j2?.api?.PJeVarsHTML, 'text/html');
   else
     console.error('PJeVarsXML não foi localizado');
 })();
@@ -3442,24 +3456,23 @@ try {
       libLoad( window.j2.res.MAIN.artfacts );
     });
     evBus.once('loaded-ROOT/res/MAIN/artfacts.js', function(){    
+      var _ap = window.j2.api ??= {}
       
-      window.j2.api = {
-        extDependency : [ // boot
-          {lib : 'j2.res.MAIN.xmlParser'},
-          {lib : 'j2.res.MAIN.PJeVars'}, 
-          {lib : 'j2.res.MAIN.baseClasses'}, 
-          {lib : 'j2.res.MAIN.builder'}, 
-          {lib : 'j2.res.XML.modelos'},
-          {lib : 'j2.res.XML.unidadesAutorizadas'}, 
-          {lib : 'j2.res.XML.baseClasses'},
-          {lib : 'j2.res.XML.usuarios'},
-          {lib : 'j2.res.XML.classStyles'},
-          {lib : 'j2.res.CSS.j2'},
-          {lib : 'j2.res.lib.jquery3'}
-        ],
-        _progresCount : 15,
-        isMainBoot : true
-      };
+      _ap.extDependency = [ // boot
+        {lib : 'j2.res.MAIN.xmlParser'},
+        {lib : 'j2.res.MAIN.PJeVars'}, 
+        {lib : 'j2.res.MAIN.baseClasses'}, 
+        {lib : 'j2.res.MAIN.builder'}, 
+        {lib : 'j2.res.XML.modelos'},
+        {lib : 'j2.res.XML.unidadesAutorizadas'}, 
+        {lib : 'j2.res.XML.baseClasses'},
+        {lib : 'j2.res.XML.usuarios'},
+        {lib : 'j2.res.XML.classStyles'},
+        {lib : 'j2.res.CSS.j2'},
+        {lib : 'j2.res.lib.jquery3'}
+      ]
+      _ap._progresCount = 15,
+      _ap.isMainBoot = true
       
       j2.env.j2U.progBar(15);
       j2.env.j2U.log('artifacts.js');
@@ -3790,6 +3803,9 @@ try {
       }
 	      
       evBus.fire('onLoadModeloJ2');
+      if(j2?.api?.idModelo)
+        evBus.fire(`builder.afterBuildModSet.externalApi.${j2.api.idModelo}`, definitiions);
+
     });
     
     evBus.once('afterLoadRunLibs', function(event, definitiions){
@@ -3982,7 +3998,10 @@ try {
         scrolled : false,
         altTitle : j2.env.modId.id
       };
-      myWindow = j2.mod._._opW.center( _.url, _.name, _.idProcesso, _.winSize, _.scrolled, null, _.altTitle );
+      if(!(j2?.api?.winEdt))
+        myWindow = j2.mod._._opW.center( _.url, _.name, _.idProcesso, _.winSize, _.scrolled, null, _.altTitle );
+      else
+        myWindow = j2.api.winEdt
 
       
     
@@ -3996,11 +4015,13 @@ try {
         'gE': function (id) {
           return myWindow.document.getElementById(id);
         },
-        $ : jQ3Factory(myWindow, true)
+        $ : jQ3Factory(myWindow, true),
       };
+      window.j2.modelo.edt.jQ3 = window.j2.modelo.edt.$
       
       window.j2.modelo.exp.$  = jQ3Factory(window.j2.modelo.exp.win, true);
-      window.j2.modelo.par.$ = jQ3Factory(window.j2.modelo.par.win, true);
+      window.j2.modelo.exp.jQ3  = window.j2.modelo.exp.$
+      window.j2.modelo.par.jQ3 = jQ3Factory(window.j2.modelo.par.win, true);
       
       /*setWinEdtHeader(myWindow);*/
     });

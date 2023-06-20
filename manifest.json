@@ -27,7 +27,8 @@
             "tabs",
             "nativeMessaging",
             "clipboardRead",
-            "clipboardWrite"
+            "clipboardWrite",
+            "https://pje.tjma.jus.br/*"
             
 	],
 	"host_permissions": [
@@ -75,10 +76,11 @@
                         "Extensao/jquery.indexedDB.js",
                         "Extensao/jquery.keyboard-shortcuts.js",
                         "Extensao/main.pje.js",
-                        "Extensao/main.js"
+                        "Extensao/main.js",
+                        "Extensao/toaster.js"
                     ],
                     "css" : [
-
+                        
                     ],
                     "all_frames" : true
 		},
@@ -87,7 +89,8 @@
                 "https://pje.tjma.jus.br/pje/Processo/movimentar.seam*"
             ],
             "js": [
-                "Extensao/movimentar.pje.js"
+                "Extensao/movimentar.pje.js",
+                "Extensao/pje-office.pje.js"
             ],
             "css" : [
             ],
@@ -396,7 +399,8 @@
           {
             "resources": [ 
                 "Extensao/evo-calendar/*",
-                "Extensao/jquery3.js"
+                "Extensao/jquery3.js",
+                "Extensao/toaster.css"
             ],
             "matches": [
                 "https://pje.tjma.jus.br/*"
@@ -406,10 +410,13 @@
           {
             "resources": [ 
                 "PJeModelos/*",
-                "Extensao/t/*"
+                "Extensao/t/*",
+                "Extensao/j2-external.js"
             ],
             "matches": [
-                "https://pje.tjma.jus.br/*"
+                "https://pje.tjma.jus.br/*",
+
+                "https://*.bb.com.br/*"
             ],
             "use_dynamic_url": true
           }, 

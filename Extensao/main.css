@@ -974,6 +974,14 @@ nav.main-menu, #divSideBar{
     transition: none;
     animation: none;
 }
+
+iframe[j2-pseudo-iframe]{
+    display: none;
+}
+
+th[j2-seletor-expediente]{
+    width: 20px;
+}
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

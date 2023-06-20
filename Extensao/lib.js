@@ -277,7 +277,16 @@ function createLockr(prefix, storage) {
     var query_key = this._getPrefixedKey(key, options);
 
     try {
-      storage.setItem(query_key, JSON.stringify({"data": value}));
+      var toStore = {"data": value}
+      if( options?.expiration ){
+        var exp = options.expiration
+        var now = (new Date()).getTime()
+        if( exp < now ){
+          now += exp
+        }
+        toStore.expiration = now
+      }
+      storage.setItem(query_key, JSON.stringify( toStore ));
     } catch (e) {
       if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the storage is full.");
     }
@@ -301,6 +310,11 @@ function createLockr(prefix, storage) {
       return missing;
     }
     else if (typeof value === 'object' && typeof value.data !== 'undefined') {
+      if(typeof value.expiration !== 'undefined' ){
+        var now = (new Date()).getTime()
+        if( now > value.expiration )
+          return missing
+      }
       return value.data;
     }
   };
@@ -629,7 +643,7 @@ var j2EUi = {
       </div>
     </div>     ` 
   },
-  createButton : (textoButtonOrData, classButton, onclickAttr, id, tag, callback) =>{    
+  createButton : (textoButtonOrData, classButton, onclickAttr, id, tag, callback, moreAttrs) =>{    
         
     if (typeof textoButtonOrData === "object" && textoButtonOrData !== null) {
       classButton = textoButtonOrData.classButton
@@ -637,20 +651,41 @@ var j2EUi = {
       id = textoButtonOrData.id
       tag = textoButtonOrData.tag
       callback = textoButtonOrData.callback
+      moreAttrs = textoButtonOrData.moreAttrs
       textoButtonOrData = textoButtonOrData.textoButton
     }
 
-    var $newBut =  jQ3(`<${tag || 'button'}>`, {
+    var $newBut =  jQ3(`<${tag || 'button'}>`, jQ3.extend({
       id : id || guid(),
       text : textoButtonOrData || '[TEXTO DO BOTÃO]',
       class : `btn ${classButton || ''}`,
       onclick : onclickAttr || 'event.preventDefault();'
-    });
+    }, moreAttrs || {}));
 
     if(callback)
       $newBut.click( callback )
 
     return $newBut
+  },
+  createRichModal: ()=>{
+    jQ3('body').append(`<div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">			
+		<div class="media">
+			<div class="media-left media-middle">
+				<div class="svg-preloader">
+					<svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+				</div>
+			</div>
+			<div class="media-body">
+				<h6>Por favor aguarde</h6>
+			</div>
+		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div></div>`)
+  },
+  createNgModal:()=>{
+
+  },
+  removeModal:()=>{
+    jQ3('#j2E-rich-modal').remove()
+    jQ3('#j2E-ng-modal').remove()
   }
 };
 
@@ -2087,7 +2122,7 @@ function j2EQueryGetChaveAcesso(idProcesso, successCallback){
     return;
   }
     
-  jQ3.ajax({
+  return jQ3.ajax({
     url : "https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/" + idProcesso,
     type : 'get',
     dataType: 'text',
@@ -2233,186 +2268,1024 @@ function j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallb
   }
 }
 
-window.j2EPJeRest =  {
-  ajax : {
-    get : function(url, sucCB, errCB, dataType){
-      return jQ3.ajax({
-        url : url,
-        type : 'get',
-        dataType: dataType || 'json',
-        success : function(data, status, xhr){
-          if(sucCB)
-            sucCB(data, status, xhr);
-        },
-        error : function(a, b, c, d){
-          if(errCB)
-            errCB(a, b, c, d);
-        },
-        headers : {
-          "Content-Type": "application/json",
-          "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-          "x-no-sso": "true",
-          "x-pje-legacy-app": "pje-tjma-1g",
-          "x-pje-cookies": document.cookie,
-          xhrFields: {
-            withCredentials: true
+function loadPJeRestAndSeamInteraction(){
+  window.j2EPJeRest =  {
+    ajax : {
+      get : function(url, sucCB, errCB, dataType){
+        return jQ3.ajax({
+          url : url,
+          type : 'get',
+          dataType: dataType || 'json',
+          success : function(data, status, xhr){
+            if(sucCB)
+              sucCB(data, status, xhr);
+          },
+          error : function(a, b, c, d){
+            if(errCB)
+              errCB(a, b, c, d);
+          },
+          headers : {
+            "Content-Type": "application/json",
+            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
+            "x-no-sso": "true",
+            "x-pje-legacy-app": "pje-tjma-1g",
+            "x-pje-cookies": document.cookie,
+            xhrFields: {
+              withCredentials: true
+            }
+          },
+          beforeSend : function(xhr, set){
+            delete set.accepts.xml;
+            delete set.accepts.script;
+            delete set.accepts.html;
           }
-        },
-        beforeSend : function(xhr, set){
-          delete set.accepts.xml;
-          delete set.accepts.script;
-          delete set.accepts.html;
-        }
-      });
-    },
-    post : function(url, data, sucCB, errCB){
-      return jQ3.ajax({
-        url : url,
-        type : 'post',
-        data : data,
-        dataType: 'json',
-        success : function(data, status, xhr){
-          if(sucCB)
-            sucCB( data, status, xhr);
-        },
-        error : function(a, b, c, d){
-          if(errCB)
-            errCB(a, b, c, d);
-        },
-        headers : {
-          "Content-Type": "application/json",
-          "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-          "x-no-sso": "true",
-          "x-pje-legacy-app": "pje-tjma-1g",
-          "x-pje-cookies": document.cookie,
-          xhrFields: {
-            withCredentials: true
+        });
+      },
+      post : function(url, data, sucCB, errCB){
+        return jQ3.ajax({
+          url : url,
+          type : 'post',
+          data : data,
+          dataType: 'json',
+          success : function(data, status, xhr){
+            if(sucCB)
+              sucCB( data, status, xhr);
+          },
+          error : function(a, b, c, d){
+            if(errCB)
+              errCB(a, b, c, d);
+          },
+          headers : {
+            "Content-Type": "application/json",
+            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
+            "x-no-sso": "true",
+            "x-pje-legacy-app": "pje-tjma-1g",
+            "x-pje-cookies": document.cookie,
+            xhrFields: {
+              withCredentials: true
+            }
+          },
+          beforeSend : function(xhr, set){
+            delete set.accepts.xml;
+            delete set.accepts.script;
+            delete set.accepts.html;
           }
-        },
-        beforeSend : function(xhr, set){
-          delete set.accepts.xml;
-          delete set.accepts.script;
-          delete set.accepts.html;
-        }
-      });
-    }
-  },
-  etiquetas : {
-    listar : function(queryCriteria, sucCB, errCB){
-
-      function _data(){
-        return JSON.stringify(jQ3.extend({
-          maxResults : 30,
-          page :  0,
-          tagsString : ""
-        }, queryCriteria || {} ));
-      };
-      
-      j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
-                            _data(), sucCB, errCB);
-    },
-    processosDaEtiqueta : function(idEtiqueta, sucCB, errCB){
-      if(!(idEtiqueta)){
-        throw new Error("Não existe id da etiqueta definido para consulta"); 
-        return;
-      }
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
-                            sucCB, errCB);
-    },
-    inserir : function(idProcesso, etiqueta, sucCB, errCB) {
-      function _data(){
-        return JSON.stringify({
-          'idProcesso' : idProcesso,
-          'tag' : etiqueta
         });
       }
-      j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
-                            _data(), sucCB, errCB);
+    },
+    etiquetas : {
+      listar : function(queryCriteria, sucCB, errCB){
+
+        function _data(){
+          return JSON.stringify(jQ3.extend({
+            maxResults : 30,
+            page :  0,
+            tagsString : ""
+          }, queryCriteria || {} ));
+        };
+        
+        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
+                              _data(), sucCB, errCB);
+      },
+      processosDaEtiqueta : function(idEtiqueta, sucCB, errCB){
+        if(!(idEtiqueta)){
+          throw new Error("Não existe id da etiqueta definido para consulta"); 
+          return;
+        }
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
+                              sucCB, errCB);
+      },
+      inserir : function(idProcesso, etiqueta, sucCB, errCB) {
+        function _data(){
+          return JSON.stringify({
+            'idProcesso' : idProcesso,
+            'tag' : etiqueta
+          });
+        }
+        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
+                              _data(), sucCB, errCB);
+      }
+      
+    },
+    tarefas : {
+      _baseQuery : function(){
+        return {
+          "numeroProcesso": "", "classe": null,"tags": [],"tagsString": null,
+          "poloAtivo": null,"poloPassivo": null,"orgao": null,"ordem": null,
+          "page": 0,"maxResults": 30,"idTaskInstance": null,"apelidoSessao": null,
+          "idTipoSessao": null,"dataSessao": null,"somenteFavoritas": null,
+          "objeto": null,"semEtiqueta": null,"assunto": null,"dataAutuacao": null,
+          "nomeParte": null,"nomeFiltro": null,"numeroDocumento": null,
+          "competencia": "","relator": null,"orgaoJulgador": null,"somenteLembrete": null,
+          "somenteSigiloso": null,"somenteLiminar": null,"eleicao": null,
+          "estado": null,"municipio": null,"prioridadeProcesso": null,"cpfCnpj": null,
+          "porEtiqueta": null,"conferidos": null
+        };
+      },
+      listar : function(sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+                            sucCB, errCB);
+      },
+      historico : function(idProcesso, sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
+                            sucCB, errCB);
+      },
+      descricaoNoFluxo : function(idTarefa, idProcesso, sucCB, errCB){
+        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
+                            sucCB, errCB);
+      },
+      recuperarEtiquetasQuantitativoProcessoTarefaPendente : function(tarefa, query, sucCB, errCB){
+        var baseQuery = j2EPJeRest.tarefas._baseQuery();
+        
+        var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarEtiquetasQuantitativoProcessoTarefaPendente/$/false';
+        nHref = nHref.replaceOrd('$', encodeURI(tarefa));
+        
+        baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+
+        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+      },
+      recuperarProcessosTarefaPendenteComCriterios : function(tarefa, query, sucCB, errCB){
+        var baseQuery = j2EPJeRest.tarefas._baseQuery();    
+        
+        var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarProcessosTarefaPendenteComCriterios/$/false';
+        nHref = nHref.replaceOrd('$', encodeURI(tarefa));
+        
+        baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+
+        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+      },
+      painelUsuario : function(query, sucCB, errCB){
+        var baseQuery ={
+            numeroProcesso: "",
+            competencia: "",
+            etiquetas: []
+        };
+        baseQuery = JSON.stringify( jQ3.extend(baseQuery, query) );
+        
+        j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+                            baseQuery, sucCB, errCB);
+      }
+    },
+    processo : {
+      getCredentials : j2EQueryGetProcessoCredentials,
+      getChaveAcesso : (idProcesso,sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
+                            sucCB, errCB, 'text');
+      },
+      getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
+                            sucCB, errCB, 'html');
+      }
+    },
+    fluxo : {
+      listarTransicoes : function(idTarefa, sucCB, errCB){
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/transicoes/${idTarefa}`, 
+                            sucCB, errCB);
+      },
+      movimentar : function(idTarefa, transicao, sucCB, errCB){
+        transicao = encodeURI(transicao)
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/movimentar/${idTarefa}/${transicao}`, 
+                            sucCB, errCB);
+      },
     }
+  };
+
+
+  if( typeof window.j2E === 'undefined')
+    window.j2E = {}
+
+  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E'); /*var $$;*/ var _this = {
+    session : {},
+    util : {
+      conformPayload : PAYLOAD =>{
+        PAYLOAD=PAYLOAD.split('\n').map( function(_i ) { 
+          _i = _i.replace(': ','=')
+          return _i.trim()
+        })
     
-  },
-  tarefas : {
-    _baseQuery : function(){
-      return {
-        "numeroProcesso": "", "classe": null,"tags": [],"tagsString": null,
-        "poloAtivo": null,"poloPassivo": null,"orgao": null,"ordem": null,
-        "page": 0,"maxResults": 30,"idTaskInstance": null,"apelidoSessao": null,
-        "idTipoSessao": null,"dataSessao": null,"somenteFavoritas": null,
-        "objeto": null,"semEtiqueta": null,"assunto": null,"dataAutuacao": null,
-        "nomeParte": null,"nomeFiltro": null,"numeroDocumento": null,
-        "competencia": "","relator": null,"orgaoJulgador": null,"somenteLembrete": null,
-        "somenteSigiloso": null,"somenteLiminar": null,"eleicao": null,
-        "estado": null,"municipio": null,"prioridadeProcesso": null,"cpfCnpj": null,
-        "porEtiqueta": null,"conferidos": null
-      };
+        PAYLOAD.shift()
+        PAYLOAD.pop()
+    
+        return encodeURI(PAYLOAD.join('&') )
+      }
     },
-    listar : function(sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
-                          sucCB, errCB);
-    },
-    historico : function(idProcesso, sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
-                          sucCB, errCB);
-    },
-    descricaoNoFluxo : function(idTarefa, idProcesso, sucCB, errCB){
-      j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
-                          sucCB, errCB);
-    },
-    recuperarEtiquetasQuantitativoProcessoTarefaPendente : function(tarefa, query, sucCB, errCB){
-      var baseQuery = j2EPJeRest.tarefas._baseQuery();
-      
-      var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarEtiquetasQuantitativoProcessoTarefaPendente/$/false';
-      nHref = nHref.replaceOrd('$', encodeURI(tarefa));
-      
-      baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+    alertas : {
+      requestsIteractions : {
+        baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
+        listView : () =>{
+          var def = $.Deferred()
 
-      j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
-    },
-    recuperarProcessosTarefaPendenteComCriterios : function(tarefa, query, sucCB, errCB){
-      var baseQuery = j2EPJeRest.tarefas._baseQuery();    
-      
-      var nHref = 'https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/recuperarProcessosTarefaPendenteComCriterios/$/false';
-      nHref = nHref.replaceOrd('$', encodeURI(tarefa));
-      
-      baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
+          var viewIdStore = _lockr.get('SeamIteraction.alertas.viewId', { noData : true })
 
-      j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+          if( viewIdStore.noData ){
+            $.get(_this.alertas.requestsIteractions.baseURL)
+            .done( (xml)=> { 
+              var $html = $(xml)
+              var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+              
+              _this.session.viewId = viewId
+
+              lockr.set('SeamIteraction.alertas.viewId', {
+                id : viewId,
+              }, {
+                expiration : 10 * 60 * 1000
+              })
+  
+              def.resolve( _this.alertas.requestsIteractions ) 
+            } )
+            .fail( err => def.reject(err) )
+          }else{
+            _this.session.viewId = viewIdStore.id
+
+            def.resolve( _this.alertas.requestsIteractions ) 
+          }
+
+          return def.promise()
+        },
+        tabFormSelection : ()=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            javax.faces.ViewState: ${_this.session.viewId}
+            form: form
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        addAlerta : (alerta, criticidade)=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            alertaForm:alerta:j_id286:alerta: ${alerta}
+            alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+            alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: true
+            alertaForm:saveH: Incluir
+            alertaForm: alertaForm
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewId}
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => def.resolve( _this.alertas.requestsIteractions ) )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        searchAlerta : (query, criticidade, ativo)=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            AJAXREQUEST: j_id137
+            alertaGridSearchForm:page: 1
+            alertaGridSearchForm:searching: true
+            alertaGridSearchForm:j_id141:ativoDecoration:ativo: ${ativo || ''}
+            alertaGridSearchForm:j_id152:inCriticidadeDecoration:inCriticidade: ${ criticidade || 'org.jboss.seam.ui.NoSelectionConverter.noSelectionValue'}
+            alertaGridSearchForm:j_id162:j_id164:alerta: ${query}
+            alertaGridSearchForm: alertaGridSearchForm
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewId}
+            alertaGridSearchForm:search: alertaGridSearchForm:search
+            AJAX:EVENTS_COUNT: 1
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( xml => def.resolve( xml, _this.alertas.requestsIteractions)  )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        }
+      },
+      acoes : {
+        adicionarUmAlertaSemAssociarProcesso : textoAlerta => {
+          var def = $.Deferred()
+
+          _this.alertas.requestsIteractions.listView()
+          .done( 
+            it => it.tabFormSelection()
+            .done( 
+              it => it.addAlerta( textoAlerta )
+              .done( it => def.resolve() )
+              .fail( err => def.reject(err) )
+
+            ).fail( err => def.reject(err) )
+          )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        pesquisarAlerta : (query, criticidade, ativo) => {
+          var def = $.Deferred()
+          var acoes = _this.alertas.acoes
+
+          _this.alertas.requestsIteractions.listView()
+          .done( 
+            it => it.searchAlerta(query, criticidade, ativo)
+            .done( xml => { 
+              var alerta = $(xml).find('#alertaGridList\\:tb').find('tr:first-child >td:nth-child(2)').text()
+              def.resolve(alerta, xml, acoes ) 
+            } )
+            .fail( err => def.reject(err) )
+          )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        }
+      }
     },
-    painelUsuario : function(query, sucCB, errCB){
-      var baseQuery ={
-          numeroProcesso: "",
-          competencia: "",
-          etiquetas: []
-      };
-      baseQuery = JSON.stringify( jQ3.extend(baseQuery, query) );
-      
-      j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
-                          baseQuery, sucCB, errCB);
-    }
-  },
-  processo : {
-    getCredentials : j2EQueryGetProcessoCredentials,
-    getChaveAcesso : (idProcesso,sucCB, errCB) =>{
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
-                          sucCB, errCB, 'text');
-    },
-    getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
-                          sucCB, errCB, 'html');
-    }
-  },
-  fluxo : {
-    listarTransicoes : function(idTarefa, sucCB, errCB){
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/transicoes/${idTarefa}`, 
-                          sucCB, errCB);
-    },
-    movimentar : function(idTarefa, transicao, sucCB, errCB){
-      transicao = encodeURI(transicao)
-      return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/movimentar/${idTarefa}/${transicao}`, 
-                          sucCB, errCB);
-    },
-  }
-};
+    processo : {
+      xmlHistory : [],
+      requestsIteractions : {
+        baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
+        listAutosDigitais : ()=>{
+          var def = $.Deferred()
+          var idProcesso = j2E.env.urlParms.idProcesso;
+          var lockrKey = `SeamIteraction.processo-${idProcesso}.viewId`
+          var viewIdStore = _lockr.get(lockrKey, { noData : true })
+
+          if( viewIdStore.noData ){
+            j2EQueryGetChaveAcesso(idProcesso)
+            .done( (ca) => {
+              const _baseURL = `${_this.processo.requestsIteractions.baseURL}?idProcesso=${idProcesso}&ca=${ca}`
+
+              _this.processo.requestsIteractions.baseURLWithCAId = _baseURL
+
+              $.get(_baseURL)
+              .done( (xml)=> { 
+                var $html = $(xml)
+                var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+                
+                _this.session.viewIdProc = viewId
+                _this.session.processoXML = xml
+
+                lockr.set(lockrKey, {
+                  id : viewId,
+                }, {
+                  expiration : 5 * 60 * 1000
+                })
+                _this.processo.xmlHistory.push({
+                  interaction : 'listAutosDigitais',
+                  $xml : $html
+                })
+
+                /*var iframe = $('<iframe>', {
+                  src: _baseURL,
+                  style: 'display: none;'})
+                  .on('load', function() {
+                    console.log('Iframe carregado!');
+                    var iframWin = iframe.prop('contentWindow')
+                    iframWin.jQ3 = jQ3Factory(iframWin, true)
+                    $$ = iframWin.jQ3
+
+                    def.resolve( _this.processo.requestsIteractions, $html) 
+                  }).appendTo('body')*/
+                
+                def.resolve( _this.processo.requestsIteractions, $html)
+              } )
+              .fail( err => def.reject(err) )
+            })
+            .fail( err => def.reject(err) )
+          }else{
+            _this.session.viewIdProc = viewIdStore.id
+
+            def.resolve( _this.processo.requestsIteractions ) 
+          }
+
+          return def;
+        },
+        juntarDocumento : ()=>{
+          var def = $.Deferred()
+
+          function obterMesEAnoAtual() {
+            const dataAtual = new Date();
+            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se for necessário
+            const ano = dataAtual.getFullYear();
+            const mesEAnoAtual = `${mes}/${ano}`;
+          
+            return mesEAnoAtual;
+          }
+          
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            navbar:cbTipoDocumento: 0
+            navbar:idDe: 
+            navbar:idAte: 
+            navbar:dtInicioInputDate: 
+            navbar:dtInicioInputCurrentDate: ${obterMesEAnoAtual()}
+            navbar:dtFimInputDate: 
+            navbar:dtFimInputCurrentDate: ${obterMesEAnoAtual()}
+            navbar:cbCronologia: DESC
+            navbar: navbar
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            navbar:linkAbaIncluirPeticoes1: navbar:linkAbaIncluirPeticoes1
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'juntarDocumento',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        juntarDocumentoSelecionarTipoDocumento : ($xml, tipo)=>{
+          function obterValorOpcao() {
+            const textoDesejado = tipo.toLowerCase();
+            const selectId = "cbTDDecoration\\:cbTD";
+          
+            const valorOpcao = $xml.find("#" + selectId + " option").filter(function() {
+              return jQ3(this).text().trim().toLowerCase() === textoDesejado;
+            }).val();
+          
+            return valorOpcao;
+          }
+          function obterSelecIdComplemento() {
+            var selectElement = $xml.find('#cbTDDecoration\\:cbTD');
+            var onchangeValue = selectElement.attr('onchange');
+            var regex = /cbTDDecoration:j_id(\d+)/;
+            var match = onchangeValue.match(regex);
+            var [part] = match ;
+
+            return part;
+          }
+
+          var def = $.Deferred()   
+          var idTipo = obterValorOpcao()
+
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            formularioUpload: formularioUpload
+            ipDescDecoration:ipDesc: 
+            ipNroDecoration:ipNro: 
+            modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            cbTDDecoration:cbTD: ${idTipo}
+            ${obterSelecIdComplemento()}: ${obterSelecIdComplemento()}
+            ajaxSingle: cbTDDecoration:cbTD
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'juntarDocumentoSelecionarTipoDocumento',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.processo.requestsIteractions, jQ3(xml), idTipo ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        juntarDocumentoSelecionarEditorDeTexto : ($xml, idTipo)=>{
+          function obterSimilarityGroupingId() {
+            var selectElement = $xml.find('input[name="raTipoDocPrincipal"]');
+            var onchangeValue = selectElement.attr('onchange');
+            var regex = /'similarityGroupingId':'j_id(\d+)'/;
+            var match = onchangeValue.match(regex);
+            var [part] = match
+
+            return part.split("':'")[1].replace("'", '')
+          }
+
+          var def = $.Deferred()   
+          var similarityGroupingId = obterSimilarityGroupingId()
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            formularioUpload: formularioUpload
+            cbTDDecoration:cbTD: ${idTipo}
+            ipDescDecoration:ipDesc: [TEMP]
+            ipNroDecoration:ipNro: 
+            modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+            uploadDocumentoPrincipalDecoration:uploadDocumentoPrincipal:file: 
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            raTipoDocPrincipal: HTML
+            ${similarityGroupingId}: ${similarityGroupingId}
+            ajaxSingle: raTipoDocPrincipal
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'juntarDocumentoSelecionarEditorDeTexto',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.processo.requestsIteractions, jQ3(xml), idTipo ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        juntarDocumentoEditarDocumentoHTML : ($xml, idTipo, textoHTML, descricao, numero)=>{
+          var def = $.Deferred()
+          var idButtonSalvar = $xml.find('#editorAnexar .btn-primary').attr('id')
+          
+          
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            formularioUpload: formularioUpload
+            cbTDDecoration:cbTD: ${idTipo}
+            ipDescDecoration:ipDesc: ${descricao}
+            ipNroDecoration:ipNro: ${numero || ''}
+            modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+            raTipoDocPrincipal: HTML
+            docPrincipalEditorTextArea: textHTMLField
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            ${idButtonSalvar}: ${idButtonSalvar}
+            AJAX:EVENTS_COUNT: 1
+          `
+          const PAYLOAD_NOT_CONFORMED = PAYLOAD
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+          PAYLOAD = PAYLOAD.replace('textHTMLField', encodeURIComponent(textoHTML))
+
+          setTimeout(function(){
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'juntarDocumentoEditarDocumentoHTML',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          }, 250);
+
+          return def.promise();
+        },
+        juntarDocumentoAssinarHTML : ($xml, idTipo, textoHTML, descricao, numero, $xml_juntDoc)=>{
+          function _passoSalvarEInformarAnexos (){
+            var def = $.Deferred()
+            var cid = $xml.find('input[name="cid"]').val()
+            var jIdUnnkown = $xml.find('script').filter( function() { return this.innerHTML.indexOf('prepararParaAssinar=function()') !== -1 && this.id.length } ).attr('id')  
+  
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              formularioUpload: formularioUpload
+              cbTDDecoration:cbTD: ${idTipo}
+              ipDescDecoration:ipDesc: ${descricao}
+              ipNroDecoration:ipNro: ${numero}
+              modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              raTipoDocPrincipal: HTML
+              docPrincipalEditorTextArea: textHTMLField
+              context: /pje
+              cid: ${cid}
+              mimes: mimesFieldValue
+              mimesEhSizes: mimesEhSizesFieldValue
+              tamanhomaximolote: 62MB
+              tipoDocLoteSuperior: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              modalConfirmaLimparOpenedState: 
+              modalDescricaoNaoPreenchidaParaLoteOpenedState: 
+              modalTipoLoteNaoSelecionadoOpenedState: 
+              modalErrosOpenedState: 
+              quantidadeProcessoDocumento: 0
+              javax.faces.ViewState: ${_this.session.viewIdProc}
+              ${jIdUnnkown}: ${jIdUnnkown}
+              AJAX:EVENTS_COUNT: 1
+  
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+            PAYLOAD = PAYLOAD.replace('mimesFieldValue', encodeURIComponent('.html,image/png,application/pdf,image/jpeg,audio/vorbis,application/vnd.google-earth.kml+xml,.kml,audio/mpeg,audio/ogg,application/pkcs7-signature,video/mpeg,text/html,video/ogg,video/mp4'))
+            PAYLOAD = PAYLOAD.replace('mimesEhSizesFieldValue', encodeURIComponent('.html:1.5,image/png:10.0,application/pdf:10.0,image/jpeg:10.0,audio/vorbis:10.0,application/vnd.google-earth.kml+xml:5.0,.kml:5.0,audio/mpeg:10.0,audio/ogg:10.0,application/pkcs7-signature:10.0,video/mpeg:10.0,text/html:1.5,video/ogg:10.0,video/mp4:10.0'))
+            PAYLOAD = PAYLOAD.replace('textHTMLField', encodeURIComponent(textoHTML))
+            
+
+            setTimeout(function(){
+
+            $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              _this.processo.xmlHistory.push({
+                interaction : 'juntarDocumentoAssinarHTML:_passoPreEnviar',
+                $xml : jQ3(xml)
+              })
+              def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+            } )
+            .fail( err => def.reject(err) )
+  
+            }, 250);
+            
+            return def.promise();
+          }
+          function _passoEnivarURLAssinaturasDoMobile (){
+            var def = $.Deferred()
+            var cid = $xml.find('input[name="cid"]').val()
+            var jIdUnnkown = $xml.find('script').filter( function() { return this.innerHTML.indexOf('assinarDocumento') !== -1 && this.id.length } ).attr('id')
+            var urlDocsField = $xml.find('script').filter( function() { return this.innerHTML.indexOf('function getUrlAssinaturas') !== -1 } ).text().split('"')[1]            
+  
+            var PAYLOAD = `
+              AJAXREQUEST: signerRegion-assinador
+              formularioUpload: formularioUpload
+              cbTDDecoration:cbTD: ${idTipo}
+              ipDescDecoration:ipDesc: ${descricao}
+              ipNroDecoration:ipNro: ${numero}
+              modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              raTipoDocPrincipal: HTML
+              docPrincipalEditorTextArea: textHTMLField
+              context: /pje
+              cid: ${cid}
+              mimes: mimesFieldValue
+              mimesEhSizes: mimesEhSizesFieldValue
+              tamanhomaximolote: 62MB
+              tipoDocLoteSuperior: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              modalConfirmaLimparOpenedState: 
+              modalDescricaoNaoPreenchidaParaLoteOpenedState: 
+              modalTipoLoteNaoSelecionadoOpenedState: 
+              modalErrosOpenedState: 
+              quantidadeProcessoDocumento: 0
+              javax.faces.ViewState: ${_this.session.viewIdProc}
+              ${jIdUnnkown}: ${jIdUnnkown}
+              urlDocsField: urlDocsFieldValue
+              action: consultaProcessoAction
+              ajaxSingle: ${jIdUnnkown}
+              AJAX:EVENTS_COUNT: 1
+  
+            `
+            if(!(jIdUnnkown)){
+              def.reject('Você está logado para assinar via mobile?')
+              return def.promise();
+            }
+
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+            PAYLOAD = PAYLOAD.replace('urlDocsFieldValue', encodeURIComponent(urlDocsField))
+            PAYLOAD = PAYLOAD.replace('mimesFieldValue', encodeURIComponent('.html,image/png,application/pdf,image/jpeg,audio/vorbis,application/vnd.google-earth.kml+xml,.kml,audio/mpeg,audio/ogg,application/pkcs7-signature,video/mpeg,text/html,video/ogg,video/mp4'))
+            PAYLOAD = PAYLOAD.replace('mimesEhSizesFieldValue', encodeURIComponent('.html:1.5,image/png:10.0,application/pdf:10.0,image/jpeg:10.0,audio/vorbis:10.0,application/vnd.google-earth.kml+xml:5.0,.kml:5.0,audio/mpeg:10.0,audio/ogg:10.0,application/pkcs7-signature:10.0,video/mpeg:10.0,text/html:1.5,video/ogg:10.0,video/mp4:10.0'))
+            PAYLOAD = PAYLOAD.replace('textHTMLField', encodeURIComponent(textoHTML))
+            
+
+            setTimeout(function(){
+
+
+            /*$.ajax({
+              url: _this.processo.requestsIteractions.baseURL,
+              type: 'POST',
+              xhrFields: {
+                withCredentials: true
+              },
+              data: PAYLOAD,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-Kl-Ajax-Request', 'Ajax_Request');
+
+                xhr.setRequestHeader('X-Requested-With', null);
+              }
+            })*/
+            $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              _this.processo.xmlHistory.push({
+                interaction : 'juntarDocumentoAssinarHTML:_passoEnivarURLAssinaturas',
+                $xml : jQ3(xml)
+              })
+              def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            }, 250);
+  
+            return def.promise();
+          }
+          function _passoInformarServidorAssinaturaMobile (){
+            var def = $.Deferred()
+            var cid = $xml.find('input[name="cid"]').val()
+            
+  
+            
+  
+            function obtercontainerId() {
+              var selectElement = $xml.find('input.btn-primary[value="OK"]:first');
+              var onchangeValue = selectElement.attr('onclick');
+              var regex = /'containerId':'j_id(\d+)'/;
+              var match = onchangeValue.match(regex);
+              var [part] = match
+  
+              return part.split("':'")[1].replace("'", '')
+            }
+            var containderId = obtercontainerId() 
+            
+  
+            var PAYLOAD = `
+              AJAXREQUEST: ${containderId}
+              formularioUpload: formularioUpload
+              cbTDDecoration:cbTD: ${idTipo}
+              ipDescDecoration:ipDesc: ${descricao}
+              ipNroDecoration:ipNro: ${numero}
+              modTDDecoration:modTD: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              raTipoDocPrincipal: HTML
+              docPrincipalEditorTextArea: textHTMLField
+              context: /pje
+              cid: ${cid}
+              mimes: .html,image/png,application/pdf,image/jpeg,audio/vorbis,application/vnd.google-earth.kml+xml,.kml,audio/mpeg,audio/ogg,application/pkcs7-signature,video/mpeg,text/html,video/ogg,video/mp4
+              mimesEhSizes: .html:1.5,image/png:10.0,application/pdf:10.0,image/jpeg:10.0,audio/vorbis:10.0,application/vnd.google-earth.kml+xml:5.0,.kml:5.0,audio/mpeg:10.0,audio/ogg:10.0,application/pkcs7-signature:10.0,video/mpeg:10.0,text/html:1.5,video/ogg:10.0,video/mp4:10.0
+              tamanhomaximolote: 62MB
+              tipoDocLoteSuperior: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              modalConfirmaLimparOpenedState: 
+              modalDescricaoNaoPreenchidaParaLoteOpenedState: 
+              modalTipoLoteNaoSelecionadoOpenedState: 
+              modalErrosOpenedState: 
+              quantidadeProcessoDocumento: 0
+              javax.faces.ViewState: ${_this.session.viewIdProc}
+              btn-mobile-assinador: btn-mobile-assinador
+              AJAX:EVENTS_COUNT: 1
+  
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+            PAYLOAD = PAYLOAD.replace('textHTMLField', encodeURIComponent(textoHTML))
+            
+
+            setTimeout(function(){
+
+
+            $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              _this.processo.xmlHistory.push({
+                interaction : 'juntarDocumentoAssinarHTML:_passoEnivarEnvioMobileAssinador',
+                $xml : jQ3(xml)
+              })
+              def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            }, 250);
+  
+            return def.promise();
+          }
+          function _passoConcluirInclusaoDocumento (){
+            var def = $.Deferred()
+            var j_id = $xml_juntDoc.find('form').filter( function() { return this.innerHTML.indexOf('concluirInclusaoPeticaoDocumento=function()') !== -1 && this.id.length } ).attr('id')
+            var j_id2 = $xml_juntDoc.find('script').filter( function() { return this.innerHTML.indexOf('concluirInclusaoPeticaoDocumento=function()') !== -1 && this.id.length } ).attr('id')
+  
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              ${j_id}: ${j_id}
+              autoScroll: 
+              javax.faces.ViewState: ${_this.session.viewIdProc}
+              ${j_id2}: ${j_id2}
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+  
+            $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              _this.processo.xmlHistory.push({
+                interaction : 'juntarDocumentoAssinarHTML:_passoConcluirInclusao',
+                $xml : jQ3(xml)
+              })
+              def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+            } )
+            .fail( err => def.reject(err) )
+  
+            return def.promise();
+          }
+
+          function _assinarViaPJeOffice($xml_b){
+            function __obterRequisicao(){
+              var cid = $xml.find('input[name="cid"]').val()
+              var urlDocsField = $xml_b.find('script').filter( function() { return this.innerHTML.indexOf('function getUrlAssinaturas') !== -1 } ).text().split('"')[1] 
+              var _arquivos = PJeOffice.parseToListaArquivos(urlDocsField)
+              var _base =  {                                                               
+                "aplicacao"      : "PJe",
+                "servidor"       : window.origin + "/pje",
+                "sessao"         : document.cookie,
+                "codigoSeguranca": "VAjonOyQlrbUpVjrcyi7e7wXlEuf9u8W17SE/vNBlWBsuio16HVW9baXbOBF2RQrvTSFfwymXmjDfM/T0nWwLyv6zr5PZhxKbG9FNkgZLuhnyjx2wfUaYhGlV04VJ43yCV/1n+hLc1uq7Elr31+J9UpkKyK7x4PKkIH+MlJqDcWwHccWOPqXX1PjIFgfJmaUyE5DJBkZWY0/TP5mZnJo3Ch2VdSx1aRqSw88kmmMkuiT3m20OWXFr0KvIzyfLNyktdZP7Du3Fo56RjQySNfekrr9rlwJDhaz8CTsz9IselSvaMAY5DIFbXZH3OmXHQcMTF6evF7dQHZl2/6ti34hkQ==",
+                "tarefaId"       : "cnj.assinadorHash",
+                "tarefa"         : {
+                  "algoritmoAssinatura": "ASN1MD5withRSA",
+                  "modoTeste"          : "false",
+                  "uploadUrl"          : `/arquivoAssinadoUpload.seam?action=consultaProcessoAction&cid=${cid}&mo=P`,
+                  "arquivos"           : _arquivos
+                }
+              }
+
+              return _base
+            }
+
+
+            var def = $.Deferred()
+            var requisicao = __obterRequisicao()
+
+            PJeOffice.executar(requisicao, 
+              ()=>{
+                def.resolve()
+              },
+              ()=>{
+                def.reject()
+              },
+              ()=>{
+                def.reject('O PJe Office não está disponível')
+              }
+            )
+              
+            return def.promise()
+          }
+
+          
+          var def = $.Deferred()
+
+          if( $xml.find('#btn-mobile-assinador').length ){
+            _passoSalvarEInformarAnexos ()
+            .pipe( (it, $xml) => {
+              if(false){
+                def.resolve($xml)
+                return;
+              }
+
+              return _passoInformarServidorAssinaturaMobile()})
+            .pipe( (it, $xml)=>{
+              return _passoEnivarURLAssinaturasDoMobile()})
+            .pipe( (it, $xml) => {
+              if(true)
+                return $.Deferred().reject('Erro ao realiar assinatura: assinatura automática foi desabilitada').promise()
+              
+              return _passoConcluirInclusaoDocumento()})
+            .pipe( (it, $xml) => def.resolve($xml) )
+            .fail( (err) => { 
+              def.reject(err) 
+            })
+          }else{
+            var $xml_urlAssinaturas
+            _passoSalvarEInformarAnexos ()
+            .pipe( (it, $xml) => {
+              if(false){
+                def.resolve($xml)
+                return;
+              }
+
+              $xml_urlAssinaturas = $xml
+              return _assinarViaPJeOffice($xml_urlAssinaturas)})
+            .pipe( (it, $xml) => {
+              if(false)
+                return $.Deferred().reject('Erro ao realiar assinatura: assinatura automática foi desabilitada').promise()
+              
+              return _passoConcluirInclusaoDocumento()})
+            .done( (it, $xml) => { 
+              var resultado = $xml.find('#_ajax\\:data:first').text().trim()
+              if(resultado === "'erro'")
+                def.reject($xml.find('#anexarMsg').text())
+              else
+                def.resolve($xml) })
+            .fail( (err) => { 
+              def.reject(err) 
+            })
+          }
+          
+
+          return def.promise();
+        },
+        requisitarModeloVariaveisExtensao : ($xml, idTipo, nomeModelo)=>{          
+          function _modTDDecoration_j_id_Get() {
+            var selectElement = $xml.find('#modTDDecoration\\:modTD');
+            var attrValue = selectElement.attr('onchange');
+            var regex = /modTDDecoration:j_id(\d+)/;
+            var match = attrValue.match(regex);
+            var [part] = match
+
+            return part.split(':')[1]
+          }
+          function _idModeloGet() {
+            const textoDesejado = nomeModelo.toLowerCase();
+            const selectId = "modTDDecoration\\:modTD";
+          
+            const valorOpcao = $xml.find("#" + selectId + " option").filter(function() {
+              return jQ3(this).text().trim().toLowerCase() === textoDesejado;
+            }).val();
+          
+            return valorOpcao;
+          }
+
+          var def = $.Deferred()          
+          var idModelo = _idModeloGet()
+          var modTDDecoration_j_id = _modTDDecoration_j_id_Get()
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            formularioUpload: formularioUpload
+            cbTDDecoration:cbTD: ${idTipo}
+            ipDescDecoration:ipDesc: 
+            ipNroDecoration:ipNro: 
+            raTipoDocPrincipal: HTML
+            docPrincipalEditorTextArea: 
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            modTDDecoration:modTD: ${idModelo}
+            modTDDecoration:${modTDDecoration_j_id}: modTDDecoration:${modTDDecoration_j_id}
+            ajaxSingle: modTDDecoration:modTD
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'requisitarModeloVariaveisExtensao',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.processo.requestsIteractions, jQ3(xml) ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+      },
+      acoes : {
+        abrirProcesso : () =>{
+          var def = $.Deferred()
+
+          _this.processo.requestsIteractions.listAutosDigitais()
+          .done( it => def.resolve( it ) )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        acaoJuntarDocumento : (tipo, descricao, source, contentDocument, numero) =>{
+          var def = $.Deferred()
+          var idTipo
+          var $xml_juntDoc
+
+          _this.processo.requestsIteractions.juntarDocumento()
+          .pipe( (it, _$xml_juntDoc) => { 
+            $xml_juntDoc = _$xml_juntDoc
+            return it.juntarDocumentoSelecionarTipoDocumento($xml_juntDoc, tipo)})
+          .pipe( (it, $xml, _idTipo) => {
+            idTipo = _idTipo
+            if( source == 'text/html')
+              return it.juntarDocumentoSelecionarEditorDeTexto($xml, idTipo)
+            else
+              return $.Deferred.reject( '#########ERROR: O tipo da fonte não é suportado' ).promise()
+          })
+          .pipe( (it, $xml, _idTipo) => {
+            if( source == 'text/html')
+              return it.juntarDocumentoEditarDocumentoHTML($xml, idTipo, contentDocument.html, descricao || tipo, numero)
+            else
+              return $.Deferred.reject( '#########ERROR: O tipo da fonte não é suportado' ).promise()
+          })
+          .pipe( (it, $xml) => {
+            return it.juntarDocumentoAssinarHTML($xml, idTipo, contentDocument.html, descricao || tipo, numero, $xml_juntDoc)})
+          .done( () => { 
+            def.resolve() 
+          })
+          .fail( (err) => { 
+            def.reject(err) 
+          })
+
+
+          return def.promise()
+        },
+        acaoObterVariaveisParaExtensao : () =>{
+          var def = $.Deferred()
+          var $xml_juntDoc
+          var $xml_tipoDocumento
+
+          var tipo = 'Termo'
+          var nomeModeloVariaveisExtensao='[VARIAVEIS PARA EXTENSAO]'
+          var idTipo
+
+          _this.processo.requestsIteractions.juntarDocumento()
+          .pipe( (it, _$xml_juntDoc) => { 
+            $xml_juntDoc = _$xml_juntDoc
+            return it.juntarDocumentoSelecionarTipoDocumento($xml_juntDoc, tipo)})
+          .pipe( (it, $xml, idTipo) => {
+            $xml_tipoDocumento = $xml
+            return it.juntarDocumentoSelecionarEditorDeTexto($xml, idTipo, nomeModeloVariaveisExtensao)
+          })
+          .pipe( (it, $xml, idTipo) => {
+              return it.requisitarModeloVariaveisExtensao($xml_tipoDocumento, idTipo, nomeModeloVariaveisExtensao, $xml)
+          })
+          .pipe( (it, $xml) => { 
+            var modHtmlVars = $xml.find('#docPrincipalEditorTextArea').val()
+            def.resolve( modHtmlVars ) 
+          })
+          .fail( err => def.reject(err) )
+
+
+          return def.promise()
+        }
+      }
+    }}
+    return _this
+  })(jQ3)
+}
 
 openPopUp = function (id, url, width, height) {
   function guid() {
@@ -2944,6 +3817,40 @@ j2E.mods.registerNumeroUnicoReplacer = function (){
   }
   checkObserver();
 };
+
+j2E.mods.remoteJ2DocCreatorInit = function(){
+  window.addEventListener("message", function(event) {
+    if (!(event.source === window && event.data.response && event.data.j2Action && event.data.pageXContent))
+      return;
+
+    evBus.fire(`on-j2Doc-response`, event.data)
+  })
+
+  j2E.mods.remoteJ2DocCreator = function (id, versao, PJeVarsHTML, robot){
+    window.postMessage({
+      j2Action: true, 
+      pageXContent : true,
+      message: "create-j2Doc",
+      idModelo: id,
+      versao: versao,
+      robot : robot,
+      PJeVarsHTML : PJeVarsHTML
+    }, "*")
+  
+    return new Promise( (res, rej)=>{
+      evBus.on('on-j2Doc-response', (ev, data)=>{
+        if(data.action === 'j2Doc-successful-create'){
+          res( data.j2ModeloExpBodyInnerHTML )
+        }else
+          rej(`Erro ao criar o documento, ${data.error}`)
+      })
+      setTimeout(()=>{
+        if (!('resolve' in Promise.prototype))
+          rej('j2Modelos demorou demais para construir o modelo.')
+      }, 10 * 1000)
+    })
+  }
+}
 
 j2E.mods.shortcuts = function (){
   var _this = j2E.mods.shortcuts;
