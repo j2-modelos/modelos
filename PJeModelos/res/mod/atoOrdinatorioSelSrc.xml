@@ -26,6 +26,11 @@ and open the template in the editor.
             <gItem id="atoOrdPortaria29922022Alvara"/>
             <gItem id="atoOrdPortaria29922022Certidao"/>
         </group>   
+
+        <group label="Análise de Juntadas">
+            <gItem id="atoOrdEnderecoDiligenciaInfrutifera"/>
+            <gItem id="atoOrdItApresentEndPartePassiva"/>
+        </group>
             
         <group label="Audiência">
             <gItem id="atoOrdItCancelamentoAudiencia"/>
@@ -51,7 +56,7 @@ and open the template in the editor.
         </group>
         
         <group label="Cumprimentos #{j2.env.PJeVars.processo.polos.parteAtiva}">
-            <gItem id="atoOrdItApresentEndParteAtiva"/>
+            <gItem id="atoOrdItApresentEndPartePassiva"/>
             <gItem id="atoOrdItJuntComprovEnd"/>
             <gItem id="atoOrdItPgtoOnerosoAdvogado"/>
             <gItem id="atoOrdItPgtoOnerosoParte"/>
@@ -179,8 +184,18 @@ and open the template in the editor.
         <item id="atoOrdPortaria129922022PartePrestarDadosBancarios" label="Parte Informar dados bancários (Portaria-TJ 29922022)" dataPlus="{ 'descricaoAppend': 'Parte prestar dados bancários' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    INTIMAÇÃO do(a) #:B{parte #{j2.env.PJeVars.processo.polos.parteAtiva}} para, no prazo de 5(cinco) dias, informar nos autos os #:B{dados bancários necessários} 
+                    INTIMAÇÃO da #:B{parte #{j2.env.PJeVars.processo.polos.parteAtiva}} para, no prazo de 5(cinco) dias, informar nos autos os #:B{dados bancários necessários} 
                     (banco, agência, conta e CPF do titular da conta) para que seja efetivado o #:B{crédito do alvará} na conta em questão;
+                </data>
+            </itemContent>
+        </item>  
+
+        <item id="atoOrdEnderecoDiligenciaInfrutifera" label="Parte #{j2.env.PJeVars.processo.polos.parteAtiva} tomar ciência certidão de endereço com diligência infrutífera" 
+            dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{INTIMAÇÃO} da #:B{parte #{j2.env.PJeVars.processo.polos.parteAtiva}} para tomar ciência da certidão #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}},
+                    bem como se manifestar acerca da mesma no prazo de 5 (cinco) dias, caso queira;
                 </data>
             </itemContent>
         </item>  
@@ -546,7 +561,7 @@ and open the template in the editor.
         
         
         
-        <item id="atoOrdItApresentEndParteAtiva" label="Intimar apresentar endereço da parte #{j2.env.PJeVars.processo.polos.partePassiva}" dataPlus="{ 'descricaoAppend': '#{j2.env.PJeVars.processo.polos.parteAtiva} atualizar endereço #{j2.env.PJeVars.processo.polos.partePassiva}' }">
+        <item id="atoOrdItApresentEndPartePassiva" label="Intimar apresentar endereço da parte #{j2.env.PJeVars.processo.polos.partePassiva}" dataPlus="{ 'descricaoAppend': '#{j2.env.PJeVars.processo.polos.parteAtiva} atualizar endereço #{j2.env.PJeVars.processo.polos.partePassiva}' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{INTIMAÇÃO} da parte #{j2.env.PJeVars.processo.polos.parteAtiva} para no prazo de #:B{5 (cinco) dias} que aponte endereço atual
