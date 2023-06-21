@@ -914,7 +914,7 @@ nav.main-menu, #divSideBar{
     left: 50px !important;
 }
 
-#divRightPanel:not([j2-view-pseudo-tarefa]){
+#divRightPanel{
     width: calc(100% - 50px) !important;
 }
 
@@ -982,6 +982,16 @@ iframe[j2-pseudo-iframe]{
 th[j2-seletor-expediente]{
     width: 20px;
 }
+
+.rich-stglpnl-marker[j2-marker]{
+    display: block !important;
+}
+
+.rich-stglpnl-marker[j2-marker].collapse:not(.in){
+    transform: scaleY(-1);
+    margin-top: 22px;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
