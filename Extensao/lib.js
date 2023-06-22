@@ -563,17 +563,47 @@ String.prototype.replaceOrd = function(){
 
 
 var j2EUi = {
-  createPanel : function(titleAsString, bodyAsJQuery, j2Attr){
+  createPanel : function(titleAsString, bodyAsJQuery, j2Attr, collapsable){
     var divDef = {
       class : 'rich-panel col-sm-12'
     }
     if(j2Attr)
       divDef[j2Attr] = j2Attr
 
-    return  jQ3('<div>', divDef).append(
-              jQ3('<div>', {class : 'rich-panel-header', text : titleAsString})
+    var $panel = jQ3('<div>', divDef)
+    var $header = jQ3('<div>', {class : 'rich-panel-header', text : titleAsString})
+    var $body = jQ3('<div>', {class : 'rich-panel-body panel', 'j2-ui-content':'j2'}).append(bodyAsJQuery)
+
+    if(typeof collapsable !== undefined){
+      var [_id] = guid().split('-')
+      _id = `j2-tog-${_id}`
+
+      var $marker = jQ3(`<div class="rich-stglpanel-marker">
+        <div class="rich-stglpnl-marker collapse" j2-marker ${_id}-marker >
+          «
+        </div>
+      </div>`)      
+      $header.prepend($marker)
+
+      $body.attr(`${_id}-body`, '')
+      $body.addClass('collpase')
+      $marker.find('> div').addClass('collpase')
+
+      $header.attr('data-toggle', 'collapse')
+      $header.attr('data-target', `[${_id}-marker], [${_id}-body]`)
+      if(collapsable.initExpanded){
+        $body.attr('aria-expanded', collapsable.initExpanded)
+        $marker.find('> div').attr('aria-expanded', collapsable.initExpanded)
+
+        $body.addClass('in')
+        $marker.find('> div').addClass('in')
+      }
+    }
+
+    return  $panel.append(
+              $header
             ).append(
-              jQ3('<div>', {class : 'rich-panel-body panel', 'j2-ui-content':'j2'}).append(bodyAsJQuery)
+              $body
             );
   },
   createWarnElements : function(warnTextOr$, severityClass){

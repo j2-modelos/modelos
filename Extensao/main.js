@@ -35,7 +35,7 @@ var TarefasProps = {
     orgNome : 'Análise de perícia',
     ADMGrupo : {
       org : 'dmsTrf',
-      alt : 'certfc'
+      alt : 'agdStt'
     },
     altNome : 'Certificar tempestividade de recurso',
     personalizacao : {
@@ -79,6 +79,9 @@ var TarefasProps = {
               ]
             }
           ],
+          collapsable : {
+            initExpanded: true
+           },
           events : [
             ($thisPanel, seamProcIteraction) => {
               function __routine($thisPanel){
@@ -175,11 +178,8 @@ var TarefasProps = {
       mostraAutosDigitais : true
     }
   },
-  'Cerificar juízo digital' : {
-    ADMGrupo : 'certfc'
-  },
   'Certificar trânsito em julgado' : {
-    ADMGrupo : 'certfc'
+    ADMGrupo : 'exps'
   },
   'Certificar consulta INFOJUD' : {
     altNomeADM : 'Consultar INFOJUD',
@@ -571,6 +571,9 @@ var TarefasProps = {
              ]
            }
          ],
+         collapsable : {
+          initExpanded: false
+         },
          events : [
            ($thisPanel) => {
               var _deferToRoutine = jQ3.Deferred()
