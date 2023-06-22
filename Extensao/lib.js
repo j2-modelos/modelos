@@ -3257,7 +3257,7 @@ function loadPJeRestAndSeamInteraction(){
           var $xml_juntDoc
           var $xml_tipoDocumento
 
-          var tipo = 'Termo'
+          var tipo = 'Relatório de diligências criminais'
           var nomeModeloVariaveisExtensao='[VARIAVEIS PARA EXTENSAO]'
           var idTipo
 
