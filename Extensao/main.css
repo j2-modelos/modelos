@@ -990,6 +990,7 @@ th[j2-seletor-expediente]{
 .rich-stglpnl-marker[j2-marker].collapse:not(.in){
     transform: scaleY(-1);
     margin-top: 22px;
+    height: 0px;
 }
 
 @keyframes mat-progress-spinner-linear-rotate {

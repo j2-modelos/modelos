@@ -580,7 +580,7 @@ var j2EUi = {
 
       var $marker = jQ3(`<div class="rich-stglpanel-marker">
         <div class="rich-stglpnl-marker collapse" j2-marker ${_id}-marker >
-          «
+          »
         </div>
       </div>`)      
       $header.prepend($marker)
