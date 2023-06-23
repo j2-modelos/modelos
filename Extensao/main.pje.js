@@ -472,7 +472,7 @@ function pjeLoad(){
             }
           });
           
-          var jP = j2EUi.createPanel(painel.header, _body, painel.j2Attr, painel.collapsable);
+          var jP = j2EUi.createPanel(painel.header, _body);
 
           if(painel.events){
             jQ3.each(painel.events, function(key, eventCallback){
@@ -552,6 +552,7 @@ function pjeLoad(){
               var _gruposSet = {
                 padrao : [
                   { text : 'Audiência', j2eG : 'aud'},
+                  { text : 'Certificar', j2eG : 'certfc'},
                   { text : 'Consultas', j2eG : 'cnslts'},
                   { text : 'Expedientes', j2eG : 'exps'},
                   { text : 'Outras Ações', j2eG : 'outac'},
@@ -2745,6 +2746,7 @@ function pjeLoad(){
     });
   }
 
+
   function personalizarAtalhosADireitaAutosDigitais(){
     jQ3.initialize('#navbar\\:ajaxPanelAlerts .icone-menu-abas', function(){
       var $liMenuTracinhos = jQ3(this)
@@ -2758,6 +2760,90 @@ function pjeLoad(){
 
       $liMenuTracinhos.parents('ul.navbar-right').find('li:first').after($newLi)
     })
+  }
+
+  function preparComandoDeEtiquetagemDeAnaliseJuntada(){
+    var delayCall = new DelayedCall(150, 250);
+    jQ3.initialize('#processoDocumentoNaoLidoDiv .rich-stglpanel-body table.rich-table', function(){
+      var $this = jQ3(this);
+      var $this = $this.parents('.rich-stglpanel-body');
+
+      var ___TEMPLATE___ = `<ul j2-analise-juntada class="nav nav-pills btn-documento pull-right" style="margin-top:-10px">
+        <li>
+          <a style="display: flex;">
+            <i class="fa fa-hashtag" aria-hidden="true" style="font-size:1.2em"></i>
+            <input type="text" value="0, 1, 2" style="height: 1.2em;width: 73px;text-align: center;" id="j2-etiqueta-digito-filter">
+          </a>
+        </li>
+        <li>
+          <a id="j2-etiquetar" href="#" title="Etiquetar processos" onclick="">
+            <i class="fa fa-tag" aria-hidden="true" style="font-size:1.2em"></i>
+            <span class="sr-only">Ícone Etiqueta</span>
+            <span style="font-size: 9pt;"> Etiquetar "Documento não lido"</span>
+          </a>
+        </li>
+      </ul>`;
+      
+      if($this.find('[j2-analise-juntada]').length !== 0)
+        return;
+      
+      $this.prepend(___TEMPLATE___);
+      
+      $this.find('a#j2-etiquetar').click(function(){
+        
+        var $tbody = $this.find('table.rich-table tbody') 
+        var _ = $tbody.text().allMatches(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/);
+        if(!(_.length)){
+          alert("Nenhum processo para etiquetar.");
+          return;
+        }
+
+        var digitos = $this.find('#j2-etiqueta-digito-filter').val().match(/\d/g);
+        if(!(digitos.length)){
+          alert("Nenhum dígito final foi informado.");
+          return;
+        }
+
+        jQ3('tr', $tbody).each(function(){
+          var $tr = jQ3(this)
+
+          var num =  $tr.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
+          if(!(num))
+            return;
+          num = num[0];
+
+          if( ! digitos.includes( num.substring(8,9)) ) 
+            return;
+
+          var $a = $tr.find('a[title="Autos digitais"]')
+          var attrWithIdProcesso = $a.attr('href');
+          var b = attrWithIdProcesso.match(/id=[0-9]+&/);
+          var idProcesso = b[0].split('=')[1].split('&')[0];
+
+          delayCall(function(_num, _$tr, _idProcesso){
+            console.log(_num, _$tr);
+
+            window.j2EPJeRest.etiquetas.inserir(_idProcesso, 'Documento não lido', function(){
+              _$tr.find('td:nth-child(3)').append(`<i class="fa fa-tag" aria-hidden="true" style="font-size: 13px;padding-left: 3px;"></i>`);
+            })
+            
+          }, num, $tr, idProcesso);
+          
+        });
+      })
+
+      $this.find('#j2-etiqueta-digito-filter').change(function(){
+        lockr.set('#j2-etiqueta-digito-filter.input.val', { 
+          value : jQ3(this).val(),
+          expiration : 10 * 1000
+        });
+      })
+
+      var stVal = lockr.get('#j2-etiqueta-digito-filter.input.val', { noData : true })
+      if( typeof stVal.noData === 'undefined') 
+        $this.find('#j2-etiqueta-digito-filter').val(stVal.value)
+    });
+
   }
   
   switch(window.location.pathname){
@@ -2838,6 +2924,10 @@ function pjeLoad(){
     case '/pje/ConsultaPrazos/listView.seam':
     case '/pje/ConsultaPrazos/listView.seam#':
       preparComandoDeEtiquetagem();
+      break;
+    
+    case '/pje/Painel/painel_usuario/include/agrupadorPje2.seam':
+      preparComandoDeEtiquetagemDeAnaliseJuntada();
       break;
       
     default:
