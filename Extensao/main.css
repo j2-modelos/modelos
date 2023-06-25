@@ -993,6 +993,23 @@ th[j2-seletor-expediente]{
     height: 0px;
 }
 
+div > .tarefa-numero-processo.process {
+    font-size: 16px !important;
+}
+
+i[j2-np-copiar]{
+    font-size: 14px;
+    cursor: copy;
+}
+
+#frameTarefas a {
+    font-size: 16px !important;
+}
+
+#frameTarefas .header-processo{
+    width: 83.333333333333% !important;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

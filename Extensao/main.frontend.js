@@ -1714,6 +1714,7 @@ function fronendLoad(){
           formatarEDestacarPrazo(this);
           inserirFolder(this);
           aplicarFiltrosJ2(this);
+          criarCmdCopiarNumeroProcesso(this);
           destacarUltimoMovimentoDoProcesso(this);
 
           jQ3.initialize('div.label.label-info.label-etiqueta.ng-star-inserted', function(){
@@ -1725,6 +1726,8 @@ function fronendLoad(){
           }, {target : this});
         },
         {target : this});
+
+        criarCmdCopiarNumeroProcesso(null, this)
       });
     }
 
@@ -1807,6 +1810,77 @@ function fronendLoad(){
       }
       if(toRemove)
         $li.remove();
+    }
+
+    function _copyToClipboard(text, $i) {
+      function __then() {
+        var $iVisto = jQ3('<i>', {
+          class : 'fa fa-check text-success',
+          css : {
+            display : 'none',
+            paddingLeft: '3px'
+          },
+          'j2-np-copiar' : 's'
+        })
+
+        $i.after($iVisto)
+        $iVisto.show(250).promise().done(()=>{
+          setTimeout(()=> $iVisto.hide('250').promise().done(()=>$iVisto.remove()), 3000)
+        })
+        
+      }
+
+      function __oldMethod(){
+        var tempField = jQ3('<input />');
+        jQ3('body').append(tempField);
+        tempField.val(text).select();
+        document.execCommand('copy');
+        tempField.remove();  
+      }
+
+      $i.focus()
+      window.navigator.clipboard.writeText(text)
+        .then(__then)
+        .catch(function(error) {
+          console.error('Erro ao copiar texto para a área de transferência:', error);
+          __oldMethod()
+          __then()
+        });
+
+    }
+
+    function criarCmdCopiarNumeroProcesso(_this, _parentUl){
+      if(_parentUl){
+        var $ul = jQ3(_parentUl)
+
+        if($ul.is('[j2-np-copiar]'))
+          return;
+
+        $ul.mousedown((ev)=>{
+          if(ev.which !== 1) //botão esquerdo do mouse
+            return;
+
+          var $target = jQ3(ev.target);
+          if ( ! $target.is('[j2-np-copiar]') )
+            return;
+          
+
+          const [numProc] = $target.parent().text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          _copyToClipboard(numProc, $target)
+          
+
+        }).attr('j2-np-copiar', '')
+        return;
+      }
+
+      var $li = jQ3(_this)
+
+      $li.find('.tarefa-numero-processo:first').append(jQ3('<i>', {
+        class: 'fa fa-clipboard', 
+        onclick: 'event.stopPropagation()',
+        'j2-np-copiar': 's'
+      }))
     }
 
     function personalisarFiltroTarefas(_this){
