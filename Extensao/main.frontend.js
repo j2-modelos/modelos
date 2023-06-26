@@ -2558,11 +2558,13 @@ function fronendLoad(){
           var $butExpand = $tooB.find(' > :first-child')
           
           var $butSentinela = jQ3(`
+
           <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
                   type="button">
                   <i aria-hidden="true" class="fa fa-lock-open" j2-i-lock ></i>
                   <i aria-hidden="true" class="fa fa-book ng-star-inserted" j2-i-book ></i>
           </button>
+
           `)
           var $aLinkAutos = $head.find('a:first-child')
           var id = guid()
