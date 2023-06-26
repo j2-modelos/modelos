@@ -2551,7 +2551,7 @@ function fronendLoad(){
       var $butExpand = $tooB.find(' > :first-child')
       
       var $butSentinela = jQ3(`
-        <button class="btn btn-sm btn-default pull-right" placement="bottom" tooltip="Fixar autos digitais à tarefa" 
+        <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
                 type="button">
                 <i aria-hidden="true" class="fa fa-thumbtack" style="font-size: 120%;vertical-align: top;"></i>
                 <i aria-hidden="true" class="fa fa-book ng-star-inserted" style="font-size: 120%;vertical-align: bottom;margin-left: -2px;"></i>
