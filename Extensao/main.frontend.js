@@ -2539,12 +2539,60 @@ function fronendLoad(){
                           
         }, this); */
         
-      }, this);
+      }, {target : this});
     });
     
   }
+
+  function personaliazarCabecalhoTarefa(){
+    function _personalizarToolbarProcesso(_this, _thisHeader){
+      var $tooB = jQ3(_this)
+      var $head = jQ3(_thisHeader)
+      var $butExpand = $tooB.find(' > :first-child')
+      
+      var $butSentinela = jQ3(`
+        <button class="btn btn-sm btn-default pull-right" placement="bottom" tooltip="Fixar autos digitais à tarefa" 
+                type="button">
+                <i aria-hidden="true" class="fa fa-thumbtack" style="font-size: 120%;vertical-align: top;"></i>
+                <i aria-hidden="true" class="fa fa-book ng-star-inserted" style="font-size: 120%;vertical-align: bottom;margin-left: -2px;"></i>
+        </button>
+      `)
+      var $aLinkAutos = $head.find('a:first-child')
+      var id = guid()
+
+      function __openSentinela(){
+        var url = $aLinkAutos.attr('href')
+        var name = 'autosDigSentinela'
+
+        j2EOpW.center(url, name, id)
+      }
+
+      $butSentinela.click(()=>{
+        $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+        __openSentinela()
+      })
+
+      $tooB.prepend($butSentinela)
+
+      $aLinkAutos.observe('attributes', (rec)=>{
+        if( ! $butSentinela.is('.btn-primary') )
+          return;
+
+        if( rec.attributeName === 'href' )
+          __openSentinela()
+      });
+    }
+
+    jQ3.initialize('#frameTarefas', function(){
+      const _thisHeader = this
+      jQ3.initialize('.toolbar-processo', function(){
+        _personalizarToolbarProcesso(this, _thisHeader)
+      }, {target : this})
+    })
+  }
   
   personaliazarPainelUsuario();
+  personaliazarCabecalhoTarefa()
   
   observeListaDeProcessosTarefaAtiva();  
   criarControlesFiltroListasDeTarefas();  
