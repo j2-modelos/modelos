@@ -574,7 +574,7 @@ var j2EUi = {
     var $header = jQ3('<div>', {class : 'rich-panel-header', text : titleAsString})
     var $body = jQ3('<div>', {class : 'rich-panel-body panel', 'j2-ui-content':'j2'}).append(bodyAsJQuery)
 
-    if(typeof collapsable !== undefined){
+    if(typeof collapsable !== 'undefined'){
       var [_id] = guid().split('-')
       _id = `j2-tog-${_id}`
 
