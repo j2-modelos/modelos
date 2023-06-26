@@ -2558,11 +2558,11 @@ function fronendLoad(){
           var $butExpand = $tooB.find(' > :first-child')
           
           var $butSentinela = jQ3(`
-            <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
-                    type="button">
-                    <i aria-hidden="true" class="fa fa-thumbtack" style="font-size: 120%;vertical-align: top;"></i>
-                    <i aria-hidden="true" class="fa fa-book ng-star-inserted" style="font-size: 120%;vertical-align: bottom;margin-left: -2px;"></i>
-            </button>
+          <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
+                  type="button">
+                  <i aria-hidden="true" class="fa fa-lock-open" j2-i-lock ></i>
+                  <i aria-hidden="true" class="fa fa-book ng-star-inserted" j2-i-book ></i>
+          </button>
           `)
           var $aLinkAutos = $head.find('a:first-child')
           var id = guid()
@@ -2579,6 +2579,9 @@ function fronendLoad(){
       
           $butSentinela.click(()=>{
             $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+            $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
             __openSentinela()
           })
       
