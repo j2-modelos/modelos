@@ -1002,6 +1002,18 @@ i[j2-np-copiar]{
     cursor: copy;
 }
 
+
+i[j2-i-lock]{
+    font-size: 120%;
+    vertical-align: top;
+}
+
+i[j2-i-book]{
+    font-size: 120%;
+    vertical-align: bottom;
+    margin-left: -2px;
+}
+
 #frameTarefas a.text-truncate {
     font-size: 16px !important;
 }
