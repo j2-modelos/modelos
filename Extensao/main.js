@@ -571,6 +571,9 @@ var TarefasProps = {
              ]
            }
          ],
+         collapsable : {
+          initExpanded : true
+         },
          events : [
            ($thisPanel) => {
               var _deferToRoutine = jQ3.Deferred()
