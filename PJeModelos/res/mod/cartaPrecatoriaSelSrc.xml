@@ -734,7 +734,7 @@ and open the template in the editor.
                 <selectorArray>           
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{CERTIFICAR} o Oficial de justiça do juízo deprecado as informações de contato telefônico e whatsapp da(s) parte(s) envolvida(s) à presente missiva.
+                            #:B{CERTIFICAR} o Oficial de justiça do juízo deprecado as informações de #:B{contato telefônico e whatsapp} da(s) parte(s) envolvida(s) à presente missiva.
                         </data>
                     </arElement>           
                 </selectorArray>         

@@ -646,7 +646,7 @@ and open the template in the editor.
                 <selectorArray>         
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{CERTIFICAR} o Oficial de justiça as informações de contato telefônico e whatsapp da(s) parte(s) vinculada(s) ao presente mandado, considerando a previsão do Art. 8º da Portaria Conjunta 34/2020.
+                            #:B{CERTIFICAR} o Oficial de justiça as informações de #:B{contato telefônico e whatsapp} da(s) parte(s) vinculada(s) ao presente mandado, considerando a previsão do Art. 8º da Portaria Conjunta 34/2020.
                         </data>
                     </arElement>           
                 </selectorArray>         
