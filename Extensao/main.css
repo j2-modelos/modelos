@@ -1002,7 +1002,7 @@ i[j2-np-copiar]{
     cursor: copy;
 }
 
-#frameTarefas a {
+#frameTarefas a.text-truncate {
     font-size: 16px !important;
 }
 

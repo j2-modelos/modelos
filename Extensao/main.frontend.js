@@ -2392,207 +2392,224 @@ function fronendLoad(){
     });
   }
   
-  function personaliazarPainelUsuario(){
-    jQ3.initialize('right-panel div.rightPanel.container-fluid', function(){
-      jQ3.initialize('div.painel-usuario-interno-dashboard', function(){
-        var verb = dbgVerbose(0);
-        
-        
-        
-        var colMinhasTarefas = jQ3('div.col-md-4 i.fa-star', this).parents('div.col-md-4');
-        var colAssinaturas   = jQ3('div.col-md-4 i.fa-pencil-alt', this).parents('div.col-md-4');
-        var colTarefas = jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4');
-        var colTarefasFavoritas = colTarefas.clone(true, true);
-        var newChildren = colTarefasFavoritas.children();
-        var newHeader = newChildren.filter('div.dashboard-item-header');
-        var nodTarefas = newChildren.filter('tarefas');
+  function personaliazarPainelUsuarioECabecalhoTarefa(){
+    jQ3.initialize('right-panel', function(){
+      //Observar painel do usário principal
+      jQ3.initialize('div.rightPanel.container-fluid', function(){
+        jQ3.initialize('div.painel-usuario-interno-dashboard', function(){
+          var verb = dbgVerbose(0);
+          
+          
+          
+          var colMinhasTarefas = jQ3('div.col-md-4 i.fa-star', this).parents('div.col-md-4');
+          var colAssinaturas   = jQ3('div.col-md-4 i.fa-pencil-alt', this).parents('div.col-md-4');
+          var colTarefas = jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4');
+          var colTarefasFavoritas = colTarefas.clone(true, true);
+          var newChildren = colTarefasFavoritas.children();
+          var newHeader = newChildren.filter('div.dashboard-item-header');
+          var nodTarefas = newChildren.filter('tarefas');
 
-        nodTarefas.find('div.overflowTarefas').empty();
-        nodTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-minhas-tarefas-favoritas', '');
-        nodTarefas.find('filtro-tarefas-pendentes fieldset').empty();
-        
-        nodTarefas.find('div#divTarefasPendentes div.collapse').attr('j2EMinhasTarefasFavoritas', '');
-        var wrpFilter = nodTarefas.find('div.wrapper-filtro-tarefas-pendentes div');
-        wrpFilter.attr('data-target', '[j2EMinhasTarefasFavoritas]');
-        var _dtVal = colTarefas.find('div[data-target]').attr('data-target');
-        colTarefas.find('div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
-        jQ3('side-bar li#liTarefas div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
-        //wrpFilter.attr('data-target', wrpFilter.attr('data-target') + '.tarfFavor');
-        //jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4')
-        //nodTarefas.find('div.group-filtro-tarefas-pendentes').addClass('tarfFavor');
-        
+          nodTarefas.find('div.overflowTarefas').empty();
+          nodTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-minhas-tarefas-favoritas', '');
+          nodTarefas.find('filtro-tarefas-pendentes fieldset').empty();
+          
+          nodTarefas.find('div#divTarefasPendentes div.collapse').attr('j2EMinhasTarefasFavoritas', '');
+          var wrpFilter = nodTarefas.find('div.wrapper-filtro-tarefas-pendentes div');
+          wrpFilter.attr('data-target', '[j2EMinhasTarefasFavoritas]');
+          var _dtVal = colTarefas.find('div[data-target]').attr('data-target');
+          colTarefas.find('div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
+          jQ3('side-bar li#liTarefas div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
+          //wrpFilter.attr('data-target', wrpFilter.attr('data-target') + '.tarfFavor');
+          //jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4')
+          //nodTarefas.find('div.group-filtro-tarefas-pendentes').addClass('tarfFavor');
+          
 
-        newHeader.attr('title', 'Tarefas que foram favoritadas pelo usuário');
-        var _c = newHeader.find('i:first').clone(true);
-        _c.attr('class', 'fas fa-star');
-        _c.insertAfter( newHeader.find('i:first') );
+          newHeader.attr('title', 'Tarefas que foram favoritadas pelo usuário');
+          var _c = newHeader.find('i:first').clone(true);
+          _c.attr('class', 'fas fa-star');
+          _c.insertAfter( newHeader.find('i:first') );
 
-        newHeader.contents().filter(function(){
-          return this.nodeType === 3;
-        }).replaceWith(' Minhas tarefas favoritas ');
-        
-        colMinhasTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-sem-pseudotarefa', '');
-        colAssinaturas.append(colMinhasTarefas.children());
-        colMinhasTarefas.append( newChildren );
-        
-        
-        function _handleTarefasFavoritasJsonData(data, status, xhr){
+          newHeader.contents().filter(function(){
+            return this.nodeType === 3;
+          }).replaceWith(' Minhas tarefas favoritas ');
+          
+          colMinhasTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-sem-pseudotarefa', '');
+          colAssinaturas.append(colMinhasTarefas.children());
+          colMinhasTarefas.append( newChildren );
           
           
-          
-          var __TEMP_SEM_RESULTADO___ = '<div _ngcontent-css-c7="" class="nenhum-resultado vcenter ng-star-inserted"><a _ngcontent-css-c7=""><span _ngcontent-css-c7="" class="nome">Nenhum resultado</span></a></div>';
-          var _divPar = nodTarefas.find('#divTarefasPendentes');
-          var _ = sessionStorage.getItem('currentUser');
-          if(!(_)){
-            setTimeout(function(){
-              _handleTarefasFavoritasJsonData(data, status, xhr);
-            },250);
-            return;
-          }
-
-          _ = JSON.parse(_);
-          
-          var tarfsFavUsuario = data[_.login];
-          if(!(tarfsFavUsuario)){
-            // usuario não tem tarefas
-            jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
-            _divPar.find('p-progressbar').hide();
-            return;
-          }
-          
-          
-          var prop = nodTarefas.find('div.overflowTarefas').prop('j2e');
-          if(prop)
-            prop.tarefaFavoritaData = tarfsFavUsuario;
-          else
-            nodTarefas.find('div.overflowTarefas').prop('j2e', {TarefaFavoritaData : tarfsFavUsuario } );
-          
-          __sendMessageToPje({
-            action : 'requisitarConsultaTarefas', 
-            query : {
-              numeroProcesso : "",        
-              competencia : "",        
-              etiquetas : []   
+          function _handleTarefasFavoritasJsonData(data, status, xhr){
+            
+            
+            
+            var __TEMP_SEM_RESULTADO___ = '<div _ngcontent-css-c7="" class="nenhum-resultado vcenter ng-star-inserted"><a _ngcontent-css-c7=""><span _ngcontent-css-c7="" class="nome">Nenhum resultado</span></a></div>';
+            var _divPar = nodTarefas.find('#divTarefasPendentes');
+            var _ = sessionStorage.getItem('currentUser');
+            if(!(_)){
+              setTimeout(function(){
+                _handleTarefasFavoritasJsonData(data, status, xhr);
+              },250);
+              return;
             }
-          }, 'PARENT_TOP', 
-          function(data, action){
 
-            var __TARF_TEMPLATE__ = '<div _ngcontent-css-c7="" class="menuItem"><!----><div _ngcontent-css-c7=""><a _ngcontent-css-c7="" title="Aguardando apreciação da Turma Recursal" href="#/painel-usuario-interno/lista-processos-tarefa/Aguardando%20aprecia%C3%A7%C3%A3o%20da%20Turma%20Recursal/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0%3D"><div _ngcontent-css-c7="" class="detalheTarefasQuantidade"><span _ngcontent-css-c7="" class="nome">Aguardando apreciação da Turma Recursal</span><span _ngcontent-css-c7="" class="quantidadeTarefa">207</span></div></a></div><!----></div>';
-            var jDivMenuItem = jQ3(__TARF_TEMPLATE__);
-            var _divTarefas = nodTarefas.find('div.overflowTarefas');
-            var _flgSomeFound = false;
+            _ = JSON.parse(_);
             
-            jQ3.each(data, function(idx, key){
-              var i = tarfsFavUsuario.findIndex(function(el, idx){
-                return el.nome.dURI() === key.nome && el.stared === true;
-              });
-              if(i === -1)
-                return;
-              
-              _flgSomeFound  = true;
-              var jDivMenuItemClone = jDivMenuItem.clone();
-
-              var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-              nHref = nHref.replace('$', encodeURI(key.nome));
-
-              jDivMenuItemClone.addClass('j2ETarefaFavorita');
-              jDivMenuItemClone.find('span.nome').text(key.nome);
-              jDivMenuItemClone.find('span.quantidadeTarefa').text(key.quantidadePendente);
-              jDivMenuItemClone.find('a').attr('href', nHref);
-              jDivMenuItemClone.find('a').click(function(){
-                console.log('clicked');
-              });
-
-              _divTarefas.append( jDivMenuItemClone );
-              
-              _divPar.find('p-progressbar').hide();
-            });
-            
-            if(!(_flgSomeFound)){
+            var tarfsFavUsuario = data[_.login];
+            if(!(tarfsFavUsuario)){
+              // usuario não tem tarefas
               jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
               _divPar.find('p-progressbar').hide();
+              return;
+            }
+            
+            
+            var prop = nodTarefas.find('div.overflowTarefas').prop('j2e');
+            if(prop)
+              prop.tarefaFavoritaData = tarfsFavUsuario;
+            else
+              nodTarefas.find('div.overflowTarefas').prop('j2e', {TarefaFavoritaData : tarfsFavUsuario } );
+            
+            __sendMessageToPje({
+              action : 'requisitarConsultaTarefas', 
+              query : {
+                numeroProcesso : "",        
+                competencia : "",        
+                etiquetas : []   
+              }
+            }, 'PARENT_TOP', 
+            function(data, action){
+
+              var __TARF_TEMPLATE__ = '<div _ngcontent-css-c7="" class="menuItem"><!----><div _ngcontent-css-c7=""><a _ngcontent-css-c7="" title="Aguardando apreciação da Turma Recursal" href="#/painel-usuario-interno/lista-processos-tarefa/Aguardando%20aprecia%C3%A7%C3%A3o%20da%20Turma%20Recursal/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0%3D"><div _ngcontent-css-c7="" class="detalheTarefasQuantidade"><span _ngcontent-css-c7="" class="nome">Aguardando apreciação da Turma Recursal</span><span _ngcontent-css-c7="" class="quantidadeTarefa">207</span></div></a></div><!----></div>';
+              var jDivMenuItem = jQ3(__TARF_TEMPLATE__);
+              var _divTarefas = nodTarefas.find('div.overflowTarefas');
+              var _flgSomeFound = false;
+              
+              jQ3.each(data, function(idx, key){
+                var i = tarfsFavUsuario.findIndex(function(el, idx){
+                  return el.nome.dURI() === key.nome && el.stared === true;
+                });
+                if(i === -1)
+                  return;
+                
+                _flgSomeFound  = true;
+                var jDivMenuItemClone = jDivMenuItem.clone();
+
+                var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
+                nHref = nHref.replace('$', encodeURI(key.nome));
+
+                jDivMenuItemClone.addClass('j2ETarefaFavorita');
+                jDivMenuItemClone.find('span.nome').text(key.nome);
+                jDivMenuItemClone.find('span.quantidadeTarefa').text(key.quantidadePendente);
+                jDivMenuItemClone.find('a').attr('href', nHref);
+                jDivMenuItemClone.find('a').click(function(){
+                  console.log('clicked');
+                });
+
+                _divTarefas.append( jDivMenuItemClone );
+                
+                _divPar.find('p-progressbar').hide();
+              });
+              
+              if(!(_flgSomeFound)){
+                jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
+                _divPar.find('p-progressbar').hide();
+              }
+            });
+
+            
+          }
+          
+          function _handleError(a, b, c){
+            aler('error');
+          }
+
+          jQ3.ajax({
+            url : 'https://jeitz2cvt1/TarefasFavoritas/listar',
+            success : _handleTarefasFavoritasJsonData,
+            error : function(){
+              jQ3.ajax({
+                url : 'https://dl.dropboxusercontent.com/s/czlwwyrweqgxkmk/TarefasFavoritas.json',
+                success : _handleTarefasFavoritasJsonData,
+                error : _handleError
+              });
             }
           });
-
           
-        }
-        
-        function _handleError(a, b, c){
-          aler('error');
-        }
-
-        jQ3.ajax({
-          url : 'https://jeitz2cvt1/TarefasFavoritas/listar',
-          success : _handleTarefasFavoritasJsonData,
-          error : function(){
-            jQ3.ajax({
-              url : 'https://dl.dropboxusercontent.com/s/czlwwyrweqgxkmk/TarefasFavoritas.json',
-              success : _handleTarefasFavoritasJsonData,
-              error : _handleError
-            });
-          }
-        });
-        
-        
-        /*jQ3('div.overflowTarefas:last').observe('childlist', function(record){
-          //lg('observe div.overflowTarefas:last', record);
-                          
-        }, this); */
-        
+          
+          /*jQ3('div.overflowTarefas:last').observe('childlist', function(record){
+            //lg('observe div.overflowTarefas:last', record);
+                            
+          }, this); */
+          
+        }, {target : this});
       }, {target : this});
+
+      //Observar cabeçalho do conteúdo da tarefa
+      jQ3.initialize('processos-tarefa conteudo-tarefa .row', function(){
+        const _thisHeader = this
+        console.log('processos-tarefa conteudo-tarefa #frameTarefas')
+  
+        jQ3.initialize('.toolbar-processo', function(){
+          console.log('.toolbar-processo')
+  
+          
+          var $tooB = jQ3(this)
+          var $head = jQ3(_thisHeader)
+          var $butExpand = $tooB.find(' > :first-child')
+          
+          var $butSentinela = jQ3(`
+            <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
+                    type="button">
+                    <i aria-hidden="true" class="fa fa-thumbtack" style="font-size: 120%;vertical-align: top;"></i>
+                    <i aria-hidden="true" class="fa fa-book ng-star-inserted" style="font-size: 120%;vertical-align: bottom;margin-left: -2px;"></i>
+            </button>
+          `)
+          var $aLinkAutos = $head.find('a:first-child')
+          var id = guid()
+          var prevIdProcesso = ''
+      
+          function __openSentinela(){
+            var url = $aLinkAutos.attr('href')
+            var name = 'autosDigSentinela'
+            var [_prevIdProcesso] = url.match(/idProcesso=[0-9]+/)
+            prevIdProcesso = _prevIdProcesso
+            
+            j2EOpW.center(url, name, id)
+          }
+      
+          $butSentinela.click(()=>{
+            $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+            __openSentinela()
+          })
+      
+          $tooB.prepend($butSentinela)
+      
+          $aLinkAutos.observe('attributes', (rec)=>{
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+      
+            if( rec.attributeName !== 'href' )
+              return;
+            
+            const [idProcesso] = jQ3(rec.target).attr('href').match(/idProcesso=[0-9]+/)
+            if(idProcesso === prevIdProcesso)
+              return;
+      
+            prevIdProcesso = idProcesso
+            __openSentinela()
+          });
+          
+          
+  
+        }, {target : this})
+
+      }, {target : this})
     });
     
   }
-
-  function personaliazarCabecalhoTarefa(){
-    function _personalizarToolbarProcesso(_this, _thisHeader){
-      var $tooB = jQ3(_this)
-      var $head = jQ3(_thisHeader)
-      var $butExpand = $tooB.find(' > :first-child')
-      
-      var $butSentinela = jQ3(`
-        <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
-                type="button">
-                <i aria-hidden="true" class="fa fa-thumbtack" style="font-size: 120%;vertical-align: top;"></i>
-                <i aria-hidden="true" class="fa fa-book ng-star-inserted" style="font-size: 120%;vertical-align: bottom;margin-left: -2px;"></i>
-        </button>
-      `)
-      var $aLinkAutos = $head.find('a:first-child')
-      var id = guid()
-
-      function __openSentinela(){
-        var url = $aLinkAutos.attr('href')
-        var name = 'autosDigSentinela'
-
-        j2EOpW.center(url, name, id)
-      }
-
-      $butSentinela.click(()=>{
-        $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
-        __openSentinela()
-      })
-
-      $tooB.prepend($butSentinela)
-
-      $aLinkAutos.observe('attributes', (rec)=>{
-        if( ! $butSentinela.is('.btn-primary') )
-          return;
-
-        if( rec.attributeName === 'href' )
-          __openSentinela()
-      });
-    }
-
-    jQ3.initialize('#frameTarefas', function(){
-      const _thisHeader = this
-      jQ3.initialize('.toolbar-processo', function(){
-        _personalizarToolbarProcesso(this, _thisHeader)
-      }, {target : this})
-    })
-  }
+    
+  personaliazarPainelUsuarioECabecalhoTarefa();
   
-  personaliazarPainelUsuario();
-  personaliazarCabecalhoTarefa()
   
   observeListaDeProcessosTarefaAtiva();  
   criarControlesFiltroListasDeTarefas();  
