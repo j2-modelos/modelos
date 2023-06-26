@@ -2547,10 +2547,15 @@ function fronendLoad(){
       //Observar cabeçalho do conteúdo da tarefa
       jQ3.initialize('processos-tarefa conteudo-tarefa .row', function(){
         const _thisHeader = this
-        console.log('processos-tarefa conteudo-tarefa #frameTarefas')
+        
   
         jQ3.initialize('.toolbar-processo', function(){
-          console.log('.toolbar-processo')
+          function _guid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            });
+          };
   
           
           var $tooB = jQ3(this)
@@ -2565,7 +2570,7 @@ function fronendLoad(){
           </button>
           `)
           var $aLinkAutos = $head.find('a:first-child')
-          var id = guid()
+          var id = _guid()
           var prevIdProcesso = ''
       
           function __openSentinela(){
