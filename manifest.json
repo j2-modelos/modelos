@@ -28,7 +28,8 @@
             "nativeMessaging",
             "clipboardRead",
             "clipboardWrite",
-            "https://pje.tjma.jus.br/*"
+            "https://pje.tjma.jus.br/*",
+            "https://frontend.prd.cnj.cloud/*"
             
 	],
 	"host_permissions": [
