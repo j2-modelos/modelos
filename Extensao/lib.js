@@ -563,9 +563,9 @@ String.prototype.replaceOrd = function(){
 
 
 var j2EUi = {
-  createPanel : function(titleAsString, bodyAsJQuery, j2Attr, collapsable){
+  createPanel : function(titleAsString, bodyAsJQuery, j2Attr, collapsable, panelClass){
     var divDef = {
-      class : 'rich-panel col-sm-12'
+      class : panelClass || 'rich-panel col-sm-12'
     }
     if(j2Attr)
       divDef[j2Attr] = j2Attr
@@ -574,7 +574,7 @@ var j2EUi = {
     var $header = jQ3('<div>', {class : 'rich-panel-header', text : titleAsString})
     var $body = jQ3('<div>', {class : 'rich-panel-body panel', 'j2-ui-content':'j2'}).append(bodyAsJQuery)
 
-    if(typeof collapsable !== undefined){
+    if(typeof collapsable !== 'undefined'){
       var [_id] = guid().split('-')
       _id = `j2-tog-${_id}`
 
@@ -716,6 +716,34 @@ var j2EUi = {
   removeModal:()=>{
     jQ3('#j2E-rich-modal').remove()
     jQ3('#j2E-ng-modal').remove()
+  },
+  TarefaNumClique : {
+    createTags : (arrayTags)=>{
+      var _createTag = (tag)=>{
+        var $tag = jQ3('<a>', {
+          class: 'btn btn-sm j2-tag-btn',
+          onclick: 'event.stopPropagation(); event.preventDefault();',
+          text : tag,
+          'j2-tag-a' : ''
+        }).prepend(jQ3('<i>', {
+          class : 'fa fa-tag',
+          //title : 'title da tag', 
+          'j2-tag-i' : ''
+        }))
+  
+        return $tag;
+      }
+
+      var $div = jQ3('<div>', {
+        class : 'j2-tags-tarefa-num-clique'
+      })
+
+      arrayTags.forEach(tag=>{
+        $div.append( _createTag(tag) )
+      })
+
+      return $div;
+    }
   }
 };
 
@@ -2374,7 +2402,7 @@ function loadPJeRestAndSeamInteraction(){
           }, queryCriteria || {} ));
         };
         
-        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
+        return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas", 
                               _data(), sucCB, errCB);
       },
       processosDaEtiqueta : function(idEtiqueta, sucCB, errCB){
@@ -2382,7 +2410,7 @@ function loadPJeRestAndSeamInteraction(){
           throw new Error("Não existe id da etiqueta definido para consulta"); 
           return;
         }
-        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
+        return j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/$/processos'.replace('$', idEtiqueta), 
                               sucCB, errCB);
       },
       inserir : function(idProcesso, etiqueta, sucCB, errCB) {
@@ -2392,7 +2420,17 @@ function loadPJeRestAndSeamInteraction(){
             'tag' : etiqueta
           });
         }
-        j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
+        return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir", 
+                              _data(), sucCB, errCB);
+      },
+      remover : function(idProcesso, etiqueta, sucCB, errCB) {
+        function _data(){
+          return JSON.stringify({
+            'idProcesso' : idProcesso,
+            'idTag' : etiqueta
+          });
+        }
+        return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/remover", 
                               _data(), sucCB, errCB);
       }
       
@@ -2413,15 +2451,15 @@ function loadPJeRestAndSeamInteraction(){
         };
       },
       listar : function(sucCB, errCB){
-        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+        return j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
                             sucCB, errCB);
       },
       historico : function(idProcesso, sucCB, errCB){
-        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
+        return j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/'+idProcesso, 
                             sucCB, errCB);
       },
       descricaoNoFluxo : function(idTarefa, idProcesso, sucCB, errCB){
-        j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
+        return j2EPJeRest.ajax.get('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/breadcrumb/$/$'.replaceOrd('$', idTarefa, idProcesso), 
                             sucCB, errCB);
       },
       recuperarEtiquetasQuantitativoProcessoTarefaPendente : function(tarefa, query, sucCB, errCB){
@@ -2432,7 +2470,7 @@ function loadPJeRestAndSeamInteraction(){
         
         baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
 
-        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+        return j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
       },
       recuperarProcessosTarefaPendenteComCriterios : function(tarefa, query, sucCB, errCB){
         var baseQuery = j2EPJeRest.tarefas._baseQuery();    
@@ -2442,7 +2480,7 @@ function loadPJeRestAndSeamInteraction(){
         
         baseQuery = JSON.stringify(jQ3.extend(baseQuery, query));
 
-        j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
+        return j2EPJeRest.ajax.post(nHref, baseQuery, sucCB, errCB);
       },
       painelUsuario : function(query, sucCB, errCB){
         var baseQuery ={
@@ -2452,7 +2490,7 @@ function loadPJeRestAndSeamInteraction(){
         };
         baseQuery = JSON.stringify( jQ3.extend(baseQuery, query) );
         
-        j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
+        return j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
                             baseQuery, sucCB, errCB);
       }
     },

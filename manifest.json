@@ -53,7 +53,8 @@
                 "Extensao/jquery.indexedDB.js",
                 "Extensao/jquery.keyboard-shortcuts.js",
                 "Extensao/main.frontend.js", 
-                "Extensao/main.js"
+                "Extensao/main.js",
+                "Extensao/toaster.js"
             ],
             "css" : [
 
@@ -441,7 +442,8 @@
                     
                     "Extensao/jquery.initialize.js",
                     "Extensao/jquery.lazy.js",
-                    "Extensao/util.frontend.js"
+                    "Extensao/util.frontend.js",
+                    "Extensao/toaster.css"
                 ],
                 "matches": [
                     "https://frontend.prd.cnj.cloud/*" 
