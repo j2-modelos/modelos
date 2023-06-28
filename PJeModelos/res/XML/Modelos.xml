@@ -2747,7 +2747,7 @@
             </style-->
         </classStyles>        
         <versao id="1.0">
-            <classe id="Documento" versao="3.1">
+            <classe id="Documento" versao="3.0">
                 <!-- diferença aqui -->
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="formatacao.js" artifact="#{j2.res.lib.formatacao}"/>

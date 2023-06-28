@@ -45,6 +45,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItHabilitacaoAutomatica"/>
             <gItem id="certItHabilitacaoManual"/>
             <gItem id="certItHabilitacaoPedidoExclusividade"/>
+            <gItem id="certItDiligenciaRealizadaEndereco"/>
         </group>
         <group label="Audiência">
             <gItem id="certItAudCancelamento"/>
@@ -316,6 +317,15 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                   como patrono(a)(s) da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                   #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}, conforme solicitação de #:U{publicações exclusivas} em petição 
                   #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="certItDiligenciaRealizadaEndereco" label="Endereço indicado possui diligência infrutífera" dataPlus="{ 'descricaoAppend': 'Endereço indicado possui diligência infrutífera' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                  Certifico, nesta data, que o endereço apontado em petição de id #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} 
+                  já foi objeto de diligência com resultado infrutífero, conforme certidão de diligência
+                  #:span@docId{#:span@docIdDefaulttext{XXXXId2XXXX}}.
                 </data>
             </itemContent>
         </item>     

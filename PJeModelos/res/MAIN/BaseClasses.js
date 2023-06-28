@@ -2560,7 +2560,7 @@ try {
              'DestinatarioExpedienteFrameComunicacao.noEditionsConfirmed;beforeFinishEdition.postConfirmation', 'docEditorCore.onCancelClose');
            }
         };
-        evBus.on('beforeFihishEdition', 10000, cb); // lwapac
+        evBus.on('beforeFihishEdition', 100000, cb); // lwapac
         evBus.once('DestinatarioExpedienteFrameComunicacao.noEditionsConfirmed', function(event){ // lwapac
           forEach(_.pDestVocativo.querySelectorAll('#PJeVars-renderedWhatsApp'), function(e){ 
             jQ3(e).removeClass('HLField');
@@ -5423,7 +5423,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +

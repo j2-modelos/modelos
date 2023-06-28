@@ -35,7 +35,7 @@ var TarefasProps = {
     orgNome : 'Análise de perícia',
     ADMGrupo : {
       org : 'dmsTrf',
-      alt : 'agdStt'
+      alt : 'certfc'
     },
     altNome : 'Certificar tempestividade de recurso',
     personalizacao : {
@@ -86,9 +86,6 @@ var TarefasProps = {
               ]
             }
           ],
-          collapsable : {
-            initExpanded: true
-           },
           events : [
             ($thisPanel)=>{
               $thisPanel.find('.j2-tags-tarefa-num-clique').mousedown((ev)=>{
@@ -219,8 +216,11 @@ var TarefasProps = {
       mostraAutosDigitais : true
     }
   },
+  'Cerificar juízo digital' : {
+    ADMGrupo : 'certfc'
+  },
   'Certificar trânsito em julgado' : {
-    ADMGrupo : 'exps'
+    ADMGrupo : 'certfc'
   },
   'Certificar consulta INFOJUD' : {
     altNomeADM : 'Consultar INFOJUD',

@@ -990,7 +990,7 @@ nav.main-menu, #divSideBar{
     left: 50px !important;
 }
 
-#divRightPanel{
+#divRightPanel:not([j2-view-pseudo-tarefa]){
     width: calc(100% - 50px) !important;
 }
 
@@ -1066,6 +1066,36 @@ th[j2-seletor-expediente]{
 .rich-stglpnl-marker[j2-marker].collapse:not(.in){
     transform: scaleY(-1);
     margin-top: 22px;
+    height: 0px;
+}
+
+div > .tarefa-numero-processo.process {
+    font-size: 16px !important;
+}
+
+i[j2-np-copiar]{
+    font-size: 14px;
+    cursor: copy;
+}
+
+
+i[j2-i-lock]{
+    font-size: 120%;
+    vertical-align: top;
+}
+
+i[j2-i-book]{
+    font-size: 120%;
+    vertical-align: bottom;
+    margin-left: -2px;
+}
+
+#frameTarefas a.text-truncate {
+    font-size: 16px !important;
+}
+
+#frameTarefas .header-processo{
+    width: 83.333333333333% !important;
 }
 
 div.j2-tags-tarefa-num-clique{
