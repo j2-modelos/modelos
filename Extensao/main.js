@@ -76,10 +76,51 @@ var TarefasProps = {
                     }
                   })
                 ],
+                ['[TESTE DE ETIQUETAS RÁPIDAS]', 
+                  j2EUi.TarefaNumClique.createTags([
+                    'Fluir CertTrans',
+                    'Análise Detida',
+                    '[TJMA] revisar assunto: 3ª revisão'
+                  ]) ],
+                
               ]
             }
           ],
           events : [
+            ($thisPanel)=>{
+              $thisPanel.find('.j2-tags-tarefa-num-clique').mousedown((ev)=>{
+                if(ev.which !== 1)
+                  return;
+
+                const $tag = jQ3(ev.target)
+                if(! $tag.is('[j2-tag-a]') && ! $tag.is('[j2-tag-i]')  )
+                  return;
+
+                var idProcesso =  j2E.env.urlParms.idProcesso
+                var taskId =  j2E.env.urlParms.newTaskId
+                var etiqueta =  $tag.is('[j2-tag-a]') ? $tag.text().trim() : $tag.parent().text().trim()
+
+                j2EPJeRest.etiquetas.inserir(idProcesso, etiqueta)
+                .then( (res)=>{
+                  if(typeof res === 'undefined'){
+                    $.Toast("Etiqueta rápida", `"${etiqueta}" já está vinculada.`, "info")
+                    return;
+                  }
+
+                  $.Toast("Etiqueta rápida", `"${etiqueta}" vinculada.`, "success")
+
+                  evBus.fire('on-adicionar-etiqueta-via-pje', {
+                    tag : etiqueta,
+                    idProcesso : idProcesso,
+                    taskId : taskId,
+                    idTag : res.id
+                  })
+                })
+                .fail((err)=>{
+                  $.Toast("Etiqueta rápida", `Erro ao vincular "${etiqueta}": ${err}.`, "error")
+                })                
+              })
+            },  
             ($thisPanel, seamProcIteraction) => {
               function __routine($thisPanel){
 
@@ -551,6 +592,8 @@ var TarefasProps = {
         {
           appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
           header : 'Tarefa em um clique',
+          panelClass : 'rich-panel col-sm-9',
+          j2Attr : 'j2-painel-basic-css',
           body : [
            {
              tipo : 'table',
@@ -571,9 +614,9 @@ var TarefasProps = {
              ]
            }
          ],
-         collapsable : {
-          initExpanded : true
-         },
+        /* collapsable : {
+          initExpanded: false
+         },*/
          events : [
            ($thisPanel) => {
               var _deferToRoutine = jQ3.Deferred()
@@ -721,6 +764,58 @@ var TarefasProps = {
                 __routine($thisPanel, int, expIFrame) 
              })
            }
+         ]
+        },
+        {
+          appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+          header : 'Etiqueta rápida',
+          panelClass : 'rich-panel col-sm-3',
+          j2Attr : 'j2-painel-basic-css',
+          body : [
+           {
+             tipo : 'jQ3',
+             data : [ 
+                j2EUi.TarefaNumClique.createTags([
+                  'Fluir CertTrans',
+                ]) 
+             ]
+           }
+         ],
+         events : [
+          ($thisPanel)=>{
+            $thisPanel.find('.j2-tags-tarefa-num-clique').mousedown((ev)=>{
+              if(ev.which !== 1)
+                return;
+
+              const $tag = jQ3(ev.target)
+              if(! $tag.is('[j2-tag-a]') && ! $tag.is('[j2-tag-i]')  )
+                return;
+
+              var idProcesso =  j2E.env.urlParms.idProcesso
+              var taskId =  j2E.env.urlParms.newTaskId
+              var etiqueta =  $tag.is('[j2-tag-a]') ? $tag.text().trim() : $tag.parent().text().trim()
+
+              j2EPJeRest.etiquetas.inserir(idProcesso, etiqueta)
+              .then( (res)=>{
+                if(typeof res === 'undefined'){
+                  $.Toast("Etiqueta rápida", `"${etiqueta}" já está vinculada.`, "info")
+                  return;
+                }
+
+                $.Toast("Etiqueta rápida", `"${etiqueta}" vinculada.`, "success")
+
+                evBus.fire('on-adicionar-etiqueta-via-pje', {
+                  tag : etiqueta,
+                  idProcesso : idProcesso,
+                  taskId : taskId,
+                  idTag : res.id
+                })
+              })
+              .fail((err)=>{
+                $.Toast("Etiqueta rápida", `Erro ao vincular "${etiqueta}": ${err}.`, "error")
+              })                
+            })
+          },  
          ]
         }
       ],

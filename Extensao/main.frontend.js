@@ -1014,10 +1014,17 @@ function fronendLoad(){
           case 'fowardNotifyPseudotarefaMovimentarLoaded':
             fowardNotifyPseudotarefaMovimentarLoaded(_act);
             break;
+          case 'triggerEventFromPJe':
+            triggerEventFromPJe(_act);
+            break;
           
         }
       }
     });
+  }
+
+  function triggerEventFromPJe(action){
+    evBus.fire(action.evento.tipo, action.evento.argumentos)
   }
   
   function fowardNotifyPseudotarefaMovimentarLoaded(action){
@@ -2630,4 +2637,43 @@ function fronendLoad(){
   
   
   listenMessages();
+
+
+  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args) {
+    const etiqueta = args.data
+
+    const $_id = jQ3(`#${etiqueta.taskId}`)
+    if(! $_id.length )
+      return;
+
+    var $card = $_id.parents('processo-datalist-card')
+
+    var $novaEtiqueta = jQ3(`
+      <div _ngcontent-nam-c13 class="label label-info label-etiqueta ng-star-inserted j2EtiquetaEstilo">
+        <span _ngcontent-nam-c13 >${etiqueta.tag}</span>
+        <span _ngcontent-nam-c13 class="icon-desvincular-tag pl-5" title="Excluir etiqueta ${etiqueta.tag}">
+          <i _ngcontent-nam-c13 class="fa fa-times "></i>
+        </span>
+      </div>
+    `)
+
+    $card.find(' > div > div:nth-child(3)').append($novaEtiqueta)
+
+    $novaEtiqueta.find('i').click(()=>{
+      __sendMessageToPje({
+        action : 'requisitarJ2EPJeRest',
+        PJeRest : 'j2EPJeRest.etiquetas.remover',
+        waitsResponse : true,
+        arguments : [ parseFloat(etiqueta.idProcesso), etiqueta.idTag ]
+      }, 
+      "PARENT_TOP",
+      function(data){
+        if(data === etiqueta.idTag){
+          $novaEtiqueta.remove()
+          jQ3.Toast("Etiqueta rápida", `"${etiqueta.tag}" desvinculada.`, "success")
+        }else
+          jQ3.Toast("Etiqueta rápida", `Erro ao desvincular "${etiqueta.tag}": ${data}.`, "error")
+      })
+    })
+  })
 };

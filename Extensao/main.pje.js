@@ -459,6 +459,10 @@ function pjeLoad(){
           var _body = jQ3('<div>');
           jQ3.each(painel.body, function(key, el){
             switch(el.tipo){
+              case 'html':
+              case 'jQ3':
+                _body.append( el.data );
+                break;
               case 'table':
                 _body.append( j2EUi.createTable(el.data) );
                 break;
@@ -472,7 +476,7 @@ function pjeLoad(){
             }
           });
           
-          var jP = j2EUi.createPanel(painel.header, _body);
+          var jP = j2EUi.createPanel(painel.header, _body, painel.j2Attr, painel.collapsable, painel.panelClass);
 
           if(painel.events){
             jQ3.each(painel.events, function(key, eventCallback){
@@ -2947,6 +2951,21 @@ function pjeLoad(){
       //mostrarEtiquetasNosAutosDigitais();*/
       break;
   }
+
+  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, etiqueta) {
+    const j2Action = {
+      j2 : true,
+      action : 'triggerEventFromPJe',
+      evento : {
+        tipo : 'on-adicionar-etiqueta-via-pje',
+        argumentos : { 
+          data : etiqueta,
+          tipo : 'definição de etiqueta'
+        }
+      }
+    }
+    __sendMessageToFrotEnd( j2Action);
+  })
 };
 
 // No content.js (content script)

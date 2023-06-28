@@ -411,8 +411,84 @@ a[_ngcontent-css-c7] {
     max-height: calc(100vh - 200px);
 }
 
+.datalist-content[_ngcontent-nam-c13] {
+    float: left;
+    width: 100%;
+    padding: 0 10px 10px !important;
+    background: #fff;
+    border-bottom: 1px solid #d8dfe3;
+    border-left: 3px solid #fff;
+    transition: all 0.3s ease-out;
+    margin: 5px 0;
+    box-shadow: 0 0 10px #8cabbd;
+}
+.selecionarProcesso[_ngcontent-nam-c13] [_ngcontent-nam-c13]:hover {
+    cursor: pointer;
+}
+.datalist-content[_ngcontent-nam-c13]:hover,
+.selecionado[_ngcontent-nam-c13] {
+    background: #ddebf1;
+    border-left: 3px solid #35a8ce;
+}
+.date[_ngcontent-nam-c13] {
+    font-size: 11px;
+}
+.tarefa-numero-processo[_ngcontent-nam-c13] {
+    font-size: 13px;
+    font-weight: 700;
+    word-wrap: break-word;
+    float: left;
+    width: 100%;
+    line-height: 1.2em;
+}
+.process[_ngcontent-nam-c13] {
+    font-size: 14px;
+    font-weight: 700;
+    color: #058ec4;
+}
+.orgao[_ngcontent-nam-c13] {
+    font-size: 12px;
+    word-wrap: break-word;
+}
+.tituloNegrito[_ngcontent-nam-c13] {
+    font-weight: 900;
+}
+.local[_ngcontent-nam-c13] {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+.label-etiqueta[_ngcontent-nam-c13] {
+    margin: 2px;
+    float: left;
+}
+.icon-desvincular-tag[_ngcontent-nam-c13] {
+    cursor: pointer;
+}
+.icones[_ngcontent-nam-c13] {
+    border-bottom: 1px solid #ddd;
+}
+.btn[_ngcontent-nam-c13] {
+    padding: 5px 10px;
+}
+.btn-default[_ngcontent-nam-c13] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4 ease-in-out;
+}
+.marcar-todos[_ngcontent-nam-c13] {
+    font-size: 1.25em;
+}
+.botao-selecionar[_ngcontent-nam-c13] {
+    border: none;
+    background: 0 0;
+    padding: 0;
+}
 
-// Favoritação de tareas
+
+/* Favoritação de tareas*/
 
 #tarfFavDivContainer{
     padding: 0;
@@ -1022,6 +1098,26 @@ i[j2-i-book]{
     width: 83.333333333333% !important;
 }
 
+div.j2-tags-tarefa-num-clique{
+    max-width: 300px;
+}
+
+a.j2-tag-btn{
+    background-color: #f6d290;
+    text-transform: none !important;
+    font-size: 13px !important;
+    font-weight: bolder;
+}
+
+a.j2-tag-btn i{
+    font-size: 18px;
+    vertical-align: sub;
+    margin-right: 3px;
+}
+
+[j2-painel-basic-css]{
+    /*min-height: 200px;*/
+}
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
