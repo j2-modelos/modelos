@@ -48,6 +48,7 @@ var TarefasProps = {
   },
   'Arquivo definitivo' : {
     personalizacao : { // Personalização de teste baeada em Expedir Alvará
+      ignorarPersonalizacaoDev : true,
       prepararInteracoes : [
         'seam-processo',
         'remote-j2Doc-create'
@@ -291,6 +292,7 @@ var TarefasProps = {
   'Expedir alvará' : {
     ADMGrupo : 'exps',
     personalizacao : {
+      ignorarPersonalizacaoDev : true,
       prepararSeamIteraction : [
         'processo'
       ],

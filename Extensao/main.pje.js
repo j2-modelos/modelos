@@ -532,7 +532,10 @@ function pjeLoad(){
             }
         })
       }
-           
+      
+      if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
+        return; 
+        
       _tarfProp.personalizacao.prepararInteracoes                        && _prepararInteracoes();
       _tarfProp.personalizacao.removeDoCorpo                             && _removeDoCorpo();
       _tarfProp.personalizacao.limpaCorpoTarefa                          && _limparCorpo();
