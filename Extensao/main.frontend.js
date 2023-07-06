@@ -1647,6 +1647,118 @@ function fronendLoad(){
         data : _postParams
       });
     }
+
+    function adicionarComandoAbrirExpedientesDoProcesso(_this, _parentUl){
+      if(_parentUl){
+        var $ul = jQ3(_parentUl)
+
+        if($ul.is('[j2-viz-exp]'))
+          return;
+
+        $ul.click((ev)=>{
+          if(ev.which !== 1) //botão esquerdo do mouse
+            return;
+
+          var $target = jQ3(ev.target);
+          if ( ! $target.is('[j2-viz-exp]') )
+            return;
+          
+          const $parentProcessoDatalistCard = $target.parents('processo-datalist-card')
+          const siglaENumeroProcesso = $parentProcessoDatalistCard.find('span.tarefa-numero-processo:first').text().trim()
+          const idTarefa = $parentProcessoDatalistCard.find('span.hidden').attr('id')
+          const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          const $modal = jQ3('#j2-modal-expedientes-processo')
+          $modal.find('.modal-title').text(`Expedientes ${siglaENumeroProcesso}`)
+          $modal.find('.modal-body').empty().append(j2EUi.spinnerHTML())
+          jQ3('[j2-rest-win]').addClass('hidden')
+
+          var $iframe
+
+          __sendMessageToPje({
+            action : 'requisitarJ2EPJeRest',
+            PJeRest : 'j2EPJeRest.processo.obterIdProcesso',
+            waitsResponse : true,
+            arguments : [ numProc ] 
+          }, 
+          "PARENT_TOP",
+          function(idProcesso){  
+            $iframe = jQ3('<iframe>', { 
+              class: 'j2-modal-expedientes-processo-iframe iframe-no-height',
+              src: `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&idTaskInstance=${idTarefa}&j2-auto-selecionar=expedientes`,
+              //sandbox: ''
+            } ).on("load", function(a, b, c, d){
+             /* !$iframe?.isShown && setTimeout( () => $iframe.toggleClass('iframe-no-height'), 500)
+              $iframe.isShown = true*/
+            })
+
+            $modal.find('.modal-body').append($iframe)
+          });
+
+          evBus.on('on-exibir-expedientes-autos-digitais', function ____oeead(){
+            $modal.find("#uS1").remove()
+            $modal.find(".divCont").remove()
+
+            !($iframe?.isShown) && $iframe.toggleClass('iframe-no-height')
+            $iframe.isShown = true
+
+            evBus.off('on-exibir-expedientes-autos-digitais', ____oeead)
+          })
+
+        }).attr('j2-viz-exp', '')
+
+        //criar modal
+        const _modal_template = `
+          <div _ngcontent-ono-c14="" class="modal fade" id="j2-modal-expedientes-processo">
+            <div _ngcontent-ono-c14="" class="modal-dialog modal-lg j2-modal-dialog-frontend">
+              <div _ngcontent-ono-c14="" class="modal-content">
+                <div _ngcontent-ono-c14="" class="modal-header">
+                  <button  _ngcontent-ono-c14="" aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                    <i class="fa fa-window-close"></i>
+                  </button>
+                  <button j2-rest-win _ngcontent-ono-c14="" aria-hidden="true" class="close" type="button" style="margin-right: 8px;">
+                    <i class="fa fa-window-restore">
+                  </i></button><span _ngcontent-ono-c14="" class="modal-title">Expedientes PJEC 0800970-64.2023.8.10.0047</span>
+                </div>
+                <div _ngcontent-ono-c14="" class="modal-body">
+                <!---->
+                </div>
+              </div>
+            </div>
+          </div>`
+        const $modalTemplate = jQ3(_modal_template)
+        $ul.parents('body').append($modalTemplate)
+        $modalTemplate.find('[j2-rest-win]').click(()=>{
+          let iframeSource = jQ3('#j2-modal-expedientes-processo').find('iframe').attr('src')
+          iframeSource = iframeSource.split('=')
+          iframeSource.pop()
+          iframeSource.push('expedientesModo2')
+          iframeSource = iframeSource.join('=')
+
+          const url = iframeSource
+          openPopUp(`popPupExpedientesProcesso-${guid ? guid() : ''}`, url);
+        })
+
+        evBus.on('on-exibir-expedientes-autos-digitais', function (){
+          jQ3('[j2-rest-win]').removeClass('hidden')
+        })
+
+        return;
+      }
+      
+
+      jQ3.initialize('.row.icones .text-right', function(){
+        var $divIconsRight = jQ3(this)
+        //fa fa-envelope-o
+        var _buttonTemplate = `<button j2-viz-exp _ngcontent-lwd-c30="" class="btn btn-default icon ng-star-inserted" 
+                                  title="Criar lembrete" type="button"
+                                  data-target="#j2-modal-expedientes-processo" data-toggle="modal" placement="bottom" >
+                                 <i j2-viz-exp _ngcontent-lwd-c30="" aria-hidden="true" class="fas fa-envelope fa-lg text-info">
+                                 </i>
+                               </button>`
+        $divIconsRight.prepend(_buttonTemplate)
+      }, {target: _this})
+    }
     
     var delayCall = new DelayedCall(750, 1500);
     function destacarUltimoMovimentoDoProcesso(_this){
@@ -1712,7 +1824,7 @@ function fronendLoad(){
       });
     }
     
-    function inicializacaoEtiqueta(){  
+    function personalizarCardDaTarefa(){  
       jQ3.initialize('ul.ui-datalist-data', function(){
         jQ3.initialize('li.ng-star-inserted', function(){          
           formatarStickerAnotacao(this);
@@ -1723,6 +1835,7 @@ function fronendLoad(){
           aplicarFiltrosJ2(this);
           criarCmdCopiarNumeroProcesso(this);
           destacarUltimoMovimentoDoProcesso(this);
+          adicionarComandoAbrirExpedientesDoProcesso(this)
 
           jQ3.initialize('div.label.label-info.label-etiqueta.ng-star-inserted', function(){
             jQ3(this).addClass('j2EtiquetaEstilo');
@@ -1735,6 +1848,7 @@ function fronendLoad(){
         {target : this});
 
         criarCmdCopiarNumeroProcesso(null, this)
+        adicionarComandoAbrirExpedientesDoProcesso(null, this)
       });
     }
 
@@ -1950,7 +2064,7 @@ function fronendLoad(){
     }
 
        
-    inicializacaoEtiqueta();
+    personalizarCardDaTarefa();
     inicializacaoformatarNomeAlternativoListaTrefaAtiva();
   };
 
