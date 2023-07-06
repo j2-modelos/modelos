@@ -1163,7 +1163,11 @@ function fronendLoad(){
           return false;
 
         //if(_days >= 15)
+        const _txt = jEl.find('[txt]')
+        if(! _txt.length)
           jEl.text( jEl.text() + '  (' + _days + ')' );
+        else
+          _txt.text( _txt.text() + '  (' + _days + ')' );
 
         if(_days < 15)
           return true;
@@ -1180,9 +1184,10 @@ function fronendLoad(){
       };
       
       if( jQ3(_this).is('span[j2e-processo-data-movimento]') ){
-        var jEl = jQ3(_this);
-        var _d = jEl.text().split(' ')[1].split('-').reverse();
-        var _days = Math.trunc(moment.duration(moment().diff(moment(_d, 'YY-MM-DD'))).asDays());
+        const jEl = jQ3(_this);
+        let [_d] = jEl.text().match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/)
+        _d = _d.split('-').reverse();
+        const _days = Math.trunc(moment.duration(moment().diff(moment(_d, 'YY-MM-DD'))).asDays());
         jEl.attr('j2eorgtext', jEl.text());
         
         _resolvePrazo(jEl, _days);
@@ -1762,16 +1767,12 @@ function fronendLoad(){
     
     var delayCall = new DelayedCall(750, 1500);
     function destacarUltimoMovimentoDoProcesso(_this){
-      console.error('ASSERTION: destacarUltimoMovimentoDoProcesso está desabilitada');
-      return;
-      
       var $this = jQ3(_this);
-      
-      
+           
       if($this.is('[je2-pseudotarefa]') )
         return;
       
-      $this.find('div.datalist-content').lazyObserve({
+      $this.find('div.row.icones').lazyObserve({
         root : $this.parents('#processosTarefa'),
         load: function($li, ent, obs) { 
           if( $this.data('lazyload-triggered') )
@@ -1779,9 +1780,28 @@ function fronendLoad(){
           
           $this.data('lazyload-triggered', true);
           
-          console.log('triggered: ', $this.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0] );
+          const $parentProcessoDatalistCard = $this.find('processo-datalist-card')
+          const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          __sendMessageToPje({
+            action : 'requisitarJ2EPJeRest',
+            PJeRest : 'j2EPJeRest.processo.movimentacoes.obterUltimaPeloNumeroUnico',
+            waitsResponse : true,
+            arguments : [ numProc ] 
+          }, 
+          "PARENT_TOP",
+          function(ultimoMovimento){
+            const data = new DataComFromatos(ultimoMovimento.dataAtualizacao)
+            //<i class="fa fa-bookmark" j2e-proc-data-mov></i>
+            const ___SPAN_DATA___ = `
+            <span j2e-processo-data-movimento _ngcontent-orb-c14="">
+              <i class="fa fa-bookmark" j2e-proc-data-mov></i>
+              <span txt>${data.PJeFrontEndTarefaCardData()}</span>
+            </span>`;
+            $this.find('.datasProcesso').append(___SPAN_DATA___);
+          });
           
-          delayCall(function(){
+          /*delayCall(function(){
             var tarfData = {
               //idProcesso : $this.find('span.tarefa-numero-processo.process > span.hidden').prop('id'), // este´ id é o da tarefa do fluxo
               idProcesso : 0, 
@@ -1819,7 +1839,7 @@ function fronendLoad(){
             });
             
 
-          });
+          });*/
         }
       });
     }

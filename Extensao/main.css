@@ -1341,6 +1341,13 @@ a.j2-tag-btn i{
 [j2-painel-basic-css]{
     /*min-height: 200px;*/
 }
+
+
+i[j2e-proc-data-mov]{
+    margin-right: 1px;
+    font-size: 90%;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

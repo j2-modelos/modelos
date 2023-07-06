@@ -560,6 +560,18 @@ String.prototype.replaceOrd = function(){
   return _this;
 };
 
+// Extendendo a classe Date
+class DataComFromatos extends Date {
+  // Método para formatar a data no formato "dd-mm-yy"
+  PJeFrontEndTarefaCardData() {
+    const day = String(this.getDate()).padStart(2, '0');
+    const month = String(this.getMonth() + 1).padStart(2, '0');
+    const year = String(this.getFullYear()).slice(-2);
+
+    return `${day}-${month}-${year}`;
+  }
+}
+
 
 
 var j2EUi = {
@@ -2432,6 +2444,11 @@ function loadPJeRestAndSeamInteraction(){
         }
         return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/remover", 
                               _data(), sucCB, errCB);
+      },
+      //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/painelusuariointerno/PainelUsuarioInternoRestController.java
+      doProcesso: (idProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/listar/${idProcesso}`, 
+                            sucCB, errCB);
       }
       
     },
@@ -2492,6 +2509,11 @@ function loadPJeRestAndSeamInteraction(){
         
         return j2EPJeRest.ajax.post('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/tarefas', 
                             baseQuery, sucCB, errCB);
+      },
+      //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/ProcessoJudicialRestController.java
+      doProcesso: (idProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/tarefas`, 
+                            sucCB, errCB);
       }
     },
     processo : {
@@ -2512,6 +2534,39 @@ function loadPJeRestAndSeamInteraction(){
         return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`, 
                             sucCB, errCB, 'text');
       },
+      //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/ProcessoJudicialRestController.java
+      obterTarefas: (idProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/tarefas`, 
+                            sucCB, errCB);
+      },
+      movimentacoes : {
+        obterTodas: (idProcesso, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/movimentacoes`, 
+                              sucCB, errCB);
+        },
+        obterUltima: (idProcesso, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/ultimoMovimento`, 
+                              sucCB, errCB);
+        },
+        obterUltimaPeloNumeroUnico: (numProc, sucCB, errCB) =>{
+          let def = jQ3.Deferred()
+
+          j2EPJeRest.processo.obterIdProcesso(numProc)
+          .pipe( idProcesso =>{
+            return j2EPJeRest.processo.movimentacoes.obterUltima(idProcesso)
+          }).
+          done( ultimoMovimento =>{
+            sucCB && sucCB(ultimoMovimento)
+            def.resolve(ultimoMovimento)
+          })
+          .fail(err =>{
+            errCB && errCB(err)
+            def.reject(err)
+          })
+
+          return def.promise()
+        },
+      },
       /**
        * Vide https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/pje/api/controllers/v1/ProcessoJudicialRestController.java
        * 
@@ -2524,28 +2579,35 @@ function loadPJeRestAndSeamInteraction(){
         return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}`, 
                             sucCB, errCB);
       },
-      getPartes: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/partes`, 
-                            sucCB, errCB);
+      partes : {
+        getTodas: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/partes`, 
+                              sucCB, errCB);
+        },
+        getPoloAtivo: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/ativos`, 
+                              sucCB, errCB);
+        },
+        getPassivo: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/passivos`, 
+                              sucCB, errCB);
+        },
+        getTerceiros: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/terceiros`, 
+                              sucCB, errCB);
+        },
+        getTodosOsPolos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos`, 
+                              sucCB, errCB);
+        },
       },
-      getPartesPoloAtivo: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/ativos`, 
-                            sucCB, errCB);
-      },
-      getPartesPoloPassivo: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/passivos`, 
-                            sucCB, errCB);
-      },
-      getPartesPoloTerceiros: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos/terceiros`, 
-                            sucCB, errCB);
-      },
-      getPartesPoloTodos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/polos`, 
-                            sucCB, errCB);
-      },
-      getAssuntos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
+      obterAssuntos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
         return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/assuntos`, 
+                            sucCB, errCB);
+      },
+      //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/painelusuariointerno/PainelUsuarioInternoRestController.java
+      obterEtiquetas: (idProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/listar/${idProcesso}`, 
                             sucCB, errCB);
       }
     },
