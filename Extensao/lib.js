@@ -2511,7 +2511,7 @@ function loadPJeRestAndSeamInteraction(){
       obterIdProcesso: (numeroProcesso, sucCB, errCB) =>{
         return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`, 
                             sucCB, errCB, 'text');
-
+      },
       /**
        * Vide https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/pje/api/controllers/v1/ProcessoJudicialRestController.java
        * 
