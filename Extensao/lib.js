@@ -2503,6 +2503,14 @@ function loadPJeRestAndSeamInteraction(){
       getAutosDigitais: (idProcesso, ca, sucCB, errCB) =>{
         return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`, 
                             sucCB, errCB, 'html');
+      },
+      validarNumeroProcesso: (numeroProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`, 
+                            sucCB, errCB, 'text');
+      },
+      obterIdProcesso: (numeroProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`, 
+                            sucCB, errCB, 'text');
       }
     },
     fluxo : {

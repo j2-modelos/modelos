@@ -1359,6 +1359,23 @@ function pjeLoad(){
     }
     
     jQ3.initialize('table#panelDetalhesProcesso', function(){
+      jQ3.initialize('#processoExpedienteTab table.rich-table', function(){
+        function _dispararEventoExpedientesExibidosFrontend(){
+          const j2Action = {
+            j2 : true,
+            action : 'triggerEventFromPJe',
+            evento : {
+              tipo : 'on-exibir-expedientes-autos-digitais',
+              argumentos : { 
+              }
+            }
+          }
+          defer(()=>__sendMessageToFrotEnd( j2Action))
+        }
+        
+        _dispararEventoExpedientesExibidosFrontend()
+      }, {target:this});
+
       var _parentThisTable = jQ3(this);
       var tdPosShift = 0 //usado para discriminar que houve a adicição ou não de coluna na tabela
 
@@ -2852,11 +2869,34 @@ function pjeLoad(){
     });
 
   }
+
+  function autoSelecionarRecursoAutosDigitais(){
+    switch(j2E.env.urlParms['j2-auto-selecionar']){
+      case 'expedientes':
+        jQ3.initialize('#navbar\\:linkAbaExpedientes1', function(){
+          jQ3('.navbar.navbar-default.navbar-fixed-top.nav-topo').hide()
+          jQ3('#pageBody').attr('j2-limitar-autos-digitais', '')
+          //jQ3('body').attr('j2E', "mostrarSoExpedientes")
+
+          !j2E.env.tempData?.autoSelecionadox?.expedientes && defer(()=>this.dispatchEvent(new Event('click')))
+          j2E.env.tempData.autoSelecionadox ??={expedientes:true}
+        })
+        break;
+      case 'expedientesModo2':
+        jQ3.initialize('#navbar\\:linkAbaExpedientes1', function(){
+          
+          !j2E.env.tempData?.autoSelecionadox?.expedientes && defer(()=>this.dispatchEvent(new Event('click')))
+          j2E.env.tempData.autoSelecionadox ??={expedientes:true}
+        })
+        break;
+    }
+  }
   
   switch(window.location.pathname){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam':
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam':
+      autoSelecionarRecursoAutosDigitais()
       observeSeEModeloJ2();
       observeProcessoFolhaExpedientes();
       observeFormDetalheProcessoTarefasDoProcesso();
