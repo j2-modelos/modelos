@@ -1354,7 +1354,7 @@ function fronendLoad(){
                       var _date = moment($firstMovData.text().PJeDataStringParaLocaleEn());
                       var _html = ___SPAN_DATA___.replace('$', _date.format('DD-MM-YY'));
 
-                      $liTarfCard.find('.datasProcesso').append(_html);
+                      $liTarfCard.find('.datasProcesso span:first').after(_html);
                     }
                     
                     $li.find('span[j2e-lazy-load]').each(function(){
@@ -1799,11 +1799,11 @@ function fronendLoad(){
             const data = new DataComFromatos(ultimoMovimento.dataAtualizacao)
             //<i class="fa fa-bookmark" j2e-proc-data-mov></i>
             const ___SPAN_DATA___ = `
-            <span j2e-processo-data-movimento _ngcontent-orb-c14="">
+            <span j2e-processo-data-movimento _ngcontent-orb-c14="" title="Data do último movimento do processo">
               <i class="fa fa-bookmark" j2e-proc-data-mov></i>
               <span txt>${data.PJeFrontEndTarefaCardData()}</span>
             </span>`;
-            $this.find('.datasProcesso').append(___SPAN_DATA___);
+            $this.find('.datasProcesso span:first').after(___SPAN_DATA___);
           });
           
           /*delayCall(function(){
