@@ -1348,6 +1348,11 @@ i[j2e-proc-data-mov]{
     font-size: 90%;
 }
 
+i[j2e-proc-data-task]{
+    margin-right: 3px;
+    font-size: 90%;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

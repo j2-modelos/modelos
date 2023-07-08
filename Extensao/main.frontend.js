@@ -1209,7 +1209,12 @@ function fronendLoad(){
         _resolvePrazo(jEl, _days);
 
         jEl.attr('j2HighlighPrazo', 'sim');
-        jEl.replaceWith( jQ3('<div>', {class: 'datasProcesso'}).append( jEl.clone(true) ) );
+        const $jElC = jEl.clone(true)
+        const _text = $jElC.text()
+        $jElC.empty()
+        $jElC.append('<i class="fas fa-check-square" j2e-proc-data-task>')  
+        $jElC.append( `<span>${_text}</span>`)
+        jEl.replaceWith( jQ3('<div>', {class: 'datasProcesso'}).append( $jElC ) );
 
         //etiqueta como prazo
         function treateEtiquetaSeComoData(elpz){
