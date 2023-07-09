@@ -1804,6 +1804,10 @@ function fronendLoad(){
               <span txt>${data.PJeFrontEndTarefaCardData()}</span>
             </span>`;
             $this.find('.datasProcesso span:first').after(___SPAN_DATA___);
+
+            const $cardUltimoMovText = $this.find('.tituloNegrito').next()
+            const movText = $cardUltimoMovText.text()
+            $cardUltimoMovText.text( `${movText} (${data.PJeFrontEndTarefaCardDataNaDescricaoDoMovimento()})` )
           });
           
           /*delayCall(function(){
@@ -1848,10 +1852,20 @@ function fronendLoad(){
         }
       });
     }
+
+    function autoSelecionarAPrimeiraTarefaDaLista($this){
+      if($this.parent().is('[j2-auto-selected]'))
+        return;
+
+      $this.parent().attr('j2-auto-selected', '')
+      $this.find('a.selecionarProcesso')[0].click();
+    }
     
     function personalizarCardDaTarefa(){  
       jQ3.initialize('ul.ui-datalist-data', function(){
-        jQ3.initialize('li.ng-star-inserted', function(){          
+        jQ3.initialize('li.ng-star-inserted', function(){       
+          const $this = jQ3(this)   
+
           formatarStickerAnotacao(this);
           //formatarEtiqueta(this);
           formatarPrioridade(this);
@@ -1869,6 +1883,8 @@ function fronendLoad(){
           jQ3.initialize('span[j2e-processo-data-movimento]', function(){
             formatarEDestacarPrazo(this);
           }, {target : this});
+
+          autoSelecionarAPrimeiraTarefaDaLista($this)
         },
         {target : this});
 

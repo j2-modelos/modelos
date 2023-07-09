@@ -570,6 +570,14 @@ class DataComFromatos extends Date {
 
     return `${day}-${month}-${year}`;
   }
+
+  PJeFrontEndTarefaCardDataNaDescricaoDoMovimento(){
+    const day = String(this.getDate()).padStart(2, '0');
+    const month = String(this.getMonth() + 1).padStart(2, '0');
+    const year = String(this.getFullYear());
+
+    return `${day}/${month}/${year}`;
+  }
 }
 
 

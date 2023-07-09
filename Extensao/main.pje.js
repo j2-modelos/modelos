@@ -402,7 +402,7 @@ function pjeLoad(){
           let _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
           _url = _url.replace('$', idProc).replace('$', ca);
 
-          iframe.attr('src', _url).css('width' , '100%').css('height', height || window.screen.height * 0.77);   
+          iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	
         })});
 
@@ -428,7 +428,7 @@ function pjeLoad(){
           var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$&j2Expedientes=true';
           _url = _url.replace('$', idProc).replace('$', ca);
 
-          iframe.attr('src', _url).css('width' , '100%').css('height', window.screen.height * 0.77);   
+          iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	
           
           defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
@@ -1857,10 +1857,31 @@ function pjeLoad(){
     });	
   }
   
+
   function observeHistoricoTarefasEPrepararAtalhos(){
-    var ___A_TEMPLATE___ = '<a href="#" j2e="menuNoHistoricoTarefas" onclick="window.j2Action = { j2 : true, action : \'abrirAutomaticoTarefa\', processo : \'$\', tarefa : \'$\'};openPopUp(\'popUpFluxo\', \'https://pje.tjma.jus.br/pje/ng2/dev.seam#/painel-usuario-interno\'); return false;" title="$">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
+    var ___A_TEMPLATE___ = '<a href="#" j2-tarefa j2e="menuNoHistoricoTarefas" title="$">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
     var ___A_NUM_TEMPLATE___ = '<a href="#" j2e="numeroProcessoHistoricoTarefas" title="Abrir processo $">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
     
+    function _prepararLinkTarefa(nomeTarefa, criterios) {
+      const hashAngularTarefaComCriterios = `?j2-abrir-tarefa#/painel-usuario-interno/lista-processos-tarefa/${encodeURI(
+        nomeTarefa
+      )}/${encodeURIComponent(btoa(JSON.stringify(criterios)))}`
+  
+      return hashAngularTarefaComCriterios
+    }
+
+    function _guidGenerator(){
+      return guid ? guid() : new Date().getTime()
+    }
+
+    function _openPopUp (id, url, width, height) {    
+      if (!width) width = window.screen.availWidth * 0.9;
+      if (!height) height = window.screen.availHeight * 0.9;
+      var featurePopUp = "width="+width + ", height="+height+", resizable=YES, scrollbars=YES, status=NO, location=NO";
+      
+      var popUp = window.open(url, id, featurePopUp); popUp.moveTo(0, 0);
+                
+    };
 
     jQ3.initialize('form table tbody tr', function(){
       var _aHtml, numProc, title, tarf, text;
@@ -1891,7 +1912,7 @@ function pjeLoad(){
         text = _this;
         
         _aHtml = ___A_TEMPLATE___;  
-        jQ3.each([numProc, tarf, title, text], function(){
+        jQ3.each([title, text], function(){
           _aHtml = _aHtml.replace('$', this);
         });
         
@@ -1911,28 +1932,43 @@ function pjeLoad(){
       nTdTarf.find('a:not(:last-child)').each(function(){
         jQ3('<br>').insertAfter(this);
       });
+
+      nTdTarf.find('[j2-tarefa]').on('click', function (event) {
+        let $target = $(event.target)
+        if ($target.is('img')) $target = $target.parent()
+
+        const nomeTarefa = $target.text().trim()
+        const url =
+          window.location.origin +
+          '/pje/ng2/dev.seam' +
+          _prepararLinkTarefa(nomeTarefa, {
+            competencia: '',
+            etiquetas: [],
+            numeroProcesso: numProc.replace(/\D/g, '')
+          })
+        _openPopUp(`tarefa-fluxo-${nomeTarefa}-${_guidGenerator()}`, url)
+      })
       
       var aNumHTML = ___A_NUM_TEMPLATE___.replaceAll('$', numProc);
       var jANum = jQ3(aNumHTML);
       jANum.click(function(event){
-        var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
-        
-        j2EQueryGetProcessoCredentials(numProc, function(idProcesso, ca){
-          jQ3.each([idProcesso, ca], function(){
-            url = url.replace('$', this);
-          });
-                    
-          /*__sendMessageToFrotEnd({
-            action : 'abrirAutosDigitais',
-            idProcesso : idProcesso,
-            ca : ca,
-            url : url
-          });*/
+        let idProcesso = 0
+        j2EPJeRest.processo.obterIdProcesso(numProc)
+        .pipe( _idProcesso=>{
+          idProcesso = _idProcesso
+          return j2EPJeRest.processo.getChaveAcesso(idProcesso)
+        })
+        .done( ca=>{
+          const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`
+
           if(event.ctrlKey)
             url += "#";
           
-          openPopUp('popPupProcessoId' + idProcesso, url);
-        });
+          _openPopUp('popPupProcessoId' + idProcesso, url);
+        })
+        .fail(err=>{
+          alert('Erro ao abrir processo.')
+        })
       });
       
       nTdNum.append( jANum );
@@ -2206,6 +2242,8 @@ function pjeLoad(){
   }
 
   function observeParaARDigital(){
+    return;
+
     var idProc = j2E.env.urlParms.idProcesso,	
         idTask = j2E.env.urlParms.newTaskId,	
         PACTarefas = [
@@ -2870,7 +2908,18 @@ function pjeLoad(){
 
   }
 
-  function autoSelecionarRecursoAutosDigitais(){
+  function autoSelecionarRecursoAutosDigitaisOuProcessarVizualizacaoParaTarefa(){
+    if(j2E.env.urlParms.j2Expedientes){
+      jQ3('body').addClass('j2-adjViewAutTarefa')
+/*
+      jQ3.initialize('#navbar', function(){
+        jQ3('.navbar.navbar-default.navbar-fixed-top.nav-topo').hide()
+      })
+      jQ3.initialize('#pageBody', function(){
+        jQ3('#pageBody').attr('j2-limitar-autos-digitais', '')
+      })*/
+    }
+
     switch(j2E.env.urlParms['j2-auto-selecionar']){
       case 'expedientes':
         jQ3.initialize('#navbar\\:linkAbaExpedientes1', function(){
@@ -2896,7 +2945,7 @@ function pjeLoad(){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam':
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam':
-      autoSelecionarRecursoAutosDigitais()
+      autoSelecionarRecursoAutosDigitaisOuProcessarVizualizacaoParaTarefa()
       observeSeEModeloJ2();
       observeProcessoFolhaExpedientes();
       observeFormDetalheProcessoTarefasDoProcesso();
