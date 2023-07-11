@@ -27,6 +27,9 @@
         <Usuario id="65834500382" nome="BARTIRIA BARROS DA SILVA" matricula="1503895" cargo="Auxiliar Judicária" ini="BBS" genr="F"/>
         <Usuario id="01017894329" nome="CLOVIS MARQUES DIAS JUNIOR" matricula="150706" cargo="Analista Judiciário" ini="CMDJ" genr="M"/>
         <Usuario id="62224239300" nome="DANIELLE GOMES DE AGUIAR COSTA" matricula="117390" cargo="Secretária Judicial" ini="DGAC" genr="F"/>
+        <Usuario id="magisDANIELA_JESUS" nome="DANIELA DE JESUS BONFIM FERREIRA" matricula="0" cargo="Magistrada" ini="DJBF" genr="F">
+            <titularidade unidade="1ª Vara Cível de Imperatriz" unidadeGenr="F" nominacao="titular"/>
+        </Usuario>
         <Usuario id="01862527300" nome="DARLAN MORAIS OLIVEIRA" matricula="137901" cargo="Auxiliar Judiciário" ini="DMO" genr="M"/>
         <Usuario id="75827298387" nome="DAYNA LEÃO TAJRA REIS TEIXEIRA" matricula="0" cargo="Juíza de Direito" ini="DLTRT" genr="F">
             <titularidade unidade="2º Juizado Especial Cível de Imperatriz" unidadeGenr="M" nominacao="titular"/>
@@ -79,6 +82,9 @@
         <Usuario id="00477237347" nome="LOURENA SOUSA COSTA" matricula="112540" cargo="Técnica Judiciária" ini="LSC" genr="F"/>
         <Usuario id="18062083349" nome="LUDUGERO PEREIRA DE SA NETO" matricula="20685" cargo="Oficial de Justiça" ini="LPSN" genr="M"/>
         <Usuario id="03414389282" nome="NATHALIA PEREIRA DA SILVA" matricula="55101707" cargo="Estagiária de Direito" ini="NPS" genr="F"/>
+        <Usuario id="magMARCOANT" nome="MARCOS ANTÔNIO OLIVEIRA" matricula="0" cargo="Juíz de Direito" ini="MAO" genr="M">
+            <titularidade unidade="2ª Vara Criminal de Imperatriz" unidadeGenr="F" nominacao="titular"/>
+        </Usuario>
         <Usuario id="01902771303" nome="MARCOS RAIDAN DE JESUS COSTA" matricula="165605" cargo="Auxiliar Judiciário" ini="MRJC" genr="M">
             <chancela idSource="sz88rygln4gzmjc" adjustStyle="height: 94px;margin-top: -62px;margin-Left: 20px;text-align: center;" adjustStyleImg=""/>
         </Usuario>

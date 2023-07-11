@@ -1033,7 +1033,7 @@ function pjeLoad(){
       if(!matches)
         return;
       
-      var script = 'debugger; event.preventDefault()';
+      var script = ' event.preventDefault()';
       switch(html_set){
         case 1:
           var $aRefsh = jQ3(`

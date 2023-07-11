@@ -210,6 +210,8 @@
         <xs:element ref="j2:globalStyle" minOccurs="0" xmlns:j2="http://j2"/>
         <xs:element ref="j2:enderecoManual" minOccurs="0" xmlns:j2="http://j2"/>
         <xs:element ref="j2:OJs" xmlns:j2="http://j2"/>
+        <xs:element ref="j2:secretarios" maxOccurs="1" xmlns:j2="http://j2"/>
+        <xs:element ref="j2:magistrados" maxOccurs="1" xmlns:j2="http://j2"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -312,8 +314,42 @@
       <xs:attribute name="j2:presidente5" type="xs:string"/>      
       <xs:attribute name="j2:presidente6" type="xs:string"/>      
       <xs:attribute name="j2:presidente7" type="xs:string"/>      
+
+      <xs:attribute name="exercicioTemporario" type="j2:DataExercicio"/>      
+      <xs:attribute name="presidencia" type="j2:Presidencia"/>      
+      <xs:attribute name="simbologiaPadraoAto" type="xs:string"/>      
+      <xs:attribute name="mostrarPortaria" type="xs:boolean"/>      
     </xs:complexType>
   </xs:element>    
+
+  <xs:element name="DataExercicio">
+    <xs:complexType>
+      <xs:attribute name="usuarioId" type="xs:string" use="required"/>
+      <xs:attribute name="dataInicio" type="xs:date" use="required"/>
+      <xs:attribute name="dataFim" type="xs:date" use="required"/>
+
+      <xs:element ref="j2:PortariaDesignacao" maxOccurs="1" minOccurs="0" xmlns:j2="http://j2"/>
+    </xs:complexType>
+  </xs:element>    
+
+  <xs:element name="Presidencia">
+    <xs:complexType>
+      <xs:attribute name="usuarioId" type="xs:string" use="required"/>
+      <xs:attribute name="numeroUnico" type="xs:string" use="required"/>
+      <xs:element ref="j2:PortariaDesignacao" maxOccurs="1" minOccurs="0" xmlns:j2="http://j2"/>
+    </xs:complexType>
+  </xs:element>    
+
+  <xs:element name="PortariaDesignacao">
+    <xs:complexType mixed="true">        
+        <xs:attribute type="xs:integer" name="numero" use="required"/>
+        <xs:attribute type="xs:integer" name="ano" use="required"/>
+        <xs:attribute type="xs:string" name="simbologia" use="optional"/>
+        <xs:attribute type="xs:date" name="dataAto" use="optional"/>
+
+        <xs:attribute type="xs:string" name="idDropbox" use="optional"/>
+    </xs:complexType>
+  </xs:element>
     
   <xs:element name="Definitions">
     <xs:complexType>

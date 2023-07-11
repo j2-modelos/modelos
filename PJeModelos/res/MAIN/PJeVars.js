@@ -238,10 +238,30 @@ try {
             evBus.once('afterSetUnidade', function(){
               var mags = j2.env.modId.unidade.config.magistrados;
               var eEx = mags.emExercicio;
-              var magId = {
-                nominacao : eEx,
+              let magId = {
                 id : mags[eEx]
               }; 
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    magId = {
+                      id: excTemp.usuarioId
+                    }
+                })
+              }
+
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    magId = {
+                      id: presid.usuarioId
+                    }
+                })
+              }
+              
               
               var usrs = j2.env.xmls.usuarios.usuarios[0].usuario;
               
@@ -369,9 +389,31 @@ try {
             var mags = j2.env.modId.unidade.config.magistrados;
             var eEx = mags.emExercicio;
             var magId = {
-              nominacao : eEx,
+              nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
               id : mags[eEx]
-            };            
+            };
+            if(mags.exercicioTemporario?.length){
+              const hoje = new Date()
+              mags.exercicioTemporario.forEach( excTemp =>{
+                const inicio = new Date(excTemp.dataInicio)
+                const fim = new Date(excTemp.dataFim)
+                if(inicio < hoje && hoje < fim)
+                  magId = {
+                    nominacao : 'respondente temporário',
+                    id: excTemp.usuarioId
+                  }
+              })
+            }
+            if(mags.Presidencia?.length){
+              mags.Presidencia.forEach( presid =>{
+                if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                  magId = {
+                    nominacao : 'presidente',
+                    id: presid.usuarioId,
+                    portaria: presid.PortariaDesignacao
+                  }
+              })
+            }                        
             return j2.env.PJeVars.expediente.deOrdemByMagId(magId, conective, ops);
           },
           'deOrdemCaixaAlta' : function(conective, ops){
@@ -383,6 +425,7 @@ try {
             
             var unit = j2.env.modId.unidade;
             var usrs = j2.env.xmls.usuarios.usuarios[0].usuario;
+            const mags = j2.env.modId.unidade.config.magistrados;
             
 
             var usrDef;
@@ -439,13 +482,18 @@ try {
                 else{
                   tx += ', presidindo os presentes autos';
                   
-                  if(ops.portaria)
-                    
-                  if((usrDef.presidente) && ((ops.portaria) ? ops.portaria : true ) ) 
-                    forEach(usrDef.presidente.preside, function(pres){
-                      if(pres.processo === j2.env.PJeVars.processo.numero)
-                        tx += ' (portaria ' + pres.portariaOrgao + ' nº ' + pres.portariaNumero + ')';
-                    });
+                  if(ops.portaria){              
+                    if((usrDef.presidente) && ((ops.portaria) ? ops.portaria : true ) ) 
+                      forEach(usrDef.presidente.preside, function(pres){
+                        if(pres.processo === j2.env.PJeVars.processo.numero)
+                          tx += ' (portaria ' + pres.portariaOrgao + ' nº ' + pres.portariaNumero + ')';
+                      });
+                    if(magId.portaria && mags.mostrarPortaria){
+                      const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                      const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                      tx += ` (${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? ` de ${_dataExtenso}` : ''})`;
+                    }
+                  }
                 }
               }
               return tx;

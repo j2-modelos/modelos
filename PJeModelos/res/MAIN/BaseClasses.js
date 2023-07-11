@@ -768,9 +768,32 @@ try {
               var eEx = mags.emExercicio;
               var ord = [];
               ord[0] = {
-                nominacao : eEx,
+                nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
                 id : mags[eEx]
               };
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    ord.unshift({
+                      nominacao : 'respondente temporário',
+                      id: excTemp.usuarioId,
+                      portaria: excTemp.PortariaDesignacao
+                    })
+                })
+              }
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    ord.unshift({
+                      nominacao : 'presidente',
+                      id: presid.usuarioId,
+                      portaria: presid.PortariaDesignacao
+                    })
+                })
+              }   
               
               for(var prop in mags){
                 if(((prop.startsWith('titular') )
@@ -784,7 +807,7 @@ try {
                    (prop !== eEx)
                   ){
                   ord[ord.length] = {
-                    nominacao : prop,
+                    nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                     id : mags[prop]
                   };
                 }
@@ -827,6 +850,11 @@ try {
                         else
                           tx += 'pela ';
                         tx+= unit.id;
+                        if(magId.portaria && mags.mostrarPortaria){
+                          const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                          const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                          tx += `\n<br>(${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? `, de ${_dataExtenso}` : ''})`;
+                        }
                       }
                       else{
                         tx += 'Presidindo os presentes autos';
@@ -837,6 +865,11 @@ try {
                               pkg.BlocoAssinaturas.processoEPresidido = nMagItem.id;
                             }
                           });
+                        if(magId.portaria && mags.mostrarPortaria){
+                          const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                          const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                          tx += `\n<br>(${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? `, de ${_dataExtenso}` : ''})`;
+                        }
                       }
                     }
                   }
@@ -5485,9 +5518,32 @@ try {
           var eEx = mags.emExercicio;
           var ord = [];
           ord[0] = {
-            nominacao : eEx,
+            nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
             id : mags[eEx]
           };
+          if(mags.exercicioTemporario?.length){
+            const hoje = new Date()
+            mags.exercicioTemporario.forEach( excTemp =>{
+              const inicio = new Date(excTemp.dataInicio)
+              const fim = new Date(excTemp.dataFim)
+              if(inicio < hoje && hoje < fim)
+                ord.unshift({
+                  nominacao : 'respondente temporário',
+                  id: excTemp.usuarioId,
+                  portaria: excTemp.PortariaDesignacao
+                })
+            })
+          }
+          if(mags.Presidencia?.length){
+            mags.Presidencia.forEach( presid =>{
+              if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                ord.unshift({
+                  nominacao : 'presidente',
+                  id: presid.usuarioId,
+                  portaria: presid.PortariaDesignacao
+                })
+            })
+          }  
 
           for(var prop in mags){
             if(((prop.startsWith('titular') )
@@ -5501,7 +5557,7 @@ try {
                (prop !== eEx)
               ){
               ord[ord.length] = {
-                nominacao : prop,
+                nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                 id : mags[prop]
               };
             }
@@ -5688,7 +5744,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
@@ -5739,9 +5795,32 @@ try {
               var eEx = mags.emExercicio;
               var ord = [];
               ord[0] = {
-                nominacao : eEx,
+                nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
                 id : mags[eEx]
               };
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    ord.unshift({
+                      nominacao : 'respondente temporário',
+                      id: excTemp.usuarioId,
+                      portaria: excTemp.PortariaDesignacao
+                    })
+                })
+              }
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    ord.unshift({
+                      nominacao : 'presidente',
+                      id: presid.usuarioId,
+                      portaria: presid.PortariaDesignacao
+                    })
+                })
+              }  
               
               for(var prop in mags){
                 if(((prop.startsWith('titular') )
@@ -5755,7 +5834,7 @@ try {
                    (prop !== eEx)
                   ){
                   ord[ord.length] = {
-                    nominacao : prop,
+                    nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                     id : mags[prop]
                   };
                 }

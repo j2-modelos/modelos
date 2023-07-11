@@ -2375,6 +2375,36 @@ setInterval(function() {
     
     return tx;
   };
+
+  class SimpleLocalDate extends Date {
+    constructor(dateString) {
+      // Verificar se a dateString é nula ou vazia
+      if (!dateString) {
+        super(); // Usar a data e hora atuais
+      } else {
+        super(dateString); // Usar a dateString fornecida
+      }
+  
+      // Configurar a data sem fuso horário
+      this.setUTCHours(0, 0, 0, 0);
+    }
+  
+    getDay() {
+      return this.getUTCDay();
+    }
+    
+    getDate() {
+      return this.getUTCDate();
+    }
+
+    getMonth() {
+      return this.getUTCMonth(); 
+    }
+  
+    getYear() {
+      return this.getUTCFullYear();
+    }
+  }
   
   window.j2.mod._._capitalizeFirstLetter = function (string) {
     return string.capt();
@@ -2559,6 +2589,29 @@ setInterval(function() {
         return win;
       }
   };
+
+  window.j2.mod._._formatarISOStringDataParaDataPorExtenso = function(isoDate){
+    const months = [
+      'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 
+      'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+    ];
+
+    const date = new SimpleLocalDate(isoDate);
+
+    // Verificar se a data é inválida
+    if (isNaN(date.getTime())) {
+      return '[DATA INVÁLIDA]';
+    }
+
+    date.setUTCHours(0, 0, 0, 0);
+  
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+  
+    const formattedDate = `${day} de ${months[monthIndex]} de ${year}`;
+    return formattedDate;
+  }
   
   if (_windowDocument.getElementById('PJeVarsXML'))
     window.j2.mod._.PJeVars = new DOMParser().parseFromString(_windowDocument.getElementById('PJeVarsXML').innerHTML, 'text/html');
