@@ -1389,6 +1389,71 @@ i[j2e-proc-data-task]{
     width: 58.33333333% !important;
 }
 
+.j2-mini-etiqueta-rapida {
+    float: right;
+    margin: 0;
+}
+.j2-mini-etiqueta-rapida:hover {
+    background: #ddebf1;
+}
+
+.j2-mini-etiqueta-rapida > div:first-child {
+    font-size: 13px;
+    padding-bottom: 0;
+}
+
+.j2-mini-etiqueta-rapida [j2-ui-content] {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    background: transparent !important;
+}
+
+.j2-mini-etiqueta-rapida .j2-tag-btn {
+    font-size: 10px !important;
+    padding: 2.5px;
+}
+
+.j2-mini-etiqueta-rapida .j2-tag-btn i {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+
+
+
+
+.j2-faixa-etiquetas {
+    margin: 0;
+}
+
+.j2-faixa-etiquetas > div:first-child {
+    display: none;
+}
+
+.j2-faixa-etiquetas [j2-ui-content] {
+    margin: 0;
+}
+
+.j2-faixa-etiquetas .j2-tag-btn {
+    font-size: 10px !important;
+    padding: 3px;
+}
+
+.j2-faixa-etiquetas .j2-tag-btn i {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/*.j2-faixa-etiquetas [j2-tags-rapidas]{
+    width: 100%;
+}*/
+
+div[j2-faixa-etiquetas-spacer]{
+    font-size: 5px;
+    display: contents;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
