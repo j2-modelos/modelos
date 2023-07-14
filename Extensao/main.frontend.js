@@ -2657,7 +2657,7 @@ function fronendLoad(){
                 var jDivMenuItemClone = jDivMenuItem.clone();
 
                 var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-                nHref = nHref.replace('$', encodeURI(key.nome));
+                nHref = nHref.replace('$', encodeURI(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
 
                 jDivMenuItemClone.addClass('j2ETarefaFavorita');
                 jDivMenuItemClone.find('span.nome').text(key.nome);
