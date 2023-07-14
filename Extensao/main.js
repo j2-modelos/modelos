@@ -230,188 +230,198 @@ class TarefaPersonalizadaAvancada{
 
     const __buttonId = guid ? guid() : `rand-${Math.random()}` //'j2-juntar-certidao-decurso-prazo'
 
-    tarefa.personalizacao.painel.push({
-      id: 'tarefa-num-clique',
-      appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
-      header : 'Tarefa em um clique',
-      panelClass : `rich-panel ${widthColSM}`,
-      j2Attr : 'j2-painel-basic-css',
-      body : [
-        {
-          tipo : 'table',
-          data : [
-            ["Ação", "Executar"],
-            [
-              acaoTexto, 
-              j2EUi.createButton({
-                textoButton : botaoAcaoTexto, 
-                classButton : 'btn-primary', 
-                //callback : () => { console.log('Callback da construção do botão: acioinado') }, 
-                id : __buttonId,
-                moreAttrs : {
-                  disabled : true
-                }
-              })
-            ],
-          ]
-        }
-      ],
-    /* collapsable : {
-      initExpanded: false
-      },*/
-      events : [
-        ($thisPanel) => {
-          var _deferToRoutine = jQ3.Deferred()
-          const contextMap = new Map();
-
-          function __routine($thisPanel, seamProcIteraction, expedientesIFrame){
-
-            const ids = [
-              `#${__buttonId}`
+    if(tarefa.personalizacao.painel.filter(item =>{
+      return item.id === 'tarefa-num-clique'
+    }).length === 0)
+      tarefa.personalizacao.painel.push({
+        id: 'tarefa-num-clique',
+        appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+        header : 'Tarefa em um clique',
+        panelClass : `rich-panel ${widthColSM}`,
+        j2Attr : 'j2-painel-basic-css',
+        body : [
+          {
+            tipo : 'table',
+            data : [
+              ["Ação", "Executar"],
             ]
-            $thisPanel.find(ids.join(', ')).removeAttr('disabled')
+          }
+        ],
+      /* collapsable : {
+        initExpanded: false
+        },*/
+        events : [
+        ]
+      })
+    
+    tarefa.personalizacao.painel.filter(item =>{
+      return item.id === 'tarefa-num-clique'
+    })[0].body[0].data.push([
+      acaoTexto, 
+      j2EUi.createButton({
+        textoButton : botaoAcaoTexto, 
+        classButton : 'btn-primary', 
+        //callback : () => { console.log('Callback da construção do botão: acioinado') }, 
+        id : __buttonId,
+        moreAttrs : {
+          disabled : true
+        }
+      })
+    ])
 
-            var [$botaoDaAcaoEmUmClique] = ids
+    tarefa.personalizacao.painel.filter(item =>{
+      return item.id === 'tarefa-num-clique'
+    })[0].events.push(
+      ($thisPanel) => {
+        var _deferToRoutine = jQ3.Deferred()
+        const contextMap = new Map();
 
-            $botaoDaAcaoEmUmClique = $thisPanel.find($botaoDaAcaoEmUmClique).click(async ($event)=>{
-            if( ! $event.ctrlKey ){
-              $.Toast("Confirme para juntar em um clique.", "Pressione ctrl e clique para gerar o documento.", "info")
+        function __routine($thisPanel, seamProcIteraction, expedientesIFrame){
 
-              return;
-            }
+          const ids = [
+            `#${__buttonId}`
+          ]
+          $thisPanel.find(ids.join(', ')).removeAttr('disabled')
 
-              var $this = $botaoDaAcaoEmUmClique
-              $this.attr('disabled', 'true')
-              j2EUi.createRichModal()
-              $this.disabledDef = jQ3.Deferred()
-              $this.disabledDef.done( ()=> setTimeout(()=>{
-              $this.removeAttr('disabled')
-              j2EUi.removeModal()
-            }, 500 ))
-              
-              let dadosExpedientes
-              let $inps
-              if (personalizacaoUsaIframeExpedientes){
-                function _obterCargaDaIframe(){
-                  var $jQ3i = expedientesIFrame.prop('contentWindow').jQ3
-                  if(!($jQ3i)){
-                    $.Toast("Erro ao Juntar em um clique.", "Expedientes não estão prontos.", "error")
-                    return false;
-                  }
+          var [$botaoDaAcaoEmUmClique] = ids
 
-                  $inps = $jQ3i.find('input[j2-seletor-expediente]:checked')
-                  if(! $inps.length){
-                    $.Toast("Erro ao Juntar em um clique.", "Nenhum expediente selecionado.", "error")
-                    return false;
-                  }
+          $botaoDaAcaoEmUmClique = $thisPanel.find($botaoDaAcaoEmUmClique).click(async ($event)=>{
+          if( ! $event.ctrlKey ){
+            $.Toast("Confirme para juntar em um clique.", "Pressione ctrl e clique para gerar o documento.", "info")
 
-                  dadosExpedientes = j2E.Expedientes.util.parseLinhaDeExpedientesSelecionados($inps)
-                  contextMap.set('dadosExpedientes', dadosExpedientes)
-
-                  $inps = jQ3($inps)
-          
-                  return true;
-                }
-
-                if(! _obterCargaDaIframe()){
-                $this.disabledDef.resolve()
-                return;
-                }
-              }
-
-
-              
-              const idModelo = modeloJ2.idModelo
-              const pjeTipoDocumento = modeloJ2.pjeTipoDocumento
-              const versao = modeloJ2.versao
-              const fonteDocumento =  TarefaPersonalizadaAvancada.suportaDocumentoTipoPDF ? modeloJ2.fonteDocumento : 'text/html'
-              const numeroDocumento = modeloJ2.numeroDocumento
-              const robot = modeloJ2Robot
-              contextMap.set('robot', robot)
-              const descricao = (()=>{
-                switch(typeof modeloJ2.descricao){
-                  case 'string':
-                    return modeloJ2.descricao;
-                  case 'function':
-                    return modeloJ2.descricao()
-                  case 'object':
-                    const desc = modeloJ2.descricao
-                    if(!(desc.toEval && desc.contexto)){
-                      $.Toast("Juntar em um clique.", "Não foi possível gerar a descição para o documento", "info")
-                      return ''
-                    }
-
-                    var _contexto = []
-                    desc.contexto.forEach( localVar => {
-                      _contexto.push(contextMap.get(localVar))
-                    })
-                    return desc.toEval(..._contexto)
-                }
-              })();
-              
-              ( avaliacaoDinamicaParaRobot || [] ).forEach(toEvalObj => {
-                var _contexto = []
-                toEvalObj.contexto.forEach( localVar => {
-                  _contexto.push(contextMap.get(localVar))
-                })
-                toEvalObj.toEval(..._contexto)
-              });
-
-
-
-              try{
-                const PJeVarsHTML = await j2E.SeamIteraction.processo.acoes.acaoObterVariaveisParaExtensao()
-                const html = await j2E.mods.remoteJ2DocCreator(idModelo, versao, PJeVarsHTML, robot)   
-                
-                j2E.SeamIteraction.processo.acoes.acaoJuntarDocumento(pjeTipoDocumento, descricao, fonteDocumento, {
-                  html : html
-                }, numeroDocumento)
-                .done( ()=>{
-                  $.Toast("Juntar num clique", "Juntado com sucesso.", "success")
-
-                  $inps.each((idx, el)=>{
-                  jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
-                  }) 
-                  $inps.attr('disabled','')
-                } )
-                .fail( (err)=>{
-                  $.Toast("Erro ao Juntar num clique", err, "error")
-                } )
-                .always(()=>{
-                  $this.disabledDef.resolve()
-                })
-              }catch(err){
-                $.Toast("Erro ao Juntar num clique", err, "error")
-                $this.disabledDef.resolve()
-              }
-            })
-
-            $.Toast("Tarefa em um clique", "Pronto para executar.", "success")
+            return;
           }
 
-          if( j2E.env.tempData?.prepararSeamIteraction?.evBusTriggered )
-            _deferToRoutine.resolve(j2E.env.tempData?.prepararSeamIteraction.interactionObject)
-          else
-            evBus.on('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int => { 
-              _deferToRoutine.resolve(int)
-            }) 
-          
-          var _defTarf = j2E.env.deferring.personalizacaoTarefa
-          const tarefaNumCliqueDeffs = [
-            _deferToRoutine,
-            _defTarf.prepararInteracoes.remoteJ2DocCreate
-          ]
-          if(personalizacaoUsaIframeExpedientes)
-            tarefaNumCliqueDeffs.push(_defTarf.carregarExpedientes)
+            var $this = $botaoDaAcaoEmUmClique
+            $this.attr('disabled', 'true')
+            j2EUi.createRichModal()
+            $this.disabledDef = jQ3.Deferred()
+            $this.disabledDef.done( ()=> setTimeout(()=>{
+            $this.removeAttr('disabled')
+            j2EUi.removeModal()
+          }, 500 ))
+            
+            let dadosExpedientes
+            let $inps
+            if (personalizacaoUsaIframeExpedientes){
+              function _obterCargaDaIframe(){
+                var $jQ3i = expedientesIFrame.prop('contentWindow').jQ3
+                if(!($jQ3i)){
+                  $.Toast("Erro ao Juntar em um clique.", "Expedientes não estão prontos.", "error")
+                  return false;
+                }
 
-          jQ3.when(...tarefaNumCliqueDeffs)
-          .done( (int, nothingExpected, expIFrame)=>{
-            __routine($thisPanel, int, expIFrame) 
-          })
-        }
-      ]
-    })
+                $inps = $jQ3i.find('input[j2-seletor-expediente]:checked')
+                if(! $inps.length){
+                  $.Toast("Erro ao Juntar em um clique.", "Nenhum expediente selecionado.", "error")
+                  return false;
+                }
+
+                dadosExpedientes = j2E.Expedientes.util.parseLinhaDeExpedientesSelecionados($inps)
+                contextMap.set('dadosExpedientes', dadosExpedientes)
+
+                $inps = jQ3($inps)
         
+                return true;
+              }
+
+              if(! _obterCargaDaIframe()){
+              $this.disabledDef.resolve()
+              return;
+              }
+            }
+
+
+            
+            const idModelo = modeloJ2.idModelo
+            const pjeTipoDocumento = modeloJ2.pjeTipoDocumento
+            const versao = modeloJ2.versao
+            const fonteDocumento =  TarefaPersonalizadaAvancada.suportaDocumentoTipoPDF ? modeloJ2.fonteDocumento : 'text/html'
+            const numeroDocumento = modeloJ2.numeroDocumento
+            const robot = modeloJ2Robot
+            contextMap.set('robot', robot)
+            const descricao = (()=>{
+              switch(typeof modeloJ2.descricao){
+                case 'string':
+                  return modeloJ2.descricao;
+                case 'function':
+                  return modeloJ2.descricao()
+                case 'object':
+                  const desc = modeloJ2.descricao
+                  if(!(desc.toEval && desc.contexto)){
+                    $.Toast("Juntar em um clique.", "Não foi possível gerar a descição para o documento", "info")
+                    return ''
+                  }
+
+                  var _contexto = []
+                  desc.contexto.forEach( localVar => {
+                    _contexto.push(contextMap.get(localVar))
+                  })
+                  return desc.toEval(..._contexto)
+              }
+            })();
+            
+            ( avaliacaoDinamicaParaRobot || [] ).forEach(toEvalObj => {
+              var _contexto = []
+              toEvalObj.contexto.forEach( localVar => {
+                _contexto.push(contextMap.get(localVar))
+              })
+              toEvalObj.toEval(..._contexto)
+            });
+
+
+
+            try{
+              const PJeVarsHTML = await j2E.SeamIteraction.processo.acoes.acaoObterVariaveisParaExtensao()
+              const html = await j2E.mods.remoteJ2DocCreator(idModelo, versao, PJeVarsHTML, robot)   
+              
+              j2E.SeamIteraction.processo.acoes.acaoJuntarDocumento(pjeTipoDocumento, descricao, fonteDocumento, {
+                html : html
+              }, numeroDocumento)
+              .done( ()=>{
+                $.Toast("Juntar num clique", "Juntado com sucesso.", "success")
+
+                $inps.each((idx, el)=>{
+                jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
+                }) 
+                $inps.attr('disabled','')
+              } )
+              .fail( (err)=>{
+                $.Toast("Erro ao Juntar num clique", err, "error")
+              } )
+              .always(()=>{
+                $this.disabledDef.resolve()
+              })
+            }catch(err){
+              $.Toast("Erro ao Juntar num clique", err, "error")
+              $this.disabledDef.resolve()
+            }
+          })
+
+          $.Toast("Tarefa em um clique", "Pronto para executar.", "success")
+        }
+
+        if( j2E.env.tempData?.prepararSeamIteraction?.evBusTriggered )
+          _deferToRoutine.resolve(j2E.env.tempData?.prepararSeamIteraction.interactionObject)
+        else
+          evBus.on('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int => { 
+            _deferToRoutine.resolve(int)
+          }) 
+        
+        var _defTarf = j2E.env.deferring.personalizacaoTarefa
+        const tarefaNumCliqueDeffs = [
+          _deferToRoutine,
+          _defTarf.prepararInteracoes.remoteJ2DocCreate
+        ]
+        if(personalizacaoUsaIframeExpedientes)
+          tarefaNumCliqueDeffs.push(_defTarf.carregarExpedientes)
+
+        jQ3.when(...tarefaNumCliqueDeffs)
+        .done( (int, nothingExpected, expIFrame)=>{
+          __routine($thisPanel, int, expIFrame) 
+        })
+      }
+    )
   }
 
   static etiquetasRapidas(
@@ -1411,6 +1421,7 @@ var TarefasProps = {
 };
 
 const estaTarefaRequerOIframeComExpedientes = true;
+const estaTarefaNaoRequerOIframeComExpedientes = false;
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   'Processo com prazo em curso',
   'col-sm-9',
@@ -1479,6 +1490,44 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
         'dadosExpedientes'
       ]
     }
+  ]
+)
+
+TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  'Processo com prazo em curso',
+  'col-sm-9',
+  'Certificar a regularidade do prazo em curso',
+  'Juntar certidão de regularidade de prazo',
+  estaTarefaNaoRequerOIframeComExpedientes,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: 'decurso de prazo regular',
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItPrazoRegular'
+        ]
+      },                    
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
   ]
 )
 
