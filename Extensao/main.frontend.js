@@ -1854,6 +1854,8 @@ function fronendLoad(){
     }
 
     function autoSelecionarAPrimeiraTarefaDaLista($this){
+      if(!$this.parent().length)
+        return;
       if($this.parent().is('[j2-auto-selected]'))
         return;
 
