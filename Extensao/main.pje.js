@@ -64,8 +64,15 @@ function pjeLoad(){
         case 'notifyPseudotarefaMovimentarLoaded':
           fowardNotifyPseudotarefaMovimentarLoaded(_act, _load);
           break;
+        case 'triggerEventFromFrontend':
+          triggerEventFromFrontend(_act, _load);
+          break;
       }
     
+    }
+
+    function triggerEventFromFrontend(action, load){
+      evBus.fire(action.evento.tipo, action.evento.argumentos)
     }
 
     function __listenMessageHandlerFromServiceWorkder(_load){
@@ -484,8 +491,12 @@ function pjeLoad(){
             })
           }
 
-          if( ! (subPanel ))
-            jQ3(painel.appendTo).append( jP );
+          if( ! (subPanel )){
+            if( typeof painel.appendTo === 'function' )
+              painel.appendTo().append( jP )
+            else if( typeof painel.appendTo === 'string' )
+              jQ3(painel.appendTo).append( jP );
+          }
           else
             jPOut = jP
         });

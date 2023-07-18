@@ -1658,6 +1658,42 @@ function fronendLoad(){
       });
     }
 
+    function ouvirClicksDeRemocaoDeEtiqueta($this){
+      $this.click((ev)=>{
+        if(ev.which !== 1) //botão esquerdo do mouse
+          return;
+
+        var $target = jQ3(ev.target);
+        if ( ! (
+          $target.is('span.icon-desvincular-tag') 
+          || ( $target.is('i.fa-times') &&  $target.parent().is('span.icon-desvincular-tag')  )
+        ) )
+          return;
+        
+        const $parentProcessoDatalistCard = $target.parents('processo-datalist-card')
+        const idTarefa = $parentProcessoDatalistCard.find('span.hidden').attr('id')
+        const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+        const j2Action = {
+          j2 : true,
+          action : 'triggerEventFromFrontend',
+          evento : {
+            tipo : `on-remover-etiqueta-via-frontend-${idTarefa}`,
+            argumentos : { 
+              data : {
+                idTarefa,
+                numProc
+              },
+              tipo : 'definição de id de tarefa e numero único processo'
+            }
+          }
+        }
+
+        setTimeout(()=> __sendMessageToPje(j2Action), 500 )
+
+      }).attr('j2-ouvir-remocoes-etiquetas', '')
+    }
+
     function adicionarComandoAbrirExpedientesDoProcesso(_this, _parentUl){
       if(_parentUl){
         var $ul = jQ3(_parentUl)
@@ -1889,9 +1925,11 @@ function fronendLoad(){
           autoSelecionarAPrimeiraTarefaDaLista($this)
         },
         {target : this});
+        const $this = jQ3(this)
 
         criarCmdCopiarNumeroProcesso(null, this)
         adicionarComandoAbrirExpedientesDoProcesso(null, this)
+        ouvirClicksDeRemocaoDeEtiqueta($this)
       });
     }
 

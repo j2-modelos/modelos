@@ -738,7 +738,7 @@ var j2EUi = {
     jQ3('#j2E-ng-modal').remove()
   },
   TarefaNumClique : {
-    createTags : (arrayTags)=>{
+    createTags : (arrayTags, tagsContainerClass)=>{
       var _createTag = (tag)=>{
         var $tag = jQ3('<a>', {
           class: 'btn btn-sm j2-tag-btn',
@@ -755,8 +755,8 @@ var j2EUi = {
       }
 
       var $div = jQ3('<div>', {
-        class : 'j2-tags-tarefa-num-clique'
-      })
+        class : tagsContainerClass || 'j2-tags-tarefa-num-clique'
+      }).attr('j2-tags-rapidas', '')
 
       arrayTags.forEach(tag=>{
         $div.append( _createTag(tag) )
@@ -3410,6 +3410,9 @@ function loadPJeRestAndSeamInteraction(){
             $xml_juntDoc = _$xml_juntDoc
             return it.juntarDocumentoSelecionarTipoDocumento($xml_juntDoc, tipo)})
           .pipe( (it, $xml, _idTipo) => {
+            if(!(_idTipo))
+              return $.Deferred.reject( `#########ERROR: O id do tipo do documento "${tipo}" não foi encontrado para.` ).promise()
+
             idTipo = _idTipo
             if( source == 'text/html')
               return it.juntarDocumentoSelecionarEditorDeTexto($xml, idTipo)
