@@ -1454,6 +1454,12 @@ div[j2-faixa-etiquetas-spacer]{
     display: contents;
 }
 
+#faixaDeEtiquetas{
+    position: sticky;
+    z-index: 100;
+    top: 0;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

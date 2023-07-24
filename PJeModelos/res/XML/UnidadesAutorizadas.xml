@@ -22,7 +22,7 @@
             <modeloAut id="j2CertidaoDaContadoria" versao="3.0"/>
             <modeloAut id="j2CertidaoDeDivida" versao="3.0"/>
             <modeloAut id="j2CertidaoDaContadoria" versao="3.0"/>
-            <modeloAut id="j2Citacao" versao="3.3"/>
+            <modeloAut id="j2Citacao" versao="3.4"/>
             <modeloAut id="j2Despacho" versao="3.0"/>
             <modeloAut id="j2Diligencia" versao="3.0"/>
             <modeloAut id="j2Decisao" versao="3.0"/>

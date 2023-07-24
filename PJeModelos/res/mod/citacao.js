@@ -107,7 +107,7 @@ try {
           if(j2.env.modId.modAut.versao === '3.1'){
             tools.show( pkg.Citacao.containers.exp.valorExecucao.core() );
             tools.show( pkg.Citacao.containers.exp.valorExecucao.br() );
-          }else if(j2.env.modId.modAut.versao === '3.2' || j2.env.modId.modAut.versao === '3.3'){
+          }else if(j2.env.modId.modAut.versao.match(/3.2|3.3|3.4/)){
             tools.show( mod.exp.gE('secao.execucaoInfo') );
             evBus.once('onDel.' + pkg.Citacao.containers.edt.itemSelector().id + '.intmItCitacaoExecucaoJec', function(){
               tools.hide( mod.exp.gE('secao.execucaoInfo') );
@@ -212,7 +212,7 @@ try {
                     (j2.env.modId.modAut.versao.match(/3.2/)) && j2.mod._.styleSetter(el, 'b'); // nct
                     break;
                   case 'vocativoPreText':
-                    el.innerHTML = (j2.env.modId.modAut.versao.match(/3.3/)) ? j2Conv('#:B{#:U{DESTINATÁRIO}}') : 'Destinatário'; // nct
+                    el.innerHTML = (j2.env.modId.modAut.versao.match(/3.3|3.4/)) ? j2Conv('#:B{#:U{DESTINATÁRIO}}') : 'Destinatário'; // nct
                     break;
                 }
               });
@@ -246,7 +246,7 @@ try {
           case 'meioComunicItCorreios':
             changeTitulo('CARTA DE CITAÇÃO');
             makeSelectorOJVisible(false);
-            if(j2.env.modId.modAut.versao.match(/3.2|3.3/)){ //nct
+            if(j2.env.modId.modAut.versao.match(/3.2|3.3|3.4/)){ //nct
               placeDestinatarioControl('sup');
               makeDadoEPassadoVisible(false);
               makeLocalEDataVisible(true);
@@ -272,7 +272,7 @@ try {
             changeTitulo('MANDADO DE CITAÇÃO');
             makeARVisible(false);
             makeSelectorOJVisible(true);
-            if(j2.env.modId.modAut.versao.match(/3.2|3.3/)){ //nct
+            if(j2.env.modId.modAut.versao.match(/3.2|3.3|3.4/)){ //nct
               placeDestinatarioControl('inf');
               makeDadoEPassadoVisible(true);
               makeLocalEDataVisible(false);
@@ -299,7 +299,7 @@ try {
             changeTitulo('CITAÇÃO ELETRÔNICA');
             makeARVisible(false);
             makeSelectorOJVisible(false);
-            if(j2.env.modId.modAut.versao.match(/3.2|3.3/)){ //nct
+            if(j2.env.modId.modAut.versao.match(/3.2|3.3|3.4/)){ //nct
               placeDestinatarioControl('sup');
               makeDadoEPassadoVisible(false);
               makeLocalEDataVisible(true);

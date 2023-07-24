@@ -297,13 +297,13 @@ function init(){
           "destinatario": destinatario,
           "servico": {
               "idUsuarioModificacao": 203109,
-              "dthModificacao": "2023-03-16T11:32:12.000-0300",
+              "dthModificacao": "2023-04-28T08:14:12.000-0300",
               "indAtivo": true,
-              "id": 10,
-              "idCorreios": 109480,
+              "id": 11,
+              "idCorreios": 1,
               "codigo": "80888",
-              "descricao": "CARTA A FATURAR CHANCELA",
-              "label": "80888 - CARTA A FATURAR CHANCELA"
+              "descricao": "CARTA RG AR DIG PL3 CHANCELA",
+              "label": "80888 - CARTA RG AR DIG PL3 CHANCELA"
           },
           "observacao": observacao || "(...)",
           "embalagem": {

@@ -2253,12 +2253,14 @@ function pjeLoad(){
   }
 
   function observeParaARDigital(){
-    return;
+    //return;
 
     var idProc = j2E.env.urlParms.idProcesso,	
         idTask = j2E.env.urlParms.newTaskId,	
         PACTarefas = [
-          'Preparar intimação'
+          'Preparar intimação',
+          'Preparar citação e(ou) intimação',
+          'Preparar citação',
         ],
         checkedEnderecos = 0
     j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	

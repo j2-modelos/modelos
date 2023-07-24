@@ -381,10 +381,12 @@ class TarefaPersonalizadaAvancada{
               .done( ()=>{
                 $.Toast("Juntar num clique", "Juntado com sucesso.", "success")
 
-                $inps.each((idx, el)=>{
-                jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
-                }) 
-                $inps.attr('disabled','')
+                if(personalizacaoUsaIframeExpedientes){
+                  $inps.each((idx, el)=>{
+                  jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
+                  }) 
+                  $inps.attr('disabled','')
+                }
               } )
               .fail( (err)=>{
                 $.Toast("Erro ao Juntar num clique", err, "error")
@@ -1063,11 +1065,11 @@ var TarefasProps = {
     }
   },
   'Processo com prazo decorrido' : {
-    /*personalizacao : {
+    personalizacao : {
       'mostraAutosDigitais' : true,
       'mostraExpedientes' : true,
       'limpaCorpoTarefa' : true
-    }*/
+    }
     //Personalização extendida de Processo com prazo em curso
     //após definição de TarefasProps
   },
@@ -1423,7 +1425,10 @@ var TarefasProps = {
 const estaTarefaRequerOIframeComExpedientes = true;
 const estaTarefaNaoRequerOIframeComExpedientes = false;
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
-  'Processo com prazo em curso',
+  [
+    'Processo com prazo em curso', 
+    'Processo com prazo decorrido'
+  ],
   'col-sm-9',
   'Certificar o decurso de prazo dos expedientes abaixo selecionados',
   'Juntar certidão de decurso de prazo',
@@ -1494,7 +1499,11 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
 )
 
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
-  'Processo com prazo em curso',
+  [
+    'Processo com prazo em curso', 
+    'Processo com prazo decorrido',
+    'Expedir precatório'
+  ],
   'col-sm-9',
   'Certificar a regularidade do prazo em curso',
   'Juntar certidão de regularidade de prazo',
@@ -1538,6 +1547,13 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
     'Certificar Publicação DJEN'
   ]
 )
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  'Processo com prazo decorrido',
+  'col-sm-3',
+  [
+    'Fluir para Certificar Trânsito'
+  ]
+)
 
 TarefaPersonalizadaAvancada.faixaDeEtiquetas(
   TarefaPersonalizadaAvancada.obterTodasAsTarefas(),
@@ -1557,10 +1573,24 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
     'Via WhatsApp',
     'Via Central de Manadados',
-    'Analise Detida'
+    'Analise Detida',
+    'Via Correios',
   ],
   'container-sem-classe'
 )
+
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  [
+    'Preparar citação e(ou) intimação',
+    'Preparar citação'
+  ],
+  'col-sm-12',
+  [
+    'Aguardando PLP'
+  ],
+  'container-sem-classe'
+)
+
 
 TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
