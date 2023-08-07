@@ -1540,6 +1540,54 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   ]
 )
 
+/*TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  [
+    'Expedir precatório'
+  ],
+  'col-sm-9',
+  'Certificar abandono dos autos pela polo ativo',
+  'Juntar certidão de regularidade de prazo',
+  estaTarefaNaoRequerOIframeComExpedientes,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: 'decurso de prazo regular',
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItPrazoRegular'
+        ]
+      },                    
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
+  ]
+)*/
+
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  'Expedir precatório',
+  'col-sm-3',
+  [
+    'Aguardando Prazo de Abandono'
+  ]
+)
+
 TarefaPersonalizadaAvancada.etiquetasRapidas(
   'Processo com prazo em curso',
   'col-sm-3',

@@ -2223,6 +2223,12 @@
     
     return tx;
   };
+
+  window.j2.mod._.codificarNomeTarefa = function(tarefa){
+    return encodeURI(tarefa).replace(/[()]/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
   
   window.j2.mod._._capitalizeFirstLetter = function (string) {
     return string.capt();

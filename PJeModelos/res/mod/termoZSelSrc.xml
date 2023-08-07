@@ -53,6 +53,7 @@ and open the template in the editor.
         <group label="Conclusões">
             <gItem id="termItConclusao"/>
             <gItem id="termItConclusaoPeticao"/>
+            <gItem id="termItConclusaoExtincao"/>
             <gItem id="termItConclusaoRegularizarMovimentacao"/>
             <gItem id="termItConclusaoRegularizarSuspensao"/>
         </group>     
@@ -90,6 +91,15 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:span!caput{Nesta data}, em razão da #:U{petição #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}, faço #:B{CONCLUSÃO} dos presentes autos #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.MM} #:B{#{j2.env.PJeVars.unidade.juiz.nome}}#:span!dot{.}
+                </data>
+            </itemContent>
+        </item>
+        <item id="termItConclusaoExtincao" label="Conclusão | Extinção" dataPlus="{ 'titleAppend': 'CONCLUSÃO', 'descricaoAppend': 'Conclusão' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span!caput{Nesta data}, considerando o cumprimento do despacho do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} e em face do alvará expedido,
+                    remeto os autos #:B{CONCLUSOS} #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.MM} 
+                    #:B{#{j2.env.PJeVars.unidade.juiz.nome}}#:span!dot{.}
                 </data>
             </itemContent>
         </item>

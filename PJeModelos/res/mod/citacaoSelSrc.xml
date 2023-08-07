@@ -27,9 +27,10 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
-            <!--gItem id="intmItAudDesigSemSalaSEC"/-->
+            <gItem id="intmItAudDesigSemSalaUNA"/>
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
+            <gItem id="intmItAudRedesigSemSalaUNA"/>
             <gItem id="intmItAudCEJUSC"/>
         </group>
         <group label="Intimação">
@@ -622,7 +623,8 @@ and open the template in the editor.
             </itemContent>
         </item>
 
-        <item id="intmItAudRedesigSemSala" label="Redesignado" dataPlus="">
+        <item id="intmItAudRedesigSemSala" label="Redesignada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">1
@@ -635,11 +637,31 @@ and open the template in the editor.
                             #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
                         </data>
                     </arElement>
-                </selectorArray>               
+                </selectorArray>             
             </itemContent>
-        </item>                
+        </item>
+
+        <item id="intmItAudRedesigSemSalaUNA" label="Redesignada (#tipo UNA)" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instruçao e Julgamento}, 
+                            #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de 
+                            Conciliação, Instruçao e Julgamento}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>             
+            </itemContent>
+        </item>              
         
-        <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+        <item id="intmItAudDesigSemSala" label="Designada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+            avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
             <eventFire event="na-finalidade-de-audiencia-disparada"/>
 
             <itemContent type="selectorArray" addClassStyles="">
@@ -657,7 +679,7 @@ and open the template in the editor.
                 </selectorArray>               
             </itemContent>
         </item>
-        <item id="intmItAudDesigSemSalaSEC" label="Designada (Ad Hoc SEC)" dataPlus="">
+        <item id="intmItAudDesigSemSalaUNA" label="Designada (#tipo UNA)" dataPlus="">
             <eventFire event="na-finalidade-de-audiencia-disparada"/>
             
             <itemContent type="selectorArray" addClassStyles="">

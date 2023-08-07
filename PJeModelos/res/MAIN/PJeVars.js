@@ -161,7 +161,8 @@ try {
           })(),
           'temDesignada' : (function(){
             return gVG('tipoAudiencia').length > 0;
-          })()
+          })(),
+          tipoLabel: gVG('tipoAudiencia').length ? gVG('tipoAudiencia') : '[SEM AUDIÊNCIA DESIGNADA]'
         },      
         'processo': {
             'assuntos' : gVG('assuntosProcesso').substring(1, gVG('assuntosProcesso').length-1),
@@ -998,7 +999,7 @@ try {
           }
         },
         'salarioMinimo' : (function(){
-              var v = 'R$ 1.302,00';
+              var v = 'R$ 1.320,00';
               if(v.match(/\d+/g))
                 return parseFloat(v.replace(/\D+/g,'').replace('.','').replace(',','.'))/100;
               else
@@ -1083,6 +1084,14 @@ try {
           },
           urlParams : { // ndlg2
             par : window.j2.mod._._getJsonFromUrl(window.parent.location.href)
+          },
+          validacao: {
+            desabilitarSeAudienciaConciliacaoPJEC: function(){ 
+              if ( gVG('classeProcesso').toLowerCase().match(/procedimento do juizado especial cível/) !== null )
+                return gVG('tipoAudiencia').toLowerCase().match(/conciliação/) !== null
+              else
+                return false
+            }
           }
          },
         '_' : {

@@ -2491,6 +2491,8 @@ try {
         if(!newDests.length)
           return;
         
+        pkg.DestinatarioExpedienteFrameComunicacao.processedDestinatarios = newDests
+          
         var prtP = args.padraoApresentacaoParteGeneral;
         var exbAdv = false;
         
@@ -4722,6 +4724,60 @@ try {
       setEvents : function(_, args){
         var _this = pkg.PACController;
         
+        var cb3 = function(event, closer){       
+          if(pkg.Documento.isRecovered)
+            return;
+          
+          let modalDialogMessage = ''
+
+          function _checkMeioParaParte(){
+            const meioDeComunicacao = $(_.meiosComunicacaoSelector.select).find('option:selected').text()
+
+            if( meioDeComunicacao.toLowerCase().match(/diário eletrônico|sistema/) !== null )
+              if(pkg.DestinatarioExpedienteFrameComunicacao?.processedDestinatarios){
+                const destFrameComunicaDestinatarios = pkg.DestinatarioExpedienteFrameComunicacao?.processedDestinatarios
+                const destSemAdvogado = []
+
+                destFrameComunicaDestinatarios.forEach(destinatario => {
+                  if(!(destinatario.advogado) && !destinatario.papel.toLowerCase().match(/advogado|procuradoria/))
+                    destSemAdvogado.push(destinatario)
+                })
+
+                const destSemAdvogadoMap = destSemAdvogado.map(d => d.nome)
+
+                if(! destSemAdvogadoMap.length)
+                  return true
+                
+                if( j2.env.modId.id.toLowerCase().match(/Citacao/) 
+                  && meioDeComunicacao.toLowerCase().match(/sistema/))
+                  return true
+
+                modalDialogMessage = `Parece que você está cometendo um erro com o meio de comunicação para uma ou mais partes.
+                                      #:BR{}#:BR{}
+                                      O meio de comunicação escolhido foi #:B{${meioDeComunicacao}}, porém #:B{${destSemAdvogadoMap.joinListE()}}
+                                      #:U{não possui(em) advogado vinculado}.
+                                      #:BR{}
+                                      ${meioDeComunicacao.toLowerCase().match(/diário eletrônico/) ?
+                                       '#:BR{}Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!' :
+                                       `Contudo, a(s) parte(s) pode(m) ser #:I{jus postulandi}, assim prossiga normalmente.
+                                        #:BR{}#:BR{}
+                                        Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!`
+                                      }
+                                      `
+
+                return false;
+              }
+
+            return true;  
+          }
+                    
+          if(! (_checkMeioParaParte() ) ){
+            pkg.DocEditorCore.proceedFinish = false;
+
+            pkg.ModalDialog.okCancel( modalDialogMessage, 'Modelo j2 - Atenção', 
+            'PACController.noEditionsConfirmed3;beforeFinishEdition.postConfirmation', 'docEditorCore.onCancelClose');
+          }
+        };
         
         var cb2 = function(event, closer){       
           if(pkg.Documento.isRecovered)
@@ -4789,6 +4845,11 @@ try {
         };
         
         
+        evBus.on('beforeFihishEdition', cb3);
+        evBus.once('PACController.noEditionsConfirmed3', function(event){ 
+          evBus.off('beforeFihishEdition',cb3);
+        });   
+
         evBus.on('beforeFihishEdition', cb2);
         evBus.once('PACController.noEditionsConfirmed2', function(event){ 
           evBus.off('beforeFihishEdition',cb2);
@@ -6837,9 +6898,9 @@ try {
             return false;
           }
 
-          var _$ = mod.edt.win.jQ3;
           var _convertChosen = function(){ //chosen
-            if(_$('<select>').chosen && bootstrapCssReady() ){
+            var _$ = mod.edt.win.jQ3;
+            if(typeof _$ === 'function' && _$('<select>').chosen && bootstrapCssReady() ){
               _.select.jQ3 = _$(_.select);
               _.select.jQ3.chosen({
                 no_results_text : 'Nenhuma finalidade',
@@ -7287,8 +7348,11 @@ try {
             o.selected = true;
           o.value = item.id;
           o.innerHTML = j2.mod.builder.parseVars(item.label);
-          o.title = itemHint(item);
-          item.disabled && (o.disabled = item.disabled);
+          const hint = itemHint(item)
+          o.title = typeof hint === 'object' && hint.nodeType === 11 ? hint.textContent : hint;
+          item.disabled && (o.disabled = true);
+          if(item.avaliarDesabilitacao)
+            j2.mod.builder.parseVars(item.avaliarDesabilitacao).trim().toLowerCase() === 'true' && (o.disabled = true)
           return o;
         };
         function groupToOptionGroup(grp){

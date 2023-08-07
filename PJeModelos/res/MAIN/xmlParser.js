@@ -3888,7 +3888,12 @@
             {
               'name': 'disabled',
               'isAttr': true,
-              'type': 'Boolean'
+              'type': 'Boolean'        
+            },            
+            {
+              'name': 'avaliarDesabilitacao',
+              'isAttr': true,
+              'type': 'String'
             }            
           ]
         },             

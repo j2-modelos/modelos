@@ -888,7 +888,7 @@
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
                                 <constructs param="padraoApresentacaoParteEnderecoTelefone" 
@@ -1745,7 +1745,7 @@
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
                                 <constructs param="padraoApresentacaoParteEnderecoTelefone" 

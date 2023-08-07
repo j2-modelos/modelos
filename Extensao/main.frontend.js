@@ -5,6 +5,7 @@
  */
 
 function fronendLoad(){    
+  const codificarNomeTarefa = window.j2.mod._.codificarNomeTarefa;
   (function _default(){
     j2E.mods.shortcuts();
     /*addScript('Extensao/jquery.initialize.js');
@@ -1606,7 +1607,7 @@ function fronendLoad(){
         nome : (function(){
           var _tarfNome = ( ! ( $this.parents('processos-tarefa').is('[j2e-e-pseudotarefa]') )
                         ? window.location.hash.split('/')[3]
-                        : encodeURI(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
+                        : codificarNomeTarefa(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
           if(!(_tarfNome)){
             console.error('nome tarefa não encontrado');
             return '#######ERROR';
@@ -2284,7 +2285,7 @@ function fronendLoad(){
                 return;
 
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-              nHref = nHref.replace('$', encodeURI(this.name));
+              nHref = nHref.replace('$', codificarNomeTarefa(this.name));
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text(this.PseudoTarefa.countTarefa());
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -2336,7 +2337,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', encodeURI(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
+              nHref = nHref.replaceOrd('$', codificarNomeTarefa(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
 
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
@@ -2381,7 +2382,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', encodeURI(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
+              nHref = nHref.replaceOrd('$', codificarNomeTarefa(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -2697,7 +2698,7 @@ function fronendLoad(){
                 var jDivMenuItemClone = jDivMenuItem.clone();
 
                 var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-                nHref = nHref.replace('$', encodeURI(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
+                nHref = nHref.replace('$', codificarNomeTarefa(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
 
                 jDivMenuItemClone.addClass('j2ETarefaFavorita');
                 jDivMenuItemClone.find('span.nome').text(key.nome);
