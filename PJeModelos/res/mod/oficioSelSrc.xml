@@ -299,7 +299,7 @@ and open the template in the editor.
             </itemContent>
         </item>   
                 
-        <item id="ofcItSolicitDevolucaoPrecatoriaPJe" label="Devolução de Carta Precatória (PJe)" dataPlus="{ 'assunto': 'Devolução de Carta Precatória', 'queVirgula' : false }">
+        <item id="ofcItSolicitDevolucaoPrecatoriaPJe" label="Devolução de Carta Precatória (PJe)" dataPlus="{ 'assunto': 'Cumprimiento e Devolução de Carta Precatória', 'queVirgula' : false }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                    a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}

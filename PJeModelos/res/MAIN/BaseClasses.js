@@ -1681,6 +1681,7 @@ try {
               disposicao    : e.disposicao,
               url           : e.url,
               idDropbox     : e.idDropbox,
+              idDropboxV2   : e.idDropboxV2,
               refArtParInc  : e.refArtParInc
             };
 
@@ -1997,7 +1998,11 @@ try {
         
         
         var _url = dispLeg.url ? dispLeg.url : 
-                   ( dispLeg.idDropbox ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) : '' );
+                   ( dispLeg.idDropbox 
+                     ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) 
+                     : (dispLeg.idDropboxV2 
+                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao))
+                        : '') );
         
         if( _url.length === 0 )
           return dispLeg.disposicao; 
@@ -4759,7 +4764,8 @@ try {
                                       #:BR{}
                                       ${meioDeComunicacao.toLowerCase().match(/diário eletrônico/) ?
                                        '#:BR{}Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!' :
-                                       `Contudo, a(s) parte(s) pode(m) ser #:I{jus postulandi}, assim prossiga normalmente.
+                                       `#:BR{}
+                                        Contudo, em sendo o caso de a(s) parte(s) pode(m) ser #:I{jus postulandi}, prossiga normalmente.
                                         #:BR{}#:BR{}
                                         Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!`
                                       }

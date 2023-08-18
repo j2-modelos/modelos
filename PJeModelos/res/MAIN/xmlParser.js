@@ -3541,6 +3541,11 @@
               'type': 'String'
            },
            {
+             'name': 'idDropboxV2',
+             'isAttr': true,
+             'type': 'String'
+           },         
+           {
               'name': 'url',
               'isAttr': true,
               'type': 'String'
@@ -4212,6 +4217,11 @@
              'name': 'idDropbox',
              'isAttr': true,
              'type': 'String'
+          },
+          {
+            'name': 'idDropboxV2',
+            'isAttr': true,
+            'type': 'String'
           }         
         ]
       },   

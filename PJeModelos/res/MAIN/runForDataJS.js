@@ -2343,6 +2343,25 @@ setInterval(function() {
     }
     return hash;
   };
+  String.prototype.toURLDropboxV2 = function(nomeArquivo) {
+    const _guid = function () {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    };
+
+    const [idD, rlkey] = this.split(';')
+    if(typeof idD !== 'undefined' && typeof rlkey !== 'undefined'){
+      return `https://www.dropbox.com/scl/fi/${
+        idD}/${
+          encodeURI(nomeArquivo || _guid())
+        }.pdf?rlkey=${
+          rlkey
+        }&raw=1`
+    }else
+      return 'https://www.tjma.jus.br'
+  };
   
   Array.prototype.fromASCII = function(){
     var _ = [];

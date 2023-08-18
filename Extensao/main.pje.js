@@ -7,6 +7,8 @@
 
 function pjeLoad(){    
   var _responseBus = {};
+  const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
+  const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
 
   (function _default(){
     j2E.mods.shortcuts();
@@ -1198,6 +1200,7 @@ function pjeLoad(){
         case 'Ato Ordinatório':
         case 'Certidão':
         case 'Mensagem(ns) de E-mail':
+        case 'Ofício':
         case 'Petição':
         case 'Petição Inicial':
         case 'Protocolo':
@@ -1597,37 +1600,7 @@ function pjeLoad(){
         
         $this.append(___TEMPLATE___);
         
-        $this.find('a').click(function(){
-          //var j2EOpW = {
-          //  center : function(url, name, idProcesso, winSize, scrolled, callback, altTitle){ // wa
-          //function addScript(name, _doc){
-          //function addStyleSheet(name, _doc){
-          
-          screen.width * 0.6;
-     var h = screen.height * 0.6;
-          
-          j2EOpW.center('', 'j2Calendar' + guid(), null, { width : screen.width * 0.7, height : screen.height * 0.65}, null, function(win){
-            win.document.body.innerHTML = '<div id="j2Calendar"></div>';
-            
-            addScript('Extensao/jquery3.js', win.document);
-            addStyleSheet('Extensao/evo-calendar/css/evo-calendar.css', win.document);
-            addStyleSheet('Extensao/evo-calendar/css/evo-calendar.royal-navy.css', win.document);
-            addScript('Extensao/evo-calendar/js/evo-calendar.js', win.document);
-            
-            function ___check(){
-              if(   win.document.readyState === 'complete' 
-                 && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js') 
-                 && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js').getAttribute('evo-calendar-ready')
-                ){ 
-                addScript('Extensao/evo-calendar/booter.js', win.document);
-              }else
-                setTimeout(___check, 10);
-            };
-            ___check();
-            
-          }, 'j2Calendário');
-          
-        });
+        $this.find('a').click( __abrirCalendarioJ2 );
       });
       
       jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
@@ -1657,6 +1630,38 @@ function pjeLoad(){
 
     });
   };
+
+  window.__abrirCalendarioJ2 = function(){
+    //var j2EOpW = {
+    //  center : function(url, name, idProcesso, winSize, scrolled, callback, altTitle){ // wa
+    //function addScript(name, _doc){
+    //function addStyleSheet(name, _doc){
+    
+    screen.width * 0.6;
+    var h = screen.height * 0.6;
+    
+    j2EOpW.center('', 'j2Calendar' + guid(), null, { width : screen.width * 0.7, height : screen.height * 0.65}, null, function(win){
+      win.document.body.innerHTML = '<div id="j2Calendar"></div>';
+      
+      addScript('Extensao/jquery3.js', win.document);
+      addStyleSheet('Extensao/evo-calendar/css/evo-calendar.css', win.document);
+      addStyleSheet('Extensao/evo-calendar/css/evo-calendar.royal-navy.css', win.document);
+      addScript('Extensao/evo-calendar/js/evo-calendar.js', win.document);
+      
+      function ___check(){
+        if(   win.document.readyState === 'complete' 
+           && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js') 
+           && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js').getAttribute('evo-calendar-ready')
+          ){ 
+          addScript('Extensao/evo-calendar/booter.js', win.document);
+        }else
+          setTimeout(___check, 10);
+      };
+      ___check();
+      
+    }, 'j2Calendário');
+    
+  }
 /*    jQ3(document.body).observe('childlist', 'table', function(rec){
         debugger;
       });
@@ -1699,16 +1704,23 @@ function pjeLoad(){
         var _this = jQ3(this);
         
         var aOuterHTML = this.outerHTML;
-        var text = _this.text();
+        var textNomeTarefa = _this.text();
         var proc = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
-        var _atch = "window.j2Action = { j2 : true, action : 'abrirAutomaticoTarefa', processo : '$', tarefa : '$'};".replace('$', proc).replace('$', text);
+        var _atch = "window.j2Action = { j2 : true, action : 'abrirAutomaticoTarefa', processo : '$', tarefa : '$'};".replace('$', proc).replace('$', textNomeTarefa);
+
+        const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(textNomeTarefa, {
+          competencia: "",
+          etiquetas:[],
+          numeroProcesso: proc.replace(/(-|\.)/g, '')
+        })
 
         var aLeft = aOuterHTML.split('onclick="');
         var aRight = aLeft[1].split('"');
         var _onclick = aRight[0].toString().split("'");          
-        _onclick[3] = 'https://pje.tjma.jus.br/pje/ng2/dev.seam#/painel-usuario-interno';
+        _onclick[3] = URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND;
         _onclick = _onclick.join("'") +'';
-        _onclick = _atch + _onclick;
+        //_onclick = _atch + _onclick;
+        
 
         aRight[0] = _onclick;
         aLeft[1] = aRight.join('"');
@@ -1737,8 +1749,10 @@ function pjeLoad(){
       return;
     if(!(window.location.search.length))
       return;     
+    if(!(j2E.env.urlParms.j2pseudotarefaMovimentar))
+      return;     
     
-    var _act;
+ /*   var _act;
     if( ! (j2E.env.urlParms.action) ){
       var _j2lockr = JSON.parse( lockr.get(window.location.search.substr(1) ) || '{"isNotValid":true}' );
       if(_j2lockr.isNotValid )
@@ -1751,7 +1765,7 @@ function pjeLoad(){
     }
       
     switch(_act.action){
-      case 'abrirAutomaticoTarefa':
+      case 'abrirAutomaticoTarefa':*/
         var _load = {
           fowarded : true,
           task : 'fowardAction',
@@ -1759,7 +1773,10 @@ function pjeLoad(){
           j2pseudotarefaMovimentar : j2E.env.urlParms.j2pseudotarefaMovimentar,
           origin: window.location.origin,
           pathname: window.location.pathname,
-          j2Action : _act
+          j2Action : {
+            action: 'abrirAutomaticoTarefa',
+            j2pseudotarefaMovimentar : j2E.env.urlParms.j2pseudotarefaMovimentar,
+          }
         };
         console.log('dispatching to https://frontend.prd.cnj.cloud');
         console.log(_load);
@@ -1767,8 +1784,9 @@ function pjeLoad(){
           jQ3('iframe#ngFrame').get(0).contentWindow.postMessage(_load, 'https://frontend.prd.cnj.cloud');
         });
         console.log('dispatched');
-        break;
-    }
+
+      /*  break;
+    }*/
   }
   
   function verificarSePaginaDeuErro(){

@@ -348,6 +348,7 @@
         <xs:attribute type="xs:date" name="dataAto" use="optional"/>
 
         <xs:attribute type="xs:string" name="idDropbox" use="optional"/>
+        <xs:attribute type="xs:string" name="idDropboxV2" use="optional"/>
     </xs:complexType>
   </xs:element>
     
@@ -581,6 +582,7 @@
         <xs:attribute type="xs:string" name="disposicao" use="required"/>
         <xs:attribute type="xs:string" name="url" use="optional"/>
         <xs:attribute type="xs:string" name="idDropbox" use="optional"/>
+        <xs:attribute type="xs:string" name="idDropboxV2" use="optional"/>
         <xs:attribute type="xs:string" name="dataAto" use="optional"/>
         <xs:attribute type="xs:string" name="anoVigencia" use="optional"/>
         <xs:attribute type="xs:string" name="refArtParInc" use="optional"/>

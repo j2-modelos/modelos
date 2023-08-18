@@ -5,7 +5,9 @@
  */
 
 function fronendLoad(){    
-  const codificarNomeTarefa = window.j2.mod._.codificarNomeTarefa;
+  const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
+  const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
+
   (function _default(){
     j2E.mods.shortcuts();
     /*addScript('Extensao/jquery.initialize.js');
@@ -101,7 +103,24 @@ function fronendLoad(){
     if( action.j2pseudotarefaMovimentar )
       __fazerAjustesExibicaoPseudotarefaMovimentar();
 
-    function __hd(){
+    var initPar, iniChild;
+    initPar = jQ3.initialize('ul.ui-datalist-data', function(){
+      var didOnce = false;
+      iniChild = jQ3.initialize('li.ng-star-inserted', function(){          
+        if(didOnce)
+          return;
+
+        didOnce = true;
+        initPar.disconnect();
+        iniChild.disconnect();
+
+        if( action.j2pseudotarefaMovimentar )
+          __notifyFinished();
+      },
+      {target : this});
+    });
+
+    /*function __hd(){
     //jQ3.initialize('div.overflowTarefas:last', function(){
       jQ3('div.overflowTarefas:last').observe('childlist', function(record){
           lg('observe div.overflowTarefas:last', record);
@@ -143,8 +162,8 @@ function fronendLoad(){
     
       jQ3('form:last').find('input#itNrProcesso').val(action.processo)[0].dispatchEvent(new Event('input'));;
       jQ3('form:last').find('button.btn.btn-primary')[0].click();
-    }
-    function check__hd() { // tappac as new
+    }*/
+  /*  function check__hd() { // tappac as new
       if (jQ3('form:last').find('input#itNrProcesso')[0] && jQ3('form:last').find('input#itNrProcesso')[0].dispatchEvent) {
         __hd();
       }
@@ -152,7 +171,7 @@ function fronendLoad(){
         window.setTimeout( check__hd, 10 );
       }
     }
-    check__hd();
+    check__hd();*/
 
   };
   
@@ -1325,7 +1344,7 @@ function fronendLoad(){
         $procsUl.prev().hide();
         
         //$liTarfCard.Lazy({
-        $liTarfCard.find('div.datalist-content').lazyObserve({
+        /*$liTarfCard.find('div.datalist-content').lazyObserve({
           root : $liTarfCard.parents('#processosTarefa'),
           load: function($li) {
             delayCall(function(){
@@ -1455,7 +1474,7 @@ function fronendLoad(){
               
             });
           }
-        });
+        });*/
       });
       
       $procsUl.lastIdProcesso = 0;
@@ -1480,22 +1499,34 @@ function fronendLoad(){
             var ___TEMPLATE__URL___ = 'https://pje.tjma.jus.br/pje/ng2/dev.seam?$&$#/painel-usuario-interno';
             var ___TEMPLATE__SPINNER___ = '<div _ngcontent-bsf-c10="" class="loaderWrapper ng-star-inserted"><mat-progress-spinner _ngcontent-bsf-c10="" class="position mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation" mode="indeterminate" role="progressbar" aria-valuenow="0" style="width: 100px; height: 100px;"><svg focusable="false" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" style="width: 100px; height: 100px;"><!----><circle cx="50%" cy="50%" r="45" class="ng-star-inserted" style="animation-name: mat-progress-spinner-stroke-rotate-100; stroke-dasharray: 282.743px; stroke-width: 10%;"></circle><!----></svg></mat-progress-spinner></div>';
             
-            var _action = encodeURIComponent( btoa( JSON.stringify( {
+            const nomeTarefa = _qData[0].nome
+            const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
+              competencia: "",
+              etiquetas:[],
+              numeroProcesso: _tarfData.num
+            }, 'j2pseudotarefaMovimentar=true')
+
+            /*var _action = encodeURIComponent( btoa( JSON.stringify( {
                 j2: true,
                 action: "abrirAutomaticoTarefa",
                 processo: _tarfData.num,
                 tarefa: _qData[0].nome,
                 j2pseudotarefaMovimentar : true
             }) ) );
-            var _url = ___TEMPLATE__URL___.replaceOrd('$', 'j2pseudotarefaMovimentar=true', 'action=' + _action);
-            
+            var _url = ___TEMPLATE__URL___.replaceOrd('$', 'j2pseudotarefaMovimentar=true', 'action=' + _action);*/
             
             var $conteudoTarefa = $this.parents('processos-tarefa').find('> #divMainPanel > conteudo-tarefa');
             if(! $conteudoTarefa.find('#conteudoTarefa').length ){            
-              var $html = jQ3( ___TEMPLATE__CONTEUDO___TAREFA___.replaceOrd('$', _url) );
+              var $html = jQ3( ___TEMPLATE__CONTEUDO___TAREFA___.replaceOrd('$', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND) );
               $conteudoTarefa.prepend($html);            
-            }else
-              $conteudoTarefa.find('iframe').attr('src', _url);
+            }else{
+              const $iframe = $conteudoTarefa.find('iframe')
+              const $iframeC = $iframe.clone(false)
+
+              $iframeC.attr('src', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND);
+              $iframe.replaceWith($iframeC)
+            }
+              
             
             $conteudoTarefa.find('div.row').css({
               filter : 'blur(8px)'
@@ -1607,7 +1638,7 @@ function fronendLoad(){
         nome : (function(){
           var _tarfNome = ( ! ( $this.parents('processos-tarefa').is('[j2e-e-pseudotarefa]') )
                         ? window.location.hash.split('/')[3]
-                        : codificarNomeTarefa(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
+                        : __codificarNomeTarefa(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
           if(!(_tarfNome)){
             console.error('nome tarefa não encontrado');
             return '#######ERROR';
@@ -1811,8 +1842,8 @@ function fronendLoad(){
     function destacarUltimoMovimentoDoProcesso(_this){
       var $this = jQ3(_this);
            
-      if($this.is('[je2-pseudotarefa]') )
-        return;
+      /*if($this.is('[je2-pseudotarefa]') )
+        return;*/
       
       $this.find('div.row.icones').lazyObserve({
         root : $this.parents('#processosTarefa'),
@@ -2285,7 +2316,7 @@ function fronendLoad(){
                 return;
 
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-              nHref = nHref.replace('$', codificarNomeTarefa(this.name));
+              nHref = nHref.replace('$', __codificarNomeTarefa(this.name));
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text(this.PseudoTarefa.countTarefa());
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -2337,7 +2368,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', codificarNomeTarefa(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
+              nHref = nHref.replaceOrd('$', __codificarNomeTarefa(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
 
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
@@ -2382,7 +2413,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', codificarNomeTarefa(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
+              nHref = nHref.replaceOrd('$', __codificarNomeTarefa(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -2698,7 +2729,7 @@ function fronendLoad(){
                 var jDivMenuItemClone = jDivMenuItem.clone();
 
                 var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-                nHref = nHref.replace('$', codificarNomeTarefa(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
+                nHref = nHref.replace('$', __codificarNomeTarefa(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
 
                 jDivMenuItemClone.addClass('j2ETarefaFavorita');
                 jDivMenuItemClone.find('span.nome').text(key.nome);

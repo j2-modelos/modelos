@@ -998,7 +998,35 @@ var TarefasProps = {
       },
       limpaCorpoTarefa : true,
       transicaoManterApenasIgnorarESairTarefa : true,
-      mostraAutosDigitais : true
+      mostraAutosDigitais : true,
+      painel : [
+        {
+          appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+          header : 'Calendário',
+          panelClass : `rich-panel col-sm-`,
+          body : [
+           {
+             tipo : 'jQ3',
+             data : jQ3( j2EUi.createButton({
+               classButton: '',
+               callback: ()=>{
+                __abrirCalendarioJ2()
+               },
+               textoButton: 'Calendário j2'
+             })).append( jQ3('<i>', {
+              class: 'fa fa-calendar-alt',
+              "aria-hidden": 'true',
+              css: {
+                fontSize: '1.2em',
+                paddingLeft: '5px'
+              }
+             }))
+           }
+         ],
+         events : [
+         ]
+        }
+      ],
     },
     ADMGrupo : {
       org : 'dmsTrf',
@@ -1582,7 +1610,7 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
 
 TarefaPersonalizadaAvancada.etiquetasRapidas(
   'Expedir precatório',
-  'col-sm-3',
+  'col-sm-12',
   [
     'Aguardando Prazo de Abandono'
   ]
