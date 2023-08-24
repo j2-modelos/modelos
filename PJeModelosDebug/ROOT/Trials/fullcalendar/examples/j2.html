@@ -64,6 +64,23 @@
         right: 'next today'
       },
 
+      dayCellContent: function(info) {
+        var weekday = info.date.getDay();
+
+        if (weekday === 0 || weekday === 6) {
+          const [infoDateStr] = info.date.toISOString().split('T')
+
+          srcCalendar.addEvent({
+            start: infoDateStr,
+            end: infoDateStr,
+            overlap: false,
+            display: 'background',
+            color: '#257e4a'
+          })
+        }
+
+      },
+
 
       //initialDate: '2020-09-12',
       locale: 'pt-br',
@@ -86,7 +103,7 @@
           start: arg.start,
           end: arg.start,
           allDay: true,
-          color: 'blue',
+          //color: 'blue',
           classNames: ['evento-importante'],
           editable: true,
           startEditable: true,
@@ -103,13 +120,16 @@
       events: [
         {
           title: 'event1',
-          start: '2020-09-11T10:00:00',
-          end: '2020-09-11T16:00:00'
+          start: '2023-08-11T10:00:00',
+          end: '2023-08-11T16:00:00'
         },
         {
           title: 'event2',
-          start: '2020-09-13T10:00:00',
-          end: '2020-09-13T16:00:00'
+          start: '2023-08-13T10:00:00',
+          end: '2023-08-13T16:00:00',
+          allDay: true,
+          //color: 'red',
+          display: 'background',
         }
       ],
       eventLeave: function(info) {

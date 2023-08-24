@@ -54,7 +54,7 @@ and open the template in the editor.
                 </simpleElementsDefs>
             </itemContent>
         </item>    
-        <item id="destItJuizDireito" label="Juíza de Direito" dataPlus="{ 'cargo': 'Juíza', 'tratamento' : 'Vossa Excelência' }">
+        <item id="destItJuizDireitoF" label="Juíza de Direito" dataPlus="{ 'cargo': 'Juíza', 'tratamento' : 'Vossa Excelência' }">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
                     <elemento tag="P" scope="NONE" class="p FntModDefault">

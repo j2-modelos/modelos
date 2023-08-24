@@ -763,7 +763,7 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>              
-        <item id="atoOrdItPrecatoriaCumprimento" label="Cumprimento Finliadade" dataPlus="{ 'descricaoAppend': 'Cumprimiento Carta Precatória' }">
+        <item id="atoOrdItPrecatoriaCumprimento-depreciado" label="Cumprimento Finliadade" dataPlus="{ 'descricaoAppend': 'Cumprimiento Carta Precatória' }">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
@@ -773,6 +773,13 @@ and open the template in the editor.
                         #:B{DEVOLUÇÃO} ao Juízo Deprecante com as nossas homenagens.
                     </elemento>
                 </simpleElementsDefs>
+            </itemContent>
+        </item>   
+        <item id="atoOrdItPrecatoriaCumprimento" label="Cumprimento Finliadade" dataPlus="{ 'descricaoAppend': 'Cumprimiento Carta Precatória' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:U{#:B{CUMPRIMENTO} da finalidade deprecada}, servindo a carta como mandado.
+                </data>
             </itemContent>
         </item>   
                 
