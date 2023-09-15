@@ -94,5 +94,6 @@
         <Usuario id="01682637506" nome="PRISCILLA MACIEL SARMENTO" matricula="138719" cargo="Secretária Judicial" ini="PMS" genr="F"/>
         <Usuario id="02692854314" nome="SOLANE SANTANA VELOZO" matricula="162776" cargo="Auxiliar Judiciária" ini="SSV" genr="F"/>
         <Usuario id="99489015334" nome="TARSILIO FARIAS DA SILVA MAIA" matricula="162909" cargo="Analista Judiciário" ini="TFSM" genr="M"/>
+        <Usuario id="60936709375" nome="VIVIANNE MACHADO DE MORAIS" matricula="55102487" cargo="Residente Jurídica" ini="VMM" genr="F"/>
     </Usuarios>
 </Definitions>

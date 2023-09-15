@@ -7855,7 +7855,7 @@ try {
                     name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
                       type: 'checkbox', 
                       selected: false,
-                      fullText : txt
+                      fullText : 'conforme despacho #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}'
                   }
                   $this.itemData[_g] = txt
 
@@ -7882,13 +7882,15 @@ try {
                       let pasteText = []
 
                       Object.entries(obj).forEach(function([key, value]) {
-                        if(value.$input.is(':checked'))
-                          pasteText.push(value.fullText)
+                        if(value.$input.is(':checked')){
+                          const __text = j2Conv(j2.mod.builder.parseVars(value.fullText))
+                          pasteText.push(__text)
+                        }
                       });
 
-                      pasteText = pasteText.join(',').trim()
+                      pasteText = pasteText.join(', ').trim()
 
-                      jQ3(j2.modelo.exp.gE('finalidade-colador')).text(pasteText)
+                      jQ3(j2.modelo.exp.gE('finalidade-colador')).html(pasteText)
                       break;
                   }
                 },

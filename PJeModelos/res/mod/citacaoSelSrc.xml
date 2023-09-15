@@ -32,6 +32,7 @@ and open the template in the editor.
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudRedesigSemSalaUNA"/>
             <gItem id="intmItAudCEJUSC"/>
+            <gItem id="intmItAudienciaPresencial"/>
         </group>
         <group label="Intimação">
             <gItem id="intmItLiminar"/>
@@ -155,7 +156,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
                             até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
-                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            que o não comparecimento à audiência importará em sua #:B{revelia} e confissão quanto à matéria de fato, sendo consideradas 
                             verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>
@@ -164,7 +165,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
                             da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
                             durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
-                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            referida audiência, configurará #:B{revelia} e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
                             apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>            
@@ -196,7 +197,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
                             até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
-                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            que o não comparecimento à audiência importará em sua #:B{revelia} e confissão quanto à matéria de fato, sendo consideradas 
                             verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>
@@ -205,7 +206,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
                             da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
                             durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
-                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            referida audiência, configurará #:B{revelia} e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
                             apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>            
@@ -357,7 +358,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} na forma da Lei, a fim de ter ciência da presente ação, cuja petição inicial segue anexa. Cientificado(a) de que poderá 
                             respondê-la, caso queira, no prazo de 15 dias, contados da data da audiência de medição/conciliação, se não houver solução à presente 
-                            demanda. Cientificado(a) ainda que a eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem 
+                            demanda. Cientificado(a) ainda que a eventual não apresentação de contestação, poderá ocasionar a decretação de sua #:B{revelia} e serem 
                             consideradas verdadeiras as alegações apresentadas pela parte contrária.
                         </data>
                     </arElement>
@@ -366,7 +367,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada para, querendo, #:b{pagar a dívida}, no prazo de
                             05 (cinco) dias, sob pena de consolidar-se liminarmente a propriedade e a posse exclusiva do bem no patrimônio do credor fiduciário, 
                             inclusive com a faculdade de venda antecipada do veículo, salientando-se que no caso de incorporação ao seu patrimônio deverá o 
-                            credor promover a avaliação do veículo #:u{e/ou} querendo, #:b{contestar} a referida ação, no prazo de 15 (quinze) dias, sob pena de revelia 
+                            credor promover a avaliação do veículo #:u{e/ou} querendo, #:b{contestar} a referida ação, no prazo de 15 (quinze) dias, sob pena de #:B{revelia} 
                             e demais cominações legais. Cientificando-o(a) desde logo que dispõe o artigo 285 do Código de Processo Civil, que tem 
                             o seguinte teor: Art. 285 - Não sendo contestada a ação se presumirão aceitos pelo réu, como verdadeiros, os fatos articulados pelo autor.
                         </data>
@@ -403,7 +404,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada, na forma da Lei, a fim de ter ciência 
                             da presente ação. Cientificando-a que poderá respondê-la, caso queira, no prazo de 15 dias, 
                             contados da data da audiência de medição/conciliação, se não houver solução à presente demanda. Cientificando-a ainda que a 
-                            eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem consideradas verdadeiras as 
+                            eventual não apresentação de contestação, poderá ocasionar a decretação de sua #:B{revelia} e serem consideradas verdadeiras as 
                             alegações apresentadas pela parte contrária.
                         </data>
                     </arElement>            

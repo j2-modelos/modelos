@@ -379,7 +379,7 @@ and open the template in the editor.
             </itemContent>
         </item>     
         
-        <item id="intmItPenhoraAvaliacao" label="Penhora e Avaliação" dataPlus="{ 'titleAppend':['AVALIAÇÃO', 'PENHORA'] }">    
+        <item id="intmItPenhoraAvaliacao" label="Penhora e Avaliação" dataPlus="{ 'titleAppend':['PENHORA', 'AVALIAÇÃO' ] }">    
             <eventFire event="Mandado.onSelectItemLinkedExecutionValue"/>
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>

@@ -2139,8 +2139,115 @@ function fronendLoad(){
         });
       })*/
     }
+
     
-    function inicializacaoformatarNomeAlternativoListaTrefaAtiva(){
+    function ajustarBarraSelecacoProcessosEAplicarPersonalizacoes(_this){
+      function _guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      };
+
+      jQ3.initialize('#acoes-processos-selecionados', function(){          
+        const $this = jQ3( this )
+        $this.removeClass('col-md-12')
+        $this.addClass('col-md-6')
+
+
+        const $divbspC = $this.clone(true)
+        $divbspC.attr('id', 'acoes-processos-selecionados-j2', '')
+
+        $this.after($divbspC)
+
+        //persolanizações
+        const TEMPLATE_BUTTON_SEM_TOGGLER = `
+          <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Vincular etiqueta">
+            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-lock-open" j2-i-lock></i>
+            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-book"></i>
+          </button>`
+
+        const $butSentinela = jQ3(TEMPLATE_BUTTON_SEM_TOGGLER)
+
+        const $j2Container = $divbspC.find(' > div > div')
+        $j2Container.empty()
+        $j2Container.removeClass('pull-left')
+        $j2Container.addClass('pull-right')
+        $j2Container.addClass('j2-alinhar-direita-items')
+        
+        $j2Container.append($butSentinela)
+
+        $butSentinela.click(()=>{
+          $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+          $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
+          if( ! $butSentinela.is('.btn-primary') )
+            return;
+
+          const $eventTargetLi = $uiDadosDaList.find('.selecionado').parents('li')
+          __openSentinela($eventTargetLi)
+        })
+
+        const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
+        $uiDadosDaList.lasNumProc = '0'
+        $uiDadosDaList.click((_ev)=>{
+          const $eventTargetLi = jQ3(_ev.target).parents('li');
+          console.log('TESTANDO: click')
+          __openSentinela($eventTargetLi)
+        })
+
+        const idJanel = _guid()
+
+        function __openSentinela($eventTargetLi){
+          if( ! $butSentinela.is('.btn-primary') )
+            return;
+
+          const [numProc] = $eventTargetLi.find('.tarefa-numero-processo').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          if($uiDadosDaList.lasNumProc === numProc)
+            return;
+
+          $uiDadosDaList.lasNumProc = numProc
+
+          _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
+            const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}`
+
+            j2EOpW.center(url, 'autosDigSentinela', idJanel)
+          })
+        }
+
+        jQ3.initialize('processos-tarefa conteudo-tarefa .row a:first-child', function(){
+          const $aLinkAutos = jQ3(this) 
+
+          $aLinkAutos.observe('attributes', (rec)=>{
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+      
+            if( rec.attributeName !== 'href' )
+              return;
+
+            const [numProc] = jQ3(rec.target).text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+            if(numProc === $uiDadosDaList.lasNumProc)
+              return;
+
+            console.log('TESTANDO: record mutatioin')
+            
+            const $numProcLi = $uiDadosDaList.find(`li:contains('${numProc}')`)
+      
+            __openSentinela($numProcLi)
+          })
+        })
+
+      },
+      {target : _this});
+    }
+    
+    /**
+     * As inicializações abaixos são badeadas na visualização de uma tarefa,
+     * á esquerda, a lista de tarefas pendentes, á direita, uma tarefa sendo executadao
+     * 
+     * barra-selecao-processos
+     */
+    function inicializacaoDiversasDeTarefaAtivaComListaDePendencias(){
       jQ3.initialize('processos-tarefa', function(){
         var _processos_tarefa = this
         jQ3.initialize('filtro-tarefas span.text-truncate.uppercase.nome-tarefa:first-child', function(){          
@@ -2154,6 +2261,7 @@ function fronendLoad(){
         jQ3.initialize('div.row.lista-processos', function(){          
           formatarExibicaoTarefaFavorita(this);
           registrarListeners(this);
+          ajustarBarraSelecacoProcessosEAplicarPersonalizacoes(this)
 
           //jQ3.initialize('span.badge.pull-right', function(){          
           jQ3.initialize('ul.ui-datalist-data', function(){          
@@ -2178,7 +2286,7 @@ function fronendLoad(){
 
        
     personalizarCardDaTarefa();
-    inicializacaoformatarNomeAlternativoListaTrefaAtiva();
+    inicializacaoDiversasDeTarefaAtivaComListaDePendencias();
   };
 
   function observeListasDeTarefas(){

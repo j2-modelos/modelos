@@ -523,6 +523,8 @@ class TarefaPersonalizadaAvancada{
 }
 
 var TarefasProps = {
+  'Aguardar audiência':{},
+  'Designar audiência': {},
   'Apensar processos' : {
     ADMGrupo : 'outac'
   },
@@ -1003,7 +1005,7 @@ var TarefasProps = {
         {
           appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
           header : 'Calendário',
-          panelClass : `rich-panel col-sm-`,
+          panelClass : `rich-panel col-sm-3`,
           body : [
            {
              tipo : 'jQ3',
@@ -1667,6 +1669,19 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   'container-sem-classe'
 )
 
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  [
+    'Aguardar audiência',
+    'Designar audiência'
+  ],
+  'col-sm-12',
+  [
+    'Audiência Híbrida',
+    'Indeferida Audiência Híbrida'
+  ],
+  'container-sem-classe'
+)
+
 
 TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
@@ -1686,6 +1701,27 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
     panelClass: 'j2-mini-etiqueta-rapida',
     onTagClick: () => {
       const $input = jQ3('label:contains("Expedir certidão")').parents('.propertyView').find('input')
+      if( ! $input.is(':checked') )
+        $input.prop("checked", true);
+    }
+  }
+)
+
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  [
+    'Avaliar determinações do magistrado'
+  ],
+  'col-sm-11',
+  [
+    'Audiência Híbrida',
+    'Indeferida Audiência Híbrida',
+  ],
+  'container-sem-classe',
+  {
+    panelAppendTo: () => { return jQ3('label:contains("Controlar audiência")').parents('.propertyView').find(' > div:nth-child(2)') },
+    panelClass: 'j2-mini-etiqueta-rapida',
+    onTagClick: () => {
+      const $input = jQ3('label:contains("Controlar audiência")').parents('.propertyView').find('input')
       if( ! $input.is(':checked') )
         $input.prop("checked", true);
     }

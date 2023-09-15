@@ -1332,12 +1332,12 @@ i[j2-np-copiar]{
 
 
 i[j2-i-lock]{
-    font-size: 120%;
+    /*font-size: 120%;*/
     vertical-align: top;
 }
 
 i[j2-i-book]{
-    font-size: 120%;
+    /*font-size: 120%;*/
     vertical-align: bottom;
     margin-left: -2px;
 }
@@ -1459,6 +1459,33 @@ div[j2-faixa-etiquetas-spacer]{
     z-index: 100;
     top: 0;
 }
+
+/** SEÇÃO DA ÁREA DIV barra-selecao-processos **/
+.j2-alinhar-direita-items{
+    justify-content: flex-end;
+}
+
+.acoes-processos-selecionados[_ngcontent-pdi-c12] {
+    float: left;
+    padding: 5px 10px;
+    background: #fff;
+}
+.btn[_ngcontent-pdi-c12] {
+    margin: 0 0 0 5px;
+    line-height: 1;
+}
+#marcarTodos[_ngcontent-pdi-c12] {
+    cursor: pointer;
+}
+.marcar-todos[_ngcontent-pdi-c12] {
+    font-size: 1.25em;
+}
+.botao-selecionar[_ngcontent-pdi-c12] {
+    border: none;
+    background: 0 0;
+    padding: 0;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

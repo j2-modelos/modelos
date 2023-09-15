@@ -4272,3 +4272,76 @@ j2E.mods.shortcuts = function (){
   checkJQueryBuildCalendar();
 })
 
+
+/**
+ *
+ * @param numeroProcesso
+ * @returns id do processo se número válido ou 0, se número inválido
+ */
+function validarNumeroProcesso(numeroProcesso) {
+  const root = window.location.origin.includes('frontend')
+    ? document.referrer.replace(/\/+$/, '')
+    : window.location.origin
+  const url = `${root}/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`
+  return fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+    credentials: 'include',
+    mode: 'cors'
+  })
+    .then(response => response.text())
+    .then(text => Number(text))
+}
+
+
+/**
+ *
+ * @param numeroProcesso
+ * @returns id do processo se número válido ou 0, se número inválido
+ */
+const obterIdProcesso = validarNumeroProcesso
+
+/**
+ * Gera a chave de acesso do processo pelo seu identificador
+ * @param idProcesso
+ * @returns
+ */
+function gerarChaveAcessoProcesso(idProcesso) {
+  const root = window.location.origin.includes('frontend')
+    ? document.referrer.replace(/\/+$/, '')
+    : window.location.origin
+  const url = `${root}/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`
+  return fetch(url, {
+    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+    method: 'GET',
+    credentials: 'include',
+    mode: 'cors'
+  }).then(response => response.text())
+}
+
+
+/**
+ * 
+ * @param {*} numProc número do processo
+ * @returns 
+ */
+function _getAcessoAosAutosDigitais(numProc){
+  return new Promise((resolve, reject) => {
+    obterIdProcesso(numProc)
+      .then(idProcesso => {
+        gerarChaveAcessoProcesso(idProcesso)
+          .then(ca => {
+            resolve({
+              ca: ca,
+              idProcesso: idProcesso
+            })
+          })
+          .catch(reason => {
+            reject(reason)
+          })
+      })
+      .catch(reason => {
+        reject(reason)
+      })
+  })
+}
