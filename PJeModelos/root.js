@@ -13,40 +13,6 @@ function RUN(e) {
   lgB('-----------------------------------------------------------------------------------------');
   lgB('Iniciando modelos j2.');
   
-  lgB('verificanod versionamento');
-  lgB('Verificar atualizacao forcaada dos modelos j2.');
-  var j2U = localStorage.getItem('j2Update');
-  j2U = (!(j2U)) ? { revision : 0, isToUpdate : true } : JSON.parse(j2U);
-  
-  lg('j2Update:');
-  lg(j2U);
-  
-  var up = localStorage.getItem('updateXML');
-  if(up){
-    lg('updateXML armazenada.');
-    lg('updateXML - JSON:');
-    lg(up); 
-    up = JSON.parse(up);
-    lg('updateXML:');
-    lg(up);  
-    if(up.update.forceUpdateNextLoad){
-      lg('j2U.revision: ' + j2U.revision);
-      lg('up.update.currentRevision: ' + up.update.currentRevision);
-      if(j2U.revision !== up.update.currentRevision){
-        wrn('Revisoees diferem.');
-        wrn('Sera realizada a atualizacoo.');
-        j2U.isToUpdate = true;
-        j2U.revision = up.update.currentRevision;
-      }
-      else
-        lg('Revisoes sao as mesmas.');
-    }else
-      lg('Erro ao realizar parse de updateXML.');
-  }else{
-    lg('updateXML nao esta armazeanda.');
-  }
-    
-    
   
   lgB('definicoes globais;');
   
@@ -54,31 +20,34 @@ function RUN(e) {
     var event = e;
   
   /* checking if user is requesting local storage cleaning */
-        
-  w.j2 = {};
-  w.j2.res = {};
-  w.j2.res.MAIN = {};
-  w.j2.mod = {};
-  w.j2.mod.com = {}; /* general */
-  w.j2.mod.com._ = {};
-  w.j2.lgB = lgB;
-  w.j2.env = {};
-  w.j2.ut = {};
-  w.j2.ut.isHttps = function(){
-    return window.location.protocol === 'https:';
-  };
-  w.j2.env.j2U = {};
-  
-  w.j2.env.keys = {
-    'alt' : event.altKey,
-    'ctrl' : event.ctrlKey,
-    'shift' : event.shiftKey
-  };
+  w.j2 = {
+    res : {
+      MAIN : {}
+    },
+    mod : {
+      com : {
+        _ : {}
+      }
+    },
+    env : {
+      j2U : {},
+      keys : {
+        alt : event.altKey,
+        ctrl : event.ctrlKey,
+        shift : event.shiftKey
+      }
+    },
+    ut : {
+      isHttps : ()=>{
+        return window.location.protocol === 'https:';
+      }
+    }
+  }
       
   if (!window.jQ)
-    window.jQ = window.$ || window.parent.jQuery;
+    window.jQ = window.$ || window.parent.jQuery_21 || window.parent.jQuery;
   
-    window.j2.mod.com._.rootConversation = {
+  window.j2.mod.com._.rootConversation = {
     'msgBuilder' : function(_tx, clear){
       var _p = document.createElement('p');
       var _ldRunConv = document.getElementById('ldRunConv');
@@ -107,6 +76,7 @@ function RUN(e) {
 	  window.j2.mod.com._.connTry.run();
     }
   };
+
   window.j2.mod.com._.connTry = {
     'run' : function () {
       var xmlhttp = new XMLHttpRequest(); 
@@ -230,33 +200,6 @@ function RUN(e) {
   };  
   
   
-  lgB('Rontina de atualizacao de arquivos armazenados no pc.');
-  if(event.shiftKey || j2U.isToUpdate){
-    w.j2.env.j2U.isUpdating = true;
-    
-    var keys = [];
-    var fg = false;
-    var C_LIB_PREFIX = 'ROOT';
-    wrn('Atualizando j2 modelos.');
-    lg('Requested localStorage cleaning.');
-    j2.mod.com._.rootConversation.msgBuilder(':) - Tentando atualizar.', true);
-    
-    var i = 0;
-    while(localStorage.key(i)){
-      var it = localStorage.key(i);
-      if(it.indexOf(C_LIB_PREFIX)===0){
-        localStorage.setItem('rmv_'+ it, localStorage.getItem(it));
-        
-        localStorage.removeItem(it);
-        lg('removido ' + it);        
-      }
-      else
-        i++;
-    };
-    
-    localStorage.setItem('j2Update', JSON.stringify(j2U));
-  }
-
   lgB('carregamento do injector');
 
   

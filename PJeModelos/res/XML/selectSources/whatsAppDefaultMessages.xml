@@ -12,10 +12,25 @@ and open the template in the editor.
           #{textContent}
       </elemento>
     </itemFormats>
-    <groupsDefs>
+    <groupsDefs naoOrdenado="true">
+        <group label="#Intimação">
+            <gItem id="wtAppItCumprimento"/>
+            <gItem id="wtAppItSegueIntimacao"/>
+            <gItem id="wtAppItInteiroTeor"/>
+            <gItem id="wtAppItLinkTarefaProcesso"/>
+        </group>
+        <group label="HTE de Residencial">
+            <gItem id="wtAppItConfirmarIdentidade"/>
+            <gItem id="wtAppItHomologacaoDistrato"/>
+            <gItem id="wtAppItTransmitir"/>
+        </group>
+        <group label="Audiência">
+            <gItem id="wtAppItLinkSalaAudiencia1"/>
+            <gItem id="wtAppItRemessaDocumentosAudiencia"/>
+        </group>
     </groupsDefs>
     <!--items initialSelected="termReclReclamacao"-->
-    <items>
+    <items naoOrdenado="true">
         <item id="wtAppItCumprimento" label="Cumprimento" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -63,6 +78,15 @@ and open the template in the editor.
         </item>   
         
         
+        <item id="wtAppItConfirmarIdentidade" label="Confirmar Identidade" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                   Falo com o(a) senhor(a) #{j2.mod.clsCnstr.SeletorPessoa.selected.nome}? 
+                   Caso sim, pedimos a gentileza que continue a leitura sobre assunto de seu interesse. Caso não, solicitamos que
+                   acuse expressamente não ser ou desconhecer a pessoa a que se destina a comunicação.
+                </data>
+            </itemContent>
+        </item>   
         <item id="wtAppItHomologacaoDistrato" label="Informação Homologação Distrato" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -85,16 +109,9 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>   
-        <item id="wtAppItConfirmarIdentidade" label="Confirmar Identidade" dataPlus="">
-            <itemContent type="plainText" addtClassStyles="">
-                <data>
-                   Falo com o(a) senhor(a) #{j2.mod.clsCnstr.SeletorPessoa.selected.nome}? 
-                   Caso sim, pedimos a gentileza que continue a leitura sobre assunto de seu interesse. Caso não, solicitamos que
-                   acuse expressamente não ser ou desconhecer a pessoa a que se destina a comunicação.
-                </data>
-            </itemContent>
-        </item>   
         
+        
+
         <item id="wtAppItLinkSalaAudiencia1" label="Link Sala Audiência 1" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

@@ -15,7 +15,7 @@ and open the template in the editor.
         </elemento>
     </itemFormats>
     <groupsDefs>
-        <group label="Citação">
+        <group label="#Citação">
             <gItem id="intmItCitacaoJec"/>
             <gItem id="intmItCitacaoExecucaoJec"/>
             <!--gItem id="intmItCitacaoExecucaoExTiExAudJec"/-->
@@ -27,9 +27,12 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
+            <gItem id="intmItAudDesigSemSalaUNA"/>
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
+            <gItem id="intmItAudRedesigSemSalaUNA"/>
             <gItem id="intmItAudCEJUSC"/>
+            <gItem id="intmItAudienciaPresencial"/>
         </group>
         <group label="Intimação">
             <gItem id="intmItLiminar"/>
@@ -79,7 +82,7 @@ and open the template in the editor.
             <gItem id="intmIt"/>
         </group-->
     </groupsDefs>
-    <items>
+    <items initialSelected="intmItCitacaoJec">
         <item id="intmItComprimentoPrecatória" label="Cumpirmento Precatória" dataPlus="">
             <advertencias>
                 <advertencia id="advtItPJeListaDocumentoAviso" />
@@ -153,7 +156,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
                             até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
-                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            que o não comparecimento à audiência importará em sua #:B{revelia} e confissão quanto à matéria de fato, sendo consideradas 
                             verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>
@@ -162,7 +165,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
                             da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
                             durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
-                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            referida audiência, configurará #:B{revelia} e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
                             apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>            
@@ -194,7 +197,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada, e, caso queira, contestá-la
                             até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, durante o próprio ato, inclusive. Cietificado(a) 
-                            que o não comparecimento à audiência importará em sua revelia e confissão quanto à matéria de fato, sendo consideradas 
+                            que o não comparecimento à audiência importará em sua #:B{revelia} e confissão quanto à matéria de fato, sendo consideradas 
                             verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>
@@ -203,7 +206,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
                             da presente ação, acima especificada. Cientificando-o(a) que, caso queira, poderá contestá-la até a data da audiência de #{j2.env.PJeVars.audiencia.tipo}, 
                             durante o próprio ato, inclusive. Cientificando-o(a) ainda que o não comparecimento à 
-                            referida audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            referida audiência, configurará #:B{revelia} e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
                             apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>            
@@ -355,7 +358,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITADO(A)} na forma da Lei, a fim de ter ciência da presente ação, cuja petição inicial segue anexa. Cientificado(a) de que poderá 
                             respondê-la, caso queira, no prazo de 15 dias, contados da data da audiência de medição/conciliação, se não houver solução à presente 
-                            demanda. Cientificado(a) ainda que a eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem 
+                            demanda. Cientificado(a) ainda que a eventual não apresentação de contestação, poderá ocasionar a decretação de sua #:B{revelia} e serem 
                             consideradas verdadeiras as alegações apresentadas pela parte contrária.
                         </data>
                     </arElement>
@@ -364,7 +367,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada para, querendo, #:b{pagar a dívida}, no prazo de
                             05 (cinco) dias, sob pena de consolidar-se liminarmente a propriedade e a posse exclusiva do bem no patrimônio do credor fiduciário, 
                             inclusive com a faculdade de venda antecipada do veículo, salientando-se que no caso de incorporação ao seu patrimônio deverá o 
-                            credor promover a avaliação do veículo #:u{e/ou} querendo, #:b{contestar} a referida ação, no prazo de 15 (quinze) dias, sob pena de revelia 
+                            credor promover a avaliação do veículo #:u{e/ou} querendo, #:b{contestar} a referida ação, no prazo de 15 (quinze) dias, sob pena de #:B{revelia} 
                             e demais cominações legais. Cientificando-o(a) desde logo que dispõe o artigo 285 do Código de Processo Civil, que tem 
                             o seguinte teor: Art. 285 - Não sendo contestada a ação se presumirão aceitos pelo réu, como verdadeiros, os fatos articulados pelo autor.
                         </data>
@@ -401,7 +404,7 @@ and open the template in the editor.
                             #:B{CITAÇÃO} dA parte #{j2.env.PJeVars.processo.polos.partePassiva} acima qualificada, na forma da Lei, a fim de ter ciência 
                             da presente ação. Cientificando-a que poderá respondê-la, caso queira, no prazo de 15 dias, 
                             contados da data da audiência de medição/conciliação, se não houver solução à presente demanda. Cientificando-a ainda que a 
-                            eventual não apresentação de contestação, poderá ocasionar a decretação de sua revelia e serem consideradas verdadeiras as 
+                            eventual não apresentação de contestação, poderá ocasionar a decretação de sua #:B{revelia} e serem consideradas verdadeiras as 
                             alegações apresentadas pela parte contrária.
                         </data>
                     </arElement>            
@@ -621,7 +624,8 @@ and open the template in the editor.
             </itemContent>
         </item>
 
-        <item id="intmItAudRedesigSemSala" label="Redesignado" dataPlus="">
+        <item id="intmItAudRedesigSemSala" label="Redesignada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">1
@@ -634,11 +638,33 @@ and open the template in the editor.
                             #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
                         </data>
                     </arElement>
-                </selectorArray>               
+                </selectorArray>             
             </itemContent>
-        </item>                
+        </item>
+
+        <item id="intmItAudRedesigSemSalaUNA" label="Redesignada (#tipo UNA)" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instruçao e Julgamento}, 
+                            #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de 
+                            Conciliação, Instruçao e Julgamento}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>             
+            </itemContent>
+        </item>              
         
-        <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+        <item id="intmItAudDesigSemSala" label="Designada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+            avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">
@@ -654,6 +680,25 @@ and open the template in the editor.
                 </selectorArray>               
             </itemContent>
         </item>
+        <item id="intmItAudDesigSemSalaUNA" label="Designada (#tipo UNA)" dataPlus="">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+
         <item id="intmItAudDesigExTiExSemSala" label="Designada ExTiEx" dataPlus="">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
@@ -778,12 +823,12 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">
                         <data>
-                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -1053,7 +1098,7 @@ and open the template in the editor.
                     </arElement>      
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{CERTIFICAR} o Oficial de justiça as informações de contato telefônico e whatsapp da(s) parte(s) vinculada(s) ao presente mandado, considerando a previsão do Art. 8º da Portaria Conjunta 34/2020.
+                            #:B{CERTIFICAR} o Oficial de justiça as informações de #:B{contato telefônico e whatsapp} da(s) parte(s) vinculada(s) ao presente mandado, considerando a previsão do Art. 8º da Portaria Conjunta 34/2020.
                         </data>
                     </arElement>           
                 </selectorArray>         

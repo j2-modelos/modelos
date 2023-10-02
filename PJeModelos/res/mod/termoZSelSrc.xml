@@ -25,8 +25,7 @@ and open the template in the editor.
         <group label="Termos Comuns">
             <gItem id="termItArquivamento"/>
             <gItem id="termItDesarquivamento"/>
-            <gItem id="termItEncaminhamento"/>
-            <gItem id="termItEncaminhamentoHoraCertaCartaIntimacao"/>
+            
             <gItem id="termItJuntada"/>
             <gItem id="termItJuntadaAlvara"/>
             <gItem id="termItJuntadaCartaPrecatoria"/>
@@ -36,6 +35,15 @@ and open the template in the editor.
         
 
         
+        <group label="Encaminhamento">
+            <gItem id="termItEncaminhamento"/>
+            <gItem id="termItEncaminhamentoHoraCertaCartaIntimacao"/>
+            
+            <gItem id="termItEncaminhamentoExpedicaoAlvara"/>
+            <gItem id="termItEncaminhamentoContadoriaCustasFinais"/>
+            <gItem id="termItEncaminhamentoContadoriaCalculo"/>
+        </group>
+
         <group label="AR">
             <gItem id="termItARDevolvido"/>
             <gItem id="termItAREntregue"/>
@@ -45,6 +53,7 @@ and open the template in the editor.
         <group label="Conclusões">
             <gItem id="termItConclusao"/>
             <gItem id="termItConclusaoPeticao"/>
+            <gItem id="termItConclusaoExtincao"/>
             <gItem id="termItConclusaoRegularizarMovimentacao"/>
             <gItem id="termItConclusaoRegularizarSuspensao"/>
         </group>     
@@ -55,7 +64,7 @@ and open the template in the editor.
         </group>   
         
     </groupsDefs>
-    <items>      
+    <items initialSelected="termItJuntada">      
         <item id="termItConclusaoCor2020" label="Conclusão" dataPlus="{ 'titleAppend': 'CONCLUSÃO', 'descricaoAppend': 'Conclusão - Correição 2020' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -82,6 +91,15 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:span!caput{Nesta data}, em razão da #:U{petição #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}, faço #:B{CONCLUSÃO} dos presentes autos #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.MM} #:B{#{j2.env.PJeVars.unidade.juiz.nome}}#:span!dot{.}
+                </data>
+            </itemContent>
+        </item>
+        <item id="termItConclusaoExtincao" label="Conclusão | Extinção" dataPlus="{ 'titleAppend': 'CONCLUSÃO', 'descricaoAppend': 'Conclusão' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span!caput{Nesta data}, considerando o cumprimento do despacho do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} e em face do alvará expedido,
+                    remeto os autos #:B{CONCLUSOS} #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.MM} 
+                    #:B{#{j2.env.PJeVars.unidade.juiz.nome}}#:span!dot{.}
                 </data>
             </itemContent>
         </item>
@@ -201,18 +219,48 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>
-        <item id="termItEncaminhamento" label="Encaminhamento" dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO' }">
+        <item id="termItEncaminhamento" label="Encaminhamento" 
+            dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:span!caput{Nesta data} #:B{ENCAMINHO} os presentes autos para ser realizada o(a) XXXXProcedimentoARealizarSecretariaXXX#, conforme o que dispõe a determinação #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}#:span!dot{.}
                 </data>
             </itemContent>
         </item>
-        <item id="termItEncaminhamentoHoraCertaCartaIntimacao" label="Encaminhamento Expedição Carta de Intimação" dataPlus="{ 'titleAppend': 'ENCAMIHAMENTO', 'descricaoAppend': 'Encaminhamento para expedição de carta de intimação'  }">
+        <item id="termItEncaminhamentoHoraCertaCartaIntimacao" label="Expedição Carta de Intimação"
+            dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO', 'descricaoAppend': 'Encaminhamento para expedição de carta de intimação'  }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:span!caput{Nesta data}, em atenção ao teor da certidão do oficial de justiça #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, referente à citação por hora certa,
                     #:B{ENCAMINHO os presentes autos para expedição de carta de intimação}, visando à formalização do ato, na forma prevista no art. 254 do CPC/2015#:span!dot{.}
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termItEncaminhamentoExpedicaoAlvara" label="Expedição de alvará" 
+            dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO', 'descricaoAppend': 'Encaminhamento para expedição de alvará'  }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span!caput{Nesta data,} considerando a autorização contida em sentença, o pagamento voluntário e a concordância da parte autora,
+                    #:B{ENCAMINHO} os autos para expedição de alvará no sistema SISCONDJ, implementado pelo TJMA, nos termos da Resolução GP 75.2022#:span!dot{.}
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termItEncaminhamentoContadoriaCustasFinais" label="Contadoria | Custas Finais" 
+            dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO', 'descricaoAppend': 'Encaminhamento para elaborar cálculo de custas finais'  }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span!caput{Nesta data} 
+                    #:B{ENCAMINHO} os autos para a #:B{Contadoria Judicial}, para fins de confecção de #:B{cálculo de custas finais}#:span!dot{.}
+                </data>
+            </itemContent>
+        </item>        
+        <item id="termItEncaminhamentoContadoriaCalculo" label="Contadoria | Cálculo do id XXX" 
+            dataPlus="{ 'titleAppend': 'ENCAMINHAMENTO', 'descricaoAppend': 'Encaminhamento para elaborar cálculo'  }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:span!caput{Nesta data} 
+                    #:B{ENCAMINHO} os autos para a #:B{Contadoria Judicial}, para fins de realização dos cálculos mencionados no 
+                    #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}#:span!dot{.}
                 </data>
             </itemContent>
         </item>        

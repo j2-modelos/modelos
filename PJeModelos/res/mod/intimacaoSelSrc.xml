@@ -15,13 +15,14 @@ and open the template in the editor.
         </elemento>
     </itemFormats>
     <groupsDefs>
-        <group label="Comuns">
+        <group label="#Comuns">
             <gItem id="intmItSentenca"/>
             <gItem id="intmItDespacho"/>
             <gItem id="intmItDecisao"/>
             <gItem id="intmItGenerico"/>
             <gItem id="intmItLiminar"/>
             <gItem id="intmItAtoOrdinatorio"/>
+            <gItem id="intmItDecisaoObrigacaoFazer"/>
             <gItem id="intmItSentencaObrigacaoFazer"/>
         </group>
         <group label="Alvará | Certidão | Portaria 29922022">
@@ -34,8 +35,10 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
+            <gItem id="intmItAudDesigSemSalaUNA"/>
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
+            <gItem id="intmItAudRedesigSemSalaUNA"/>
             <gItem id="intmItAudCEJUSC"/>
             <gItem id="intmItAudCancel"/>
             <gItem id="intmItAudInstrucaoDeferimento"/>
@@ -45,6 +48,7 @@ and open the template in the editor.
             
             <gItem id="intmItAdvertenciaContumacia"/>
             <gItem id="intmItAdvertenciaRevelia"/>
+            <gItem id="intmItAudienciaPresencial"/>
         </group>
         <group label="Diversos">
             <gItem id="intmItApresContrarrazoes"/>
@@ -61,7 +65,7 @@ and open the template in the editor.
             <gItem id="intmItJuntExtratoBancario"/>
             <gItem id="intmItOJCertificarContatos"/>
             <gItem id="intmItManifestarSe"/>
-            <gItem id="intmItManifestarSeReplica"/>
+            <!--gItem id="intmItManifestarSeReplica"/-->
             <gItem id="intmItPretensaoResistida"/>
             <gItem id="intmItCienciaDiligenciaNegativa"/>
             
@@ -112,7 +116,7 @@ and open the template in the editor.
             <gItem id="intmIt"/>
         </group-->
     </groupsDefs>
-    <items>
+    <items initialSelected="intmItSentenca">
         <!-- items selectorArray are 'binded' with meioComunicacao.xml 
             <item id="meioComunicItCorreios" ...
             <item id="meioComunicItCentralMandados" ...
@@ -242,7 +246,10 @@ and open the template in the editor.
             </itemContent>
         </item>
         
-        <item id="intmItAudDesigSemSala" label="Designada" dataPlus="">
+        <item id="intmItAudDesigSemSala" label="Designada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">
@@ -253,6 +260,24 @@ and open the template in the editor.
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+        <item id="intmItAudDesigSemSalaUNA" label="Designada (#tipo UNA)" dataPlus="{ 'isAdHoc': false }">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -318,7 +343,8 @@ and open the template in the editor.
             </itemContent>
         </item>
         
-        <item id="intmItAudRedesigSemSala" label="Redesignado" dataPlus="">
+        <item id="intmItAudRedesigSemSala" label="Redesignada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">1
@@ -329,6 +355,25 @@ and open the template in the editor.
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>             
+            </itemContent>
+        </item>
+
+        <item id="intmItAudRedesigSemSalaUNA" label="Redesignada (#tipo UNA)" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instruçao e Julgamento}, 
+                            #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de 
+                            Conciliação, Instruçao e Julgamento}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
                         </data>
                     </arElement>
                 </selectorArray>             
@@ -569,12 +614,12 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">
                         <data>
-                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -791,7 +836,7 @@ and open the template in the editor.
             </itemContent>
         </item>
         
-        <item id="intmItPenhoraOnLineOferecerEmbargos" label="Penhora Online - Oferecer Embargos" dataPlus="">
+        <item id="intmItPenhoraOnLineOferecerEmbargos" label="Oferecer Embargos" dataPlus="">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">1
@@ -1125,6 +1170,39 @@ and open the template in the editor.
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{SENTENÇA}} #:span@docId{} proferida por este Juízo, 
                             #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no julgado}},
+                            cuja cópia segue anexa.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+        <item id="intmItDecisaoObrigacaoFazer" label="Decisão | Obrigação" dataPlus="requireIdElementSet">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido ato judicial}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCorreios">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
+                            cuja cópia segue anexa.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItDJe">
+                        <data>
+                            #:B{INTIMADO(A)} de todo o teor da #:B{#:U{DECISÃO}} #:span@docId{}proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
+                            a seguir transcrita.
+                        </data>
+                    </arElement>                
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento do inteiro teor da #:B{#:U{DECISÃO}} #:span@docId{} proferida por este Juízo, 
+                            #:U{#:B{bem como do teor da(s) OBRIGAÇÃO(ÕES) DE FAZER/NÃO FAZER constantes no referido  ato judicial}},
                             cuja cópia segue anexa.
                         </data>
                     </arElement>            
@@ -1481,8 +1559,8 @@ and open the template in the editor.
                             #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
                             completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
-                            em relação aos danos morais alegados}, por meio da plataforma pública digital de interlocução 
+                            ação apresentou requerimento(s) administrativo(s) para solução da demanda,  inclusive em relação ao pedido 
+                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
@@ -1494,8 +1572,8 @@ and open the template in the editor.
                             #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
                             completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
-                            em relação aos danos morais alegados}, por meio da plataforma pública digital de interlocução 
+                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, inclusive em relação ao pedido 
+                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior

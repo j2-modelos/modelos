@@ -161,7 +161,7 @@ try {
         });
         
         var tx = '';
-        _a.sort();
+        //_a.sort(); ordenação a pedidos dos colegas
         for(var i = 0; i < _a.length; i++)
           tx += (tx.length) ? ( (i===_a.length-1)? ' E ': ', ' ) + _a[i] : 'MANDADO DE ' + _a[i];
         

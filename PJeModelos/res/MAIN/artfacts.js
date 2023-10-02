@@ -84,13 +84,21 @@ try {
         'fileName' : 'Modelos.xml'
       },
       'unidadesAutorizadas' : { 
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/UnidadesAutorizadas.xml' : 'rynf0qbcnvxmu44'; },
+        'lib': 'ROOT/res/XML/UnidadesAutorizadas.xml',
+        'type': 'j2/xml',
+        'version' : '1.1', 
+        'fileName' : 'UnidadesAutorizadas.xml',
+        //'storable' : true
+      },
+      /*'unidadesAutorizadas' : { 
         'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/UnidadesAutorizadas.xml' : '8rdsdj8msocl88z'; },
         'lib': window.j2Extension ? 'ROOT/res/XML/UnidadesAutorizadas.xml' : 'ROOT/res/XML/UnidadesAutorizadas.js',
         'type': window.j2Extension ? 'j2/xml' : 'j2/javascript',
         'version' : '0.1', 
         'fileName' : window.j2Extension ? 'UnidadesAutorizadas.xml' : 'UnidadesAutorizadas.js',
         'storable' : true
-      },
+      },*/
       /*'usuarios' : {
         'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/XML/Usuarios.xml' : 'bei36n9jprcmtvx'; },        
         'lib': window.j2Extension ? 'ROOT/res/XML/Usuarios.xml' : 'ROOT/res/XML/Usuarios.js',
@@ -213,6 +221,13 @@ try {
         'type': 'j2/styleSheet',
         'version' : '1.8.7', 
         'fileName' : 'chosen-bs.css'
+      },
+      'jqueryContextMenu' : {  // chosen
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/jquery.contextMenu.css' : 'ep504t2p761f423'; },
+        'lib': 'ROOT/res/css/jquery.contextMenu.css',
+        'type': 'j2/styleSheet',
+        'version' : '2.9.2', 
+        'fileName' : 'jquery.contextMenu.css'
       }
     };
     
@@ -779,6 +794,22 @@ try {
         'type': 'j2/javascript',
         'version' : '1.0', 
         'fileName' : 'jquery-ui.js'
+           
+      },
+      'jqueryInitialize' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.initialize.js' : '7zuwec0wrmvuxxv'; },                
+        'lib': 'ROOT/lib/jquery.initialize.js',
+        'type': 'j2/javascript',
+        'version' : '0.0.0', 
+        'fileName' : 'jquery.initialize.js'
+           
+      },
+      'jqueryContextMenu' : {
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/lib/jquery.contextMenu.js' : 'pm8l59lftz1bphu'; },                
+        'lib': 'ROOT/lib/jquery.contextMenu.js',
+        'type': 'j2/javascript',
+        'version' : '2.9.2', 
+        'fileName' : 'jquery.contextMenu.js'
            
       },
       'html2pdf' : { //pdf

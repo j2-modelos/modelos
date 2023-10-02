@@ -16,7 +16,7 @@ and open the template in the editor.
             </textHTML>
         </elemento>
     </itemFormats>
-    <groupsDefs>
+    <groupsDefs naoOrdenado="true">
         <group label="Polo Ativo">
             <gItem id="poloAtivo.Demandante"/>
             <gItem id="poloAtivo.Demandante2"/>
@@ -28,7 +28,7 @@ and open the template in the editor.
             <gItem id="poloPassivo.Demandado.CEMAR"/>
         </group>     
     </groupsDefs>
-    <items>
+    <items naoOrdenado="true">
         <item id="poloAtivo.Demandante" label="Primeiro Demandante" dataPlus="{ 'polo':'partesPoloAtivo' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

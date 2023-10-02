@@ -2887,7 +2887,7 @@
                             <elemento tag="div" scope="EDT" classBS="dropdown-menu">
                                 <elemento tag="a" scope="EDT" id="ReferenciaDocumento-AddId-Preseted" 
                                     classBS="dropdown-item">
-                                    <HTMLAttribute name="href" value="#"/>
+                                    <HTMLAttribute name="href" value="javascript: void 0;"/>
                                     Inserir no pronto pré-definido
                                 </elemento>
                             </elemento>
