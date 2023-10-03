@@ -7220,7 +7220,7 @@ try {
           return;
         }
         
-        if(select.options[select.selectedIndex].disabled)
+        if(select.options[select.selectedIndex]?.disabled)
           return;
         
         pkg.Selector.changeAction(_);

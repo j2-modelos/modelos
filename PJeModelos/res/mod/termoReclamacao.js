@@ -123,6 +123,7 @@ try {
           { id : 'trmRcl.Comuns.Inexistencia', ipLabel : 'Débito' },
           { id : 'trmRcl-Comuns-Restituicao', ipLabel : 'Restituicao' },
           { id : 'trmRcl-ObgFaz-TransferenciaTitularidadeDebito', ipLabel : 'Débitos' },
+          { id : 'trmRcl-Comuns-Restituicao-dobro', ipLabel : 'Rest. Dobro' },
           
         ],
         selector : 'selectortermoReclamacaoPedidosItens',
@@ -366,9 +367,9 @@ try {
             mod.sup.parteEdit.win.close();
           };          
           var declWA = mod.sup.parteEdit.gE('buttonGenDecWA');
-          declWA.onclick = function(event){
+          declWA && (declWA.onclick = function(event){
             pkg.TermoReclamacaoSeletorParte.gerarDeclaracaoWhatsApp();
-          };  
+          })
       
       },
       build : function(containers){
@@ -404,9 +405,10 @@ try {
          return _td;
       },
       changeParteTipo : function(event, select, changed){
-        var sP = pkg.TermoReclamacaoSeletorParte.partes.selected;
+        var parteSelecionada = pkg.TermoReclamacaoSeletorParte.partes.selected;
         
         var pAtiv = { prop : '#{parte.selIProp.polo}', value : 'partesPoloAtivo'};
+        var pPassiv = { prop : '#{parte.selIProp.polo}', value : 'partesPoloPassivo'};
         var pBiVl = function(bind){ /* previsou binding is valuated */ 
           return [
             pAtiv,
@@ -418,27 +420,40 @@ try {
             }
           ];
         };
-        var pBiCkd = function(bind){ /* previsou binding is valuated */ 
+        var pBiCkd = function(bind, _pPolo, valProp){ /* previsou binding is valuated */ 
           return [
-            pAtiv,
+            _pPolo || pAtiv,
             {
               prop : '#{parte.binding.' + bind + '.input.checked}',
-              value : true
+              value : typeof valProp === 'boolean' ? valProp : ( valProp || true )
             }
           ];
-        };      
+        };       
         var pBiCkdBivl = function(bindCheck, bindValue){
           var _ = pBiVl(bindValue);
           _[_.length]=pBiCkd(bindCheck)[1];
           return _;
         };
+
+        const pAtivoOuProcuradoriaFalsa = pBiCkd('checkBoxProcuradoria', pAtiv, false)
+        pAtivoOuProcuradoriaFalsa.unshift({
+          operador: 'OR'
+        })
         
-        var definitions = [         /*  PF    PJ */
+        /**
+         * 0: identificação do controle
+         * 1: visualizável para pessoa física
+         * 2: visualizável para pessoa jurídica
+         * 3: avaliar quando outro elemento for alterado
+         * 4: qual elemento focar após a alteração
+         */
+        var definicoesDeExibicaoControle = [         /*  PF    PJ */
           ['ParteNome',        true,    true],
           ['ParteNomeRazao',   false,   true],
           ['ParteNacional',    true,    false],
           ['ParteEstadoCivil', pAtiv,   false],
           ['ParteProfissao',   pAtiv,   false],
+          ['ParteEscolaridade',   pAtiv,   false],
           ['ParteCPFPre',      true,    false],
           ['ParteRepLegalPre', false,   pAtiv, 'ParteRepLegal'],
           ['ParteRepLegal',    false,   pAtiv],
@@ -446,15 +461,18 @@ try {
           ['ParteCPF',         true,    false],
           ['ParteCNPJ',        false,   true],
           ['PartePFEndPre',    true,    false],
-          ['PartePJEndPre',    false,   true],
-          ['ParteEndLograd',   true,    true],
-          ['ParteEndNumero',   true,    true],
-          ['ParteEndBairro',   true,    true],
-          ['ParteEndCmpoRef',  true,    true],
-          ['ParteEndCidade',   true,    true],
-          ['ParteEndUF',       true,    true],
-          ['ParteTelefonePre', true,    true],
-          ['ParteTelefone1',   true,    false,  'ParteTelefonePre', 'ParteTelefone2'],
+          ['PartePJProcuradoria',   false, pBiCkd('checkBoxProcuradoria', pPassiv), 'checkBoxProcuradoria'],
+          ['checkBoxProcuradoria',  false, pPassiv, [], 'ParteNome'],   
+          ['checkBoxProcuradoriaLabel',  false, pPassiv],   
+          ['PartePJEndPre',    false,   pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndLograd',   true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndNumero',   true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndBairro',   true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndCmpoRef',  true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndCidade',   true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteEndUF',       true,    pAtivoOuProcuradoriaFalsa, 'checkBoxProcuradoria'],
+          ['ParteTelefonePre', true,    pAtiv],
+          ['ParteTelefone1',   true,    pAtiv,  'ParteTelefonePre', 'ParteTelefone2'],
           ['ParteTelefone2',   pBiVl('ParteTelefone1'),  
                                       pBiVl('ParteTelefone1'), 
                                                'ParteTelefone1',  'ParteTelefone3'],
@@ -471,96 +489,121 @@ try {
                                       pBiVl('ParteEMail1'),
                                              'ParteEMail1'],
           
-          ['ParteEMail1',      pAtiv, pAtiv, [], 'ParteEMail2'],
+          ['ParteEMail1',      pAtiv, false, [], 'ParteEMail2'],
           ['ParteEMail2',      pBiVl('ParteEMail1'), 
                                       pBiVl('ParteEMail1'),
                                                  'ParteEMail1'],
           ['checkBoxWA',       pAtiv, pAtiv, [], 'ParteWA1'],  
           ['checkBoxWALabel',  pAtiv, pAtiv],  
-          ['ParteWAPre',       pBiCkd('checkBoxWA'), 
-                                      pBiCkd('checkBoxWA'), 
+          ['ParteWAPre',       pAtiv, 
+                                      pAtiv, 
                                                  'ParteWA1'],                    
-          ['ParteWA1',         pBiCkd('checkBoxWA'), 
+         /* ['ParteWA1',         pBiCkd('checkBoxWA'), 
                                       pBiCkd('checkBoxWA'), 
                                                   'checkBoxWA', 
+                                                                'ParteWA2'], */         
+          ['ParteWA1',         true, 
+                                      pAtiv, 
+                                                   
                                                                 'ParteWA2'],          
-          ['ParteWA2',         pBiCkdBivl('checkBoxWA','ParteWA1'), 
+        /*  ['ParteWA2',         pBiCkdBivl('checkBoxWA','ParteWA1'), 
                                       pBiCkdBivl('checkBoxWA','ParteWA1'), 
+                                                  ['ParteWA1', 'checkBoxWA']],*/
+          ['ParteWA2',         pBiVl('ParteWA1'), 
+                                      pBiVl('ParteWA1'), 
                                                   ['ParteWA1', 'checkBoxWA']],
-          ['buttGenDecWASpan', pBiCkdBivl('checkBoxWA','ParteWA1'), 
+       /*   ['buttGenDecWASpan', pBiCkdBivl('checkBoxWA','ParteWA1'), 
                                       pBiCkdBivl('checkBoxWA','ParteWA1'), 
-                                                  ['ParteWA1', 'checkBoxWA']]
+                                                  ['ParteWA1', 'checkBoxWA']]*/
         ];
-        var c = [
+        var bidingOuElArray = [
           'binding', 'oEl'
         ];
         
-        var idx = -1;
+        let PF_PJ_E_IDX = -1;
         switch(select.value){
-          case 'PF': idx = 1; break;
-          case 'PJ': idx = 2; break;
-          case 'E':  idx = 3; break;
+          case 'PF': PF_PJ_E_IDX = 1; break;
+          case 'PJ': PF_PJ_E_IDX = 2; break;
+          case 'E':  PF_PJ_E_IDX = 3; break;
         }
         
-        var defs;
+        var definicoesComAlteracoesComputadas;
         var changedDef;
         if(changed){
-          defs = [];
-          forEach(definitions, function(defEl){
-            if(defEl[0]===changed){
-              defs[defs.length] = defEl;
-              changedDef = defEl;
+          definicoesComAlteracoesComputadas = [];
+          forEach(definicoesDeExibicaoControle, function(definicaoIterando){
+            if(definicaoIterando[0]===changed){
+              definicoesComAlteracoesComputadas.push(definicaoIterando);
+              changedDef = definicaoIterando;
             }
-            if(defEl[3]){
-              if(isArray(defEl[3]))
-                forEach(defEl[3], function(ch){
+            if(definicaoIterando[3]){
+              if(isArray(definicaoIterando[3]))
+                forEach(definicaoIterando[3], function(ch){
                   if(ch===changed)
-                    defs[defs.length] = defEl;
+                    definicoesComAlteracoesComputadas.push( definicaoIterando )
                 });
-              if(defEl[3]===changed)
-                defs[defs.length] = defEl;
+              if(definicaoIterando[3]===changed)
+                definicoesComAlteracoesComputadas.push( definicaoIterando )
             }
           });
         }
         else
-          defs = definitions;
+          definicoesComAlteracoesComputadas = definicoesDeExibicaoControle;
         
-        if(!(defs.length))
+        if(!(definicoesComAlteracoesComputadas.length))
           return;
         
         function evalPrem(prem){
-          var pr = sP.parseVar(prem.prop);
+          var pr = parteSelecionada.parseVar(prem.prop);
           pr = (isFunction(pr)) ? pr() : pr;
           pr = (isFunction(prem.value)) ? prem.value(pr) : pr === prem.value;
           return pr;
         };
         
-        forEach(c, function(c_){
-          forEach(defs, function(defEl){
-            if(sP[c_])
-              if(sP[c_][defEl[0]])
-                if(!(isObject(defEl[idx])) && !(isArray(defEl[idx])))
-                  sP[c_][defEl[0]].visible( defEl[idx] );
-                else if(isArray(defEl[idx])){
-                  var evRs = true;
-                  forEach(defEl[idx], function(prem){
-                    evRs = evRs && evalPrem( prem );
+        const IDX_ID = 0
+        forEach(bidingOuElArray, function(bindingOuOEl){
+          forEach(definicoesComAlteracoesComputadas, function(definicaoIterando){
+            if(parteSelecionada[bindingOuOEl])
+              //se a parte tiver o biding para o elemento
+              if(parteSelecionada[bindingOuOEl][definicaoIterando[IDX_ID]])
+                // o elemento no indice do tipo da pessoa não é objeto e não é array
+                if(!(isObject(definicaoIterando[PF_PJ_E_IDX])) && !(isArray(definicaoIterando[PF_PJ_E_IDX])))
+                  parteSelecionada[bindingOuOEl][definicaoIterando[0]].visible( definicaoIterando[PF_PJ_E_IDX] );
+                else if(isArray(definicaoIterando[PF_PJ_E_IDX])){
+                  let evRs = true;
+                  let operador = 'AND'
+                  forEach(definicaoIterando[PF_PJ_E_IDX], function(prem){
+                    if(prem.operador){
+                      operador = prem.operador
+                      evRs = false
+                      return
+                    }
+
+                    switch(operador){
+                      case 'AND':
+                        evRs = evRs && evalPrem( prem );
+                        break
+
+                      case 'OR':
+                        evRs = evRs || evalPrem( prem )
+                        break
+                    }
                   });
-                  sP[c_][defEl[0]].visible( evRs );
+                  parteSelecionada[bindingOuOEl][definicaoIterando[0]].visible( evRs );
                 }
-                else if(isObject(defEl[idx])){ 
-                  sP[c_][defEl[0]].visible( evalPrem(defEl[idx]) );
+                else if(isObject(definicaoIterando[PF_PJ_E_IDX])){ 
+                  parteSelecionada[bindingOuOEl][definicaoIterando[0]].visible( evalPrem(definicaoIterando[PF_PJ_E_IDX]) );
                 }
                  
           });
         });
         
         if(changedDef)
-          if(sP.binding[changedDef[0]])
-              if(sP.binding[changedDef[0]].input.value.length)
-                if(sP.binding[changedDef[4]])
-                  if(sP.binding[changedDef[4]].input.value.length === 0)
-                    sP.binding[changedDef[4]].input.focus();
+          if(parteSelecionada.binding[changedDef[0]])
+              if(parteSelecionada.binding[changedDef[0]].input.value.length)
+                if(parteSelecionada.binding[changedDef[4]])
+                  if(parteSelecionada.binding[changedDef[4]].input.value.length === 0)
+                    parteSelecionada.binding[changedDef[4]].input.focus();
         
       },
       gerarDeclaracaoWhatsApp : function(){      

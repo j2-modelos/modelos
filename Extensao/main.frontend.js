@@ -2190,6 +2190,9 @@ function fronendLoad(){
         const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
         $uiDadosDaList.lasNumProc = '0'
         $uiDadosDaList.click((_ev)=>{
+          if( ! jQ3(_ev.target).is('.tarefa-numero-processo') )
+            return
+
           const $eventTargetLi = jQ3(_ev.target).parents('li');
           console.log('TESTANDO: click')
           __openSentinela($eventTargetLi)

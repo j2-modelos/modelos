@@ -85,13 +85,16 @@
                 </exercicioTemporario>
 
                 <Presidencia numeroUnico="0801308-43.2020.8.10.0047" usuarioId="magMARCOANT">
-                    <PortariaDesignacao numero="3785" ano="2020" dataAto="2020-12.07"/>
+                    <PortariaDesignacao numero="3785" ano="2020" dataAto="2020-12-07"/>
                 </Presidencia>
                 <Presidencia numeroUnico="0801343-03.2020.8.10.0047" usuarioId="magMARCOANT">
-                    <PortariaDesignacao numero="3785" ano="2020" dataAto="2020-12.07"/>
+                    <PortariaDesignacao numero="3785" ano="2020" dataAto="2020-12-07"/>
                 </Presidencia>
                 <Presidencia numeroUnico="0800769-72.2023.8.10.0047" usuarioId="magisDANIELA_JESUS">
                     <PortariaDesignacao numero="3423" ano="2023" dataAto="2023-07-21"/>
+                </Presidencia>
+                <Presidencia numeroUnico="0801280-70.2023.8.10.0047" usuarioId="magisADOLFO">
+                    <PortariaDesignacao numero="4514" ano="2023" dataAto="2023-09-25"/>
                 </Presidencia>
             </magistrados>
             <!-- 47202467372 -DELVAN -->

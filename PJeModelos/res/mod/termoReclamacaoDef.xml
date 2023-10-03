@@ -169,12 +169,20 @@ and open the template in the editor.
                 <HTMLAttribute name="spanOnlyFilled" value="."/>
                 <HTMLAttribute name="placeholder" value="Estado Civil"/>
                 <HTMLAttribute name="align" value="middle"/>
+                <HTMLAttribute name="list" value="estado-civil"/>
             </elemento>        
             <elemento tag="input" scope="EDT" id="ParteProfissao" class="p edtCtrl FntDocEdt AlignCenter width100 Hidden">
                 <HTMLAttribute name="type" value="text"/>
                 <HTMLAttribute name="spanOnlyFilled" value="."/>
                 <HTMLAttribute name="placeholder" value="Profissão"/>
                 <HTMLAttribute name="align" value="middle"/>
+            </elemento>        
+            <elemento tag="input" scope="EDT" id="ParteEscolaridade" class="p edtCtrl FntDocEdt AlignCenter width100 Hidden">
+                <HTMLAttribute name="type" value="text"/>
+                <HTMLAttribute name="spanOnlyFilled" value="."/>
+                <HTMLAttribute name="placeholder" value="Escolaridade"/>
+                <HTMLAttribute name="align" value="middle"/>
+                <HTMLAttribute name="list" value="escolaridades"/>
             </elemento>        
             <elemento tag="input" scope="EDT" id="ParteRepLegal" class="p edtCtrl FntDocEdt AlignCenter width100 Hidden">
                 <HTMLAttribute name="type" value="text"/>
@@ -193,7 +201,26 @@ and open the template in the editor.
                 <HTMLAttribute name="type" value="text"/>
                 <HTMLAttribute name="placeholder" value="CNPJ"/>
                 <HTMLAttribute name="align" value="middle"/>
-            </elemento>        
+            </elemento>      
+            <!-- PROCURADORIA -->
+            <elemento tag="div" scope="EDT" id="divProcuradoria" class="">
+                <HTMLAttribute name="style" value="display: flex;"/>
+                <elemento tag="div" scope="EDT">
+                    <HTMLAttribute name="style" value="float:left;"/>
+                    <elemento tag="input" scope="EDT" id="checkBoxProcuradoria" class="">
+                        <HTMLAttribute name="type" value="checkbox"/>
+                    </elemento>
+                </elemento>
+                <elemento tag="div" scope="EDT">
+                    <HTMLAttribute name="style" value="float:left;"/>
+                    <elemento tag="span" scope="EDT" id="checkBoxProcuradoriaLabel">
+                        <elemento tag="p" scope="EDT" class="p FntDocEdt AlignJustify width100">
+                            com Procuradoria no PJe
+                        </elemento>
+                    </elemento>
+                </elemento>
+            </elemento>  
+            <!-- LOGRADOURO -->
             <elemento tag="input" scope="EDT" id="ParteEndLograd" class="p edtCtrl FntDocEdt AlignCenter width100">
                 <HTMLAttribute name="notDotBefore" value="."/>
                 <HTMLAttribute name="type" value="text"/>
@@ -238,6 +265,7 @@ and open the template in the editor.
                 <HTMLAttribute name="notDotBefore" value="."/>
                 <HTMLAttribute name="type" value="text"/>
                 <HTMLAttribute name="placeholder" value="Telefone"/>
+                <HTMLAttribute name="spanOnlyFilled" value="."/>
                 <HTMLAttribute name="align" value="middle"/>
             </elemento>        
             <elemento tag="input" scope="EDT" id="ParteTelefone2" class="p edtCtrl FntDocEdt AlignCenter width100 Hidden">
@@ -272,7 +300,7 @@ and open the template in the editor.
                 <HTMLAttribute name="align" value="middle"/>
             </elemento>        
             
-            <elemento tag="div" scope="EDT">
+            <!--elemento tag="div" scope="EDT">
                 <HTMLAttribute name="style" value="display: flex;"/>
                 <elemento tag="div" scope="EDT">
                     <HTMLAttribute name="style" value="float:left;"/>
@@ -288,8 +316,8 @@ and open the template in the editor.
                         </elemento>
                     </elemento>
                 </elemento>
-            </elemento>
-            <elemento tag="input" scope="EDT" id="ParteWA1" class="p edtCtrl FntDocEdt AlignCenter width100 Hidden">
+            </elemento-->
+            <elemento tag="input" scope="EDT" id="ParteWA1" class="p edtCtrl FntDocEdt AlignCenter width100">
                 <HTMLAttribute name="notDotBefore" value="."/>
                 <HTMLAttribute name="type" value="text"/>
                 <HTMLAttribute name="placeholder" value="WhatsApp"/>
@@ -302,13 +330,13 @@ and open the template in the editor.
                 <HTMLAttribute name="spanOnlyFilled" value="."/>
                 <HTMLAttribute name="align" value="middle"/>
             </elemento>
-            <elemento tag="span" scope="EDT" id="buttGenDecWASpan" >
+            <!--elemento tag="span" scope="EDT" id="buttGenDecWASpan" >
                 <elemento tag="button" id="buttonGenDecWA" class="p FntModeEditor width100 edtCtrl" scope="EDT">
                     <elemento tag="p" class="p FntModeEditor width100 AlignCenter" scope="EDT">
                         Gerar Declaração WhatsApp
                     </elemento>
                 </elemento>
-            </elemento>                                                                                                                                                                                                                                                                                                                                                                                                  
+            </elemento-->                                                                                                                                                                                                                                                                                                                                                                                                  
         </versao>
     </classeDef>
     
@@ -329,6 +357,9 @@ and open the template in the editor.
                 </elemento>
                 <elemento tag="span" scope="EXP" id="ParteProfissao" class="Hidden">
                     , XXXProfissãoXXX
+                </elemento>
+                <elemento tag="span" scope="EXP" id="ParteEscolaridade" class="Hidden">
+                    , XXXEscolaridadeXXX
                 </elemento>
                 <elemento tag="span" scope="EXP" id="ParteCPFPre">
                     <textHTML scope="EXP">
@@ -358,12 +389,20 @@ and open the template in the editor.
                     XXXCPFXXX
                 </elemento>
                 <elemento tag="span" scope="EXP" id="ParteCNPJ" class="Hidden b">
-                    XXXCNPJ
+                    XXXCNPJXXX
                 </elemento>
                 <elemento tag="span" scope="EXP" id="PartePFEndPre">
                     <textHTML scope="EXP">
                         <data>
                             <![CDATA[, residente e domiciliado(a) na<SPAN>&nbsp;</SPAN>]]>
+                        </data>
+                    </textHTML>
+                </elemento>
+                <!-- TEXTO PROCURADORIA -->
+                <elemento tag="span" scope="EXP" id="PartePJProcuradoria" class="Hidden">
+                    <textHTML scope="EXP">
+                        <data>
+                            <![CDATA[, com Procuradoria neste sistema PJe.]]>
                         </data>
                     </textHTML>
                 </elemento>
@@ -434,7 +473,7 @@ and open the template in the editor.
                         </data>
                     </textHTML>
                 </elemento>
-                <elemento tag="span" scope="EXP" id="ParteWA1" class="Hidden">
+                <elemento tag="span" scope="EXP" id="ParteWA1" class="">
                     XXXWhatsAppXXX
                 </elemento>
                 <elemento tag="span" scope="EXP" id="ParteWA2" class="Hidden">
@@ -6045,6 +6084,28 @@ and open the template in the editor.
                 <elemento tag="option" value="São Paulo" scope="EDT" />
                 <elemento tag="option" value="Tocantins" scope="EDT" />
 
+            </elemento>
+
+            <elemento tag="datalist" scope="EDT" id="escolaridades">
+                <elemento tag="option" value="analfabeto(a)" scope="EDT" />
+                <elemento tag="option" value="ensino fundamental incompelto" scope="EDT" />
+                <elemento tag="option" value="ensino fundamental completo" scope="EDT" />
+                <elemento tag="option" value="ensino médio incompelto" scope="EDT" />
+                <elemento tag="option" value="ensino médio completo" scope="EDT" />
+                <elemento tag="option" value="ensino superior incompelto" scope="EDT" />
+                <elemento tag="option" value="ensino superior completo" scope="EDT" />
+                <elemento tag="option" value="pós graduado(a)" scope="EDT" />
+                <elemento tag="option" value="mestre(a) em XXXXAreaXXXX" scope="EDT" />
+                <elemento tag="option" value="doutor(a) em XXXXAreaXXXX" scope="EDT" />
+            </elemento>
+
+            <elemento tag="datalist" scope="EDT" id="estado-civil">
+                <elemento tag="option" value="casado(a)" scope="EDT" />
+                <elemento tag="option" value="divorciado(a)" scope="EDT" />
+                <elemento tag="option" value="separado(a)" scope="EDT" />
+                <elemento tag="option" value="solteiro(a)" scope="EDT" />
+                <elemento tag="option" value="em união estável" scope="EDT" />
+                <elemento tag="option" value="viúvo(a)" scope="EDT" />
             </elemento>
         </versao>
     </classeDef>   

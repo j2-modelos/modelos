@@ -2747,7 +2747,7 @@
             </style-->
         </classStyles>        
         <versao id="1.0">
-            <classe id="Documento" versao="3.0">
+            <classe id="Documento" versao="3.3">
                 <!-- diferença aqui -->
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="formatacao.js" artifact="#{j2.res.lib.formatacao}"/>
@@ -2884,6 +2884,7 @@
                             <valueAr value="01682637506"/>
                             <valueAr value="02692854314"/>
                             <valueAr value="99489015334"/>
+                            <valueAr value="60936709375"/>
                         </constructs>
                     </classe>
                     <classe id="SeletorAdvertencias" versao="1.0">

@@ -64,9 +64,10 @@ function init(){
     });
   })();
   
-  jQ3.initialize('span[data-testid=menu]', function(){
+  //jQ3.initialize('span[data-testid=menu]', function(){
+  jQ3.initialize(`div[aria-label='Status']`, function(){
     var $this = jQ3(this);
-    var $button = $this.parents('div[data-testid=menu-bar-menu]');
+    var $button = $this.parent();
     if($button.is('[j2-menu]'))
       return;
     if($button.length === 0)
@@ -79,7 +80,7 @@ function init(){
       $buttonC.find('> div').attr('title', 'Iniciar conversa com novo contato de WhatsApp');
       $button.parent().prepend($buttonC);
 
-      $buttonC.find('span[data-testid=menu]').parent().parent().click(function(){
+      $buttonC.find('div').click(function(){
         j2E.whatsapp.openModal();
       });
     })();

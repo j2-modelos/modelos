@@ -1028,6 +1028,52 @@
                 </elemento>
             </elemento>
         </versao>
+        <!-- VERSÃO ABAIXO UTILIZADA SEM AS FERRAMENTAS DO PROCESSO
+             USADO PELO TERMO DE RECLAMAÇÃO
+        -->
+        <versao id="3.1">
+            <elemento tag="div" id="WS" scope="EDT">
+                <elemento tag="div" id="EditTools" scope="EDT" class="EditTools width100">
+                    <HTMLAttribute name="contenteditable" value="false"/>
+                    <elemento tag="div" id="dialogMessage" class="p WindowEditor" scope="EDT">
+                        <elemento tag="div" id="title" scope="EDT" class="richText richHeaderColor pad4px">
+                            <!--HTMLAttribute name="style" value="margin: 0;"/-->
+                            <elemento tag="p" class="p AlignCenter" scope="EDT">
+                                <textHTML scope="EDT">
+                                    <data>
+                                        <![CDATA[#{j2.env.PJeVars.processo.numero} <BR> Editar #{j2.env.modId.id} ]]>
+                                    </data>
+                                </textHTML>
+                            </elemento>
+                        </elemento>
+                        <elemento tag="div" scope="EDT">
+                            <HTMLAttribute name="style" value="overflow:auto;" />
+                            <elemento tag="dl" scope="EDT">
+                                <HTMLAttribute name="style" value="margin: 5px" />
+                                <elemento tag="dt" scope="EDT">
+                                    <elemento tag="div" id="innerContentDocEditorCore" scope="EDT">
+                                        <!-- classe id="IdDoProcesso" versao="3.0"/-->
+                                        <classeImp id="HorizontalBar" versao="1.0" scope="EDT"/>
+                                        <elemento tag="div" scope="EDT" id="DocEditorInnerCore"/>
+                                        <elemento tag="div" scope="EDT" id="DocEditorInnerBottom"/>
+                                        <!-- DEFINIDAS EM ORDEM INVERSA/-->
+                                        <elemento tag="div" class="width100" scope="EDT_BOTTOM">
+                                            <elemento tag="div" scope="EDT" class="DivLikeHr"/>
+                                            <elemento tag="button" class="p FntModeEditor width100 edtCtrl" onclick="j2.mod.clsCnstr.DocEditorCore.close();" scope="EDT">
+                                                <elemento tag="p" class="p FntModeEditor width100 AlignCenter" scope="EDT">
+                                                    Fechar
+                                                </elemento>
+                                            </elemento>
+                                        </elemento>
+                                        <classeImp id="ReferenciaDocumento" versao="3.0" scope="EDT_BOTTOM"/>
+                                    </elemento>
+                                </elemento>
+                            </elemento>
+                        </elemento>
+                    </elemento>
+                </elemento>
+            </elemento>
+        </versao>
         <versao id="3.0">
             <elemento tag="div" id="WS" scope="EDT">
                 <elemento tag="div" id="EditTools" scope="EDT" class="EditTools width100">
@@ -1246,7 +1292,21 @@
                 <innerContent scope="EXP"/>
             </elemento>
             <classeImp id="BotaoVizualizarImpressao" versao="3.0" scope="EXP"/>
-        </versao>        
+        </versao>   
+        <!-- VERSÃO ABAIXO UTILIZADA SEM AS FERRAMENTAS DO PROCESSO
+             USADO PELO TERMO DE RECLAMAÇÃO
+        -->   
+        <versao id="3.3">
+            <classeImp id="j2Data" versao="1.0" scope="EXP"/>
+            <classeImp id="DocEditorCore" versao="3.1" scope="EDT"/>
+            <!-- value id changed from jecivelExpediente to j2Exp -->
+            <elemento tag="div" scope="EXP" id="j2Exp">   
+                <innerContent scope="EXP"/>
+            </elemento>
+            <classeImp id="BotaoVizualizarImpressao" versao="3.0" scope="EXP"/>
+            <!--classeImp id="AmostraFirmaPje" versao="3.0" enabled="false" scope="EXP"/-->
+            <!--classeImp id="AmostraBotaoImprimirPJe" versao="3.0" enabled="false" scope="EXP"/-->
+        </versao>  
         <versao id="4.0">
             <classeImp id="DocEditorCore" versao="5.0" scope="EDT">
                 <constructs param="width" value="400" type="int"/>
