@@ -2456,73 +2456,6 @@ function loadPJeRestAndSeamInteraction(){
     },
     etiquetas : {
       listar : function(queryCriteria, sucCB, errCB){
-function loadPJeRestAndSeamInteraction(){
-  window.j2EPJeRest =  {
-    ajax : {
-      get : function(url, sucCB, errCB, dataType){
-        return jQ3.ajax({
-          url : url,
-          type : 'get',
-          dataType: dataType || 'json',
-          success : function(data, status, xhr){
-            if(sucCB)
-              sucCB(data, status, xhr);
-          },
-          error : function(a, b, c, d){
-            if(errCB)
-              errCB(a, b, c, d);
-          },
-          headers : {
-            "Content-Type": "application/json",
-            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-            "x-no-sso": "true",
-            "x-pje-legacy-app": "pje-tjma-1g",
-            "x-pje-cookies": document.cookie,
-            xhrFields: {
-              withCredentials: true
-            }
-          },
-          beforeSend : function(xhr, set){
-            delete set.accepts.xml;
-            delete set.accepts.script;
-            delete set.accepts.html;
-          }
-        });
-      },
-      post : function(url, data, sucCB, errCB){
-        return jQ3.ajax({
-          url : url,
-          type : 'post',
-          data : data,
-          dataType: 'json',
-          success : function(data, status, xhr){
-            if(sucCB)
-              sucCB( data, status, xhr);
-          },
-          error : function(a, b, c, d){
-            if(errCB)
-              errCB(a, b, c, d);
-          },
-          headers : {
-            "Content-Type": "application/json",
-            "authorization": "Basic MDA2NDE4MDUzMDY6MTIzNDU=",
-            "x-no-sso": "true",
-            "x-pje-legacy-app": "pje-tjma-1g",
-            "x-pje-cookies": document.cookie,
-            xhrFields: {
-              withCredentials: true
-            }
-          },
-          beforeSend : function(xhr, set){
-            delete set.accepts.xml;
-            delete set.accepts.script;
-            delete set.accepts.html;
-          }
-        });
-      }
-    },
-    etiquetas : {
-      listar : function(queryCriteria, sucCB, errCB){
 
         function _data(){
           return JSON.stringify(jQ3.extend({
@@ -2741,7 +2674,6 @@ function loadPJeRestAndSeamInteraction(){
       },
     }
   };
-
 
   if( typeof window.j2E === 'undefined')
     window.j2E = {}
