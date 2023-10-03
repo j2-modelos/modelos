@@ -2961,6 +2961,22 @@ function loadPJeRestAndSeamInteraction(){
           .fail( err => def.reject(err) )
 
           return def.promise()
+        },
+        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
+          const def = $.Deferred()
+          const acoes = _this.alertas.acoes
+          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
+
+          if(textoAlertaAlterado === textoBuffer){
+            return def.promise().resolve(acoes)
+          }
+
+          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
+          .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
+          .done( () => def.resolve(acoes) )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
         }
       }
     },
@@ -3642,38 +3658,6 @@ function loadPJeRestAndSeamInteraction(){
           })
           .fail( err => def.reject(err) )
 
-
-          return def.promise()
-        },
-        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
-          const def = $.Deferred()
-          const acoes = _this.alertas.acoes
-          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
-
-          if(textoAlertaAlterado === textoBuffer){
-            return def.promise().resolve(acoes)
-          }
-
-          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
-          .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
-          .done( () => def.resolve(acoes) )
-          .fail( err => def.reject(err) )
-
-          return def.promise()
-        },
-        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
-          const def = $.Deferred()
-          const acoes = _this.alertas.acoes
-          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
-
-          if(textoAlertaAlterado === textoBuffer){
-            return def.promise().resolve(acoes)
-          }
-
-          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
-          .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
-          .done( () => def.resolve(acoes) )
-          .fail( err => def.reject(err) )
 
           return def.promise()
         }
