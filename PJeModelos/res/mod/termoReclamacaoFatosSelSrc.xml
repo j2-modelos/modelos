@@ -96,7 +96,7 @@ and open the template in the editor.
             </itemContent>
         </item>
                  
-        <item id="trmRclFatoItSelecione" label="Genérico" dataPlus="">
+        <item id="trmRclFatoItSelecione" label="#Genérico" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Narra a parte demandante que XXXFatosXXXX.

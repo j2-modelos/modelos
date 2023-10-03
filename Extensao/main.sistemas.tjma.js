@@ -51,7 +51,7 @@ function init(){
       if(_uc)
         return JSON.parse( _uc )
 
-      setInterval(sendToken, 1000)
+      setTimeout(sendToken, 1000)
       return { token: j2E.env.urlParms._atk }
     }
 

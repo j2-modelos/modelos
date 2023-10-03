@@ -16,7 +16,7 @@ and open the template in the editor.
             </textHTML>
         </elemento>
     </itemFormats>
-    <groupsDefs>
+    <groupsDefs naoOrdenado="true">
         <group label="Polo Ativo">
             <gItem id="poloAtivo.Demandante"/>
             <gItem id="poloAtivo.Demandante2"/>
@@ -24,11 +24,12 @@ and open the template in the editor.
         <group label="Polo Passivo">
             <gItem id="poloPassivo.Demandado"/>
             <gItem id="poloPassivo.Demandado2"/>
+            <gItem id="poloPassivo.Demandado3"/>
             <gItem id="poloPassivo.Demandado.CAEMA"/>
             <gItem id="poloPassivo.Demandado.CEMAR"/>
         </group>     
     </groupsDefs>
-    <items>
+    <items naoOrdenado="true">
         <item id="poloAtivo.Demandante" label="Primeiro Demandante" dataPlus="{ 'polo':'partesPoloAtivo' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -57,6 +58,13 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{SEGUNDO DEMANDADO}
+                </data>
+            </itemContent>
+        </item>        
+        <item id="poloPassivo.Demandado3" label="Terceiro Demandado" dataPlus="{'polo':'partesPoloPassivo'}">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{TERCEIRO DEMANDADO}
                 </data>
             </itemContent>
         </item>        

@@ -25,13 +25,18 @@
             "activeTab",
             "scripting",
             "tabs",
-            "nativeMessaging"
+            "nativeMessaging",
+            "clipboardRead",
+            "clipboardWrite",
+            "https://pje.tjma.jus.br/*",
+            "https://frontend.prd.cnj.cloud/*"
             
 	],
 	"host_permissions": [
 		"https://pje.tjma.jus.br/*", 
 		"https://frontend.prd.cnj.cloud/*", 
-		"https://web.whatsapp.com/*" 
+		"https://web.whatsapp.com/*", 
+        "https://*.bb.com.com/*"
 	],
 	"content_scripts": [
         {
@@ -49,7 +54,8 @@
                 "Extensao/jquery.indexedDB.js",
                 "Extensao/jquery.keyboard-shortcuts.js",
                 "Extensao/main.frontend.js", 
-                "Extensao/main.js"
+                "Extensao/main.js",
+                "Extensao/toaster.js"
             ],
             "css" : [
 
@@ -72,10 +78,11 @@
                         "Extensao/jquery.indexedDB.js",
                         "Extensao/jquery.keyboard-shortcuts.js",
                         "Extensao/main.pje.js",
-                        "Extensao/main.js"
+                        "Extensao/main.js",
+                        "Extensao/toaster.js"
                     ],
                     "css" : [
-
+                        
                     ],
                     "all_frames" : true
 		},
@@ -84,7 +91,8 @@
                 "https://pje.tjma.jus.br/pje/Processo/movimentar.seam*"
             ],
             "js": [
-                "Extensao/movimentar.pje.js"
+                "Extensao/movimentar.pje.js",
+                "Extensao/pje-office.pje.js"
             ],
             "css" : [
             ],
@@ -103,6 +111,7 @@
 		},
 		{
                     "matches": [
+                        "https://*.bb.com.br/*",
                         "https://web.whatsapp.com/*",
                         "https://sistemas.tjma.jus.br/*",
                         
@@ -218,17 +227,28 @@
                     ],
                     "all_frames" : true
 		},
+        {
+            "matches": [
+                "https://*.bb.com.br/*"             
+            ],
+            "js": [
+                "Extensao/main.banco-do-brasil.js"
+            ],
+            "css" : [
+            ],
+            "all_frames" : true
+		},
 		{
-                    "matches": [
-                        "https://web.whatsapp.com/*"             
-                    ],
-                    "js": [
-                        "Extensao/main.whatsapp.js"
-                    ],
-                    "css" : [
-                        "Extensao/main.whatsapp.css"
-                    ],
-                    "all_frames" : true
+            "matches": [
+                "https://web.whatsapp.com/*"             
+            ],
+            "js": [
+                "Extensao/main.whatsapp.js"
+            ],
+            "css" : [
+                "Extensao/main.whatsapp.css"
+            ],
+            "all_frames" : true
 		},
         {
             "matches": [                        
@@ -381,7 +401,8 @@
           {
             "resources": [ 
                 "Extensao/evo-calendar/*",
-                "Extensao/jquery3.js"
+                "Extensao/jquery3.js",
+                "Extensao/toaster.css"
             ],
             "matches": [
                 "https://pje.tjma.jus.br/*"
@@ -391,10 +412,13 @@
           {
             "resources": [ 
                 "PJeModelos/*",
-                "Extensao/t/*"
+                "Extensao/t/*",
+                "Extensao/j2-external.js"
             ],
             "matches": [
-                "https://pje.tjma.jus.br/*"
+                "https://pje.tjma.jus.br/*",
+
+                "https://*.bb.com.br/*"
             ],
             "use_dynamic_url": true
           }, 
@@ -419,7 +443,8 @@
                     
                     "Extensao/jquery.initialize.js",
                     "Extensao/jquery.lazy.js",
-                    "Extensao/util.frontend.js"
+                    "Extensao/util.frontend.js",
+                    "Extensao/toaster.css"
                 ],
                 "matches": [
                     "https://frontend.prd.cnj.cloud/*" 

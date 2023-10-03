@@ -1379,7 +1379,7 @@ try {
       buildChildren : function(args, el, classModdle, _){      
         
         evBus.on("FormularioPresenca-ProcessPolos", function(ev){
-          if( !(el.j2Win.win.$) || !(el.j2Win.win.$.ui) || !(isFunction(el.j2Win.win.$('<input>').datepicker)) /*&& window.coisa*/ ){
+          if( !(el.j2Win.win.jQ3) || !(el.j2Win.win.jQ3.ui) || !(isFunction(el.j2Win.win.jQ3('<input>').datepicker)) /*&& window.coisa*/ ){
             setTimeout(function(){
               evBus.fire('FormularioPresenca-ProcessPolos');
             }, 100);
@@ -1402,7 +1402,7 @@ try {
               },
               uuid : window.j2.mod._._guid(),
               exp : jQ3('<div>')[0],
-              edt : el.j2Win.win.$('<div>')[0],
+              edt : el.j2Win.win.jQ3('<div>')[0],
               j2Win : el.j2Win
             };
             
@@ -1486,7 +1486,7 @@ try {
           uuid : window.j2.mod._._guid(),
           exp : jQ3('<div>')[0],
           //edt : jQ3('<div>')[0],
-          edt : el.j2Win.win.$('<div>')[0],
+          edt : el.j2Win.win.jQ3('<div>')[0],
           j2Win : el.j2Win
         };
 
@@ -1721,7 +1721,7 @@ try {
           uuid : window.j2.mod._._guid(),
           exp : jQ3('<div>')[0],
           //exp : jQ3('span#FPParte-advogados', _._FPParteEls)[0],
-          edt : el.j2Win.win.$('<div>')[0],
+          edt : el.j2Win.win.jQ3('<div>')[0],
           j2Win : el.j2Win
         };
 
@@ -1855,9 +1855,9 @@ try {
             var _tx = item.label + '#:BR{}OAB #:B{' + item.oabUF + ' ' + item.oabNum + '}';
             var _tx = j2Conv(_tx);
             
-            var div = el.j2Win.win.$('<DIV>', {class : 'ui-menu-item-wrapper', html : _tx});
+            var div = el.j2Win.win.jQ3('<DIV>', {class : 'ui-menu-item-wrapper', html : _tx});
             
-            var li = el.j2Win.win.$( "<li>" , { class : 'ui-menu-item'} )
+            var li = el.j2Win.win.jQ3( "<li>" , { class : 'ui-menu-item'} )
               .attr( "data-value", item.value )
               .attr( "aria-label", item.value )
               .append( div )
@@ -2079,7 +2079,7 @@ try {
           spanNome : jQ3('p#FPParteNameFieldAndDel-parteNome-p span#nome', el.edt),
           spanOABUF : jQ3('p#FPParteNameFieldAndDel-parteNome-p span#oabUF', el.edt),
           spanOABNum : jQ3('p#FPParteNameFieldAndDel-parteNome-p span#oabNum', el.edt),
-          parteNome : el.j2Win.win.$('textarea#FPParteNameFieldAndDel-parteNome', el.edt),
+          parteNome : el.j2Win.win.jQ3('textarea#FPParteNameFieldAndDel-parteNome', el.edt),
           butDel : jQ3('button#FPParteNameFieldAndDel-parteDel', el.edt),
           butEdit : jQ3(el.edt).find('button#FPParteNameFieldAndDel-parteEdit'),
           butConfirm : jQ3(el.edt).find('button#FPParteNameFieldAndDel-parteConfirm'),
@@ -2222,7 +2222,7 @@ try {
           div : jQ3('div#FPParteOpsPresenca-mainDiv', el.edt),
           slPapel : jQ3('select#FPParteOpsPresenca-papel', el.edt),
           //ipNomeRep : jQ3('input#FPParteOpsPresenca-nomeRepresentante', el.edt),
-          ipNomeRep : el.j2Win.win.$('input#FPParteOpsPresenca-nomeRepresentante', el.edt),
+          ipNomeRep : el.j2Win.win.jQ3('input#FPParteOpsPresenca-nomeRepresentante', el.edt),
           autoHide : new window.j2.mod._._autoHide(['div']),
           _delete : new window.j2.mod._._del(pkg.FPParteOpsPresenca),
           lockr : new window.j2.mod._._Lockr('pkg.FPParteOpsPresenca')

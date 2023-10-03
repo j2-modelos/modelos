@@ -153,7 +153,7 @@ try {
                 }
               }
             });*/
-            var selQ = container.querySelectorAll(`#${id}`);
+            var selQ = container.querySelectorAll(`#${id.jQId()}`);
             if(selQ.length){
               var div = selQ[0];
 

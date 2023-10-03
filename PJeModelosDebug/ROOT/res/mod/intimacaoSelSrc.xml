@@ -545,12 +545,12 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">
                         <data>
-                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{XXXFinalidadeXXXX}.
+                            #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, #:U{#:span@finalidade-colador{XXXFinalidadeXXXX}}.
                         </data>
                     </arElement>
                 </selectorArray>               

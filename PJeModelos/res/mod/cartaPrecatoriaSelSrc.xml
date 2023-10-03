@@ -23,6 +23,9 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesig"/>
+            <gItem id="intmItAudDesigSemSalaUNA"/>
+            <gItem id="intmItAudRedesigSemSala"/>
+            <gItem id="intmItAudRedesigSemSalaUNA"/>
         </group>
         <group label="Intimação">
             <gItem id="intmItDespacho"/>
@@ -304,7 +307,8 @@ and open the template in the editor.
 		
             
         
-        <item id="intmItAudDesig" label="Designada" dataPlus="{ 'titleAppend':'INTIMAÇÃO' }">
+        <item id="intmItAudDesig" label="Designada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus="{ 'titleAppend':'INTIMAÇÃO' }"
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="meioComunicItCentralMandados">
@@ -315,6 +319,57 @@ and open the template in the editor.
                 </selectorArray>               
             </itemContent>
         </item>
+
+        <item id="intmItAudDesigSemSalaUNA" label="Designada (#tipo UNA)" dataPlus="{ 'titleAppend':'INTIMAÇÃO' }">
+            <eventFire event="na-finalidade-de-audiencia-disparada"/>
+            
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de Conciliação, Instrução e Julgamento}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+
+        <item id="intmItAudRedesigSemSala" label="Redesignada (sistema: #{j2.env.PJeVars.audiencia.tipoLabel})" dataPlus=""
+              avaliarDesabilitacao="#{j2.env.PJeVars.util.validacao.desabilitarSeAudienciaConciliacaoPJEC}">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>             
+            </itemContent>
+        </item>
+
+        <item id="intmItAudRedesigSemSalaUNA" label="Redesignada (#tipo UNA)" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">1
+                        <data>
+                            #:B{INTIMADO(A)} a comparecer à #:B{Audiência de Conciliação, Instruçao e Julgamento}, 
+                            #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da parte acima qualificada para comparecer à #:B{Audiência de 
+                            Conciliação, Instruçao e Julgamento}, #:B{#:U{REDESIGNADA}} para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                        </data>
+                    </arElement>
+                </selectorArray>             
+            </itemContent>
+        </item>      
                            
         
         <item id="intmItDecisao" label="Decisão" dataPlus="{ 'requireElementSet': true, 'titleAppend':'INTIMAÇÃO' }">
@@ -734,7 +789,7 @@ and open the template in the editor.
                 <selectorArray>           
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{CERTIFICAR} o Oficial de justiça do juízo deprecado as informações de contato telefônico e whatsapp da(s) parte(s) envolvida(s) à presente missiva.
+                            #:B{CERTIFICAR} o Oficial de justiça do juízo deprecado as informações de #:B{contato telefônico e whatsapp} da(s) parte(s) envolvida(s) à presente missiva.
                         </data>
                     </arElement>           
                 </selectorArray>         

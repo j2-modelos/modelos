@@ -330,8 +330,9 @@ and open the template in the editor.
         <item id="advtItLocacaoComrpovEndereco" label="LocacaoComrpovanteEndereco" dataPlus="">
             <itemContent type="plainText" addClassStyles="">
                 <data>
-                   Em caso de a parte residir em imóvel alugado, deverá juntar também o contrato de locação ou 
-                   declaração do proprietário do imóvel acerca locação e residência do parte.
+                   Em caso de a parte residir em imóvel alugado, deverá juntar também o contrato de locação, juntamente
+                   com fatura de serviço instalado no domicílio e mais outro documento em nome da própria parte que
+                   aponte o mesmo endereço do imóvel alugado. Não será admitida declaração do proprietário do imóvel.
                 </data>
             </itemContent>
         </item>      

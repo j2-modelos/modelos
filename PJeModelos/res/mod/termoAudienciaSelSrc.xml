@@ -16,7 +16,7 @@ and open the template in the editor.
             </textHTML>
         </elemento>
     </itemFormats>
-    <groupsDefs>
+    <groupsDefs naoOrdenado="true">
         <group label="Fases">
             <gItem id="trmAud.Fase.Abertura"/>
             <gItem id="trmAud.Fase.Conciliacao"/>
@@ -199,7 +199,7 @@ and open the template in the editor.
             
         </group>        
     </groupsDefs>
-    <items>
+    <items naoOrdenado="true">
         <item id="trmAud.Fase.Abertura" label="Abertura" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

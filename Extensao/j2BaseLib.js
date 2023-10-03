@@ -2223,6 +2223,24 @@
     
     return tx;
   };
+
+  window.j2.mod._.codificarNomeTarefa = function(tarefa){
+    return encodeURI(tarefa).replace(/[()]/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
+
+  window.j2.mod._.prepararLinkTarefa = function (nomeTarefaNaoCodificado, criterios, searchString) {
+    const codificarNomeTarefa = j2.mod._.codificarNomeTarefa
+
+    const hashAngularTarefaComCriterios = `https://pje.tjma.jus.br/pje/ng2/dev.seam${
+      searchString ? `?${searchString}` : ''}#/painel-usuario-interno/lista-processos-tarefa/${
+      codificarNomeTarefa(
+        nomeTarefaNaoCodificado
+    )}/${encodeURIComponent(btoa(JSON.stringify(criterios)))}`
+
+    return hashAngularTarefaComCriterios
+  }
   
   window.j2.mod._._capitalizeFirstLetter = function (string) {
     return string.capt();

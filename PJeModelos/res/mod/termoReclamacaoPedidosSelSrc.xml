@@ -27,6 +27,7 @@ and open the template in the editor.
             <gItem id="trmRcl.Comuns.Pagamento"/>
             <gItem id="trmRcl.Comuns.Inexistencia"/>
             <gItem id="trmRcl-Comuns-Restituicao"/>
+            <gItem id="trmRcl-Comuns-Restituicao-dobro"/>
             <gItem id="trmRcl-Comuns-Obrigacao-Fazer"/>
         </group>     
         <group label="Liminar">
@@ -86,6 +87,7 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>     
+        <!-- LIMINAR PARA NÃO PROMOVER CORTE -->
         <item id="trmRcl.Comuns.Liminar" label="Abster Corte" dataPlus="">
             <itemContent type="plainText" addClassStyles="">
                 <data>
@@ -114,6 +116,17 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>     
+
+        <item id="trmRcl-Comuns-Restituicao-dobro" label="Restituição em dobro" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Requerer que seja #:U{JULGADA PROCEDENTE} a presente demandada a fim de promover 
+                    da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Restituicao{R$ 0,00 (zero)}}, 
+                    referentes ao dobro do valor objeto da lide cobrado indevidamente.
+                </data>
+            </itemContent>
+        </item>
     </items>
   </selectorDef>
 </Definitions>

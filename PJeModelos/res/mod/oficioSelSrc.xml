@@ -34,7 +34,8 @@ and open the template in the editor.
         <group label="Carta Precatória">
             <gItem id="ofcItComunicacaoRedesignacoDeprecado"/>
             <gItem id="ofcItSolicitDevolucaoPrecatoriaPJe"/>
-            <gItem id="ofcItSolicitDevolucaoPrecatoriaMalote"/>
+            <gItem id="ofcItSolicitDevolucaoPrecatoriaPJeAudiencia"/>
+            <!-- gItem id="ofcItSolicitDevolucaoPrecatoriaMalote"/-->
         </group>               
     </groupsDefs>
     <items>        
@@ -299,20 +300,36 @@ and open the template in the editor.
             </itemContent>
         </item>   
                 
-        <item id="ofcItSolicitDevolucaoPrecatoriaPJe" label="Devolução de Carta Precatória (PJe)" dataPlus="{ 'assunto': 'Devolução de Carta Precatória', 'queVirgula' : false }">
+        <item id="ofcItSolicitDevolucaoPrecatoriaPJe" label="Devolução de Carta Precatória" dataPlus="{ 'assunto': 'Cumprimento e Devolução de Carta Precatória', 'queVirgula' : false }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                   a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                   a devolução, no prazo de 20 (vinte) dias, da carta precatória devidamente cumprida extraída dos autos acima epigrafados tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
                     #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} e Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
                     enviada a esse juízo via PJe e tombada sob nº XXXNumeroNoJuizoDeprecadoXXXXXX
                 </data>
+            </itemContent>
+        </item>    
+
+        <item id="ofcItSolicitDevolucaoPrecatoriaPJeAudiencia" label="Devolução de Carta Precatória | Audiência" dataPlus="{ 'assunto': 'Cumprimento e Devolução de Carta Precatória', 'queVirgula' : false }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafados tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                        #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} e Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
+                        enviada a esse juízo via PJe e tombada sob nº XXXNumeroNoJuizoDeprecadoXXXXXX
+                    </elemento>    
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Solicito, ainda, providências para que o cumprimento seja realizado com a máxima brevidade possível, 
+                        considerando que nos autos originários existe #:B{audiência designada} para o próximo dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}.
+                    </elemento>
+                </simpleElementsDefs>
             </itemContent>
         </item>    
         
         <item id="ofcItSolicitDevolucaoPrecatoriaMalote" label="Devolução de Carta Precatória (Malote Digital)" dataPlus="{ 'assunto': 'Devolução de Carta Precatória', 'queVirgula' : false }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    a devolução da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
+                    a devolução, no prazo de 20 (vinte) dias, da carta precatória devidamente cumprida extraída dos autos acima epigrafado tendo como parte #{j2.env.PJeVars.processo.polos.parteAtiva}
                     #:B{#{j2.env.PJeVars.partes.ativa.nomeUC}} e Parte #{j2.env.PJeVars.processo.polos.partePassiva} #:B{#{j2.env.PJeVars.partes.passiva.nomeUC}}, 
                     enviada a esse juízo via Malote Digital em XXXDataEnvioMaloteXXX (código de rastreabilidade nº  XXXCodigoRastreabilidadeXXX)
                 </data>

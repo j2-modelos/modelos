@@ -5,6 +5,9 @@
  */
 
 function fronendLoad(){    
+  const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
+  const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
+
   (function _default(){
     j2E.mods.shortcuts();
     /*addScript('Extensao/jquery.initialize.js');
@@ -70,7 +73,7 @@ function fronendLoad(){
         jQ3(this).css({
           //filter : 'blur(5px)',
           width : '100%'
-        });
+        }).attr('j2-view-pseudo-tarefa', 'true');
         
         jQ3.initialize('div#divProcessosTarefa', function(){
           jQ3(this).hide();
@@ -100,7 +103,24 @@ function fronendLoad(){
     if( action.j2pseudotarefaMovimentar )
       __fazerAjustesExibicaoPseudotarefaMovimentar();
 
-    function __hd(){
+    var initPar, iniChild;
+    initPar = jQ3.initialize('ul.ui-datalist-data', function(){
+      var didOnce = false;
+      iniChild = jQ3.initialize('li.ng-star-inserted', function(){          
+        if(didOnce)
+          return;
+
+        didOnce = true;
+        initPar.disconnect();
+        iniChild.disconnect();
+
+        if( action.j2pseudotarefaMovimentar )
+          __notifyFinished();
+      },
+      {target : this});
+    });
+
+    /*function __hd(){
     //jQ3.initialize('div.overflowTarefas:last', function(){
       jQ3('div.overflowTarefas:last').observe('childlist', function(record){
           lg('observe div.overflowTarefas:last', record);
@@ -142,8 +162,8 @@ function fronendLoad(){
     
       jQ3('form:last').find('input#itNrProcesso').val(action.processo)[0].dispatchEvent(new Event('input'));;
       jQ3('form:last').find('button.btn.btn-primary')[0].click();
-    }
-    function check__hd() { // tappac as new
+    }*/
+  /*  function check__hd() { // tappac as new
       if (jQ3('form:last').find('input#itNrProcesso')[0] && jQ3('form:last').find('input#itNrProcesso')[0].dispatchEvent) {
         __hd();
       }
@@ -151,7 +171,7 @@ function fronendLoad(){
         window.setTimeout( check__hd, 10 );
       }
     }
-    check__hd();
+    check__hd();*/
 
   };
   
@@ -1014,10 +1034,17 @@ function fronendLoad(){
           case 'fowardNotifyPseudotarefaMovimentarLoaded':
             fowardNotifyPseudotarefaMovimentarLoaded(_act);
             break;
+          case 'triggerEventFromPJe':
+            triggerEventFromPJe(_act);
+            break;
           
         }
       }
     });
+  }
+
+  function triggerEventFromPJe(action){
+    evBus.fire(action.evento.tipo, action.evento.argumentos)
   }
   
   function fowardNotifyPseudotarefaMovimentarLoaded(action){
@@ -1156,7 +1183,11 @@ function fronendLoad(){
           return false;
 
         //if(_days >= 15)
+        const _txt = jEl.find('[txt]')
+        if(! _txt.length)
           jEl.text( jEl.text() + '  (' + _days + ')' );
+        else
+          _txt.text( _txt.text() + '  (' + _days + ')' );
 
         if(_days < 15)
           return true;
@@ -1173,9 +1204,10 @@ function fronendLoad(){
       };
       
       if( jQ3(_this).is('span[j2e-processo-data-movimento]') ){
-        var jEl = jQ3(_this);
-        var _d = jEl.text().split(' ')[1].split('-').reverse();
-        var _days = Math.trunc(moment.duration(moment().diff(moment(_d, 'YY-MM-DD'))).asDays());
+        const jEl = jQ3(_this);
+        let [_d] = jEl.text().match(/[0-9]{2}-[0-9]{2}-[0-9]{2}/)
+        _d = _d.split('-').reverse();
+        const _days = Math.trunc(moment.duration(moment().diff(moment(_d, 'YY-MM-DD'))).asDays());
         jEl.attr('j2eorgtext', jEl.text());
         
         _resolvePrazo(jEl, _days);
@@ -1197,7 +1229,12 @@ function fronendLoad(){
         _resolvePrazo(jEl, _days);
 
         jEl.attr('j2HighlighPrazo', 'sim');
-        jEl.replaceWith( jQ3('<div>', {class: 'datasProcesso'}).append( jEl.clone(true) ) );
+        const $jElC = jEl.clone(true)
+        const _text = $jElC.text()
+        $jElC.empty()
+        $jElC.append('<i class="fas fa-check-square" j2e-proc-data-task>')  
+        $jElC.append( `<span>${_text}</span>`)
+        jEl.replaceWith( jQ3('<div>', {class: 'datasProcesso'}).append( $jElC ) );
 
         //etiqueta como prazo
         function treateEtiquetaSeComoData(elpz){
@@ -1307,7 +1344,7 @@ function fronendLoad(){
         $procsUl.prev().hide();
         
         //$liTarfCard.Lazy({
-        $liTarfCard.find('div.datalist-content').lazyObserve({
+        /*$liTarfCard.find('div.datalist-content').lazyObserve({
           root : $liTarfCard.parents('#processosTarefa'),
           load: function($li) {
             delayCall(function(){
@@ -1337,7 +1374,7 @@ function fronendLoad(){
                       var _date = moment($firstMovData.text().PJeDataStringParaLocaleEn());
                       var _html = ___SPAN_DATA___.replace('$', _date.format('DD-MM-YY'));
 
-                      $liTarfCard.find('.datasProcesso').append(_html);
+                      $liTarfCard.find('.datasProcesso span:first').after(_html);
                     }
                     
                     $li.find('span[j2e-lazy-load]').each(function(){
@@ -1437,7 +1474,7 @@ function fronendLoad(){
               
             });
           }
-        });
+        });*/
       });
       
       $procsUl.lastIdProcesso = 0;
@@ -1462,22 +1499,34 @@ function fronendLoad(){
             var ___TEMPLATE__URL___ = 'https://pje.tjma.jus.br/pje/ng2/dev.seam?$&$#/painel-usuario-interno';
             var ___TEMPLATE__SPINNER___ = '<div _ngcontent-bsf-c10="" class="loaderWrapper ng-star-inserted"><mat-progress-spinner _ngcontent-bsf-c10="" class="position mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation" mode="indeterminate" role="progressbar" aria-valuenow="0" style="width: 100px; height: 100px;"><svg focusable="false" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" style="width: 100px; height: 100px;"><!----><circle cx="50%" cy="50%" r="45" class="ng-star-inserted" style="animation-name: mat-progress-spinner-stroke-rotate-100; stroke-dasharray: 282.743px; stroke-width: 10%;"></circle><!----></svg></mat-progress-spinner></div>';
             
-            var _action = encodeURIComponent( btoa( JSON.stringify( {
+            const nomeTarefa = _qData[0].nome
+            const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
+              competencia: "",
+              etiquetas:[],
+              numeroProcesso: _tarfData.num
+            }, 'j2pseudotarefaMovimentar=true')
+
+            /*var _action = encodeURIComponent( btoa( JSON.stringify( {
                 j2: true,
                 action: "abrirAutomaticoTarefa",
                 processo: _tarfData.num,
                 tarefa: _qData[0].nome,
                 j2pseudotarefaMovimentar : true
             }) ) );
-            var _url = ___TEMPLATE__URL___.replaceOrd('$', 'j2pseudotarefaMovimentar=true', 'action=' + _action);
-            
+            var _url = ___TEMPLATE__URL___.replaceOrd('$', 'j2pseudotarefaMovimentar=true', 'action=' + _action);*/
             
             var $conteudoTarefa = $this.parents('processos-tarefa').find('> #divMainPanel > conteudo-tarefa');
             if(! $conteudoTarefa.find('#conteudoTarefa').length ){            
-              var $html = jQ3( ___TEMPLATE__CONTEUDO___TAREFA___.replaceOrd('$', _url) );
+              var $html = jQ3( ___TEMPLATE__CONTEUDO___TAREFA___.replaceOrd('$', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND) );
               $conteudoTarefa.prepend($html);            
-            }else
-              $conteudoTarefa.find('iframe').attr('src', _url);
+            }else{
+              const $iframe = $conteudoTarefa.find('iframe')
+              const $iframeC = $iframe.clone(false)
+
+              $iframeC.attr('src', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND);
+              $iframe.replaceWith($iframeC)
+            }
+              
             
             $conteudoTarefa.find('div.row').css({
               filter : 'blur(8px)'
@@ -1517,7 +1566,6 @@ function fronendLoad(){
           
           return;
         }
-;
       });
     };
     
@@ -1590,7 +1638,7 @@ function fronendLoad(){
         nome : (function(){
           var _tarfNome = ( ! ( $this.parents('processos-tarefa').is('[j2e-e-pseudotarefa]') )
                         ? window.location.hash.split('/')[3]
-                        : encodeURI(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
+                        : __codificarNomeTarefa(jQ3(_this).parents('processos-tarefa').prop('j2E').PseudoTarefa.nome) );
           if(!(_tarfNome)){
             console.error('nome tarefa não encontrado');
             return '#######ERROR';
@@ -1641,19 +1689,163 @@ function fronendLoad(){
         data : _postParams
       });
     }
+
+    function ouvirClicksDeRemocaoDeEtiqueta($this){
+      $this.click((ev)=>{
+        if(ev.which !== 1) //botão esquerdo do mouse
+          return;
+
+        var $target = jQ3(ev.target);
+        if ( ! (
+          $target.is('span.icon-desvincular-tag') 
+          || ( $target.is('i.fa-times') &&  $target.parent().is('span.icon-desvincular-tag')  )
+        ) )
+          return;
+        
+        const $parentProcessoDatalistCard = $target.parents('processo-datalist-card')
+        const idTarefa = $parentProcessoDatalistCard.find('span.hidden').attr('id')
+        const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+        const j2Action = {
+          j2 : true,
+          action : 'triggerEventFromFrontend',
+          evento : {
+            tipo : `on-remover-etiqueta-via-frontend-${idTarefa}`,
+            argumentos : { 
+              data : {
+                idTarefa,
+                numProc
+              },
+              tipo : 'definição de id de tarefa e numero único processo'
+            }
+          }
+        }
+
+        setTimeout(()=> __sendMessageToPje(j2Action), 500 )
+
+      }).attr('j2-ouvir-remocoes-etiquetas', '')
+    }
+
+    function adicionarComandoAbrirExpedientesDoProcesso(_this, _parentUl){
+      if(_parentUl){
+        var $ul = jQ3(_parentUl)
+
+        if($ul.is('[j2-viz-exp]'))
+          return;
+
+        $ul.click((ev)=>{
+          if(ev.which !== 1) //botão esquerdo do mouse
+            return;
+
+          var $target = jQ3(ev.target);
+          if ( ! $target.is('[j2-viz-exp]') )
+            return;
+          
+          const $parentProcessoDatalistCard = $target.parents('processo-datalist-card')
+          const siglaENumeroProcesso = $parentProcessoDatalistCard.find('span.tarefa-numero-processo:first').text().trim()
+          const idTarefa = $parentProcessoDatalistCard.find('span.hidden').attr('id')
+          const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          const $modal = jQ3('#j2-modal-expedientes-processo')
+          $modal.find('.modal-title').text(`Expedientes ${siglaENumeroProcesso}`)
+          $modal.find('.modal-body').empty().append(j2EUi.spinnerHTML())
+          jQ3('[j2-rest-win]').addClass('hidden')
+
+          var $iframe
+
+          __sendMessageToPje({
+            action : 'requisitarJ2EPJeRest',
+            PJeRest : 'j2EPJeRest.processo.obterIdProcesso',
+            waitsResponse : true,
+            arguments : [ numProc ] 
+          }, 
+          "PARENT_TOP",
+          function(idProcesso){  
+            $iframe = jQ3('<iframe>', { 
+              class: 'j2-modal-expedientes-processo-iframe iframe-no-height',
+              src: `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&idTaskInstance=${idTarefa}&j2-auto-selecionar=expedientes`,
+              //sandbox: ''
+            } ).on("load", function(a, b, c, d){
+             /* !$iframe?.isShown && setTimeout( () => $iframe.toggleClass('iframe-no-height'), 500)
+              $iframe.isShown = true*/
+            })
+
+            $modal.find('.modal-body').append($iframe)
+          });
+
+          evBus.on('on-exibir-expedientes-autos-digitais', function ____oeead(){
+            $modal.find("#uS1").remove()
+            $modal.find(".divCont").remove()
+
+            !($iframe?.isShown) && $iframe.toggleClass('iframe-no-height')
+            $iframe.isShown = true
+
+            evBus.off('on-exibir-expedientes-autos-digitais', ____oeead)
+          })
+
+        }).attr('j2-viz-exp', '')
+
+        //criar modal
+        const _modal_template = `
+          <div _ngcontent-ono-c14="" class="modal fade" id="j2-modal-expedientes-processo">
+            <div _ngcontent-ono-c14="" class="modal-dialog modal-lg j2-modal-dialog-frontend">
+              <div _ngcontent-ono-c14="" class="modal-content">
+                <div _ngcontent-ono-c14="" class="modal-header">
+                  <button  _ngcontent-ono-c14="" aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                    <i class="fa fa-window-close"></i>
+                  </button>
+                  <button j2-rest-win _ngcontent-ono-c14="" aria-hidden="true" class="close" type="button" style="margin-right: 8px;">
+                    <i class="fa fa-window-restore">
+                  </i></button><span _ngcontent-ono-c14="" class="modal-title">Expedientes PJEC 0800970-64.2023.8.10.0047</span>
+                </div>
+                <div _ngcontent-ono-c14="" class="modal-body">
+                <!---->
+                </div>
+              </div>
+            </div>
+          </div>`
+        const $modalTemplate = jQ3(_modal_template)
+        $ul.parents('body').append($modalTemplate)
+        $modalTemplate.find('[j2-rest-win]').click(()=>{
+          let iframeSource = jQ3('#j2-modal-expedientes-processo').find('iframe').attr('src')
+          iframeSource = iframeSource.split('=')
+          iframeSource.pop()
+          iframeSource.push('expedientesModo2')
+          iframeSource = iframeSource.join('=')
+
+          const url = iframeSource
+          openPopUp(`popPupExpedientesProcesso-${guid ? guid() : ''}`, url);
+        })
+
+        evBus.on('on-exibir-expedientes-autos-digitais', function (){
+          jQ3('[j2-rest-win]').removeClass('hidden')
+        })
+
+        return;
+      }
+      
+
+      jQ3.initialize('.row.icones .text-right', function(){
+        var $divIconsRight = jQ3(this)
+        //fa fa-envelope-o
+        var _buttonTemplate = `<button j2-viz-exp _ngcontent-lwd-c30="" class="btn btn-default icon ng-star-inserted" 
+                                  title="Criar lembrete" type="button"
+                                  data-target="#j2-modal-expedientes-processo" data-toggle="modal" placement="bottom" >
+                                 <i j2-viz-exp _ngcontent-lwd-c30="" aria-hidden="true" class="fas fa-envelope fa-lg text-info">
+                                 </i>
+                               </button>`
+        $divIconsRight.prepend(_buttonTemplate)
+      }, {target: _this})
+    }
     
     var delayCall = new DelayedCall(750, 1500);
     function destacarUltimoMovimentoDoProcesso(_this){
-      console.error('ASSERTION: destacarUltimoMovimentoDoProcesso está desabilitada');
-      return;
-      
       var $this = jQ3(_this);
+           
+      /*if($this.is('[je2-pseudotarefa]') )
+        return;*/
       
-      
-      if($this.is('[je2-pseudotarefa]') )
-        return;
-      
-      $this.find('div.datalist-content').lazyObserve({
+      $this.find('div.row.icones').lazyObserve({
         root : $this.parents('#processosTarefa'),
         load: function($li, ent, obs) { 
           if( $this.data('lazyload-triggered') )
@@ -1661,9 +1853,32 @@ function fronendLoad(){
           
           $this.data('lazyload-triggered', true);
           
-          console.log('triggered: ', $this.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0] );
+          const $parentProcessoDatalistCard = $this.find('processo-datalist-card')
+          const [numProc] = $parentProcessoDatalistCard.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          __sendMessageToPje({
+            action : 'requisitarJ2EPJeRest',
+            PJeRest : 'j2EPJeRest.processo.movimentacoes.obterUltimaPeloNumeroUnico',
+            waitsResponse : true,
+            arguments : [ numProc ] 
+          }, 
+          "PARENT_TOP",
+          function(ultimoMovimento){
+            const data = new DataComFromatos(ultimoMovimento.dataAtualizacao)
+            //<i class="fa fa-bookmark" j2e-proc-data-mov></i>
+            const ___SPAN_DATA___ = `
+            <span j2e-processo-data-movimento _ngcontent-orb-c14="" title="Data do último movimento do processo">
+              <i class="fa fa-bookmark" j2e-proc-data-mov></i>
+              <span txt>${data.PJeFrontEndTarefaCardData()}</span>
+            </span>`;
+            $this.find('.datasProcesso span:first').after(___SPAN_DATA___);
+
+            const $cardUltimoMovText = $this.find('.tituloNegrito').next()
+            const movText = $cardUltimoMovText.text()
+            $cardUltimoMovText.text( `${movText} (${data.PJeFrontEndTarefaCardDataNaDescricaoDoMovimento()})` )
+          });
           
-          delayCall(function(){
+          /*delayCall(function(){
             var tarfData = {
               //idProcesso : $this.find('span.tarefa-numero-processo.process > span.hidden').prop('id'), // este´ id é o da tarefa do fluxo
               idProcesso : 0, 
@@ -1701,20 +1916,35 @@ function fronendLoad(){
             });
             
 
-          });
+          });*/
         }
       });
     }
+
+    function autoSelecionarAPrimeiraTarefaDaLista($this){
+      if(!$this.parent().length)
+        return;
+      if($this.parent().is('[j2-auto-selected]'))
+        return;
+
+      $this.parent().attr('j2-auto-selected', '')
+      $this.find('a.selecionarProcesso')[0].click();
+    }
     
-    function inicializacaoEtiqueta(){  
+    function personalizarCardDaTarefa(){  
       jQ3.initialize('ul.ui-datalist-data', function(){
-        jQ3.initialize('li.ng-star-inserted', function(){          
+        jQ3.initialize('li.ng-star-inserted', function(){       
+          const $this = jQ3(this)   
+
           formatarStickerAnotacao(this);
           //formatarEtiqueta(this);
           formatarPrioridade(this);
           formatarEDestacarPrazo(this);
           inserirFolder(this);
+          aplicarFiltrosJ2(this);
+          criarCmdCopiarNumeroProcesso(this);
           destacarUltimoMovimentoDoProcesso(this);
+          adicionarComandoAbrirExpedientesDoProcesso(this)
 
           jQ3.initialize('div.label.label-info.label-etiqueta.ng-star-inserted', function(){
             jQ3(this).addClass('j2EtiquetaEstilo');
@@ -1723,8 +1953,15 @@ function fronendLoad(){
           jQ3.initialize('span[j2e-processo-data-movimento]', function(){
             formatarEDestacarPrazo(this);
           }, {target : this});
+
+          autoSelecionarAPrimeiraTarefaDaLista($this)
         },
         {target : this});
+        const $this = jQ3(this)
+
+        criarCmdCopiarNumeroProcesso(null, this)
+        adicionarComandoAbrirExpedientesDoProcesso(null, this)
+        ouvirClicksDeRemocaoDeEtiqueta($this)
       });
     }
 
@@ -1784,9 +2021,238 @@ function fronendLoad(){
         j2E.env.tempData.processoDaTarefaAtivaSelecionado = $trg.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
       });
     }
+
+    function aplicarFiltrosJ2(_this){
+      var $li = jQ3(_this)
+
+          
+      var num = $li.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
+      num = num ? num[0] : { semNumero : true }
+
+      if( num.semNumero ){
+        return;
+      }
+
+      var toRemove = false
+      switch( jQ3('select#expressaoNumero').val() ){
+        case 'digito-impar':
+          toRemove = (num.substring(8,10) % 2) == 0
+          break;
+        case 'digito-par':
+          toRemove = (num.substring(8,10) % 2) == 1
+          break;
+      }
+      if(toRemove)
+        $li.remove();
+    }
+
+    function _copyToClipboard(text, $i) {
+      function __then() {
+        var $iVisto = jQ3('<i>', {
+          class : 'fa fa-check text-success',
+          css : {
+            display : 'none',
+            paddingLeft: '3px'
+          },
+          'j2-np-copiar' : 's'
+        })
+
+        $i.after($iVisto)
+        $iVisto.show(250).promise().done(()=>{
+          setTimeout(()=> $iVisto.hide('250').promise().done(()=>$iVisto.remove()), 3000)
+        })
+        
+      }
+
+      function __oldMethod(){
+        var tempField = jQ3('<input />');
+        jQ3('body').append(tempField);
+        tempField.val(text).select();
+        document.execCommand('copy');
+        tempField.remove();  
+      }
+
+      $i.focus()
+      window.navigator.clipboard.writeText(text)
+        .then(__then)
+        .catch(function(error) {
+          console.error('Erro ao copiar texto para a área de transferência:', error);
+          __oldMethod()
+          __then()
+        });
+
+    }
+
+    function criarCmdCopiarNumeroProcesso(_this, _parentUl){
+      if(_parentUl){
+        var $ul = jQ3(_parentUl)
+
+        if($ul.is('[j2-np-copiar]'))
+          return;
+
+        $ul.mousedown((ev)=>{
+          if(ev.which !== 1) //botão esquerdo do mouse
+            return;
+
+          var $target = jQ3(ev.target);
+          if ( ! $target.is('[j2-np-copiar]') )
+            return;
+          
+
+          const [numProc] = $target.parent().text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          _copyToClipboard(numProc, $target)
+          
+
+        }).attr('j2-np-copiar', '')
+        return;
+      }
+
+      var $li = jQ3(_this)
+
+      $li.find('.tarefa-numero-processo:first').append(jQ3('<i>', {
+        class: 'fa fa-clipboard', 
+        onclick: 'event.stopPropagation()',
+        'j2-np-copiar': 's'
+      }))
+    }
+
+    function personalisarFiltroTarefas(_this){
+      var $filtro = jQ3(_this).parents('#filtro-tarefas')
+      var $recolherPorParidadeDigito = $filtro.find('#cargoJudicial').parents('.col-md-4.form-group').clone()
+
+      $recolherPorParidadeDigito.find('label').text('Expressão do número')
+      var $option = $recolherPorParidadeDigito.find('option:first').detach()
+      $recolherPorParidadeDigito.find('option').remove()
+      $recolherPorParidadeDigito.find('select').attr('id', 'expressaoNumero')
+      $recolherPorParidadeDigito.find('select').attr('name', 'expressaoNumero')
+      $recolherPorParidadeDigito.find('select')
+      .append($option)
+      .append($option.clone().attr('value', 'digito-impar').text('Dígito ímpar'))
+      .append($option.clone().attr('value', 'digito-par').text('Dígito par'))
+      
+      $recolherPorParidadeDigito.insertBefore($filtro.find('fieldset > div:last-child'))
+
+      /*$recolherPorParidadeDigito.find('select').change(()=>{
+        $filtro.parents('processos-tarefa').find('p-datalist ul.ui-datalist-data li').filter(function() {
+
+        });
+      })*/
+    }
+
     
-    function inicializacaoformatarNomeAlternativoListaTrefaAtiva(){
+    function ajustarBarraSelecacoProcessosEAplicarPersonalizacoes(_this){
+      function _guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      };
+
+      jQ3.initialize('#acoes-processos-selecionados', function(){          
+        const $this = jQ3( this )
+        $this.removeClass('col-md-12')
+        $this.addClass('col-md-6')
+
+
+        const $divbspC = $this.clone(true)
+        $divbspC.attr('id', 'acoes-processos-selecionados-j2', '')
+
+        $this.after($divbspC)
+
+        //persolanizações
+        const TEMPLATE_BUTTON_SEM_TOGGLER = `
+          <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Vincular etiqueta">
+            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-lock-open" j2-i-lock></i>
+            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-book"></i>
+          </button>`
+
+        const $butSentinela = jQ3(TEMPLATE_BUTTON_SEM_TOGGLER)
+
+        const $j2Container = $divbspC.find(' > div > div')
+        $j2Container.empty()
+        $j2Container.removeClass('pull-left')
+        $j2Container.addClass('pull-right')
+        $j2Container.addClass('j2-alinhar-direita-items')
+        
+        $j2Container.append($butSentinela)
+
+        $butSentinela.click(()=>{
+          $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+          $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
+          if( ! $butSentinela.is('.btn-primary') )
+            return;
+
+          const $eventTargetLi = $uiDadosDaList.find('.selecionado').parents('li')
+          __openSentinela($eventTargetLi)
+        })
+
+        const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
+        $uiDadosDaList.lasNumProc = '0'
+        $uiDadosDaList.click((_ev)=>{
+          if( ! jQ3(_ev.target).is('.tarefa-numero-processo') )
+            return
+
+          const $eventTargetLi = jQ3(_ev.target).parents('li');
+          console.log('TESTANDO: click')
+          __openSentinela($eventTargetLi)
+        })
+
+        const idJanel = _guid()
+
+        function __openSentinela($eventTargetLi){
+          if( ! $butSentinela.is('.btn-primary') )
+            return;
+
+          const [numProc] = $eventTargetLi.find('.tarefa-numero-processo').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+
+          if($uiDadosDaList.lasNumProc === numProc)
+            return;
+
+          $uiDadosDaList.lasNumProc = numProc
+
+          _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
+            const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}`
+
+            j2EOpW.center(url, 'autosDigSentinela', idJanel)
+          })
+        }
+
+        jQ3.initialize('processos-tarefa conteudo-tarefa .row a:first-child', function(){
+          const $aLinkAutos = jQ3(this) 
+
+          $aLinkAutos.observe('attributes', (rec)=>{
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+      
+            if( rec.attributeName !== 'href' )
+              return;
+
+            const [numProc] = jQ3(rec.target).text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+            if(numProc === $uiDadosDaList.lasNumProc)
+              return;
+
+            console.log('TESTANDO: record mutatioin')
+            
+            const $numProcLi = $uiDadosDaList.find(`li:contains('${numProc}')`)
+      
+            __openSentinela($numProcLi)
+          })
+        })
+
+      },
+      {target : _this});
+    }
+    
+    /**
+     * As inicializações abaixos são badeadas na visualização de uma tarefa,
+     * á esquerda, a lista de tarefas pendentes, á direita, uma tarefa sendo executadao
+     * 
+     * barra-selecao-processos
+     */
+    function inicializacaoDiversasDeTarefaAtivaComListaDePendencias(){
       jQ3.initialize('processos-tarefa', function(){
+        var _processos_tarefa = this
         jQ3.initialize('filtro-tarefas span.text-truncate.uppercase.nome-tarefa:first-child', function(){          
           formatarNomeAlternativoListaTrefaAtiva(this);
           prepararPseudotarefaAtiva(this);
@@ -1798,13 +2264,32 @@ function fronendLoad(){
         jQ3.initialize('div.row.lista-processos', function(){          
           formatarExibicaoTarefaFavorita(this);
           registrarListeners(this);
+          ajustarBarraSelecacoProcessosEAplicarPersonalizacoes(this)
+
+          //jQ3.initialize('span.badge.pull-right', function(){          
+          jQ3.initialize('ul.ui-datalist-data', function(){          
+            var $ul = jQ3( this )
+            var $badge = jQ3( 'span.badge.pull-right', _processos_tarefa )
+            $ul.observe('childlist', ()=> { 
+              $badge.text( $ul.find('> li').length )
+            })
+          },
+          {target : this});
+
         },
         {target : this});
+
+        jQ3.initialize('#filtro-tarefas #cargoJudicial', function(){          
+          personalisarFiltroTarefas( this )
+        },
+        {target : this});
+
       });
     }
+
        
-    inicializacaoEtiqueta();
-    inicializacaoformatarNomeAlternativoListaTrefaAtiva();
+    personalizarCardDaTarefa();
+    inicializacaoDiversasDeTarefaAtivaComListaDePendencias();
   };
 
   function observeListasDeTarefas(){
@@ -1942,7 +2427,7 @@ function fronendLoad(){
                 return;
 
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-              nHref = nHref.replace('$', encodeURI(this.name));
+              nHref = nHref.replace('$', __codificarNomeTarefa(this.name));
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text(this.PseudoTarefa.countTarefa());
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -1994,7 +2479,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', encodeURI(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
+              nHref = nHref.replaceOrd('$', __codificarNomeTarefa(cri.tarefa), encodeURIComponent( btoa(JSON.stringify(cri.pjeQuery)) ) );
 
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
@@ -2039,7 +2524,7 @@ function fronendLoad(){
               }
               
               var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/$';
-              nHref = nHref.replaceOrd('$', encodeURI(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
+              nHref = nHref.replaceOrd('$', __codificarNomeTarefa(this.name), encodeURIComponent( btoa(JSON.stringify(pjeQuery)) )  );
 
               jDivMenuItemClone.find('span.quantidadeTarefa').text("...");
               jDivMenuItemClone.find('a').attr('href', nHref);
@@ -2252,159 +2737,234 @@ function fronendLoad(){
     });
   }
   
-  function personaliazarPainelUsuario(){
-    jQ3.initialize('right-panel div.rightPanel.container-fluid', function(){
-      jQ3.initialize('div.painel-usuario-interno-dashboard', function(){
-        var verb = dbgVerbose(0);
-        
-        
-        
-        var colMinhasTarefas = jQ3('div.col-md-4 i.fa-star', this).parents('div.col-md-4');
-        var colAssinaturas   = jQ3('div.col-md-4 i.fa-pencil-alt', this).parents('div.col-md-4');
-        var colTarefas = jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4');
-        var colTarefasFavoritas = colTarefas.clone(true, true);
-        var newChildren = colTarefasFavoritas.children();
-        var newHeader = newChildren.filter('div.dashboard-item-header');
-        var nodTarefas = newChildren.filter('tarefas');
+  function personaliazarPainelUsuarioECabecalhoTarefa(){
+    jQ3.initialize('right-panel', function(){
+      //Observar painel do usário principal
+      jQ3.initialize('div.rightPanel.container-fluid', function(){
+        jQ3.initialize('div.painel-usuario-interno-dashboard', function(){
+          var verb = dbgVerbose(0);
+          
+          
+          
+          var colMinhasTarefas = jQ3('div.col-md-4 i.fa-star', this).parents('div.col-md-4');
+          var colAssinaturas   = jQ3('div.col-md-4 i.fa-pencil-alt', this).parents('div.col-md-4');
+          var colTarefas = jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4');
+          var colTarefasFavoritas = colTarefas.clone(true, true);
+          var newChildren = colTarefasFavoritas.children();
+          var newHeader = newChildren.filter('div.dashboard-item-header');
+          var nodTarefas = newChildren.filter('tarefas');
 
-        nodTarefas.find('div.overflowTarefas').empty();
-        nodTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-minhas-tarefas-favoritas', '');
-        nodTarefas.find('filtro-tarefas-pendentes fieldset').empty();
-        
-        nodTarefas.find('div#divTarefasPendentes div.collapse').attr('j2EMinhasTarefasFavoritas', '');
-        var wrpFilter = nodTarefas.find('div.wrapper-filtro-tarefas-pendentes div');
-        wrpFilter.attr('data-target', '[j2EMinhasTarefasFavoritas]');
-        var _dtVal = colTarefas.find('div[data-target]').attr('data-target');
-        colTarefas.find('div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
-        jQ3('side-bar li#liTarefas div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
-        //wrpFilter.attr('data-target', wrpFilter.attr('data-target') + '.tarfFavor');
-        //jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4')
-        //nodTarefas.find('div.group-filtro-tarefas-pendentes').addClass('tarfFavor');
-        
+          nodTarefas.find('div.overflowTarefas').empty();
+          nodTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-minhas-tarefas-favoritas', '');
+          nodTarefas.find('filtro-tarefas-pendentes fieldset').empty();
+          
+          nodTarefas.find('div#divTarefasPendentes div.collapse').attr('j2EMinhasTarefasFavoritas', '');
+          var wrpFilter = nodTarefas.find('div.wrapper-filtro-tarefas-pendentes div');
+          wrpFilter.attr('data-target', '[j2EMinhasTarefasFavoritas]');
+          var _dtVal = colTarefas.find('div[data-target]').attr('data-target');
+          colTarefas.find('div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
+          jQ3('side-bar li#liTarefas div[data-target]').attr('data-target', (_dtVal + ':not([j2EMinhasTarefasFavoritas])') );
+          //wrpFilter.attr('data-target', wrpFilter.attr('data-target') + '.tarfFavor');
+          //jQ3('div.col-md-4 i.fa-check-square', this).parents('div.col-md-4')
+          //nodTarefas.find('div.group-filtro-tarefas-pendentes').addClass('tarfFavor');
+          
 
-        newHeader.attr('title', 'Tarefas que foram favoritadas pelo usuário');
-        var _c = newHeader.find('i:first').clone(true);
-        _c.attr('class', 'fas fa-star');
-        _c.insertAfter( newHeader.find('i:first') );
+          newHeader.attr('title', 'Tarefas que foram favoritadas pelo usuário');
+          var _c = newHeader.find('i:first').clone(true);
+          _c.attr('class', 'fas fa-star');
+          _c.insertAfter( newHeader.find('i:first') );
 
-        newHeader.contents().filter(function(){
-          return this.nodeType === 3;
-        }).replaceWith(' Minhas tarefas favoritas ');
-        
-        colMinhasTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-sem-pseudotarefa', '');
-        colAssinaturas.append(colMinhasTarefas.children());
-        colMinhasTarefas.append( newChildren );
-        
-        
-        function _handleTarefasFavoritasJsonData(data, status, xhr){
+          newHeader.contents().filter(function(){
+            return this.nodeType === 3;
+          }).replaceWith(' Minhas tarefas favoritas ');
+          
+          colMinhasTarefas.find('div.overflowTarefas').attr('j2e-overflowtarefas-sem-pseudotarefa', '');
+          colAssinaturas.append(colMinhasTarefas.children());
+          colMinhasTarefas.append( newChildren );
           
           
-          
-          var __TEMP_SEM_RESULTADO___ = '<div _ngcontent-css-c7="" class="nenhum-resultado vcenter ng-star-inserted"><a _ngcontent-css-c7=""><span _ngcontent-css-c7="" class="nome">Nenhum resultado</span></a></div>';
-          var _divPar = nodTarefas.find('#divTarefasPendentes');
-          var _ = sessionStorage.getItem('currentUser');
-          if(!(_)){
-            setTimeout(function(){
-              _handleTarefasFavoritasJsonData(data, status, xhr);
-            },250);
-            return;
-          }
-
-          _ = JSON.parse(_);
-          
-          var tarfsFavUsuario = data[_.login];
-          if(!(tarfsFavUsuario)){
-            // usuario não tem tarefas
-            jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
-            _divPar.find('p-progressbar').hide();
-            return;
-          }
-          
-          
-          var prop = nodTarefas.find('div.overflowTarefas').prop('j2e');
-          if(prop)
-            prop.tarefaFavoritaData = tarfsFavUsuario;
-          else
-            nodTarefas.find('div.overflowTarefas').prop('j2e', {TarefaFavoritaData : tarfsFavUsuario } );
-          
-          __sendMessageToPje({
-            action : 'requisitarConsultaTarefas', 
-            query : {
-              numeroProcesso : "",        
-              competencia : "",        
-              etiquetas : []   
+          function _handleTarefasFavoritasJsonData(data, status, xhr){
+            
+            
+            
+            var __TEMP_SEM_RESULTADO___ = '<div _ngcontent-css-c7="" class="nenhum-resultado vcenter ng-star-inserted"><a _ngcontent-css-c7=""><span _ngcontent-css-c7="" class="nome">Nenhum resultado</span></a></div>';
+            var _divPar = nodTarefas.find('#divTarefasPendentes');
+            var _ = sessionStorage.getItem('currentUser');
+            if(!(_)){
+              setTimeout(function(){
+                _handleTarefasFavoritasJsonData(data, status, xhr);
+              },250);
+              return;
             }
-          }, 'PARENT_TOP', 
-          function(data, action){
 
-            var __TARF_TEMPLATE__ = '<div _ngcontent-css-c7="" class="menuItem"><!----><div _ngcontent-css-c7=""><a _ngcontent-css-c7="" title="Aguardando apreciação da Turma Recursal" href="#/painel-usuario-interno/lista-processos-tarefa/Aguardando%20aprecia%C3%A7%C3%A3o%20da%20Turma%20Recursal/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0%3D"><div _ngcontent-css-c7="" class="detalheTarefasQuantidade"><span _ngcontent-css-c7="" class="nome">Aguardando apreciação da Turma Recursal</span><span _ngcontent-css-c7="" class="quantidadeTarefa">207</span></div></a></div><!----></div>';
-            var jDivMenuItem = jQ3(__TARF_TEMPLATE__);
-            var _divTarefas = nodTarefas.find('div.overflowTarefas');
-            var _flgSomeFound = false;
+            _ = JSON.parse(_);
             
-            jQ3.each(data, function(idx, key){
-              var i = tarfsFavUsuario.findIndex(function(el, idx){
-                return el.nome.dURI() === key.nome && el.stared === true;
-              });
-              if(i === -1)
-                return;
-              
-              _flgSomeFound  = true;
-              var jDivMenuItemClone = jDivMenuItem.clone();
-
-              var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
-              nHref = nHref.replace('$', encodeURI(key.nome));
-
-              jDivMenuItemClone.addClass('j2ETarefaFavorita');
-              jDivMenuItemClone.find('span.nome').text(key.nome);
-              jDivMenuItemClone.find('span.quantidadeTarefa').text(key.quantidadePendente);
-              jDivMenuItemClone.find('a').attr('href', nHref);
-              jDivMenuItemClone.find('a').click(function(){
-                console.log('clicked');
-              });
-
-              _divTarefas.append( jDivMenuItemClone );
-              
-              _divPar.find('p-progressbar').hide();
-            });
-            
-            if(!(_flgSomeFound)){
+            var tarfsFavUsuario = data[_.login];
+            if(!(tarfsFavUsuario)){
+              // usuario não tem tarefas
               jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
               _divPar.find('p-progressbar').hide();
+              return;
+            }
+            
+            
+            var prop = nodTarefas.find('div.overflowTarefas').prop('j2e');
+            if(prop)
+              prop.tarefaFavoritaData = tarfsFavUsuario;
+            else
+              nodTarefas.find('div.overflowTarefas').prop('j2e', {TarefaFavoritaData : tarfsFavUsuario } );
+            
+            __sendMessageToPje({
+              action : 'requisitarConsultaTarefas', 
+              query : {
+                numeroProcesso : "",        
+                competencia : "",        
+                etiquetas : []   
+              }
+            }, 'PARENT_TOP', 
+            function(data, action){
+
+              var __TARF_TEMPLATE__ = '<div _ngcontent-css-c7="" class="menuItem"><!----><div _ngcontent-css-c7=""><a _ngcontent-css-c7="" title="Aguardando apreciação da Turma Recursal" href="#/painel-usuario-interno/lista-processos-tarefa/Aguardando%20aprecia%C3%A7%C3%A3o%20da%20Turma%20Recursal/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0%3D"><div _ngcontent-css-c7="" class="detalheTarefasQuantidade"><span _ngcontent-css-c7="" class="nome">Aguardando apreciação da Turma Recursal</span><span _ngcontent-css-c7="" class="quantidadeTarefa">207</span></div></a></div><!----></div>';
+              var jDivMenuItem = jQ3(__TARF_TEMPLATE__);
+              var _divTarefas = nodTarefas.find('div.overflowTarefas');
+              var _flgSomeFound = false;
+              
+              jQ3.each(data, function(idx, key){
+                var i = tarfsFavUsuario.findIndex(function(el, idx){
+                  return el.nome.dURI() === key.nome && el.stared === true;
+                });
+                if(i === -1)
+                  return;
+                
+                _flgSomeFound  = true;
+                var jDivMenuItemClone = jDivMenuItem.clone();
+
+                var nHref = 'https://frontend.prd.cnj.cloud/#/painel-usuario-interno/lista-processos-tarefa/$/eyJudW1lcm9Qcm9jZXNzbyI6IiIsImNvbXBldGVuY2lhIjoiIiwiZXRpcXVldGFzIjpbXX0';
+                nHref = nHref.replace('$', __codificarNomeTarefa(key.nome)).replace(/\(/g, '%28').replace(/\)/g, '%29');
+
+                jDivMenuItemClone.addClass('j2ETarefaFavorita');
+                jDivMenuItemClone.find('span.nome').text(key.nome);
+                jDivMenuItemClone.find('span.quantidadeTarefa').text(key.quantidadePendente);
+                jDivMenuItemClone.find('a').attr('href', nHref);
+                jDivMenuItemClone.find('a').click(function(){
+                  console.log('clicked');
+                });
+
+                _divTarefas.append( jDivMenuItemClone );
+                
+                _divPar.find('p-progressbar').hide();
+              });
+              
+              if(!(_flgSomeFound)){
+                jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);
+                _divPar.find('p-progressbar').hide();
+              }
+            });
+
+            
+          }
+          
+          function _handleError(a, b, c){
+            aler('error');
+          }
+
+          jQ3.ajax({
+            url : 'https://jeitz2cvt1/TarefasFavoritas/listar',
+            success : _handleTarefasFavoritasJsonData,
+            error : function(){
+              jQ3.ajax({
+                url : 'https://dl.dropboxusercontent.com/s/czlwwyrweqgxkmk/TarefasFavoritas.json',
+                success : _handleTarefasFavoritasJsonData,
+                error : _handleError
+              });
             }
           });
-
           
-        }
-        
-        function _handleError(a, b, c){
-          aler('error');
-        }
+          
+          /*jQ3('div.overflowTarefas:last').observe('childlist', function(record){
+            //lg('observe div.overflowTarefas:last', record);
+                            
+          }, this); */
+          
+        }, {target : this});
+      }, {target : this});
 
-        jQ3.ajax({
-          url : 'https://jeitz2cvt1/TarefasFavoritas/listar',
-          success : _handleTarefasFavoritasJsonData,
-          error : function(){
-            jQ3.ajax({
-              url : 'https://dl.dropboxusercontent.com/s/czlwwyrweqgxkmk/TarefasFavoritas.json',
-              success : _handleTarefasFavoritasJsonData,
-              error : _handleError
+      //Observar cabeçalho do conteúdo da tarefa
+      jQ3.initialize('processos-tarefa conteudo-tarefa .row', function(){
+        const _thisHeader = this
+        
+  
+        jQ3.initialize('.toolbar-processo', function(){
+          function _guid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
             });
+          };
+  
+          
+          var $tooB = jQ3(this)
+          var $head = jQ3(_thisHeader)
+          var $butExpand = $tooB.find(' > :first-child')
+          
+          var $butSentinela = jQ3(`
+
+          <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
+                  type="button">
+                  <i aria-hidden="true" class="fa fa-lock-open" j2-i-lock ></i>
+                  <i aria-hidden="true" class="fa fa-book ng-star-inserted" j2-i-book ></i>
+          </button>
+
+          `)
+          var $aLinkAutos = $head.find('a:first-child')
+          var id = _guid()
+          var prevIdProcesso = ''
+      
+          function __openSentinela(){
+            var url = $aLinkAutos.attr('href')
+            var name = 'autosDigSentinela'
+            var [_prevIdProcesso] = url.match(/idProcesso=[0-9]+/)
+            prevIdProcesso = _prevIdProcesso
+            
+            j2EOpW.center(url, name, id)
           }
-        });
-        
-        
-        /*jQ3('div.overflowTarefas:last').observe('childlist', function(record){
-          //lg('observe div.overflowTarefas:last', record);
-                          
-        }, this); */
-        
-      }, this);
+      
+          $butSentinela.click(()=>{
+            $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+            $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+            __openSentinela()
+          })
+      
+          $tooB.prepend($butSentinela)
+      
+          $aLinkAutos.observe('attributes', (rec)=>{
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+      
+            if( rec.attributeName !== 'href' )
+              return;
+            
+            const [idProcesso] = jQ3(rec.target).attr('href').match(/idProcesso=[0-9]+/)
+            if(idProcesso === prevIdProcesso)
+              return;
+      
+            prevIdProcesso = idProcesso
+            __openSentinela()
+          });
+          
+          
+  
+        }, {target : this})
+
+      }, {target : this})
     });
     
   }
+    
+  personaliazarPainelUsuarioECabecalhoTarefa();
   
-  personaliazarPainelUsuario();
   
   observeListaDeProcessosTarefaAtiva();  
   criarControlesFiltroListasDeTarefas();  
@@ -2415,4 +2975,43 @@ function fronendLoad(){
   
   
   listenMessages();
+
+
+  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args) {
+    const etiqueta = args.data
+
+    const $_id = jQ3(`#${etiqueta.taskId}`)
+    if(! $_id.length )
+      return;
+
+    var $card = $_id.parents('processo-datalist-card')
+
+    var $novaEtiqueta = jQ3(`
+      <div _ngcontent-nam-c13 class="label label-info label-etiqueta ng-star-inserted j2EtiquetaEstilo">
+        <span _ngcontent-nam-c13 >${etiqueta.tag}</span>
+        <span _ngcontent-nam-c13 class="icon-desvincular-tag pl-5" title="Excluir etiqueta ${etiqueta.tag}">
+          <i _ngcontent-nam-c13 class="fa fa-times "></i>
+        </span>
+      </div>
+    `)
+
+    $card.find(' > div > div:nth-child(3)').append($novaEtiqueta)
+
+    $novaEtiqueta.find('i').click(()=>{
+      __sendMessageToPje({
+        action : 'requisitarJ2EPJeRest',
+        PJeRest : 'j2EPJeRest.etiquetas.remover',
+        waitsResponse : true,
+        arguments : [ parseFloat(etiqueta.idProcesso), etiqueta.idTag ]
+      }, 
+      "PARENT_TOP",
+      function(data){
+        if(data === etiqueta.idTag){
+          $novaEtiqueta.remove()
+          jQ3.Toast("Etiqueta rápida", `"${etiqueta.tag}" desvinculada.`, "success")
+        }else
+          jQ3.Toast("Etiqueta rápida", `Erro ao desvincular "${etiqueta.tag}": ${data}.`, "error")
+      })
+    })
+  })
 };
