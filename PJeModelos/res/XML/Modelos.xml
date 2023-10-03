@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
  ASS: Assemblélia
  DOC: 5429118
@@ -822,6 +822,187 @@
                 <prop name="fontSize" value="6pt"/>
             </style>                      
         </classStyles>
+        <versao id="3.4">
+            <classe id="Documento" versao="3.0">
+                <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
+                <importLib name="citacao.js" artifact="#{j2.res.mod.citacao}"/>
+                <importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/>
+                <importLib name="addtionalControls.js" artifact="#{j2.res.MAIN.addtionalControls}"/>
+                
+                <classe id="Pagina1" versao="2.0">
+                    <constructs param="largura" value="A4" type="string"/>
+                    <classe id="SeletorPrioridade" versao="1.0" />
+                    <classe id="Cabecalho" versao="2.0" >
+                        <constructs param="endereco" value="sim" type="bool"/>
+                    </classe>
+                    <classe id="QualificacaoTable" versao="3.0">
+                        <constructs param="assuntos" value="sim" type="bool"/>
+                        <constructs param="advogados" value="nao" type="bool"/>
+                        <constructs param="idAudiencia" value="nao" type="bool" />
+                    </classe>
+                    <classe id="Titulo" versao="3.0">
+                        <constructs param="text" value="MANDADO DE CITAÇÃO" type="string"/>
+                    </classe>          
+                    <classe id="Selector" versao="3.0" >
+                        <constructs param="newId" value="citacaoSelectMeio" type="string"/>
+                        <constructs param="multiple" value="nao" type="bool"/>
+                        <constructs param="onChange" value="default" type="string"/>
+                        <!--constructs param="onAddAction" value="default" type="string"/>
+                        <constructs param="onDelAction" value="default" type="string"/-->
+                        <constructs param="source" value="meiosComunicacao" type="bool"/>
+                    </classe>
+                    <classe id="MandadoDeOrdemJuiz" versao="1.0"/>
+                    
+                    <classe id="Secao" versao="1.0">
+                        <constructs param="newId" value="destinatarioSup" type="string"/>
+                    </classe>
+                    <classe id="Space" versao="1.0">
+                        <constructs param="newId" value="destinatarioSup.spacing" type="string"/>
+                        <constructs param="size" value="1" type="int"/>
+                        <constructs param="oculto" value="sim" type="boolean"/>
+                    </classe>    
+                    
+                    <classe id="NormalizarFormatacao" versao="3.0">
+                        <classe id="SeletorOJ" versao="3.0" />
+
+                        <classe id="SeletorDeOrdem" versao="2.0">
+                            <constructs param="initialBaseTextIsMandado" value="true" type="bool"/>
+                            <constructs param="deOrdemEmMandadoTradicional" value="sim" type="bool"/>
+                            <constructs param="elementoTradicional" value="deOrdemMandadoTradicional" type="string"/>
+                            <constructs param="complementoProceder" value="citação e intimação" type="string"/>
+                        </classe>
+                        
+                        <!-- PARETE ENVOLVIDA - LOCAL DA DILIGÊNCIA MAIS INFORMAÇÕES DA EXECUÇÃO -->
+                        <classe id="Secao" versao="1.0">
+                            <constructs param="newId" value="destinatarioInf" type="string"/>
+                            <!--classe id="Corpo" versao="1.0">
+                                <constructs param="textIndent" value="3cm" type="string"/>
+                                <constructs param="newId" value="destinatarioExpediente" type="string"/>
+                                <constructs param="textContent" value="#:span@vocativoPreText{#:B{#:U{PARTE ENVOLVIDA - LOCAL DA DILGÊNCIA:}}} #:BR{} #:sapn@vocativo{#{j2.env.PJeVars.processo.polos.partePassivaUC}: #{j2.env.PJeVars.expediente.destinatario}}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 pAsListItem" type="string"/>
+                            </classe-->
+                            <classe id="DestinatarioExpedienteFrameComunicacao" versao="1.0-mand">
+                                <!--constructs param="bindSeletorPessoaElement" value="selectorPessoaTextP" type="bool"/>
+                                <constructs param="bindSeletorPessoaFormats" value="Indnt0cm" type="bool"/-->
+                                <constructs param="initialMeioComnicacao" value="meioComunicItCentralMandados" type="string"/>
+                                <constructs param="padraoApresentacaoParteGeneral" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
+                                <constructs param="padraoApresentacaoParteEndereco" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
+                                <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
+                                <constructs param="padraoApresentacaoParteEnderecoTelefone" 
+                                            value="#:SPAN[centralMandadosDestinatarios]{
+                                                        #:SPAN@pessoa{ #:SPAN{
+                                                            #:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}#:SPAN@oab{} 
+                                                            #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} 
+                                                            #:SPAN@enderecoPAC{#{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}}
+                                                            #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}
+                                                        }}
+                                                        #:SPAN@qr-codes[centralMandadosQRCodes]{
+                                                          #:SPAN@qr-code[centralMandadosQRCode]{}
+                                                        }
+                                                    }" type="string"/>
+                                <constructs param="padraoApresentacaoParteTelefone" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
+                                
+
+                                <constructs param="padraoApresentacaoAdvogado" 
+                                            value="#:BR{}#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.parte.UCase}}: #{j2.mod.clsCnstr.SeletorPessoa.selected.nome} - OAB#{j2.mod.clsCnstr.SeletorPessoa.selected.OAB}" type="string"/>
+                              
+                                <constructs param="separador" value="#:BR{}" type="string"/>
+                                <constructs param="padraoEnderecoPAC" value="#:U{ENDEREÇO:} #:SPAN@selPesEnd{#{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC.iterator._}} #:BR{} " type="string"/>
+                            </classe>
+                            <classe id="Secao" versao="1.0">
+                                <constructs param="newId" value="execucaoInfo" type="string"/>
+                                <constructs param="oculto" value="sim" type="string"/>
+                                <classe id="Space" versao="1.0"/>
+                                <classe id="Corpo" versao="1.0">
+                                    <constructs param="newId" value="citacao.valorExecucao" type="string"/>
+                                    <constructs param="textContent" value="#:U{#:B{VALOR DA EXECUÇÃO}}: #:span@valorExecucao.intmItCitacaoExecucaoJec{R$ 0,00 (zero)}#:BR{}" type="string"/>
+                                    <constructs param="styleClasses" value="pAsListItem Indnt0" type="string"/>
+                                </classe>      
+                            </classe>                   
+                            <classe id="Space" versao="1.0"/>
+                        </classe>
+                        
+                        <!-- FINALIDADE -->
+                        <classe id="Corpo" versao="1.0">
+                            <constructs param="textIndent" value="3cm" type="string"/>
+                            <constructs param="newId" value="finaliadeExpediente" type="string"/>
+                            <constructs param="textContent" value="#:B{#:U{FINALIDADE:}}" type="string"/>
+                            <constructs param="styleClasses" value="" type="string"/>
+                        </classe>
+                        
+                        <!-- SELETOR PRINCIAPL DO MODELO -->
+                        <classe id="Selector" versao="3.0" >
+                            <constructs param="newId" value="citacaoItens" type="string"/>
+                            <constructs param="linkedElTag" value="UL" type="string"/>
+                            
+                            <constructs param="multiple" value="sim" type="bool"/>
+                            <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
+                            <constructs param="onAddAction" value="default" type="string"/>
+                            <constructs param="onDelAction" value="default" type="string"/>
+                            <constructs param="changeList" value="default" type="string"/>
+                            <constructs param="source" value="#{j2.res.mod.citacaoSelSrc}" type="bool"/>
+                            <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                        </classe>  
+                        
+                    </classe>
+                    
+                    <classe id="Space" versao="1.0">
+                        <constructs param="size" value="1" type="int"/>
+                    </classe>    
+                    <classe id="Corpo" versao="1.0">
+                        <constructs param="newId" value="dadoEPassado" type="string"/>
+                        <constructs param="textContent" value="Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, Estado do #{j2.env.PJeVars.unidade.UFFormal}, aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei e o subscrevo." type="string"/>
+                        <constructs param="styleClasses" value="Indnt3" type="string"/>
+                    </classe>    
+                    <classe id="LocalEData" versao="1.0">       
+                        <constructs param="newId" value="default" type="string"/> 
+                        <constructs param="oculto" value="sim" type="boolean"/>    
+                    </classe>    
+                    <classe id="Space" versao="1.0">
+                        <constructs param="size" value="1" type="int"/>
+                    </classe>
+                    <classe id="AddtionalControls" versao="1.0">
+                        <constructs param="modelRegisteredVersions" value="" type="key-pair">
+                            <constructKeyPair key="Editor-Endereco-PAC" value="1.0" type="string"/>
+                        </constructs>
+                    </classe>
+                    <classe id="DJeControls" versao="3.0">
+                        <constructs param="linkedElement" value="SDLinkedElementcitacaoItens" type="string"/>
+                    </classe>
+                    <classe id="BlocoAssinaturas" versao="3.0">
+                        <!--constructs param="magistrado" value="sim" type="bool"/-->
+                        <constructs param="servidor" value="sim" type="bool"/>
+                        <constructs param="secretario" value="sim" type="bool"/>
+                        
+                        <constructs param="proProvimento" value="sim" type="bool"/>
+                        <!--constructs param="textoPrincipal" value="sim" type="string"/-->
+                        <!--constructs param="referenciaArtigo" value="Art. 3º, XXVII" type="string"/ EM RAZÃO DA PROVIMENTO 222018-->
+                        <constructs param="cumuladoCom" value="Portaria 2/2017-2JECivel" type="string"/>
+                    </classe>
+                    <classe id="SeletorAdvertencias" versao="1.0">
+                        <constructs param="observar" value="selectorMonitorcitacaoItens" type="string"/>
+                        <constructs param="itemSourceDef" value="citacaoItens" type="string"/>
+                    </classe>
+
+                    <classe id="PACController" versao="1.0">
+                        <constructs param="meioComunicacaoSelector" value="citacaoSelectMeio" type="string"/>
+                        <constructs param="urgenciaItems" value="intmItLiminar intmItDecisao" type="string"/>
+                        <constructs param="itemsSelector" value="citacaoItens" type="string"/>
+                    </classe>
+                    
+                    <classe id="AutoSave" versao="1.1">
+                        <constructs param="containersType" value="fullFrameBody" type="enum"/>
+                        <constructs param="saveTimeInterval" value="5000" type="int"/>
+                        <!--constructs param="containersExp" value="{ 'atoJudicial': 'atoJudicial' }" type="j2son"/>
+                        <constructs param="containersEdt" value="{ 'itemSelector': 'selectorsentencaItens' }" type="j2son"/-->
+                    </classe> 
+                </classe>
+            </classe>
+        </versao>
         <versao id="3.3"> <!-- nct -->
             <classe id="Documento" versao="3.0">
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
@@ -1564,7 +1745,7 @@
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
-                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}" type="string"/>                                
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #:U{CONTATOS:} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/-->
                                 <constructs param="padraoApresentacaoParteEnderecoTelefone" 
@@ -2566,7 +2747,7 @@
             </style-->
         </classStyles>        
         <versao id="1.0">
-            <classe id="Documento" versao="3.1">
+            <classe id="Documento" versao="3.0">
                 <!-- diferença aqui -->
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="formatacao.js" artifact="#{j2.res.lib.formatacao}"/>

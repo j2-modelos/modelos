@@ -126,6 +126,24 @@ try {
         'audiencia': {
           'listar' : gVG('audienciaProcesso'),
           'data' : gVG('dataAudiencia'),
+          dataIso : (()=>{
+            try{
+              const dataHora = gVG('dataAudiencia');
+              if(!( dataHora.length ) )
+                return ''
+
+              const [data, hora] = dataHora.split(' ');
+
+              const [dia, mes, ano] = data.split('/');
+              const [horaStr, minuto] = hora.split(':');
+
+              const dataISO = `${ano}-${mes}-${dia}T${horaStr}:${minuto}:00.000Z`
+
+              return dataISO;
+            }catch(e){
+              return '';
+            }
+          })(),
           'endereco' : gVG('enderecoSalaAudiencia'),
           'sala' : (function(){
             try{
@@ -143,7 +161,8 @@ try {
           })(),
           'temDesignada' : (function(){
             return gVG('tipoAudiencia').length > 0;
-          })()
+          })(),
+          tipoLabel: gVG('tipoAudiencia').length ? gVG('tipoAudiencia') : '[SEM AUDIÊNCIA DESIGNADA]'
         },      
         'processo': {
             'assuntos' : gVG('assuntosProcesso').substring(1, gVG('assuntosProcesso').length-1),
@@ -220,10 +239,30 @@ try {
             evBus.once('afterSetUnidade', function(){
               var mags = j2.env.modId.unidade.config.magistrados;
               var eEx = mags.emExercicio;
-              var magId = {
-                nominacao : eEx,
+              let magId = {
                 id : mags[eEx]
               }; 
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    magId = {
+                      id: excTemp.usuarioId
+                    }
+                })
+              }
+
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    magId = {
+                      id: presid.usuarioId
+                    }
+                })
+              }
+              
               
               var usrs = j2.env.xmls.usuarios.usuarios[0].usuario;
               
@@ -351,9 +390,31 @@ try {
             var mags = j2.env.modId.unidade.config.magistrados;
             var eEx = mags.emExercicio;
             var magId = {
-              nominacao : eEx,
+              nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
               id : mags[eEx]
-            };            
+            };
+            if(mags.exercicioTemporario?.length){
+              const hoje = new Date()
+              mags.exercicioTemporario.forEach( excTemp =>{
+                const inicio = new Date(excTemp.dataInicio)
+                const fim = new Date(excTemp.dataFim)
+                if(inicio < hoje && hoje < fim)
+                  magId = {
+                    nominacao : 'respondente temporário',
+                    id: excTemp.usuarioId
+                  }
+              })
+            }
+            if(mags.Presidencia?.length){
+              mags.Presidencia.forEach( presid =>{
+                if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                  magId = {
+                    nominacao : 'presidente',
+                    id: presid.usuarioId,
+                    portaria: presid.PortariaDesignacao
+                  }
+              })
+            }                        
             return j2.env.PJeVars.expediente.deOrdemByMagId(magId, conective, ops);
           },
           'deOrdemCaixaAlta' : function(conective, ops){
@@ -365,6 +426,7 @@ try {
             
             var unit = j2.env.modId.unidade;
             var usrs = j2.env.xmls.usuarios.usuarios[0].usuario;
+            const mags = j2.env.modId.unidade.config.magistrados;
             
 
             var usrDef;
@@ -421,13 +483,18 @@ try {
                 else{
                   tx += ', presidindo os presentes autos';
                   
-                  if(ops.portaria)
-                    
-                  if((usrDef.presidente) && ((ops.portaria) ? ops.portaria : true ) ) 
-                    forEach(usrDef.presidente.preside, function(pres){
-                      if(pres.processo === j2.env.PJeVars.processo.numero)
-                        tx += ' (portaria ' + pres.portariaOrgao + ' nº ' + pres.portariaNumero + ')';
-                    });
+                  if(ops.portaria){              
+                    if((usrDef.presidente) && ((ops.portaria) ? ops.portaria : true ) ) 
+                      forEach(usrDef.presidente.preside, function(pres){
+                        if(pres.processo === j2.env.PJeVars.processo.numero)
+                          tx += ' (portaria ' + pres.portariaOrgao + ' nº ' + pres.portariaNumero + ')';
+                      });
+                    if(magId.portaria && mags.mostrarPortaria){
+                      const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                      const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                      tx += ` (${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? ` de ${_dataExtenso}` : ''})`;
+                    }
+                  }
                 }
               }
               return tx;
@@ -460,7 +527,8 @@ try {
 //            else 
 //              detURL = window.j2.modelo.par.win.location.href;
 
-            detURL = window.location.origin + '/pje/Processo/movimentar.seam?idProcesso=' + getIdProcesso();
+            
+            detURL = (!(j2?.api?.origin) ? window.location.origin : j2.api.origin ) + '/pje/Processo/movimentar.seam?idProcesso=' + getIdProcesso();
             
             jQ.get(detURL, '', function(data, textStatus, jqXHR){
               try{
@@ -931,7 +999,7 @@ try {
           }
         },
         'salarioMinimo' : (function(){
-              var v = 'R$ 1.302,00';
+              var v = 'R$ 1.320,00';
               if(v.match(/\d+/g))
                 return parseFloat(v.replace(/\D+/g,'').replace('.','').replace(',','.'))/100;
               else
@@ -1016,6 +1084,14 @@ try {
           },
           urlParams : { // ndlg2
             par : window.j2.mod._._getJsonFromUrl(window.parent.location.href)
+          },
+          validacao: {
+            desabilitarSeAudienciaConciliacaoPJEC: function(){ 
+              if ( gVG('classeProcesso').toLowerCase().match(/procedimento do juizado especial cível/) !== null )
+                return gVG('tipoAudiencia').toLowerCase().match(/conciliação/) !== null
+              else
+                return false
+            }
           }
          },
         '_' : {

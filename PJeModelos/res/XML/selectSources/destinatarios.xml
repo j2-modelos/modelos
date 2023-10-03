@@ -34,6 +34,65 @@ and open the template in the editor.
                 </simpleElementsDefs>
             </itemContent>
         </item>        
+        <item id="destItJuizDireito" label="Juiz de Direito" dataPlus="{ 'cargo': 'Juiz', 'tratamento' : 'Vossa Excelência' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="P" scope="NONE" class="p FntModDefault">
+                        <elemento tag="span" scope="NONE">
+                            A Sua Excelência o Senhor Juiz
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            <HTMLAttribute name="style" value="text-transform: uppercase;"/>
+                            #:B{XXXNomeMagistrado}
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            Juiz de Direito Titular da XXXXVaraJuizadoXXX
+                        </elemento>
+                    </elemento>                    
+                </simpleElementsDefs>
+            </itemContent>
+        </item>    
+        <item id="destItJuizDireitoF" label="Juíza de Direito" dataPlus="{ 'cargo': 'Juíza', 'tratamento' : 'Vossa Excelência' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="P" scope="NONE" class="p FntModDefault">
+                        <elemento tag="span" scope="NONE">
+                            A Sua Excelência a Senhora Juíza
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            <HTMLAttribute name="style" value="text-transform: uppercase;"/>
+                            #:B{XXXNomeMagistrada}
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            Juíza de Direito Titular da XXXXVaraJuizadoXXX
+                        </elemento>
+                    </elemento>                    
+                </simpleElementsDefs>
+            </itemContent>
+        </item>    
+        <item id="destItJuizDireitoGenerico" label="Juiz genérico" dataPlus="{ 'cargo': 'Juiz(a)', 'tratamento' : 'Vossa Excelência' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="P" scope="NONE" class="p FntModDefault">
+                        <elemento tag="span" scope="NONE">
+                            A Sua Excelência o(a) Senhor(a)
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            #:B{Juiz(a) de Direito}
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            Juiz(a) de Direito da XXXXVaraJuizadoXXX
+                        </elemento>
+                    </elemento>                    
+                </simpleElementsDefs>
+            </itemContent>
+        </item>    
         <item id="destItCorregedorCGJ" label="Corregedor Geral da Justiça" dataPlus="{ 'cargo': 'Corregedor', 'tratamento' : 'Vossa Excelência' }">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
@@ -43,7 +102,7 @@ and open the template in the editor.
                         </elemento>
                         <elemento tag="br" scope="NONE"/>
                         <elemento tag="span" scope="NONE">
-                            #:B{MARCELO CARVALHO SILVA}
+                            #:B{JOSÉ DE RIBAMAR FROZ SOBRINHO}
                         </elemento>
                         <elemento tag="br" scope="NONE"/>
                         <elemento tag="span" scope="NONE">

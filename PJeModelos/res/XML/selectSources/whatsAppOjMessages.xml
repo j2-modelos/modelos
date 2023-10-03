@@ -26,7 +26,7 @@ and open the template in the editor.
         </group>
     </groupsDefs>
     <!--items initialSelected="termReclReclamacao"-->
-    <items>
+    <items naoOrdenado="true">
         <item id="wtAppItCumprimento" label="Cumprimento" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

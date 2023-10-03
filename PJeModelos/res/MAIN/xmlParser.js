@@ -3441,7 +3441,32 @@
               'type': 'String'
            }
          ]
-       },              
+       },     
+       {
+        'name': 'DataExercicio',
+        'properties': [
+          {
+             'name': 'PortariaDesignacao',
+             'isMany': false,
+             'type': 'PortariaDesignacao'
+          },
+          {
+             'name': 'usuarioId',
+             'isAttr': true,
+             'type': 'String'
+          },           
+          {
+             'name': 'dataInicio',
+             'isAttr': true,
+             'type': 'Date'
+          },           
+          {
+             'name': 'dataFim',
+             'isAttr': true,
+             'type': 'Date'
+          }             
+        ]
+      },            
         {
           'name': 'Definitions',
           'properties': [
@@ -3515,6 +3540,11 @@
               'isAttr': true,
               'type': 'String'
            },
+           {
+             'name': 'idDropboxV2',
+             'isAttr': true,
+             'type': 'String'
+           },         
            {
               'name': 'url',
               'isAttr': true,
@@ -3761,7 +3791,12 @@
               'name': 'group',
               'isMany' : true,
               'type': 'group'
-            }            
+            },
+            {
+              'name': 'naoOrdenado',
+              'type': 'Boolean',
+              'isAttr': true
+            }     
           ]
         },         
         {
@@ -3858,7 +3893,12 @@
             {
               'name': 'disabled',
               'isAttr': true,
-              'type': 'Boolean'
+              'type': 'Boolean'        
+            },            
+            {
+              'name': 'avaliarDesabilitacao',
+              'isAttr': true,
+              'type': 'String'
             }            
           ]
         },             
@@ -3919,7 +3959,12 @@
               'name': 'initialSelected',
               'isAttr' : true,
               'type': 'String'
-            }            
+            },
+            {
+              'name': 'naoOrdenado',
+              'type': 'Boolean',
+              'isAttr': true
+            }         
           ]
         },               
         {
@@ -4034,6 +4079,26 @@
              'name': 'presidente7',
              'isAttr': true,
              'type': 'String'
+           },
+           {
+            'name': 'exercicioTemporario',
+            'isMany': true,
+            'type': 'DataExercicio'
+           },
+           {
+            'name': 'Presidencia',
+            'isMany': true,
+            'type': 'Presidencia'
+           },
+           {
+            'name': 'simbologiaPadraoAto',
+            'isAttr': true,
+            'type': 'String'
+           },
+           {
+            'name': 'mostrarPortaria',
+            'isAttr': true,
+            'type': 'Boolean'
            }
          ]
        },        
@@ -4120,6 +4185,66 @@
            }
          ]
        },
+       {
+        'name': 'PortariaDesignacao',
+        'properties': [
+          {
+             'name': 'usuarioId',
+             'isAttr': true,
+             'type': 'String'
+          },           
+          {
+             'name': 'numero',
+             'isAttr': true,
+             'type': 'Integer'
+          },           
+          {
+             'name': 'ano',
+             'isAttr': true,
+             'type': 'Integer'
+          },             
+          {
+             'name': 'simbologia',
+             'isAttr': true,
+             'type': 'String'
+          },             
+          {
+             'name': 'dataAto',
+             'isAttr': true,
+             'type': 'Date'
+          },             
+          {
+             'name': 'idDropbox',
+             'isAttr': true,
+             'type': 'String'
+          },
+          {
+            'name': 'idDropboxV2',
+            'isAttr': true,
+            'type': 'String'
+          }         
+        ]
+      },   
+      {
+        'name': 'Presidencia',
+        'properties': [
+          {
+             'name': 'PortariaDesignacao',
+             'isMany': false,
+             'type': 'PortariaDesignacao'
+          },
+          {
+             'name': 'usuarioId',
+             'isAttr': true,
+             'type': 'String'
+          },           
+          {
+             'name': 'numeroUnico',
+             'isAttr': true,
+             'type': 'String'
+          }           
+        ]
+      },   
         {
          'name': 'prop',
          'properties': [

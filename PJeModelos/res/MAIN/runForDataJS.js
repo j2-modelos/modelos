@@ -164,8 +164,13 @@ setInterval(function() {
 
     var slice = Array.prototype.slice;
 
+    var fireLogging = true
+
     function EventBus() {
       this._listeners = {};
+      this._fireLogging = []
+      if(!fireLogging)
+      this._fireLogging = 'DISABLED'
 
       this.on('diagram.destroy', 1, this._destroy, this);
     };
@@ -261,11 +266,18 @@ setInterval(function() {
         throw new Error('no event type specified');
       }
 
+      var _toLog = {}
+      _toLog[type] = undefined
+      if(fireLogging)
+        this._fireLogging.push(_toLog)
+
       listeners = this._listeners[type];
 
       if (!listeners) {
         return;
       }
+
+      _toLog[type] = listeners
 
       if (data instanceof Event) {
         event = data;
@@ -2331,6 +2343,25 @@ setInterval(function() {
     }
     return hash;
   };
+  String.prototype.toURLDropboxV2 = function(nomeArquivo) {
+    const _guid = function () {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    };
+
+    const [idD, rlkey] = this.split(';')
+    if(typeof idD !== 'undefined' && typeof rlkey !== 'undefined'){
+      return `https://www.dropbox.com/scl/fi/${
+        idD}/${
+          encodeURI(nomeArquivo || _guid())
+        }.pdf?rlkey=${
+          rlkey
+        }&raw=1`
+    }else
+      return 'https://www.tjma.jus.br'
+  };
   
   Array.prototype.fromASCII = function(){
     var _ = [];
@@ -2363,6 +2394,36 @@ setInterval(function() {
     
     return tx;
   };
+
+  class SimpleLocalDate extends Date {
+    constructor(dateString) {
+      // Verificar se a dateString é nula ou vazia
+      if (!dateString) {
+        super(); // Usar a data e hora atuais
+      } else {
+        super(dateString); // Usar a dateString fornecida
+      }
+  
+      // Configurar a data sem fuso horário
+      this.setUTCHours(0, 0, 0, 0);
+    }
+  
+    getDay() {
+      return this.getUTCDay();
+    }
+    
+    getDate() {
+      return this.getUTCDate();
+    }
+
+    getMonth() {
+      return this.getUTCMonth(); 
+    }
+  
+    getYear() {
+      return this.getUTCFullYear();
+    }
+  }
   
   window.j2.mod._._capitalizeFirstLetter = function (string) {
     return string.capt();
@@ -2547,9 +2608,34 @@ setInterval(function() {
         return win;
       }
   };
+
+  window.j2.mod._._formatarISOStringDataParaDataPorExtenso = function(isoDate){
+    const months = [
+      'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 
+      'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+    ];
+
+    const date = new SimpleLocalDate(isoDate);
+
+    // Verificar se a data é inválida
+    if (isNaN(date.getTime())) {
+      return '[DATA INVÁLIDA]';
+    }
+
+    date.setUTCHours(0, 0, 0, 0);
   
-  if (document.getElementById('PJeVarsXML'))
-    window.j2.mod._.PJeVars = new DOMParser().parseFromString(document.getElementById('PJeVarsXML').innerHTML, 'text/html');
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+  
+    const formattedDate = `${day} de ${months[monthIndex]} de ${year}`;
+    return formattedDate;
+  }
+  
+  if (_windowDocument.getElementById('PJeVarsXML'))
+    window.j2.mod._.PJeVars = new DOMParser().parseFromString(_windowDocument.getElementById('PJeVarsXML').innerHTML, 'text/html');
+  else if (j2?.api?.PJeVarsHTML)
+    window.j2.mod._.PJeVars = new DOMParser().parseFromString(j2?.api?.PJeVarsHTML, 'text/html');
   else
     console.error('PJeVarsXML não foi localizado');
 })();
@@ -3391,15 +3477,21 @@ try {
           j2.modelo.sup[name] = {};
           j2.modelo.sup[name].name = name; // tappac as new
           j2.modelo.sup[name].win = method();
-          j2.modelo.sup[name].doc = j2.modelo.sup[name].win.document;
-          j2.modelo.sup[name].gE = function(e){
-            return j2.modelo.sup[name].win.document.getElementById(e);
-          };
-          
-          j2.modelo.sup[name].$ = jQ3Factory(j2.modelo.sup[name].win, true);
-          j2.modelo.sup[name].$_ = function(){ // tappac as new
-            return j2.modelo.sup[name].win.jQ3;
-          };
+          function ___sub() {
+            j2.modelo.sup[name].doc = /*() => { return*/ j2.modelo.sup[name].win.document /*};*/
+            j2.modelo.sup[name].gE = function(e){
+              return j2.modelo.sup[name].win.document.getElementById(e);
+            };
+            
+            j2.modelo.sup[name].jQ3 = jQ3Factory(j2.modelo.sup[name].win, true);
+            j2.modelo.sup[name].win.jQ3 = j2.modelo.sup[name].jQ3
+            j2.modelo.sup[name].$_ = function(){ // tappac as new
+              return j2.modelo.sup[name].win.jQ3;
+            };
+          }
+
+          j2.modelo.sup[name].win.addEventListener('load', ___sub)
+          ___sub()
         }
       }
     };
@@ -3436,24 +3528,23 @@ try {
       libLoad( window.j2.res.MAIN.artfacts );
     });
     evBus.once('loaded-ROOT/res/MAIN/artfacts.js', function(){    
+      var _ap = window.j2.api ??= {}
       
-      window.j2.api = {
-        extDependency : [ // boot
-          {lib : 'j2.res.MAIN.xmlParser'},
-          {lib : 'j2.res.MAIN.PJeVars'}, 
-          {lib : 'j2.res.MAIN.baseClasses'}, 
-          {lib : 'j2.res.MAIN.builder'}, 
-          {lib : 'j2.res.XML.unidadesAutorizadas'}, 
-          {lib : 'j2.res.XML.modelos'},
-          {lib : 'j2.res.XML.baseClasses'},
-          {lib : 'j2.res.XML.usuarios'},
-          {lib : 'j2.res.XML.classStyles'},
-          {lib : 'j2.res.CSS.j2'},
-          {lib : 'j2.res.lib.jquery3'}
-        ],
-        _progresCount : 15,
-        isMainBoot : true
-      };
+      _ap.extDependency = [ // boot
+        {lib : 'j2.res.MAIN.xmlParser'},
+        {lib : 'j2.res.MAIN.PJeVars'}, 
+        {lib : 'j2.res.MAIN.baseClasses'}, 
+        {lib : 'j2.res.MAIN.builder'}, 
+        {lib : 'j2.res.XML.modelos'},
+        {lib : 'j2.res.XML.unidadesAutorizadas'}, 
+        {lib : 'j2.res.XML.baseClasses'},
+        {lib : 'j2.res.XML.usuarios'},
+        {lib : 'j2.res.XML.classStyles'},
+        {lib : 'j2.res.CSS.j2'},
+        {lib : 'j2.res.lib.jquery3'}
+      ]
+      _ap._progresCount = 15,
+      _ap.isMainBoot = true
       
       j2.env.j2U.progBar(15);
       j2.env.j2U.log('artifacts.js');
@@ -3784,10 +3875,17 @@ try {
       }
 	      
       evBus.fire('onLoadModeloJ2');
+      if(j2?.api?.idModelo)
+        evBus.fire(`builder.afterBuildModSet.externalApi.${j2.api.idModelo}`, definitiions);
+
     });
     
     evBus.once('afterLoadRunLibs', function(event, definitiions){
       console.log('fired afterLoadRunLibs');
+      var mod = window.j2.modelo;
+      mod.par.jQ3 = jQ3Factory(mod.par.win, true)
+      mod.exp.jQ3 = jQ3Factory(mod.exp.win, true)
+
       var b = window.j2.modelo.edt.doc.body;
 
       while (b.firstChild) {
@@ -3972,7 +4070,10 @@ try {
         scrolled : false,
         altTitle : j2.env.modId.id
       };
-      myWindow = j2.mod._._opW.center( _.url, _.name, _.idProcesso, _.winSize, _.scrolled, null, _.altTitle );
+      if(!(j2?.api?.winEdt))
+        myWindow = j2.mod._._opW.center( _.url, _.name, _.idProcesso, _.winSize, _.scrolled, null, _.altTitle );
+      else
+        myWindow = j2.api.winEdt
 
       
     
@@ -3986,11 +4087,13 @@ try {
         'gE': function (id) {
           return myWindow.document.getElementById(id);
         },
-        $ : jQ3Factory(myWindow, true)
+        $ : jQ3Factory(myWindow, true),
       };
+      window.j2.modelo.edt.jQ3 = window.j2.modelo.edt.$
       
       window.j2.modelo.exp.$  = jQ3Factory(window.j2.modelo.exp.win, true);
-      window.j2.modelo.par.$ = jQ3Factory(window.j2.modelo.par.win, true);
+      window.j2.modelo.exp.jQ3  = window.j2.modelo.exp.$
+      window.j2.modelo.par.jQ3 = jQ3Factory(window.j2.modelo.par.win, true);
       
       /*setWinEdtHeader(myWindow);*/
     });

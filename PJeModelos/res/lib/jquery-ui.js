@@ -12,7 +12,7 @@ function jQueryUiFactory(){ //tappac
 	} else {
 
 		// Browser globals
-		factory( window.jQuery || window.jQ3 );
+		factory( /*window.jQuery ||*/ window.jQ3 );
 	}
 }(function( $ ) {
 

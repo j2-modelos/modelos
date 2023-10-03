@@ -731,7 +731,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
@@ -768,9 +768,32 @@ try {
               var eEx = mags.emExercicio;
               var ord = [];
               ord[0] = {
-                nominacao : eEx,
+                nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
                 id : mags[eEx]
               };
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    ord.unshift({
+                      nominacao : 'respondente temporário',
+                      id: excTemp.usuarioId,
+                      portaria: excTemp.PortariaDesignacao
+                    })
+                })
+              }
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    ord.unshift({
+                      nominacao : 'presidente',
+                      id: presid.usuarioId,
+                      portaria: presid.PortariaDesignacao
+                    })
+                })
+              }   
               
               for(var prop in mags){
                 if(((prop.startsWith('titular') )
@@ -784,7 +807,7 @@ try {
                    (prop !== eEx)
                   ){
                   ord[ord.length] = {
-                    nominacao : prop,
+                    nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                     id : mags[prop]
                   };
                 }
@@ -827,6 +850,11 @@ try {
                         else
                           tx += 'pela ';
                         tx+= unit.id;
+                        if(magId.portaria && mags.mostrarPortaria){
+                          const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                          const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                          tx += `\n<br>(${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? `, de ${_dataExtenso}` : ''})`;
+                        }
                       }
                       else{
                         tx += 'Presidindo os presentes autos';
@@ -837,6 +865,11 @@ try {
                               pkg.BlocoAssinaturas.processoEPresidido = nMagItem.id;
                             }
                           });
+                        if(magId.portaria && mags.mostrarPortaria){
+                          const _dataExtenso = window.j2.mod._._formatarISOStringDataParaDataPorExtenso(magId.portaria.dataAto)
+                          const _simbPadAto = mags.simbologiaPadraoAto || magId.portaria.simbologia
+                          tx += `\n<br>(${_simbPadAto} nº ${magId.portaria.numero}/${magId.portaria.ano}${(magId.portaria.dataAto) ? `, de ${_dataExtenso}` : ''})`;
+                        }
                       }
                     }
                   }
@@ -1648,6 +1681,7 @@ try {
               disposicao    : e.disposicao,
               url           : e.url,
               idDropbox     : e.idDropbox,
+              idDropboxV2   : e.idDropboxV2,
               refArtParInc  : e.refArtParInc
             };
 
@@ -1909,10 +1943,10 @@ try {
 
           if (soma > 9) {
             dia=(d+e-9);
-            mes=03;
+            mes=3;
           }else {
             dia=(d+e+22);
-            mes=02;
+            mes=2;
           }
 
           var _pascDate = new Date(ano,mes,dia);  
@@ -1964,7 +1998,11 @@ try {
         
         
         var _url = dispLeg.url ? dispLeg.url : 
-                   ( dispLeg.idDropbox ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) : '' );
+                   ( dispLeg.idDropbox 
+                     ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) 
+                     : (dispLeg.idDropboxV2 
+                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao))
+                        : '') );
         
         if( _url.length === 0 )
           return dispLeg.disposicao; 
@@ -2458,6 +2496,8 @@ try {
         if(!newDests.length)
           return;
         
+        pkg.DestinatarioExpedienteFrameComunicacao.processedDestinatarios = newDests
+          
         var prtP = args.padraoApresentacaoParteGeneral;
         var exbAdv = false;
         
@@ -2560,7 +2600,7 @@ try {
              'DestinatarioExpedienteFrameComunicacao.noEditionsConfirmed;beforeFinishEdition.postConfirmation', 'docEditorCore.onCancelClose');
            }
         };
-        evBus.on('beforeFihishEdition', 10000, cb); // lwapac
+        evBus.on('beforeFihishEdition', 100000, cb); // lwapac
         evBus.once('DestinatarioExpedienteFrameComunicacao.noEditionsConfirmed', function(event){ // lwapac
           forEach(_.pDestVocativo.querySelectorAll('#PJeVars-renderedWhatsApp'), function(e){ 
             jQ3(e).removeClass('HLField');
@@ -2571,7 +2611,7 @@ try {
         evBus.on('onFinishEdition', 900, function(){
           jQ3('.ui-helper-hidden-accessible').remove()
           jQ3('[j2-tooltiped]').removeAttr('title')
-          mod.par.$('#Fragment-Loader-div').remove()
+          mod.par.jQ3('#Fragment-Loader-div').remove()
           jQ3('#vocativo .HLField').removeClass('HLField')
         })
       },
@@ -3085,6 +3125,9 @@ try {
       proceedFinish : false,
       close : function () {
         pkg.ModalDialog.okCancel('Fechar o editor?', 'Modelos j2 - Confrimação', 'docEditorCore.closeConfirmation', 'docEditorCore.onCancelClose');
+      },
+      closeByRobot : () =>{
+        evBus.fire('onFinishEdition');
       }
     };
     
@@ -3381,7 +3424,7 @@ try {
         
         if(!(j2.modelo.opn)){
           j2.modelo.opn = {
-            $ : jQ3Factory(j2.modelo.par.win.opener, true),
+            jQ3 : jQ3Factory(j2.modelo.par.win.opener, true),
             doc : j2.modelo.par.win.opener.document,
             gE : function(id){
               return j2.modelo.opn.getElementById(id);
@@ -3392,11 +3435,11 @@ try {
         
         var _ = { 
           ctxt : el,
-          open : $(mod.edt.gE('ExpedienteVinculado-ExpedienteOpener')),
+          open : jQ3(mod.edt.gE('ExpedienteVinculado-ExpedienteOpener')),
           openerLinkedActions : {
-            editar : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]'),
-            openExpediente : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').prev(),
-            openProcesso : j2.modelo.opn.$('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').next()
+            editar : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]'),
+            openExpediente : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').prev(),
+            openProcesso : j2.modelo.opn.jQ3('a[href="/pje/Visita/listView.seam' + j2.modelo.par.win.location.search + '"]').next()
           }
         };        
         
@@ -3411,7 +3454,7 @@ try {
         jQ3.get(_.openerLinkedActions.openExpediente.attr('href'), function(data, textStatus, jqXHR){ // ndlg2 as new
           if(textStatus==='success'){
             _.expediente$ = jQ3(data);
-            pkg.ExpedienteVinculado.expediente.$ = _.expediente$;
+            pkg.ExpedienteVinculado.expediente.jQ3 = _.expediente$;
           }
           if(textStatus==='error'){
             var e = 'Erro ao carregar html do expediente vinculado.';
@@ -3494,23 +3537,16 @@ try {
             });
           };
           
-          var _ = {
-            selectMethod : { 
-              value : 'docAutos'
-            }, 
-            ids : pkg.ExpedienteVinculado.expediente.ids
-          };
           var doc = {
-            id : pkg.ExpedienteVinculado.expediente.ids.doc,
             url : null
           };
+          jQ3.extend(doc, pkg.ExpedienteVinculado.expediente.ids)
           
-          pkg.ReferenciaDocumento.findURL(doc, _);
-          doc.url = window.location.origin + doc.url;
+          pkg.ReferenciaDocumento.findURL(doc);
           pkg.ReferenciaDocumento.prepareHTMLElements(doc);
           
           var txN = getTextNodesIn(doc.html.spn);
-          txN[0].textContent += ' (Expediente ' + _.ids.exp + ')';         
+          txN[0].textContent += ' (Expediente ' + doc.exp + ')';         
          
           return doc.html.spn.outerHTML;
         },
@@ -3522,7 +3558,7 @@ try {
             return 'Mandado';
         })(),
         verbosCumprimento : function(){
-          var _ = pkg.ExpedienteVinculado.expediente.$.find('#expTitle');
+          var _ = pkg.ExpedienteVinculado.expediente.jQ3.find('#expTitle');
           var _v = {
             passado : 'diligenciei',
             infinitivo : 'diligenciar'
@@ -3721,7 +3757,7 @@ try {
           return j2.mod._._opW.corner( _.url, _.name, null, _.winSize );
         });
 
-        var j2ExpC = $(mod.exp.doc.getElementById('j2Exp')).clone(true);
+        var j2ExpC = jQ3(mod.exp.doc.getElementById('j2Exp')).clone(true);
         //j2ExpC.find('#textMargins').css('box-shadow', '');
         j2ExpC.find('div').filter(function() {
             return $(this).css('box-shadow').length > 0;
@@ -3730,7 +3766,7 @@ try {
         j2ExpC.find('#normalizeFormtas').css('border', '');
 
         var _pdfWin = mod.sup.FerramentasProcessoBaixarPDF;
-        var _wB = _pdfWin.$('body');
+        var _wB = _pdfWin.jQ3('body');
         _wB.empty();
         _wB.append(j2ExpC);
 
@@ -3744,7 +3780,7 @@ try {
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          _pdfWin.win.html2pdf().set(opt).from(_pdfWin.$('#j2Exp')[0]).save(null, mod.exp.doc);
+          _pdfWin.win.html2pdf().set(opt).from(_pdfWin.jQ3('#j2Exp')[0]).save(null, mod.exp.doc);
           setTimeout(function(){_pdfWin.win.close();},250);
         });
         
@@ -4693,6 +4729,61 @@ try {
       setEvents : function(_, args){
         var _this = pkg.PACController;
         
+        var cb3 = function(event, closer){       
+          if(pkg.Documento.isRecovered)
+            return;
+          
+          let modalDialogMessage = ''
+
+          function _checkMeioParaParte(){
+            const meioDeComunicacao = $(_.meiosComunicacaoSelector.select).find('option:selected').text()
+
+            if( meioDeComunicacao.toLowerCase().match(/diário eletrônico|sistema/) !== null )
+              if(pkg.DestinatarioExpedienteFrameComunicacao?.processedDestinatarios){
+                const destFrameComunicaDestinatarios = pkg.DestinatarioExpedienteFrameComunicacao?.processedDestinatarios
+                const destSemAdvogado = []
+
+                destFrameComunicaDestinatarios.forEach(destinatario => {
+                  if(!(destinatario.advogado) && !destinatario.papel.toLowerCase().match(/advogado|procuradoria/))
+                    destSemAdvogado.push(destinatario)
+                })
+
+                const destSemAdvogadoMap = destSemAdvogado.map(d => d.nome)
+
+                if(! destSemAdvogadoMap.length)
+                  return true
+                
+                if( j2.env.modId.id.toLowerCase().match(/Citacao/) 
+                  && meioDeComunicacao.toLowerCase().match(/sistema/))
+                  return true
+
+                modalDialogMessage = `Parece que você está cometendo um erro com o meio de comunicação para uma ou mais partes.
+                                      #:BR{}#:BR{}
+                                      O meio de comunicação escolhido foi #:B{${meioDeComunicacao}}, porém #:B{${destSemAdvogadoMap.joinListE()}}
+                                      #:U{não possui(em) advogado vinculado}.
+                                      #:BR{}
+                                      ${meioDeComunicacao.toLowerCase().match(/diário eletrônico/) ?
+                                       '#:BR{}Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!' :
+                                       `#:BR{}
+                                        Contudo, em sendo o caso de a(s) parte(s) pode(m) ser #:I{jus postulandi}, prossiga normalmente.
+                                        #:BR{}#:BR{}
+                                        Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!`
+                                      }
+                                      `
+
+                return false;
+              }
+
+            return true;  
+          }
+                    
+          if(! (_checkMeioParaParte() ) ){
+            pkg.DocEditorCore.proceedFinish = false;
+
+            pkg.ModalDialog.okCancel( modalDialogMessage, 'Modelo j2 - Atenção', 
+            'PACController.noEditionsConfirmed3;beforeFinishEdition.postConfirmation', 'docEditorCore.onCancelClose');
+          }
+        };
         
         var cb2 = function(event, closer){       
           if(pkg.Documento.isRecovered)
@@ -4760,6 +4851,11 @@ try {
         };
         
         
+        evBus.on('beforeFihishEdition', cb3);
+        evBus.once('PACController.noEditionsConfirmed3', function(event){ 
+          evBus.off('beforeFihishEdition',cb3);
+        });   
+
         evBus.on('beforeFihishEdition', cb2);
         evBus.once('PACController.noEditionsConfirmed2', function(event){ 
           evBus.off('beforeFihishEdition',cb2);
@@ -5427,7 +5523,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
@@ -5489,9 +5585,32 @@ try {
           var eEx = mags.emExercicio;
           var ord = [];
           ord[0] = {
-            nominacao : eEx,
+            nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
             id : mags[eEx]
           };
+          if(mags.exercicioTemporario?.length){
+            const hoje = new Date()
+            mags.exercicioTemporario.forEach( excTemp =>{
+              const inicio = new Date(excTemp.dataInicio)
+              const fim = new Date(excTemp.dataFim)
+              if(inicio < hoje && hoje < fim)
+                ord.unshift({
+                  nominacao : 'respondente temporário',
+                  id: excTemp.usuarioId,
+                  portaria: excTemp.PortariaDesignacao
+                })
+            })
+          }
+          if(mags.Presidencia?.length){
+            mags.Presidencia.forEach( presid =>{
+              if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                ord.unshift({
+                  nominacao : 'presidente',
+                  id: presid.usuarioId,
+                  portaria: presid.PortariaDesignacao
+                })
+            })
+          }  
 
           for(var prop in mags){
             if(((prop.startsWith('titular') )
@@ -5505,7 +5624,7 @@ try {
                (prop !== eEx)
               ){
               ord[ord.length] = {
-                nominacao : prop,
+                nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                 id : mags[prop]
               };
             }
@@ -5692,7 +5811,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
@@ -5743,9 +5862,32 @@ try {
               var eEx = mags.emExercicio;
               var ord = [];
               ord[0] = {
-                nominacao : eEx,
+                nominacao : !eEx.startsWith('respondente') ? eEx : 'respondente fixo',
                 id : mags[eEx]
               };
+              if(mags.exercicioTemporario?.length){
+                const hoje = new Date()
+                mags.exercicioTemporario.forEach( excTemp =>{
+                  const inicio = new Date(excTemp.dataInicio)
+                  const fim = new Date(excTemp.dataFim)
+                  if(inicio < hoje && hoje < fim)
+                    ord.unshift({
+                      nominacao : 'respondente temporário',
+                      id: excTemp.usuarioId,
+                      portaria: excTemp.PortariaDesignacao
+                    })
+                })
+              }
+              if(mags.Presidencia?.length){
+                mags.Presidencia.forEach( presid =>{
+                  if(presid.numeroUnico === j2.env.PJeVars.processo.numero)
+                    ord.unshift({
+                      nominacao : 'presidente',
+                      id: presid.usuarioId,
+                      portaria: presid.PortariaDesignacao
+                    })
+                })
+              }  
               
               for(var prop in mags){
                 if(((prop.startsWith('titular') )
@@ -5759,7 +5901,7 @@ try {
                    (prop !== eEx)
                   ){
                   ord[ord.length] = {
-                    nominacao : prop,
+                    nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
                     id : mags[prop]
                   };
                 }
@@ -6762,9 +6904,9 @@ try {
             return false;
           }
 
-          var _$ = mod.edt.win.jQ3;
           var _convertChosen = function(){ //chosen
-            if(_$('<select>').chosen && bootstrapCssReady() ){
+            var _$ = mod.edt.win.jQ3;
+            if(typeof _$ === 'function' && _$('<select>').chosen && bootstrapCssReady() ){
               _.select.jQ3 = _$(_.select);
               _.select.jQ3.chosen({
                 no_results_text : 'Nenhuma finalidade',
@@ -7212,8 +7354,11 @@ try {
             o.selected = true;
           o.value = item.id;
           o.innerHTML = j2.mod.builder.parseVars(item.label);
-          o.title = itemHint(item);
-          item.disabled && (o.disabled = item.disabled);
+          const hint = itemHint(item)
+          o.title = typeof hint === 'object' && hint.nodeType === 11 ? hint.textContent : hint;
+          item.disabled && (o.disabled = true);
+          if(item.avaliarDesabilitacao)
+            j2.mod.builder.parseVars(item.avaliarDesabilitacao).trim().toLowerCase() === 'true' && (o.disabled = true)
           return o;
         };
         function groupToOptionGroup(grp){
@@ -7228,13 +7373,19 @@ try {
         }
                 
 
-        function itrGroup(arGp, appd, arI){
+        function itrGroup(arGp, appd, arI, naoOrdenado){
+          if(!(naoOrdenado))
+            arGp.sort((a, b)=>{
+              var _a = a.label.toLowerCase()
+              var _b = b.label.toLowerCase()
+              return _a.localeCompare(_b);
+            })
           forEach(arGp, function(it){
             if (eCompetencia(it)){
               var g = groupToOptionGroup(it);
               appd.appendChild(g);
-              forEach(it.gItem, function(it){
-                forEach(arI, function(it_item){
+              forEach(arI, function(it_item){
+                forEach(it.gItem, function(it){
                   if(it_item.id === it.id && eCompetencia(it_item))
                     g.appendChild( itemToOption(it_item)) ;
                 });
@@ -7252,10 +7403,17 @@ try {
         if(selectorDefModdle.selectorDef.items.initialSelected)
           selectedId = selectorDefModdle.selectorDef.items.initialSelected;
         
+        if(!(selectorDefModdle.selectorDef.items.naoOrdenado))
+          selectorDefModdle.selectorDef.items.item.sort((a, b)=>{
+            var _a = a.label.toLowerCase()
+            var _b = b.label.toLowerCase()
+            return _a.localeCompare(_b);
+          })
+
         if(selectorDefModdle.selectorDef.groupsDefs)
           if(selectorDefModdle.selectorDef.groupsDefs.group)
             if(selectorDefModdle.selectorDef.groupsDefs.group.length){
-              itrGroup(selectorDefModdle.selectorDef.groupsDefs.group, selct, selectorDefModdle.selectorDef.items.item, selct);
+              itrGroup(selectorDefModdle.selectorDef.groupsDefs.group, selct, selectorDefModdle.selectorDef.items.item, selectorDefModdle.selectorDef.groupsDefs.naoOrdenado);
               _selInst.__loadedItems = true;
               defer(function(){evBus.fire('afterLoadItems.' + selct.id);});
               // slck
@@ -7369,8 +7527,10 @@ try {
       },
       setEvents : function(_){        
         evBus.on('beforeFihishEdition', 9999, function(event, closer){          
-          if(mod.sup.docList)
-            mod.sup.docList.win.close();
+          forEach(mod.sup, function(_sup){                
+            if(_sup.ESuplementarDeDocList)
+              _sup.win.close()
+          })
           if(mod.sup.docListAutoSearch) // rdp
             mod.sup.docListAutoSearch.win.close(); // rdp
         });
@@ -7410,19 +7570,19 @@ try {
         var dlasJ2Win = j2.modelo.sup.docListAutoSearch;
           
           dlasJ2Win.win.addEventListener('load', function() {
-            j2.modelo.sup.docListAutoSearch.$ = jQ3Factory(j2.modelo.sup.docListAutoSearch.win, true);
+            j2.modelo.sup.docListAutoSearch.jQ3 = jQ3Factory(j2.modelo.sup.docListAutoSearch.win, true);
             dlasJ2Win.searchClone = {
               tbl : jQ3('<table>'),
               tBodyPrevHash : 0
             };
             setInterval(function(){ 
-              var currHsh = dlasJ2Win.$('#processoDocumentoGridList\\:tb').text().hashCode();
+              var currHsh = dlasJ2Win.jQ3('#processoDocumentoGridList\\:tb').text().hashCode();
               if(currHsh === dlasJ2Win.searchClone.tBodyPrevHash)
                 return;
               
               dlasJ2Win.searchClone.tBodyPrevHash = currHsh;
               
-              var cln = dlasJ2Win.$('#processoDocumentoGridList\\:tb').clone(true);
+              var cln = dlasJ2Win.jQ3('#processoDocumentoGridList\\:tb').clone(true);
               
               cln.find('tr').each(function(a, b, c){
                 b.id = jQ3(b).find('td:first').text().trim();
@@ -7430,7 +7590,7 @@ try {
               
               dlasJ2Win.searchClone.tbl.append(cln);
               
-              var a =dlasJ2Win.$('.rich-inslider-inc-horizontal')[0]; 
+              var a =dlasJ2Win.jQ3('.rich-inslider-inc-horizontal')[0]; 
               a.dispatchEvent(new Event('mousedown')); 
               a.dispatchEvent(new Event('mouseup'));
               
@@ -7491,11 +7651,21 @@ try {
                 :
                 j2.env.PJeVars.j2Api.URLs.autosDigitaisURL;
 
-        var w;
-        mod.sup.open('docList', function(){          
+        
+        forEach(mod.sup, function(_sup){                
+          if(_sup.ESuplementarDeDocList){
+            _sup.jQ3('#pageBody > div.navbar').css({ background : 'gray' })
+            _sup.ESuplementarDeDocList = 'inactive'
+          }
+        })
+
+        var w
+        var winName = 'docList-' + guid()
+          
+        mod.sup.open(winName, function(){          
           var _ = {
             url : url,
-            name : 'wndDocList',
+            name : `wnd${winName}`,
             idProcesso : j2.env.PJeVars.processo.idProcesso,
             winSize : {
               width : screen.width * 0.6,
@@ -7509,13 +7679,241 @@ try {
         });
         
         _ctrls.winReference = w;
+
+        var currWinSup = j2.modelo.sup[winName]
+        currWinSup.ESuplementarDeDocList = 'active'
+        
+        function loadedDocListSub () {
+          var context = {
+            doc : currWinSup.doc,
+            loc : 'head'
+          }
+
+          var jquidef = jQ3.Deferred()
+          var jqinitdef = jQ3.Deferred()
+
+          evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function() {  jquidef.resolve() })
+          evBus.on('loaded-'+ j2.res.lib.jqueryInitialize.lib, function() {   
+            var wdl = currWinSup 
+            wdl.win.jQueryInitializeFactory(wdl.jQ3, wdl.doc)            
+            jqinitdef.resolve() 
+          })
+          
+          jQ3.when(jquidef, jqinitdef).done( ()=>{
+            var _jQ3 = currWinSup.jQ3
+            
+            function initializeFrameHTML(initial){
+              var wdl = currWinSup
+              var $wFrame = _jQ3('#frameHtml')
+
+              function loadedFrame(){
+                wdl.htmlFrame = {
+                  jQ3 : jQ3Factory($wFrame.prop('contentWindow'), true),
+                  win : $wFrame.prop('contentWindow'),
+                  doc : $wFrame.prop('contentDocument')
+                }
+                $wFrame.prop('contentWindow').jQ3 = wdl.htmlFrame.jQ3
+
+                var context = {
+                  doc : wdl.htmlFrame.doc,
+                  loc : 'head'
+                }
+
+                var jquidef = jQ3.Deferred()
+                var jqctxmendef = jQ3.Deferred()
+                var jqctxmencssdef = jQ3.Deferred()
+                var jqsloaded = jQ3.Deferred()
+
+                evBus.on('loaded-'+ j2.res.lib.jqueryUi.lib, function __lcb() { 
+                  jquidef.resolve()
+                  evBus.off('loaded-'+ j2.res.lib.jqueryUi.lib, __lcb)
+
+                  j2.mod.com.libLoader(j2.res.lib.jqueryContextMenu, context)
+                  j2.mod.com.libLoader(j2.res.CSS.jqueryContextMenu, context)
+                })
+                evBus.on('loaded-'+ j2.res.lib.jqueryContextMenu.lib, function __lcb2() { 
+                  jqctxmendef.resolve()
+                  evBus.off('loaded-'+ j2.res.lib.jqueryContextMenu.lib, __lcb2)
+                })
+                evBus.on('loaded-'+ j2.res.CSS.jqueryContextMenu.lib, function __lcb3() { 
+                  jqctxmencssdef.resolve()
+                  evBus.off('loaded-'+ j2.res.CSS.jqueryContextMenu.lib, __lcb3)
+                })
+
+                function checkJQueryLibsLoaded() { // tappac as new
+                  if (typeof wdl.htmlFrame.jQ3.ui !== 'undefined'
+                  &&  typeof wdl.htmlFrame.jQ3.contextMenu !== 'undefined'
+                  ) {
+                    jqsloaded.resolve()
+                  }
+                  else {
+                      window.setTimeout( checkJQueryLibsLoaded, 50 );
+                  }
+                }
+                checkJQueryLibsLoaded()
+                
+                jQ3.when(jquidef, jqctxmendef, jqctxmencssdef, jqsloaded).done(function() {  
+                  var $ = wdl.htmlFrame.jQ3
+
+                 loadContextMenu($, wdl)
+                  
+                })
+
+                setTimeout( () => { 
+                  j2.mod.com.libLoader(j2.res.lib.jqueryUi, context)
+                  j2.mod.com.libLoader(j2.res.lib.fontawesome, context);
+                }, 250 )
+              }
+
+              $wFrame.on('load', loadedFrame)
+              if(initial.firstIteraction)
+                loadedFrame()
+            }
+
+            _jQ3.initialize('#frameHtml', initializeFrameHTML)
+            initializeFrameHTML({ firstIteraction : true })
+            
+          })
+
+          j2.mod.com.libLoader(j2.res.lib.jqueryInitialize, context);
+          j2.mod.com.libLoader(j2.res.lib.jqueryUi, context);
+        }
+
+        currWinSup.win.addEventListener('pageshow', loadedDocListSub )
+
+        function loadContextMenu($, wdl){
+
+          function getSelectedText() {
+            var win = wdl.htmlFrame.win
+            var doc = wdl.htmlFrame.doc
+  
+            var text = "";
+            if (typeof win.getSelection !== "undefined") {
+              text = win.getSelection().toString();
+            } else if (typeof doc.selection !== "undefined" && doc.selection.type === "Text") {
+              text = doc.selection.createRange().text;
+            }
+            return text;
+          }
+          
+          $.contextMenu({
+            selector: 'body', 
+            build: function($triggerElement, e){
+              var $this = this;
+
+              var static = {/*
+                 "pasteFinalidade": {
+                  name: "Colar em XXXFinalidadeXXX", 
+                  icon: "paste", 
+                  faClass : 'fa-solid fa-paste',
+                  disabled : function(key, opt){
+                    return (j2.modelo.exp.gE('finalidade-colador') === null) || (getSelectedText().length === 0)
+                  }
+                }*/
+              }
+
+              var dyna = (function(){
+                return jQ3.extend(
+                (function(){
+                  var selText = getSelectedText()
+                  var selMenuItems = {
+                    selectionFold : {
+                      name : 'Seleção',
+                      items : {}
+                    }
+                  }
+
+                  if(selText.length === 0){
+                    selMenuItems = { 
+                      noText : {
+                        name : '[Nenhum texto selecionado]',
+                        disabled : true
+                      }
+                    }
+                    return selMenuItems
+                  }
+
+                  $this.itemData = {}
+                  selText = selText.split(',')
+                  
+                  selText.forEach( function(txt){
+                    var _g = guid()
+                    selMenuItems.selectionFold.items[_g] = { 
+                      name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
+                      type: 'checkbox', 
+                      selected: true,
+                      fullText : txt
+                    }
+                    $this.itemData[_g] = txt
+                  })
+
+                  selMenuItems.selectionFold.items["sep1"] = "---------"  
+                  
+                  var _g = guid()
+                  var txt = 'conforme despacho XXXXIdXXX'
+                  selMenuItems.selectionFold.items[_g] = {
+                    name: txt.substring(0, 30) + ( (txt.length) > 30 ? '...' : '' ),
+                      type: 'checkbox', 
+                      selected: false,
+                      fullText : 'conforme despacho #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}'
+                  }
+                  $this.itemData[_g] = txt
+
+                  return selMenuItems
+                })(),
+                {
+                  "sep1": "---------",
+                  "pasteFinalidade": {
+                    name: "Colar em XXXFinalidadeXXX", 
+                    icon: "paste", 
+                    faClass : 'fa-solid fa-paste',
+                    disabled : function(key, opt){
+                      return (j2.modelo.exp.gE('finalidade-colador') === null) || (getSelectedText().length === 0)
+                    }
+                  }
+                })
+              })()
+
+              return {
+                callback: function(key, options) {                  
+                  switch(key){
+                    case 'pasteFinalidade':
+                      const obj = options.inputs
+                      let pasteText = []
+
+                      Object.entries(obj).forEach(function([key, value]) {
+                        if(value.$input.is(':checked')){
+                          const __text = j2Conv(j2.mod.builder.parseVars(value.fullText))
+                          pasteText.push(__text)
+                        }
+                      });
+
+                      pasteText = pasteText.join(', ').trim()
+
+                      jQ3(j2.modelo.exp.gE('finalidade-colador')).html(pasteText)
+                      break;
+                  }
+                },
+                items : jQ3.extend(dyna, static),
+                events: {
+                  
+                }
+      
+              }
+            }            
+          })
+            
+        }
+        
+        
+        
         
         
         
         /* Depreciado com a atualizaão da versão do PJe
          * if(_ctrls.selectMethod.value === 'docAutos'){
           j2.modelo.sup.docList.win.addEventListener('load', function() {
-            j2.modelo.sup.docList.$ = jQ3Factory(j2.modelo.sup.docList.win, true);
+            j2.modelo.sup.docList.jQ3 = jQ3Factory(j2.modelo.sup.docList.win, true);
             setInterval(function(){ 
               j2.modelo.sup.docList.$('ul.tree').each(function(i, _dv){
                 //jQ3(_dv).find('li').not('[j2ruled="true"]').each(function(i, e){ // rdp2
@@ -7700,7 +8098,7 @@ try {
         return true;
       },
       getIdBasedOnMethod : function (_){
-        var win = _.winReference || j2.modelo.sup.docList;
+        var win = _.winReference || (()=>{const [sup] = filter( j2.modelo.sup, { ESuplementarDeDocList : 'active' }); return sup})();
         var winDoc = win.document || win.doc;
         var a = winDoc.querySelectorAll('h3.media-heading a');
         if(a.length === 0)
@@ -8099,6 +8497,60 @@ try {
         j2.mod._.styleSetter(_.el, 'Hidden', true);
       }
     };     
+
+
+    /**
+     * COMMON GLOBAL EVENTS
+     */
+    evBus.on('na-finalidade-de-audiencia-disparada', function(ev, arg, finItem, b, c){ 
+      let data = j2.env.PJeVars.audiencia.dataIso; 
+      if(!(data.length))
+        return;
+
+      data = new Date(data); 
+      const inicioIntervalo = new Date('2023-06-12T00:00:00.000Z'); 
+      const fimIntervalo =    new Date('2023-06-16T23:59:59.000Z'); 
+      //const inicioIntervalo = new Date('2023-07-15T00:00:00.000Z'); 
+      //const fimIntervalo =    new Date('2023-07-20T23:59:59.000Z'); 
+
+      if (data >= inicioIntervalo && data <= fimIntervalo) {
+        let audTipo = j2.env.PJeVars.audiencia.tipo;
+
+        if ( audTipo === "Conciliação, Instrução e Julgamento" ){
+          var text = [
+            'Observar que este processo possui audiência designada para a ',
+            'Semana Estadual de Conciliação (12/06/2023 a 16/06/2023). #:BR{}#:BR{}',
+            'Contudo, foi designada como Conciliação, Instrução e Julgamento neste sistema PJe.',
+            'Deverá ser retificada o tipo da audiência'
+          ]
+          pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+        }
+        else if( audTipo === "Conciliação" ){
+          var text = [
+            'Observar que este processo possui audiência designada para a ',
+            'Semana Estadual de Conciliação (12/06/2023 a 16/06/2023). #:BR{}#:BR{}',
+            'Deverá ser utilizada',
+            'a finalidade #:B{Designada (Ad Hoc SEC) do agrupamento Audiências} para assegurar',
+            'que as partes sejam regularmente intimadas para audiência',
+            'UNA / Conciliação, Instrução e Julgamento.'
+          ]
+
+          if( ! finItem.dataPlus.length){
+            pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+            return;
+          }else{
+            var dpl = j2.mod._._j2JSONparse(finItem.dataPlus);
+
+            if( dpl.isAdHoc )
+              return;
+
+              pkg.ModalDialog.ok( text.join(' ') , 'Modelo j2 - Informação');
+          }
+        }
+      }
+
+      
+    })
     
   })();
 } catch (err) {

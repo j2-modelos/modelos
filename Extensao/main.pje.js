@@ -7,6 +7,8 @@
 
 function pjeLoad(){    
   var _responseBus = {};
+  const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
+  const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
 
   (function _default(){
     j2E.mods.shortcuts();
@@ -64,8 +66,15 @@ function pjeLoad(){
         case 'notifyPseudotarefaMovimentarLoaded':
           fowardNotifyPseudotarefaMovimentarLoaded(_act, _load);
           break;
+        case 'triggerEventFromFrontend':
+          triggerEventFromFrontend(_act, _load);
+          break;
       }
     
+    }
+
+    function triggerEventFromFrontend(action, load){
+      evBus.fire(action.evento.tipo, action.evento.argumentos)
     }
 
     function __listenMessageHandlerFromServiceWorkder(_load){
@@ -349,10 +358,23 @@ function pjeLoad(){
   }
   
   var _preiousSource = '';
+  if(!(j2E.env?.deferring))
+    j2E.env.deferring= {}
+
+  j2E.env.deferring.personalizacaoTarefa = {
+    carregarAutosDigitais : jQ3.Deferred(),
+    carregarExpedientes : jQ3.Deferred(),
+    prepararInteracoes : {
+      autosDigitaisCarregados : jQ3.Deferred(),
+      remoteJ2DocCreate : jQ3.Deferred()
+    }
+  };
+
   function personalizarTarefa(_load){
       var _tarf = _load.at(-1);
       var _tarfProp = TarefasProps[_tarf];
       var _delayCall = new DelayedCall(10, 10);
+      var _defTarf = j2E.env.deferring.personalizacaoTarefa
       
       if(!(_tarfProp))
         return;
@@ -372,6 +394,8 @@ function pjeLoad(){
           this.contentWindow.jQ3('body').attr('j2E', 'mostrarSoExpedientes');
           
           this.contentWindow.jQ3('a#navbar\\:linkAbaExpedientes1')[0].click();
+
+          defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
         });
       };
       var _autosDigitaisJuntarDocumento = function(height){
@@ -387,7 +411,7 @@ function pjeLoad(){
           let _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
           _url = _url.replace('$', idProc).replace('$', ca);
 
-          iframe.attr('src', _url).css('width' , '100%').css('height', height || window.screen.height * 0.77);   
+          iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	
         })});
 
@@ -410,11 +434,13 @@ function pjeLoad(){
         idProc = idProc[0].split('=')[1].split('&')[0];
 
         defer(function(){j2EQueryGetChaveAcesso(idProc, function(ca){
-          var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
+          var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$&j2Expedientes=true';
           _url = _url.replace('$', idProc).replace('$', ca);
 
-          iframe.attr('src', _url).css('width' , '100%').css('height', window.screen.height * 0.77);   
+          iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	
+          
+          defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
         })});
       };
       var _limparCorpo = function(){
@@ -436,22 +462,94 @@ function pjeLoad(){
           jQ3(val).remove();
         });
       };
-      var _criarPainel = function(){
-        jQ3.each(_tarfProp.personalizacao.painel, function(key, painel){
+      var _criarPainel = function(subPanel){
+        var jPOut
+        jQ3.each(subPanel?.painel || _tarfProp.personalizacao.painel, function(key, painel){
           var _body = jQ3('<div>');
           jQ3.each(painel.body, function(key, el){
             switch(el.tipo){
+              case 'html':
+              case 'jQ3':
+                _body.append( el.data );
+                break;
               case 'table':
                 _body.append( j2EUi.createTable(el.data) );
+                break;
+              case 'button':
+                _body.append( j2EUi.createButton(el.data) );
+                break;
+              case 'painel':
+                var subPanel = _criarPainel(el)
+                _body.append( subPanel );
                 break;
             }
           });
           
-          var jP = j2EUi.createPanel(painel.header, _body);
-          jQ3(painel.appendTo).append( jP );
+          var jP = j2EUi.createPanel(painel.header, _body, painel.j2Attr, painel.collapsable, painel.panelClass);
+
+          if(painel.events){
+            jQ3.each(painel.events, function(key, eventCallback){
+              eventCallback(jP)
+            })
+          }
+
+          if( ! (subPanel )){
+            if( typeof painel.appendTo === 'function' )
+              painel.appendTo().append( jP )
+            else if( typeof painel.appendTo === 'string' )
+              jQ3(painel.appendTo).append( jP );
+          }
+          else
+            jPOut = jP
         });
+
+        if( subPanel )
+          return jPOut
       };
-           
+      var _prepararInteracoes = function(){
+        jQ3.each(_tarfProp.personalizacao.prepararInteracoes, function(key, interaction){
+          switch(interaction){
+              case 'seam-processo':
+                j2E.SeamIteraction.processo.acoes.abrirProcesso()
+                .done( (int)=> { 
+                  defer(()=>evBus.fire('Tarefa.Personalizacao.prepararInteracoes.autosDigitaisCarregados', int))
+                  defer(()=>_defTarf.prepararInteracoes.autosDigitaisCarregados.resolve(int))
+                  j2E.env.tempData.prepararInteracoes = { 
+                    evBusTriggered : true,
+                    interactionObject :  int
+                  }
+                })
+                break;
+              
+              case 'remote-j2Doc-create':
+                addScript('Extensao/j2-external.js')
+                j2E.mods.remoteJ2DocCreatorInit()
+                window.postMessage({
+                   j2Action: true, 
+                   pageXContent : true,
+                   message: "initialize-remote-j2Doc-create" 
+                }, "*")
+
+                jQ3('#taskInstanceDiv').append(`
+                  <iframe id="pseudoEdt" j2-pseudo-iframe>
+                `)
+                jQ3('#taskInstanceDiv').append(`
+                  <iframe id="pseudoExp" j2-pseudo-iframe>
+                `)
+
+                setTimeout(()=>{ //preguiça, apenas isso
+                  defer(()=>evBus.fire('Tarefa.Personalizacao.prepararInteracoes.remote-j2Doc-created'))
+                  defer(()=>_defTarf.prepararInteracoes.remoteJ2DocCreate.resolve())
+                }, 100);
+                break;
+            }
+        })
+      }
+      
+      if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
+        return; 
+        
+      _tarfProp.personalizacao.prepararInteracoes                        && _prepararInteracoes();
       _tarfProp.personalizacao.removeDoCorpo                             && _removeDoCorpo();
       _tarfProp.personalizacao.limpaCorpoTarefa                          && _limparCorpo();
       _tarfProp.personalizacao.mostraAutosDigitais                       && _autosDigitais();
@@ -474,6 +572,7 @@ function pjeLoad(){
               var _gruposSet = {
                 padrao : [
                   { text : 'Audiência', j2eG : 'aud'},
+                  { text : 'Certificar', j2eG : 'certfc'},
                   { text : 'Consultas', j2eG : 'cnslts'},
                   { text : 'Expedientes', j2eG : 'exps'},
                   { text : 'Outras Ações', j2eG : 'outac'},
@@ -926,7 +1025,171 @@ function pjeLoad(){
       }, { target : this });
     });
   }
+
+  function observarParaAcrescentarRecarregadorDeDocumento(){
+
+    jQ3.initialize('select', function(){
+      var matches = false
+      var html_set = 1
+      var jEl = jQ3(this);
+
+      if(jEl.prop('id')==='modTDDecoration:modTD')
+        matches = true
+      if( jEl.prop('id').match(/^taskInstanceForm.*selectModeloDocumento$/) )
+        matches = true
+      if( jEl.prev().is('label') && jEl.prev().attr('for').match(/^taskInstanceForm.*modeloCombo$/) ){
+        matches = true
+        html_set = 2
+      }
+        
+
+      if(!matches)
+        return;
+      
+      var script = ' event.preventDefault()';
+      switch(html_set){
+        case 1:
+          var $aRefsh = jQ3(`
+            <div class="value col-sm-1">
+              <a class="btn btn-primary j2-refresh-loader-autos" onclick="${script}"><i class="fa fa-refresh"></i></a>
+            </div>
+          `
+          )
+          jEl.parent().after($aRefsh)
+          jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+
+        case 2:
+          var $aRefsh = jQ3(`
+              <a class="btn btn-primary j2-refresh-loader-autos framePAC" onclick="${script}"><i class="fa fa-refresh"></i></a>
+          `
+          )
+          jEl.after($aRefsh)
+          jEl.css({
+            width : 'calc(100% - 40px)'
+          })
+          //jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
+          $aRefsh.click(()=>{
+            debugger;
+            jEl[0].dispatchEvent(new Event('change'))
+          })
+          break;
+      }
+    });
+  }
   
+  
+  function observeQualificacaoPartes(){
+    var sels = [
+      'ul.dropdown-menu #poloAtivo a', 
+      'ul.dropdown-menu #poloPassivo a', 
+      'ul.dropdown-menu #outrosInteressados a',
+      '#pessoaFisicaViewView label',
+      '#pessoaJuridicaViewView label',
+    ]
+
+    function _copyToClipboard(text, $i) {
+      navigator.clipboard.writeText(text)
+        .then(function() {
+          var $iVisto = jQ3('<i>', {
+            class : 'fa fa-check text-success',
+            css : {
+              display : 'none',
+              paddingLeft: '3px'
+            }
+          })
+
+          $i.after($iVisto)
+          $iVisto.show(250).promise().done(()=>{
+            setTimeout(()=> $iVisto.hide('250').promise().done(()=>$iVisto.remove()), 3000)
+          })
+          
+        })
+        .catch(function(error) {
+          console.error('Erro ao copiar texto para a área de transferência:', error);
+        });
+    }
+
+    function _extrairDocumento(texto) {
+      var padraoCpf = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
+      var padraoCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
+      var cpf = texto.match(padraoCpf);
+      var cnpj = texto.match(padraoCnpj);
+    
+      if (cpf) {
+        return cpf[0];
+      } else if (cnpj) {
+        return cnpj[0];
+      } else {
+        return undefined;
+      }
+    }
+    
+
+    jQ3.initialize(sels.join(','), function(a, b, c){
+      var $obj = jQ3(this)
+      var $this
+      var naoCopiarDocumento = true;
+      var parent
+
+      if($obj.parents('.dropdown-menu ').length){ 
+        parent = 'dropdown-menu'
+        $this = $obj
+        naoCopiarDocumento = false
+      }
+      else if($obj.parents('#pessoaFisicaViewView').length){
+        if(! ( $obj.is(':contains("CPF")') || $obj.is(':contains("Nome civil")') ) )
+          return;
+        
+        parent = 'pessoaFisicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+      }
+      else if($obj.parents('#pessoaJuridicaViewView').length){
+        if(! ( $obj.is(':contains("CNPJ")') || $obj.is(':contains("Nome")')  ) )
+          return;
+        
+        parent = 'pessoaJuridicaViewView'
+        $this = $obj.parent().next()
+        $this.text($this.text().replace('\n', ''))
+        if( ! $this.text().trim().length )
+          return;
+      }
+      else
+        return
+
+      var $i = jQ3('<i>', {
+        class : 'fa fa-clipboard copiar-clipboard j2-qualificacao-icon',
+        title : 'Copiar nome, cpf e participação para área de trnasferência',
+        css : {
+          paddingLeft: '2px'
+        }
+      })
+      $i.click((ev)=>{
+        _copyToClipboard($this.text().trim(), $i)
+      })
+      $this[(parent === 'dropdown-menu') ? 'after' : 'append']($i)
+
+      if( naoCopiarDocumento || _extrairDocumento($this.text().trim()) === undefined)
+        return
+        
+			var $i_cpf = jQ3('<i>', {
+        class : 'fa fa-id-card-o copiar-clipboard j2-qualificacao-icon',
+        title : 'Copiar cpf/cnpj para área de trnasferência',
+        css : {
+          paddingLeft: '4px'
+        }
+      })					
+      $i_cpf.click((ev)=>{
+        _copyToClipboard(_extrairDocumento($this.text().trim()), $i_cpf)
+      })
+      $i.after($i_cpf)
+    })
+  }
+
   function observeSelectTipoDocumento(){
     
     
@@ -937,6 +1200,7 @@ function pjeLoad(){
         case 'Ato Ordinatório':
         case 'Certidão':
         case 'Mensagem(ns) de E-mail':
+        case 'Ofício':
         case 'Petição':
         case 'Petição Inicial':
         case 'Protocolo':
@@ -1109,12 +1373,31 @@ function pjeLoad(){
     }
     
     jQ3.initialize('table#panelDetalhesProcesso', function(){
+      jQ3.initialize('#processoExpedienteTab table.rich-table', function(){
+        function _dispararEventoExpedientesExibidosFrontend(){
+          const j2Action = {
+            j2 : true,
+            action : 'triggerEventFromPJe',
+            evento : {
+              tipo : 'on-exibir-expedientes-autos-digitais',
+              argumentos : { 
+              }
+            }
+          }
+          defer(()=>__sendMessageToFrotEnd( j2Action))
+        }
+        
+        _dispararEventoExpedientesExibidosFrontend()
+      }, {target:this});
+
       var _parentThisTable = jQ3(this);
-      
+      var tdPosShift = 0 //usado para discriminar que houve a adicição ou não de coluna na tabela
+
       jQ3('#processoExpedienteTab table.rich-table.clearfix a[title="Visualizar ato"]', _parentThisTable).each(function(idx, el){
 
         var jEl = jQ3(el);
-        var $tr = jEl.parents('tr');
+        var $tr = jEl.parents('tr:first');
+        
         
         function _adicionarComandoParaFecharOPrazo(){
           if(jEl.parents('td').next().find('div[j2="editarExpediente"]').length !== 0 || jEl.parents('td').next().text().includes('SIM'))
@@ -1148,6 +1431,59 @@ function pjeLoad(){
           _a.append(_i);
           jEl.parents('td').next().find('span').append(_div);
         }
+
+        function _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2(){
+          function _converterParaISO(dataHora) {
+            const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
+            //const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
+            const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
+            return dataISO;
+          }
+          function _extrairDataHora(html) {
+            const regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
+            let match;
+            match = regex.exec(html)
+            let [dataHora] = match;
+            
+            return dataHora;
+          }
+
+          var EstaVencido = false
+          var $h6Data = $tr.find('td:nth-child(2) > span:first h6:first')
+          if( $h6Data.text().length ){
+
+          var data = _extrairDataHora($h6Data.text())
+          var dataISO = _converterParaISO(data)
+          var jsData = new Date(dataISO)
+          var jsAgora = new Date()
+          EstaVencido = jsAgora > jsData
+          
+          if(! EstaVencido)
+            $tr.find('td:nth-child(2) > span:first h6').addClass('text-success')
+          }
+
+          //Seletor
+          if(!(j2E?.env?.urlParms?.j2Expedientes))
+            return;
+          if( ! $tr.parents('table:first').find('> thead[j2]').length ){
+            $tr.parents('table:first').find('> thead').attr('j2', '')
+            .find('tr').prepend('<th j2-seletor-expediente></td>')
+
+            $tr.parents('tbody:first').mouseup((ev)=>{
+              var $el = jQ3(ev.target)
+              if(!$el.is('input[j2-seletor-expediente]'))
+                return
+
+              $el.parents('tr:first')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+              .find('td')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+            })
+
+            tdPosShift = 1
+          }
+
+          var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
+          $tr.prepend($seletor)
+        }
         
         function _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao(){
           if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
@@ -1160,6 +1496,7 @@ function pjeLoad(){
         }
         
         _adicionarComandoParaFecharOPrazo();
+        _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2()
         _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao();
       });
       
@@ -1198,19 +1535,19 @@ function pjeLoad(){
 
               _div.append(_a);
               _a.append(_i);
-              $tr.find('td:nth-child(3)').append(_div);
-              $tr.find('td:nth-child(1) > span > div > span').append(`<br>Disponibilizado em: ${items[i].datadisponibilizacao}`)
+              $tr.find(`td:nth-child(${3 + tdPosShift})`).append(_div);
+              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Disponibilizado em: ${items[i].datadisponibilizacao}`)
               
               const pubDataISO = j2E.mods.Calendario.contarPrazo(new Date(`${items[i].data_disponibilizacao}T00:00:00.000-03:00`), 1)
               const pubData = pubDataISO.split('-').reverse().join('/')
-              $tr.find('td:nth-child(1) > span > div > span').append(`<br>Publicado em: ${pubData}`)
+              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Publicado em: ${pubData}`)
 
 
 
-              if ( $tr.find('td:nth-child(2) > span > div:first').text().length && ( $tr.find('td:nth-child(1) > span > div:first').text().toLowerCase().includes('o sistema registrou ciência')  ) )
+              if ( $tr.find(`td:nth-child(${2 + tdPosShift}) > span > div:first`).text().length && ( $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div:first`).text().toLowerCase().includes('o sistema registrou ciência')  ) )
                 return;
 
-              let _parsePrazo = $tr.find('td:nth-child(1)').text().split('Prazo: ')[1].split(' dias')
+              let _parsePrazo = $tr.find(`td:nth-child(${1 + tdPosShift})`).text().split('Prazo: ')[1].split(' dias')
               
               if( isNaN(_parsePrazo[0] ) )
                 return;
@@ -1231,7 +1568,7 @@ function pjeLoad(){
                   color: #a94442;
               ">(para manifestação)</span></h6></div></span></div></span>`;
 
-              $tr.find('td:nth-child(2)').append(htmlTemplate);
+              $tr.find(`td:nth-child(${2 + tdPosShift})`).append(htmlTemplate);
             });
           }
         }
@@ -1263,37 +1600,7 @@ function pjeLoad(){
         
         $this.append(___TEMPLATE___);
         
-        $this.find('a').click(function(){
-          //var j2EOpW = {
-          //  center : function(url, name, idProcesso, winSize, scrolled, callback, altTitle){ // wa
-          //function addScript(name, _doc){
-          //function addStyleSheet(name, _doc){
-          
-          screen.width * 0.6;
-     var h = screen.height * 0.6;
-          
-          j2EOpW.center('', 'j2Calendar' + guid(), null, { width : screen.width * 0.7, height : screen.height * 0.65}, null, function(win){
-            win.document.body.innerHTML = '<div id="j2Calendar"></div>';
-            
-            addScript('Extensao/jquery3.js', win.document);
-            addStyleSheet('Extensao/evo-calendar/css/evo-calendar.css', win.document);
-            addStyleSheet('Extensao/evo-calendar/css/evo-calendar.royal-navy.css', win.document);
-            addScript('Extensao/evo-calendar/js/evo-calendar.js', win.document);
-            
-            function ___check(){
-              if(   win.document.readyState === 'complete' 
-                 && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js') 
-                 && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js').getAttribute('evo-calendar-ready')
-                ){ 
-                addScript('Extensao/evo-calendar/booter.js', win.document);
-              }else
-                setTimeout(___check, 10);
-            };
-            ___check();
-            
-          }, 'j2Calendário');
-          
-        });
+        $this.find('a').click( __abrirCalendarioJ2 );
       });
       
       jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
@@ -1323,6 +1630,38 @@ function pjeLoad(){
 
     });
   };
+
+  window.__abrirCalendarioJ2 = function(){
+    //var j2EOpW = {
+    //  center : function(url, name, idProcesso, winSize, scrolled, callback, altTitle){ // wa
+    //function addScript(name, _doc){
+    //function addStyleSheet(name, _doc){
+    
+    screen.width * 0.6;
+    var h = screen.height * 0.6;
+    
+    j2EOpW.center('', 'j2Calendar' + guid(), null, { width : screen.width * 0.7, height : screen.height * 0.65}, null, function(win){
+      win.document.body.innerHTML = '<div id="j2Calendar"></div>';
+      
+      addScript('Extensao/jquery3.js', win.document);
+      addStyleSheet('Extensao/evo-calendar/css/evo-calendar.css', win.document);
+      addStyleSheet('Extensao/evo-calendar/css/evo-calendar.royal-navy.css', win.document);
+      addScript('Extensao/evo-calendar/js/evo-calendar.js', win.document);
+      
+      function ___check(){
+        if(   win.document.readyState === 'complete' 
+           && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js') 
+           && win.document.getElementById('Extensao/evo-calendar/js/evo-calendar.js').getAttribute('evo-calendar-ready')
+          ){ 
+          addScript('Extensao/evo-calendar/booter.js', win.document);
+        }else
+          setTimeout(___check, 10);
+      };
+      ___check();
+      
+    }, 'j2Calendário');
+    
+  }
 /*    jQ3(document.body).observe('childlist', 'table', function(rec){
         debugger;
       });
@@ -1365,16 +1704,23 @@ function pjeLoad(){
         var _this = jQ3(this);
         
         var aOuterHTML = this.outerHTML;
-        var text = _this.text();
+        var textNomeTarefa = _this.text();
         var proc = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
-        var _atch = "window.j2Action = { j2 : true, action : 'abrirAutomaticoTarefa', processo : '$', tarefa : '$'};".replace('$', proc).replace('$', text);
+        var _atch = "window.j2Action = { j2 : true, action : 'abrirAutomaticoTarefa', processo : '$', tarefa : '$'};".replace('$', proc).replace('$', textNomeTarefa);
+
+        const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(textNomeTarefa, {
+          competencia: "",
+          etiquetas:[],
+          numeroProcesso: proc.replace(/(-|\.)/g, '')
+        })
 
         var aLeft = aOuterHTML.split('onclick="');
         var aRight = aLeft[1].split('"');
         var _onclick = aRight[0].toString().split("'");          
-        _onclick[3] = 'https://pje.tjma.jus.br/pje/ng2/dev.seam#/painel-usuario-interno';
+        _onclick[3] = URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND;
         _onclick = _onclick.join("'") +'';
-        _onclick = _atch + _onclick;
+        //_onclick = _atch + _onclick;
+        
 
         aRight[0] = _onclick;
         aLeft[1] = aRight.join('"');
@@ -1403,8 +1749,10 @@ function pjeLoad(){
       return;
     if(!(window.location.search.length))
       return;     
+    if(!(j2E.env.urlParms.j2pseudotarefaMovimentar))
+      return;     
     
-    var _act;
+ /*   var _act;
     if( ! (j2E.env.urlParms.action) ){
       var _j2lockr = JSON.parse( lockr.get(window.location.search.substr(1) ) || '{"isNotValid":true}' );
       if(_j2lockr.isNotValid )
@@ -1417,7 +1765,7 @@ function pjeLoad(){
     }
       
     switch(_act.action){
-      case 'abrirAutomaticoTarefa':
+      case 'abrirAutomaticoTarefa':*/
         var _load = {
           fowarded : true,
           task : 'fowardAction',
@@ -1425,7 +1773,10 @@ function pjeLoad(){
           j2pseudotarefaMovimentar : j2E.env.urlParms.j2pseudotarefaMovimentar,
           origin: window.location.origin,
           pathname: window.location.pathname,
-          j2Action : _act
+          j2Action : {
+            action: 'abrirAutomaticoTarefa',
+            j2pseudotarefaMovimentar : j2E.env.urlParms.j2pseudotarefaMovimentar,
+          }
         };
         console.log('dispatching to https://frontend.prd.cnj.cloud');
         console.log(_load);
@@ -1433,8 +1784,9 @@ function pjeLoad(){
           jQ3('iframe#ngFrame').get(0).contentWindow.postMessage(_load, 'https://frontend.prd.cnj.cloud');
         });
         console.log('dispatched');
-        break;
-    }
+
+      /*  break;
+    }*/
   }
   
   function verificarSePaginaDeuErro(){
@@ -1534,10 +1886,31 @@ function pjeLoad(){
     });	
   }
   
+
   function observeHistoricoTarefasEPrepararAtalhos(){
-    var ___A_TEMPLATE___ = '<a href="#" j2e="menuNoHistoricoTarefas" onclick="window.j2Action = { j2 : true, action : \'abrirAutomaticoTarefa\', processo : \'$\', tarefa : \'$\'};openPopUp(\'popUpFluxo\', \'https://pje.tjma.jus.br/pje/ng2/dev.seam#/painel-usuario-interno\'); return false;" title="$">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
+    var ___A_TEMPLATE___ = '<a href="#" j2-tarefa j2e="menuNoHistoricoTarefas" title="$">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
     var ___A_NUM_TEMPLATE___ = '<a href="#" j2e="numeroProcessoHistoricoTarefas" title="Abrir processo $">$<img class="historicoTarefaIconOpen" src="https://pje.tjma.jus.br/pje/img/view.gif"></a>';
     
+    function _prepararLinkTarefa(nomeTarefa, criterios) {
+      const hashAngularTarefaComCriterios = `?j2-abrir-tarefa#/painel-usuario-interno/lista-processos-tarefa/${encodeURI(
+        nomeTarefa
+      )}/${encodeURIComponent(btoa(JSON.stringify(criterios)))}`
+  
+      return hashAngularTarefaComCriterios
+    }
+
+    function _guidGenerator(){
+      return guid ? guid() : new Date().getTime()
+    }
+
+    function _openPopUp (id, url, width, height) {    
+      if (!width) width = window.screen.availWidth * 0.9;
+      if (!height) height = window.screen.availHeight * 0.9;
+      var featurePopUp = "width="+width + ", height="+height+", resizable=YES, scrollbars=YES, status=NO, location=NO";
+      
+      var popUp = window.open(url, id, featurePopUp); popUp.moveTo(0, 0);
+                
+    };
 
     jQ3.initialize('form table tbody tr', function(){
       var _aHtml, numProc, title, tarf, text;
@@ -1568,7 +1941,7 @@ function pjeLoad(){
         text = _this;
         
         _aHtml = ___A_TEMPLATE___;  
-        jQ3.each([numProc, tarf, title, text], function(){
+        jQ3.each([title, text], function(){
           _aHtml = _aHtml.replace('$', this);
         });
         
@@ -1588,28 +1961,43 @@ function pjeLoad(){
       nTdTarf.find('a:not(:last-child)').each(function(){
         jQ3('<br>').insertAfter(this);
       });
+
+      nTdTarf.find('[j2-tarefa]').on('click', function (event) {
+        let $target = $(event.target)
+        if ($target.is('img')) $target = $target.parent()
+
+        const nomeTarefa = $target.text().trim()
+        const url =
+          window.location.origin +
+          '/pje/ng2/dev.seam' +
+          _prepararLinkTarefa(nomeTarefa, {
+            competencia: '',
+            etiquetas: [],
+            numeroProcesso: numProc.replace(/\D/g, '')
+          })
+        _openPopUp(`tarefa-fluxo-${nomeTarefa}-${_guidGenerator()}`, url)
+      })
       
       var aNumHTML = ___A_NUM_TEMPLATE___.replaceAll('$', numProc);
       var jANum = jQ3(aNumHTML);
       jANum.click(function(event){
-        var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$';
-        
-        j2EQueryGetProcessoCredentials(numProc, function(idProcesso, ca){
-          jQ3.each([idProcesso, ca], function(){
-            url = url.replace('$', this);
-          });
-                    
-          /*__sendMessageToFrotEnd({
-            action : 'abrirAutosDigitais',
-            idProcesso : idProcesso,
-            ca : ca,
-            url : url
-          });*/
+        let idProcesso = 0
+        j2EPJeRest.processo.obterIdProcesso(numProc)
+        .pipe( _idProcesso=>{
+          idProcesso = _idProcesso
+          return j2EPJeRest.processo.getChaveAcesso(idProcesso)
+        })
+        .done( ca=>{
+          const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&ca=${ca}`
+
           if(event.ctrlKey)
             url += "#";
           
-          openPopUp('popPupProcessoId' + idProcesso, url);
-        });
+          _openPopUp('popPupProcessoId' + idProcesso, url);
+        })
+        .fail(err=>{
+          alert('Erro ao abrir processo.')
+        })
       });
       
       nTdNum.append( jANum );
@@ -1861,6 +2249,14 @@ function pjeLoad(){
       }, { target : this});
     });
   }
+
+  function destacarNomeUnidade(){
+    jQ3.initialize('li.menu-usuario small', function(){
+      var $this = jQ3(this)
+      var text = $this.text().split(' / ')[0]
+      jQ3('.titulo').text( text )
+    })
+  }
   
   function personalizarUpdateRetificacaoAutuacao(){
     jQ3.initialize('[title="Paginador"]', function(){
@@ -1875,10 +2271,14 @@ function pjeLoad(){
   }
 
   function observeParaARDigital(){
+    //return;
+
     var idProc = j2E.env.urlParms.idProcesso,	
         idTask = j2E.env.urlParms.newTaskId,	
         PACTarefas = [
-          'Preparar intimação'
+          'Preparar intimação',
+          'Preparar citação e(ou) intimação',
+          'Preparar citação',
         ],
         checkedEnderecos = 0,
         deferPLPQuery,
@@ -3148,11 +3548,145 @@ function pjeLoad(){
       })
     });
   }
+
+
+  function personalizarAtalhosADireitaAutosDigitais(){
+    jQ3.initialize('#navbar\\:ajaxPanelAlerts .icone-menu-abas', function(){
+      var $liMenuTracinhos = jQ3(this)
+
+      var $aExibirTarefasProcessoClone = $liMenuTracinhos.find('a#navbar\\:linkExibirTarefaAtualProcesso').clone()
+      $aExibirTarefasProcessoClone.text('')
+      $aExibirTarefasProcessoClone.attr('title', 'Exibir tarefa atual do processo')
+      $aExibirTarefasProcessoClone.append('<i class="fa fa-project-diagram">')
+      
+      var $newLi = jQ3('<li>').append($aExibirTarefasProcessoClone)
+
+      $liMenuTracinhos.parents('ul.navbar-right').find('li:first').after($newLi)
+    })
+  }
+
+  function preparComandoDeEtiquetagemDeAnaliseJuntada(){
+    var delayCall = new DelayedCall(150, 250);
+    jQ3.initialize('#processoDocumentoNaoLidoDiv .rich-stglpanel-body table.rich-table', function(){
+      var $this = jQ3(this);
+      var $this = $this.parents('.rich-stglpanel-body');
+
+      var ___TEMPLATE___ = `<ul j2-analise-juntada class="nav nav-pills btn-documento pull-right" style="margin-top:-10px">
+        <li>
+          <a style="display: flex;">
+            <i class="fa fa-hashtag" aria-hidden="true" style="font-size:1.2em"></i>
+            <input type="text" value="0, 1, 2" style="height: 1.2em;width: 73px;text-align: center;" id="j2-etiqueta-digito-filter">
+          </a>
+        </li>
+        <li>
+          <a id="j2-etiquetar" href="#" title="Etiquetar processos" onclick="">
+            <i class="fa fa-tag" aria-hidden="true" style="font-size:1.2em"></i>
+            <span class="sr-only">Ícone Etiqueta</span>
+            <span style="font-size: 9pt;"> Etiquetar "Documento não lido"</span>
+          </a>
+        </li>
+      </ul>`;
+      
+      if($this.find('[j2-analise-juntada]').length !== 0)
+        return;
+      
+      $this.prepend(___TEMPLATE___);
+      
+      $this.find('a#j2-etiquetar').click(function(){
+        
+        var $tbody = $this.find('table.rich-table tbody') 
+        var _ = $tbody.text().allMatches(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/);
+        if(!(_.length)){
+          alert("Nenhum processo para etiquetar.");
+          return;
+        }
+
+        var digitos = $this.find('#j2-etiqueta-digito-filter').val().match(/\d/g);
+        if(!(digitos.length)){
+          alert("Nenhum dígito final foi informado.");
+          return;
+        }
+
+        jQ3('tr', $tbody).each(function(){
+          var $tr = jQ3(this)
+
+          var num =  $tr.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
+          if(!(num))
+            return;
+          num = num[0];
+
+          if( ! digitos.includes( num.substring(8,9)) ) 
+            return;
+
+          var $a = $tr.find('a[title="Autos digitais"]')
+          var attrWithIdProcesso = $a.attr('href');
+          var b = attrWithIdProcesso.match(/id=[0-9]+&/);
+          var idProcesso = b[0].split('=')[1].split('&')[0];
+
+          delayCall(function(_num, _$tr, _idProcesso){
+            console.log(_num, _$tr);
+
+            window.j2EPJeRest.etiquetas.inserir(_idProcesso, 'Documento não lido', function(){
+              _$tr.find('td:nth-child(3)').append(`<i class="fa fa-tag" aria-hidden="true" style="font-size: 13px;padding-left: 3px;"></i>`);
+            })
+            
+          }, num, $tr, idProcesso);
+          
+        });
+      })
+
+      $this.find('#j2-etiqueta-digito-filter').change(function(){
+        lockr.set('#j2-etiqueta-digito-filter.input.val', { 
+          value : jQ3(this).val(),
+          expiration : 10 * 1000
+        });
+      })
+
+      var stVal = lockr.get('#j2-etiqueta-digito-filter.input.val', { noData : true })
+      if( typeof stVal.noData === 'undefined') 
+        $this.find('#j2-etiqueta-digito-filter').val(stVal.value)
+    });
+
+  }
+
+  function autoSelecionarRecursoAutosDigitaisOuProcessarVizualizacaoParaTarefa(){
+    if(j2E.env.urlParms.j2Expedientes){
+      jQ3('body').addClass('j2-adjViewAutTarefa')
+/*
+      jQ3.initialize('#navbar', function(){
+        jQ3('.navbar.navbar-default.navbar-fixed-top.nav-topo').hide()
+      })
+      jQ3.initialize('#pageBody', function(){
+        jQ3('#pageBody').attr('j2-limitar-autos-digitais', '')
+      })*/
+    }
+
+    switch(j2E.env.urlParms['j2-auto-selecionar']){
+      case 'expedientes':
+        jQ3.initialize('#navbar\\:linkAbaExpedientes1', function(){
+          jQ3('.navbar.navbar-default.navbar-fixed-top.nav-topo').hide()
+          jQ3('#pageBody').attr('j2-limitar-autos-digitais', '')
+          //jQ3('body').attr('j2E', "mostrarSoExpedientes")
+
+          !j2E.env.tempData?.autoSelecionadox?.expedientes && defer(()=>this.dispatchEvent(new Event('click')))
+          j2E.env.tempData.autoSelecionadox ??={expedientes:true}
+        })
+        break;
+      case 'expedientesModo2':
+        jQ3.initialize('#navbar\\:linkAbaExpedientes1', function(){
+          
+          !j2E.env.tempData?.autoSelecionadox?.expedientes && defer(()=>this.dispatchEvent(new Event('click')))
+          j2E.env.tempData.autoSelecionadox ??={expedientes:true}
+        })
+        break;
+    }
+  }
   
   switch(window.location.pathname){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam':
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam':
+      autoSelecionarRecursoAutosDigitaisOuProcessarVizualizacaoParaTarefa()
       observeSeEModeloJ2();
       observeProcessoFolhaExpedientes();
       observeFormDetalheProcessoTarefasDoProcesso();
@@ -3161,13 +3695,17 @@ function pjeLoad(){
       //verificarSePaginaDeuErro();
       //verificarSePaginaExpirou();
       observeSelectTipoDocumento();
+      observarParaAcrescentarRecarregadorDeDocumento()
+      observeQualificacaoPartes();
       //observeTarefaComPAC();
       //requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
       //personaliazarMenu();
       //registrarServiceWorker();
+      personalizarAtalhosADireitaAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
+      destacarNomeUnidade()
       if(!(j2E.env.urlParms.j2pseudotarefaMovimentar)){
         personaliazarMenu();
       }else
@@ -3183,6 +3721,7 @@ function pjeLoad(){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam':
       personalizarTelefonesDasPartes();
+      observeQualificacaoPartes()
       break;
       
     case '/pje/Processo/update.seam':
@@ -3216,11 +3755,16 @@ function pjeLoad(){
       listenMessages();
       observeSeEModeloJ2();
       observeParaARDigital();
+      observarParaAcrescentarRecarregadorDeDocumento()
       break;
     
     case '/pje/ConsultaPrazos/listView.seam':
     case '/pje/ConsultaPrazos/listView.seam#':
       preparComandoDeEtiquetagem();
+      break;
+    
+    case '/pje/Painel/painel_usuario/include/agrupadorPje2.seam':
+      preparComandoDeEtiquetagemDeAnaliseJuntada();
       break;
       
     default:
@@ -3240,5 +3784,33 @@ function pjeLoad(){
       //mostrarEtiquetasNosAutosDigitais();*/
       break;
   }
+
+  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, etiqueta) {
+    const j2Action = {
+      j2 : true,
+      action : 'triggerEventFromPJe',
+      evento : {
+        tipo : 'on-adicionar-etiqueta-via-pje',
+        argumentos : { 
+          data : etiqueta,
+          tipo : 'definição de etiqueta'
+        }
+      }
+    }
+    __sendMessageToFrotEnd( j2Action);
+  })
 };
 
+// No content.js (content script)
+window.addEventListener("message", function(event) {
+  if (event.source === window && event.data.type === "MensagemDoContentScript") {
+    // Tratar a mensagem recebida do código da página
+    console.log("TESTAR: Mensagem recebida da página:", event.data.message);
+
+    // Enviar uma resposta para o código da página
+    event.source.postMessage({ type: "RespostaDoContentScript", message: "TESTAR: Resposta do content script" }, event.origin);
+  }
+});
+
+// Enviar uma mensagem para o código da página
+setTimeout(()=>{window.postMessage({ type: "MensagemParaAPagina", message: "TESTAR: Olá página!" }, "*");}, 3000)

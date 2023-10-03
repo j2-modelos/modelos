@@ -52,6 +52,7 @@
 
 .datasProcesso {
     display: inline-grid;
+    vertical-align: middle;
 }
 
 .isBold{
@@ -411,8 +412,84 @@ a[_ngcontent-css-c7] {
     max-height: calc(100vh - 200px);
 }
 
+.datalist-content[_ngcontent-nam-c13] {
+    float: left;
+    width: 100%;
+    padding: 0 10px 10px !important;
+    background: #fff;
+    border-bottom: 1px solid #d8dfe3;
+    border-left: 3px solid #fff;
+    transition: all 0.3s ease-out;
+    margin: 5px 0;
+    box-shadow: 0 0 10px #8cabbd;
+}
+.selecionarProcesso[_ngcontent-nam-c13] [_ngcontent-nam-c13]:hover {
+    cursor: pointer;
+}
+.datalist-content[_ngcontent-nam-c13]:hover,
+.selecionado[_ngcontent-nam-c13] {
+    background: #ddebf1;
+    border-left: 3px solid #35a8ce;
+}
+.date[_ngcontent-nam-c13] {
+    font-size: 11px;
+}
+.tarefa-numero-processo[_ngcontent-nam-c13] {
+    font-size: 13px;
+    font-weight: 700;
+    word-wrap: break-word;
+    float: left;
+    width: 100%;
+    line-height: 1.2em;
+}
+.process[_ngcontent-nam-c13] {
+    font-size: 14px;
+    font-weight: 700;
+    color: #058ec4;
+}
+.orgao[_ngcontent-nam-c13] {
+    font-size: 12px;
+    word-wrap: break-word;
+}
+.tituloNegrito[_ngcontent-nam-c13] {
+    font-weight: 900;
+}
+.local[_ngcontent-nam-c13] {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+.label-etiqueta[_ngcontent-nam-c13] {
+    margin: 2px;
+    float: left;
+}
+.icon-desvincular-tag[_ngcontent-nam-c13] {
+    cursor: pointer;
+}
+.icones[_ngcontent-nam-c13] {
+    border-bottom: 1px solid #ddd;
+}
+.btn[_ngcontent-nam-c13] {
+    padding: 5px 10px;
+}
+.btn-default[_ngcontent-nam-c13] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4 ease-in-out;
+}
+.marcar-todos[_ngcontent-nam-c13] {
+    font-size: 1.25em;
+}
+.botao-selecionar[_ngcontent-nam-c13] {
+    border: none;
+    background: 0 0;
+    padding: 0;
+}
 
-// Favoritação de tareas
+
+/* Favoritação de tareas*/
 
 #tarfFavDivContainer{
     padding: 0;
@@ -893,6 +970,285 @@ a[_ngcontent-bdb-c14]:visited {
     margin: auto;
 }
 
+.icon.btn-default[_ngcontent-lwd-c30] {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4s ease-in-out;
+}
+.icon.btn-default[_ngcontent-lwd-c30]:hover {
+    background: #ebf0f3;
+}
+.icon.btn[_ngcontent-lwd-c30] {
+    padding: 5px 10px;
+}
+.modal[_ngcontent-lwd-c30] > .btn[_ngcontent-lwd-c30] {
+    line-height: 1.9;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 400;
+}
+button.close[_ngcontent-lwd-c30] {
+    font-size: 21px;
+}
+.modal-footer[_ngcontent-lwd-c30] button[_ngcontent-lwd-c30] {
+    font-size: 13px !important;
+}
+.modal-title[_ngcontent-lwd-c30] {
+    font-size: 150%;
+}
+.modal-body[_ngcontent-lwd-c30] {
+    max-height: calc(100vh - 175px);
+    overflow: auto;
+}
+.panel-body[_ngcontent-lwd-c30] {
+    word-break: break-word;
+}
+
+.conteudoTarefa[_ngcontent-ono-c14] {
+    height: 100%;
+    padding: 0 !important;
+    position: relative;
+}
+.fullScreen[_ngcontent-ono-c14] {
+    position: fixed;
+    right: 0;
+    height: 100%;
+    background: #fff;
+    top: 0;
+    width: 100% !important;
+    z-index: 999;
+}
+.header-processo[_ngcontent-ono-c14] {
+    color: #058ec4;
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 3px solid transparent;
+}
+.header-processo[_ngcontent-ono-c14] h1[_ngcontent-ono-c14],
+a[_ngcontent-ono-c14] {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 0;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+}
+.header-processo-sigiloso[_ngcontent-ono-c14] {
+    color: #a94442;
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 3px solid transparent;
+}
+.header-processo-sigiloso[_ngcontent-ono-c14] h1[_ngcontent-ono-c14],
+a[_ngcontent-ono-c14] {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 0;
+    cursor: pointer;
+    -webkit-text-decoration: noneZ;
+    text-decoration: noneZ;
+    font-weight: 700;
+}
+.partes[_ngcontent-ono-c14] {
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 97%;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    color: #454545;
+}
+.mais-detalhes[_ngcontent-ono-c14] {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background: #ddebf1;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease-out;
+}
+.mais-detalhes-sigiloso[_ngcontent-ono-c14] {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background: #ffeded;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease-out;
+}
+.mais-detalhes[_ngcontent-ono-c14]:hover {
+    background: #cadfe4;
+    border-bottom: 3px solid #058ec4;
+}
+.mais-detalhes-sigiloso[_ngcontent-ono-c14]:hover {
+    background: #dababa;
+    border-bottom: 3px solid #a94442;
+}
+.toggleDetalhes[_ngcontent-ono-c14] {
+    height: inherit;
+    cursor: pointer;
+}
+.header-wrapper[_ngcontent-ono-c14] {
+    background: #eef5f7;
+    border-left: 3px solid transparent;
+    transition: all 0.5s ease-out;
+}
+.header-wrapper-sigiloso[_ngcontent-ono-c14] {
+    background: snow;
+    border-left: 3px solid transparent;
+    transition: all 0.5s ease-out;
+}
+.header-wrapper[_ngcontent-ono-c14]:hover {
+    background: #ddebf1;
+    border-left: 3px solid #058ec4;
+}
+.header-wrapper-sigiloso[_ngcontent-ono-c14]:hover {
+    background: #ffeded;
+    border-left: 3px solid #a94442;
+}
+.icon-detalhes[_ngcontent-ono-c14] {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    right: 0;
+}
+.numero-processo[_ngcontent-ono-c14] a[_ngcontent-ono-c14],
+a[_ngcontent-ono-c14]:link,
+a[_ngcontent-ono-c14]:visited {
+    text-decoration: none;
+    -webkit-text-decoration-line: none;
+    text-decoration-line: none;
+}
+.processo-sigiloso[_ngcontent-ono-c14] {
+    color: #a94442;
+}
+.processo-publico[_ngcontent-ono-c14] {
+    color: #058ec4;
+}
+.mostrar-detalhes[_ngcontent-ono-c14] {
+    width: 90%;
+    padding: 10px 5px 0;
+    position: absolute;
+    z-index: 99;
+    background: #fff;
+    box-shadow: 1px 1px 4px #ccc;
+    border: 1px solid #ededed;
+    border-radius: 4px;
+}
+.frame-tarefa[_ngcontent-ono-c14] {
+    width: 100%;
+}
+.etiqueta-ativa[_ngcontent-ono-c14] {
+    color: green;
+}
+.btn-etiqueta[_ngcontent-ono-c14] {
+    margin-left: 5px;
+}
+.toolbar-processo[_ngcontent-ono-c14] {
+    margin-top: 5px !important;
+}
+.nenhum-processo-selecionado[_ngcontent-ono-c14] {
+    position: absolute;
+    top: 45vh;
+    left: 55vw;
+    color: #999;
+    font-size: 150%;
+}
+.toolbar-processo[_ngcontent-ono-c14] i.fa[_ngcontent-ono-c14],
+.toolbar-processo[_ngcontent-ono-c14] i.far[_ngcontent-ono-c14],
+.toolbar-processo[_ngcontent-ono-c14] i.fas[_ngcontent-ono-c14] {
+    font-size: 120%;
+}
+.dropdown-transicoes[_ngcontent-ono-c14] {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.j2-modal-dialog-frontend{
+    width: 80dvi;
+}
+
+.j2-modal-expedientes-processo-iframe{
+    border: none;
+    height: 80dvh;
+    width: 100%;
+}
+
+.iframe-no-height{
+    height: 0.0000001px;
+}
+
+#pageBody[j2-limitar-autos-digitais]{
+    padding-top: 0;
+    background: transparent;
+}
+
+#pageBody[j2-limitar-autos-digitais] div.row.menu-topo-autos{
+    margin: 0;
+    max-height: unset;
+}
+
+#pageBody[j2-limitar-autos-digitais] div.container-fluid.content{
+    padding: 0;
+}
+
+.j2-adjViewAutTarefa td.rich-tabpanel-content{
+    padding: 0;
+}
+
+.j2-adjViewAutTarefa #divTimeLine , 
+.j2-adjViewAutTarefa #detalheDocumento{
+    top: 0 !important;
+}
+
+.j2-adjViewAutTarefa .navbar{
+    display: none;
+}
+
+.j2-adjViewAutTarefa #divTimeLine #divTimeLine\:divEventosTimeLine{
+    height: calc(100% - 50px);
+}
+
+
+
+[j2-autos-tarefa]{
+    width: 100%;
+    height: calc(100vh - 50px);
+}
+
+#pageBody.novoPainel{
+    height: 100vh !important;
+}
+
+.j2-refresh-loader-autos{
+    margin:0;
+    height: 40px;
+    padding: 6px;
+}
+
+.j2-refresh-loader-autos i{
+    padding-top: 7px;
+}
+
+.framePAC{
+    margin-top: -3px;
+}
+
+nav.main-menu, #divSideBar{
+    width: 50px !important;
+}
+#divLiTarefas, #divLiMinhasTarefas, #divLiAssinatura{
+    left: 50px !important;
+}
+
+#divRightPanel:not([j2-view-pseudo-tarefa]){
+    width: calc(100% - 50px) !important;
+}
+
+.j2-qualificacao-icon:hover{
+    color:#23527c
+}
 
 .mat-progress-spinner {
     display: block;
@@ -946,6 +1302,191 @@ a[_ngcontent-bdb-c14]:visited {
     transition: none;
     animation: none;
 }
+
+iframe[j2-pseudo-iframe]{
+    display: none;
+}
+
+th[j2-seletor-expediente]{
+    width: 20px;
+}
+
+.rich-stglpnl-marker[j2-marker]{
+    display: block !important;
+}
+
+.rich-stglpnl-marker[j2-marker].collapse:not(.in){
+    transform: scaleY(-1);
+    margin-top: 22px;
+    height: 0px;
+}
+
+div > .tarefa-numero-processo.process {
+    font-size: 16px !important;
+}
+
+i[j2-np-copiar]{
+    font-size: 14px;
+    cursor: copy;
+}
+
+
+i[j2-i-lock]{
+    /*font-size: 120%;*/
+    vertical-align: top;
+}
+
+i[j2-i-book]{
+    /*font-size: 120%;*/
+    vertical-align: bottom;
+    margin-left: -2px;
+}
+
+#frameTarefas a.text-truncate {
+    font-size: 16px !important;
+}
+
+#frameTarefas .header-processo{
+    width: 83.333333333333% !important;
+}
+
+div.j2-tags-tarefa-num-clique{
+    max-width: 300px;
+}
+
+a.j2-tag-btn{
+    background-color: #f6d290;
+    text-transform: none !important;
+    font-size: 13px !important;
+    font-weight: bolder;
+}
+
+a.j2-tag-btn i{
+    font-size: 18px;
+    vertical-align: sub;
+    margin-right: 3px;
+}
+
+[j2-painel-basic-css]{
+    /*min-height: 200px;*/
+}
+
+
+i[j2e-proc-data-mov]{
+    margin-right: 1px;
+    font-size: 90%;
+}
+
+i[j2e-proc-data-task]{
+    margin-right: 3px;
+    font-size: 90%;
+}
+
+.row.icones > div:first-child{
+    width: 41.66666667% !important;
+}
+.row.icones > div:last-child{
+    width: 58.33333333% !important;
+}
+
+.j2-mini-etiqueta-rapida {
+    float: right;
+    margin: 0;
+}
+.j2-mini-etiqueta-rapida:hover {
+    background: #ddebf1;
+}
+
+.j2-mini-etiqueta-rapida > div:first-child {
+    font-size: 13px;
+    padding-bottom: 0;
+}
+
+.j2-mini-etiqueta-rapida [j2-ui-content] {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+    background: transparent !important;
+}
+
+.j2-mini-etiqueta-rapida .j2-tag-btn {
+    font-size: 10px !important;
+    padding: 2.5px;
+}
+
+.j2-mini-etiqueta-rapida .j2-tag-btn i {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+
+
+
+
+.j2-faixa-etiquetas {
+    margin: 0;
+}
+
+.j2-faixa-etiquetas > div:first-child {
+    display: none;
+}
+
+.j2-faixa-etiquetas [j2-ui-content] {
+    margin: 0;
+}
+
+.j2-faixa-etiquetas .j2-tag-btn {
+    font-size: 10px !important;
+    padding: 3px;
+}
+
+.j2-faixa-etiquetas .j2-tag-btn i {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/*.j2-faixa-etiquetas [j2-tags-rapidas]{
+    width: 100%;
+}*/
+
+div[j2-faixa-etiquetas-spacer]{
+    font-size: 5px;
+    display: contents;
+}
+
+#faixaDeEtiquetas{
+    position: sticky;
+    z-index: 100;
+    top: 0;
+}
+
+/** SEÇÃO DA ÁREA DIV barra-selecao-processos **/
+.j2-alinhar-direita-items{
+    justify-content: flex-end;
+}
+
+.acoes-processos-selecionados[_ngcontent-pdi-c12] {
+    float: left;
+    padding: 5px 10px;
+    background: #fff;
+}
+.btn[_ngcontent-pdi-c12] {
+    margin: 0 0 0 5px;
+    line-height: 1;
+}
+#marcarTodos[_ngcontent-pdi-c12] {
+    cursor: pointer;
+}
+.marcar-todos[_ngcontent-pdi-c12] {
+    font-size: 1.25em;
+}
+.botao-selecionar[_ngcontent-pdi-c12] {
+    border: none;
+    background: 0 0;
+    padding: 0;
+}
+
+
 
 
 /*Bootstrap validation*/

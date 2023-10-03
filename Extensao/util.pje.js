@@ -253,3 +253,28 @@ openPopUp = function (id, url, width, height) {
       _cookies.set(_baseCookieName() + '.' + key, value, {expires: __COOKIES_EXPIRE_TIME___ });
 };
 */
+
+window.j2E = { env : {
+  urlParms : (function searchToObject() {
+    var pairs = window.location.search.substring(1).split("&"),
+      obj = {},
+      pair,
+      i;
+
+    for ( var i = 0; i < pairs.length; i++ ) {
+      if ( pairs[i] === "" ) continue;
+      pair = pairs[i].split("=");
+      obj[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
+    }
+    return obj;
+  })(),
+}};
+
+
+function popupRetificarAutuacao(){	
+  var retificarAutuacaoUrl = '/pje/Processo/RetificacaoAutuacao/updateRetificacaoAutuacao.seam';
+  retificarAutuacaoUrl += `?idProcesso=${j2E.env.urlParms.idProcesso | j2E.env.urlParms.idProcesso}&`;
+  retificarAutuacaoUrl += 'tab=tabPartes';
+
+  window.open(retificarAutuacaoUrl,'processooRetificaAutuacao');
+}
