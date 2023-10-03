@@ -105,6 +105,19 @@ function init(){
           return j2E.ARDigital.api.ajax.post('https://sistemas.tjma.jus.br/ardigital-api/rest/destinatarios', 
             destData, sucCB, errCB);
           
+        },
+        alterar: function(destinatario, sucCB, errCB){
+          destinatario = jQ3.extend({indAtivo : true}, destinatario);
+          if(!j2E.ARDigital.util.validarEConformarDestinatarioCampos(destinatario)){
+
+            errCB && errCB('Um ou mais campos não seguem suas regras de validação.')
+            return jQ3.Deferred().reject('Um ou mais campos não seguem suas regras de validação.');
+          }
+          const idDestinatario = destinatario.id
+          destinatario = JSON.stringify(destinatario)
+          return j2E.ARDigital.api.ajax.put(`https://sistemas.tjma.jus.br/ardigital-api/rest/destinatarios/${idDestinatario}`, 
+            destinatario, sucCB, errCB);
+          
         }
       },
       plp : {
@@ -151,16 +164,38 @@ function init(){
            * Deve retornar {"resultado":"true"}
            */
         },
+        servicosEct : function(sucCB, errCB){
+          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/servicos-ect?_limit=0&_offset=0`, 
+            sucCB, errCB);
+        },
+        embalagens : function(sucCB, errCB){
+          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/embalagens?_limit=0&_offset=0`, 
+            sucCB, errCB);
+        },
+        cartaoAtivoUnidade : function(sucCB, errCB){
+          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/cartoes-postagem/cartao-ativo-unidade`, 
+            sucCB, errCB);
+        },
+        remetentes : function(sucCB, errCB){
+          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/remetentes?nome=&_limit=100`, 
+            sucCB, errCB);
+        },
       }
     },
     util : {
       conformarEnderecoARDigigal : function(enderecoString){
+        if( typeof enderecoString === 'string' ){
+          const hashCode = enderecoString.hashCode()
+          enderecoString = j2E.ARDigital.util.parseEnderecosFrameComunicacao(enderecoString)
+          enderecoString.hashCode = hashCode
+        }
+
         return jQ3.extend({
           "indPrincipal": false,
           "indAtivo": true
-        }, j2E.ARDigital.util.parseEnderecosFrameComunicacao(enderecoString))
+        }, enderecoString )
       },
-      validarEConformarDestinatarioCampos : destinatario =>{
+      validarEConformarDestinatarioCampos: destinatario =>{
         destinatario.nome.length > 50 && ( destinatario.nome = destinatario.nome.substr(0,49) )
         destinatario.enderecos.forEach((curr, idx) =>{
           curr.complemento && curr.complemento.length > 30 && ( curr.complemento = curr.complemento.substr(0,29) )  
@@ -168,7 +203,7 @@ function init(){
 
         return true;
       },
-      parseEnderecosFrameComunicacao : endStr =>{
+      parseEnderecosFrameComunicacao: endStr =>{
         function splitEnds(str) {
           const partes = str.split(/(?<=CEP:.*);/);
           return partes.map((parte) => parte.trim());
@@ -216,6 +251,26 @@ function init(){
         })
 
         return ends.length === 1 ? ends[0] : ends;
+      },
+      stringifyParaEnderecosFrameComunicacao: enderecoObj =>{
+        const separadosVirgula = []
+
+        separadosVirgula.push(enderecoObj.logradouro)
+        separadosVirgula.push(enderecoObj.numero)
+        if(enderecoObj.complemento) separadosVirgula.push(enderecoObj.complemento)
+        separadosVirgula.push(enderecoObj.bairro)
+        const cep = enderecoObj.cep.substring(0, 5) + "-" + enderecoObj.cep.substring(5);
+        separadosVirgula.push(`${enderecoObj.cidade} - ${enderecoObj.uf} - CEP: ${cep}`)
+
+        return separadosVirgula.join(', ')
+      },
+      hashCodeDoEndereco: endereco =>{
+        const parser = j2E.ARDigital.util.parseEnderecosFrameComunicacao
+        const stringify = j2E.ARDigital.util.stringifyParaEnderecosFrameComunicacao
+
+        let _endereco = (typeof endereco === "string" ? parser(parser) : endereco)
+
+        return stringify(_endereco).toLowerCase().hashCode()
       },
       getCartaoPostagem : ()=>{
         return {
@@ -292,6 +347,7 @@ function init(){
       },
       getDefaultServico : (destinatario, observacao, maoPropria)=>{
         return {
+          j2EUUID : guid ? guid() : Math.random(),
           "idUsuarioModificacao": 148007,
           "dthModificacao": new Date().toISOString(),
           "destinatario": destinatario,
@@ -345,7 +401,164 @@ function init(){
         return objeto
       },
       compararObjetosCorreios : (objA, objB)=>{
-        return objA.destinatario.id === objB.destinatario.id
+        return objA.destinatario.id 
+               === 
+               objB.destinatario.id
+               &&
+               objA.destinatario.enderecos[0].id 
+               === 
+               objB.destinatario.enderecos[0].id
+      },
+      propriedadesAlteradas : (objA, objB)=>{
+        const propriedadesEditaveis = ['maoPropria', 'observacao']
+        const propriedadesAlteradas = []
+
+        propriedadesEditaveis.forEach(propriedade=>{
+          if( objA[propriedade] !== objB[propriedade])
+            propriedadesAlteradas.push(propriedade)
+        })
+
+        return propriedadesAlteradas
+      },
+      storeServicosData : () =>{
+        var __this = j2E.ARDigital.api.servicos
+        var deferred = jQ3.Deferred()
+        var servPromises = []
+
+        j2E.env.ARDigitalData = {}
+
+        
+        servPromises.push( __this.cartaoAtivoUnidade()
+          .done( result => j2E.env.ARDigitalData.cartaoAtivoUnidade = result )
+        )
+        servPromises.push( __this.remetentes()
+          .done( result => j2E.env.ARDigitalData.remetentes = result )
+        )
+        servPromises.push( __this.embalagens()
+          .done( result => j2E.env.ARDigitalData.embalagens = result )
+        )
+        
+
+        jQ3.when(...servPromises)
+        .done( ()=> deferred.resolve() )
+        .fail( (prom, reas)=> deferred.reject(prom, reas) )
+
+        return deferred.promise()
+      }
+    }
+  }
+
+  j2E.Expedientes = {
+    util : {
+      /**
+       * Faz parse ds informações do expediente a partir
+       * do input selecionado na tabela de expedientes do 
+       * processo
+       * @param {*} $input 
+       */
+      parseLinhaDeExpedientesSelecionados : ($inputs)=>{
+        function _converterParaISO(dataHora) {
+          const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
+          const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
+          return dataISO;
+        }
+        function _extrairUltimaDataHora(html) {
+          const regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
+          let ultimaDataHora = null;
+          let match;
+          while ((match = regex.exec(html)) !== null) {
+            [ultimaDataHora] = match;
+          }
+          return ultimaDataHora;
+        }
+        function _extrairPrazo(html) {
+          let regex = /Prazo:\s*(\d+)\s*(\w+)/;
+          let resultado = regex.exec(html);
+        
+          if (resultado !== null) {
+            let valorNumerico = resultado[1];
+            let palavraSeguinte = resultado[2];
+        
+            return { prazo: valorNumerico, computo: palavraSeguinte };
+          } else {
+            return null;
+          }
+        }
+        function _extrairUltimoValorNumerico(linkParaAto) {
+          let regex = /\d+(?![\d\s\S]*\d)/;
+          let resultado = regex.exec(linkParaAto);
+
+          
+          let [ultimoValorNumerico] = resultado ? resultado : [undefined]
+          return ultimoValorNumerico;
+        }
+
+
+        var dadosExpedientes = []
+        $inputs.forEach((el)=>{
+          var $el = jQ3(el)
+          var $tr = $el.parents('tr:first')
+          var exp = {}
+          var html = $tr.html()
+
+          exp.data    = _extrairUltimaDataHora(html)
+          exp.dataEm  = `em ${exp.data}`
+          exp.dataISO = _converterParaISO(exp.data)
+          let prazo   = _extrairPrazo(html)
+          if(prazo) { 
+            exp.computo = prazo.computo;
+            exp.prazo   = prazo.prazo;
+          }else
+            exp.prazo = 'não aplicado'
+            
+          exp.parte   = $tr.find('h6:first').text();
+          [exp.idExpediente]   = $tr.find('h6').prev().text().trim().match(/(\d+)/);
+          exp.linkParaAto = $tr.find('a[title="Visualizar ato"]').attr('href');
+          exp.idDocumento = _extrairUltimoValorNumerico(exp.linkParaAto);
+          exp.idDocumentoLink = j2E.Expedientes.util.criarViewLinkHTMLAPartirDoEnderecao(exp.linkParaAto, exp.idDocumento)
+
+          dadosExpedientes.push(exp)
+        })
+
+        return dadosExpedientes
+      },
+      criarViewLinkHTMLAPartirDoEnderecao : (_linkAto, _idDocumento)=>{
+        var imgViewCln = jQ3('<img src="https://pje.tjma.jus.br/pje/img/view.gif" style="vertical-align: bottom;">')[0];
+
+        
+        imgViewCln.style.height = '12px';
+        imgViewCln.style.verticalAlign = 'bottom';
+
+        var spn = document.createElement('span');
+        var u = document.createElement('u');
+        spn.style.cursor = 'pointer';
+        spn.title = `Abrir documento id ${_idDocumento}` 
+        spn.setAttribute('contenteditable', false);
+        u.innerHTML = `id ${_idDocumento}`;
+
+
+        var oCSrc = 'window.open(\'' + _linkAto + '\', ' + _idDocumento + ' + \'popUpDocumento\', \'width=780, height=740, scrollbars=yes\').focus();';
+
+        spn.setAttribute('onclick', oCSrc);
+        imgViewCln.setAttribute('onclick', oCSrc);
+
+        spn.appendChild( u );
+        u.appendChild( imgViewCln );
+
+        return spn.outerHTML
+      },
+      enumerarParteEVencimentoDoExpediente: (exp)=>{
+        return `${exp?.parte ? exp.parte : '[ERRO AO PROCESSAR PARTE]'} em ${exp?.data ? exp.data : '[ERRO AO PROCESSAR DATA]'}`
+      },
+      enumerarParteEVencimentoDoExpedientes: (exps)=>{
+        var _enumerarParteEVencimentoDoExpediente = j2E.Expedientes.util.enumerarParteEVencimentoDoExpediente
+        var _exps = []
+        
+        exps.forEach(exp=>{
+          _exps.push(_enumerarParteEVencimentoDoExpediente(exp))
+        })
+
+        return _exps.joinListE()
       }
     }
   }

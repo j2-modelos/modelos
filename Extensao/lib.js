@@ -764,6 +764,49 @@ var j2EUi = {
 
       return $div;
     }
+  },
+  richModal : show =>{
+    const _html = `
+      <div j2-modal class="rich-modalpanel ajax-loader" id="modalStatusContainer-j2" style="position: absolute;z-index: 100;background-color: inherit;">
+        <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="modalStatusDiv" style="z-index: -1;">
+          <button class="rich-mpnl-button" id="modalStatusFirstHref"></button>
+        </div>
+        <div class="rich-mpnl-panel">
+          <div class="rich-mp-container" id="modalStatusCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+            <div class="rich-mpnl-shadow" id="modalStatusShadowDiv" style="opacity: 0; width: 1043px; height: 645px;" wfd-invisible="true"></div>
+            <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="modalStatusContentDiv" style="width: 300px; height: 200px;">
+              <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="modalStatusContentTable" style="height: 100%; width: 100%;" wfd-invisible="true">
+                <tbody>
+                  <tr style="height: 99%">
+                    <td class="rich-mpnl-body" valign="top"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- div class="rich-mpnl-resizer" id="modalStatusResizerN" style="width: 1043px; height: 4px; cursor: n-resize; left: 0px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerE" style="height: 645px; width: 4px; cursor: e-resize; left: 1039px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerS" style="width: 1043px; height: 4px; cursor: s-resize; left: 0px; top: 641px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerW" style="height: 645px; width: 4px; cursor: w-resize; left: 0px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize; left: 0px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize; left: 1039px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize; left: 1003px; top: 0px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerSEU" style="height: 40px; width: 4px; cursor: se-resize; left: 1039px; top: 605px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerSEL" style="width: 40px; height: 4px; cursor: se-resize; left: 1003px; top: 641px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize; left: 0px; top: 605px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize; left: 0px; top: 641px;"></div>
+            <div class="rich-mpnl-resizer" id="modalStatusResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize; left: 0px; top: 0px;"></div-->
+          </div>
+        </div>
+        <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="modalStatusCursorDiv" style="z-index: -200;">
+          <button class="rich-mpnl-button" id="modalStatusLastHref"></button>
+        </div>
+      </div>
+    `;
+    
+    if (typeof show === 'undefined' || show) 
+      jQ3('body').append(_html)
+    else
+      jQ3('#modalStatusContainer-j2').remove()
   }
 };
 
@@ -2703,7 +2746,7 @@ function loadPJeRestAndSeamInteraction(){
   if( typeof window.j2E === 'undefined')
     window.j2E = {}
 
-  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E'); /*var $$;*/ var _this = {
+  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E'); var _this = {
     session : {},
     util : {
       conformPayload : PAYLOAD =>{
@@ -2721,6 +2764,8 @@ function loadPJeRestAndSeamInteraction(){
     alertas : {
       requestsIteractions : {
         baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
+        $elementoTRDoAlertaEncontrado: {},
+        $xmlDoFormulario: {},
         listView : () =>{
           var def = $.Deferred()
 
@@ -2789,7 +2834,33 @@ function loadPJeRestAndSeamInteraction(){
 
           return def.promise();
         },
-        searchAlerta : (query, criticidade, ativo)=>{
+        alterarAlerta : (alerta, criticidade, ativo)=>{
+          const def = $.Deferred()
+          const $xmlDoFormulario = j2E.SeamIteraction.alertas.$xmlDoFormulario
+          const containerId = $xmlDoFormulario.find('#alertaForm\\:update').attr('onclick').toString()
+                              .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
+
+          let PAYLOAD = `
+            AJAXREQUEST: ${containerId}
+            alertaForm:alerta:j_id286:alerta: ${alerta}
+            alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+            alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: ${ ativo || 'true'}
+            alertaForm: alertaForm
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewId}
+            alertaForm:update: alertaForm:update
+            AJAX:EVENTS_COUNT: 1
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => def.resolve( _this.alertas.requestsIteractions ) )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        searchAlerta: (query, criticidade, ativo)=>{
           var def = $.Deferred()
 
           var PAYLOAD = `
@@ -2809,7 +2880,48 @@ function loadPJeRestAndSeamInteraction(){
           PAYLOAD = _this.util.conformPayload(PAYLOAD)
 
           $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( xml => def.resolve( xml, _this.alertas.requestsIteractions)  )
+          .done( xml => { 
+            j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado = 
+            jQ3(xml).find('#alertaGridList\\:tb tr:first')
+
+            def.resolve( xml, _this.alertas.requestsIteractions)  
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        /**
+         * Considera que houve uma consulta e existe um único registro a ser dada
+         * a ação para editar o registro
+         */
+        editarOAlertaEncontrado: ()=>{
+          const def = $.Deferred()
+          const $elmentoTR = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado
+          const alertaGridListAlertaGridEdit = $elmentoTR.find('a:first').attr('id');
+          const containerId = $elmentoTR.find('a:first').attr('onclick').toString()
+                              .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
+          const formId = $elmentoTR.find('form').attr('id');
+          const id = $elmentoTR.find('a:first').attr('onclick').toString().match(/'id':\d+/)[0].match(/\d+/)[0]
+
+          var PAYLOAD = `
+            AJAXREQUEST: ${containerId}
+            ${formId}: ${formId}
+            autoScroll: 
+            ${alertaGridListAlertaGridEdit}: ${alertaGridListAlertaGridEdit}
+            tab: form
+            id: ${id}
+            AJAX:EVENTS_COUNT: 1
+            javax.faces.ViewState: ${_this.session.viewId}
+          `;
+
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) =>{
+            j2E.SeamIteraction.alertas.$xmlDoFormulario = jQ3(xml)
+
+            def.resolve( _this.alertas.requestsIteractions ) 
+          })
           .fail( err => def.reject(err) )
 
           return def.promise();
@@ -3532,6 +3644,38 @@ function loadPJeRestAndSeamInteraction(){
 
 
           return def.promise()
+        },
+        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
+          const def = $.Deferred()
+          const acoes = _this.alertas.acoes
+          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
+
+          if(textoAlertaAlterado === textoBuffer){
+            return def.promise().resolve(acoes)
+          }
+
+          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
+          .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
+          .done( () => def.resolve(acoes) )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
+          const def = $.Deferred()
+          const acoes = _this.alertas.acoes
+          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
+
+          if(textoAlertaAlterado === textoBuffer){
+            return def.promise().resolve(acoes)
+          }
+
+          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
+          .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
+          .done( () => def.resolve(acoes) )
+          .fail( err => def.reject(err) )
+
+          return def.promise()
         }
       }
     }}
@@ -3636,7 +3780,7 @@ PseudoTarefas.prototype.criarTarefa = function(nome, tipo, callback, dados, crit
     tipo : tipo,
     dados : dados || [],
     criteria : criteria,
-    dataCriacao : new Date().getTime()
+    dataCriacao : (new Date()).getTime()
   };   
   
   jQ3.each(this.baseURL, function(){
@@ -3815,7 +3959,7 @@ j2E.mods.runTimeConnect = function(){
       j2E.conn._responseBus.tickets[load.responseBusTicket] = {
           ticket : load.responseBusTicket,
           callback : load.callback || callback,
-          timestamp : new Date().getTime()
+          timestamp : (new Date()).getTime()
       };
       if(timeout){
         setTimeout(function(){
@@ -3896,7 +4040,7 @@ j2E.mods.registerNumeroUnicoReplacer = function (){
 
     function isExperied(cred){
       var __TIME__ = 1000 * 60 * 10; //10 min
-      var now = new Date().getTime();
+      var now = (new Date()).getTime();
 
       return ( now - cred.timestamp ) > __TIME__;
     }
@@ -4007,7 +4151,7 @@ j2E.mods.registerNumeroUnicoReplacer = function (){
               _lockr.set('credentials.' + numProc, { 
                 id : loadData[0],
                 ca : loadData[1],
-                timestamp : new Date().getTime()
+                timestamp : (new Date()).getTime()
               });
                             
               
