@@ -346,7 +346,7 @@ function init(){
         }
       },
       getDefaultServico : (destinatario, observacao, maoPropria)=>{
-        return {
+        return destinatario?.__J2E__?.objetoCorreiosAssociado || {
           j2EUUID : guid ? guid() : Math.random(),
           "idUsuarioModificacao": 148007,
           "dthModificacao": new Date().toISOString(),

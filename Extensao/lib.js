@@ -2900,7 +2900,7 @@ function loadPJeRestAndSeamInteraction(){
           const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
 
           if(textoAlertaAlterado === textoBuffer){
-            return def.promise().resolve(acoes)
+            return def.resolve(acoes).promise()
           }
 
           _this.alertas.requestsIteractions.editarOAlertaEncontrado()
@@ -4471,4 +4471,23 @@ function _getAcessoAosAutosDigitais(numProc){
         reject(reason)
       })
   })
+}
+
+/**
+ *
+ * @param numeroProcesso
+ * @returns id do processo se número válido ou 0, se número inválido
+ */
+function obterCurrentUser() {
+  const root = window.location.origin.includes('frontend')
+    ? document.referrer.replace(/\/+$/, '')
+    : window.location.origin
+  const url = `${root}/pje/seam/resource/rest/pje-legacy/usuario/currentUser`
+  return fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+    credentials: 'include',
+    mode: 'cors'
+  })
+    .then(response => response.json())
 }

@@ -2270,8 +2270,11 @@ function pjeLoad(){
     });
   }
 
-  function observeParaARDigital(){
-    //return;
+  async function observeParaARDigital(){
+    const currentUser = await obterCurrentUser()
+    
+    if(currentUser.login !== '00641805306')
+      return
 
     var idProc = j2E.env.urlParms.idProcesso,	
         idTask = j2E.env.urlParms.newTaskId,	
@@ -2284,7 +2287,9 @@ function pjeLoad(){
         deferPLPQuery,
         numeroUnicoProcesso,
         objetoDescricaoPadrao = 'Intimação';
-    const toaster = jQ3.Toast ? jQ3.Toast : (a, msg, severity)=> alert(`${severity.toUpperCase()}: ${msg}`)
+    const toaster = (a, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
 
     function destinatarioAtual(){ 
       const text = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:enderecosPanel_header`).text().split(' - ')
@@ -2300,6 +2305,7 @@ function pjeLoad(){
     .fail(()=>{
       numeroUnicoProcesso = '0000000-00.0000.0.00.0000'
     })
+
     j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
       if(!(data.length))
         return;
@@ -2664,6 +2670,7 @@ function pjeLoad(){
       return deferred.promise();
     }
 
+    const IDX_ID_OBJETO_NA_PLP = 2, IDX_ID_PROCESSO = 0, IDX_TASK_HASH = 1, IDX_ENDERECO_HASH = 4, IDX_HASH_NOME_PARTE = 3
     function __getDestinatarioForCheckedPosition(data, checkedEnderecosOrder, currentWorkingPLP){
       var deferred = jQ3.Deferred();
 
@@ -2675,30 +2682,44 @@ function pjeLoad(){
           return objeto.destinatario.id === idDestinatario
         })
 
+        let destinatarioEncontradoNaLista = false
+
         const [PLPEspelhoJ2E] = j2E.env.PLP.filter(_p => _p.id === currentWorkingPLP.id)
         if(objetoEncontradoNaPLPTrabalhando.length && PLPEspelhoJ2E){
           const hashCodeDoEndereco = j2E.ARDigital.util.hashCodeDoEndereco
-          const [objetoEspelhoJ2E] = PLPEspelhoJ2E.objs.filter(objEspelho =>
-            objEspelho[2] === objetoEncontradoNaPLPTrabalhando[0].id
-            &&
-            objEspelho[0] === idProc
-            &&
-            objEspelho[1] === j2E.env.task.hash
-            &&
-            objEspelho[3] === objetoEncontradoNaPLPTrabalhando[0].destinatario.nome.toLowerCase().hashCode()
-            &&
-            objEspelho[4] === data.endereco.toLowerCase().hashCode()
-            === hashCodeDoEndereco(objetoEncontradoNaPLPTrabalhando[0].destinatario.enderecos[0]))
+          const parserEnderecoFormatoFrameComunicacao = j2E.ARDigital.util.parseEnderecosFrameComunicacao
+
+          const [objetoEspelhoJ2E] = PLPEspelhoJ2E.objs.filter(objEspelho => {
+            const hashNomeDestinaraioDoObjetoEncontradoDaWorkingList  = objetoEncontradoNaPLPTrabalhando[0].destinatario.nome.toLowerCase().hashCode()
+            const hashEnderecoParsedDataEndereco = hashCodeDoEndereco(parserEnderecoFormatoFrameComunicacao(data.endereco))
+            const hashEnderecoDoObjetoEncontradoDaWorkingList = hashCodeDoEndereco(objetoEncontradoNaPLPTrabalhando[0].destinatario.enderecos[0])
+
+            return  objEspelho[IDX_ID_OBJETO_NA_PLP] === objetoEncontradoNaPLPTrabalhando[0].id
+                    &&
+                    objEspelho[IDX_ID_PROCESSO]      === parseInt(idProc)
+                    &&
+                    objEspelho[IDX_TASK_HASH]        === j2E.env.task.hash
+                    &&
+                    objEspelho[IDX_HASH_NOME_PARTE]  === hashNomeDestinaraioDoObjetoEncontradoDaWorkingList
+                    &&
+                    objEspelho[IDX_ENDERECO_HASH]    === hashEnderecoParsedDataEndereco
+                    &&
+                    objEspelho[IDX_ENDERECO_HASH]    === hashEnderecoDoObjetoEncontradoDaWorkingList
+          })
 
           if(!!(objetoEspelhoJ2E)){ 
             destinatarioContainer.destinatario = objetoEncontradoNaPLPTrabalhando[0].destinatario
-            objetoEncontradoNaPLPTrabalhando = []
+            destinatarioContainer.destinatario.__J2E__ = {
+              objetoCorreiosAssociado : objetoEncontradoNaPLPTrabalhando[0]
+            }
+            objetoEncontradoNaPLPTrabalhando[0].__J2E__ = {
+              marcadoComoEncontradoDaWorkingList: true
+            }
+            destinatarioEncontradoNaLista = true
           }
         }
 
-
-
-        return objetoEncontradoNaPLPTrabalhando.length !== 0
+        return destinatarioEncontradoNaLista
       }
 
       j2E.ARDigital.api.destinatarios.consultar(data.destinatario, res =>{
@@ -2770,8 +2791,16 @@ function pjeLoad(){
       var deferred = jQ3.Deferred();
 
       function ____onDone(res){
-        __getDescricaoPadrao().always( observacaoTarefa => {
+        __getDescricaoPadrao()
+        .always( observacaoTarefa => {
           var objeto = j2E.ARDigital.util.getDefaultServico(destData, observacaoTarefa)
+          //se já existe objeto correios associado, não precisa verificar Disponibilidade
+          //pois foi verificado anteriormente
+          if(destData?.__J2E__?.objetoCorreiosAssociado){
+            deferred.resolve(objeto) 
+            return
+          }
+
           var cepDest = destData.enderecos.filter( _it => { return _it.indAtivo })[0].cep
           j2E.ARDigital.api.servicos.verificarDisponibilidade(cepDest)
           .done( res11 => { 
@@ -3035,9 +3064,9 @@ function pjeLoad(){
 
             $td.empty()
             ____obj = {
-              maoPropria : _resolverSeEMaoPropria(),
+              maoPropria : objDone.maoPropria,
               objetoCorreios: objDone,
-              descricao : `${numeroUnicoProcesso} - ${objetoDescricaoPadrao}`
+              descricao : objDone.observacao
             }
             $td.append(j2EUi.createPanel('Objeto', _ARDigitalObjFields(____obj,
               (objetoCorreiosAlterado)=>{
@@ -3112,8 +3141,7 @@ function pjeLoad(){
           destHash = destinatarioAtual().toLowerCase().hashCode(), 
           endHash = (obj) =>{
             return j2E.ARDigital.util
-                  .stringifyParaEnderecosFrameComunicacao(obj.destinatario.enderecos[0])
-                  .toLowerCase().hashCode()
+                  .hashCodeDoEndereco(obj.destinatario.enderecos[0])
           }
       /**
        * 
