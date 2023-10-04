@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"version": "0.1.0",
-	"name": "j2 - AR Digital que não está comitado",
+	"name": "j2",
 	"description": "Extensao Modelos j2",
 	"author": "Elmo de Moraes",
 	"action": {
