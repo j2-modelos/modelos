@@ -2723,10 +2723,29 @@ function loadPJeRestAndSeamInteraction(){
           }else{
             _this.session.viewId = viewIdStore.id
 
-            def.resolve( _this.alertas.requestsIteractions ) 
+            _this.alertas.requestsIteractions.tabPesquisaSelection()
+            .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+            .fail( err => def.reject(err) )
           }
 
           return def.promise()
+        },
+        tabPesquisaSelection : ()=>{
+          var def = $.Deferred()
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            javax.faces.ViewState: ${_this.session.viewId}
+            form: search
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+          .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
         },
         tabFormSelection : ()=>{
           var def = $.Deferred()
