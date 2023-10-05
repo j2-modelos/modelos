@@ -2910,6 +2910,30 @@ function pjeLoad(){
             } 
           })
 
+          /**
+           * Verificar a deleção de ojbetos
+           */
+          // filtra as PLP do ambientes para a mesma que resPLP pelo id,
+          // filtrando seus objs pelos critérios iguais:
+          // numeroProcesso, hash da tarefa, nome da parte
+          // e se o id de objeto correis não possui o id do objeto que está na
+          // objeotos da resPLP
+          const objetosPersistidoNaoIncluidoNaResPLP = 
+          j2E.env.PLP.filter(p => p.id === resPLP.id )?.[0]?.objs.filter(o=> { 
+            return o[IDX_ID_PROCESSO] == idProc 
+            && o[IDX_TASK_HASH] === j2E.env.task.hash
+            && o[IDX_HASH_NOME_PARTE] === destinatarioAtual().toLowerCase().hashCode()
+            && ! objetos.map(ob => ob.id ).includes( o[IDX_ID_OBJETO_NA_PLP] )
+          })
+          // altera o resPLP objeto, filtrando  removendo os ids de objetoCorreios
+          // que não combinam com os objetos espelhos obtidos da persistencia 
+          // objetosPersistidoNaoIncluidoNaResPLP
+          if(objetosPersistidoNaoIncluidoNaResPLP?.length){
+            resPLP.objetos = resPLP.objetos.filter(o => 
+              !objetosPersistidoNaoIncluidoNaResPLP.map(p => p[IDX_ID_OBJETO_NA_PLP]).includes(o.id) )
+          }
+
+
           const plpDepois = JSON.stringify(resPLP).hashCode()
 
           if(plpDepois !== plpAntes)
@@ -2952,7 +2976,8 @@ function pjeLoad(){
           .always( ()=> defer(()=>j2EUi.richModal(false)) )
 
           return;
-        }
+        }else if( linkedInputPLP.prop('id') !== 'plp-new' )
+          currentWorkingPLP = linkedInputPLP.data('j2E')?.plpFull
       }
 
 
@@ -3305,6 +3330,9 @@ function pjeLoad(){
         }
 
         changeCallback(obj.objetoCorreios)
+      })
+      $fragmento.data('j2E', {
+        objetoCorreios: obj.objetoCorreios
       })
 
       return $fragmento
