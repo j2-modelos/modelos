@@ -2919,11 +2919,14 @@ function pjeLoad(){
           // e se o id de objeto correis não possui o id do objeto que está na
           // objeotos da resPLP
           const objetosPersistidoNaoIncluidoNaResPLP = 
-          j2E.env.PLP.filter(p => p.id === resPLP.id )?.[0]?.objs.filter(o=> { 
-            return o[IDX_ID_PROCESSO] == idProc 
-            && o[IDX_TASK_HASH] === j2E.env.task.hash
-            && o[IDX_HASH_NOME_PARTE] === destinatarioAtual().toLowerCase().hashCode()
-            && ! objetos.map(ob => ob.id ).includes( o[IDX_ID_OBJETO_NA_PLP] )
+          j2E.env.PLP.filter(p => p.id === resPLP.id )?.[0]?.objs.filter(o=> {
+            const ojbetosMapped =  objetos.map(ob=>ob.id).filter(ob=> !!ob)
+
+            return ojbetosMapped.length
+                && ! ojbetosMapped.includes( o[IDX_ID_OBJETO_NA_PLP] ) 
+                && o[IDX_ID_PROCESSO] == idProc 
+                && o[IDX_TASK_HASH] === j2E.env.task.hash
+                && o[IDX_HASH_NOME_PARTE] === destinatarioAtual().toLowerCase().hashCode()
           })
           // altera o resPLP objeto, filtrando  removendo os ids de objetoCorreios
           // que não combinam com os objetos espelhos obtidos da persistencia 
@@ -3021,7 +3024,7 @@ function pjeLoad(){
             .fail( (_err, _endObj) => ____defaultFail(_err, _endObj, data) )
             .then( () => j2EUi.richModal(false) )*/
 
-            _recarregarSelecoesDoUsuario()
+            _recarregarSelecoesDoUsuario(enderecosSelected)
           }
 
           let $endEditorPanel = _ARDigitalObjFieldsWithError(
@@ -3514,7 +3517,7 @@ function pjeLoad(){
       $elementoTagInputUmExpedientePorEndereco.prop('checked', (enderecosSelected.length > 1) ? true : false );
     }
 
-    function _recarregarSelecoesDoUsuario(){ 
+    function _recarregarSelecoesDoUsuario(enderecosSelected){ 
       const $elementoTagTbodyDaDefinicaoDeEnderecos = _ObterElementoTagTRDaParteAtual(enderecosSelected)
       if(!$elementoTagTbodyDaDefinicaoDeEnderecos.length)
         return;
