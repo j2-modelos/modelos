@@ -2736,13 +2736,26 @@ function loadPJeRestAndSeamInteraction(){
           var PAYLOAD = `
             AJAXREQUEST: _viewRoot
             javax.faces.ViewState: ${_this.session.viewId}
-            form: search
+            search: search
             AJAX:EVENTS_COUNT: 1
           `
           PAYLOAD = _this.util.conformPayload(PAYLOAD)
 
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+          const it = _this.alertas.requestsIteractions
+
+          $.post(it.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            const $xml = jQ3(xml)
+            const viewStillIsFrom = !! $xml.find('textarea')?.prop('id')?.match(/alertaForm/)
+            
+            if(viewStillIsFrom){
+              debugger;
+              it.tabPesquisaSelection(xml)
+              .done( () => def.resolve( it, xml ) )
+              .fail( err => def.reject(err) )
+            }else
+              def.resolve( it, xml ) 
+          } )
           .fail( err => def.reject(err) )
 
           return def.promise();
