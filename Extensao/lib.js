@@ -2679,7 +2679,7 @@ function loadPJeRestAndSeamInteraction(){
     window.j2E = {}
 
   j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E'); var _this = {
-    session : {},
+    session : [],
     util : {
       conformPayload : PAYLOAD =>{
         PAYLOAD=PAYLOAD.split('\n').map( function(_i ) { 
@@ -2691,254 +2691,314 @@ function loadPJeRestAndSeamInteraction(){
         PAYLOAD.pop()
     
         return encodeURI(PAYLOAD.join('&') )
+      },
+      liberarViewsExpiradas: () =>{
+        _this.session = _this.session.filter(ses => { 
+          return ses.expiration >= new Date().getTime() 
+        })
+      },
+      obterNovaExpiracao: ()=>{
+        return new Date().getTime() + (3 * 60 * 1000)
       }
     },
     alertas : {
-      requestsIteractions : {
-        baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
-        $elementoTRDoAlertaEncontrado: {},
-        $xmlDoFormulario: {},
-        listView : () =>{
-          var def = $.Deferred()
+      requestsIteractionsGetter : () => { 
+        const requestsIteractions = {
+          baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
+          $elementoTRDoAlertaEncontrado: {},
+          $xmlDoFormulario: {},
+          session: null,
+          liberarAView: ()=>{
+            requestsIteractions.session.ocupado = false
+            requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+            lockr.set('SeamIteraction.sessions', _this.session)
+          },
+          listView : () =>{
+            const def = $.Deferred()
 
-          var viewIdStore = _lockr.get('SeamIteraction.alertas.viewId', { noData : true })
+            _this.session = _lockr.get('SeamIteraction.sessions', [])
+            _this.util.liberarViewsExpiradas()
 
-          if( viewIdStore.noData ){
-            $.get(_this.alertas.requestsIteractions.baseURL)
-            .done( (xml)=> { 
-              var $html = $(xml)
-              var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+            const alertasSessions = _this.session.filter(ses => { 
+              return ses.pagina === 'alertas' && !ses.ocupado
+            })
+
+            if( ! alertasSessions.length ){
+              $.get(requestsIteractions.baseURL)
+              .done( (xml)=> { 
+                var $html = $(xml)
+                var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+                
+                requestsIteractions.session = { 
+                  viewId: viewId,
+                  pagina: 'alertas',
+                  expiration: _this.util.obterNovaExpiracao(),
+                  ocupado: true
+                }
+
+                _this.session.push(requestsIteractions.session)
+
+                lockr.set('SeamIteraction.sessions', _this.session)
+    
+                def.resolve( requestsIteractions ) 
+              } )
+              .fail( err => def.reject(err) )
+            }else{
+              requestsIteractions.session = alertasSessions[0]
+              requestsIteractions.session.ocupado = true
+              requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+              lockr.set('SeamIteraction.sessions', _this.session)
+
+              requestsIteractions.tabPesquisaSelection()
+              .done( () => { 
+                def.resolve( requestsIteractions ) 
+              } )
+              .fail( err => def.reject(err) )
+            }
+
+            return def.promise()
+          },
+          tabPesquisaSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              search: search
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              const viewStillIsFrom = !! $xml.find('textarea')?.prop('id')?.match(/alertaForm/)
               
-              _this.session.viewId = viewId
-
-              lockr.set('SeamIteraction.alertas.viewId', {
-                id : viewId,
-              }, {
-                expiration : 10 * 60 * 1000
-              })
-  
-              def.resolve( _this.alertas.requestsIteractions ) 
+              if(viewStillIsFrom){
+                debugger;
+                it.tabPesquisaSelection(xml)
+                .done( () => def.resolve( it, xml ) )
+                .fail( err => def.reject(err) )
+              }else
+                def.resolve( it, xml ) 
             } )
             .fail( err => def.reject(err) )
-          }else{
-            _this.session.viewId = viewIdStore.id
 
-            _this.alertas.requestsIteractions.tabPesquisaSelection()
-            .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
+            return def.promise();
+          },
+          tabFormSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              form: form
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( () => { def.resolve( requestsIteractions ) } )
             .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          addAlerta : (alerta, criticidade)=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              alertaForm:alerta:j_id286:alerta: ${alerta}
+              alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+              alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: true
+              alertaForm:saveH: Incluir
+              alertaForm: alertaForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+            `;
+
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( () => def.resolve( requestsIteractions ) )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          alterarAlerta : (alerta, criticidade, ativo)=>{
+            const def = $.Deferred()
+            const $xmlDoFormulario =  requestsIteractions.$xmlDoFormulario
+            const containerId = $xmlDoFormulario.find('#alertaForm\\:update').attr('onclick').toString()
+                                .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
+
+            let PAYLOAD = `
+              AJAXREQUEST: ${containerId}
+              alertaForm:alerta:j_id286:alerta: ${alerta}
+              alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+              alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: ${ ativo || 'true'}
+              alertaForm: alertaForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              alertaForm:update: alertaForm:update
+              AJAX:EVENTS_COUNT: 1
+            `;
+
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( () => def.resolve( requestsIteractions ) )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          searchAlerta: (query, criticidade, ativo)=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: j_id137
+              alertaGridSearchForm:page: 1
+              alertaGridSearchForm:searching: true
+              alertaGridSearchForm:j_id141:ativoDecoration:ativo: ${ativo || ''}
+              alertaGridSearchForm:j_id152:inCriticidadeDecoration:inCriticidade: ${ criticidade || 'org.jboss.seam.ui.NoSelectionConverter.noSelectionValue'}
+              alertaGridSearchForm:j_id162:j_id164:alerta: ${query}
+              alertaGridSearchForm: alertaGridSearchForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              alertaGridSearchForm:search: alertaGridSearchForm:search
+              AJAX:EVENTS_COUNT: 1
+            `;
+
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( xml => { 
+              requestsIteractions.$elementoTRDoAlertaEncontrado = 
+              jQ3(xml).find('#alertaGridList\\:tb tr:first')
+
+              def.resolve( xml, requestsIteractions)  
+            })
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          /**
+           * Considera que houve uma consulta e existe um único registro a ser dada
+           * a ação para editar o registro
+           */
+          editarOAlertaEncontrado: ()=>{
+            const def = $.Deferred()
+            const $elmentoTR = requestsIteractions.$elementoTRDoAlertaEncontrado
+            const alertaGridListAlertaGridEdit = $elmentoTR.find('a:first').attr('id');
+            const containerId = $elmentoTR.find('a:first').attr('onclick').toString()
+                                .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
+            const formId = $elmentoTR.find('form').attr('id');
+            const id = $elmentoTR.find('a:first').attr('onclick').toString().match(/'id':\d+/)[0].match(/\d+/)[0]
+
+            var PAYLOAD = `
+              AJAXREQUEST: ${containerId}
+              ${formId}: ${formId}
+              autoScroll: 
+              ${alertaGridListAlertaGridEdit}: ${alertaGridListAlertaGridEdit}
+              tab: form
+              id: ${id}
+              AJAX:EVENTS_COUNT: 1
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+            `;
+
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) =>{
+              requestsIteractions.$xmlDoFormulario = jQ3(xml)
+
+              def.resolve( requestsIteractions ) 
+            })
+            .fail( err => def.reject(err) )
+
+            return def.promise();
           }
-
-          return def.promise()
-        },
-        tabPesquisaSelection : ()=>{
-          var def = $.Deferred()
-
-          var PAYLOAD = `
-            AJAXREQUEST: _viewRoot
-            javax.faces.ViewState: ${_this.session.viewId}
-            search: search
-            AJAX:EVENTS_COUNT: 1
-          `
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          const it = _this.alertas.requestsIteractions
-
-          $.post(it.baseURL, PAYLOAD)
-          .done( (xml) => { 
-            const $xml = jQ3(xml)
-            const viewStillIsFrom = !! $xml.find('textarea')?.prop('id')?.match(/alertaForm/)
-            
-            if(viewStillIsFrom){
-              debugger;
-              it.tabPesquisaSelection(xml)
-              .done( () => def.resolve( it, xml ) )
-              .fail( err => def.reject(err) )
-            }else
-              def.resolve( it, xml ) 
-          } )
-          .fail( err => def.reject(err) )
-
-          return def.promise();
-        },
-        tabFormSelection : ()=>{
-          var def = $.Deferred()
-
-          var PAYLOAD = `
-            AJAXREQUEST: _viewRoot
-            javax.faces.ViewState: ${_this.session.viewId}
-            form: form
-            AJAX:EVENTS_COUNT: 1
-          `
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( () => { def.resolve( _this.alertas.requestsIteractions ) } )
-          .fail( err => def.reject(err) )
-
-          return def.promise();
-        },
-        addAlerta : (alerta, criticidade)=>{
-          var def = $.Deferred()
-
-          var PAYLOAD = `
-            alertaForm:alerta:j_id286:alerta: ${alerta}
-            alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
-            alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: true
-            alertaForm:saveH: Incluir
-            alertaForm: alertaForm
-            autoScroll: 
-            javax.faces.ViewState: ${_this.session.viewId}
-          `;
-
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( () => def.resolve( _this.alertas.requestsIteractions ) )
-          .fail( err => def.reject(err) )
-
-          return def.promise();
-        },
-        alterarAlerta : (alerta, criticidade, ativo)=>{
-          const def = $.Deferred()
-          const $xmlDoFormulario = j2E.SeamIteraction.alertas.$xmlDoFormulario
-          const containerId = $xmlDoFormulario.find('#alertaForm\\:update').attr('onclick').toString()
-                              .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
-
-          let PAYLOAD = `
-            AJAXREQUEST: ${containerId}
-            alertaForm:alerta:j_id286:alerta: ${alerta}
-            alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
-            alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: ${ ativo || 'true'}
-            alertaForm: alertaForm
-            autoScroll: 
-            javax.faces.ViewState: ${_this.session.viewId}
-            alertaForm:update: alertaForm:update
-            AJAX:EVENTS_COUNT: 1
-          `;
-
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( () => def.resolve( _this.alertas.requestsIteractions ) )
-          .fail( err => def.reject(err) )
-
-          return def.promise();
-        },
-        searchAlerta: (query, criticidade, ativo)=>{
-          var def = $.Deferred()
-
-          var PAYLOAD = `
-            AJAXREQUEST: j_id137
-            alertaGridSearchForm:page: 1
-            alertaGridSearchForm:searching: true
-            alertaGridSearchForm:j_id141:ativoDecoration:ativo: ${ativo || ''}
-            alertaGridSearchForm:j_id152:inCriticidadeDecoration:inCriticidade: ${ criticidade || 'org.jboss.seam.ui.NoSelectionConverter.noSelectionValue'}
-            alertaGridSearchForm:j_id162:j_id164:alerta: ${query}
-            alertaGridSearchForm: alertaGridSearchForm
-            autoScroll: 
-            javax.faces.ViewState: ${_this.session.viewId}
-            alertaGridSearchForm:search: alertaGridSearchForm:search
-            AJAX:EVENTS_COUNT: 1
-          `;
-
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( xml => { 
-            j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado = 
-            jQ3(xml).find('#alertaGridList\\:tb tr:first')
-
-            def.resolve( xml, _this.alertas.requestsIteractions)  
-          })
-          .fail( err => def.reject(err) )
-
-          return def.promise();
-        },
-        /**
-         * Considera que houve uma consulta e existe um único registro a ser dada
-         * a ação para editar o registro
-         */
-        editarOAlertaEncontrado: ()=>{
-          const def = $.Deferred()
-          const $elmentoTR = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado
-          const alertaGridListAlertaGridEdit = $elmentoTR.find('a:first').attr('id');
-          const containerId = $elmentoTR.find('a:first').attr('onclick').toString()
-                              .match(/'containerId':'[^']*'/)[0].match(/'[^']*'/g)[1].replaceAll("'", '')
-          const formId = $elmentoTR.find('form').attr('id');
-          const id = $elmentoTR.find('a:first').attr('onclick').toString().match(/'id':\d+/)[0].match(/\d+/)[0]
-
-          var PAYLOAD = `
-            AJAXREQUEST: ${containerId}
-            ${formId}: ${formId}
-            autoScroll: 
-            ${alertaGridListAlertaGridEdit}: ${alertaGridListAlertaGridEdit}
-            tab: form
-            id: ${id}
-            AJAX:EVENTS_COUNT: 1
-            javax.faces.ViewState: ${_this.session.viewId}
-          `;
-
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
-          .done( (xml) =>{
-            j2E.SeamIteraction.alertas.$xmlDoFormulario = jQ3(xml)
-
-            def.resolve( _this.alertas.requestsIteractions ) 
-          })
-          .fail( err => def.reject(err) )
-
-          return def.promise();
         }
+        return requestsIteractions
       },
       acoes : {
         adicionarUmAlertaSemAssociarProcesso : textoAlerta => {
-          var def = $.Deferred()
+          const def = $.Deferred()
+          const requestsIteractions = _this.alertas.requestsIteractionsGetter()
+          const defFail = (err)=>{
+            requestsIteractions.liberarAView()
+            def.reject(err)
+          }
 
-          _this.alertas.requestsIteractions.listView()
+          requestsIteractions.listView()
           .done( 
             it => it.tabFormSelection()
             .done( 
               it => it.addAlerta( textoAlerta )
-              .done( it => def.resolve() )
-              .fail( err => def.reject(err) )
+              .done( it => { 
+                requestsIteractions.liberarAView()
 
-            ).fail( err => def.reject(err) )
+                def.resolve() 
+              })
+              .fail( defFail )
+
+            ).fail( defFail )
           )
+          .fail( defFail )
+
+          return def.promise()
+        },
+        pesquisarAlertaELiberarAView: (query, criticidade, ativo) => {
+          const def = $.Deferred()
+
+          _this.alertas.acoes.pesquisarAlerta(query, criticidade, ativo)
+          .done( (alerta, xml, acoes, requestsIteractions) =>{
+            requestsIteractions.liberarAView()
+
+            def.resolve( alerta, xml, acoes )
+          })
           .fail( err => def.reject(err) )
 
           return def.promise()
         },
         pesquisarAlerta : (query, criticidade, ativo) => {
-          var def = $.Deferred()
-          var acoes = _this.alertas.acoes
+          const def = $.Deferred()
+          const acoes = _this.alertas.acoes
+          const requestsIteractions = _this.alertas.requestsIteractionsGetter()
+          const defFail = (err)=>{
+            requestsIteractions.liberarAView()
+            def.reject(err)
+          }
 
-          _this.alertas.requestsIteractions.listView()
+          requestsIteractions.listView()
           .done( 
             it => it.searchAlerta(query, criticidade, ativo)
             .done( xml => { 
               var alerta = $(xml).find('#alertaGridList\\:tb').find('tr:first-child >td:nth-child(2)').text()
-              def.resolve(alerta, xml, acoes ) 
+              def.resolve(alerta, xml, acoes, requestsIteractions ) 
             } )
-            .fail( err => def.reject(err) )
+            .fail( defFail )
           )
-          .fail( err => def.reject(err) )
+          .fail( defFail )
 
           return def.promise()
         },
-        alterarAlertaEncontrado : (textoAlertaAlterado, criticidade, ativo) => {
+        alterarAlertaEncontrado : (requestsIteractions, textoAlertaAlterado, criticidade, ativo) => {
           const def = $.Deferred()
           const acoes = _this.alertas.acoes
-          const textoBuffer = j2E.SeamIteraction.alertas.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
+          const textoBuffer = requestsIteractions.$elementoTRDoAlertaEncontrado.find('td:nth-child(2)').text()
 
           if(textoAlertaAlterado === textoBuffer){
+            requestsIteractions.liberarAView()
+            
             return def.resolve(acoes).promise()
           }
 
-          _this.alertas.requestsIteractions.editarOAlertaEncontrado()
+          requestsIteractions.editarOAlertaEncontrado()
           .pipe( it => it.alterarAlerta( textoAlertaAlterado, criticidade, ativo ) )
           .done( () => def.resolve(acoes) )
           .fail( err => def.reject(err) )
+          .always( ()=> requestsIteractions.liberarAView() )
 
           return def.promise()
         }

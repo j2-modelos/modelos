@@ -2320,7 +2320,7 @@ function pjeLoad(){
       }
 
       deferPLPQuery = jQ3.Deferred()
-      j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`p-#${idProc}#`)
+      j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(`p-#${idProc}#`)
       .done( alerta => { 
         const emptyAlerta = `{"p-#${idProc}#":{"id":"${idProc}","PLP":[]}}`
 
@@ -2346,7 +2346,7 @@ function pjeLoad(){
         
         j2E.env[`p-#${idProc}#`].PLP.forEach( plp => {
           //j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`id-${plp}`)
-          let _prom = j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`plp*-#${plp}#`)
+          let _prom = j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(`plp*-#${plp}#`)
           .done( plpJson => {
             if (! plpJson.length)
               return;
@@ -3177,7 +3177,7 @@ function pjeLoad(){
             
       var defPLP = jQ3.Deferred()
       j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`plp*-#${plp.id}#`)
-      .done( alerta => { 
+      .done( (alerta, _, __, seamRequestIteractionPending) => { 
         if (! (alerta.length)){
           let _p_plp = {}
           const root = _p_plp[`plp*-#${plp.id}#`] = {}
@@ -3194,6 +3194,8 @@ function pjeLoad(){
               endHash(idObjPLP),  // hashcode do endereço no PJe como é apresentado
             ]
           ))
+
+          seamRequestIteractionPending.liberarAView()
 
           _p_plp = JSON.stringify(_p_plp)
           j2E.SeamIteraction.alertas.acoes.adicionarUmAlertaSemAssociarProcesso( _p_plp )
@@ -3225,7 +3227,7 @@ function pjeLoad(){
           })
 
           _p_plp = JSON.stringify(_p_plp)
-          j2E.SeamIteraction.alertas.acoes.alterarAlertaEncontrado( _p_plp )
+          j2E.SeamIteraction.alertas.acoes.alterarAlertaEncontrado( seamRequestIteractionPending, _p_plp )
           .done( ()=> defPLP.resolve( root.objs) )
           .fail( ()=> defPLP.reject() )
         }
@@ -3238,13 +3240,15 @@ function pjeLoad(){
       var defProc = jQ3.Deferred()
       jQ3.when(defPLP).done(()=>{
         j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`p-#${idProc}#`)
-        .done( alerta => { 
+        .done( (alerta, _, __, seamRequestIteractionPending) => { 
           if (! (alerta.length)){
             var _p = {}
             var proot = _p[`p-#${idProc}#`] = {}
 
             proot.id = idProc
             proot.PLP = [ plp.id ]
+
+            seamRequestIteractionPending.liberarAView()
 
             _p = JSON.stringify(_p)
             j2E.SeamIteraction.alertas.acoes.adicionarUmAlertaSemAssociarProcesso( _p )
@@ -3260,7 +3264,7 @@ function pjeLoad(){
               proot.PLP.push(plp.id)
 
               _p = JSON.stringify(_p)
-              j2E.SeamIteraction.alertas.acoes.alterarAlertaEncontrado( _p )
+              j2E.SeamIteraction.alertas.acoes.alterarAlertaEncontrado( seamRequestIteractionPending, _p )
               .done( ()=> defProc.resolve() )
               .fail( ()=> defProc.reject() )
           }
