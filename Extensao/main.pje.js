@@ -2272,6 +2272,7 @@ function pjeLoad(){
 
   async function observeParaARDigital(){
     const currentUser = await obterCurrentUser()
+    j2E.env.currentUser = currentUser
     
     if(currentUser.login !== '00641805306')
       return
@@ -2287,16 +2288,26 @@ function pjeLoad(){
         deferPLPQuery,
         numeroUnicoProcesso,
         objetoDescricaoPadrao = 'Intimação';
+    
+    const IDX_ID_OBJETO_NA_PLP = 2, 
+          IDX_ID_PROCESSO = 0, 
+          IDX_TASK_HASH = 1, 
+          IDX_ENDERECO_HASH = 4, 
+          IDX_HASH_NOME_PARTE = 3
+    
+    const ___delayCall = new DelayedCall(150, 500);
+
     const toaster = (a, msg, severity)=> { 
       jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
     }
 
-    function destinatarioAtual(){ 
+    function _obterDestinatarioAtual(){ 
       const text = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:enderecosPanel_header`).text().split(' - ')
       text.shift()
       return text.join(' - ').trim()
     }
 
+    //obtem dados compleos do processo
     j2EPJeRest.processo.getDadosCompletos(idProc)
     .done( dados=>{
       numeroUnicoProcesso = dados.result.dadosBasicos.numero.value
@@ -2306,6 +2317,7 @@ function pjeLoad(){
       numeroUnicoProcesso = '0000000-00.0000.0.00.0000'
     })
 
+    //obtem a descrição no fluxo para determinar a implantação
     j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
       if(!(data.length))
         return;
@@ -2319,6 +2331,7 @@ function pjeLoad(){
         hash : data[data.length-1].toLowerCase().hashCode()
       }
 
+      //Verifica a persistência para o processo e PLP associadas, quando houver
       deferPLPQuery = jQ3.Deferred()
       j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(`p-#${idProc}#`)
       .done( alerta => { 
@@ -2366,110 +2379,203 @@ function pjeLoad(){
         
       })  
 
+      //Implantará quando visualizar os paineis na view
+      //  painel de quando o usuário tem de selecionar o endereço da parte
       jQ3.initialize('.rich-panel-header', function(){
-        var $div = jQ3(this);
-        if ($div.text().toLowerCase() !== 'definição de endereços')
+        const $div = jQ3(this);
+        let TAREFA_VIEW = ''
+        const defPrepararAtoViewMatchedList = jQ3.Deferred()
+
+        if ($div.text().toLowerCase() === 'definição de endereços')
+          TAREFA_VIEW = 'DEFINICAO_ENDERECO'
+        else if ($div.text().toLowerCase() === 'ato de comunicação')
+          TAREFA_VIEW = 'PREPARAR_ATO'
+        else
           return;
-        if ( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
-          return;
 
-        //observar se uusário irá ativar endereços adicionais
-                
-        jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
-          var $chk = jQ3(this);
-          checkedEnderecos = 0
+        if (  TAREFA_VIEW === 'DEFINICAO_ENDERECO' ){
+          if( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+            return
 
-          var endsSelectedByUser = []
-          function __triage($target, event){
-            if (!($target.is('input') && $target.is(":checked") && $target.prop('id').match(/taskInstanceForm:Processo_Fluxo_prepararExpediente-\d+:tabelaEnderecosPessoa:\d+:check/)))
-              return;
-            
-            if(event)
-              event.preventDefault()
+          //prepara a observação de quando o  uusário irá ativar endereços adicionais            
+          jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
+            const $chk = jQ3(this);
+            checkedEnderecos = 0
 
-            var $tr = $target.parents('tr')
-            if( $tr.is("[j2-with-linked-tr]") )
-              return;
-            
-            $tr.attr('j2-with-linked-tr', 'sim')
+            const endsSelectedByUser = []
+            const mapEnderecos = new Map()
 
-            var data = {
-              //destinatario : $tr.find('td:nth-child(2)').text().trim(),
-              destinatario : destinatarioAtual(),
-              endereco : $tr.find('td:nth-child(3)').text().trim()
+            function trTimeToDateTimeLong(trTime){
+              if(!trTime.length)
+                return 0
+
+              if(! trTime.match(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/))
+                return -1
+
+              const [dia, mes, anoA, anoB, hora, min, seg] = trTime.match(/\d{2}/g)
+              const isoString = `${anoA}${anoB}-${mes}-${dia}T${hora}:${min}:${'00'}Z`
+              return new Date(isoString).getTime()
             }
 
-            endsSelectedByUser.push({
-              data : data,
-              $tr: $tr,
-              $target: $target
+            function __triage($target, event){
+              const $tr = $target.parents('tr')
+              const enderecoAtual = $tr.find('td:nth-child(3)').text().trim()
+
+              let elMappedCurrentEnderecoHash = mapEnderecos.get( enderecoAtual.hashCode() )
+              if( ! elMappedCurrentEnderecoHash ){
+                elMappedCurrentEnderecoHash = []
+                mapEnderecos.set(enderecoAtual.hashCode(), elMappedCurrentEnderecoHash)
+              }
+              elMappedCurrentEnderecoHash.push({
+                $tr, 
+                tempo: trTimeToDateTimeLong($tr.find('td:nth-child(4)').text().trim())
+              })
+
+              if (!($target.is('input') && $target.is(":checked") && $target.prop('id').match(/taskInstanceForm:Processo_Fluxo_prepararExpediente-\d+:tabelaEnderecosPessoa:\d+:check/)))
+                return;
+              
+              if(event)
+                event.preventDefault()
+
+              if( $tr.is("[j2-with-linked-tr]") )
+                return;
+              $tr.attr('j2-with-linked-tr', 'sim')
+
+              const $tbody = $target.parents('tbody')
+              $tbody.prepend($tr)
+
+              var data = {
+                destinatario : _obterDestinatarioAtual(),
+                endereco : enderecoAtual
+              }
+
+              endsSelectedByUser.push({
+                data : data,
+                $tr: $tr,
+                $target: $target
+              })
+
+            }
+            
+            $chk.find('input').each((idx, el)=>{
+              __triage(jQ3(el))
             })
 
-          }
+            mapEnderecos.forEach((elMappedArray, chave) => {
+              // se houver elemento checado, trazer para o topo
+              // se houver mais de un no mesmo set, o segundo em diante será 
+              // removido posteriormente abaixo
+              elMappedArray.filter(el => el.$tr.find('input').is(':checked') )
+              .forEach(el => el.tempo = Number.MAX_VALUE)
+              
+              elMappedArray.sort((a, b)=> b.tempo - a.tempo)
 
-          /*$chk.click((event)=>{
-            var $target = jQ3(event.target);
-            __triage($target, event)
-          })*/
-          
-          $chk.find('input').each((idx, el)=>{
-            __triage(jQ3(el))
+              elMappedArray.shift()
+              elMappedArray.forEach( el => el.$tr.remove() )
+            });
+
+            if(endsSelectedByUser.length)
+              _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)
           })
+        }
 
-          if(endsSelectedByUser.length)
-            _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)
-        })
+        if (  TAREFA_VIEW === 'PREPARAR_ATO' ){
+          if( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+            return
 
-               
+          //quando for encontada a matatched list do processo
+          defPrepararAtoViewMatchedList.done((obtidaMatachedList)=>{
+            if(obtidaMatachedList?.status !== 'FECHADA')
+              return
+
+            function ____resolveDestinatarioDaTdDaView($tdDesinatario){
+              const text = $tdDesinatario.text().trim()
+              const nome = text
+              const endereco = null
+              
+              return {
+                nome,
+                endereco
+              }
+            }
+
+            let algumaAlteracaoRealizada = false
+            $div.parent().find('tr').each((idx, el)=>{
+              const $tr = jQ3(el)
+              if( ! ($tr.find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+                return
+              
+              algumaAlteracaoRealizada = true
+
+              const destinatario = ____resolveDestinatarioDaTdDaView($tr.find('td:nth-child(3)'))
+
+            })
+            
+            if(! algumaAlteracaoRealizada)
+              return
+
+            const $lastThThead = $div.parent().find('thead th:last-child')
+            const $thARCloned = $lastThThead.clone(true)
+
+            $lastThThead.after($thARCloned)
+          })
+        }
+
+        //obter chave de acesso para prosseguir  
         __sendMessageToServiceWorder({
           j2Action: 'getSharedMessage',
           from: 'https://sistemas.tjma.jus.br',
           messageName : 'sentinelaToken'
-        }, response => {
+        }, respBackground => {
           if (jQ3('[j2-ardigital-panel]').length){
-            if(response.j2Action === 'getSharedMessageResponse')
-              j2E.ARDigital.api.ajax.setToken(response.response.message)
+            if(respBackground.j2Action === 'getSharedMessageResponse')
+              j2E.ARDigital.api.ajax.setToken(respBackground.response.message)
             return;
           }  
             
-
+          //insere um separdor
           $div.parent().parent().prepend('<span style="font-size: 5px;">&nbsp;</span>');
+          //Cria o painel do AR Digital na View
           var ARDigitalPanel = $div.parent().parent().prepend(j2EUi.createPanel('AR Digital',(function(){
-            if(response.j2Action !== 'getSharedMessageResponse'){
+            //view se não existe token de acesso ao AR Digital
+            if(respBackground.j2Action !== 'getSharedMessageResponse'){
               return j2EUi.createWarnElements(`
                 Não localizado o token de acesso ao ARdigital. Acesse o sistema
                 <a href="https://sistemas.tjma.jus.br" target="_blank">https://sistemas.tjma.jus.br</a>
                 `)
             }
-              
-            j2E.ARDigital.api.ajax.setToken(response.response.message)
-            j2E.env.extAccToken = response.response.message
-            /*var inpChk = '<input id="plp-new" class="checkbox" type="checkbox">'
-            return j2EUi.createTable([
-              [ '', 'Nº PLP', 'Listas de postagem' ],
-              [ inpChk, 'Criar uma nova lista de postagem']
-            ]);*/
+            
+            //Guarda o token de acesso
+            j2E.ARDigital.api.ajax.setToken(respBackground.response.message)
+            j2E.env.extAccToken = respBackground.response.message
+            
             j2EUi.richModal(true)
             return j2EUi.spinnerHTML()
           })(), 'j2-ARDigital-panel'))
+
+          //apensa estilos necessários
           $div.parent().parent().prepend(`
             <style>
               div[j2-ui-content] table tr td:first-child{
                 text-align:center !important
               }
             </style>`);
-
-          if(response.j2Action !== 'getSharedMessageResponse')
+          
+          //Se não obteve resposta satisfativa do background, retorne
+          if(respBackground.j2Action !== 'getSharedMessageResponse')
             return;
 
           ARDigitalPanel.$content = ARDigitalPanel.find('[j2-ui-content]')
           
+          //Defers necessários
           var deferPLPListar = j2E.ARDigital.api.plp.listar()
           var promiseStoreServicos = j2E.ARDigital.util.storeServicosData()
+          
+          //quando consultar a persistencia, listar as PLP do AR digital e o armazenamento de serviços
+          jQ3.when( deferPLPListar, deferPLPQuery, promiseStoreServicos)
+          .done ((res, storedPLPs)=>{
 
-          jQ3.when( deferPLPListar, deferPLPQuery, promiseStoreServicos).done ((res, storedPLPs)=>{
-            defer(()=> j2EUi.richModal(false))
-
+            //obter as listas que combinam com a persistencia
             let matachedList
             storedPLPs && res[0].result.some(item =>  { 
               return j2E.env.PLP.filter(item2 => { 
@@ -2481,38 +2587,72 @@ function pjeLoad(){
                   plp : item,
                   store : item2
                 }
+                j2E.env.obtidaMatachedList = matachedList
+                defPrepararAtoViewMatchedList.resolve(matachedList)
+
                 return true
               }).length !== 0 } 
             ) 
 
+            //resolver status a exibir
+            const STATUS_PLP_PARA_VIEW = 
+            TAREFA_VIEW === 'DEFINICAO_ENDERECO' ? 'ABERTA' :
+            TAREFA_VIEW === 'PREPARAR_ATO' ? 'ENVIADA' :
+            'STATUS_INVALIDO'
+            
+            //criar a tabela pra o painel do AR Digital
             var tableSet = [
               [ '<img src="/pje/img/toolbox.png" title="Seleciontar lista de postagem ou criar nova">', 
-                'Nº PLP', 'Objetos', 'Data de postagem' ]
+                'Nº PLP', 'Usuario',  'Objetos', 'Data de postagem' ]
             ]
-            res[0].result.forEach( plp =>{
-              if (false || plp.status === 'ABERTA'){
-                var inpChk = jQ3(`<input id="plp-${plp.id}" class="checkbox " type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''}  ${ matachedList?.id == plp.id ? 'checked="checked"' : ''} />`)
+
+            const defConsultaListasPromisses = []
+            res[0].result.forEach( async plp =>{
+              if (false || plp.status === STATUS_PLP_PARA_VIEW){
+                const def = jQ3.Deferred()
+                defConsultaListasPromisses.push(def)
+
+                const inpChk = jQ3(`<input id="plp-${plp.id}" class="checkbox " type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''}  ${ matachedList?.id == plp.id ? 'checked="checked"' : ''} />`)
+                
+                const plpCompleta = await j2E.ARDigital.api.plp.getById(plp.id)
+                plp.__J2E__ = { plpCompleta }
+
                 inpChk.data('j2E', {
                   plp : plp,
-                  matachedList : matachedList
+                  matachedList : matachedList?.id == plp.id ? matachedList : null,
+                  plpCompleta
                 })
-                var dtaPostagem = plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')
-                tableSet.push([inpChk, plp.numeroPlp, plp.qtdeObjetos, dtaPostagem ])
+
+                const dtaPostagem = plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')
+                tableSet.push([inpChk, plp.numeroPlp, plpCompleta.matriculaCriador, plp.qtdeObjetos, dtaPostagem ])
+                def.resolve()
               }
             })
-            
-            let hoje = new Date().toISOString().split("T")[0];
-            var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''} />`
-            var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" ${ matachedList ? 'disabled="disabled"' : ''} />`
-            tableSet.push([inpChk, '-', 'Criar uma nova lista de postagem', inpDat])
+           
+            jQ3.when(...defConsultaListasPromisses)
+            .done(()=>{
+              //criar elementos para criar nova lista de postagem
+              if(TAREFA_VIEW === 'DEFINICAO_ENDERECO'){
+                let hoje = new Date().toISOString().split("T")[0]
+                var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''} />`
+                var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" ${ matachedList ? 'disabled="disabled"' : ''} />`
+                tableSet.push([inpChk, '-', '-', 'Criar uma nova lista de postagem', inpDat])
+              }
 
-            let uiTable = j2EUi.createTable(tableSet)
-            ARDigitalPanel.$content.empty()
-            ARDigitalPanel.$content.append( uiTable )
+              //finalizando o painel do AR Digital
+              let uiTable = j2EUi.createTable(tableSet)
+              ARDigitalPanel.$content.empty()
+              ARDigitalPanel.$content.append( uiTable )
 
-            uiTable.find('input:checked').parents('tr').find('td').addClass('success')
+              uiTable.find('input:checked').parents('tr').find('td').addClass('success')
+
+              
+            })
+            //remover bloqueio
+            .always(()=> j2EUi.richModal(false))
           })
 
+          //painel em caso de falha
           deferPLPListar.fail(errRes=>{
             ARDigitalPanel.$content.empty()
             ARDigitalPanel.$content.append(j2EUi.createWarnElements(`
@@ -2520,6 +2660,7 @@ function pjeLoad(){
             `));
           })
 
+          //registrar ouvidor de eventos
           ARDigitalPanel.mouseup(event => {
             var $el = jQ3(event.target)
             if(!$el.is('input[type="radio"]'))
@@ -2528,9 +2669,6 @@ function pjeLoad(){
             $el.parents('tbody').find('.success').removeClass('success')
             $el.parents('tr').find('td').addClass('success')
           })
-
-
-
         })
 
 
@@ -2670,7 +2808,6 @@ function pjeLoad(){
       return deferred.promise();
     }
 
-    const IDX_ID_OBJETO_NA_PLP = 2, IDX_ID_PROCESSO = 0, IDX_TASK_HASH = 1, IDX_ENDERECO_HASH = 4, IDX_HASH_NOME_PARTE = 3
     function __getDestinatarioForCheckedPosition(data, checkedEnderecosOrder, currentWorkingPLP){
       var deferred = jQ3.Deferred();
 
@@ -2831,7 +2968,26 @@ function pjeLoad(){
     }
 
     function __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, plp){
-      let frag = `<tr class="rich-table-row "><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left"><input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" checked /></span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left"></span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left">${plp.objetos.length}</span></div></td><td class="rich-table-cell text-break text-left success"><div class="col-sm-12"><span class="text-left">${plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')}</span></div></td></tr>`;
+      let frag = `<tr class="rich-table-row">
+          <td class="rich-table-cell text-break text-left success">
+              <div class="col-sm-12">
+                  <span class="text-left"><input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" checked /></span>
+              </div>
+          </td>
+          <td class="rich-table-cell text-break text-left success">
+              <div class="col-sm-12"><span class="text-left"></span></div>
+          </td>
+          <td class="rich-table-cell text-break text-left success">
+              <div class="col-sm-12"><span class="text-left">${plp.matriculaCriador}</span></div>
+          </td>
+          <td class="rich-table-cell text-break text-left success">
+              <div class="col-sm-12"><span class="text-left">${plp.objetos.length}</span></div>
+          </td>
+          <td class="rich-table-cell text-break text-left success">
+              <div class="col-sm-12"><span class="text-left">${plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')}</span></div>
+          </td>
+        </tr>`;
+
       let newTR = jQ3(frag)
       let newInputLinkedPLP = newTR.find('input')
 
@@ -2926,7 +3082,7 @@ function pjeLoad(){
                 && ! ojbetosMapped.includes( o[IDX_ID_OBJETO_NA_PLP] ) 
                 && o[IDX_ID_PROCESSO] == idProc 
                 && o[IDX_TASK_HASH] === j2E.env.task.hash
-                && o[IDX_HASH_NOME_PARTE] === destinatarioAtual().toLowerCase().hashCode()
+                && o[IDX_HASH_NOME_PARTE] === _obterDestinatarioAtual().toLowerCase().hashCode()
           })
           // altera o resPLP objeto, filtrando  removendo os ids de objetoCorreios
           // que não combinam com os objetos espelhos obtidos da persistencia 
@@ -2958,7 +3114,6 @@ function pjeLoad(){
       return deferred.promise();
     }
 
-    var ___delayCall = new DelayedCall(150, 500);
     function _treatDestinatarioEEnderecoARDigital(enderecosSelected, currentWorkingPLP){
     //function _treatDestinatarioEEnderecoARDigital(data, $tr, $target){
       j2EUi.richModal(true)
@@ -3166,7 +3321,7 @@ function pjeLoad(){
       var idProc = parseFloat(j2E.env.urlParms.idProcesso),	
           idTask = j2E.env.urlParms.newTaskId,
           taskHash = j2E.env.task.hash,
-          destHash = destinatarioAtual().toLowerCase().hashCode(), 
+          destHash = _obterDestinatarioAtual().toLowerCase().hashCode(), 
           endHash = (obj) =>{
             return j2E.ARDigital.util
                   .hashCodeDoEndereco(obj.destinatario.enderecos[0])
@@ -3530,16 +3685,9 @@ function pjeLoad(){
       $elementosTagAPagina[0].dispatchEvent( new Event('click') )
     }
 
-    function _resolverSeEMaoPropria(){
-      return false;
-    }
+    return
+  }
 
-    return;
-  }
-  
-  function registrarServiceWorker(){
-    
-  }
   
   function fazerAjustesExibicaoPseudotarefaMovimentar(){
     jQ3('nav#barraSuperiorPrincipal').hide();

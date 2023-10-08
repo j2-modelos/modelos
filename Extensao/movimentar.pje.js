@@ -125,6 +125,40 @@ function init(){
           return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/plps?_limit=100&_offset=0&_download=false`, 
             sucCB, errCB);
         },
+        listarCompleta: ()=> {
+          const def = jQ3.Deferred()
+
+          j2E.ARDigital.api.plp.listar()
+          .done( resList => {
+            const listasDaRespListar = resList[0].result
+            const novaListaPLPsCompletas = []
+            const promisses = []
+
+            listasDaRespListar.forEach(lista=>{
+              const getListaFullByIdDef = jQ3.Deferred()
+
+              j2E.ARDigital.api.plp.getById(lista.id)
+              .done(res=>{
+                const plpCompleta = res[0].result
+                plpCompleta.__J2E__ = {
+                  plpSimpes: lista
+                }
+                
+                getListaFullByIdDef.resolve()
+              })
+              .fail(err=>getListaFullByIdDef.reject)
+
+              promisses.push(getListaFullByIdDef)
+            })
+
+            jQ3.when(...promisses)
+            .done( ()=> def.resolve( novaListaPLPsCompletas ) )
+            .fail(err => def.reject(err))
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
         criar : function(dataPostagem, objetos, sucCB, errCB) {
           
           var payload = {};
