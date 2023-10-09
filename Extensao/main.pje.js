@@ -2533,7 +2533,7 @@ function pjeLoad(){
                 const $lastTrCloned = $lastTr.clone(true)
                 const $_span = $lastTrCloned.find('span')
 
-                $_span.text( objetosDesintario[0].etiqueta.etiqueta )
+                $_span.text( objetosDesintario[0]?.etiqueta.etiqueta )
 
 
                 $tr.find('td:nth-child(6)').after($lastTrCloned)

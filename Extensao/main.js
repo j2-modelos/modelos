@@ -1664,7 +1664,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   ],
   'col-sm-12',
   [
-    'Aguardando PLP'
+    'Aguardando PLP',
+    'Via Correios'
   ],
   'container-sem-classe'
 )
