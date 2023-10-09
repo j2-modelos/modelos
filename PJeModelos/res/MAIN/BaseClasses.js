@@ -2433,10 +2433,12 @@ try {
         var lines = _.initialLines;
         var newDests = [];
         var idFrmComId = 1;
+        const replaceHtmlEntites = pkg.Utilidades.replaceHtmlEntites
         let resolveMatch = (lns, pssNome) => {
           let _pssNome = pssNome;
           if ( _pssNome.includes('registrado civilmente como') )
             _pssNome = _pssNome.split(" registrado")[0]
+            _pssNome = replaceHtmlEntites(_pssNome)
           
           return lns.replace(/[(]|[)]/g, '').match( new RegExp(_pssNome.replace(/[(]|[)]/g, ''))) !== null;
         }
@@ -8476,7 +8478,24 @@ try {
         })
 
         return ends;
-      }
+      },
+      replaceHtmlEntites: (()=>{
+        const translate_re = /&(nbsp|amp|quot|lt|gt);/g,
+              translate = {
+                  'nbsp': String.fromCharCode(160), 
+                  'amp' : '&', 
+                  'quot': '"',
+                  'lt'  : '<', 
+                  'gt'  : '>'
+              },
+              translator = function($0, $1) { 
+                  return translate[$1]; 
+              };
+
+        return function(string) {
+            return string.replace(translate_re, translator);
+        };
+      })()
     };
     
     pkg.VistosEmCorreicao = {

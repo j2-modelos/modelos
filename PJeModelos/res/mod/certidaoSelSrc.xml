@@ -1081,6 +1081,21 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </simpleElementsDefs>
             </itemContent>
         </item> 
+
+        <!--item id="certItWhatsAppLeitura" label="Leitura" dataPlus="{ 'descricaoAppend': 'Leitura WhatsApp' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, para os devidos fins, que em XX/XX/XX #:B{findou, sem manifestação das partes, 
+                    o prazo de 15 dias úteis após o trânsito} em julgado da sentença/acórdão, nos termos do art. 
+                    52, II e IV, da lei 9.099/99 e do art. 523, §1º, do CPC. 
+
+                    Certifico nesta data que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} foi 
+                    devidamente #:B{#:U{lida}} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} 
+                    #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} através do 
+                    aplicativo #:I{WhatsApp} em #:B{#:span@certItWhatsAppLeitura-prazoExtenso{XXXDataXXX}}. 
+                </data>
+            </itemContent>
+        </!item-->
         
                         
         <item id="certItTempestividadeRecurso" label="Recurso Inominado - tempestivo" dataPlus="{ 'descricaoAppend': 'Recurso Inominado tempestivo' }">
