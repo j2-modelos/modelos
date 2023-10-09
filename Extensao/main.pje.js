@@ -2307,6 +2307,13 @@ function pjeLoad(){
       return text.join(' - ').trim()
     }
 
+    function _resolverSeListaDeveSerExibidaNaView(plp, VIEW, matachedList){
+      if( VIEW === 'DEFINICAO_ENDERECO' )
+        return plp.status === 'ABERTA'
+      if( VIEW === 'PREPARAR_ATO')
+        return matachedList?.id == plp.id
+    }
+
     //obtem dados compleos do processo
     j2EPJeRest.processo.getDadosCompletos(idProc)
     .done( dados=>{
@@ -2480,44 +2487,72 @@ function pjeLoad(){
         }
 
         if (  TAREFA_VIEW === 'PREPARAR_ATO' ){
-          if( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+          if( ! ($div.parent().find('td:nth-child(6)').text().toLowerCase().includes('correios')) )
             return
 
           //quando for encontada a matatched list do processo
           defPrepararAtoViewMatchedList.done((obtidaMatachedList)=>{
-            if(obtidaMatachedList?.status !== 'FECHADA')
+            if(obtidaMatachedList?.plp?.status !== 'FECHADA')
               return
 
             function ____resolveDestinatarioDaTdDaView($tdDesinatario){
               const text = $tdDesinatario.text().trim()
               const nome = text
               const endereco = null
+              const hash = text.hashCode()
               
               return {
                 nome,
-                endereco
+                endereco,
+                hash
               }
             }
 
             let algumaAlteracaoRealizada = false
+            const objetosAssociadosAListaEProcessoETarefa = 
+            obtidaMatachedList.plpCompleta.objetos.filter( 
+              ob => obtidaMatachedList.store.objs.some(
+                obs=> obs[IDX_ID_OBJETO_NA_PLP] === ob.id 
+                && obs[IDX_ID_PROCESSO] === parseInt(idProc) 
+                && obs[IDX_TASK_HASH] === j2E.env.task.hash ))
+
+
             $div.parent().find('tr').each((idx, el)=>{
               const $tr = jQ3(el)
-              if( ! ($tr.find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
+              if( ! ($tr.find('td:nth-child(6)').text().toLowerCase().includes('correios')) )
                 return
               
               algumaAlteracaoRealizada = true
 
               const destinatario = ____resolveDestinatarioDaTdDaView($tr.find('td:nth-child(3)'))
+              const objetosDesintario = objetosAssociadosAListaEProcessoETarefa.filter( 
+                ob => ob.destinatario.nome.hashCode() === destinatario.hash )
 
+              if( ! destinatario.endereco ){
+                const $lastTr = $tr.find('td:nth-child(6)')
+                const $lastTrCloned = $lastTr.clone(true)
+                const $_span = $lastTrCloned.find('span')
+
+                $_span.text( objetosDesintario[0].etiqueta.etiqueta )
+
+
+                $tr.find('td:nth-child(6)').after($lastTrCloned)
+              }else{
+                return
+              }
             })
             
             if(! algumaAlteracaoRealizada)
               return
 
-            const $lastThThead = $div.parent().find('thead th:last-child')
+            const $trThead = $div.parent().find('thead tr')
+            const $lastThThead = $trThead.find('th:last-child')
             const $thARCloned = $lastThThead.clone(true)
+            const $_div = $thARCloned.find('div')
 
-            $lastThThead.after($thARCloned)
+            $_div.text( 'Nº Etiqueta AR')
+
+            $trThead.find('th:nth-child(6)').after($thARCloned)
           })
         }
 
@@ -2588,8 +2623,7 @@ function pjeLoad(){
                   store : item2
                 }
                 j2E.env.obtidaMatachedList = matachedList
-                defPrepararAtoViewMatchedList.resolve(matachedList)
-
+                
                 return true
               }).length !== 0 } 
             ) 
@@ -2597,7 +2631,7 @@ function pjeLoad(){
             //resolver status a exibir
             const STATUS_PLP_PARA_VIEW = 
             TAREFA_VIEW === 'DEFINICAO_ENDERECO' ? 'ABERTA' :
-            TAREFA_VIEW === 'PREPARAR_ATO' ? 'ENVIADA' :
+            TAREFA_VIEW === 'PREPARAR_ATO' ? 'FECHADA' :
             'STATUS_INVALIDO'
             
             //criar a tabela pra o painel do AR Digital
@@ -2608,7 +2642,7 @@ function pjeLoad(){
 
             const defConsultaListasPromisses = []
             res[0].result.forEach( async plp =>{
-              if (false || plp.status === STATUS_PLP_PARA_VIEW){
+              if ( _resolverSeListaDeveSerExibidaNaView(plp, TAREFA_VIEW, matachedList) ){
                 const def = jQ3.Deferred()
                 defConsultaListasPromisses.push(def)
 
@@ -2622,6 +2656,8 @@ function pjeLoad(){
                   matachedList : matachedList?.id == plp.id ? matachedList : null,
                   plpCompleta
                 })
+                if( matachedList?.id == plp.id )
+                  matachedList.plpCompleta = plpCompleta
 
                 const dtaPostagem = plp.dtaPostagem.split('T')[0].split('-').reverse().join('/')
                 tableSet.push([inpChk, plp.numeroPlp, plpCompleta.matriculaCriador, plp.qtdeObjetos, dtaPostagem ])
@@ -2632,7 +2668,7 @@ function pjeLoad(){
             jQ3.when(...defConsultaListasPromisses)
             .done(()=>{
               //criar elementos para criar nova lista de postagem
-              if(TAREFA_VIEW === 'DEFINICAO_ENDERECO'){
+              if(TAREFA_VIEW === 'DEFINICAO_ENDERECO' && !matachedList){
                 let hoje = new Date().toISOString().split("T")[0]
                 var inpChk = `<input id="plp-new" class="checkbox" type="radio" name="radio-plp" ${ matachedList ? 'disabled="disabled"' : ''} />`
                 var inpDat = `<input id="plp-date" class="form-control" type="date" min="${hoje}" ${ matachedList ? 'disabled="disabled"' : ''} />`
@@ -2643,10 +2679,27 @@ function pjeLoad(){
               let uiTable = j2EUi.createTable(tableSet)
               ARDigitalPanel.$content.empty()
               ARDigitalPanel.$content.append( uiTable )
-
               uiTable.find('input:checked').parents('tr').find('td').addClass('success')
 
-              
+              if( TAREFA_VIEW === 'PREPARAR_ATO'){
+                let warn
+
+                if(! matachedList)
+                  warn = j2EUi.createWarnElements(`
+                    Nenhuma lista de postagem associada ao processo. Retorne para DEFINIR ENDEREÇOS e crie a lista.
+                  `)
+                else if( matachedList.plp.status !== 'FECHADA' )
+                  warn = j2EUi.createWarnElements(`
+                    A lista de postagem associada a este processo não foi fechada e enviada. Acesse o sistema para realizar o fechamento.
+                    <a href="https://sistemas.tjma.jus.br" target="_blank">https://sistemas.tjma.jus.br</a>
+                  `)
+                else if( matachedList.plp.status === 'FECHADA' )
+                  warn = false
+
+                warn & ARDigitalPanel.$content.append( warn )
+              }
+
+              matachedList && defPrepararAtoViewMatchedList.resolve( matachedList )
             })
             //remover bloqueio
             .always(()=> j2EUi.richModal(false))
@@ -2921,6 +2974,17 @@ function pjeLoad(){
     }
 
     function __getDescricaoPadrao(){
+      //Criar datalist para uso pelos campos de descricao no objeto
+      if(! jQ3('#ar-digital-descricao-datalist').length ){
+        const frag = `<datalist id="ar-digital-descricao-datalist">
+          <option value="${numeroUnicoProcesso} - citação">
+          <option value="${numeroUnicoProcesso} - citação e intimação">
+          <option value="${numeroUnicoProcesso} - intimação">
+        </datalist>`
+
+        jQ3('body').append(frag)
+      }
+      
       return jQ3.Deferred().resolve(`${numeroUnicoProcesso} - ${objetoDescricaoPadrao}`)
     }
 
@@ -2968,7 +3032,7 @@ function pjeLoad(){
     }
 
     function __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, plp){
-      let frag = `<tr class="rich-table-row">
+      let frag = `<tr class="rich-table-row ${ linkedPLP.is(':first-child') ? 'rich-table-firstrow' : ''}">
           <td class="rich-table-cell text-break text-left success">
               <div class="col-sm-12">
                   <span class="text-left"><input id="plp-${plp.id}" class="checkbox" type="radio" name="radio-plp" checked /></span>
@@ -2991,10 +3055,22 @@ function pjeLoad(){
       let newTR = jQ3(frag)
       let newInputLinkedPLP = newTR.find('input')
 
-      linkedPLP.data('j2E') && (linkedPLP.data('j2E').plpFull = plp)
-      j2E.env.tempData.plpFull = plp
-      
-      newInputLinkedPLP.data('j2E', linkedPLP.data('j2E') )
+      //se sim, já existe uma lista de postagem criada e salva no AR Digital
+      if( linkedPLP.data('j2E') ){
+
+        linkedPLP.data('j2E') && (linkedPLP.data('j2E').plpFull = plp)
+        j2E.env.tempData.plpFull = plp
+        
+        newInputLinkedPLP.data('j2E', linkedPLP.data('j2E') )
+      }
+      else{ //se não, lidando com uma nova lista de postagem recem criada
+        newInputLinkedPLP.data('j2E', {
+          plpfull: plp,
+          matachedList: plp,
+          plp
+        })
+      }
+
       linkedPLP.parents('tr').replaceWith(newTR)
 
       return newInputLinkedPLP;
@@ -3472,7 +3548,7 @@ function pjeLoad(){
             <label for="objeto-descricao" class="">Descrição do Objeto <small class="text-muted text-lowercase"></small></label>
           </div>
           <div class="value col-sm-12">
-            <input id="objeto-descricao" type="text" maxlength="80" value="${obj.descricao}" class="readonly inputText" style="/* width: 250px; */">
+            <input id="objeto-descricao" list="ar-digital-descricao-datalist" type="text" maxlength="80" value="${obj.descricao}" class="readonly inputText" style="/* width: 250px; */">
           </div>
         </div>
         
