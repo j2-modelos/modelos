@@ -88,6 +88,7 @@ and open the template in the editor.
             <gItem id="atoOrdItReiterarIntimacaoMandadoNegativo"/>
             <gItem id="atoOrdItIntimarParaPericiaIML"/>
             <gItem id="atoOrdItIntimarParaPericiaIMLPoloPassivo"/>
+            <gItem id="atoOrdItConsultaEnderecoOrgaosConveniados"/>
         </group>
         
         <group label="Outros Atos">
@@ -830,6 +831,43 @@ and open the template in the editor.
                     eletrônico através da Plataforma do Sistema Processo Judicial Eletrônico (PJe) do 1º Grau, nos termos 
                     da Portaria Conjunta 162021.
                 </data>
+            </itemContent>
+        </item> 
+
+         <item id="atoOrdItConsultaEnderecoOrgaosConveniados" label="Consultar endereço #{j2.env.PJeVars.processo.polos.partePassiva}" 
+               dataPlus="{ 'descricaoAppend': 'Consultar endereço da parte #{j2.env.PJeVars.processo.polos.partePassiva} em sistemas' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        <elemento tag="span" scope="NONE">
+                            #:B{CONSULTA} pelo endereço da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                            nos sistemas conveniados à disposição deste juízo, nos termos
+                        </elemento>
+                        <elemento tag="span" scope="NONE"> 
+                            <textHTML scope="NONE">
+                                <data>
+                                    <![CDATA[<SPAN name="sep">&nbsp;</SPAN>]]>
+                                </data>
+                            </textHTML>
+                        </elemento>
+                        <elemento tag="span" scope="NONE" id="docSpan">
+                            <HTMLAttribute name="title" value="Abrir Ordem de Serviço OS-2JECI - 12023"/>
+                            <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                            <HTMLAttribute name="style" value="cursor: pointer;"/>
+                            <elemento tag="u" scope="NONE">
+                                Ordem de Serviço OS-2JECI - 12023
+                                <elemento tag="img" scope="NONE" id="docSpan.view">
+                                    <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/view.gif"/>
+                                    <HTMLAttribute name="style" value="-align: bottom; height: 12px;"/>
+                                    <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                                </elemento>
+                            </elemento>
+                        </elemento>
+                        <elemento tag="span" scope="NONE">
+                            .
+                        </elemento>         
+                    </elemento>
+                </simpleElementsDefs>
             </itemContent>
         </item> 
     </items>

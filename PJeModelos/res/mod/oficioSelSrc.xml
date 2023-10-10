@@ -30,6 +30,7 @@ and open the template in the editor.
             <gItem id="ofcItReforçoPolicial"/>
             <gItem id="ofcItRequisicaoInquerito"/>
             <gItem id="ofcItRequisicaoInqueritoFalsoTestemunho"/>
+            <gItem id="ofcItLeilaoJudicial"/>
         </group>
         <group label="Carta Precatória">
             <gItem id="ofcItComunicacaoRedesignacoDeprecado"/>
@@ -335,6 +336,53 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>       
+
+        <item id="ofcItLeilaoJudicial" label="Leilão Judicial" dataPlus="{ 'assunto': 'Leilão judicial', 'queVirgula' : false }">
+			<itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        sejam realizados os
+                        procedimentos para autorização contratual de leiloeiro público oficial, junto ao Tribunal de Justiça do Estado do Maranhão (art.
+                        881,§1o do CPC), para fins de leilão judicial do(s) bem(ns) penhorado(s) e abaixo descrito(s), cujos documentos seguem anexos:
+                    </elemento>    
+
+                    <elemento tag="ul" scope="NONE" class="p unorderedOrderedList FntModDefault paddingLeft35mm" >
+                        <elemento tag="li" scope="NONE" class="" >
+                            <elemento tag="p" scope="NONE" class="p FntModDefault Indnt0 marginAtoJudicial" >
+                                #:B{(um) terreno XXXXXXXXXXXXXXXXXX}, XXXXXXXXXXCaracterísticasXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXX.
+                            </elemento>
+                        </elemento>
+                        <elemento tag="li" scope="NONE" class="" >
+                            <elemento tag="p" scope="NONE" class="p FntModDefault Indnt0 marginAtoJudicial" >
+                                #:B{(um) terreno XXXXXXXXXXXXXXXXXX}, XXXXXXXXXXCaracterísticasXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXX.
+                            </elemento>
+                        </elemento>
+                        <elemento tag="li" scope="NONE" class="" >
+                            <elemento tag="p" scope="NONE" class="p FntModDefault Indnt0 marginAtoJudicial" >
+                                #:B{(um) terreno XXXXXXXXXXXXXXXXXX}, XXXXXXXXXXCaracterísticasXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXX.
+                            </elemento>
+                        </elemento>
+                        <elemento tag="li" scope="NONE" class="" >
+                            <elemento tag="p" scope="NONE" class="p FntModDefault Indnt0 marginAtoJudicial" >
+                                #:B{(um) terreno XXXXXXXXXXXXXXXXXX}, XXXXXXXXXXCaracterísticasXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXX.
+                            </elemento>
+                        </elemento>
+                    </elemento>
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Para instrução do presente, segue despacho/decisão #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}. 
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+            <!--itemContent type="plainText" addtClassStyles="">
+                <data>
+                    no prazo de 48 (quarenta e oito) horas, transfira a importância de #:B{#:U{#:span@valor-Oficio{R$ 0,00 (zero)}}}, com os acréscimos porventura existentes, depositada na #:B{conta judicial nº XXXNumeroDaContaXXX}, 
+                    agência 0554, para a #:B{conta corrente nº XXXNumeroContaCorrenteXXX, agência nº XXXAgenciaXXX, 
+                    do Banco XXXNomeDoBancoXXX}. Conta de titularidade do(a) XXXTitularidadeXXX, CNPJ nº: XXXCnpjTitularXXX, 
+                    conforme indicação realizada pela parte #{j2.env.PJeVars.processo.polos.partePassiva} nos autos em epígrafe
+                </data>
+            </itemContent-->
+        </item>
                                                   
     </items>
   </selectorDef>

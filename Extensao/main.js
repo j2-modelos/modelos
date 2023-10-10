@@ -1614,7 +1614,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   'Expedir precatório',
   'col-sm-12',
   [
-    'Aguardando Prazo de Abandono'
+    'Aguardando Prazo de Abandono',
+    'Aguardando Trânsito em Julgado',
   ]
 )
 

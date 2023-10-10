@@ -114,6 +114,7 @@ try {
           'certItWhatsAppLeitura',
           'certItWhatsAppLeituraArt6',
           'certItWhatsAppLeituraArt6ccPC142020',
+          'certItDecursoCumprimentoVoluntario',
         ], function(it){
           evBus.on('onAdd.selectorcertidaoItens.' + it, function(ev, arg){
             evBus.once("General.DatePicker.onCreate", function(ev, _dpObj){

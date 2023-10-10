@@ -69,6 +69,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItConclusao"/>
             <gItem id="certItConclusaoRegularizarAtoJudicial"/>
             <gItem id="certItConclusaoRegularizarSuspensao"/>
+            <gItem id="certItConclusaoExtincao"/>
         </group>
         <group label="Contadoria">
             <gItem id="certItCustasPendentes"/>
@@ -122,6 +123,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItPrazoRegular"/>
             <gItem id="certItPrazoCumprimentoVoluntario"/>
             <gItem id="certItPrazoSemExpedienteForense"/>
+            <gItem id="certItDecursoCumprimentoVoluntario"/>
         </group>        
         <group label="RENAJUD">
             <gItem id="certItRENAJUDComAlienBloq"/>
@@ -1082,20 +1084,15 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item> 
 
-        <!--item id="certItWhatsAppLeitura" label="Leitura" dataPlus="{ 'descricaoAppend': 'Leitura WhatsApp' }">
+        <item id="certItDecursoCumprimentoVoluntario" label="Decurso prazo cumprimento voluntário" dataPlus="{ 'descricaoAppend': 'Decurso de prazo' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, para os devidos fins, que em XX/XX/XX #:B{findou, sem manifestação das partes, 
+                    Certifico, para os devidos fins, que em #:B{#:span@certItDecursoCumprimentoVoluntario-prazoExtenso{XX/XX/XXXX}} #:B{findou, sem manifestação do devedor, 
                     o prazo de 15 dias úteis após o trânsito} em julgado da sentença/acórdão, nos termos do art. 
                     52, II e IV, da lei 9.099/99 e do art. 523, §1º, do CPC. 
-
-                    Certifico nesta data que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} foi 
-                    devidamente #:B{#:U{lida}} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} 
-                    #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} através do 
-                    aplicativo #:I{WhatsApp} em #:B{#:span@certItWhatsAppLeitura-prazoExtenso{XXXDataXXX}}. 
                 </data>
             </itemContent>
-        </!item-->
+        </item>
         
                         
         <item id="certItTempestividadeRecurso" label="Recurso Inominado - tempestivo" dataPlus="{ 'descricaoAppend': 'Recurso Inominado tempestivo' }">
@@ -1232,6 +1229,17 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Nesta data, remeto os autos conclusos #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.doutor} #:B{#{j2.env.PJeVars.unidade.juiz.nome}}, para fins de regularização do código da suspensão do processo, conforme OFC-GDJAP – 222018, expedido pela Supervisão dos Juizados Especiais.
+                </data>
+            </itemContent>
+        </item>   
+
+        <item id="certItConclusaoExtincao" label="Para Conclusão | Extinção" dataPlus="{ 'descricaoAppend': 'Conclusão' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Nesta data, considerando o cumrprimento do despacho do #:span@docId{#:B{#:span@docIdDefaulttext{XXXXIdXXXX}}}
+                    e em face do alvará expedido,
+                    remeto os autos conclusos #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.doutor} #:B{#{j2.env.PJeVars.unidade.juiz.nome}} 
+                    para deliberação.
                 </data>
             </itemContent>
         </item>   

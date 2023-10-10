@@ -221,6 +221,26 @@ and open the template in the editor.
                 </simpleElementsDefs>
             </itemContent>
         </item>    
+
+        <item id="destItSERASA" label="Coordenador Administrativo CGJ-MA" dataPlus="{ 'cargo': 'Coordenador(a)', 'tratamento' : 'Vossa Senhoria' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="P" scope="NONE" class="p FntModDefault">
+                        <elemento tag="span" scope="NONE">
+                            Ao(À) Senhor(a)
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            #:B{Coordenador(a) Administrativo(a)}
+                        </elemento>
+                        <elemento tag="br" scope="NONE"/>
+                        <elemento tag="span" scope="NONE">
+                            Coordenadoria Administrativa da CGJ-MA
+                        </elemento>
+                    </elemento>                    
+                </simpleElementsDefs>
+            </itemContent>
+        </item>    
          
  
            
