@@ -2309,7 +2309,7 @@ function pjeLoad(){
 
     function _resolverSeListaDeveSerExibidaNaView(plp, VIEW, matachedList){
       if( VIEW === 'DEFINICAO_ENDERECO' )
-        return plp.status === 'ABERTA'
+        return plp.status === 'ABERTA' || matachedList?.id == plp.id
       if( VIEW === 'PREPARAR_ATO')
         return matachedList?.id == plp.id
     }
@@ -2361,12 +2361,10 @@ function pjeLoad(){
           return;
         }
 
-        //deferPLPQuery.__queries = j2E.env[`p-#${idProc}#`].PLP.length
         var promisses = []
         
-        j2E.env[`p-#${idProc}#`].PLP.forEach( plp => {
-          //j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`id-${plp}`)
-          let _prom = j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(`plp*-#${plp}#`)
+        j2E.env[`p-#${idProc}#`].PLP.forEach( (plp, idx) => {
+          let _prom = j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAViewEmCadeia(`plp*-#${plp}#`)
           .done( plpJson => {
             if (! plpJson.length)
               return;
@@ -2375,9 +2373,6 @@ function pjeLoad(){
               j2E.env.PLP = []
 
             j2E.env.PLP.push( JSON.parse(plpJson)[`plp*-#${plp}#`] )   
-            /*deferPLPQuery.__queries--
-            if( deferPLPQuery.__queries === 0 )
-              deferPLPQuery.resolve( j2E.env.PLP )*/
           })
           promisses.push(_prom)
         })
@@ -2481,6 +2476,26 @@ function pjeLoad(){
               elMappedArray.forEach( el => el.$tr.remove() )
             });
 
+            // se a lista de postagem que bate com o processo existir e estiver fechada, não necessita executar esse procedimento
+            if( j2E.env?.obtidaMatachedList?.plp?.status === 'FECHADA' ){
+              $chk.find('input').each((idx, el)=>{
+                jQ3(el).attr('disabled', 'true')
+              })
+
+              if( ! jQ3('#warning-lista-enderecos').length ){
+                const $parentsTable = $chk.parents('table')
+                const $_div = jQ3('<div id="warning-lista-enderecos">')
+
+                $parentsTable.parent().prepend($_div)
+                $_div.append( j2EUi.createWarnElements(`
+                    A lista de postagem associado ao processo já está fechada. 
+                    Não é possível realizar alterações para preservar 
+                    a integridade dos dados compartilhados entre os sistemas.
+                  `)
+                )
+              }
+            }
+
             if(endsSelectedByUser.length)
               _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)
           })
@@ -2508,51 +2523,73 @@ function pjeLoad(){
               }
             }
 
-            let algumaAlteracaoRealizada = false
-            const objetosAssociadosAListaEProcessoETarefa = 
-            obtidaMatachedList.plpCompleta.objetos.filter( 
-              ob => obtidaMatachedList.store.objs.some(
-                obs=> obs[IDX_ID_OBJETO_NA_PLP] === ob.id 
-                && obs[IDX_ID_PROCESSO] === parseInt(idProc) 
-                && obs[IDX_TASK_HASH] === j2E.env.task.hash ))
-
-
-            $div.parent().find('tr').each((idx, el)=>{
-              const $tr = jQ3(el)
-              if( ! ($tr.find('td:nth-child(6)').text().toLowerCase().includes('correios')) )
-                return
+            jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaDestinatarios`, function(){
+              const $thisTable = jQ3(this)
+              let algumaAlteracaoRealizada = false
+              const objetosAssociadosAListaEProcessoETarefa = 
+              obtidaMatachedList.plpCompleta.objetos.filter( 
+                ob => obtidaMatachedList.store.objs.some(
+                  obs=> obs[IDX_ID_OBJETO_NA_PLP] === ob.id 
+                  && obs[IDX_ID_PROCESSO] === parseInt(idProc) 
+                  && obs[IDX_TASK_HASH] === j2E.env.task.hash ))
+  
+  
+              $thisTable.find('tr').each((idx, el)=>{
+                const $tr = jQ3(el)
+                if( ! ($tr.find('td:nth-child(6)').text().toLowerCase().includes('correios')) )
+                  return
+                
+                algumaAlteracaoRealizada = true
+  
+                const destinatario = ____resolveDestinatarioDaTdDaView($tr.find('td:nth-child(3)'))
+                const objetosDesintario = objetosAssociadosAListaEProcessoETarefa.filter( 
+                  ob => ob.destinatario.nome.hashCode() === destinatario.hash )
+  
+                if( ! destinatario.endereco ){
+                  const $lastTr = $tr.find('td:nth-child(6)')
+                  const $lastTrCloned = $lastTr.clone(true)
+                  const $_span = $lastTrCloned.find('span')
+  
+                  $_span.text( objetosDesintario[0]?.etiqueta.etiqueta )
+  
+  
+                  $tr.find('td:nth-child(6)').after($lastTrCloned)
+                }else{
+                  return
+                }
+              })
               
-              algumaAlteracaoRealizada = true
+              if( algumaAlteracaoRealizada){
+                //tratar cabeçalho
+                const $trThead = $thisTable.find('thead tr')
+                const $lastThThead = $trThead.find('th:last-child')
+                const $thARCloned = $lastThThead.clone(true)
+                const $_div = $thARCloned.find('div')
+  
+                $_div.text( 'Nº Etiqueta AR')
+  
+                $trThead.find('th:nth-child(6)').after($thARCloned)
 
-              const destinatario = ____resolveDestinatarioDaTdDaView($tr.find('td:nth-child(3)'))
-              const objetosDesintario = objetosAssociadosAListaEProcessoETarefa.filter( 
-                ob => ob.destinatario.nome.hashCode() === destinatario.hash )
+                //tratar linhas que não sou correios
+                $thisTable.find('tr').each((idx, el)=>{
+                  const $tr = jQ3(el)
+                  if( ($tr.find('td:nth-child(6)').text().toLowerCase().includes('correios')) )
+                    return
 
-              if( ! destinatario.endereco ){
-                const $lastTr = $tr.find('td:nth-child(6)')
-                const $lastTrCloned = $lastTr.clone(true)
-                const $_span = $lastTrCloned.find('span')
-
-                $_span.text( objetosDesintario[0]?.etiqueta.etiqueta )
-
-
-                $tr.find('td:nth-child(6)').after($lastTrCloned)
-              }else{
-                return
+                  const $lastTr = $tr.find('td:nth-child(6)')
+                  const $lastTrCloned = $lastTr.clone(true)
+                  const $_span = $lastTrCloned.find('span')
+  
+                  $_span.text( '' )
+  
+  
+                  $tr.find('td:nth-child(6)').after($lastTrCloned)
+                })
               }
+            }, {
+              target: $div.parent().parent()[0]
             })
-            
-            if(! algumaAlteracaoRealizada)
-              return
 
-            const $trThead = $div.parent().find('thead tr')
-            const $lastThThead = $trThead.find('th:last-child')
-            const $thARCloned = $lastThThead.clone(true)
-            const $_div = $thARCloned.find('div')
-
-            $_div.text( 'Nº Etiqueta AR')
-
-            $trThead.find('th:nth-child(6)').after($thARCloned)
           })
         }
 
@@ -2681,9 +2718,15 @@ function pjeLoad(){
               ARDigitalPanel.$content.append( uiTable )
               uiTable.find('input:checked').parents('tr').find('td').addClass('success')
 
+              let warn
+              if( TAREFA_VIEW === 'DEFINICAO_ENDERECO'){
+                warn = false
+                if( matachedList?.plp.status === 'FECHADA' )
+                  warn = j2EUi.createWarnElements(`
+                    A lista de postagem associada ao processo já está fechada.
+                  `)
+              }
               if( TAREFA_VIEW === 'PREPARAR_ATO'){
-                let warn
-
                 if(! matachedList)
                   warn = j2EUi.createWarnElements(`
                     Nenhuma lista de postagem associada ao processo. Retorne para DEFINIR ENDEREÇOS e crie a lista.
@@ -2695,9 +2738,8 @@ function pjeLoad(){
                   `)
                 else if( matachedList.plp.status === 'FECHADA' )
                   warn = false
-
-                warn & ARDigitalPanel.$content.append( warn )
               }
+              warn & ARDigitalPanel.$content.append( warn )
 
               matachedList && defPrepararAtoViewMatchedList.resolve( matachedList )
             })
@@ -3541,14 +3583,16 @@ function pjeLoad(){
             <label for="objeto-mao-propria" class="">Mão Própria? <small class="text-muted text-lowercase"></small></label>
           </div>
           <div class="value col-sm-12">
-            <input type="checkbox" id="objeto-mao-propria" ${obj.maoPropria ? 'checked' : ''}>
+            <input type="checkbox" id="objeto-mao-propria" ${obj.maoPropria ? 'checked' : ''}
+            ${ j2E.env?.obtidaMatachedList?.plp?.status === 'FECHADA' ? 'disabled="disabled"' : '' }>
           </div>
         </div><div class="propertyView col-sm-8">
           <div class="name">
             <label for="objeto-descricao" class="">Descrição do Objeto <small class="text-muted text-lowercase"></small></label>
           </div>
           <div class="value col-sm-12">
-            <input id="objeto-descricao" list="ar-digital-descricao-datalist" type="text" maxlength="80" value="${obj.descricao}" class="readonly inputText" style="/* width: 250px; */">
+            <input id="objeto-descricao" list="ar-digital-descricao-datalist" type="text" maxlength="80" value="${obj.descricao}" class="readonly inputText" style="/* width: 250px; */"
+            ${ j2E.env?.obtidaMatachedList?.plp?.status === 'FECHADA' ? 'disabled="disabled"' : '' }>
           </div>
         </div>
         

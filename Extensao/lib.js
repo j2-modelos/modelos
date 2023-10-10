@@ -2948,6 +2948,39 @@ function loadPJeRestAndSeamInteraction(){
 
           return def.promise()
         },
+        pesquisarAlertaELiberarAViewEmCadeia: (()=>{
+          const bufferChain = []
+          function previousLink(){
+            return bufferChain[bufferChain.length - 2] 
+          }
+
+          return (query, criticidade, ativo) => {            
+            const def = jQ3.Deferred()
+
+            bufferChain.push( { def } )
+
+            if(bufferChain.length === 1)
+              j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView( 
+                query, criticidade, ativo 
+              ).done( ( alerta, xml, acoes ) => { 
+                bufferChain.shift()
+                def.resolve( alerta, xml, acoes ) 
+              })
+              .done( err => def.reject(err) )
+            else{
+              previousLink().def.done(()=>{ 
+                j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView( 
+                  query, criticidade, ativo
+                ).done( ( alerta, xml, acoes ) => { 
+                  bufferChain.shift()
+                  def.resolve( alerta, xml, acoes ) 
+                })
+                .done( err => def.reject(err) ) })
+            }
+
+            return def.promise()
+          }
+        })() ,
         pesquisarAlertaELiberarAView: (query, criticidade, ativo) => {
           const def = $.Deferred()
 

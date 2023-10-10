@@ -1,467 +1,410 @@
 {
-	"manifest_version": 3,
-	"version": "0.1.0",
-	"name": "j2",
-	"description": "Extensao Modelos j2",
-	"author": "Elmo de Moraes",
-	"action": {
+  "manifest_version": 3,
+  "version": "0.1.0",
+  "name": "j2",
+  "description": "Extensao Modelos j2",
+  "author": "Elmo de Moraes",
+  "action": {
+    "default_icon": {
+      "16": "Extensao/icon.png",
+      "24": "Extensao/icon.png",
+      "32": "Extensao/icon.png"
+    }
+  },
+  "icons": {
+    "16": "Extensao/icon.png",
+    "24": "Extensao/icon.png",
+    "32": "Extensao/icon.png",
+    "128": "Extensao/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "nativeMessaging",
+    "clipboardRead",
+    "clipboardWrite",
+    "https://pje.tjma.jus.br/*",
+    "https://pjeh.tjma.jus.br/*",
+    "https://frontend.prd.cnj.cloud/*"
+  ],
+  "host_permissions": [
+    "https://pje.tjma.jus.br/*",
+    "https://frontend.prd.cnj.cloud/*",
+    "https://web.whatsapp.com/*",
+    "https://*.bb.com.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://frontend.prd.cnj.cloud/*"],
+      "js": [
+        "Extensao/j2BaseLib.js",
+        "Extensao/lib.js",
+        "Extensao/jquery3.js",
+        "Extensao/moment.js",
+        "Extensao/jquery.initialize.js",
+        "Extensao/jquery.observe.js",
+        "Extensao/jquery-ui.js",
+        "Extensao/jquery.indexedDB.js",
+        "Extensao/jquery.keyboard-shortcuts.js",
+        "Extensao/main.frontend.js",
+        "Extensao/main.js",
+        "Extensao/toaster.js"
+      ],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://pje.tjma.jus.br/*", "https://pjeh.tjma.jus.br/*"],
+      "js": [
+        "Extensao/j2BaseLib.js",
+        "Extensao/jquery3.js",
+        "Extensao/evo-calendar/calendarioClass.js",
+        "Extensao/lib.js",
+        "Extensao/moment.js",
+        "Extensao/jquery.initialize.js",
+        "Extensao/jquery.observe.js",
+        "Extensao/jquery-ui.js",
+        "Extensao/jquery.indexedDB.js",
+        "Extensao/jquery.keyboard-shortcuts.js",
+        "Extensao/main.pje.js",
+        "Extensao/main.js",
+        "Extensao/toaster.js"
+      ],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://pje.tjma.jus.br/pje/Processo/movimentar.seam*",
+        "https://pjeh.tjma.jus.br/pje/Processo/movimentar.seam*"
+      ],
+      "js": ["Extensao/movimentar.pje.js", "Extensao/pje-office.pje.js"],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://pje.tjma.jus.br/*", "https://pjeh.tjma.jus.br/*"],
+      "js": ["Extensao/jquery.keyboard-shortcuts.js"],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.bb.com.br/*",
+        "https://web.whatsapp.com/*",
+        "https://sistemas.tjma.jus.br/*",
 
-		"default_icon": {
-			"16": "Extensao/icon.png",
-			"24": "Extensao/icon.png",
-			"32": "Extensao/icon.png"
-		}
-	},
-	"icons": {
+        "https://vcs01.tjma.jus.br/*",
+        "https://vcs02.tjma.jus.br/*",
+        "https://vcs03.tjma.jus.br/*",
+        "https://vcs04.tjma.jus.br/*",
+        "https://vcs05.tjma.jus.br/*",
+        "https://vcs06.tjma.jus.br/*",
+        "https://vcs07.tjma.jus.br/*",
+        "https://vcs08.tjma.jus.br/*",
+        "https://vcs09.tjma.jus.br/*",
+        "https://vcs10.tjma.jus.br/*",
+        "https://vcs11.tjma.jus.br/*",
+        "https://vcs12.tjma.jus.br/*",
+        "https://vcs13.tjma.jus.br/*",
+        "https://vcs14.tjma.jus.br/*",
+        "https://vcs15.tjma.jus.br/*",
+        "https://vcs16.tjma.jus.br/*",
+        "https://vcs17.tjma.jus.br/*",
+        "https://vcs18.tjma.jus.br/*",
+        "https://vcs19.tjma.jus.br/*",
+        "https://vcs20.tjma.jus.br/*",
+        "https://vcs21.tjma.jus.br/*",
+        "https://vcs22.tjma.jus.br/*",
+        "https://vcs23.tjma.jus.br/*",
+        "https://vcs24.tjma.jus.br/*",
+        "https://vcs25.tjma.jus.br/*",
+        "https://vcs26.tjma.jus.br/*",
+        "https://vcs27.tjma.jus.br/*",
+        "https://vcs28.tjma.jus.br/*",
+        "https://vcs29.tjma.jus.br/*",
+        "https://vcs30.tjma.jus.br/*",
+        "https://vcs31.tjma.jus.br/*",
+        "https://vcs32.tjma.jus.br/*",
+        "https://vcs33.tjma.jus.br/*",
+        "https://vcs34.tjma.jus.br/*",
+        "https://vcs35.tjma.jus.br/*",
+        "https://vcs36.tjma.jus.br/*",
+        "https://vcs37.tjma.jus.br/*",
+        "https://vcs38.tjma.jus.br/*",
+        "https://vcs39.tjma.jus.br/*",
+        "https://vcs40.tjma.jus.br/*",
+        "https://vcs41.tjma.jus.br/*",
+        "https://vcs42.tjma.jus.br/*",
+        "https://vcs43.tjma.jus.br/*",
+        "https://vcs44.tjma.jus.br/*",
+        "https://vcs45.tjma.jus.br/*",
+        "https://vcs46.tjma.jus.br/*",
+        "https://vcs47.tjma.jus.br/*",
+        "https://vcs48.tjma.jus.br/*",
+        "https://vcs49.tjma.jus.br/*",
+        "https://vcs50.tjma.jus.br/*",
+        "https://vcs51.tjma.jus.br/*",
+        "https://vcs52.tjma.jus.br/*",
+        "https://vcs53.tjma.jus.br/*",
+        "https://vcs54.tjma.jus.br/*",
+        "https://vcs55.tjma.jus.br/*",
+        "https://vcs56.tjma.jus.br/*",
+        "https://vcs57.tjma.jus.br/*",
+        "https://vcs58.tjma.jus.br/*",
+        "https://vcs59.tjma.jus.br/*",
+        "https://vcs60.tjma.jus.br/*",
+        "https://vcs61.tjma.jus.br/*",
+        "https://vcs62.tjma.jus.br/*",
+        "https://vcs63.tjma.jus.br/*",
+        "https://vcs64.tjma.jus.br/*",
+        "https://vcs65.tjma.jus.br/*",
+        "https://vcs66.tjma.jus.br/*",
+        "https://vcs67.tjma.jus.br/*",
+        "https://vcs68.tjma.jus.br/*",
+        "https://vcs69.tjma.jus.br/*",
+        "https://vcs70.tjma.jus.br/*",
+        "https://vcs71.tjma.jus.br/*",
+        "https://vcs72.tjma.jus.br/*",
+        "https://vcs73.tjma.jus.br/*",
+        "https://vcs74.tjma.jus.br/*",
+        "https://vcs75.tjma.jus.br/*",
+        "https://vcs76.tjma.jus.br/*",
+        "https://vcs77.tjma.jus.br/*",
+        "https://vcs78.tjma.jus.br/*",
+        "https://vcs79.tjma.jus.br/*",
+        "https://vcs80.tjma.jus.br/*",
+        "https://vcs81.tjma.jus.br/*",
+        "https://vcs82.tjma.jus.br/*",
+        "https://vcs83.tjma.jus.br/*",
+        "https://vcs84.tjma.jus.br/*",
+        "https://vcs85.tjma.jus.br/*",
+        "https://vcs86.tjma.jus.br/*",
+        "https://vcs87.tjma.jus.br/*",
+        "https://vcs88.tjma.jus.br/*",
+        "https://vcs89.tjma.jus.br/*",
+        "https://vcs90.tjma.jus.br/*",
+        "https://vcs91.tjma.jus.br/*",
+        "https://vcs92.tjma.jus.br/*",
+        "https://vcs93.tjma.jus.br/*",
+        "https://vcs94.tjma.jus.br/*",
+        "https://vcs95.tjma.jus.br/*",
+        "https://vcs96.tjma.jus.br/*",
+        "https://vcs97.tjma.jus.br/*",
+        "https://vcs98.tjma.jus.br/*",
+        "https://vcs99.tjma.jus.br/*"
+      ],
+      "js": [
+        "Extensao/j2BaseLib.js",
+        "Extensao/lib.js",
+        "Extensao/jquery3.js",
+        "Extensao/jquery.initialize.js",
+        "Extensao/jquery.observe.js"
+      ],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.bb.com.br/*"],
+      "js": ["Extensao/main.banco-do-brasil.js"],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["Extensao/main.whatsapp.js"],
+      "css": ["Extensao/main.whatsapp.css"],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://vcs01.tjma.jus.br/*",
+        "https://vcs02.tjma.jus.br/*",
+        "https://vcs03.tjma.jus.br/*",
+        "https://vcs04.tjma.jus.br/*",
+        "https://vcs05.tjma.jus.br/*",
+        "https://vcs06.tjma.jus.br/*",
+        "https://vcs07.tjma.jus.br/*",
+        "https://vcs08.tjma.jus.br/*",
+        "https://vcs09.tjma.jus.br/*",
+        "https://vcs10.tjma.jus.br/*",
+        "https://vcs11.tjma.jus.br/*",
+        "https://vcs12.tjma.jus.br/*",
+        "https://vcs13.tjma.jus.br/*",
+        "https://vcs14.tjma.jus.br/*",
+        "https://vcs15.tjma.jus.br/*",
+        "https://vcs16.tjma.jus.br/*",
+        "https://vcs17.tjma.jus.br/*",
+        "https://vcs18.tjma.jus.br/*",
+        "https://vcs19.tjma.jus.br/*",
+        "https://vcs20.tjma.jus.br/*",
+        "https://vcs21.tjma.jus.br/*",
+        "https://vcs22.tjma.jus.br/*",
+        "https://vcs23.tjma.jus.br/*",
+        "https://vcs24.tjma.jus.br/*",
+        "https://vcs25.tjma.jus.br/*",
+        "https://vcs26.tjma.jus.br/*",
+        "https://vcs27.tjma.jus.br/*",
+        "https://vcs28.tjma.jus.br/*",
+        "https://vcs29.tjma.jus.br/*",
+        "https://vcs30.tjma.jus.br/*",
+        "https://vcs31.tjma.jus.br/*",
+        "https://vcs32.tjma.jus.br/*",
+        "https://vcs33.tjma.jus.br/*",
+        "https://vcs34.tjma.jus.br/*",
+        "https://vcs35.tjma.jus.br/*",
+        "https://vcs36.tjma.jus.br/*",
+        "https://vcs37.tjma.jus.br/*",
+        "https://vcs38.tjma.jus.br/*",
+        "https://vcs39.tjma.jus.br/*",
+        "https://vcs40.tjma.jus.br/*",
+        "https://vcs41.tjma.jus.br/*",
+        "https://vcs42.tjma.jus.br/*",
+        "https://vcs43.tjma.jus.br/*",
+        "https://vcs44.tjma.jus.br/*",
+        "https://vcs45.tjma.jus.br/*",
+        "https://vcs46.tjma.jus.br/*",
+        "https://vcs47.tjma.jus.br/*",
+        "https://vcs48.tjma.jus.br/*",
+        "https://vcs49.tjma.jus.br/*",
+        "https://vcs50.tjma.jus.br/*",
+        "https://vcs51.tjma.jus.br/*",
+        "https://vcs52.tjma.jus.br/*",
+        "https://vcs53.tjma.jus.br/*",
+        "https://vcs54.tjma.jus.br/*",
+        "https://vcs55.tjma.jus.br/*",
+        "https://vcs56.tjma.jus.br/*",
+        "https://vcs57.tjma.jus.br/*",
+        "https://vcs58.tjma.jus.br/*",
+        "https://vcs59.tjma.jus.br/*",
+        "https://vcs60.tjma.jus.br/*",
+        "https://vcs61.tjma.jus.br/*",
+        "https://vcs62.tjma.jus.br/*",
+        "https://vcs63.tjma.jus.br/*",
+        "https://vcs64.tjma.jus.br/*",
+        "https://vcs65.tjma.jus.br/*",
+        "https://vcs66.tjma.jus.br/*",
+        "https://vcs67.tjma.jus.br/*",
+        "https://vcs68.tjma.jus.br/*",
+        "https://vcs69.tjma.jus.br/*",
+        "https://vcs70.tjma.jus.br/*",
+        "https://vcs71.tjma.jus.br/*",
+        "https://vcs72.tjma.jus.br/*",
+        "https://vcs73.tjma.jus.br/*",
+        "https://vcs74.tjma.jus.br/*",
+        "https://vcs75.tjma.jus.br/*",
+        "https://vcs76.tjma.jus.br/*",
+        "https://vcs77.tjma.jus.br/*",
+        "https://vcs78.tjma.jus.br/*",
+        "https://vcs79.tjma.jus.br/*",
+        "https://vcs80.tjma.jus.br/*",
+        "https://vcs81.tjma.jus.br/*",
+        "https://vcs82.tjma.jus.br/*",
+        "https://vcs83.tjma.jus.br/*",
+        "https://vcs84.tjma.jus.br/*",
+        "https://vcs85.tjma.jus.br/*",
+        "https://vcs86.tjma.jus.br/*",
+        "https://vcs87.tjma.jus.br/*",
+        "https://vcs88.tjma.jus.br/*",
+        "https://vcs89.tjma.jus.br/*",
+        "https://vcs90.tjma.jus.br/*",
+        "https://vcs91.tjma.jus.br/*",
+        "https://vcs92.tjma.jus.br/*",
+        "https://vcs93.tjma.jus.br/*",
+        "https://vcs94.tjma.jus.br/*",
+        "https://vcs95.tjma.jus.br/*",
+        "https://vcs96.tjma.jus.br/*",
+        "https://vcs97.tjma.jus.br/*",
+        "https://vcs98.tjma.jus.br/*",
+        "https://vcs99.tjma.jus.br/*"
+      ],
+      "js": ["Extensao/main.vc.js"],
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://frontend.prd.cnj.cloud/*"],
+      "js": ["Extensao/jquery.lazy.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://pje.tjma.jus.br/*", "https://pjeh.tjma.jus.br/*"],
+      "js": ["Extensao/html2pdf.js"],
+      "match_about_blank": true
+    },
+    {
+      "matches": ["https://sistemas.tjma.jus.br/*"],
+      "js": ["Extensao/main.sistemas.tjma.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["Extensao/main.whatsapp.css"],
+      "matches": ["https://web.whatsapp.com/*"],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "Extensao/evo-calendar/*",
+        "Extensao/jquery3.js",
+        "Extensao/toaster.css"
+      ],
+      "matches": ["https://pje.tjma.jus.br/*", "https://pjeh.tjma.jus.br/*"],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": ["PJeModelos/*", "Extensao/t/*", "Extensao/j2-external.js"],
+      "matches": [
+        "https://pje.tjma.jus.br/*",
+        "https://pjeh.tjma.jus.br/*",
 
+        "https://*.bb.com.br/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "Extensao/main.css",
+        "Extensao/util.pje.js",
+        "Extensao/jquery-ui.css"
+      ],
+      "matches": [
+        "https://pje.tjma.jus.br/*",
+        "https://pjeh.tjma.jus.br/*",
+        "https://frontend.prd.cnj.cloud/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "Extensao/t/*",
 
-		"16": "Extensao/icon.png",
-		"24": "Extensao/icon.png",
-		"32": "Extensao/icon.png",
-		"128": "Extensao/icon.png"		
-	},
-	"permissions": [
-            "storage",
-            "activeTab",
-            "scripting",
-            "tabs",
-            "nativeMessaging",
-            "clipboardRead",
-            "clipboardWrite",
-            "https://pje.tjma.jus.br/*",
-            "https://frontend.prd.cnj.cloud/*"
-            
-	],
-	"host_permissions": [
-		"https://pje.tjma.jus.br/*", 
-		"https://frontend.prd.cnj.cloud/*", 
-		"https://web.whatsapp.com/*", 
-        "https://*.bb.com.com/*"
-	],
-	"content_scripts": [
-        {
-            "matches": [
-                "https://frontend.prd.cnj.cloud/*"
-            ],
-            "js": [
-                "Extensao/j2BaseLib.js",
-                "Extensao/lib.js",
-                "Extensao/jquery3.js", 
-                "Extensao/moment.js", 
-                "Extensao/jquery.initialize.js", 
-                "Extensao/jquery.observe.js", 
-                "Extensao/jquery-ui.js",
-                "Extensao/jquery.indexedDB.js",
-                "Extensao/jquery.keyboard-shortcuts.js",
-                "Extensao/main.frontend.js", 
-                "Extensao/main.js",
-                "Extensao/toaster.js"
-            ],
-            "css" : [
+        "Extensao/pje/19.js",
+        "Extensao/pje/main.js",
 
-            ],
-            "all_frames" : true
-        },
-		{
-                    "matches": [
-                        "https://pje.tjma.jus.br/*"
-                    ],
-                    "js": [
-                        "Extensao/j2BaseLib.js",
-                        "Extensao/jquery3.js", 
-                        "Extensao/evo-calendar/calendarioClass.js",                        
-                        "Extensao/lib.js",
-                        "Extensao/moment.js", 
-                        "Extensao/jquery.initialize.js", 
-                        "Extensao/jquery.observe.js", 
-                        "Extensao/jquery-ui.js",
-                        "Extensao/jquery.indexedDB.js",
-                        "Extensao/jquery.keyboard-shortcuts.js",
-                        "Extensao/main.pje.js",
-                        "Extensao/main.js",
-                        "Extensao/toaster.js"
-                    ],
-                    "css" : [
-                        
-                    ],
-                    "all_frames" : true
-		},
-        {
-            "matches": [
-                "https://pje.tjma.jus.br/pje/Processo/movimentar.seam*"
-            ],
-            "js": [
-                "Extensao/movimentar.pje.js",
-                "Extensao/pje-office.pje.js"
-            ],
-            "css" : [
-            ],
-            "all_frames" : true
-        },
-		{
-                    "matches": [
-                        "https://pje.tjma.jus.br/*"
-                    ],
-                    "js": [
-                        "Extensao/jquery.keyboard-shortcuts.js"
-                    ],
-                    "css" : [
-                    ],
-                    "all_frames" : true
-		},
-		{
-                    "matches": [
-                        "https://*.bb.com.br/*",
-                        "https://web.whatsapp.com/*",
-                        "https://sistemas.tjma.jus.br/*",
-                        
-                        "https://vcs01.tjma.jus.br/*",
-                        "https://vcs02.tjma.jus.br/*",
-                        "https://vcs03.tjma.jus.br/*",
-                        "https://vcs04.tjma.jus.br/*",
-                        "https://vcs05.tjma.jus.br/*",
-                        "https://vcs06.tjma.jus.br/*",
-                        "https://vcs07.tjma.jus.br/*",
-                        "https://vcs08.tjma.jus.br/*",
-                        "https://vcs09.tjma.jus.br/*",
-                        "https://vcs10.tjma.jus.br/*",
-                        "https://vcs11.tjma.jus.br/*",
-                        "https://vcs12.tjma.jus.br/*",
-                        "https://vcs13.tjma.jus.br/*",
-                        "https://vcs14.tjma.jus.br/*",
-                        "https://vcs15.tjma.jus.br/*",
-                        "https://vcs16.tjma.jus.br/*",
-                        "https://vcs17.tjma.jus.br/*",
-                        "https://vcs18.tjma.jus.br/*",
-                        "https://vcs19.tjma.jus.br/*",
-                        "https://vcs20.tjma.jus.br/*",
-                        "https://vcs21.tjma.jus.br/*",
-                        "https://vcs22.tjma.jus.br/*",
-                        "https://vcs23.tjma.jus.br/*",
-                        "https://vcs24.tjma.jus.br/*",
-                        "https://vcs25.tjma.jus.br/*",
-                        "https://vcs26.tjma.jus.br/*",
-                        "https://vcs27.tjma.jus.br/*",
-                        "https://vcs28.tjma.jus.br/*",
-                        "https://vcs29.tjma.jus.br/*",
-                        "https://vcs30.tjma.jus.br/*",
-                        "https://vcs31.tjma.jus.br/*",
-                        "https://vcs32.tjma.jus.br/*",
-                        "https://vcs33.tjma.jus.br/*",
-                        "https://vcs34.tjma.jus.br/*",
-                        "https://vcs35.tjma.jus.br/*",
-                        "https://vcs36.tjma.jus.br/*",
-                        "https://vcs37.tjma.jus.br/*",
-                        "https://vcs38.tjma.jus.br/*",
-                        "https://vcs39.tjma.jus.br/*",
-                        "https://vcs40.tjma.jus.br/*",
-                        "https://vcs41.tjma.jus.br/*",
-                        "https://vcs42.tjma.jus.br/*",
-                        "https://vcs43.tjma.jus.br/*",
-                        "https://vcs44.tjma.jus.br/*",
-                        "https://vcs45.tjma.jus.br/*",
-                        "https://vcs46.tjma.jus.br/*",
-                        "https://vcs47.tjma.jus.br/*",
-                        "https://vcs48.tjma.jus.br/*",
-                        "https://vcs49.tjma.jus.br/*",
-                        "https://vcs50.tjma.jus.br/*",
-                        "https://vcs51.tjma.jus.br/*",
-                        "https://vcs52.tjma.jus.br/*",
-                        "https://vcs53.tjma.jus.br/*",
-                        "https://vcs54.tjma.jus.br/*",
-                        "https://vcs55.tjma.jus.br/*",
-                        "https://vcs56.tjma.jus.br/*",
-                        "https://vcs57.tjma.jus.br/*",
-                        "https://vcs58.tjma.jus.br/*",
-                        "https://vcs59.tjma.jus.br/*",
-                        "https://vcs60.tjma.jus.br/*",
-                        "https://vcs61.tjma.jus.br/*",
-                        "https://vcs62.tjma.jus.br/*",
-                        "https://vcs63.tjma.jus.br/*",
-                        "https://vcs64.tjma.jus.br/*",
-                        "https://vcs65.tjma.jus.br/*",
-                        "https://vcs66.tjma.jus.br/*",
-                        "https://vcs67.tjma.jus.br/*",
-                        "https://vcs68.tjma.jus.br/*",
-                        "https://vcs69.tjma.jus.br/*",
-                        "https://vcs70.tjma.jus.br/*",
-                        "https://vcs71.tjma.jus.br/*",
-                        "https://vcs72.tjma.jus.br/*",
-                        "https://vcs73.tjma.jus.br/*",
-                        "https://vcs74.tjma.jus.br/*",
-                        "https://vcs75.tjma.jus.br/*",
-                        "https://vcs76.tjma.jus.br/*",
-                        "https://vcs77.tjma.jus.br/*",
-                        "https://vcs78.tjma.jus.br/*",
-                        "https://vcs79.tjma.jus.br/*",
-                        "https://vcs80.tjma.jus.br/*",
-                        "https://vcs81.tjma.jus.br/*",
-                        "https://vcs82.tjma.jus.br/*",
-                        "https://vcs83.tjma.jus.br/*",
-                        "https://vcs84.tjma.jus.br/*",
-                        "https://vcs85.tjma.jus.br/*",
-                        "https://vcs86.tjma.jus.br/*",
-                        "https://vcs87.tjma.jus.br/*",
-                        "https://vcs88.tjma.jus.br/*",
-                        "https://vcs89.tjma.jus.br/*",
-                        "https://vcs90.tjma.jus.br/*",
-                        "https://vcs91.tjma.jus.br/*",
-                        "https://vcs92.tjma.jus.br/*",
-                        "https://vcs93.tjma.jus.br/*",
-                        "https://vcs94.tjma.jus.br/*",
-                        "https://vcs95.tjma.jus.br/*",
-                        "https://vcs96.tjma.jus.br/*",
-                        "https://vcs97.tjma.jus.br/*",
-                        "https://vcs98.tjma.jus.br/*",
-                        "https://vcs99.tjma.jus.br/*"                        
-                    ],
-                    "js": [
-                        "Extensao/j2BaseLib.js",
-                        "Extensao/lib.js",                        
-                        "Extensao/jquery3.js",
-                        "Extensao/jquery.initialize.js", 
-                        "Extensao/jquery.observe.js"
-                    ],
-                    "css" : [
-
-                    ],
-                    "all_frames" : true
-		},
-        {
-            "matches": [
-                "https://*.bb.com.br/*"             
-            ],
-            "js": [
-                "Extensao/main.banco-do-brasil.js"
-            ],
-            "css" : [
-            ],
-            "all_frames" : true
-		},
-		{
-            "matches": [
-                "https://web.whatsapp.com/*"             
-            ],
-            "js": [
-                "Extensao/main.whatsapp.js"
-            ],
-            "css" : [
-                "Extensao/main.whatsapp.css"
-            ],
-            "all_frames" : true
-		},
-        {
-            "matches": [                        
-                "https://vcs01.tjma.jus.br/*",
-                "https://vcs02.tjma.jus.br/*",
-                "https://vcs03.tjma.jus.br/*",
-                "https://vcs04.tjma.jus.br/*",
-                "https://vcs05.tjma.jus.br/*",
-                "https://vcs06.tjma.jus.br/*",
-                "https://vcs07.tjma.jus.br/*",
-                "https://vcs08.tjma.jus.br/*",
-                "https://vcs09.tjma.jus.br/*",
-                "https://vcs10.tjma.jus.br/*",
-                "https://vcs11.tjma.jus.br/*",
-                "https://vcs12.tjma.jus.br/*",
-                "https://vcs13.tjma.jus.br/*",
-                "https://vcs14.tjma.jus.br/*",
-                "https://vcs15.tjma.jus.br/*",
-                "https://vcs16.tjma.jus.br/*",
-                "https://vcs17.tjma.jus.br/*",
-                "https://vcs18.tjma.jus.br/*",
-                "https://vcs19.tjma.jus.br/*",
-                "https://vcs20.tjma.jus.br/*",
-                "https://vcs21.tjma.jus.br/*",
-                "https://vcs22.tjma.jus.br/*",
-                "https://vcs23.tjma.jus.br/*",
-                "https://vcs24.tjma.jus.br/*",
-                "https://vcs25.tjma.jus.br/*",
-                "https://vcs26.tjma.jus.br/*",
-                "https://vcs27.tjma.jus.br/*",
-                "https://vcs28.tjma.jus.br/*",
-                "https://vcs29.tjma.jus.br/*",
-                "https://vcs30.tjma.jus.br/*",
-                "https://vcs31.tjma.jus.br/*",
-                "https://vcs32.tjma.jus.br/*",
-                "https://vcs33.tjma.jus.br/*",
-                "https://vcs34.tjma.jus.br/*",
-                "https://vcs35.tjma.jus.br/*",
-                "https://vcs36.tjma.jus.br/*",
-                "https://vcs37.tjma.jus.br/*",
-                "https://vcs38.tjma.jus.br/*",
-                "https://vcs39.tjma.jus.br/*",
-                "https://vcs40.tjma.jus.br/*",
-                "https://vcs41.tjma.jus.br/*",
-                "https://vcs42.tjma.jus.br/*",
-                "https://vcs43.tjma.jus.br/*",
-                "https://vcs44.tjma.jus.br/*",
-                "https://vcs45.tjma.jus.br/*",
-                "https://vcs46.tjma.jus.br/*",
-                "https://vcs47.tjma.jus.br/*",
-                "https://vcs48.tjma.jus.br/*",
-                "https://vcs49.tjma.jus.br/*",
-                "https://vcs50.tjma.jus.br/*",
-                "https://vcs51.tjma.jus.br/*",
-                "https://vcs52.tjma.jus.br/*",
-                "https://vcs53.tjma.jus.br/*",
-                "https://vcs54.tjma.jus.br/*",
-                "https://vcs55.tjma.jus.br/*",
-                "https://vcs56.tjma.jus.br/*",
-                "https://vcs57.tjma.jus.br/*",
-                "https://vcs58.tjma.jus.br/*",
-                "https://vcs59.tjma.jus.br/*",
-                "https://vcs60.tjma.jus.br/*",
-                "https://vcs61.tjma.jus.br/*",
-                "https://vcs62.tjma.jus.br/*",
-                "https://vcs63.tjma.jus.br/*",
-                "https://vcs64.tjma.jus.br/*",
-                "https://vcs65.tjma.jus.br/*",
-                "https://vcs66.tjma.jus.br/*",
-                "https://vcs67.tjma.jus.br/*",
-                "https://vcs68.tjma.jus.br/*",
-                "https://vcs69.tjma.jus.br/*",
-                "https://vcs70.tjma.jus.br/*",
-                "https://vcs71.tjma.jus.br/*",
-                "https://vcs72.tjma.jus.br/*",
-                "https://vcs73.tjma.jus.br/*",
-                "https://vcs74.tjma.jus.br/*",
-                "https://vcs75.tjma.jus.br/*",
-                "https://vcs76.tjma.jus.br/*",
-                "https://vcs77.tjma.jus.br/*",
-                "https://vcs78.tjma.jus.br/*",
-                "https://vcs79.tjma.jus.br/*",
-                "https://vcs80.tjma.jus.br/*",
-                "https://vcs81.tjma.jus.br/*",
-                "https://vcs82.tjma.jus.br/*",
-                "https://vcs83.tjma.jus.br/*",
-                "https://vcs84.tjma.jus.br/*",
-                "https://vcs85.tjma.jus.br/*",
-                "https://vcs86.tjma.jus.br/*",
-                "https://vcs87.tjma.jus.br/*",
-                "https://vcs88.tjma.jus.br/*",
-                "https://vcs89.tjma.jus.br/*",
-                "https://vcs90.tjma.jus.br/*",
-                "https://vcs91.tjma.jus.br/*",
-                "https://vcs92.tjma.jus.br/*",
-                "https://vcs93.tjma.jus.br/*",
-                "https://vcs94.tjma.jus.br/*",
-                "https://vcs95.tjma.jus.br/*",
-                "https://vcs96.tjma.jus.br/*",
-                "https://vcs97.tjma.jus.br/*",
-                "https://vcs98.tjma.jus.br/*",
-                "https://vcs99.tjma.jus.br/*"                        
-            ],
-            "js": [
-                "Extensao/main.vc.js"
-            ],
-            "css" : [
-
-            ],
-            "all_frames" : true
-		},
-        {
-        "matches": [
-                "https://frontend.prd.cnj.cloud/*"
-            ],
-            "js": [
-                "Extensao/jquery.lazy.js"
-            ],
-            "all_frames" : true
-		},
-        {
-        "matches": [
-                "https://pje.tjma.jus.br/*"
-            ],
-            "js": [
-                "Extensao/html2pdf.js"
-            ],
-            "match_about_blank" : true
-		},
-        {
-            "matches": [
-                "https://sistemas.tjma.jus.br/*"
-            ],
-            "js": [
-                "Extensao/main.sistemas.tjma.js"
-            ],
-            "all_frames" : true
-        }
-	], 
-        "web_accessible_resources": [
-          {
-            "resources": [ 
-                "Extensao/main.whatsapp.css"
-            ],
-            "matches": [
-                "https://web.whatsapp.com/*"
-            ],
-            "use_dynamic_url": true
-          }, 
-          {
-            "resources": [ 
-                "Extensao/evo-calendar/*",
-                "Extensao/jquery3.js",
-                "Extensao/toaster.css"
-            ],
-            "matches": [
-                "https://pje.tjma.jus.br/*"
-            ],
-            "use_dynamic_url": true
-          }, 
-          {
-            "resources": [ 
-                "PJeModelos/*",
-                "Extensao/t/*",
-                "Extensao/j2-external.js"
-            ],
-            "matches": [
-                "https://pje.tjma.jus.br/*",
-
-                "https://*.bb.com.br/*"
-            ],
-            "use_dynamic_url": true
-          }, 
-          {
-            "resources": [ 
-                "Extensao/main.css", 
-                "Extensao/util.pje.js",
-                "Extensao/jquery-ui.css"
-            ],
-            "matches": [
-                "https://pje.tjma.jus.br/*", 
-                "https://frontend.prd.cnj.cloud/*" 
-            ],
-            "use_dynamic_url": true
-          },
-            {
-                "resources": [ 
-                    "Extensao/t/*",
-                    
-                    "Extensao/pje/19.js",
-                    "Extensao/pje/main.js",
-                    
-                    "Extensao/jquery.initialize.js",
-                    "Extensao/jquery.lazy.js",
-                    "Extensao/util.frontend.js",
-                    "Extensao/toaster.css"
-                ],
-                "matches": [
-                    "https://frontend.prd.cnj.cloud/*" 
-                ],
-                "use_dynamic_url": true
-            }
-        ],
-        "externally_connectable": {
-            "matches": [
-                "https://pje.tjma.jus.br/*", 
-		"https://frontend.prd.cnj.cloud/*", 
-		"https://web.whatsapp.com/*" 
-            ],
-            "ids" : ["*"]
-        },
-        "background": {
-            "service_worker": "Extensao/background.js",
-            "type" : "module"
-        }
+        "Extensao/jquery.initialize.js",
+        "Extensao/jquery.lazy.js",
+        "Extensao/util.frontend.js",
+        "Extensao/toaster.css"
+      ],
+      "matches": ["https://frontend.prd.cnj.cloud/*"],
+      "use_dynamic_url": true
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://pje.tjma.jus.br/*",
+      "https://pjeh.tjma.jus.br/*",
+      "https://frontend.prd.cnj.cloud/*",
+      "https://web.whatsapp.com/*"
+    ],
+    "ids": ["*"]
+  },
+  "background": {
+    "service_worker": "Extensao/background.js",
+    "type": "module"
+  }
 }
