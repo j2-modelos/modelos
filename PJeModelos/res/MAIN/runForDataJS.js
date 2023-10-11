@@ -3080,10 +3080,14 @@ window.j2.mod._._inherits = function(el, _, className, superClassName) { // tapp
  * adaptado para modelos j2
  * @returns {window.j2.mod._._Lockr.Lockr}
  */
-window.j2.mod._._Lockr = function(prefix) { // tappac as new
+window.j2.mod._._Lockr = function(prefix, storage) { // tappac as new
   'use strict';
   
   var Lockr = {};
+  if(!(storage))
+    storage = window.localStorage;
+  else
+    storage = window[storage];
 
   if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function(elt /*, from*/)
@@ -3124,9 +3128,18 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
     var query_key = this._getPrefixedKey(key, options);
 
     try {
-      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+      var toStore = {"data": value}
+      if( options?.expiration ){
+        var exp = options.expiration
+        var now = (new Date()).getTime()
+        if( exp < now ){
+          now += exp
+        }
+        toStore.expiration = now
+      }
+      storage.setItem(query_key, JSON.stringify( toStore ));
     } catch (e) {
-      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
+      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the storage is full.");
     }
   };
 
@@ -3135,10 +3148,10 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
         value;
 
     try {
-      value = JSON.parse(localStorage.getItem(query_key));
+      value = JSON.parse(storage.getItem(query_key));
     } catch (e) {
-            if(localStorage[query_key]) {
-              value = {data: localStorage.getItem(query_key)};
+            if(storage[query_key]) {
+              value = {data: storage.getItem(query_key)};
             } else{
                 value = null;
             }
@@ -3148,6 +3161,11 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
       return missing;
     }
     else if (typeof value === 'object' && typeof value.data !== 'undefined') {
+      if(typeof value.expiration !== 'undefined' ){
+        var now = (new Date()).getTime()
+        if( now > value.expiration )
+          return missing
+      }
       return value.data;
     }
   };
@@ -3170,10 +3188,10 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
     try {
       values.push(value);
       json = JSON.stringify({"data": values});
-      localStorage.setItem(query_key, json);
+      storage.setItem(query_key, json);
     } catch (e) {
       console.log(e);
-      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the localStorage is full.");
+      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the storage is full.");
     }
   };
 
@@ -3182,7 +3200,7 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
         value;
 
     try {
-      value = JSON.parse(localStorage.getItem(query_key));
+      value = JSON.parse(storage.getItem(query_key));
     } catch (e) {
       value = null;
     }
@@ -3196,7 +3214,7 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
 
   Lockr.keys = function() {
     var keys = [];
-    var allKeys = Object.keys(localStorage);
+    var allKeys = Object.keys(storage);
 
     if (Lockr.prefix.length === 0) {
       return allKeys;
@@ -3211,14 +3229,22 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
     return keys;
   };
 
-  Lockr.getAll = function (includeKeys) {
+  Lockr.getAll = function (includeKeys, keyStartsWith) {
     var keys = Lockr.keys();
 
     if (includeKeys) {
       return keys.reduce(function (accum, key) {
         var tempObj = {};
+        
         tempObj[key] = Lockr.get(key);
-        accum.push(tempObj);
+        if(keyStartsWith){
+          if( key.startsWith(keyStartsWith)){
+            accum.push(tempObj);
+          }
+        }else{
+          accum.push(tempObj);
+        }
+        
         return accum;
       }, []);
     }
@@ -3243,7 +3269,7 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
     json = JSON.stringify({"data": values});
 
     try {
-      localStorage.setItem(query_key, json);
+      storage.setItem(query_key, json);
     } catch (e) {
       if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
     }
@@ -3252,16 +3278,16 @@ window.j2.mod._._Lockr = function(prefix) { // tappac as new
   Lockr.rm =  function (key) {
     var queryKey = this._getPrefixedKey(key);
     
-    localStorage.removeItem(queryKey);
+    storage.removeItem(queryKey);
   };
 
   Lockr.flush = function () {
     if (Lockr.prefix.length) {
       Lockr.keys().forEach(function(key) {
-        localStorage.removeItem(Lockr._getPrefixedKey(key));
+        storage.removeItem(Lockr._getPrefixedKey(key));
       });
     } else {
-      localStorage.clear();
+      storage.clear();
     }
   };
   return Lockr;
@@ -3341,6 +3367,20 @@ window.j2.mod._._extend = function(obj, extension){
     obj[key] = extension[key];
   }
   return obj;
+};
+
+window.j2.mod._._convertBoolean = function(value){
+  if(typeof value === 'boolean')
+    return value;
+  if(typeof value === 'number')
+    return value === 0 ? false : true;
+  if(typeof value === 'string')
+    try{
+      return JSON.parse(value)
+    }catch(e){
+      return false
+    }
+  throw new Error('Valor não pode ser boolean. Apenas boolean, number ou string podem ser avaliados')
 };
 
 /* these are the noble modules */

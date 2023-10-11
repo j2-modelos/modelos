@@ -508,6 +508,7 @@ and open the template in the editor.
                     <HTMLAttribute name="placeholder" value="AB123456785BR"/>
                     <HTMLAttribute name="maxlength" value="13"/>
                     <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterEtiquetaAtual}"/>
                     <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
                 </elemento>
                 
@@ -536,6 +537,9 @@ and open the template in the editor.
                         <HTMLAttribute name="style" value="float:left;"/>
                         <elemento tag="input" scope="EDT" id="AR-EdtControles-maoPropria-inputCheck" class="">
                             <HTMLAttribute name="type" value="checkbox"/>
+                            <HTMLAttribute name="checked" 
+                                value="true"
+                                renderIf="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterMaoPropria}"/>
                         </elemento>
                     </elemento>
                     <elemento tag="div" scope="EDT">
@@ -563,12 +567,14 @@ and open the template in the editor.
                     <HTMLAttribute name="placeholder" value="20220001234"/>
                     <HTMLAttribute name="maxlength" value="11"/>
                     <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/>
                     <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
                 </elemento>
                 <elemento tag="input" scope="EDT" id="AR-EdtControles-dataPostagem" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
                     <HTMLAttribute name="type" value="date"/>
                     <HTMLAttribute name="placeholder" value="13/06/2022"/>
                     <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterDataPostagem}"/>
                     <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
                 </elemento>
             </elemento>

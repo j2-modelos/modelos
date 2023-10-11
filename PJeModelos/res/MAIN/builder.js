@@ -34,6 +34,7 @@ try {
     var isObject = new j2.mod._._201;
     var domify = new j2.mod._._233;
     var j2Conv = window.j2.mod._._j2TagsConverter;
+    const convertBoolean = window.j2.mod._._convertBoolean
        
     var mod = null; // boot as new
     var getMod = function(){ // boot as changed
@@ -232,7 +233,13 @@ try {
           ne.setAttribute('value', j2El.value);
         
         forEach(j2El.HTMLAttribute, function(attr){
-            ne.setAttribute(attr.name, (attr.value) ? j2.mod.builder.parseVars(attr.value) : '');
+          if(attr.renderIf){
+            let isToRender = j2.mod.builder.parseVars(attr.renderIf)
+            isToRender = convertBoolean(isToRender)
+            if(isToRender === false)
+              return
+          }
+          ne.setAttribute(attr.name, (attr.value) ? j2.mod.builder.parseVars(attr.value) : '');
         });
         /*console.log('ASSERTION: needs build for attributes for j2 class, *');*/
         var partDdEl = j2.mod.builder.setContext(ddEl, ne, j2El.scope );

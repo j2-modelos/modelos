@@ -37,6 +37,8 @@ try {
     
     //for debbugging nly
     //localStorage.removeItem('pkg.AR.registeredPostList') ;
+
+    const j2ELockrSes = window.j2.mod._._Lockr('j2E', 'sessionStorage')
     
     var _unId = function(pfx){ // pl as new 
       var f = false;
@@ -69,7 +71,7 @@ try {
         AR_AA : "ZZ000000000AA",
         PLP : function(){
           //var _ = cookies.get('pkg.AR.vars.PLP');
-          var _ = pkg.AR.cookies.get('PLP');
+          var _ = pkg.AR.j2EIntegracao.obterPLPNumero() || pkg.AR.cookies.get('PLP');
           
           return _ ? _ : 0;
         },
@@ -130,7 +132,7 @@ try {
         },
         dataPostagem : function(){
           //var _ = cookies.get('pkg.AR.vars.dataPostagem');
-          var _ = pkg.AR.cookies.get('dataPostagem'); // newCook
+          var _ = pkg.AR.j2EIntegracao.obterDataPostagem() || pkg.AR.cookies.get('dataPostagem'); // newCook
           return _ ? _ : '2000-01-01';
         },
         dataMatrix : function(){
@@ -486,6 +488,46 @@ try {
         
         //sro query
         evBus.fire('AR.afterRenderAR7Body', _exp); //arq
+      },
+      j2EIntegracao: {
+        obterPLPNumero: ()=>{
+          const integracaoInfoPlp = j2ELockrSes.get('ar-digital-integrecao-info-plp', {
+            numeroPlp: '',
+            dataPostagem: ''
+          })
+
+          return integracaoInfoPlp.numeroPlp
+              ? integracaoInfoPlp.numeroPlp
+              : ''
+        },
+        obterDataPostagem: ()=>{
+          const integracaoInfoPlp = j2ELockrSes.get('ar-digital-integrecao-info-plp', {
+            numeroPlp: '',
+            dtaPostagem: ''
+          })
+
+          return integracaoInfoPlp.dtaPostagem 
+              ? integracaoInfoPlp.dtaPostagem.split('T')[0]
+              : ''
+        },
+        obterEtiquetaAtual: ()=>{
+          const integracaoInfoObjeto = j2ELockrSes.get('ar-digital-integrecao-info-objeto', {
+            etiqueta: '',
+            maoPropria: false
+          })
+
+          return integracaoInfoObjeto.etiqueta 
+              ? integracaoInfoObjeto.etiqueta 
+              : ''
+        },
+        obterMaoPropria: ()=>{
+          const integracaoInfoObjeto = j2ELockrSes.get('ar-digital-integrecao-info-objeto', {
+            etiqueta: '',
+            maoPropria: false
+          })
+
+          return integracaoInfoObjeto.maoPropria
+        }
       }
     };
     
@@ -596,18 +638,23 @@ try {
           
           _.PLP.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.PLP');
-              var _ = pkg.AR.cookies.get('PLP');
+              var _ = pkg.AR.j2EIntegracao.obterPLPNumero() || pkg.AR.cookies.get('PLP')
               return _ ? _ : '';
           })();
             
           _.dataPostagem.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.dataPostagem');
-              var _ = pkg.AR.cookies.get('dataPostagem');
+              var _ =  pkg.AR.j2EIntegracao.obterDataPostagem() || pkg.AR.cookies.get('dataPostagem');
               return _ ? _ : null;
           })();  
         }
         
         pkg.AREdtControles.setEvents(args, _, el);
+        if( pkg.AR.j2EIntegracao.obterEtiquetaAtual() )
+          evBus.fire('AREdtControles.afterConfirmARNumber', {
+            shiftKey: true,
+            imprimirForcadoIntegracaoJ2E: true
+          })
       },
       setEvents : function(args, el, elCtxt){
         evBus.on('AREdtControles.afterConfirmARNumber', function(event, sysEvent){ 
@@ -648,6 +695,12 @@ try {
               pkg.AR.removeARNum(arEls.arNum()); 
               pkg.AREdtControles.stampARNum7(arEls, event, true, elCtxt); 
             });     
+
+            //impressão forçada pela integração
+            if(ev.imprimirForcadoIntegracaoJ2E){
+              evBus.fire('AREdtControles.repeatARNum.Ok.' + arEls.uuid)
+              return
+            }
             
             pkg.ModalDialog.okCancel('Esta etiqueta já foi utilizada. Repetir mesmo assim? (' + arEls.arNum() + ')',
                                'AR j2 - Aviso', 

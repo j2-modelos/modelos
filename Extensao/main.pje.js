@@ -2550,13 +2550,28 @@ function pjeLoad(){
                   const $lastTrCloned = $lastTr.clone(true)
                   const $_span = $lastTrCloned.find('span')
   
-                  $_span.text( objetosDesintario[0]?.etiqueta.etiqueta )
+                  $_span.text( objetosDesintario[0]?.etiqueta?.etiqueta || '' )
+                  $tr.attr('j2e-etiqueta-objeto-etiqueta', 
+                    objetosDesintario[0]?.etiqueta.etiqueta )
+                  $tr.attr('j2e-etiqueta-objeto-mao-propria', 
+                    objetosDesintario[0]?.maoPropria )
   
   
                   $tr.find('td:nth-child(6)').after($lastTrCloned)
                 }else{
                   return
                 }
+
+                $tr.find('td:first-child i.fa-pencil').parent().click(()=>{
+                  lockrSes.set('ar-digital-integrecao-info-objeto', { 
+                    etiqueta: objetosDesintario[0] 
+                      ? objetosDesintario[0]?.etiqueta.etiqueta
+                      : null,
+                    maoPropria: objetosDesintario[0] 
+                      ? objetosDesintario[0]?.maoPropria
+                      : false
+                  })
+                })
               })
               
               if( algumaAlteracaoRealizada){
@@ -2584,6 +2599,13 @@ function pjeLoad(){
   
   
                   $tr.find('td:nth-child(6)').after($lastTrCloned)
+
+                  $tr.find('td:first-child i.fa-pencil').parent().click(()=>{
+                    lockrSes.set('ar-digital-integrecao-info-objeto', { 
+                      etiqueta: null,
+                      maoPropria: false
+                    })
+                  })
                 })
               }
             }, {
@@ -2664,12 +2686,6 @@ function pjeLoad(){
                 return true
               }).length !== 0 } 
             ) 
-
-            //resolver status a exibir
-            const STATUS_PLP_PARA_VIEW = 
-            TAREFA_VIEW === 'DEFINICAO_ENDERECO' ? 'ABERTA' :
-            TAREFA_VIEW === 'PREPARAR_ATO' ? 'FECHADA' :
-            'STATUS_INVALIDO'
             
             //criar a tabela pra o painel do AR Digital
             var tableSet = [
@@ -2741,7 +2757,13 @@ function pjeLoad(){
               }
               warn & ARDigitalPanel.$content.append( warn )
 
-              matachedList && defPrepararAtoViewMatchedList.resolve( matachedList )
+              if ( matachedList ){
+                defPrepararAtoViewMatchedList.resolve( matachedList )
+                lockrSes.set('ar-digital-integrecao-info-plp', { 
+                  numeroPlp: matachedList.plp.numeroPlp,
+                  dtaPostagem: matachedList.plp.dtaPostagem 
+                })
+              }
             })
             //remover bloqueio
             .always(()=> j2EUi.richModal(false))

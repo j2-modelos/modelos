@@ -3816,7 +3816,12 @@
               'name': 'type',
               'isAttr': true,
               'type': 'String'
-           }                      
+           },
+           {
+            'name': 'renderIf',
+            'isAttr': true,
+            'type': 'String'
+           }
          ]
        },    
         {
