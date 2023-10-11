@@ -1616,7 +1616,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
     'Aguardando Prazo de Abandono',
     'Aguardando Trânsito em Julgado',
-  ]
+  ],
+  'container-sem-classe'
 )
 
 TarefaPersonalizadaAvancada.etiquetasRapidas(

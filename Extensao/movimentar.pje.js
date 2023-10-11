@@ -181,6 +181,10 @@ function init(){
           var payload = JSON.stringify(plp)
           return j2E.ARDigital.api.ajax.put(`https://sistemas.tjma.jus.br/ardigital-api/rest/plps/${plpId}`, 
             payload, sucCB, errCB);
+        },
+        imprimir: (idPlp, sucCB, errCB)=>{
+          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/plps/${idPlp}/impressao-lista-postagem`, 
+            sucCB, errCB, 'text');
         }
       },
       servicos : {

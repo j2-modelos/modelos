@@ -2283,6 +2283,7 @@ function pjeLoad(){
           'Preparar intimação',
           'Preparar citação e(ou) intimação',
           'Preparar citação',
+          'Imprimir Correspondência_'
         ],
         checkedEnderecos = 0,
         deferPLPQuery,
@@ -2308,10 +2309,14 @@ function pjeLoad(){
     }
 
     function _resolverSeListaDeveSerExibidaNaView(plp, VIEW, matachedList){
-      if( VIEW === 'DEFINICAO_ENDERECO' )
-        return plp.status === 'ABERTA' || matachedList?.id == plp.id
-      if( VIEW === 'PREPARAR_ATO')
-        return matachedList?.id == plp.id
+      switch(VIEW){
+        case 'DEFINICAO_ENDERECO':
+          return plp.status === 'ABERTA' || matachedList?.id == plp.id
+
+        case 'PREPARAR_ATO':
+        case 'IMPRIMIR_CORRESPONDENCIA':
+          return matachedList?.id == plp.id
+      }
     }
 
     //obtem dados compleos do processo
@@ -2383,7 +2388,8 @@ function pjeLoad(){
 
       //Implantará quando visualizar os paineis na view
       //  painel de quando o usuário tem de selecionar o endereço da parte
-      jQ3.initialize('.rich-panel-header', function(){
+      const initializeSelector = j2E.env.task.name !== 'Imprimir Correspondência_' ? '.rich-panel-header' : '.rich-panel-body'
+      jQ3.initialize(initializeSelector, function(){
         const $div = jQ3(this);
         let TAREFA_VIEW = ''
         const defPrepararAtoViewMatchedList = jQ3.Deferred()
@@ -2392,6 +2398,8 @@ function pjeLoad(){
           TAREFA_VIEW = 'DEFINICAO_ENDERECO'
         else if ($div.text().toLowerCase() === 'ato de comunicação')
           TAREFA_VIEW = 'PREPARAR_ATO'
+        else if (j2E.env.task.name === 'Imprimir Correspondência_')
+          TAREFA_VIEW = 'IMPRIMIR_CORRESPONDENCIA'
         else
           return;
 
@@ -2668,10 +2676,11 @@ function pjeLoad(){
           //quando consultar a persistencia, listar as PLP do AR digital e o armazenamento de serviços
           jQ3.when( deferPLPListar, deferPLPQuery, promiseStoreServicos)
           .done ((res, storedPLPs)=>{
+            const resPlps = res[0].result
 
             //obter as listas que combinam com a persistencia
             let matachedList
-            storedPLPs && res[0].result.some(item =>  { 
+            storedPLPs && resPlps.some(item =>  { 
               return j2E.env.PLP.filter(item2 => { 
                 if( item2.id !== item.id )
                   return false;
@@ -2694,7 +2703,7 @@ function pjeLoad(){
             ]
 
             const defConsultaListasPromisses = []
-            res[0].result.forEach( async plp =>{
+            resPlps.forEach( async plp =>{
               if ( _resolverSeListaDeveSerExibidaNaView(plp, TAREFA_VIEW, matachedList) ){
                 const def = jQ3.Deferred()
                 defConsultaListasPromisses.push(def)
@@ -2734,28 +2743,58 @@ function pjeLoad(){
               ARDigitalPanel.$content.append( uiTable )
               uiTable.find('input:checked').parents('tr').find('td').addClass('success')
 
-              let warn
+              let uiComplement
               if( TAREFA_VIEW === 'DEFINICAO_ENDERECO'){
-                warn = false
+                uiComplement = false
                 if( matachedList?.plp.status === 'FECHADA' )
-                  warn = j2EUi.createWarnElements(`
+                  uiComplement = j2EUi.createWarnElements(`
                     A lista de postagem associada ao processo já está fechada.
                   `)
               }
               if( TAREFA_VIEW === 'PREPARAR_ATO'){
                 if(! matachedList)
-                  warn = j2EUi.createWarnElements(`
+                  uiComplement = j2EUi.createWarnElements(`
                     Nenhuma lista de postagem associada ao processo. Retorne para DEFINIR ENDEREÇOS e crie a lista.
                   `)
                 else if( matachedList.plp.status !== 'FECHADA' )
-                  warn = j2EUi.createWarnElements(`
+                  uiComplement = j2EUi.createWarnElements(`
                     A lista de postagem associada a este processo não foi fechada e enviada. Acesse o sistema para realizar o fechamento.
                     <a href="https://sistemas.tjma.jus.br" target="_blank">https://sistemas.tjma.jus.br</a>
                   `)
                 else if( matachedList.plp.status === 'FECHADA' )
-                  warn = false
+                  uiComplement = false
               }
-              warn & ARDigitalPanel.$content.append( warn )
+              if( TAREFA_VIEW === 'IMPRIMIR_CORRESPONDENCIA'){
+                if( matachedList )
+                  uiComplement = j2EUi.createButton({
+                    classButton: 'btn-primary',
+                    //onclickAttr = textoButtonOrData.onclickAttr
+                    //id = textoButtonOrData.id
+                    //tag = textoButtonOrData.tag
+                    callback: ()=>{
+                      j2E.ARDigital.api.plp.imprimir(matachedList.id)
+                      .done( res => { 
+                        const blob = new Blob([res], { type: "application/pdf" });
+
+                        const url = window.URL || window.webkitURL;
+                        link = url.createObjectURL(blob);
+                        const a = jQ3("<a />");
+                        a.attr("download", `j2e-plp-${matachedList.plp.numeroPlp}.pdf`);
+                        a.attr("href", link);
+                        jQ3("body").append(a);
+                        a[0].click();
+                        a.remove()
+
+                      } )
+                      .fail( err => { 
+                        toaster("AR Digital", `Erro ao imprimir a lista de postagem. (${err.responseText})`, "error") 
+                      } )
+                    },
+                    //moreAttrs = textoButtonOrData.moreAttrs
+                    textoButton: 'Imprimir PLP'
+                  })
+              }
+              uiComplement & ARDigitalPanel.$content.append( uiComplement )
 
               if ( matachedList ){
                 defPrepararAtoViewMatchedList.resolve( matachedList )
