@@ -4616,3 +4616,18 @@ function obterCurrentUser() {
   })
     .then(response => response.json())
 }
+
+
+/**
+ * Download a blob response
+ */
+function downloadBlob(resBlob, fileName){
+  const url = window.URL.createObjectURL(resBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName || 'novo download';
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  a.remove()
+}

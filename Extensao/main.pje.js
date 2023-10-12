@@ -2377,7 +2377,11 @@ function pjeLoad(){
             if( ! (j2E.env.PLP ))
               j2E.env.PLP = []
 
-            j2E.env.PLP.push( JSON.parse(plpJson)[`plp*-#${plp}#`] )   
+            const plpParsed = JSON.parse(plpJson)
+            if(plpParsed[`plp*-#${plp}#`]?.ECPJe)
+              return;
+
+            j2E.env.PLP.push( plpParsed[`plp*-#${plp}#`] )   
           })
           promisses.push(_prom)
         })
@@ -2765,34 +2769,55 @@ function pjeLoad(){
                   uiComplement = false
               }
               if( TAREFA_VIEW === 'IMPRIMIR_CORRESPONDENCIA'){
-                if( matachedList )
-                  uiComplement = j2EUi.createButton({
+                if( matachedList ){
+                  uiComplement = jQ3('<div>')
+
+                  uiComplement.append(j2EUi.createButton({
                     classButton: 'btn-primary',
-                    //onclickAttr = textoButtonOrData.onclickAttr
-                    //id = textoButtonOrData.id
-                    //tag = textoButtonOrData.tag
                     callback: ()=>{
                       j2E.ARDigital.api.plp.imprimir(matachedList.id)
-                      .done( res => { 
-                        const blob = new Blob([res], { type: "application/pdf" });
-
-                        const url = window.URL || window.webkitURL;
-                        link = url.createObjectURL(blob);
-                        const a = jQ3("<a />");
-                        a.attr("download", `j2e-plp-${matachedList.plp.numeroPlp}.pdf`);
-                        a.attr("href", link);
-                        jQ3("body").append(a);
-                        a[0].click();
-                        a.remove()
-
+                      .done( resBlob => { 
+                        downloadBlob(resBlob, `j2e-plp-${matachedList.plp.numeroPlp}.pdf`)
+                        toaster("AR Digital", `PLP baixada.`, "success") 
                       } )
                       .fail( err => { 
                         toaster("AR Digital", `Erro ao imprimir a lista de postagem. (${err.responseText})`, "error") 
                       } )
                     },
-                    //moreAttrs = textoButtonOrData.moreAttrs
-                    textoButton: 'Imprimir PLP'
-                  })
+                    textoButton: 'Baixa PLP associado ao processo'
+                  }))
+
+                  uiComplement.append(j2EUi.createButton({
+                    classButton: 'btn-danger',
+                    callback: (ev)=>{
+                      const confirm = (texto) => window.confirm(texto)
+
+                      if(!confirm('Encerrar o controle da PLP? Esta ação não pode ser desfeita e eventualmente pode comprometer outros objetos/processos da sau lista de postagem'))
+                        return;
+
+                      j2EUi.richModal(true)
+                      j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(`plp*-#${matachedList.id}#`)
+                      .pipe((alertaAsPLPJson, _, acoes, requestsIteractions) =>{
+                        const PLPParsed = JSON.parse(alertaAsPLPJson)
+                        // flag para indicar ecerramento controle pje - ECPje
+                        PLPParsed[`plp*-#${matachedList.id}#`].ECPJe = true 
+                        const PLPAlteradoStringified = JSON.stringify(PLPParsed)
+                        return acoes.alterarAlertaEncontrado(requestsIteractions,  PLPAlteradoStringified)
+                      })
+                      .done(res=>{
+                        toaster("AR Digital", `Controle de PLP via PJe encerrado`, "success")
+                        jQ3(ev.target).attr('disabled', 'true')
+                      })
+                      .fail(err =>{
+                        toaster("AR Digital", `Falha encerrar a PLP. (${ err || ''})`, "error")
+                      })
+                      .always(()=>{
+                        j2EUi.richModal(false)
+                      })
+                    },
+                    textoButton: 'Encerrar controle da PLP via PJe'
+                  }))
+                }
               }
               uiComplement & ARDigitalPanel.$content.append( uiComplement )
 

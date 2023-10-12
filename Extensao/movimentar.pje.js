@@ -26,6 +26,42 @@ function init(){
             }*/
           });
         },
+        getBlob : function(url, sucCB, errCB){
+          return jQ3.ajax({
+            url : url,
+            type : 'get',
+            dataType: 'blob',
+            success : function(data, status, xhr){
+              if(sucCB)
+                sucCB(data, status, xhr);
+            },
+            error : function(a, b, c, d){
+              if(errCB)
+                errCB(a, b, c, d);
+            },
+            headers : {
+              'sentinela-token': `${j2E.ARDigital.api.ajax.accessToken.token}`,
+              /*'X-KL-Ajax-Request': 'Ajax_Request'*/
+            },
+            /*beforeSend : function(xhr, set){
+              delete set.accepts.xml;
+              delete set.accepts.script;
+              delete set.accepts.html;
+            }*/
+            xhrFields: {
+              responseType: 'blob' // Definir o responseType como 'blob'
+            },
+            contents: {
+              blob: /blob/
+            },
+            converters: {
+              //"text blob": true,
+              "* blob": function( result ) {
+                return result;
+              }
+            }
+          });
+        },
         post : function(url, data, sucCB, errCB, dataType){
           return jQ3.ajax({
             url : url,
@@ -183,8 +219,8 @@ function init(){
             payload, sucCB, errCB);
         },
         imprimir: (idPlp, sucCB, errCB)=>{
-          return j2E.ARDigital.api.ajax.get(`https://sistemas.tjma.jus.br/ardigital-api/rest/plps/${idPlp}/impressao-lista-postagem`, 
-            sucCB, errCB, 'text');
+          return j2E.ARDigital.api.ajax.getBlob(`https://sistemas.tjma.jus.br/ardigital-api/rest/plps/${idPlp}/impressao-lista-postagem`, 
+            sucCB, errCB, 'blob');
         }
       },
       servicos : {
