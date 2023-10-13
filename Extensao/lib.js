@@ -620,11 +620,16 @@ var j2EUi = {
       }
     }
 
-    return  $panel.append(
-              $header
-            ).append(
-              $body
-            );
+    $panel.append(
+      $header
+    ).append(
+      $body
+    )
+
+    $panel.$header = $header
+    $panel.$body = $body
+
+    return $panel
   },
   createWarnElements : function(warnTextOr$, severityClass){
     severityClass = severityClass || 'text-danger'
@@ -738,18 +743,31 @@ var j2EUi = {
     jQ3('#j2E-ng-modal').remove()
   },
   TarefaNumClique : {
-    createTags : (arrayTags, tagsContainerClass)=>{
+    createTags : (arrayTags, tagsContainerClass, excluivel)=>{
       var _createTag = (tag)=>{
         var $tag = jQ3('<a>', {
-          class: 'btn btn-sm j2-tag-btn',
+          class: `btn btn-sm j2-tag-btn ${ excluivel ? ' j2-tag-no-pointer' : '' }`,
           onclick: 'event.stopPropagation(); event.preventDefault();',
-          text : tag,
+          title: typeof tag === 'string' ? tag : tag.nomeTagCompleto,
+          text : typeof tag === 'string' ? tag : tag.nomeTag,
           'j2-tag-a' : ''
         }).prepend(jQ3('<i>', {
           class : 'fa fa-tag',
           //title : 'title da tag', 
           'j2-tag-i' : ''
         }))
+        if(excluivel){
+          const $iRem = jQ3('<i>', {
+            class : 'fa fa-times',
+            //title : 'title da tag', 
+            'j2-tag-i' : ''
+          })
+          $tag.append($iRem)
+          $iRem.click(()=>{
+            j2EPJeRest.etiquetas.remover(tag.idProcesso, tag.id)
+            .done(res => $tag.remove() )
+          })
+        }
   
         return $tag;
       }
@@ -3797,12 +3815,16 @@ PseudoTarefas.prototype.baseURL = [
 ];
 
 PseudoTarefas.prototype.listarTarefas = function(callback){
-  jQ3.each(this.baseURL, function(){
+  /*jQ3.each(this.baseURL, function(){
     jQ3.get(this + '/Pseudotarefa/listar', function(data, suc, xhr){
       callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
     }, 'text');
-  });
+  });*/
   
+  const URLPeseudoTarefas = chrome.runtime.getURL('JSON/Pseudtarefas.json')
+  jQ3.get(URLPeseudoTarefas, function(data, suc, xhr){
+    callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
+  }, 'text');
 };
 
 

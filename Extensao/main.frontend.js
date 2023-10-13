@@ -46,7 +46,9 @@ function fronendLoad(){
         
     if(!(iframeSelector)){
       iframeSelector = 'iframe#frame-tarefa';
-    
+      
+      if( ! jQ3(iframeSelector).length )
+        return
       jQ3(iframeSelector).prop('contentWindow').postMessage(load, 'https://pje.tjma.jus.br');
       //document.body.querySelector('iframe#frame-tarefa').contentWindow.postMessage(_load, 'https://pje.tjma.jus.br');
     }
@@ -1273,7 +1275,7 @@ function fronendLoad(){
     }
     //observar filtro da Tarefa
     function prepararPseudotarefaAtiva(_this){
-      var ___TEMPLATE_CARD_TAREFA__ = '<li class="ng-star-inserted" data-loader="getInfosPJe" je2-pseudotarefa><processo-datalist-card _ngcontent-orb-c10="" _nghost-orb-c14="" class="ng-star-inserted"><div _ngcontent-orb-c14="" class="datalist-content"><div _ngcontent-orb-c14="" class="row icones"><div _ngcontent-orb-c14="" class="col-sm-6 vcenter pull-left"><span _ngcontent-orb-c14="" class="sr-only">Tarefa bloqueada por </span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo sigiloso - vermelho</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo pedido de liminar - vermelho</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo prioritário - azul</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo conferido - azul</span></div><div _ngcontent-orb-c14="" class="date col-sm-6 text-right text-muted no-padding"><pje-lembretes _ngcontent-orb-c14="" _nghost-orb-c28=""><button _ngcontent-orb-c28="" class="btn btn-default icon ng-star-inserted" title="Criar lembrete" type="button"><i _ngcontent-orb-c28="" aria-hidden="true" class="fas fa-thumbtack fa-lg text-info"></i></button></pje-lembretes><pje-link-autos-digitais _ngcontent-orb-c14="" _nghost-orb-c29=""><button _ngcontent-orb-c29="" class="btn btn-default" title="Abrir autos" type="button"><i _ngcontent-orb-c29="" aria-hidden="true" class="fa fa-book fa-lg text-info"></i></button></pje-link-autos-digitais> / <span _ngcontent-orb-c14="">$dataEntreadaTarefa</span></div></div><div _ngcontent-orb-c14="" class="selecionarProcesso pull-left pr-10 pt-5"><button _ngcontent-orb-c14="" class="botao-selecionar ng-star-inserted" type="button"><i _ngcontent-orb-c14="" class="far marcar-todos fa-square"></i></button></div><div _ngcontent-orb-c14="" class="col-sm-11 no-padding pt-5"><a _ngcontent-orb-c14="" class="selecionarProcesso" href="javascript:;"><div _ngcontent-orb-c14=""><span _ngcontent-orb-c14="" class="checked"></span><span _ngcontent-orb-c14="" class="tarefa-numero-processo process"><span _ngcontent-orb-c14="" class="hidden" id="$idProcesso"></span> $siglaClass $numeroProcesso </span></div><span _ngcontent-orb-c14="" class="tarefa-numero-processo process"> $assuntoCNJ </span></a><span _ngcontent-orb-c14="" class="orgao col-sm-12 no-padding"> / 2º Juizado Especial Cível de Imperatriz / Juiz de Direito Titular </span><span _ngcontent-orb-c14="" class="local col-sm-12 no-padding"><span _ngcontent-orb-c14="" class="dtPoloAtivo">$poloAtivo X </span><span _ngcontent-orb-c14="" class="dtPoloPassivo">$poloPassivo</span></span><span _ngcontent-orb-c14="" class="local col-sm-12 no-padding ng-star-inserted"><span _ngcontent-orb-c14="" class="tituloNegrito">Última movimentação: </span><span _ngcontent-orb-c14="" class="dtPoloPassivo">$ultimoMovimento.</span></span></div></div></processo-datalist-card></li>';
+      var ___TEMPLATE_CARD_TAREFA__ = `<li class="ng-star-inserted" data-loader="getInfosPJe" je2-pseudotarefa><processo-datalist-card _ngcontent-orb-c10="" _nghost-orb-c14="" class="ng-star-inserted"><div _ngcontent-orb-c14="" class="datalist-content"><div _ngcontent-orb-c14="" class="row icones"><div _ngcontent-orb-c14="" class="col-sm-6 vcenter pull-left"><span _ngcontent-orb-c14="" class="sr-only">Tarefa bloqueada por </span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo sigiloso - vermelho</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo pedido de liminar - vermelho</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo prioritário - azul</span> &nbsp; <span _ngcontent-orb-c14="" class="sr-only">Processo conferido - azul</span></div><div _ngcontent-orb-c14="" class="date col-sm-6 text-right text-muted no-padding"><pje-lembretes _ngcontent-orb-c14="" _nghost-orb-c28=""><button _ngcontent-orb-c28="" class="btn btn-default icon ng-star-inserted" title="Criar lembrete" type="button"><i _ngcontent-orb-c28="" aria-hidden="true" class="fas fa-thumbtack fa-lg text-info"></i></button></pje-lembretes><pje-link-autos-digitais _ngcontent-orb-c14="" _nghost-orb-c29=""><button _ngcontent-orb-c29="" class="btn btn-default" title="Abrir autos" type="button"><i _ngcontent-orb-c29="" aria-hidden="true" class="fa fa-book fa-lg text-info"></i></button></pje-link-autos-digitais> / <span _ngcontent-orb-c14="">$dataEntreadaTarefa</span></div></div><div _ngcontent-orb-c14="" class="selecionarProcesso pull-left pr-10 pt-5"><button _ngcontent-orb-c14="" class="botao-selecionar ng-star-inserted" type="button"><i _ngcontent-orb-c14="" class="far marcar-todos fa-square"></i></button></div><div _ngcontent-orb-c14="" class="col-sm-11 no-padding pt-5"><a _ngcontent-orb-c14="" class="selecionarProcesso" href="javascript:;"><div _ngcontent-orb-c14=""><span _ngcontent-orb-c14="" class="checked"></span><span _ngcontent-orb-c14="" class="tarefa-numero-processo process"><span _ngcontent-orb-c14="" class="hidden" id="$idProcesso"></span> $siglaClass $numeroProcesso </span></div><span _ngcontent-orb-c14="" class="tarefa-numero-processo process"> $assuntoCNJ </span></a><span _ngcontent-orb-c14="" class="orgao col-sm-12 no-padding"> / 2º Juizado Especial Cível de Imperatriz / Juiz de Direito Titular </span><span _ngcontent-orb-c14="" class="local col-sm-12 no-padding"><span _ngcontent-orb-c14="" class="dtPoloAtivo">$poloAtivo X </span><span _ngcontent-orb-c14="" class="dtPoloPassivo">$poloPassivo</span></span><span _ngcontent-orb-c14="" class="local col-sm-12 no-padding ng-star-inserted"><span _ngcontent-orb-c14="" class="tituloNegrito">Última movimentação: </span><span _ngcontent-orb-c14="" class="dtPoloPassivo">$ultimoMovimento.</span></span></div></div></processo-datalist-card></li>`
       var ___LAZY_DATA___ = '<span j2e-lazy-load id="tarfData-$">[carregando...]</span>';
       var jElOrg = jQ3(_this);
       var $this = jQ3(_this);
@@ -1342,6 +1344,29 @@ function fronendLoad(){
         
         $procsUl.append( $liTarfCard );
         $procsUl.prev().hide();
+
+        tarfData?.etiquetas?.forEach(etq=>{
+          const $fragTagTemplate = jQ3(`
+            <div _ngcontent-orb-c14="" class="label label-info label-etiqueta ng-star-inserted j2EtiquetaEstilo">
+              <span _ngcontent-orb-c14="">${etq.nomeTag}</span>
+              <span _ngcontent-orb-c14="" class="icon-desvincular-tag pl-5" title="Remover etiqueta '${etq.nomeTag}'">
+                <i _ngcontent-orb-c14="" class="fa fa-times "></i>
+              </span>
+            </div>`)
+
+          $fragTagTemplate.find('i').click((evJq)=>{
+            __sendMessageToPje({
+              action : 'requisitarJ2EPJeRest',
+              PJeRest : 'j2EPJeRest.etiquetas.remover',
+              waitsResponse : true,
+              arguments : [etq.idProcesso, etq.id]
+            }, 
+            "PARENT_TOP", 
+            res=> $fragTagTemplate.remove())
+          })
+          
+          $liTarfCard.find('a.selecionarProcesso').parent().append( $fragTagTemplate )          
+        })
         
         //$liTarfCard.Lazy({
         /*$liTarfCard.find('div.datalist-content').lazyObserve({
@@ -2149,7 +2174,8 @@ function fronendLoad(){
         });
       };
 
-      jQ3.initialize('#acoes-processos-selecionados', function(){          
+      jQ3.initialize('#acoes-processos-selecionados', function(){       
+        return    
         const $this = jQ3( this )
         $this.removeClass('col-md-12')
         $this.addClass('col-md-6')
@@ -2938,7 +2964,8 @@ function fronendLoad(){
           })
       
           $tooB.prepend($butSentinela)
-      
+          
+          return 
           $aLinkAutos.observe('attributes', (rec)=>{
             if( ! $butSentinela.is('.btn-primary') )
               return;

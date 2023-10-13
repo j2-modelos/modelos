@@ -2402,7 +2402,11 @@ function pjeLoad(){
           TAREFA_VIEW = 'DEFINICAO_ENDERECO'
         else if ($div.text().toLowerCase() === 'ato de comunicação')
           TAREFA_VIEW = 'PREPARAR_ATO'
-        else if (j2E.env.task.name === 'Imprimir Correspondência_')
+        else if (
+          j2E.env.task.name === 'Imprimir Correspondência_'
+          &&
+          $div.find(`#taskInstanceForm\\:Processo_Fluxo_expedientes_correios-${idTask}\\:atividadeRegion\\:status`).length
+        )
           TAREFA_VIEW = 'IMPRIMIR_CORRESPONDENCIA'
         else
           return;
@@ -2771,8 +2775,12 @@ function pjeLoad(){
               if( TAREFA_VIEW === 'IMPRIMIR_CORRESPONDENCIA'){
                 if( matachedList ){
                   uiComplement = jQ3('<div>')
+                  const $panel = j2EUi.createPanel('Ações para PLP')
 
-                  uiComplement.append(j2EUi.createButton({
+                  uiComplement.append('<span style="font-size: 5px;">&nbsp;</span>');
+                  uiComplement.append($panel);
+
+                  $panel.$body.append(j2EUi.createButton({
                     classButton: 'btn-primary',
                     callback: ()=>{
                       j2E.ARDigital.api.plp.imprimir(matachedList.id)
@@ -2784,10 +2792,10 @@ function pjeLoad(){
                         toaster("AR Digital", `Erro ao imprimir a lista de postagem. (${err.responseText})`, "error") 
                       } )
                     },
-                    textoButton: 'Baixa PLP associado ao processo'
+                    textoButton: 'Baixar PLP associado ao processo'
                   }))
 
-                  uiComplement.append(j2EUi.createButton({
+                  $panel.$body.append(j2EUi.createButton({
                     classButton: 'btn-danger',
                     callback: (ev)=>{
                       const confirm = (texto) => window.confirm(texto)

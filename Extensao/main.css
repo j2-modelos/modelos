@@ -1450,9 +1450,18 @@ i[j2e-proc-data-task]{
     padding: 3px;
 }
 
+.j2-tag-no-pointer {
+    cursor: unset;
+}
+
 .j2-faixa-etiquetas .j2-tag-btn i {
     font-size: 13px;
     vertical-align: middle;
+}
+
+.j2-faixa-etiquetas .j2-tag-btn i.fa-times {
+    padding-left: 5px;
+    cursor: pointer;
 }
 
 /*.j2-faixa-etiquetas [j2-tags-rapidas]{
@@ -1513,6 +1522,14 @@ div[j2-faixa-etiquetas-spacer]{
 .form-control.is-invalid:focus, .was-validated .form-control:invalid:focus, input.is-invalid:focus {
     border-color: #dc3545;
     box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+
+/* mudar a etiqueta da cor padrão */
+.label.label-info.label-etiqueta{
+    color: black;
+	background: #f6d290;
+    border-radius: 0.25em;
 }
 
 @keyframes mat-progress-spinner-linear-rotate {

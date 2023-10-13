@@ -91,26 +91,29 @@ class TarefaPersonalizadaAvancada{
       ($thisPanel)=>{
         var idProcesso =  j2E.env.urlParms.idProcesso
         var taskId =  j2E.env.urlParms.newTaskId
-        var tarefasDoProcesso = []
+        var etiquetasDoProcesso = []
+        const ETIQUETAS_EXCLUIVEIS = true
 
         function __atualizarAsEstiquetasNaFaixaDeEtiquetas(){
           j2EPJeRest.processo.obterEtiquetas(idProcesso)
-          .done(res => { 
-            if(! res.length){
+          .done(resEtiquetas => { 
+            if(! resEtiquetas.length){
               $thisPanel.addClass('hidden')
               jQ3('#faixaDeEtiquetas').find('[j2-faixa-etiquetas-spacer]').remove()
               return;
             }
 
-            tarefasDoProcesso = res.map(_tarefa =>{
-              return _tarefa.nomeTagCompleto;
-            })
+            /*etiquetasDoProcesso = resEtiquetas.map(_etiqueta =>{
+              return _etiqueta.nomeTagCompleto;
+            })*/
+            etiquetasDoProcesso = resEtiquetas
 
             $thisPanel.find('[j2-ui-content]').empty()
             $thisPanel.find('[j2-ui-content]').append(
               j2EUi.TarefaNumClique.createTags(
-                tarefasDoProcesso,
-                classeDoConteinerDasEtiquetas
+                etiquetasDoProcesso,
+                classeDoConteinerDasEtiquetas,
+                ETIQUETAS_EXCLUIVEIS
               ) 
             )
 
@@ -524,7 +527,9 @@ class TarefaPersonalizadaAvancada{
 
 var TarefasProps = {
   'Aguardar audiência':{},
+  'Aguardando devolução de AR':{},
   'Designar audiência': {},
+  'Imprimir Correspondência_': {},
   'Apensar processos' : {
     ADMGrupo : 'outac'
   },

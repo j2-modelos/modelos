@@ -381,7 +381,7 @@
     {
       "resources": [
         "Extensao/t/*",
-
+        "JSON/*",
         "Extensao/pje/19.js",
         "Extensao/pje/main.js",
 
