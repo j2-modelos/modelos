@@ -60,6 +60,9 @@ function pjeLoad(){
         case 'requisitarJ2EPJeRest':
           requisitarj2EPJeRest(_act, _load);
           break;
+        case 'requisitarSeamIteraction':
+          requisitarSeamIteraction(_act, _load);
+          break;
         case 'ping':
           pong(_act, _load);
           break;
@@ -204,6 +207,43 @@ function pjeLoad(){
     
     defer(function(){
       _rest.apply(null, _args);
+    });    
+    
+    //console.log('rest', _rest, _args);
+  }
+  function requisitarSeamIteraction(action, _load){
+    var _rest, _args;
+    var _resAr = action.PJeRest.split('.');
+    
+    for( var i = 0; i <= _resAr.length-1; i++ ){
+      _rest = i===0 ?  window[_resAr[i]] : _rest[_resAr[i]];
+    }
+    
+    _args = (action.arguments) ? action.arguments.slice() : [];
+    
+    defer(function(){
+      _rest.apply(null, _args)
+      .done(res => {
+        const load = {
+          action : 'requisitarSeamIteractionResponse',
+          data : res,
+          status : 'success',
+          callerAction : action
+        }; 
+    
+        __sendMessageToFrotEnd(load, "#ngFrame");
+      })
+      .fail(err => {
+        const load = {
+          action : 'requisitarSeamIteractionResponse',
+          data : null,
+          status : 'error',
+          isError : true,
+          error: err,
+          callerAction : action
+        };      
+        __sendMessageToFrotEnd(load, "#ngFrame");
+      });
     });    
     
     //console.log('rest', _rest, _args);

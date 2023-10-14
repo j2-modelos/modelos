@@ -3806,6 +3806,53 @@ PseudoTarefa.prototype.transporDados = function(){
   }
 };
 
+class Servlet {
+  static getStore(key){
+    if( j2E.SeamIteraction )
+      return j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(Key)
+
+    const def = jQ3.Deferred()
+
+    window.j2E.mods.__sendMessageToPje({
+      action : 'requisitarSeamIteraction',
+      PJeRest : 'j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView',
+      waitsResponse : true,
+      arguments : [ key ]
+    }, 
+    "PARENT_TOP",
+    function(response, status, action){
+      def.resolve(response)
+    })
+
+    return def.promise()
+  }
+}
+
+class PseudoTarefaServlet extends Servlet{
+  static STORE_INDEX = `STORE-#PSEUDOTAREFAS#`
+
+  static get(request){
+    const def = jQ3.Deferred()
+
+    PseudoTarefaServlet.getStore(PseudoTarefaServlet.STORE_INDEX)
+    .done( alertaAsResult => { 
+      const result = JSON.parse(alertaAsResult.unePtBr())[PseudoTarefaServlet.STORE_INDEX]
+      switch(request){
+        case '/Pseudotarefa/listar':
+          def.resolve(result, 'success')
+          break
+
+        default:
+          def.reject('Requisição inválida', 'error')
+          break;
+      }
+    })  
+    .fail( err => def.reject(err) )
+
+    return def.promise()
+  }
+}
+
 
 function PseudoTarefas(){
 };
@@ -3820,11 +3867,16 @@ PseudoTarefas.prototype.listarTarefas = function(callback){
       callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
     }, 'text');
   });*/
-  
+  /*
   const URLPeseudoTarefas = chrome.runtime.getURL('JSON/Pseudtarefas.json')
   jQ3.get(URLPeseudoTarefas, function(data, suc, xhr){
     callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
-  }, 'text');
+  }, 'text');*/
+
+  PseudoTarefaServlet.get('/Pseudotarefa/listar')
+  .done((result, status) => {
+    callback && callback(result, status)
+  })
 };
 
 

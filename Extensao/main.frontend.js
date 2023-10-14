@@ -63,6 +63,7 @@ function fronendLoad(){
       }
     }
   }
+  window.j2E.mods.__sendMessageToPje = __sendMessageToPje
 
   function abrirAutomaticoTarefa(action){     
     function __fazerAjustesExibicaoPseudotarefaMovimentar(){
@@ -1031,6 +1032,7 @@ function fronendLoad(){
             getHTMLAutosDigiaisResponse(_act);
             break;
           case 'requisitarJ2EPJeRestResponse':
+          case 'requisitarSeamIteractionResponse':
             getJ2EPJeRestResponseResponse(_act);
             break;
           case 'fowardNotifyPseudotarefaMovimentarLoaded':
