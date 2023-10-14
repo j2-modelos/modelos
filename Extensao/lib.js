@@ -3965,6 +3965,10 @@ function dbgVerbose(initId){
   };
 }
 
+function EIframe(){
+  return window.frameElement !== null
+}
+
 window.sessionStorage.setItem('j2EExtensionURLPattern', chrome.runtime.getURL(''));
 window.sessionStorage.setItem('j2EExtensionID', chrome.runtime.id);
 
@@ -3980,8 +3984,12 @@ j2E.mods.runTimeConnect = function(){
   j2E.conn.reconnect = function(){
     j2E.conn.port = chrome.runtime.connect(sessionStorage.getItem('j2EExtensionID'), { 
       includeTlsChannelId : true, 
-      name : window.location.origin 
+      name : JSON.stringify({
+        nome: window.location.origin,
+        emIframe: EIframe()
+      }) 
     })
+
     j2E.conn.port.onDisconnect.addListener(function() {
       console.warn('Reconnecting port ', j2E.conn.port.name);
       console.warn('Runtime last error ', chrome.runtime.lastError);

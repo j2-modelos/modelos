@@ -30,7 +30,10 @@ chrome.runtime.onConnect.addListener(function(port) {
       console.warn("Falha ao enviar a solicitação para " + request.domain.to, ' msg/request:', request);
     }
   });
-  
+
+  const connectInfoExtended = JSON.parse(port.name)
+  port.name = connectInfoExtended.nome
+
   if(j2E.ports.activeDomain[port.name]){
     if(j2E.ports.activeDomain[port.name].isDisconnected === true){
       j2E.ports.activeDomain[port.name] = port;
@@ -38,8 +41,12 @@ chrome.runtime.onConnect.addListener(function(port) {
   }
   else
     j2E.ports.activeDomain[port.name] = port;
+
   j2E.ports.all.push(port);
   port.guid = guid();
+  port.timeStamp = new Date().getTime()
+  port.emIframe = connectInfoExtended.emIframe
+
   port.onDisconnect.addListener(function() {
     port.isDisconnected = true;
     port.discTimeStamp = new Date().getTime();
@@ -85,6 +92,22 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
       //chrome.action.disable(tabId);
     }
   }*/
+});
+
+chrome.tabs.onActivated.addListener(function(activeInfo, a, b, c, d) {
+  // activeInfo contém informações sobre a guia ativa
+  const tabId = activeInfo.tabId;
+  const windowId = activeInfo.windowId;
+  
+  //se houver mais de uma porta para a tab, apenas a que tiver no topo 
+  const [tabPort] = j2E.ports.all.filter( 
+    p => p.sender.tab.id === activeInfo.tabId 
+      && p.emIframe === false
+      && ( typeof p.isDisconnected !== "undefined" ? p.isDisconnected === false : true )
+  )
+  if(tabPort)
+    j2E.ports.activeDomain[tabPort.name] = tabPort
+      
 });
 
 
