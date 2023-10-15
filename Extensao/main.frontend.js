@@ -2827,7 +2827,7 @@ function fronendLoad(){
 
             _ = JSON.parse(_);
             
-            var tarfsFavUsuario = data[_.login];
+            var tarfsFavUsuario = data[_.login] || JSON.parse(data)[_.login];
             if(!(tarfsFavUsuario)){
               // usuario não tem tarefas
               jQ3(__TEMP_SEM_RESULTADO___).appendTo(_divPar);

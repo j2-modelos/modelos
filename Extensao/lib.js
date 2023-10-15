@@ -293,6 +293,7 @@ function createLockr(prefix, storage) {
   };
 
   Lockr.get = function (key, missing, options) {
+    options = options || {};
     var query_key = this._getPrefixedKey(key, options),
         value;
 
@@ -312,8 +313,13 @@ function createLockr(prefix, storage) {
     else if (typeof value === 'object' && typeof value.data !== 'undefined') {
       if(typeof value.expiration !== 'undefined' ){
         var now = (new Date()).getTime()
-        if( now > value.expiration )
+        if( now > value.expiration ){
+          if(options.flagMissingExpiration && typeof missing === 'object' ){
+            missing.expired = true
+            missing.expiredData = value.data
+          }
           return missing
+        }
       }
       return value.data;
     }
@@ -3807,24 +3813,45 @@ PseudoTarefa.prototype.transporDados = function(){
 };
 
 class Servlet {
+  static _lockr = new createLockr('j2E.STORAGE')
+  static DEFAULT_EXPIRATION = 10 * 60 * 1000
+
   static getStore(key){
-    if( j2E.SeamIteraction )
-      return j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(Key)
+    const _lockrStore = this._lockr.get(key, { noData: true}, { flagMissingExpiration: true })
 
-    const def = jQ3.Deferred()
+    if( _lockrStore.noData ){
+      const def = jQ3.Deferred()
 
-    window.j2E.mods.__sendMessageToPje({
-      action : 'requisitarSeamIteraction',
-      PJeRest : 'j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView',
-      waitsResponse : true,
-      arguments : [ key ]
-    }, 
-    "PARENT_TOP",
-    function(response, status, action){
-      def.resolve(response)
-    })
+      if( j2E.SeamIteraction ){
+        j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView(Key)
+        .done(response => {
+          this._lockr.set(key, response, { expiration: this.DEFAULT_EXPIRATION })
+          def.resolve( response )
+        })
+        .fail( err =>{
+          def.reject( err )
+        })
+      }else{
+        window.j2E.mods.__sendMessageToPje({
+          action : 'requisitarSeamIteraction',
+          PJeRest : 'j2E.SeamIteraction.alertas.acoes.pesquisarAlertaELiberarAView',
+          waitsResponse : true,
+          arguments : [ key ]
+        }, 
+        "PARENT_TOP",
+        (response, status, action)=>{
+          this._lockr.set(key, response, { expiration: this.DEFAULT_EXPIRATION })
+          def.resolve(response)
+        })
+      }
 
-    return def.promise()
+      if( _lockrStore.expired ){
+        console.warn(`j2e.STORAGE: enviando expired data da key ${key}`)
+        return jQ3.Deferred().resolve(_lockrStore.expiredData).promise() 
+      }else 
+        return def.promise()
+    }else
+      return jQ3.Deferred().resolve(_lockrStore).promise()
   }
 }
 
@@ -3839,6 +3866,31 @@ class PseudoTarefaServlet extends Servlet{
       const result = JSON.parse(alertaAsResult.unePtBr())[PseudoTarefaServlet.STORE_INDEX]
       switch(request){
         case '/Pseudotarefa/listar':
+          def.resolve(result, 'success')
+          break
+
+        default:
+          def.reject('Requisição inválida', 'error')
+          break;
+      }
+    })  
+    .fail( err => def.reject(err) )
+
+    return def.promise()
+  }
+}
+
+class TarefasFavoritasServlet extends Servlet{
+  static STORE_INDEX = `STORE-#TAREFAS_FAVORITAS#`
+
+  static get(request){
+    const def = jQ3.Deferred()
+
+    TarefasFavoritasServlet.getStore(TarefasFavoritasServlet.STORE_INDEX)
+    .done( alertaAsResult => { 
+      const result = JSON.parse(alertaAsResult.unePtBr())[TarefasFavoritasServlet.STORE_INDEX]
+      switch(request){
+        case '/TarefasFavoritas/listar':
           def.resolve(result, 'success')
           break
 
