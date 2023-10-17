@@ -94,11 +94,24 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
   }*/
 });
 
-chrome.tabs.onActivated.addListener(function(activeInfo, a, b, c, d) {
-  // activeInfo contém informações sobre a guia ativa
-  const tabId = activeInfo.tabId;
-  const windowId = activeInfo.windowId;
-  
+chrome.windows.onFocusChanged.addListener(function(winId, a, b, c, d) {
+  chrome.windows.get(winId).then(win=> { 
+    if (win.type !== 'popup')
+      return
+    const [uniquePopupTabId] = j2E.ports.all.filter(
+      p => p.sender.tab.windowId === winId 
+    ).map(p=> p.sender.tab.id)
+
+    const activeInfo = {
+      windowId: winId,
+      tabId: uniquePopupTabId
+    }
+
+    _tabsOnActivatedListener(activeInfo)
+  })
+})
+
+function _tabsOnActivatedListener(activeInfo) {  
   //se houver mais de uma porta para a tab, apenas a que tiver no topo 
   const [tabPort] = j2E.ports.all.filter( 
     p => p.sender.tab.id === activeInfo.tabId 
@@ -108,7 +121,8 @@ chrome.tabs.onActivated.addListener(function(activeInfo, a, b, c, d) {
   if(tabPort)
     j2E.ports.activeDomain[tabPort.name] = tabPort
       
-});
+}
+chrome.tabs.onActivated.addListener(_tabsOnActivatedListener)
 
 
 self.addEventListener("install", function(event) {

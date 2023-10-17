@@ -2177,7 +2177,7 @@ function fronendLoad(){
       };
 
       jQ3.initialize('#acoes-processos-selecionados', function(){       
-        return    
+        
         const $this = jQ3( this )
         $this.removeClass('col-md-12')
         $this.addClass('col-md-6')
@@ -2246,7 +2246,7 @@ function fronendLoad(){
           })
         }
 
-        jQ3.initialize('processos-tarefa conteudo-tarefa .row a:first-child', function(){
+        /*jQ3.initialize('processos-tarefa conteudo-tarefa .row a:first-child', function(){
           const $aLinkAutos = jQ3(this) 
 
           $aLinkAutos.observe('attributes', (rec)=>{
@@ -2266,7 +2266,7 @@ function fronendLoad(){
       
             __openSentinela($numProcLi)
           })
-        })
+        })*/
 
       },
       {target : _this});
