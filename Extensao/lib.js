@@ -3919,16 +3919,17 @@ PseudoTarefas.prototype.listarTarefas = function(callback){
       callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
     }, 'text');
   });*/
-  /*
+  
   const URLPeseudoTarefas = chrome.runtime.getURL('JSON/Pseudtarefas.json')
   jQ3.get(URLPeseudoTarefas, function(data, suc, xhr){
     callback && callback(JSON.parse(data.unePtBr()), suc, xhr);
-  }, 'text');*/
-
+  }, 'text');
+  /*
   PseudoTarefaServlet.get('/Pseudotarefa/listar')
   .done((result, status) => {
     callback && callback(result, status)
   })
+  */
 };
 
 

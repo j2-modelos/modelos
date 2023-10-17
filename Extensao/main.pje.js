@@ -832,6 +832,152 @@ function pjeLoad(){
               }, ADMGrupos, jQ3(this) );
             });
             _delayCall(function(){jQ3('#pageBody').css('filter', ''); });
+            _delayCall(ADMFaixaULtimasSelecoes, _tarfProp);
+          }
+
+          async function ADMFaixaULtimasSelecoes(_tarfProp){
+            function prepararUmaTraefa(cumprDecId, idTask, nomeTarefa){
+              const TEMPLATE_TASK_SELECTOR = `
+              <span
+                id="taskInstanceForm:${cumprDecId}-${idTask}"
+              >
+                <div class="propertyView col-sm-4 propertyViewJ2E">
+                  <div
+                    id="taskInstanceForm:${cumprDecId}-${idTask}:${cumprDecId}-${idTask}Decoration:field${cumprDecId}-${idTask}Div"
+                    class="name"
+                  >
+                    <label
+                      for="taskInstanceForm:${cumprDecId}-${idTask}:${cumprDecId}-${idTask}Decoration:${cumprDecId}-${idTask}"
+                      class=""
+                    >
+                      ${nomeTarefa}
+                      <small class="text-muted text-lowercase"></small
+                    ></label>
+                  </div>
+                  <div class="value col-sm-12">
+                    <input
+                      id="taskInstanceForm:${cumprDecId}-${idTask}:${cumprDecId}-${idTask}Decoration:${cumprDecId}-${idTask}"
+                      type="checkbox"
+                      name="taskInstanceForm:${cumprDecId}-${idTask}:${cumprDecId}-${idTask}Decoration:${cumprDecId}-${idTask}"
+                      class="checkbox"
+                      onclick=""
+                    />
+                  </div></div>
+              </span>`
+
+              return TEMPLATE_TASK_SELECTOR
+            }
+            
+            const TEMPLATE_CONTAINER = `<div id="j2-float-adm" class="div-fixa">
+            <div class="rich-panel col-sm-12">
+              <div class="rich-panel-header j2eADMHeader">Últimas selecionadas</div>
+              <div class="rich-panel-body panel j2eADMPanel" j2e="certfc">
+                
+              </div>
+            </div>
+            </div>
+            `
+            
+            const idTask = j2E.env.urlParms.newTaskId
+            const currentUser = await obterCurrentUser()
+            const dataTarefasStored = lockrSes.get(
+              `${currentUser.login}-ADMFaixaULtimasSelecoes`, { noData: true}
+            )
+
+            const $referenceObject = jQ3(`#taskInstanceForm\\:Processo_Fluxo_visualizarDecisao-${idTask}`).prev()
+            const $container = jQ3(TEMPLATE_CONTAINER)
+
+            if(typeof dataTarefasStored.noData === 'undefined' ){
+              const $body = $container.find('.rich-panel-body')
+
+              dataTarefasStored.sort((a, b)=> a.nome.localeCompare(b.nome))
+              dataTarefasStored.forEach(trf=>{
+                const $tarefa = jQ3(prepararUmaTraefa(trf.cumprDecId, idTask, trf.nome))
+                const $relInput = jQ3('#taskInstanceForm').find(`[id='${trf.relId.replaceAll('$', idTask).replaceAll(':', '\\:')}']`)
+                if($relInput.length === 0)
+                  return
+
+                trf.$relInput = $relInput
+                $body.append($tarefa)
+                $tarefa.data('j2E', trf )
+                $relInput.click(function(){
+                  if(this.checked){
+                    $tarefa.find('input').attr('checked', 'checked')
+                    $tarefa.find('input').prop('checked', true)
+                  }else{
+                    $tarefa.find('input').removeAttr('checked')
+                    $tarefa.find('input').prop('checked', false)
+                  }
+                })
+              })
+
+              $body.find('input').click($ev =>{
+                const $target = jQ3($ev.target)
+                const j2EData = $target.parents('span').data('j2E')
+
+                const $relInput = j2EData.$relInput
+                if($target.is(':checked')){
+                  $relInput.attr('checked', 'checked')
+                  $relInput.prop('checked', true)
+                }else{
+                  $relInput.removeAttr('checked')
+                  $relInput.prop('checked', false)
+                }
+                if( j2EData.relId.includes('j2Alt')) 
+                  $relInput[0].dispatchEvent( new Event('click') )
+              })
+            }
+
+            jQ3('#taskInstanceForm').before($container)
+
+            jQ3('#pageBody').on("scroll", function(event) {
+              if( dataTarefasStored.noData )
+                return
+
+              const divFixa = jQ3('#j2-float-adm')[0];
+              const depoisDesseId = $referenceObject[0];
+              const divRect = divFixa.getBoundingClientRect();
+              const depoisRect = depoisDesseId.getBoundingClientRect();
+            
+            
+            
+              // Verifique se o elemento 'depoisDesseId' está fora da visualização
+                console.log('depoisRect.top', depoisRect.top , 'divRect.height', divRect.height )
+              if ( depoisRect.top < -divRect.height) {
+                  //console.warn('condição is true')
+                  divFixa.style.top = "0"; // Mostra a div fixa definindo o topo como 0
+              } else {
+                  divFixa.style.top = "-500px"; // Esconde a div fixa definindo o topo como -100px
+              }
+            });
+
+            const selecaoAtualBuffer = []
+            jQ3('#taskInstanceForm').find('input').click(($ev)=>{
+              const $target = jQ3($ev.target)
+              const targetRelNomeTarefa = $target.parents('span').find('label').text().trim()
+
+              if($target.is(':checked'))
+                selecaoAtualBuffer.push({ 
+                  nome: targetRelNomeTarefa,
+                  relId: $target.attr('id').replace(/-\d+/g, '-$'),
+                  cumprDecId: $target.attr('id').split(':')[1].split('-')[0]
+                })
+              else{
+                const idx = selecaoAtualBuffer.findIndex(s => s.nome === targetRelNomeTarefa)
+                if(idx !== -1) 
+                  selecaoAtualBuffer.splice(idx, 1);
+              }
+            })
+
+            window.addEventListener("message", (event) => {
+              if( event.origin === 'https://frontend.prd.cnj.cloud'
+                  &&
+                  !!event.data.transitarFrame
+              )
+                if(selecaoAtualBuffer.length)
+                  lockrSes.set(`${currentUser.login}-ADMFaixaULtimasSelecoes`, selecaoAtualBuffer)
+
+            });
           }
           
           _delayCall(function(){jQ3('#pageBody').css('filter', 'blur(5px)'); });

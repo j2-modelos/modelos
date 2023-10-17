@@ -1,8 +1,8 @@
-const TEMPLATE_CONTAINER = `<div id="j2-float-adm" class="div-fixa">
+const TEMPLATE_CONTAINER2 = `<div id="j2-float-adm" class="div-fixa">
 <div class="rich-panel col-sm-12 j2-faixa-etiquetas" j2-painel-basic-css="j2-painel-basic-css">
 <div class="rich-panel-header">[SEM HEADER]</div><div class="rich-panel-body panel" j2-ui-content="j2"></div></div><div j2-faixa-etiquetas-spacer="">&nbsp;</div></div>`
 
-const TEMPLATE_DIV = `<div id="j2-float-adm" class="div-fixa">
+const TEMPLATE_CONTAINER = `<div id="j2-float-adm" class="div-fixa">
 <div class="rich-panel col-sm-12">
   <div class="rich-panel-header j2eADMHeader">Certificar</div>
   <div class="rich-panel-body panel j2eADMPanel" j2e="certfc">
@@ -93,16 +93,16 @@ const TEMPLATE_DIV = `<div id="j2-float-adm" class="div-fixa">
     width: calc(100% - 6px);
     /*background-color: #ccc;*/
     padding: 14px;
-    transition: top 0.3s ease; /* Adicione uma transição suave para o efeito de deslizamento */
+    transition: top 0.5s ease; /* Adicione uma transição suave para o efeito de deslizamento */
     z-index: 1000;
 }
 </style>`
-const idTask = 10532671725
+const idTask = 10532708803
 const jQ3 = jQuery_21
 const $referenceObject = jQ3(`#taskInstanceForm\\:Processo_Fluxo_visualizarDecisao-${idTask}`).prev()
 jQ3('#taskInstanceForm').before(TEMPLATE_CSS)
-//const $container = jQ3(TEMPLATE_CONTAINER)
-const $container = jQ3(TEMPLATE_DIV)
+//const $container = jQ3(TEMPLATE_CONTAINER2)
+const $container = jQ3(TEMPLATE_CONTAINER)
 jQ3('#taskInstanceForm').before($container)
 //$container.find('.rich-panel-body').append(TEMPLATE_DIV)
 
