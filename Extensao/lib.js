@@ -3574,7 +3574,7 @@ function loadPJeRestAndSeamInteraction(){
             .pipe( (it, $xml)=>{
               return _passoEnivarURLAssinaturasDoMobile()})
             .pipe( (it, $xml) => {
-              if(true)
+              if(false)
                 return $.Deferred().reject('Erro ao realiar assinatura: assinatura automática foi desabilitada').promise()
               
               return _passoConcluirInclusaoDocumento()})

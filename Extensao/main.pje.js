@@ -832,7 +832,7 @@ function pjeLoad(){
               }, ADMGrupos, jQ3(this) );
             });
             _delayCall(function(){jQ3('#pageBody').css('filter', ''); });
-            _delayCall(ADMFaixaULtimasSelecoes, _tarfProp);
+            _delayCall(depoisDeADMReorganizarTarefas, _tarfProp)
           }
 
           async function ADMFaixaULtimasSelecoes(_tarfProp){
@@ -951,37 +951,36 @@ function pjeLoad(){
               }
             });
 
-            const selecaoAtualBuffer = []
-            jQ3('#taskInstanceForm').find('input').click(($ev)=>{
-              const $target = jQ3($ev.target)
-              const targetRelNomeTarefa = $target.parents('span').find('label').text().trim()
-
-              if($target.is(':checked'))
-                selecaoAtualBuffer.push({ 
-                  nome: targetRelNomeTarefa,
-                  relId: $target.attr('id').replace(/-\d+/g, '-$'),
-                  cumprDecId: $target.attr('id').split(':')[1].split('-')[0]
-                })
-              else{
-                const idx = selecaoAtualBuffer.findIndex(s => s.nome === targetRelNomeTarefa)
-                if(idx !== -1) 
-                  selecaoAtualBuffer.splice(idx, 1);
-              }
-            })
-
+            
             window.addEventListener("message", (event) => {
-              if( event.origin === 'https://frontend.prd.cnj.cloud'
+              if( ! ( event.origin === 'https://frontend.prd.cnj.cloud'
                   &&
                   !!event.data.transitarFrame
-              )
-                if(selecaoAtualBuffer.length)
-                  lockrSes.set(`${currentUser.login}-ADMFaixaULtimasSelecoes`, selecaoAtualBuffer)
+              )) return
+
+              const selecaoAtualBuffer = []
+              jQ3('#taskInstanceForm').find('input:enabled:checked').each((idx, el)=>{ 
+                const $elInputTarf = jQ3(el)
+                const targetRelNomeTarefa = $elInputTarf.parents('span').find('label').text().trim()
+
+                selecaoAtualBuffer.push({ 
+                  nome: targetRelNomeTarefa,
+                  relId: $elInputTarf.attr('id').replace(/-\d+/g, '-$'),
+                  cumprDecId: $elInputTarf.attr('id').split(':')[1].split('-')[0]
+                })
+              })
+              if(selecaoAtualBuffer.length)
+                lockrSes.set(`${currentUser.login}-ADMFaixaULtimasSelecoes`, selecaoAtualBuffer)
 
             });
           }
           
           _delayCall(function(){jQ3('#pageBody').css('filter', 'blur(5px)'); });
           _delayCall(ADMReorganizarTarefas, _tarfProp);
+
+          function depoisDeADMReorganizarTarefas(_tarfProp){
+            _delayCall(ADMFaixaULtimasSelecoes, _tarfProp)
+          }
           break;
       }
   }
@@ -3299,6 +3298,7 @@ function pjeLoad(){
       //Criar datalist para uso pelos campos de descricao no objeto
       if(! jQ3('#ar-digital-descricao-datalist').length ){
         const frag = `<datalist id="ar-digital-descricao-datalist">
+          <option value="${numeroUnicoProcesso}">
           <option value="${numeroUnicoProcesso} - citação">
           <option value="${numeroUnicoProcesso} - citação e intimação">
           <option value="${numeroUnicoProcesso} - intimação">
@@ -3307,7 +3307,7 @@ function pjeLoad(){
         jQ3('body').append(frag)
       }
       
-      return jQ3.Deferred().resolve(`${numeroUnicoProcesso} - ${objetoDescricaoPadrao}`)
+      return jQ3.Deferred().resolve(`${numeroUnicoProcesso}`)
     }
 
     function __adicionarObjetoServicoPadrao(destData){

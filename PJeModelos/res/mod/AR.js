@@ -490,7 +490,7 @@ try {
         evBus.fire('AR.afterRenderAR7Body', _exp); //arq
       },
       j2EIntegracao: {
-        obterPLPNumero: ()=>{
+        obterPLPNumero: (paraNaoFazerParseJ2)=>{
           const integracaoInfoPlp = j2ELockrSes.get('ar-digital-integrecao-info-plp', {
             numeroPlp: '',
             dataPostagem: ''
@@ -498,9 +498,9 @@ try {
 
           return integracaoInfoPlp.numeroPlp
               ? integracaoInfoPlp.numeroPlp
-              : ''
+              : (  paraNaoFazerParseJ2 ? '' : '&*EMPTY_STRING*&' )
         },
-        obterDataPostagem: ()=>{
+        obterDataPostagem: (paraNaoFazerParseJ2)=>{
           const integracaoInfoPlp = j2ELockrSes.get('ar-digital-integrecao-info-plp', {
             numeroPlp: '',
             dtaPostagem: ''
@@ -508,9 +508,9 @@ try {
 
           return integracaoInfoPlp.dtaPostagem 
               ? integracaoInfoPlp.dtaPostagem.split('T')[0]
-              : ''
+              : (  paraNaoFazerParseJ2 ? '' : '&*EMPTY_STRING*&' )
         },
-        obterEtiquetaAtual: ()=>{
+        obterEtiquetaAtual: (paraNaoFazerParseJ2)=>{
           const integracaoInfoObjeto = j2ELockrSes.get('ar-digital-integrecao-info-objeto', {
             etiqueta: '',
             maoPropria: false
@@ -518,7 +518,7 @@ try {
 
           return integracaoInfoObjeto.etiqueta 
               ? integracaoInfoObjeto.etiqueta 
-              : ''
+              : (  paraNaoFazerParseJ2 ? '' : '&*EMPTY_STRING*&' )
         },
         obterMaoPropria: ()=>{
           const integracaoInfoObjeto = j2ELockrSes.get('ar-digital-integrecao-info-objeto', {
@@ -638,13 +638,13 @@ try {
           
           _.PLP.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.PLP');
-              var _ = pkg.AR.j2EIntegracao.obterPLPNumero() || pkg.AR.cookies.get('PLP')
+              var _ = pkg.AR.j2EIntegracao.obterPLPNumero(true) || pkg.AR.cookies.get('PLP')
               return _ ? _ : '';
           })();
             
           _.dataPostagem.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.dataPostagem');
-              var _ =  pkg.AR.j2EIntegracao.obterDataPostagem() || pkg.AR.cookies.get('dataPostagem');
+              var _ =  pkg.AR.j2EIntegracao.obterDataPostagem(true) || pkg.AR.cookies.get('dataPostagem');
               return _ ? _ : null;
           })();  
         }

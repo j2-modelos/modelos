@@ -345,7 +345,7 @@ try {
           r = (isString(r)) ? r : 'ERRO AO PROCESSAR: ' + v.join('.') + '(undefinied, empty, null)';
           
           vn = '#{' + vn + '}';
-          text = text.replace(vn, (r.length)?r:vn.replace('#', '@'));
+          text = text.replace(vn, (r === '&*EMPTY_STRING*&') ? '' : (r.length)? r : vn.replace('#', '@') );
         }
         return text.replace('@{', '#{');
       },
