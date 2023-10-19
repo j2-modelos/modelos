@@ -25,6 +25,7 @@
     "nativeMessaging",
     "clipboardRead",
     "clipboardWrite",
+    "cookies",
     "https://pje.tjma.jus.br/*",
     "https://pjeh.tjma.jus.br/*",
     "https://frontend.prd.cnj.cloud/*"
@@ -95,6 +96,7 @@
         "https://*.bb.com.br/*",
         "https://web.whatsapp.com/*",
         "https://sistemas.tjma.jus.br/*",
+        "https://jurisconsult.tjma.jus.br/*",
 
         "https://vcs01.tjma.jus.br/*",
         "https://vcs02.tjma.jus.br/*",
@@ -337,6 +339,11 @@
     {
       "matches": ["https://sistemas.tjma.jus.br/*"],
       "js": ["Extensao/main.sistemas.tjma.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://jurisconsult.tjma.jus.br/*"],
+      "js": ["Extensao/main.jurisconsult.tjma.js"],
       "all_frames": true
     }
   ],
