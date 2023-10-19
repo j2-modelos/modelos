@@ -3061,6 +3061,216 @@ function loadPJeRestAndSeamInteraction(){
         }
       }
     },
+    autoTexto : {
+      requestsIteractionsGetter : () => { 
+        const requestsIteractions = {
+          baseURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/autoTexto.seam`,
+          $elementoTRDoAlertaEncontrado: {},
+          $xmlDoFormulario: {},
+          responseHistory: [],
+          session: null,
+          liberarAView: ()=>{
+            requestsIteractions.session.ocupado = false
+            requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+            lockr.set('SeamIteraction.sessions', _this.session)
+          },
+          listView : () =>{
+            const def = $.Deferred()
+
+            _this.session = _lockr.get('SeamIteraction.sessions', [])
+            _this.util.liberarViewsExpiradas()
+
+            const alertasSessions = _this.session.filter(ses => { 
+              return ses.pagina === 'alertas' && !ses.ocupado
+            })
+
+            if( ! alertasSessions.length ){
+              $.get(requestsIteractions.baseURL)
+              .done( (xml)=> { 
+                var $html = $(xml)
+                var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+
+                requestsIteractions.$xmlDoFormulario = $html
+                requestsIteractions.responseHistory.push({
+                  iteraction: 'listView',
+                  $xml: $html
+                })
+                
+                requestsIteractions.session = { 
+                  viewId: viewId,
+                  pagina: 'autoTexto',
+                  expiration: _this.util.obterNovaExpiracao(),
+                  ocupado: true
+                }
+
+                _this.session.push(requestsIteractions.session)
+
+                lockr.set('SeamIteraction.sessions', _this.session)
+    
+                def.resolve( requestsIteractions ) 
+              } )
+              .fail( err => def.reject(err) )
+            }else{
+              requestsIteractions.session = alertasSessions[0]
+              requestsIteractions.session.ocupado = true
+              requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+              lockr.set('SeamIteraction.sessions', _this.session)
+
+              requestsIteractions.tabPesquisaSelection()
+              .done( () => { 
+                def.resolve( requestsIteractions ) 
+              } )
+              .fail( err => def.reject(err) )
+            }
+
+            return def.promise()
+          },
+          definirAOrigem : (origem)=>{
+            var def = $.Deferred()
+
+            const containerId = Array.from(
+              requestsIteractions.$xmlDoFormulario.docRoot.find('form#pesquisarAutoTextoForm script')
+            ).filter(s => !!s.id  )[0].innerHTML.match(/'containerId':'pesquisarAutoTextoForm:j_id(\d+)'/).at(1)
+
+            const origemAutoTextoDecoration = Array.from(
+              requestsIteractions.$xmlDoFormulario.docRoot.querySelectorAll('input[name="pesquisarAutoTextoForm:origemAutoTextoDecoration:origemAutoTexto"]')
+            )[0].outerHTML.match(/'pesquisarAutoTextoForm:origemAutoTextoDecoration:j_id(\d+)'/).at(1)
+
+            var PAYLOAD = `
+              AJAXREQUEST: pesquisarAutoTextoForm:j_id${containerId}
+              pesquisarAutoTextoForm:descricaoDecoration:descricao: 
+              pesquisarAutoTextoForm_link_hidden_: pesquisarAutoTextoForm:clearButton
+              pesquisarAutoTextoForm: pesquisarAutoTextoForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              pesquisarAutoTextoForm:origemAutoTextoDecoration:origemAutoTexto: ${origem}
+              pesquisarAutoTextoForm:origemAutoTextoDecoration:j_id${origemAutoTextoDecoration}: pesquisarAutoTextoForm:origemAutoTextoDecoration:j_id${origemAutoTextoDecoration}
+              ajaxSingle: pesquisarAutoTextoForm:origemAutoTextoDecoration:origemAutoTexto
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              def.resolve( it, xml ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          pesquisar : (query, origem)=>{
+            var def = $.Deferred()
+
+            const containerId = Array.from(
+              requestsIteractions.$xmlDoFormulario.find('form#pesquisarAutoTextoForm script')
+            ).filter(s => !!s.id  )[0].innerHTML.match(/'containerId':'pesquisarAutoTextoForm:j_id(\d+)'/).at(1)
+
+            const searchButtonId = Array.from(
+              requestsIteractions.$xmlDoFormulario.find('#pesquisarAutoTextoForm\\:searchButton')
+            )[0].outerHTML.match(/'pesquisarAutoTextoForm:searchButton','pesquisarAutoTextoForm:j_id(\d+)'/).at(1)
+
+            var PAYLOAD = `
+              AJAXREQUEST: pesquisarAutoTextoForm:j_id${containerId}
+              pesquisarAutoTextoForm:origemAutoTextoDecoration:origemAutoTexto: ${origem}
+              pesquisarAutoTextoForm:descricaoDecoration:descricao: ${query}
+              pesquisarAutoTextoForm_link_hidden_: pesquisarAutoTextoForm:clearButton
+              pesquisarAutoTextoForm: pesquisarAutoTextoForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              pesquisarAutoTextoForm:searchButton: pesquisarAutoTextoForm:searchButton
+              pesquisarAutoTextoForm:j_id${searchButtonId}: 1
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              requestsIteractions.$elementoTRDoAlertaEncontrado = 
+              $xml.find('#autoTextoList\\:tb tr:first')
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'pesquisar',
+                $xml: $xml
+              })
+
+              def.resolve( $xml, requestsIteractions)  
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          irParaFormularioDoAutoTexto : ($xml)=>{
+            var def = $.Deferred()            
+
+            const $tr = requestsIteractions.$elementoTRDoAlertaEncontrado
+
+            const autoTextoId = $tr.html().match(/'id':(\d+)/)?.at(1)
+            const containerId = Array.from($tr.find('a'))[0].outerHTML.match(/'containerId':'([^']+)'/).at(1)
+            const autoTextoFormId = $tr.find('a').parent().attr('id')
+
+            var PAYLOAD = `
+              AJAXREQUEST: ${containerId}
+              ${autoTextoFormId}: ${autoTextoFormId}
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              tab: form
+              id: ${autoTextoId}
+              ${autoTextoFormId}:autoTextoList: ${autoTextoFormId}:autoTextoList
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'irParaFormularioDoAutoTexto',
+                $xml: $xml
+              })
+
+              def.resolve( $xml, requestsIteractions)  
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          }
+        }
+        return requestsIteractions
+      },
+      acoes : {
+        pesquisarAutoTextoEObterConteudo : (query, origem) => {
+          const def = $.Deferred()
+          const acoes = _this.autoTexto.acoes
+          const requestsIteractions = _this.autoTexto.requestsIteractionsGetter()
+
+          requestsIteractions.listView()
+          .pipe(()=>{
+            return requestsIteractions.pesquisar(query, origem)
+          })
+          .pipe( $xml=>{
+            return requestsIteractions.irParaFormularioDoAutoTexto($xml)
+          })
+          .done( $xml=>{
+            def.resolve( /*alerta,*/ $xml, acoes ) 
+          })
+          .fail( err => def.reject(err) )
+          .always( ()=>{
+            requestsIteractions.liberarAView()
+          })
+
+          return def.promise()
+        }
+      }
+    },
     processo : {
       xmlHistory : [],
       requestsIteractions : {
