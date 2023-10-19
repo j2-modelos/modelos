@@ -4324,6 +4324,7 @@ function pjeLoad(){
       
       listenMessages();
       encaminharAbrirTarefa();
+      inicializarJurisconsult()
       break;
       
     case "/pje/Painel/painel_usuario/include/listTasksUsuarioPje2.seam":
