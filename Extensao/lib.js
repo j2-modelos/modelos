@@ -2823,7 +2823,7 @@ function loadPJeRestAndSeamInteraction(){
 
             return def.promise()
           },
-          tabPesquisaSelection : ()=>{
+          tabPesquisaSelection : (recursive)=>{
             var def = $.Deferred()
 
             var PAYLOAD = `
@@ -2843,7 +2843,11 @@ function loadPJeRestAndSeamInteraction(){
               
               if(viewStillIsFrom){
                 debugger;
-                it.tabPesquisaSelection(xml)
+                if(recursive){
+                  def.reject("Recursão para obter falhou")
+                  return
+                }
+                it.tabPesquisaSelection(true)
                 .done( () => def.resolve( it, xml ) )
                 .fail( err => def.reject(err) )
               }else
@@ -3127,8 +3131,10 @@ function loadPJeRestAndSeamInteraction(){
       requestsIteractionsGetter : () => { 
         const requestsIteractions = {
           baseURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/autoTexto.seam`,
+          conteudoURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/conteudo.seam`,
           $elementoTRDoAlertaEncontrado: {},
           $xmlDoFormulario: {},
+          $textAreadConteudoEncontrado: {},
           responseHistory: [],
           session: null,
           liberarAView: ()=>{
@@ -3143,7 +3149,7 @@ function loadPJeRestAndSeamInteraction(){
             _this.util.liberarViewsExpiradas()
 
             const alertasSessions = _this.session.filter(ses => { 
-              return ses.pagina === 'alertas' && !ses.ocupado
+              return ses.pagina === 'autoTexto' && !ses.ocupado
             })
 
             if( ! alertasSessions.length ){
@@ -3304,6 +3310,152 @@ function loadPJeRestAndSeamInteraction(){
             .fail( err => def.reject(err) )
 
             return def.promise();
+          },
+          obterConteudo : ($xml, cid)=>{
+            var def = $.Deferred()
+
+            if(!cid){
+              cid = $xml.find('iframe#editorFrame').attr('src').match(/(\d+)/).at(1)
+            }
+
+            $.get(`${requestsIteractions.conteudoURL}?cid=${cid}`)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'obterConteudo',
+                $xml: $xml
+              })
+
+              requestsIteractions.$textAreadConteudoEncontrado = $xml.find('#editorForm\\:conteudo')
+
+              const conteudo = requestsIteractions.$textAreadConteudoEncontrado.val()
+
+              def.resolve( conteudo, $xml, requestsIteractions ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          tabPesquisaSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              search: search
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              const viewStillIsFrom = !! $xml.find('#pesquisarAutoTextoForm\\:descricaoDecoration\\:descricao')
+              
+              if(viewStillIsFrom){
+                debugger;
+                if($xml.find('meta[name="Location"]').attr('content').includes('error.seam')){
+                  requestsIteractions.session.ocupado = false
+                  requestsIteractions.session.expiration = (new Date().getTime()) + 999999
+                  _this.util.liberarViewsExpiradas()
+
+                  it.listView()
+                  .done( (xml) => def.resolve( xml ) )
+                  .fail( err => def.reject(err) )
+                }else{
+                  debugger;
+
+                  def.reject("Erro ao acessar a página")
+                }
+              }else
+                def.resolve( it, xml ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          tabFormSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              form: form
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'tabFormSelection',
+                $xml: $xml,
+              })
+
+              def.resolve( $xml ) 
+            })
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          incluirAutoTexto: (descricao, conteudo, origem)=>{
+            const def = $.Deferred()
+
+            const $xmlConteudo = requestsIteractions.responseHistory.find(rh => rh.iteraction === 'obterConteudo')?.$xml
+            const viewIdConteudo = $xmlConteudo.find('#javax\\.faces\\.ViewState').val()
+            const editorFormScriptId = $xmlConteudo.find('script').attr('id')
+
+
+            var PAYLOAD_AUTOTEXTO = `
+              AJAXREQUEST: autoTextoFormRegion
+              autoTextoForm:descricaoDecoration:descricao: ${descricao}
+              autoTextoForm:origemAutoTextoDecoration:origemAutoTexto: ${origem}
+              autoTextoForm:variavelDecoration:variavel: 4
+              autoTextoForm: autoTextoForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              autoTextoForm:persistButton: autoTextoForm:persistButton
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD_AUTOTEXTO = _this.util.conformPayload(PAYLOAD_AUTOTEXTO)
+
+            var PAYLOAD_CONTEUDO = `
+              AJAXREQUEST: _viewRoot
+              editorForm:conteudo: ${conteudo}
+              editorForm: editorForm
+              autoScroll: 
+              javax.faces.ViewState: ${viewIdConteudo}
+              ${editorFormScriptId}: ${editorFormScriptId}
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD_CONTEUDO = _this.util.conformPayload(PAYLOAD_CONTEUDO)
+
+            const promiseAutoTexto = $.post(requestsIteractions.baseURL, PAYLOAD_AUTOTEXTO)
+            const promiseConteudo = $.post(requestsIteractions.conteudoURL, PAYLOAD_CONTEUDO)
+
+            $.when(promiseAutoTexto, promiseConteudo)
+            .done((xmlAutoTexto, xmlConteudo)=>{
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'obterConteudo',
+                $xmlAutoTexto: $(xmlAutoTexto),
+                $xmlConteudo: $(xmlConteudo)
+              })
+              
+              def.resolve( requestsIteractions )
+            })
+            .fail( err => def.reject(err) )
+
+            $.post(requestsIteractions.baseURL, PAYLOAD_AUTOTEXTO)
+            .done( () => { def.resolve( requestsIteractions ) } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
           }
         }
         return requestsIteractions
@@ -3321,8 +3473,11 @@ function loadPJeRestAndSeamInteraction(){
           .pipe( $xml=>{
             return requestsIteractions.irParaFormularioDoAutoTexto($xml)
           })
-          .done( $xml=>{
-            def.resolve( /*alerta,*/ $xml, acoes ) 
+          .pipe( $xml=>{
+            return requestsIteractions.obterConteudo($xml)
+          })
+          .done( (conteudo, $xml) =>{
+            def.resolve( conteudo, $xml, acoes ) 
           })
           .fail( err => def.reject(err) )
           .always( ()=>{
@@ -3330,7 +3485,32 @@ function loadPJeRestAndSeamInteraction(){
           })
 
           return def.promise()
-        }
+        },
+        adicionarNovoAutoTexto : (descricao, conteudo, origem) => {
+          const def = $.Deferred()
+          const requestsIteractions = _this.autoTexto.requestsIteractionsGetter()
+          const acoes = _this.autoTexto.acoes
+
+          requestsIteractions.listView()
+          .pipe(()=>{
+            return requestsIteractions.tabFormSelection()
+          })
+          .pipe( $xml=>{
+            return requestsIteractions.obterConteudo($xml)
+          })
+          .pipe( $xml=>{
+            return requestsIteractions.incluirAutoTexto(descricao, conteudo, origem)
+          })
+          .done( () =>{
+            def.resolve( acoes ) 
+          })
+          .fail( err => def.reject(err) )
+          .always( ()=>{
+            requestsIteractions.liberarAView()
+          })
+
+          return def.promise()
+        },
       }
     },
     processo : {
