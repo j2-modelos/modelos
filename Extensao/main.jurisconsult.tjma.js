@@ -46,31 +46,22 @@ function init(){
 
   function sendToken(){
     function _getToken(){
-      let _uc = sessionStorage.getItem('_uc')
+      if(window.location.hash.includes('token')){
+        setTimeout(sendToken, 1000)  
+      }
+
+      let _uc = localStorage.getItem('__mydb/_ionickv/currentUser')
 
       if(_uc)
         return JSON.parse( _uc )
-
-      if(j2E.env.urlParms._atk)
-        return { token: j2E.env.urlParms._atk }
-      
-      if(jQ3('#token').length)
-        return { token: jQ3('#token').val() }
     }
 
-    const gotToken = _getToken()
-
-    if(gotToken){
-      chrome.runtime.sendMessage({
-        j2Action : 'shareMessage',
-        messageName : 'sentinelaToken',
-        message : _getToken(),
-        validade : new Date().getTime() + 180 * 1000 
-      });
-
-      if(window.location.search.includes('request-login-pje'))
-        window.close()
-    }
+    chrome.runtime.sendMessage({
+      j2Action : 'shareMessage',
+      messageName : 'sentinelaTokenJurisconsult',
+      message : _getToken(),
+      validade : new Date().getTime() + 180 * 1000 
+    });
   }
 
   setInterval(sendToken, 30000)

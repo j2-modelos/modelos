@@ -741,12 +741,53 @@ var j2EUi = {
 			</div>
 		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div></div>`)
   },
+  createRichModalComIframePainelUsuario: (headerDoPainel, urlIframe, userCloseCallback)=>{
+    const $modal = jQ3(`<div class="rich-modalpanel modal-small" id="j2E-modalWithIframePainelUsuario" style="position: absolute; z-index: 100; background-color: inherit;">
+                          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+                          <div class="rich-mpnl-panel">
+                              <div class="rich-mp-container" id="modalWithIframePainelUsuarioDiv" style="position: absolute; left: 960px; top: 440px; z-index: 9;">
+                                  <div class="rich-mpnl-shadow" id="modalWithIframePainelUsuarioDivDiv" style="width: 0px; height: 0px;"></div>
+                                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 80vw; height: 80vh; max-width: unset;">
+                                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                                          <tbody>
+                                              <tr style="height: 99%;">
+                                                  <td class="rich-mpnl-body" valign="top">
+                                                    <div class="media" style="height: calc(75vh - 2px);">
+                                                          <div class="media-body" style="height: 75vh;">
+                                                          <i class="fa fa-times" style="float: right; padding: 9px 8px 5px 5px; font-size: 120%; cursor: pointer;"></i>
+                                                              <h6>${headerDoPainel}</h6>
+                                                              <iframe src="${urlIframe}" j2-modal-iframe="" style="height: 70vh; width: 100%; border-radius: 5px; border: 1px solid #0078aa;"></iframe>
+                                                          </div>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+                      </div>`)
+
+    jQ3('body').append($modal)
+    $modal.find('i').click(()=>{
+      j2EUi.removeModal()
+      userCloseCallback && userCloseCallback()
+    })
+    return {
+      $modal,
+      header: $modal.find('h6'),
+      iframe: $modal.find('iframe'),
+    }
+  },
   createNgModal:()=>{
 
   },
-  removeModal:()=>{
-    jQ3('#j2E-rich-modal').remove()
-    jQ3('#j2E-ng-modal').remove()
+  removeModal:(modalId)=>{
+    jQ3( modalId || '#j2E-modalWithIframePainelUsuario, #j2E-rich-modal, #j2E-ng-modal')
+    .hide(500, function(){
+      this.remove()
+    })
   },
   TarefaNumClique : {
     createTags : (arrayTags, tagsContainerClass, excluivel)=>{
@@ -2782,7 +2823,7 @@ function loadPJeRestAndSeamInteraction(){
 
             return def.promise()
           },
-          tabPesquisaSelection : ()=>{
+          tabPesquisaSelection : (recursive)=>{
             var def = $.Deferred()
 
             var PAYLOAD = `
@@ -2802,7 +2843,11 @@ function loadPJeRestAndSeamInteraction(){
               
               if(viewStillIsFrom){
                 debugger;
-                it.tabPesquisaSelection(xml)
+                if(recursive){
+                  def.reject("Recursão para obter falhou")
+                  return
+                }
+                it.tabPesquisaSelection(true)
                 .done( () => def.resolve( it, xml ) )
                 .fail( err => def.reject(err) )
               }else
@@ -2810,6 +2855,27 @@ function loadPJeRestAndSeamInteraction(){
             } )
             .fail( err => def.reject(err) )
 
+            return def.promise();
+          },
+          clicarEditarAlertaNaLista : ()=>{
+            var def = $.Deferred()
+  
+            var PAYLOAD = `
+              alertaForm:alerta:j_id286:alerta: ${alerta}
+              alertaForm:inCriticidade:inCriticidadeDecoration:inCriticidade: ${criticidade || 'I'}
+              alertaForm:ativo:ativoDecoration:ativoSelectOneRadio: true
+              alertaForm:saveH: Incluir
+              alertaForm: alertaForm
+              autoScroll: 
+              javax.faces.ViewState: ${_this.session.viewId}
+            `;
+  
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+  
+            $.post(_this.alertas.requestsIteractions.baseURL, PAYLOAD)
+            .done( () => def.resolve( _this.alertas.requestsIteractions ) )
+            .fail( err => def.reject(err) )
+  
             return def.promise();
           },
           tabFormSelection : ()=>{
@@ -3065,8 +3131,10 @@ function loadPJeRestAndSeamInteraction(){
       requestsIteractionsGetter : () => { 
         const requestsIteractions = {
           baseURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/autoTexto.seam`,
+          conteudoURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/conteudo.seam`,
           $elementoTRDoAlertaEncontrado: {},
           $xmlDoFormulario: {},
+          $textAreadConteudoEncontrado: {},
           responseHistory: [],
           session: null,
           liberarAView: ()=>{
@@ -3081,7 +3149,7 @@ function loadPJeRestAndSeamInteraction(){
             _this.util.liberarViewsExpiradas()
 
             const alertasSessions = _this.session.filter(ses => { 
-              return ses.pagina === 'alertas' && !ses.ocupado
+              return ses.pagina === 'autoTexto' && !ses.ocupado
             })
 
             if( ! alertasSessions.length ){
@@ -3242,6 +3310,152 @@ function loadPJeRestAndSeamInteraction(){
             .fail( err => def.reject(err) )
 
             return def.promise();
+          },
+          obterConteudo : ($xml, cid)=>{
+            var def = $.Deferred()
+
+            if(!cid){
+              cid = $xml.find('iframe#editorFrame').attr('src').match(/(\d+)/).at(1)
+            }
+
+            $.get(`${requestsIteractions.conteudoURL}?cid=${cid}`)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'obterConteudo',
+                $xml: $xml
+              })
+
+              requestsIteractions.$textAreadConteudoEncontrado = $xml.find('#editorForm\\:conteudo')
+
+              const conteudo = requestsIteractions.$textAreadConteudoEncontrado.val()
+
+              def.resolve( conteudo, $xml, requestsIteractions ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          tabPesquisaSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              search: search
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              const viewStillIsFrom = !! $xml.find('#pesquisarAutoTextoForm\\:descricaoDecoration\\:descricao')
+              
+              if(viewStillIsFrom){
+                debugger;
+                if($xml.find('meta[name="Location"]').attr('content').includes('error.seam')){
+                  requestsIteractions.session.ocupado = false
+                  requestsIteractions.session.expiration = (new Date().getTime()) + 999999
+                  _this.util.liberarViewsExpiradas()
+
+                  it.listView()
+                  .done( (xml) => def.resolve( xml ) )
+                  .fail( err => def.reject(err) )
+                }else{
+                  debugger;
+
+                  def.reject("Erro ao acessar a página")
+                }
+              }else
+                def.resolve( it, xml ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          tabFormSelection : ()=>{
+            var def = $.Deferred()
+
+            var PAYLOAD = `
+              AJAXREQUEST: _viewRoot
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              form: form
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            $.post(requestsIteractions.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'tabFormSelection',
+                $xml: $xml,
+              })
+
+              def.resolve( $xml ) 
+            })
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          },
+          incluirAutoTexto: (descricao, conteudo, origem)=>{
+            const def = $.Deferred()
+
+            const $xmlConteudo = requestsIteractions.responseHistory.find(rh => rh.iteraction === 'obterConteudo')?.$xml
+            const viewIdConteudo = $xmlConteudo.find('#javax\\.faces\\.ViewState').val()
+            const editorFormScriptId = $xmlConteudo.find('script').attr('id')
+
+
+            var PAYLOAD_AUTOTEXTO = `
+              AJAXREQUEST: autoTextoFormRegion
+              autoTextoForm:descricaoDecoration:descricao: ${descricao}
+              autoTextoForm:origemAutoTextoDecoration:origemAutoTexto: ${origem}
+              autoTextoForm:variavelDecoration:variavel: 4
+              autoTextoForm: autoTextoForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              autoTextoForm:persistButton: autoTextoForm:persistButton
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD_AUTOTEXTO = _this.util.conformPayload(PAYLOAD_AUTOTEXTO)
+
+            var PAYLOAD_CONTEUDO = `
+              AJAXREQUEST: _viewRoot
+              editorForm:conteudo: ${conteudo}
+              editorForm: editorForm
+              autoScroll: 
+              javax.faces.ViewState: ${viewIdConteudo}
+              ${editorFormScriptId}: ${editorFormScriptId}
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD_CONTEUDO = _this.util.conformPayload(PAYLOAD_CONTEUDO)
+
+            const promiseAutoTexto = $.post(requestsIteractions.baseURL, PAYLOAD_AUTOTEXTO)
+            const promiseConteudo = $.post(requestsIteractions.conteudoURL, PAYLOAD_CONTEUDO)
+
+            $.when(promiseAutoTexto, promiseConteudo)
+            .done((xmlAutoTexto, xmlConteudo)=>{
+
+              requestsIteractions.responseHistory.push({
+                iteraction: 'obterConteudo',
+                $xmlAutoTexto: $(xmlAutoTexto),
+                $xmlConteudo: $(xmlConteudo)
+              })
+              
+              def.resolve( requestsIteractions )
+            })
+            .fail( err => def.reject(err) )
+
+            $.post(requestsIteractions.baseURL, PAYLOAD_AUTOTEXTO)
+            .done( () => { def.resolve( requestsIteractions ) } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
           }
         }
         return requestsIteractions
@@ -3259,8 +3473,11 @@ function loadPJeRestAndSeamInteraction(){
           .pipe( $xml=>{
             return requestsIteractions.irParaFormularioDoAutoTexto($xml)
           })
-          .done( $xml=>{
-            def.resolve( /*alerta,*/ $xml, acoes ) 
+          .pipe( $xml=>{
+            return requestsIteractions.obterConteudo($xml)
+          })
+          .done( (conteudo, $xml) =>{
+            def.resolve( conteudo, $xml, acoes ) 
           })
           .fail( err => def.reject(err) )
           .always( ()=>{
@@ -3268,7 +3485,32 @@ function loadPJeRestAndSeamInteraction(){
           })
 
           return def.promise()
-        }
+        },
+        adicionarNovoAutoTexto : (descricao, conteudo, origem) => {
+          const def = $.Deferred()
+          const requestsIteractions = _this.autoTexto.requestsIteractionsGetter()
+          const acoes = _this.autoTexto.acoes
+
+          requestsIteractions.listView()
+          .pipe(()=>{
+            return requestsIteractions.tabFormSelection()
+          })
+          .pipe( $xml=>{
+            return requestsIteractions.obterConteudo($xml)
+          })
+          .pipe( $xml=>{
+            return requestsIteractions.incluirAutoTexto(descricao, conteudo, origem)
+          })
+          .done( () =>{
+            def.resolve( acoes ) 
+          })
+          .fail( err => def.reject(err) )
+          .always( ()=>{
+            requestsIteractions.liberarAView()
+          })
+
+          return def.promise()
+        },
       }
     },
     processo : {
@@ -3976,6 +4218,7 @@ openPopUp = function (id, url, width, height) {
   
   var popUp = window.open(url, id, featurePopUp); popUp.moveTo(0, 0);
             
+  return popUp
 };
 
 function PseudoTarefa(raw){
@@ -4632,6 +4875,379 @@ j2E.mods.remoteJ2DocCreatorInit = function(){
       }, 10 * 1000)
     })
   }
+}
+
+
+
+function __sendMessageToServiceWorder(load, responseCallback){
+  if(!(load.j2)) 
+    load.j2 = true;
+  if(!(load.pathname)) 
+    load.pathname = window.location.pathname;
+  if(!(load.origin)) 
+    load.origin = window.location.origin;
+
+          
+  lg(`${window.location.origin} sending message to Service Workder`, load );  
+
+  // Envia uma mensagem para o Service Worker
+  chrome.runtime.sendMessage( load, responseCallback || void 0 );
+}
+
+async function inicializarJurisconsult(){
+  const frequenciaParaRealizarNovaConsultaAoJurisconsult = 60 * 60 * 1000
+  const frequenciaEstaInstanciaDeveTentarFazerNovaConsulta = 5 * 60 * 1000  
+  const frequenciaExecutarRotina = 1 * 60 * 1000  
+  const _lockr = typeof lockr !== 'undefined' ? lockr : new createLockr('j2E')
+  let KEYCLOAK_IDENTITY = null
+
+  j2E.mods.SistemasTJMA = {
+    api : {
+      requestToken: ()=>{      
+        const def = jQ3.Deferred()  
+        __sendMessageToServiceWorder({
+          j2Action: 'getSharedMessage',
+          from: 'https://sistemas.tjma.jus.br',
+          messageName : 'sentinelaToken'
+        }, response => {
+          if(response.j2Action === 'getSharedMessageResponse'){
+            j2E.mods.SistemasTJMA.api.ajax.setToken(response.response.message)
+            def.resolve(true);
+          }
+          def.resolve(false);
+        })
+        return def.promise()
+      },
+      ajax : {
+        get : function(url, sucCB, errCB, dataType){
+          return jQ3.ajax({
+            url : url,
+            type : 'get',
+            dataType: dataType || 'json',
+            success : function(data, status, xhr){
+              if(sucCB)
+                sucCB(data, status, xhr);
+            },
+            error : function(a, b, c, d){
+              if(errCB)
+                errCB(a, b, c, d);
+            },
+            headers : {
+              xhrFields: {
+                withCredentials: true
+              }
+            },
+         /*   beforeSend : function(xhr, set){
+              delete set.accepts.xml;
+              delete set.accepts.script;
+              delete set.accepts.html;
+            }*/
+          });
+        },
+        touch : (token, instancia, sucCB, errCB)=>{ // tjma sentinela/sistema.tjma.jus.br touch
+          return jQ3.ajax({
+            url : 'https://sistemas.tjma.jus.br/extensaopje-api/touch',
+            type : 'get',
+            dataType: 'json',
+            success : function(data, status, xhr){
+              if(sucCB)
+                sucCB(data, status, xhr);
+            },
+            error : function(a, b, c, d){
+              if(errCB)
+                errCB(a, b, c, d);
+            },
+            headers : {
+              "Token": token,
+              "Instancia": instancia,
+            },
+          });
+        },
+        setToken : token => j2E.mods.SistemasTJMA.api.ajax.accessToken = token
+      },
+      autoLogarViaTouch: () =>{
+        const instancia = !window.location.pathname.includes('pje2g') ? 'PG' : 'SG'
+        return j2E.mods.SistemasTJMA.api.ajax.touch(KEYCLOAK_IDENTITY, instancia)
+      },
+      sentinelaHome: (sucCB, errCB)=>{
+        return j2EPJeRest.ajax.get('https://sistemas.tjma.jus.br/sentinela/SistemaAction.welcome.mtw', 
+                                    sucCB, errCB);
+      },
+      requisitarLoginManual: (UIRequisitor, UIRemover, customDeferred)=>{
+        const def = customDeferred || jQ3.Deferred()
+
+        const winSent = UIRequisitor()
+        async function __tryRequestToken(){
+          const gotToken = await j2E.mods.SistemasTJMA.api.requestToken()
+          if( ! gotToken )
+          def.state() === 'pending' && 
+          setTimeout(__tryRequestToken, 1000)
+          else{
+            def.resolve()
+            UIRemover()
+          }
+        }
+        defer( __tryRequestToken )
+
+        setTimeout(()=>{
+          if( def.state() === 'pending' ){
+            def.reject('Falha na requisição do login.')
+            UIRemover()
+          }
+        }, 60 * 1000)
+
+        return def.promise()
+      }
+    }
+  }
+
+  j2E.mods.Jurisconsult  = {
+    api : {
+      ajax : {
+        get : function(url, sucCB, errCB, dataType){
+          return jQ3.ajax({
+            url : url,
+            type : 'get',
+            dataType: dataType || 'json',
+            success : function(data, status, xhr){
+              if(sucCB)
+                sucCB(data, status, xhr);
+            },
+            error : function(a, b, c, d){
+              if(errCB)
+                errCB(a, b, c, d);
+            },
+            headers : {
+              'Authorization': `Bearer ${j2E.mods.Jurisconsult.api.ajax.accessToken.token}`,
+              /*'X-KL-Ajax-Request': 'Ajax_Request'*/
+            },
+          });
+        },
+        setToken : token => j2E.mods.Jurisconsult.api.ajax.accessToken = token
+      },
+      getAPIJurisToken: (token, sucCB, errCB) =>{
+        function _data(){
+          return JSON.stringify(token)
+        };
+        
+        return j2EPJeRest.ajax.post("https://apijuris.tjma.jus.br/v1/usuario/authenticateToken", 
+                              _data(), sucCB, errCB);
+      }
+    },
+    consultar : {
+      processoPendentes: {
+        processoParado: (dataFim, dias, orgaoJulgador, sucCB, errCB)=>{
+          orgaoJulgador = orgaoJulgador || 30 //j2
+          dias = dias || 30
+          dataFim = dataFim || new Date().toISOString().split('T').shift()
+
+          return j2E.mods.Jurisconsult.api.ajax.get(`https://apijuris.tjma.jus.br/v1/pje1g/pendentes/processos?orgaoJulgador=${orgaoJulgador}&tipoPendencia=P&qtdDias=${dias}&dtaFim=${dataFim}&inicioPagina=1&fimPagina=10000`, 
+            sucCB, errCB);
+        }
+      }
+    },
+    util : {
+      getUnidadePJeId: ()=>{
+        var def = $.Deferred()
+
+        
+        setTimeout(() => {
+          console.error('#####TODO: lógica de obtenção id da unidade que trabalha necessita ser criada.')
+          const idOrgaoJulgadorPJe = Math.abs('2º Juizado Especial Cível de Imperatriz'.hashCode());
+
+          j2E.mods.Jurisconsult.env = {
+            idOrgaoJulgadorJurisconsult: 30,
+            idOrgaoJulgadorPJe
+          }
+          def.resolve(); // Chamando o resolve com o resultado
+        }, 100);
+        
+
+        return def.promise()
+      }
+    }
+  }
+
+  function ____getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + '=')) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+
+  async function __verificarUltimaAtualizacaoNoOrgaoJulgado(){
+    return new Promise( (res, rej)=>{
+      let idPersistencia = ''
+      function __calcularSeNecessitaAtualizar(jurisconsultJSON){
+        const agora = new Date().getTime()
+        const ultima = jurisconsultJSON[idPersistencia].ultimaAtualizacao
+
+        return agora > (ultima + frequenciaParaRealizarNovaConsultaAoJurisconsult)
+      }
+
+      function __iniciarPersistencia(){
+        let jurisconsultJSON = {}
+        jurisconsultJSON[idPersistencia] = {
+          ultimaAtualizacao: new Date().getTime(),
+          __previousValue: 0
+        }
+
+        j2E.SeamIteraction.alertas.acoes.adicionarUmAlertaSemAssociarProcesso(JSON.stringify(jurisconsultJSON))
+        .then( ()=>res(true))
+        .fail( ()=> res(false) )
+      }
+
+      j2E.mods.Jurisconsult.util.getUnidadePJeId()
+      .then(()=>{
+        idPersistencia = `Jurisconsult-#${j2E.mods.Jurisconsult.env.idOrgaoJulgadorPJe}#`
+
+        j2E.SeamIteraction.alertas.acoes.pesquisarAlerta(idPersistencia)
+        .then((jurisconsultJSON, xml, acoes) =>{         
+          if(jurisconsultJSON.length){
+            jurisconsultJSON = JSON.parse(jurisconsultJSON)
+
+            if( __calcularSeNecessitaAtualizar(jurisconsultJSON) ){
+              jurisconsultJSON[idPersistencia].__previousValue = 
+              jurisconsultJSON[idPersistencia].ultimaAtualizacao
+              jurisconsultJSON[idPersistencia].ultimaAtualizacao = new Date().getTime()
+
+              acoes.alterarAlerta(JSON.stringify(jurisconsultJSON))
+              .then( ()=>res(true))
+              .fail( ()=> res(false) )
+            }else
+              res(false)
+          }else
+            __iniciarPersistencia()
+        })
+        .fail(err=> __iniciarPersistencia() )
+      })
+      .fail(err=>{
+        $.Toast("Jurisconsult", `Erro ao oter ids do orgão julgado. (${err}).`, "error")
+        res(false)
+      })
+    })
+  }
+
+  function __obterTokenPJe(){
+    const keycloakIdentity = ____getCookie('KEYCLOAK_IDENTITY');
+    KEYCLOAK_IDENTITY = keycloakIdentity
+    return !!(keycloakIdentity)
+  }
+
+  function __verificarSeDecorreuLapsoParaInstanciaRealizarNovaConsulta(ultima){
+    const agora = new Date().getTime()
+    return agora > (ultima + frequenciaEstaInstanciaDeveTentarFazerNovaConsulta)
+  }
+
+  function __realizarConsultaEAtualizacaoDadosJurisconsulta(){
+    var def = jQ3.Deferred()
+    j2E.mods.Jurisconsult.dadosConsulta ??= {}
+    j2E.mods.Jurisconsult.dadosConsulta.processoPendentes ??= {}
+    j2E.mods.Jurisconsult.dadosConsulta.processoPendentes.processoParado ??= {}
+
+    j2E.mods.Jurisconsult.consultar.processoPendentes.processoParado()
+    .then( res =>{
+      j2E.mods.Jurisconsult.dadosConsulta.processoPendentes.processoParado = res.response
+      def.resolve(j2E.mods.Jurisconsult.dadosConsulta)
+    })
+    .fail( err => def.reject(err) )
+
+    return def.promise()
+  }
+
+  function __autoLogarNoSentinela(){
+    const def = jQ3.Deferred()
+    const defferedPersonalizadoParaRequisitarLoginManual = jQ3.Deferred()
+
+    const UIRequisitorReturnsIframe = ()=>{
+      return j2EUi.createRichModalComIframePainelUsuario(
+        'Por favor fazer login no Sentinela para realizar a extração de dados',
+        'https://sistemas.tjma.jus.br/sentinela/?request-login-pje',
+        ()=>{
+          defferedPersonalizadoParaRequisitarLoginManual.reject('Canclado pelo usuário.')
+        }
+      ).iframe.prop('contentWindow')
+    }
+
+    const UIReomver = ()=>{
+      j2EUi.removeModal()
+    }
+
+    j2E.mods.SistemasTJMA.api.requisitarLoginManual(
+      UIRequisitorReturnsIframe, 
+      UIReomver, 
+      defferedPersonalizadoParaRequisitarLoginManual
+    )
+    .done(()=> def.resolve() )
+    .fail(err => def.reject(err))
+
+    return def.promise()
+  }
+
+  function __gerarTokenDeAcessoDoAPIJuris(){
+    const def = jQ3.Deferred()
+    const token = j2E.mods.SistemasTJMA.api.ajax.accessToken
+
+    j2E.mods.Jurisconsult.api.getAPIJurisToken(token)
+    .done( response=> { 
+      j2E.mods.Jurisconsult.api.ajax.setToken(response)
+      def.resolve()
+     })
+    .fail(err=> def.reject(err))
+
+    return def.promise()
+  }
+
+  function __reverterAPersistenciaParaDesfazerUltimaAtualizacao(){
+
+  }
+
+  (async function __inicializar() { 
+    const ultimaConsultaDestaInstancia = _lockr.get(`Jurisconsulta.UltimaTentativaConsultaDestaInstancia`, { noData : true })
+
+    if( ultimaConsultaDestaInstancia.noData || 
+      __verificarSeDecorreuLapsoParaInstanciaRealizarNovaConsulta(ultimaConsultaDestaInstancia)
+    ){
+      _lockr.set( `Jurisconsulta.UltimaTentativaConsultaDestaInstancia`, new Date().getTime() )
+      const flag = await __verificarUltimaAtualizacaoNoOrgaoJulgado()
+
+      if( flag ){
+        if (__obterTokenPJe()) 
+          __autoLogarNoSentinela()
+          .pipe(()=>{
+            return __gerarTokenDeAcessoDoAPIJuris()
+          })
+          .pipe(()=>{
+            $.Toast("Jurisconsult", `Realizando consultas.`, "success")
+            return __realizarConsultaEAtualizacaoDadosJurisconsulta()
+          })
+          .then(dadosJurisconsult =>{
+            evBus.on('on-consulta-Jurisconsult-obter-dados', 10000, dadosJurisconsult)
+            $.Toast("Jurisconsult", `Consultas realizadas com sucesso.`, "success")
+          })
+          .fail(err=> { 
+            $.Toast("Jurisconsult", `Falha na consulta. (${err})`, "error")
+            __reverterAPersistenciaParaDesfazerUltimaAtualizacao()
+          })
+          .always(()=> {
+            setTimeout( __inicializar, frequenciaExecutarRotina );
+          })
+        else{ 
+          setTimeout( __inicializar, frequenciaExecutarRotina );
+          __reverterAPersistenciaParaDesfazerUltimaAtualizacao()
+        }
+      }else{ 
+        __reverterAPersistenciaParaDesfazerUltimaAtualizacao()
+        setTimeout( __inicializar, frequenciaExecutarRotina );
+      }
+    }else
+      setTimeout( __inicializar, frequenciaExecutarRotina )
+  })()
+
 }
 
 j2E.mods.shortcuts = function (){
