@@ -4176,6 +4176,28 @@ function pjeLoad(){
     })
   }
 
+  function melhorarBotaoMarcarTodosComoLido(){
+    jQ3.initialize('input[value="Marcar todos como lidos"]', function(){
+      var $this = jQ3(this)
+      const idProcesso = parseInt(j2E.env.urlParms.idProcesso)
+      const toaster = (a, msg, severity)=> { 
+        jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+      }
+
+      $this.click(()=>{
+        j2EPJeRest.etiquetas.doProcesso(idProcesso)
+        .done(res => {
+          const [etiquetaDocNaoLido] = res.filter(t=> t.nomeTag.toLowerCase() === 'documento não lido')
+          if(etiquetaDocNaoLido)
+            j2EPJeRest.etiquetas.remover(idProcesso, etiquetaDocNaoLido.id)
+            .done(()=>{
+              toaster("Autos Digitais", `Etiqueta "Documento não lido" removida.`, "success") 
+            })
+        })
+      })
+    })
+  }
+
   function preparComandoDeEtiquetagemDeAnaliseJuntada(){
     var delayCall = new DelayedCall(150, 250);
     jQ3.initialize('#processoDocumentoNaoLidoDiv .rich-stglpanel-body table.rich-table', function(){
@@ -4314,6 +4336,7 @@ function pjeLoad(){
       //personaliazarMenu();
       //registrarServiceWorker();
       personalizarAtalhosADireitaAutosDigitais()
+      melhorarBotaoMarcarTodosComoLido()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()
@@ -4366,7 +4389,7 @@ function pjeLoad(){
       requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
       observeSeEModeloJ2();
-      observeParaARDigital();
+      //observeParaARDigital();
       observarParaAcrescentarRecarregadorDeDocumento()
       break;
     

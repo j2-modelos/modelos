@@ -579,6 +579,267 @@ and open the template in the editor.
                 </elemento>
             </elemento>
         </versao>
+
+        <versao id="7.1"> <!-- ard -->
+            <elemento tag="div" scope="EDT" id="AR.EdtControles" >
+                <HTMLAttribute name="style" value="display:block;"/>
+                <elemento tag="input" scope="EDT" id="AR.EdtControles#Numero" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="AB123456785BR"/>
+                    <HTMLAttribute name="maxlength" value="13"/>
+                    <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterEtiquetaAtual}"/>
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+                
+                <elemento tag="select" scope="EDT" id="AR.EdtControles#EtiquetaTipo" class="p edtCtrl FntDocEdt AR.EdtControles#EtiquetaTipo ">
+                   <HTMLAttribute name="disabled" value="true"/> 
+                   <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AR.EdtControles#EtiquetaTipo.Carta"/>
+                        Carta
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AR.EdtControles#EtiquetaTipo.SEDEX"/>
+                        SEDEX
+                    </elemento>
+                </elemento>
+                <elemento tag="button" scope="EDT" id="AR.EdtControles#Action" class="p edtCtrl FntDocEdt AR.EdtControles#Action">
+                    <elemento tag="img" scope="EDT" id="AR.EdtControles#Action-Stamp">
+                        <HTMLAttribute name="src" value="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH0wkCFgswIuFYfgAAAD50RVh0Q29tbWVudABDcmVhdGVkIHdpdGggVGhlIEdJTVAKCihjKSAyMDAzIEpha3ViICdqaW1tYWMnIFN0ZWluZXInM+9YAAABTElEQVR42qWTzU7rMBCFv3Pm7rgPyaabri9RUSVA8JZ9iIQ2TRGo0rCwnZSfDVxLjuWj8ec5MzHANZC/nNcCMjP56ThNJ67+XvGnCbvdDocJGzuwXfdRVhlH1V10ADeAbZ4enwDx8HDP3f0dQmy3WwRsbm8B6LoOAeVzAYjwDAKhFnEZXUdKXwElbSGVWbQGWnRJGKHUVwuo+AdqsBHC1qzNWfkTIBwIiJYFYBnUYAug7YGlCw6X9Op6ebPlb218BNioWphvcoXNtfFixZ8AEYHUQLqACtlLUaWiL+7JzMy+73O1WmU/9DkMQz4Pz7nf7/NwOOQ4jjkdj/lyOuV6vc63t9c8n88J5IcuWCIcbDYbHKbrOrquw2H+3dyg+q/Isdhpb+E4jiS12sXo0kqBLKxWJ+FqTUBO0zT7kSBzaZtUgqkZqh5uXeF/n/M7RGR7qRmhEMIAAAAASUVORK5CYII="/>
+                    </elemento>
+                    <elemento tag="img" scope="EDT" class="Hidden" id="AR.EdtControles#Action-Refresh">
+                        <HTMLAttribute name="src" value="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAnVJREFUeNqkU11IFFEU/mbccX9czcqtB0O28i+hDDeph8igQkWQivCp8CWpNXzRLKOHXsWKLGT3oUL6gaKoJCIo6M2HCA0ySltWpN3VVmx3WXfWcWZ3Zjozu01bS09e+Lj3nnvOued+37mMqqpYy2Au3m7611ZBcBOOEWqytm+EFwTvzm1NgdbGM+rg4w4MdY0zJlVVcoOvWyxMb3V1IbaUm1BczOrGREKpCc2nB3w+aUDbX3ty0ggwKX8SeJxOzt1Qb0Yg9BPhRegwHE1AXR0w+fEdjh+14/mY9DuBrM1DW51md2014PP/wIrAIBLhIAgsNIasFoUqEvWAHbUS4ssspPSqkaDcZmX7qyqBQDCCSLQAC2EOxG03oI6TjxznV28lEusOtTYXIhZLIsmLlEDIJlDS83wSV1+/kYg4k10jCkiPXDn16mu2evXCnf040e7Qg/mkSBVxRgLm3MiuPGlKLBuNdSg68z+dvff7F7q1ClBq2+zJSpc37Jb1TO7e0/Plr3NWVmSkFcnd1mZCSwurQ1uTDec7HkI7T8liBcFDULuGK0XCsNFIp29sR5G5VD180EysSygoYPH+AwcxJdzjV6OXyecIw2B0n2sTGurLKKGKR89mSQmp6m7vnJ+eIOuECCSdRlBGKgETn/lOm43tdJRZ0VjvgKKk8GkqiNnvAmJx8eZoX8Cvq6CVyqQZutmO6ZkSuBoy+h7Yu8F45/JyQp+n/TwWIyKphL6cTtQbCWNvg2h2dSG48BQlRSw4LtPGqZSCpZiIudAKREkefNAfvpRLotHKw2cn0OPdvSerRjvBkfVZIrzM9Acm837jWr/zLwEGABlsF651Nz3mAAAAAElFTkSuQmCC"/>
+                    </elemento>
+                </elemento>
+                <elemento tag="div" scope="EDT" id="AR-EdtControles-maoPropria">
+                    <HTMLAttribute name="style" value="display: flex;"/>
+                    <elemento tag="div" scope="EDT">
+                        <HTMLAttribute name="style" value="float:left;"/>
+                        <elemento tag="input" scope="EDT" id="AR-EdtControles-maoPropria-inputCheck" class="">
+                            <HTMLAttribute name="type" value="checkbox"/>
+                            <HTMLAttribute name="checked" 
+                                value="true"
+                                renderIf="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterMaoPropria}"/>
+                        </elemento>
+                    </elemento>
+                    <elemento tag="div" scope="EDT">
+                        <HTMLAttribute name="style" value="float:left;"/>
+                        <elemento tag="span" scope="EDT" id="AR-EdtControles-maoPropria-label">
+                            <elemento tag="p" scope="EDT" class="p FntDocEdt AlignJustify width100">
+                                Aviso de Recebimeno em Mão Própria
+                            </elemento>
+                        </elemento>
+                    </elemento>
+                </elemento>                 
+                <!-- elemento tag="div" scope="EDT" id="AR-EdtControles-enderecoManual">
+                    <HTMLAttribute name="style" value="display: flex; width:100%;"/>
+                    <elemento tag="div" scope="EDT">
+                        <HTMLAttribute name="style" value="float:left; width:100%;"/>
+                        <elemento tag="textarea" scope="EDT" id="AR-EdtControles-enderecoManual-textarea" 
+                                  class="p edtCtrl FntDocEdt width100 heightUnset resizeNone">
+                            <HTMLAttribute name="Rows" value="4"/>
+                            <HTMLAttribute name="placeholder" value="Inserir manualmente endereco do AR aqui"/>
+                        </elemento>
+                    </elemento>
+                </elemento-->         
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-PLP" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="20220001234"/>
+                    <HTMLAttribute name="maxlength" value="11"/>
+                    <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/>
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-dataPostagem" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="date"/>
+                    <HTMLAttribute name="placeholder" value="13/06/2022"/>
+                    <HTMLAttribute name="align" value="middle"/>
+                    <HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterDataPostagem}"/>
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+                <!-- DESTINATÁRIO -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Destinatario" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Destinatário"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+                <!-- LOGRADOURO -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Logradouro" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Logradouro"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+                <!-- NUMERO -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Numero" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="number"/>
+                    <HTMLAttribute name="placeholder" value="Número"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+                <!-- COMPLEMENTO -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Complemento" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Complemento"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+                <!-- CIDADE -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Cidade" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Cidade"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+                <!-- BAIRRO -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Bairro" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Bairro"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+
+                <!-- CEP -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-CEP" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width50">
+                    <HTMLAttribute name="type" value="number"/>
+                    <HTMLAttribute name="placeholder" value="CEP"/>
+                    <HTMLAttribute name="maxlength" value="8"/>
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
+                </elemento>
+
+                <!-- UF -->
+                <elemento tag="select" scope="EDT" id="AR-EdtControles-enderecoManual-UF" class="p edtCtrl FntDocEdt width50 AlignCenter">
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AC"/>
+                        Acre
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AL"/>
+                        Alagoas
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AP"/>
+                        Amapá
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="AM"/>
+                        Amazonas
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="BA"/>
+                        Bahia
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="CE"/>
+                        Ceará
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="DF"/>
+                        Distrito Federal
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="ES"/>
+                        Espírito Santo
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="GO"/>
+                        Goiás
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="MA"/>
+                        Maranhão
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="MT"/>
+                        Mato Grosso
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="MS"/>
+                        Mato Grosso do Sul
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="MG"/>
+                        Minas Gerais
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="PA"/>
+                        Pará
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="PB"/>
+                        Paraíba
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="PR"/>
+                        Paraná
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="PE"/>
+                        Pernambuco
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="PI"/>
+                        Piauí
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="RJ"/>
+                        Rio de Janeiro
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="RN"/>
+                        Rio Grande do Norte
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="RS"/>
+                        Rio Grande do Sul
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="RO"/>
+                        Rondônia
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="RR"/>
+                        Roraima
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="SC"/>
+                        Santa Catarina
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="SP"/>
+                        São Paulo
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="SE"/>
+                        Sergipe
+                    </elemento>
+                    <elemento tag="option" scope="EDT" >
+                        <HTMLAttribute name="value" value="TO"/>
+                        Tocantins
+                    </elemento>
+                </elemento>
+            </elemento>
+        </versao>
     </classeDef>
     
     <classeDef id="AR.Footer">

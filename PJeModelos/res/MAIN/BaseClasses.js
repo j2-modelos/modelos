@@ -3985,7 +3985,7 @@ try {
     
     pkg.MeiosDeEncaminhamento = {
       constructor_ : function(args, el){
-        var VERSAO_DO_AR = '6.1';
+        var VERSAO_DO_AR = '7.1';
         var _ = {
           sel : $(el.edt).find('#Oficio_Meio_Select')[0]
         };

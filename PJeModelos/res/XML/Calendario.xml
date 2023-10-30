@@ -214,7 +214,15 @@
     
     
     <!-- RECORRENCIAS PONTUAIS -->
-    <!-- suspensão apagação 2023-08.18 -->
+    <!-- suspensão dia do servidor público 2023-10.27 -->
+    <CalendarioEvento id="cd65d3ef-94d9-4b94-bbb5-6a4a2dadf612" descricao="Suspensão de exepediente pela celebração do Dia do Servidor Público" 
+                      dataInicial="2023-10-27" tipo="suspensao-prazo" abrangencia="estadual" recorrencia="unica">
+        <DisposicaoLegal disposicao="Portaria Conjunta nº 472023" refArtParInc="Art. 1º" 
+                         dataAto="26/10/2023" idDropboxV2="936hbivjrkzb7gvg06ejz;5vxiaojha0mqxghht7silt2xm" />
+        <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
+
+    </CalendarioEvento>
+
     <!--CalendarioEvento id="9109614d-ed4d-4311-981f-3e8e05d1f26b" descricao="Suspensão Exepediente por falha no Sistema Elétrico Nacional" 
                       dataInicial="2023-08-15" tipo="suspensao-prazo" abrangencia="estadual" recorrencia="unica">
         <DisposicaoLegal disposicao="Portaria Conjunta nº 342023" refArtParInc="Art. 1º e 2º" 

@@ -1526,7 +1526,7 @@ div[j2-faixa-etiquetas-spacer]{
 
 
 /* mudar a etiqueta da cor padrão */
-.label.label-info.label-etiqueta{
+.label.label-info.label-etiqueta:not([style]){
     color: black;
 	background: #f6d290;
     border-radius: 0.25em;

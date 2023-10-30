@@ -100,7 +100,13 @@
                     <PortariaDesignacao numero="4484" ano="2023" dataAto="2023-09-22"/>
                 </Presidencia>
                 <Presidencia numeroUnico="0801224-37.2023.8.10.0047" usuarioId="magisADOLFO">
-                    <PortariaDesignacao numero="491" ano="2023" dataAto="2023-10-06"/>
+                    <PortariaDesignacao numero="4691" ano="2023" dataAto="2023-10-06"/>
+                </Presidencia>
+                <Presidencia numeroUnico="0800277-51.2021.8.10.0047" usuarioId="magisADOLFO">
+                    <PortariaDesignacao numero="4872," ano="2023" dataAto="2023-10-18"/>
+                </Presidencia>
+                <Presidencia numeroUnico="0800883-11.2023.8.10.0047" usuarioId="magisADOLFO">
+                    <PortariaDesignacao numero="4872," ano="2023" dataAto="2023-10-18"/>
                 </Presidencia>
             </magistrados>
             <!-- 47202467372 -DELVAN -->

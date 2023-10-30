@@ -472,8 +472,8 @@ and open the template in the editor.
                     <arElement keyEl="general">
 						<simpleElementsDefs> 
                             <elemento tag="p" scope="NONE" class="p FntModDefault" >
-                                #:B{CITADO(A)} para que pague, 
-								no prazo de #{j2.env.PJeVars.expediente.prazo}, o valor acima indicado #:B{ou ofereça bem(ns) suficiente(s) para a garantia do crédito} em execução
+                                #:B{CITADO(A)} para que #:B{pague, 
+								no prazo de #{j2.env.PJeVars.expediente.prazo}}, o valor acima indicado #:B{ou ofereça bem(ns) suficiente(s) para a garantia do crédito} em execução
 								para que tenha ciência de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
 								por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
 								conforme chaves de acesso aos documento listados abaixo. 

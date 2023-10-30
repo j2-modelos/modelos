@@ -158,6 +158,28 @@
               <constructs param="isAR7" value="true" type="string"/>
             </classe>
         </versao>
+
+        <!-- versão 7 para Ofício e afins -->
+        <versao id="7.1">
+            <classe id="QuebraDePagina" versao="3.0">
+                <constructs param="newId" value="AR" type="string"/>
+            </classe>
+            
+            <classe id="Pagina2toN" versao="pageAR7">
+                <constructs param="autoIncrement" value="sim" type="bool"/>
+                <classe id="ARcls" versao="7.0">
+                    
+                    <classe id="AR-CorreiosControl-digital-ARFull" versao="7.0"/>
+                    
+                    <classe id="ARcls" versao="7.1">
+                        <classe id="AR-CorreiosControl-digital-Etiqueta" versao="7.0"/>
+                    </classe>
+                </classe>
+            </classe>
+            <classe id="AR.EdtControles" versao="7.1">
+              <constructs param="isAR7" value="true" type="string"/>
+            </classe>
+        </versao> 
         
         <versao id="7.0-body">
             <classe id="AR-CorreiosControl-digital-ARFull" versao="7.0"/>

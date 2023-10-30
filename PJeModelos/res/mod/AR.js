@@ -579,8 +579,21 @@ try {
             return this.num.value.toUpperCase();
           },
           manualEndereco : {
+            //no editor
             divCont : $(el.edt).find('#AR-EdtControles-enderecoManual')[0],
+            //6.1
             cmd : $(el.edt).find('#AR-EdtControles-enderecoManual-textarea')[0],
+
+            //7.1
+            destinatario  : $(el.edt).find('#AR-EdtControles-enderecoManual-Destinatario')[0],
+            logradouro  : $(el.edt).find('#AR-EdtControles-enderecoManual-Logradouro')[0],
+            numero  : $(el.edt).find('#AR-EdtControles-enderecoManual-Numero')[0],
+            complemento  : $(el.edt).find('#AR-EdtControles-enderecoManual-Complemento')[0],
+            cidade : $(el.edt).find('#AR-EdtControles-enderecoManual-Cidade')[0],
+            bairro : $(el.edt).find('#AR-EdtControles-enderecoManual-Bairro')[0],
+            CEP : $(el.edt).find('#AR-EdtControles-enderecoManual-CEP')[0],
+            UF : $(el.edt).find('#AR-EdtControles-enderecoManual-UF')[0],
+            //no expediente
             textExp : $(el.exp).find('#AR.Body.DestRemPlus.Right#ParteVinculadaAoExpediente'.jQId())[0]
           }
         };
@@ -635,6 +648,39 @@ try {
               //cookies.set('pkg.AR.vars.dataPostagem', _.dataPostagem.value.toString(),  {expires: __COOKIES_EXPIRE_TIME___ });
               pkg.AR.renderAR7Body(_, el);
           };
+
+          _.destinatario && (_.destinatario.onchange = function(event){              
+            pkg.AR.vars.destinatario.nome  = _.destinatario.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.logradouro && (_.logradouro.onchange = function(event){              
+            pkg.AR.vars.destinatario.logradouro   = _.logradouro.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.numero && (_.numero.onchange = function(event){              
+            pkg.AR.vars.destinatario.numero  = _.numero.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.complemento && (_.complemento.onchange = function(event){              
+            pkg.AR.vars.destinatario.complemento  = _.complemento.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.cidade && (_.cidade.onchange = function(event){              
+            pkg.AR.vars.destinatario.cidade  = _.cidade.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.bairro && (_.bairro.onchange = function(event){              
+            pkg.AR.vars.destinatario.bairro  = _.bairro.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.CEP && (_.CEP.onchange = function(event){              
+            pkg.AR.vars.destinatario.CEP  = _.CEP.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
+          _.UF && (_.UF.onchange = function(event){              
+            pkg.AR.vars.destinatario.UF  = _.UF.value;
+            pkg.AR.renderAR7Body(_, el);
+          })
           
           _.PLP.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.PLP');
