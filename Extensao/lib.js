@@ -584,7 +584,52 @@ class DataComFromatos extends Date {
 
     return `${day}/${month}/${year}`;
   }
+
+  static incrementarDecrementarDataString(incrementaTrueDecrementaFalse, inputDateAsString, passo){
+    if(!passo)
+      passo = 1
+    // Parse a date string in the format "03/11/2023 23:59:59"
+    const parts = inputDateAsString.split(/[\s/:-]/);
+    const year = parseInt(parts[2], 10).toString().padStart(4, '0');
+    const month = parseInt(parts[1], 10).toString().padStart(2, '0'); 
+    const day = parseInt(parts[0], 10).toString().padStart(2, '0');
+    const hour = parseInt(parts[3], 10).toString().padStart(2, '0');
+    const minute = parseInt(parts[4], 10).toString().padStart(2, '0');
+    const second = parseInt(parts[5], 10).toString().padStart(2, '0');
+  
+    // Crie uma nova data em UTC (sem considerar o fuso horário)
+    let dateInUTC = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}.000Z`).getTime();
+    const DIA = 24 * 60 * 60 * 1000
+  
+    dateInUTC += incrementaTrueDecrementaFalse ? (DIA * passo) : (-1 * DIA * passo)
+  
+    dateInUTC = new Date(dateInUTC)
+  
+    // Converta a data para uma string no formato ISO 8601
+    const isoString = dateInUTC.toISOString();
+  
+    return isoString;
+  }
+
+  static convertISOToBrazilianDateTime(isoString) {
+    const date = new Date(isoString);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Mês é base 0 (0 - janeiro, 1 - fevereiro, etc.)
+    const year = date.getUTCFullYear();
+    const hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
+  
+    // Formate os componentes da data e hora para o formato brasileiro
+    const formattedDateTime = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  
+    return formattedDateTime;
+  }
 }
+
+
+
+
 
 
 

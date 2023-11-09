@@ -72,7 +72,7 @@ try {
         PLP : function(){
           //var _ = cookies.get('pkg.AR.vars.PLP');
           var _ = pkg.AR.j2EIntegracao.obterPLPNumero() || pkg.AR.cookies.get('PLP');
-          
+          _ = _ === '&*EMPTY_STRING*&' ? pkg.AR.cookies.get('PLP') : _
           return _ ? _ : 0;
         },
         MP : {
@@ -128,11 +128,17 @@ try {
                   return "[NÃO FOI POSSÍVEL PROCESSAR AREndElements]";
 
               return end.split('CEP')[0].split(',').slice(0, -1).join(',');
-          })()
+          })(),
+          recalcularAREndElements: ()=>{
+            var _this = pkg.AR.vars.destinatario
+
+            _this.AREndElements = [ 'nome', 'logradouro', 'numero', 'complemento', 'bairro' ].map(k => _this[k]).join(', ').replace(', ', '<br>')
+          }
         },
         dataPostagem : function(){
           //var _ = cookies.get('pkg.AR.vars.dataPostagem');
-          var _ = pkg.AR.j2EIntegracao.obterDataPostagem() || pkg.AR.cookies.get('dataPostagem'); // newCook
+          var _ = pkg.AR.j2EIntegracao.obterDataPostagem() || pkg.AR.cookies.get('dataPostagem') // newCook
+          _ = _ === '&*EMPTY_STRING*&' ? pkg.AR.cookies.get('dataPostagem') : _
           return _ ? _ : '2000-01-01';
         },
         dataMatrix : function(){
@@ -649,38 +655,24 @@ try {
               pkg.AR.renderAR7Body(_, el);
           };
 
-          _.destinatario && (_.destinatario.onchange = function(event){              
-            pkg.AR.vars.destinatario.nome  = _.destinatario.value;
-            pkg.AR.renderAR7Body(_, el);
+          [ 
+            {campo: _.manualEndereco?.destinatario,  key: 'nome', format: (s)=> s.toUpperCase() },
+            {campo: _.manualEndereco?.logradouro,    key: 'logradouro'}, 
+            {campo: _.manualEndereco?.numero,        key: 'numero'}, 
+            {campo: _.manualEndereco?.complemento,   key: 'complemento'}, 
+            {campo: _.manualEndereco?.cidade,        key: 'cidade', format: (s)=> s.toUpperCase() }, 
+            {campo: _.manualEndereco?.bairro,        key: 'bairro'}, 
+            {campo: _.manualEndereco?.CEP,           key: 'CEP', format: (s)=> `${s.slice(0, 5)}-${s.slice(-3)}` }, 
+            {campo: _.manualEndereco?.UF,            key: 'UF'}
+          ].forEach(it=>{
+            if(!it.campo) return
+            it.campo.onchange = ()=>{
+              pkg.AR.vars.destinatario[it.key] = (!it.format) ? it.campo.value : it.format(it.campo.value)
+              pkg.AR.vars.destinatario.recalcularAREndElements()
+              pkg.AR.renderAR7Body(_, el)
+            }
           })
-          _.logradouro && (_.logradouro.onchange = function(event){              
-            pkg.AR.vars.destinatario.logradouro   = _.logradouro.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.numero && (_.numero.onchange = function(event){              
-            pkg.AR.vars.destinatario.numero  = _.numero.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.complemento && (_.complemento.onchange = function(event){              
-            pkg.AR.vars.destinatario.complemento  = _.complemento.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.cidade && (_.cidade.onchange = function(event){              
-            pkg.AR.vars.destinatario.cidade  = _.cidade.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.bairro && (_.bairro.onchange = function(event){              
-            pkg.AR.vars.destinatario.bairro  = _.bairro.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.CEP && (_.CEP.onchange = function(event){              
-            pkg.AR.vars.destinatario.CEP  = _.CEP.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
-          _.UF && (_.UF.onchange = function(event){              
-            pkg.AR.vars.destinatario.UF  = _.UF.value;
-            pkg.AR.renderAR7Body(_, el);
-          })
+
           
           _.PLP.value = (function(){
               //var _ = cookies.get('pkg.AR.vars.PLP');

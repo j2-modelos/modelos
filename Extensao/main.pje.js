@@ -1668,6 +1668,79 @@ function pjeLoad(){
 
           var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
           $tr.prepend($seletor)
+
+          //inserir o lápis
+          const $alvoEditorData = $tr.find('td h6:first-child:not(.alert-heading)')
+          const dataText = $alvoEditorData.text()
+          if(!dataText.length) 
+            return
+
+          $alvoEditorData.empty()
+          
+          const $span = jQ3(`<span>${dataText}</span>`)
+          $alvoEditorData.append($span)
+
+          const $i = jQ3(`<i j2e-data-i class="fa fa-pencil-alt" style="
+              padding-left: 2px;
+          "></i>`)
+
+          $alvoEditorData.append($i)
+          $i.click(()=>{
+            const $input = jQ3(`<input  j2e-data-input class="fa fa-plus" value="${dataText}">`)
+            const $plus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-plus" style="
+              padding-left: 2px;
+            "></i>`)
+            const $minus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-minus" style="
+                padding-left: 2px;
+            "></i>`)
+            const $check = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-check j2e-i-mp" style="
+                padding-left: 2px;
+            "></i>`)
+            const $times = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-times" style="
+                padding-left: 2px;
+            "></i>`)
+            
+            
+            $span.after($input)
+            $input.after($plus)
+            $plus.after($minus)
+            $minus.after($check)
+            $check.after($times)
+            $span.hide()
+
+            $plus.click(()=>{
+               $input.val( _incrementarDecrementarData(true, $input.val()) )
+            })
+            $minus.click(()=>{
+              $input.val( _incrementarDecrementarData(false, $input.val() ) )
+            })
+
+            $check.click(()=>{
+              $span.text($input.val())
+
+              $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+              $input.remove()
+              $span.show()
+              $i.show()
+            })
+
+            $times.click(()=>{
+              $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+              $input.remove()
+              $span.show()
+              $i.show()
+            })
+
+            $i.hide()
+          })
+
+          function _incrementarDecrementarData(incrementaTrueDecrementaFalse, inputDate){
+            const dataIsoAlterada = DataComFromatos.incrementarDecrementarDataString(incrementaTrueDecrementaFalse, inputDate)
+            const dataPtBrAlterada = DataComFromatos.convertISOToBrazilianDateTime(dataIsoAlterada)
+
+            return dataPtBrAlterada
+          }
+
         }
         
         function _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao(){
@@ -4389,7 +4462,7 @@ function pjeLoad(){
       requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
       observeSeEModeloJ2();
-      //observeParaARDigital();
+      observeParaARDigital();
       observarParaAcrescentarRecarregadorDeDocumento()
       break;
     

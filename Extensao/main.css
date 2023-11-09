@@ -1543,6 +1543,25 @@ div[j2-faixa-etiquetas-spacer]{
     z-index: 8;
 }
 
+i[j2e-data-i]{
+    cursor: pointer;
+}
+
+i.j2e-i-mp[j2e-data-i]{
+    padding-left: 8px !important;
+}
+
+input[j2e-data-input]{
+    width: 50%;
+    font-family: inherit;
+    color: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: center;
+    font-size: inherit;
+    user-select: none;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

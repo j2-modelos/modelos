@@ -11,8 +11,8 @@ function fronendLoad(){
   (function _default(){
     j2E.mods.shortcuts();
     /*addScript('Extensao/jquery.initialize.js');
-    addScript('Extensao/jquery.lazy.js');
-    addScript('Extensao/util.frontend.js');*/
+    addScript('Extensao/jquery.lazy.js');*/
+    addScript('Extensao/pjecomm.js')
                     
     console.log('j2Extension: loading origin https://pje.tjma.jus.br');
   })();

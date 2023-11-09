@@ -679,7 +679,7 @@ and open the template in the editor.
 
                 <!-- NUMERO -->
                 <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Numero" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
-                    <HTMLAttribute name="type" value="number"/>
+                    <HTMLAttribute name="type" value="text"/>
                     <HTMLAttribute name="placeholder" value="Número"/>
                     <!--HTMLAttribute name="maxlength" value="11"/-->
                     <HTMLAttribute name="align" value="middle"/>
@@ -697,15 +697,6 @@ and open the template in the editor.
                     <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
                 </elemento>
 
-                <!-- CIDADE -->
-                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Cidade" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
-                    <HTMLAttribute name="type" value="text"/>
-                    <HTMLAttribute name="placeholder" value="Cidade"/>
-                    <!--HTMLAttribute name="maxlength" value="11"/-->
-                    <HTMLAttribute name="align" value="middle"/>
-                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
-                    <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
-                </elemento>
                 <!-- BAIRRO -->
                 <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Bairro" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
                     <HTMLAttribute name="type" value="text"/>
@@ -716,10 +707,19 @@ and open the template in the editor.
                     <!--HTMLAttribute name="pattern" value="[a-zA-Z]{2}[0-9]{9}[a-zA-Z]{2}"/-->
                 </elemento>
 
+                <!-- CIDADE -->
+                <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-Cidade" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width100">
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="placeholder" value="Cidade"/>
+                    <!--HTMLAttribute name="maxlength" value="11"/-->
+                    <HTMLAttribute name="align" value="middle"/>
+                    <!--HTMLAttribute name="value" value="#{j2.mod.clsCnstr.AR.j2EIntegracao.obterPLPNumero}"/-->
+                    <HTMLAttribute name="pattern" value="[0-9]{4}"/>
+                </elemento>
 
                 <!-- CEP -->
                 <elemento tag="input" scope="EDT" id="AR-EdtControles-enderecoManual-CEP" class="p edtCtrl FntDocEdt AlignCenter AR.EdtControles#Numero width50">
-                    <HTMLAttribute name="type" value="number"/>
+                    <HTMLAttribute name="type" value="text"/>
                     <HTMLAttribute name="placeholder" value="CEP"/>
                     <HTMLAttribute name="maxlength" value="8"/>
                     <HTMLAttribute name="align" value="middle"/>

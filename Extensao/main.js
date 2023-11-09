@@ -1099,6 +1099,7 @@ var TarefasProps = {
       alt : 'agdStt'
     }
   },
+  'MiniPac - Preparar comunicação':{},
   'Processo com prazo decorrido' : {
     personalizacao : {
       'mostraAutosDigitais' : true,
@@ -1369,6 +1370,8 @@ var TarefasProps = {
       limpaCorpoTarefa : true,
       transicaoManterApenasIgnorarESairTarefa : true
     }
+  },
+  'Publicar DJE_': {
   },
   'Operações de perícia' : {
     altNome : 'Aguardando perícia do IML',

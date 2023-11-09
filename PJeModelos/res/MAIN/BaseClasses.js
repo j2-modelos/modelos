@@ -1537,7 +1537,7 @@ try {
                           '         #{textContent}\n' +
                           '      </elemento>\n' +*/
                           '    </itemFormats>\n' +
-                          '    <groupsDefs>\n' +
+                          '    <groupsDefs naoOrdenado="true">\n' +
                           /*'    <group label="Magistrados">' +
                           '        <gItem id="magJOSCELMO"/>' +
                           '        <gItem id="magGLADISTON"/>' +
@@ -1547,7 +1547,7 @@ try {
                           '        <gItem id="01379812364"/>' +
                           '      </group>' +*/
                           '    </groupsDefs>\n' +
-                          '    <items>\n' +
+                          '    <items naoOrdenado="true">\n' +
                           /*'    <item id="magJOSCELMO" label="Respondente" dataPlus="">' +
                           '        <eventFire event="signatario.respodenteSelected"/>' +
                           '        <itemContent type="HTML" addtClassStyles="someClass">' +
