@@ -4387,10 +4387,20 @@ function pjeLoad(){
         break;
     }
   }
+
+  function modificarLinkAssociadosParaAbrirAutosDigitais(){
+    jQ3.initialize('#associadosTab a', function(){
+      const $this = jQ3(this)
+      const onclickAttr = $this.attr('onclick')
+      $this.attr('onclick', onclickAttr.replace('/pje/detalheProcessoPrevento.seam?id', 
+        '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso'))
+    })
+  }
   
   switch(window.location.pathname){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam':
+    case '/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompleto.seam':
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheProcessoVisualizacao.seam':
       autoSelecionarRecursoAutosDigitaisOuProcessarVizualizacaoParaTarefa()
       observeSeEModeloJ2();
@@ -4410,6 +4420,7 @@ function pjeLoad(){
       //registrarServiceWorker();
       personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
+      modificarLinkAssociadosParaAbrirAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()

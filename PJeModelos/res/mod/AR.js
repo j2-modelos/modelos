@@ -198,6 +198,27 @@ try {
         },
         descricaoConteudo : ' '
       },
+      SVGCodeBarsDataUrl: {
+        AR_AA: ()=> pkg.SVGCodeBars.svgToSvgDataUrl( 
+          pkg.SVGCodeBars.DATAMatrix( {
+            msg :  `${pkg.AR.vars.AR_AA}MAJ`,
+            pad :   2
+          }) 
+        ),
+        AR: ()=> pkg.SVGCodeBars.svgToSvgDataUrl( 
+          pkg.SVGCodeBars.Code128({
+            msg :  pkg.AR.vars.AR,
+            dim : [ 325, 60],
+            pad : [ 5, 5]
+          }) 
+        ),
+        destinatarioCEP: ()=> pkg.SVGCodeBars.svgToSvgDataUrl( 
+          pkg.SVGCodeBars.POSTNET( pkg.AR.vars.destinatario.CEP ) 
+        ),
+        dataMatrix: ()=> pkg.SVGCodeBars.svgToSvgDataUrl( 
+          pkg.SVGCodeBars.DATAMatrix( pkg.AR.vars.dataMatrix() ) 
+        ),
+      },
       constructor_ : function(args, el){
         /* creating event listener*/
         pkg.AR.setEvents();
@@ -544,9 +565,12 @@ try {
 //          var src = 'https://www.barcodesinc.com/generator_files/image.php?code=' 
 //                  + j2.env.PJeVars.processo.meanNum()
 //                  + '&style=68&type=C128B&width=310&height=30&xres=1&font=3';
-          var src = 'https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&Content=' 
+         /* var src = 'https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&Content=' 
                   + j2.env.PJeVars.processo.meanNum()
-                  + '&Height=30&Width=265&TextLocation=none';
+                  + '&Height=30&Width=265&TextLocation=none';*/
+            var src = pkg.SVGCodeBars.svgToSvgDataUrl( pkg.SVGCodeBars.Code128(j2.env.PJeVars.processo.meanNum()) )
+
+                  pkg.SVGCodeBars.svgToSvgDataUrl( pkg.SVGCodeBars.Code128(arEls.arNum()) )
           img.setAttribute('src', src);
         }
       }
@@ -811,7 +835,9 @@ try {
         arEls.TAObjetos.textContent = arEls.arNum();
         //arEls.etq.barCode.src = 'http://www.barcodesinc.com/generator/image.php?code='+ arEls.arNum() +'&style=68&type=C128A&width=414&height=70&xres=2&font=5';
         //arEls.etq.barCode.src = 'https://www.invertexto.com/image.php?scale=2&rotation=0&font=none&font_size=11&text='+ arEls.arNum() +'&thickness=25&code=code128';
-        arEls.etq.barCode.src = 'https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&Content='+ arEls.arNum() +'&Height=65&Width=325&TextLocation=none';
+        //arEls.etq.barCode.src = 'https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&Content='+ arEls.arNum() +'&Height=65&Width=325&TextLocation=none';
+        arEls.etq.barCode.src = pkg.SVGCodeBars.svgToSvgDataUrl( pkg.SVGCodeBars.Code128(arEls.arNum()) )
+
         arEls.etq.p.setAttribute('onclick', "(" + pkg.AREdtControles.sroQuery + ")('" + arEls.arNum() + "')");
         
         pkg.AR.postList.ARNum = arEls.arNum();
@@ -888,7 +914,10 @@ try {
     };
     
     evBus.once('loaded-'+ window.j2.res.mod.AR.lib, function(ev, args, el){
-      pkg.AR.constructor_(args, el);
+      j2.mod.com.libLoader(j2.res.lib.qrious);
+      evBus.on('loaded-'+ j2.res.lib.qrious.lib, function(){
+        pkg.AR.constructor_(args, el);
+      });
     });
 
   })();

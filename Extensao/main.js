@@ -767,11 +767,11 @@ var TarefasProps = {
                tipo : 'table',
                data : [
                  ["Caraterísticas", "Prazo designação", ""],
-                 ["Pessoa jurídica recorrente na cidade", "30 dias", somarDiasDeHoje(30)],
-                 ["Pessoa jurídica com procuradoria", "30 dias", somarDiasDeHoje(30)],
-                 ["Pessoa jurídica fora da cidade", "40 dias", somarDiasDeHoje(40)],
-                 ["Pessoa física fora da comarca", "50 dias", somarDiasDeHoje(50)],
-                 ["Pessoa física dentro da comarca", "40 dias", somarDiasDeHoje(40)]
+                 ["Pessoa jurídica recorrente na cidade", "30 dias", j2EUi.Audiencias.createLinkExibirPautaAudienciaDataAudienciaTarefa(  somarDiasDeHoje(30) )],
+                 ["Pessoa jurídica com procuradoria", "30 dias", j2EUi.Audiencias.createLinkExibirPautaAudienciaDataAudienciaTarefa( somarDiasDeHoje(30) )],
+                 ["Pessoa jurídica fora da cidade", "40 dias", j2EUi.Audiencias.createLinkExibirPautaAudienciaDataAudienciaTarefa( somarDiasDeHoje(40) )],
+                 ["Pessoa física fora da comarca", "50 dias", j2EUi.Audiencias.createLinkExibirPautaAudienciaDataAudienciaTarefa( somarDiasDeHoje(50) )],
+                 ["Pessoa física dentro da comarca", "40 dias", j2EUi.Audiencias.createLinkExibirPautaAudienciaDataAudienciaTarefa( somarDiasDeHoje(40) )]
                ]
              }
            ]

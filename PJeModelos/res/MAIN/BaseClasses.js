@@ -2537,7 +2537,7 @@ try {
           _.pDestVocativo.innerHTML += j2Conv(j2.mod.builder.parseVars(pt)); 
 
           if( meioComnicacao==='meioComunicItCentralMandados'){ 
-            if( typeof QRious === 'undefined'){
+            if( typeof pkg.QRious === 'undefined'){
               
               j2.mod.com.libLoader(j2.res.lib.jqueryUi);
               j2.mod.com.libLoader(j2.res.CSS.jqueryUi);
@@ -2739,7 +2739,7 @@ try {
               var endU = treateEndereco(pkg.Utilidades.parseEnderecosFrameComunicacaoToQRCodeGoogleMaps($end.text()));
               var url = `https://www.google.com/maps/search/${endU}`;
 
-              var uqr = new QRious({
+              var uqr = new pkg.QRious({
                 value: url,
                 padding: 0,
                 level: 'H',
@@ -2760,7 +2760,7 @@ try {
             
             var url = `https://www.google.com/maps/search/${endereco}`
 
-            var qr = new QRious({
+            var qr = new pkg.QRious({
               value: url,
               padding: 0,
               level: 'H',
@@ -2859,7 +2859,7 @@ try {
           );
           var url = `https://www.google.com/maps/search/${endU}`;
 
-          var uqr = new QRious({
+          var uqr = new pkg.QRious({
             value: url,
             padding: 0,
             level: 'H',
