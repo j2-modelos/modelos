@@ -74,8 +74,9 @@ class TarefaPersonalizadaAvancada{
 
     tarefa.personalizacao.painel.push({
       appendTo : ()=>{
-        jQ3('#taskInstanceForm').before('<div id="faixaDeEtiquetas">')
-        return jQ3('#faixaDeEtiquetas')
+        const $faixa = jQ3(/*html*/`<div id="faixaDeEtiquetas">`)
+        jQ3('#pageBody').prepend($faixa)
+        return $faixa
       },
       header : '[SEM HEADER]',
       panelClass : `rich-panel col-sm-12 j2-faixa-etiquetas hidden`,
@@ -718,6 +719,38 @@ var TarefasProps = {
   'Audiência realizada pelo magistrado' : {
     personalizacao : {
       mostraAutosDigitais : true
+    }
+  },
+  'Certificar arquivo definitivo' : {
+    personalizacao : { // Personalização de teste baeada em Expedir Alvará
+      ignorarPersonalizacaoDev : false,
+      //onIntitialize: '',
+      limpaCorpoTarefa : false,
+      prepararInteracoes : [
+        'seam-processo',
+        'remote-j2Doc-create'
+      ],
+      /*ADM : {
+        estenderControlarAudiencia : true
+      },*/
+      painel : [
+        {
+          appendTo : '#taskInstanceDiv',//'form#taskInstanceForm > div > div.rich-panel-body',
+          header : '',
+          panelClass : `rich-panel col-sm-12`,
+          body : [
+            {
+              tipo : 'tabs',
+              data: [
+                {
+                  header: 'Tarefa',
+                  body: jQ3('#taskInstanceForm')
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   'Cerificar juízo digital' : {

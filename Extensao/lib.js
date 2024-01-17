@@ -917,6 +917,55 @@ var j2EUi = {
       jQ3('body').append(_html)
     else
       jQ3('#modalStatusContainer-j2').remove()
+  },
+  createTabs: (data)=> {
+    const TEMPLATE = /*html*/`
+    <j2EjQUI pje-seam>
+        <div j2e-body>
+            <ul>
+                <!-- li><a href="#tabs-1">Adicionar processos em lote</a></!>
+                <li><a href="#tabs-2">Configurar distribuição</a></li -->
+            </ul>
+            <!--div id="tabs-1">
+                <iframe _ngcontent-vaj-c10="" alt="Título" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" 
+                      id="areaPasteProcessoLista" name="areaPasteProcessoLista" 
+                      placeholder="Colar número de processo aqui" contenteditable="" style="height: 84%;"></iframe>
+                <div _ngcontent-vaj-c10="" class="" style="width: 100%;margin-top: 5px;">
+                    <button j2e-lista-limpar-action _ngcontent-vaj-c10="" class="btn btn-default ml-5" type="button" style="float: right;">Limpar</button>
+                    <button j2e-lista-adicionar-lote-action _ngcontent-vaj-c10="" class="btn btn-primary" style="float: right;">Adicionar em lote</button>
+                </div>
+            </div>
+            <div id="tabs-2">
+                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            </div -->
+        </div>
+    </j2EjQUI>
+    `
+
+    const $control = jQ3(TEMPLATE)
+
+    data.forEach(tab=>{
+      const $ul = $control.find('ul')
+      const $body = $control.find('[j2e-body]')
+      const step = $ul.children().length + 1
+
+      $ul.append(`<li><a href="#tabs-${step}">${tab.header}</a></li>`)
+      const $newTabContent = jQ3(`<div id="tabs-${step}">`)
+      $newTabContent.append(tab.body)
+      $body.append($newTabContent)
+    })
+
+    
+
+    $control.addClass('pseudotarefasLoteOptions').tabs({
+      create: function( event, ui ) {
+        jQ3( 'ul a', event.target).addClass('btn');
+        jQ3( 'div[role="tabpanel"]', event.target).css('height','100%');
+      }
+    })
+
+
+    return $control
   }
 };
 

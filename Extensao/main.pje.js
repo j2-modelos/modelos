@@ -522,6 +522,11 @@ function pjeLoad(){
                 var subPanel = _criarPainel(el)
                 _body.append( subPanel );
                 break;
+              case 'tabs':{
+                const tabs = j2EUi.createTabs(el.data)
+                _body.append( tabs );
+                break;
+              }
             }
           });
           
@@ -2436,7 +2441,12 @@ function pjeLoad(){
     jQ3.initialize('div#modeloBooterBody > button#booter', function(){
       addScript('PJeModelos/rootExtensao.js');
       
-      var ___BUT_TEMPLATE___ = '<button id="booterAlt" onclick="RUN(event);" style="font-size: 15px; cursor: pointer; height: 50px; width: 300px; font-weight: bold; min-height: 50px;"> Carregar Modelo </button>';
+      const ___BUT_TEMPLATE___ = /*html*/`
+        <button id="booterAlt" onclick="RUN_BY_EXTENSAO(event);" 
+          style="font-size: 15px; cursor: pointer; height: 50px; width: 300px; font-weight: bold; min-height: 50px;"> 
+            Carregar Modelo 
+          </button>`
+
       /*var $this = jQ3(this);
       $this.removeAttr('onclick');
       
@@ -4277,7 +4287,7 @@ function pjeLoad(){
       var $this = jQ3(this);
       var $this = $this.parents('.rich-stglpanel-body');
 
-      var ___TEMPLATE___ = `<ul j2-analise-juntada class="nav nav-pills btn-documento pull-right" style="margin-top:-10px">
+      var ___TEMPLATE___ = /*html*/`<ul j2-analise-juntada class="nav nav-pills btn-documento pull-right" style="margin-top:-10px">
         <li>
           <a style="display: flex;">
             <i class="fa fa-hashtag" aria-hidden="true" style="font-size:1.2em"></i>

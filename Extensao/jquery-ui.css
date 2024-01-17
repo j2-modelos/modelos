@@ -839,6 +839,9 @@ j2EjQUI .ui-tabs .ui-tabs-nav {
 	margin: 0;
 	padding: .2em .2em 0;
 }
+j2EjQUI[pje-seam] ul.ui-tabs-nav {
+	display: flex;
+}
 j2EjQUI .ui-tabs .ui-tabs-nav li {
 	list-style: none;
 	float: left;
