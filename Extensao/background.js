@@ -163,6 +163,22 @@ chrome.runtime.onMessage.addListener(
       return;
 
     switch(request.j2Action){
+      case 'Notificacao':
+        if ("Notification" in window) {
+          Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+              // Criar uma instância de Notification com ações
+              const notification = new Notification("Notificação do Worker", {
+                body: "Esta notificação foi gerada pelo Web Worker",
+                actions: [
+                  { action: "acao-1", title: "Ação 1" },
+                  { action: "acao-2", title: "Ação 2" }
+                ]
+              });
+            }
+          });
+        }
+        
       case 'shareMessage':
         if(!(j2E.sharedMessages[sender.origin]))
           j2E.sharedMessages[sender.origin] = {}

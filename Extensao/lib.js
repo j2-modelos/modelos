@@ -5637,3 +5637,63 @@ function downloadBlob(resBlob, fileName){
   window.URL.revokeObjectURL(url);
   a.remove()
 }
+
+j2E.mods.Notificacoes = (function (){
+  const ICON = chrome.runtime.getURL('Extensao/img/pje.svg')
+  const URGENTE_IMG = chrome.runtime.getURL('Extensao/img/urgente.png')
+
+  const processos = [ 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '0801234-56.2024.8.10.0047', 
+    '1234567-89.2024.8.10.0047' ]
+  
+  return {
+    notificar: ()=>{
+
+    const buildNotification = ()=>{
+      const notification = new Notification('Processo urgente despachado', {
+          icon: ICON,
+          body: processos.join(', '),
+          image: URGENTE_IMG,
+          badge: 'https://pje.tjma.jus.br/pje/ng2/dev.seam#/painel-usuario-interno',
+          requireInteraction: true
+      });
+      notification.onclick = function() {
+          window.open("http://stackoverflow.com");
+      }
+    }
+
+
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      buildNotification()
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          buildNotification()
+        }
+      });
+    }
+    }
+  }
+})()
+  

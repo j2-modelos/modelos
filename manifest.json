@@ -357,7 +357,8 @@
       "resources": [
         "Extensao/evo-calendar/*",
         "Extensao/jquery3.js",
-        "Extensao/toaster.css"
+        "Extensao/toaster.css",
+        "Extensao/img/*"
       ],
       "matches": ["https://pje.tjma.jus.br/*", "https://pjeh.tjma.jus.br/*"],
       "use_dynamic_url": true
