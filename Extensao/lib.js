@@ -2809,6 +2809,26 @@ function loadPJeRestAndSeamInteraction(){
       },
       obterNovaExpiracao: ()=>{
         return new Date().getTime() + (3 * 60 * 1000)
+      },
+      tabelaAudienciaParaJSON: ($tabela)=>{
+        $tabela.find('script, i, div.modal').remove()
+        const cabecalho = $tabela.find("thead th");
+        const linhas = $tabela.find("tbody > tr");
+
+        const dados = [];
+
+        linhas.each(function () {
+            const linha = $(this)
+            const item = {}
+            cabecalho.each(function (i) {
+                const key = $(this).text().trim().replace(/\s+/g, '_').replace('ê', 'e').toLowerCase()
+                const valor = linha.find('td').eq(i).text().trim()
+                item[key] = valor
+            })
+            dados.push(item)
+        });
+
+        return dados
       }
     },
     alertas : {
@@ -3562,9 +3582,9 @@ function loadPJeRestAndSeamInteraction(){
       xmlHistory : [],
       requestsIteractions : {
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
-        listAutosDigitais : ()=>{
+        listAutosDigitais : (_idProcesso)=>{
           var def = $.Deferred()
-          var idProcesso = j2E.env.urlParms.idProcesso;
+          var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso;
           var lockrKey = `SeamIteraction.processo-${idProcesso}.viewId`
           var viewIdStore = _lockr.get(lockrKey, { noData : true })
 
@@ -4162,13 +4182,57 @@ function loadPJeRestAndSeamInteraction(){
 
           return def.promise();
         },
+        vizualizarAudienciasDoProcesso: ()=>{
+          var def = $.Deferred()
+
+          function obterMesEAnoAtual() {
+            const dataAtual = new Date();
+            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se for necessário
+            const ano = dataAtual.getFullYear();
+            const mesEAnoAtual = `${mes}/${ano}`;
+          
+            return mesEAnoAtual;
+          }
+          
+
+          var PAYLOAD = `
+            AJAXREQUEST: _viewRoot
+            navbar:cbTipoDocumento: 0
+            navbar:idDe: 
+            navbar:idAte: 
+            navbar:dtInicioInputDate: 
+            navbar:dtInicioInputCurrentDate: ${obterMesEAnoAtual()}
+            navbar:dtFimInputDate: 
+            navbar:dtFimInputCurrentDate: ${obterMesEAnoAtual()}
+            navbar:cbCronologia: DESC
+            navbar: navbar
+            autoScroll: 
+            javax.faces.ViewState: ${_this.session.viewIdProc}
+            navbar:linkAbaAudiencia: navbar:linkAbaAudiencia
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'Audiencias',
+              $xml : jQ3(xml)
+            })
+            def.resolve( jQ3(xml), _this.processo.requestsIteractions ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        }
       },
       acoes : {
         abrirProcesso : () =>{
           var def = $.Deferred()
+          const acoes = j2E.SeamIteraction.processo.acoes
 
           _this.processo.requestsIteractions.listAutosDigitais()
-          .done( it => def.resolve( it ) )
+          .done( it => def.resolve( it, acoes ) )
           .fail( err => def.reject(err) )
 
           return def.promise()
@@ -4236,6 +4300,21 @@ function loadPJeRestAndSeamInteraction(){
           })
           .fail( err => def.reject(err) )
 
+
+          return def.promise()
+        },
+        obterAudiencasDoProcesso: ()=>{
+          const def = $.Deferred()
+          const converter = j2E.SeamIteraction.util.tabelaAudienciaParaJSON
+
+          _this.processo.requestsIteractions.vizualizarAudienciasDoProcesso()
+          .done( ($xml, it) => { 
+            const $tabela = $xml.find('#processoConsultaAudienciaGridList')
+            const audiencias = converter( $tabela )
+
+            def.resolve( audiencias, $tabela, $xml) 
+          })
+          .fail( err => def.reject(err) )
 
           return def.promise()
         }

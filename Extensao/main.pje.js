@@ -748,12 +748,61 @@ function pjeLoad(){
                   }
                   
                   function __estenderControlarTarefa(){
-                    var idProc = (function(){
-                      var b = window.location.search.match(/idProcesso=[0-9]+&/);
-                      return b[0].split('=')[1].split('&')[0];
-                    })();
+                    var _j = jElSet.clone(true);
+                    var _div = _j.find('div.propertyView');
                     
-                    jQ3.get('/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/$'.replace('$', idProc), function(data, status){
+                    _div.empty();
+                    _div.removeClass('col-sm-4');
+                    _div.addClass('col-sm-8');
+
+                    _div.append( j2EUi.spinnerHTML() )
+                    
+                    _j.insertAfter(jElSet);
+
+
+                    j2E.SeamIteraction.processo.acoes.abrirProcesso()
+                    .pipe( (a, acoes) => acoes.obterAudiencasDoProcesso() )
+                    .done((audiencias, $tabela) => { 
+                      _div.empty()
+                      const ___infoNenhumaAudiencia = ()=>{
+                        _div.append(/*html*/`
+                          <img src="/pje/img/al/secam.png">
+                          <span class="j2eSpanAlert"><b>Nenhuma audiência designada.</b></span>
+                        `);
+                      }
+
+                      if(!audiencias.length) {
+                        ___infoNenhumaAudiencia()
+                        return
+                      }
+
+                      if(!audiencias.filter(aud => aud.status_da_audiencia === 'designada').length) {
+                        ___infoNenhumaAudiencia()
+                        return
+                      }
+
+                      $tabela.find("tbody > tr").each(function () {
+                          const linha = $(this);
+                          const texto = linha.text().toLowerCase();
+
+                          if (texto.includes('redesignada')) {
+                            linha.remove();
+                          }
+                          else if (!texto.includes('designada')) {
+                              linha.remove();
+                          }
+                      });
+                      
+                      _div.append( $tabela );
+                    })
+                    .fail(err=>{
+                      _div.empty()
+                      _div.append(/*html*/`
+                          <span class="j2eSpanAlert"><b>###ERRO: Falha ao consultar audiências (${err}).</b>.</span>
+                        `);
+                    })
+                    
+                  /*  jQ3.get('/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/$'.replace('$', idProc), function(data, status){
                       if(status !== 'success')
                         return;
                       
@@ -781,7 +830,7 @@ function pjeLoad(){
                       _j.insertAfter(jElSet);
                       
                       _j.find('div.propertyView').append('<img src="/pje/img/al/secam.png"><span class="j2eSpanAlert">O histórico de tarefas do processo sugere que <b>existe audiência desiganda</b>.</span>');
-                    });
+                    });*/
                   }
                   
                   function __alterarAltNomeLabel(){
