@@ -4387,6 +4387,43 @@ function pjeLoad(){
         break;
     }
   }
+
+  function criarEditorEtiquetasPelosAutosDigitais(){
+    const TEMPLATE_EMPTY = /*html*/`
+      <li class="dropdown drop-menu menu-alertas">
+          <a href="#" class="btn-alertas dropdown-toggle" title="Etiquetas do processo" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <i class="fa fa-tag"></i>
+              <span class="sr-only">Ícone de etiquetas</span>
+              <span class="badge">0</span>
+          </a>
+          <ul class="dropdown-menu">
+              <li class="menu-titulo">Etiquetas</li>
+              <li class="menu-conteudo">
+                  <ul>
+                      <li id="etiqueta39841">
+                          <div class="media-body"><i class="fa fa-tag mr-5" title="Elmo de Moraes"></i>------------------------</div>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+    `
+
+    jQ3.initialize('#navbar\\:ajaxPanelAlerts ul.navbar-right', function(){
+      const $this = jQ3(this)
+      jQ3.initialize('li.menu-alertas', function(){
+        j2EPJeRest.etiquetas.listarTodas()
+        then(etqsArrays=>{
+          
+        })
+      },{ 
+        target: $this[0] 
+      })
+
+      if(! $this.find('li.menu-alertas').length)
+        $this.find('li.icone-menu-abas').before(jQ3(TEMPLATE_EMPTY))
+    })
+  }
   
   switch(window.location.pathname){
     
@@ -4410,6 +4447,7 @@ function pjeLoad(){
       //registrarServiceWorker();
       personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
+      criarEditorEtiquetasPelosAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()

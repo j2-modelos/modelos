@@ -2565,6 +2565,11 @@ function loadPJeRestAndSeamInteraction(){
       }
     },
     etiquetas : {
+      listarTodas : function(queryCriteria, sucCB, errCB){
+        
+        return j2EPJeRest.ajax.get("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/todas", 
+                              sucCB, errCB);
+      },
       listar : function(queryCriteria, sucCB, errCB){
 
         function _data(){
