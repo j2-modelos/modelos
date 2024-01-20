@@ -4400,7 +4400,7 @@ function pjeLoad(){
               <li class="menu-titulo">Etiquetas</li>
               <li class="menu-conteudo">
                   <ul>
-                      <li id="etiqueta39841">
+                      <li id="remover-inicializacao">
                           <div class="media-body"><i class="fa fa-tag mr-5" title="Elmo de Moraes"></i>------------------------</div>
                       </li>
                   </ul>
@@ -4439,9 +4439,48 @@ function pjeLoad(){
     jQ3.initialize('#navbar\\:ajaxPanelAlerts ul.navbar-right', function(){
       const $this = jQ3(this)
       jQ3.initialize('li.menu-alertas', function(){
-        const $_this = jQ3(this)
+        function ___unaccent(str) {
+          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+        function ___normalizeString(str) {
+          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-zA-Z0-9]/g, ""); // Remove caracteres não alfanuméricos
+        }
+        function ___idFrom$el($el){
+          try {
+            return $el.attr('id').match(/\d/g).join('')
+          } catch (error) {
+            return -1
+          }            
+        }
+        const toaster = (title, msg, severity)=> { 
+          jQ3.Toast ? jQ3.Toast(title, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+        }
+        const ___personalizar$Badge = $badge =>{
+          $badge.j2E = {
+            inc: ()=> {
+              let val = parseInt($badge.text().trim())
+              val++
+              $badge.text(val)
+            },
+            dec: ()=> {
+              let val = parseInt($badge.text().trim())
+              val--
+              $badge.text(val)
+            }
+          }
+        }
 
+        const $_this = jQ3(this)
         if(!$_this.find('.fa-tag').length) return
+        
+        const $containerEtiquetas = $_this.find('.menu-conteudo')
+        const $badge = $_this.find('.badge')
+        ___personalizar$Badge($badge)
+        $containerEtiquetas.find('#remover-inicializacao').remove()
+
+        
+        
 
         jQ3.initialize('li.menu-conteudo div.media-body', function(){
           const $__this = jQ3(this)
@@ -4459,58 +4498,167 @@ function pjeLoad(){
           target: this
         }
 
-        const $btnAddEtiqueta = jQ3(BTN_ADD_ETIQUETA).click(()=>{
-          function ___unaccent(str) {
-            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-          }
+        const $pai = $_this.find('ul.dropdown-menu')
 
-          const $pai = $_this.find('ul.dropdown-menu')
+        const $btnAddEtiqueta = jQ3(BTN_ADD_ETIQUETA).click(()=>{
+
           const $dropLi = jQ3(TEMPLATE_DROP_DOWN_LI).append(j2EUi.spinnerHTML())
           const $container = jQ3(TEMPLATE_ETIQUETAS_CONTAINER)
           const $tbody = $container.find('tbody')
 
           $container.find('#j2-etq-pesquisar').on('input', function(){
-            const filtro = ___unaccent($(this).val().toLowerCase()); 
+            const $this = jQ3(this)
+            if($this.val().length < 3 && $this.val().length > 0)
+              return
+
+            if( $this.val().length === 0 ){
+              $tbody.find('tr').removeAttr('style')
+            }
+
+            const filtro = ___unaccent($this.val().toLowerCase()); 
             $tbody.find('tr').each(function() {
-              const texto = ___unaccent($(this).text().toLowerCase()); 
+              const $this = jQ3(this)
+              const texto = ___unaccent($this.text().toLowerCase()); 
               const correspondeAoFiltro = texto.indexOf(filtro) !== -1;
-              $(this).toggle(correspondeAoFiltro);
+              $this.toggle(correspondeAoFiltro);
             })
           })
 
           $pai.append($dropLi)
-          $btnAddEtiqueta.hide()
+          $btnAddEtiqueta.hide(500)
 
           j2EPJeRest.etiquetas.listarTodas()
           .then(etqsArrays=>{
+            etqsArrays.sort((a, b) => ___normalizeString(a.nomeTagCompleto.trim()).localeCompare(___normalizeString(b.nomeTagCompleto.trim())))
+
             let htmlElementos = ''
             etqsArrays.forEach(etq => {
               htmlElementos += /*html*/`
                 <tr class="rich-table-row">
                   <td class="rich-table-cell">
                     <span><center>
-                      <input type="checkbox" id="etq-${etq.id}">
+                      <input type="checkbox" id="etq-${etq.id}" j2>
                     </center></span>
                   </td>
                   <td class="rich-table-cell">
                     <span>
-                      <div class="col-sm-12">${etq.nomeTagCompleto}</div>
+                      <div class="col-sm-12" j2>${etq.nomeTagCompleto}</div>
                     </span>
                   </td>
                 </tr>
-              `})
+            `})
 
-              $tbody.append(htmlElementos)
-              $tbody.find('tr:first-child').addClass('rich-table-firstrow')
-              
-              $dropLi.empty()
-              $dropLi.append($container)
+            $tbody.append(htmlElementos)
+            $tbody.find('tr:first-child').addClass('rich-table-firstrow')
+            
+            const stSelector = $containerEtiquetas.find('li').toArray().map(el => {
+              return `#etq-${___idFrom$el(jQ3(el))}`
+            }).join(', ')
+            $tbody.find(stSelector).each(function(){
+              this.checked = true
+            })
+            
+            $dropLi.empty()
+            $dropLi.append($container)
           })
-
 
         })
 
-        $_this.find('.menu-conteudo').addClass('j2-menu-conteudo')
+        $pai.click(($event)=>{
+          const $target = jQ3($event.target)
+          if((!$target.is( '[j2-tag-i]' )) && (!$target.is('[j2]')))
+            return;
+
+          const idProcesso =  j2E.env.urlParms.idProcesso
+
+          //adição ou exclusão pela tabela de etiquetas
+          if($target.is('[j2]')){
+            let idEtiqueta = -1
+            let textoEtiqueta = ''
+            let $input = null
+            let acaoAdd = false
+            let acaoDel = false
+
+            if($target.is('input')){
+              $input = $target
+              idEtiqueta = ___idFrom$el($target)
+              textoEtiqueta = $target.parents('tr').find('div[j2]').text().trim()
+              if($input.is(':checked'))
+                acaoAdd = true
+              else
+                acaoDel = true
+            }else if ($target.is('div')){
+              $input = $target.parents('tr').find('input')
+              idEtiqueta = ___idFrom$el($input)
+              textoEtiqueta = $target.text().trim()
+              if($input.is(':checked'))
+                acaoDel = true
+              else
+                acaoAdd = true
+            }
+
+            if(idEtiqueta === -1)
+              return
+
+            //adicionar 
+            acaoAdd && j2EPJeRest.etiquetas.inserir(idProcesso, textoEtiqueta)
+            .done((newEtq)=>{
+              $containerEtiquetas.find('ul').append(/*html*/`
+                <li id="etiqueta${newEtq.id}">
+                  <div class="media-body">
+                    <i class="fa fa-tag mr-5" title="${textoEtiqueta}"></i>
+                    ${textoEtiqueta}
+                  </div>
+                </li>
+              `)
+              $input.prop('checked', true)
+              $badge.j2E.inc()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" vinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', false)
+              toaster('Etiquetas', `Erro ao vincular etiqueta "${textoEtiqueta}".`, 'error')
+            })
+
+            //remover
+            acaoDel && j2EPJeRest.etiquetas.remover(idProcesso, idEtiqueta)
+            .done(()=>{
+              $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
+              $input.prop('checked', false)
+              $badge.j2E.dec()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', true)
+              toaster('Etiquetas', `Erro ao remover desvincular "${textoEtiqueta}".`, 'error')
+            })
+          }
+
+          //remoção etiqueta
+          if($target.is('[j2-tag-i]')){
+            const $tbody = $containerEtiquetas.next().find('tbody')
+            const idEtiqueta = ___idFrom$el($target.parents('li:first'))
+            const textoEtiqueta = $target.parents('li:first').find('div > div > div').text().trim()
+            const $input = $tbody.find(`#etq-${idEtiqueta}`)
+
+            if(idEtiqueta === -1)
+              return
+
+            //remover
+            j2EPJeRest.etiquetas.remover(idProcesso, idEtiqueta)
+            .done(()=>{
+              $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
+              $input.prop('checked', false)
+              $badge.j2E.dec()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
+            })
+            .fail(err => {
+              toaster('Etiquetas', `Erro ao remover desvincular "${textoEtiqueta}".`, 'error')
+            })
+          }
+        })
+
+        $containerEtiquetas.addClass('j2-menu-conteudo')
         $_this.find('.menu-titulo').prepend($btnAddEtiqueta)
       },{ 
         target: this

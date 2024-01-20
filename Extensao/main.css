@@ -1430,11 +1430,24 @@ a.j2-tbn-add-etiqueta i {
     overflow-y: hidden !important;
     display: flex;
     flex-direction: column;
+    border-top: 1px solid #e0e0e0;
+}
+
+.j2-add-etiqueta .value {
+    display: table;
 }
 
 .j2-container-etiquetas {
     overflow-y: auto;
     max-height: 230px;
+}
+
+.j2-container-etiquetas table tbody tr td:first-child{
+    width: 25px;
+}
+
+.j2-container-etiquetas table [j2]{
+    cursor: pointer;
 }
 
 [j2-painel-basic-css]{
