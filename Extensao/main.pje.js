@@ -4399,11 +4399,7 @@ function pjeLoad(){
           <ul class="dropdown-menu">
               <li class="menu-titulo">Etiquetas</li>
               <li class="menu-conteudo">
-                  <ul>
-                      <li id="remover-inicializacao">
-                          <div class="media-body"><i class="fa fa-tag mr-5" title="Elmo de Moraes"></i>------------------------</div>
-                      </li>
-                  </ul>
+                  <ul></ul>
               </li>
           </ul>
       </li>
@@ -4467,6 +4463,9 @@ function pjeLoad(){
               let val = parseInt($badge.text().trim())
               val--
               $badge.text(val)
+            },
+            equals: (val)=>{
+              return val === parseInt($badge.text().trim())
             }
           }
         }
@@ -4477,7 +4476,12 @@ function pjeLoad(){
         const $containerEtiquetas = $_this.find('.menu-conteudo')
         const $badge = $_this.find('.badge')
         ___personalizar$Badge($badge)
-        $containerEtiquetas.find('#remover-inicializacao').remove()
+        $containerEtiquetas.prepend(/*html*/`
+          <span id="info-nenhuma-etiqueta" style="display:none;">Nenhuma etiqueta vinculada.</span>
+        `)
+        if($badge.j2E.equals(0))
+          $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
+
 
         
         
@@ -4613,6 +4617,7 @@ function pjeLoad(){
               `)
               $input.prop('checked', true)
               $badge.j2E.inc()
+              $containerEtiquetas.find('#info-nenhuma-etiqueta').hide()
               toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" vinculada.`, 'success')
             })
             .fail(err => {
@@ -4626,6 +4631,8 @@ function pjeLoad(){
               $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
               $input.prop('checked', false)
               $badge.j2E.dec()
+              if($badge.j2E.equals(0))
+                $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
               toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
             })
             .fail(err => {
@@ -4650,6 +4657,8 @@ function pjeLoad(){
               $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
               $input.prop('checked', false)
               $badge.j2E.dec()
+              if($badge.j2E.equals(0))
+                $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
               toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
             })
             .fail(err => {

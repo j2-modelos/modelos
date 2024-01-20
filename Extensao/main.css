@@ -1450,6 +1450,17 @@ a.j2-tbn-add-etiqueta i {
     cursor: pointer;
 }
 
+.j2-danger {
+    border-color: #d43f3a;
+}
+
+.j2-danger:focus{
+    border-color: #d43f3a !important;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(233 102 102 / 60%) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(233 102 102 / 60%) !important;
+}
+
 [j2-painel-basic-css]{
     /*min-height: 200px;*/
 }
