@@ -4409,15 +4409,111 @@ function pjeLoad(){
       </li>
     `
 
+    const BTN_ADD_ETIQUETA = /*html*/`
+      <a class="btn btn-default btn-sm j2-tbn-add-etiqueta" title="Inserir etiqueta">
+        <i class="fa fa-tag mr-5"></i>
+        <i class="fa fa-plus mr-5"></i>
+      </a>
+    `
+
+    const TEMPLATE_DROP_DOWN_LI = /*html*/`
+      <li class="menu-conteudo j2-add-etiqueta"></li>
+    `
+    const TEMPLATE_ETIQUETAS_CONTAINER = /*html*/`   
+      <div class="value col-sm-12">
+        <input id="j2-etq-pesquisar" type="text" class="" maxlength="255" placeholder="Pesquisar etiqueta">
+      </div>
+      <div class="j2-container-etiquetas">
+        <table class="rich-table clearfix" border="0" cellpadding="0" cellspacing="0" style="overflow-y: auto;">
+          <thead class="rich-table-thead">
+            <tr class="rich-table-subheader"></tr>
+          </thead>
+          <tbody>
+           
+          </tbody>
+        </table>
+      </div>
+    
+    `
+
     jQ3.initialize('#navbar\\:ajaxPanelAlerts ul.navbar-right', function(){
       const $this = jQ3(this)
       jQ3.initialize('li.menu-alertas', function(){
-        j2EPJeRest.etiquetas.listarTodas()
-        then(etqsArrays=>{
-          
+        const $_this = jQ3(this)
+
+        if(!$_this.find('.fa-tag').length) return
+
+        jQ3.initialize('li.menu-conteudo div.media-body', function(){
+          const $__this = jQ3(this)
+          $__this.addClass('btn btn-sm j2-tag-btn  j2-tag-no-pointer')
+          $__this.append(/*html*/`
+            <div>
+              <div>${$__this.text()}</div>
+            </div>
+            <i class="fa fa-times" j2-tag-i></i>
+          `)
+          $__this.contents().filter(function() {
+            return this.nodeType === 3; // 3 representa o tipo de nó de texto
+          }).remove();
+        }),{ 
+          target: this
+        }
+
+        const $btnAddEtiqueta = jQ3(BTN_ADD_ETIQUETA).click(()=>{
+          function ___unaccent(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          }
+
+          const $pai = $_this.find('ul.dropdown-menu')
+          const $dropLi = jQ3(TEMPLATE_DROP_DOWN_LI).append(j2EUi.spinnerHTML())
+          const $container = jQ3(TEMPLATE_ETIQUETAS_CONTAINER)
+          const $tbody = $container.find('tbody')
+
+          $container.find('#j2-etq-pesquisar').on('input', function(){
+            const filtro = ___unaccent($(this).val().toLowerCase()); 
+            $tbody.find('tr').each(function() {
+              const texto = ___unaccent($(this).text().toLowerCase()); 
+              const correspondeAoFiltro = texto.indexOf(filtro) !== -1;
+              $(this).toggle(correspondeAoFiltro);
+            })
+          })
+
+          $pai.append($dropLi)
+          $btnAddEtiqueta.hide()
+
+          j2EPJeRest.etiquetas.listarTodas()
+          .then(etqsArrays=>{
+            let htmlElementos = ''
+            etqsArrays.forEach(etq => {
+              htmlElementos += /*html*/`
+                <tr class="rich-table-row">
+                  <td class="rich-table-cell">
+                    <span><center>
+                      <input type="checkbox" id="etq-${etq.id}">
+                    </center></span>
+                  </td>
+                  <td class="rich-table-cell">
+                    <span>
+                      <div class="col-sm-12">${etq.nomeTagCompleto}</div>
+                    </span>
+                  </td>
+                </tr>
+              `})
+
+              $tbody.append(htmlElementos)
+              $tbody.find('tr:first-child').addClass('rich-table-firstrow')
+              
+              $dropLi.empty()
+              $dropLi.append($container)
+          })
+
+
         })
+
+        $_this.find('.menu-conteudo').addClass('j2-menu-conteudo')
+        $_this.find('.menu-titulo').prepend($btnAddEtiqueta)
       },{ 
-        target: $this[0] 
+        target: this
       })
 
       if(! $this.find('li.menu-alertas').length)

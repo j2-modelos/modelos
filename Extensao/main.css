@@ -1364,7 +1364,7 @@ div.j2-tags-tarefa-num-clique{
     max-width: 300px;
 }
 
-a.j2-tag-btn{
+div.j2-tag-btn, a.j2-tag-btn{
     background-color: #f6d290;
     text-transform: none !important;
     font-size: 13px !important;
@@ -1375,6 +1375,66 @@ a.j2-tag-btn i{
     font-size: 18px;
     vertical-align: sub;
     margin-right: 3px;
+}
+
+div.j2-tag-btn i{
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+div.j2-tag-btn i.fa-times {
+    padding-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.j2-menu-conteudo{
+    /*max-height: 170px !important;*/
+}
+
+.j2-menu-conteudo ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.j2-menu-conteudo ul li{
+    max-width: 100%;
+}
+
+.j2-menu-conteudo ul div{
+    max-width: 100%;
+}
+
+.j2-menu-conteudo ul div div{
+    display: inline-block;
+    max-width: 90%;
+    vertical-align: middle;
+}
+
+.j2-menu-conteudo ul div div div{
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+a.j2-tbn-add-etiqueta i {
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+.j2-add-etiqueta {
+    overflow: hidden;
+    overflow-y: hidden !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.j2-container-etiquetas {
+    overflow-y: auto;
+    max-height: 230px;
 }
 
 [j2-painel-basic-css]{
