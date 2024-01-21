@@ -4389,6 +4389,41 @@ function pjeLoad(){
   }
 
   function criarEditorEtiquetasPelosAutosDigitais(){
+    function ___unaccent(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+    function ___normalizeString(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9]/g, ""); // Remove caracteres não alfanuméricos
+    }
+    function ___idFrom$el($el){
+      try {
+        return $el.attr('id').match(/\d/g).join('')
+      } catch (error) {
+        return -1
+      }            
+    }
+    const toaster = (title, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(title, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
+    const ___personalizar$Badge = $badge =>{
+      $badge.j2E = {
+        inc: ()=> {
+          let val = parseInt($badge.text().trim())
+          val++
+          $badge.text(val)
+        },
+        dec: ()=> {
+          let val = parseInt($badge.text().trim())
+          val--
+          $badge.text(val)
+        },
+        equals: (val)=>{
+          return val === parseInt($badge.text().trim())
+        }
+      }
+    }
+
     const TEMPLATE_EMPTY = /*html*/`
       <li class="dropdown drop-menu menu-alertas">
           <a href="#" class="btn-alertas dropdown-toggle" title="Etiquetas do processo" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
@@ -4433,98 +4468,131 @@ function pjeLoad(){
     `
 
     jQ3.initialize('#navbar\\:ajaxPanelAlerts ul.navbar-right', function(){
-      const $this = jQ3(this)
+      const $thisNavBarRight = jQ3(this)
       jQ3.initialize('li.menu-alertas', function(){
-        function ___unaccent(str) {
-          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        }
-        function ___normalizeString(str) {
-          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-zA-Z0-9]/g, ""); // Remove caracteres não alfanuméricos
-        }
-        function ___idFrom$el($el){
-          try {
-            return $el.attr('id').match(/\d/g).join('')
-          } catch (error) {
-            return -1
-          }            
-        }
-        const toaster = (title, msg, severity)=> { 
-          jQ3.Toast ? jQ3.Toast(title, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
-        }
-        const ___personalizar$Badge = $badge =>{
-          $badge.j2E = {
-            inc: ()=> {
-              let val = parseInt($badge.text().trim())
-              val++
-              $badge.text(val)
-            },
-            dec: ()=> {
-              let val = parseInt($badge.text().trim())
-              val--
-              $badge.text(val)
-            },
-            equals: (val)=>{
-              return val === parseInt($badge.text().trim())
-            }
-          }
-        }
 
-        const $_this = jQ3(this)
-        if(!$_this.find('.fa-tag').length) return
+        const $_thisMenuAlertas = jQ3(this)
+        if(!$_thisMenuAlertas.find('.fa-tag').length) return
         
-        const $containerEtiquetas = $_this.find('.menu-conteudo')
-        const $badge = $_this.find('.badge')
+        const $containerEtiquetas = $_thisMenuAlertas.find('.menu-conteudo')
+        const $badge = $_thisMenuAlertas.find('.badge')
         ___personalizar$Badge($badge)
         $containerEtiquetas.prepend(/*html*/`
           <span id="info-nenhuma-etiqueta" style="display:none;">Nenhuma etiqueta vinculada.</span>
         `)
         if($badge.j2E.equals(0))
-          $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
-
-
-        
+          $containerEtiquetas.find('#info-nenhuma-etiqueta').show()        
+        const idProcesso =  j2E.env.urlParms.idProcesso
         
 
-        jQ3.initialize('li.menu-conteudo div.media-body', function(){
-          const $__this = jQ3(this)
-          $__this.addClass('btn btn-sm j2-tag-btn  j2-tag-no-pointer')
-          $__this.append(/*html*/`
+        jQ3.initialize('li.menu-conteudo div.media-body:not(.j2-tag-btn)', function(){
+          const $__thisMediaBody = jQ3(this)
+          $__thisMediaBody.addClass('btn btn-sm j2-tag-btn  j2-tag-no-pointer')
+          $__thisMediaBody.append(/*html*/`
             <div>
-              <div>${$__this.text()}</div>
+              <div>${$__thisMediaBody.text()}</div>
             </div>
             <i class="fa fa-times" j2-tag-i></i>
           `)
-          $__this.contents().filter(function() {
+          $__thisMediaBody.contents().filter(function() {
             return this.nodeType === 3; // 3 representa o tipo de nó de texto
           }).remove();
-        }),{ 
-          target: this
-        }
+        },{ 
+          target: $_thisMenuAlertas.get(0)
+        })
 
-        const $pai = $_this.find('ul.dropdown-menu')
+        const $pai = $_thisMenuAlertas.find('ul.dropdown-menu')
 
         const $btnAddEtiqueta = jQ3(BTN_ADD_ETIQUETA).click(()=>{
 
           const $dropLi = jQ3(TEMPLATE_DROP_DOWN_LI).append(j2EUi.spinnerHTML())
           const $container = jQ3(TEMPLATE_ETIQUETAS_CONTAINER)
           const $tbody = $container.find('tbody')
+          let etiqDataAr
 
           $container.find('#j2-etq-pesquisar').on('input', function(){
             const $this = jQ3(this)
+
+            $this.removeClass('j2-danger')
+
             if($this.val().length < 3 && $this.val().length > 0)
               return
 
             if( $this.val().length === 0 ){
-              $tbody.find('tr').removeAttr('style')
+              ___buildEtiquetasTBody(etiqDataAr)
+              return
             }
 
-            const filtro = ___unaccent($this.val().toLowerCase()); 
-            $tbody.find('tr').each(function() {
-              const $this = jQ3(this)
-              const texto = ___unaccent($this.text().toLowerCase()); 
-              const correspondeAoFiltro = texto.indexOf(filtro) !== -1;
-              $this.toggle(correspondeAoFiltro);
+            const filtro = ___normalizeString($this.val().trim().toLowerCase()); 
+            const etqsFiltradass = etiqDataAr.filter(etq => etq.tagNorm.includes(filtro))
+
+            ___buildEtiquetasTBody( etqsFiltradass )
+          })
+
+          $container.find('#j2-etq-pesquisar').on('keydown', function($event){
+            if ($event.which !== 13)
+              return
+
+            $event.preventDefault();
+
+            const $this = jQ3(this)
+            const textoEtiqueta = $this.val().trim()
+
+            if(textoEtiqueta.length < 3){
+              $this.addClass('j2-danger')
+              toaster('Etiquetas', `A etiqueta deve possuir três ou mais caracteres.`, 'error')
+              return
+            }
+
+            const filtro = ___normalizeString($this.val().trim().toLowerCase()); 
+            const etqsFiltradass = etiqDataAr.filter(etq => etq.nomeTag === filtro)
+
+            if(etqsFiltradass.length){
+              $this.addClass('j2-danger')
+              toaster('Etiquetas', `A etiqueta "${textoEtiqueta}" já existe em sua unidade.`, 'error')
+              return
+            }
+
+            j2EPJeRest.etiquetas.inserir(idProcesso, textoEtiqueta)
+            .done((newEtq)=>{
+              $containerEtiquetas.find('ul').append(/*html*/`
+                <li id="etiqueta${newEtq.id}">
+                  <div class="media-body">
+                    <i class="fa fa-tag mr-5" title="${textoEtiqueta}"></i>
+                    ${textoEtiqueta}
+                  </div>
+                </li>
+              `);
+
+              newEtq.nomeTagCompleto = newEtq.nomeTag
+              newEtq.tagNorm = ___normalizeString(newEtq.nomeTagCompleto.toLowerCase().trim())
+              etiqDataAr.push(newEtq)
+              etiqDataAr.sort((a, b) => a.tagNorm.localeCompare(b.tagNorm) )
+
+              const htmlElemento = /*html*/`
+                <tr class="rich-table-row rich-table-firstrow success">
+                  <td class="rich-table-cell">
+                    <span><center>
+                      <input type="checkbox" id="etq-${newEtq.id}" j2 checked>
+                    </center></span>
+                  </td>
+                  <td class="rich-table-cell">
+                    <span>
+                      <div class="col-sm-12" j2>${newEtq.nomeTagCompleto}</div>
+                    </span>
+                  </td>
+                </tr>
+              `
+              $tbody.find('tr:first-child').removeClass('rich-table-firstrow')
+              $tbody.prepend(htmlElemento)
+
+              $badge.j2E.inc()
+              $containerEtiquetas.find('#info-nenhuma-etiqueta').hide()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" vinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', false)
+              toaster('Etiquetas', `Erro ao vincular etiqueta "${textoEtiqueta}".`, 'error')
             })
           })
 
@@ -4532,11 +4600,21 @@ function pjeLoad(){
           $btnAddEtiqueta.hide(500)
 
           j2EPJeRest.etiquetas.listarTodas()
-          .then(etqsArrays=>{
-            etqsArrays.sort((a, b) => ___normalizeString(a.nomeTagCompleto.trim()).localeCompare(___normalizeString(b.nomeTagCompleto.trim())))
+          .then(etqsArResp=>{
+            etiqDataAr = etqsArResp.map(etq => {
+              etq.tagNorm = ___normalizeString(etq.nomeTagCompleto.toLowerCase().trim())
+              return etq
+            }).sort((a, b) => a.tagNorm.localeCompare(b.tagNorm) )
 
+            ___buildEtiquetasTBody(etiqDataAr)
+            
+            $dropLi.empty()
+            $dropLi.append($container)
+          })
+
+          const ___buildEtiquetasTBody =(etqArray)=>{
             let htmlElementos = ''
-            etqsArrays.forEach(etq => {
+            etqArray.forEach(etq => {
               htmlElementos += /*html*/`
                 <tr class="rich-table-row">
                   <td class="rich-table-cell">
@@ -4552,6 +4630,7 @@ function pjeLoad(){
                 </tr>
             `})
 
+            $tbody.empty()
             $tbody.append(htmlElementos)
             $tbody.find('tr:first-child').addClass('rich-table-firstrow')
             
@@ -4561,19 +4640,13 @@ function pjeLoad(){
             $tbody.find(stSelector).each(function(){
               this.checked = true
             })
-            
-            $dropLi.empty()
-            $dropLi.append($container)
-          })
-
+          }
         })
 
         $pai.click(($event)=>{
           const $target = jQ3($event.target)
           if((!$target.is( '[j2-tag-i]' )) && (!$target.is('[j2]')))
             return;
-
-          const idProcesso =  j2E.env.urlParms.idProcesso
 
           //adição ou exclusão pela tabela de etiquetas
           if($target.is('[j2]')){
@@ -4607,6 +4680,11 @@ function pjeLoad(){
             //adicionar 
             acaoAdd && j2EPJeRest.etiquetas.inserir(idProcesso, textoEtiqueta)
             .done((newEtq)=>{
+              if( newEtq === undefined ){
+                toaster('Etiquetas', `A etiqueta "${textoEtiqueta}" já está vinculada.`, 'error')
+                return
+              }
+
               $containerEtiquetas.find('ul').append(/*html*/`
                 <li id="etiqueta${newEtq.id}">
                   <div class="media-body">
@@ -4668,13 +4746,13 @@ function pjeLoad(){
         })
 
         $containerEtiquetas.addClass('j2-menu-conteudo')
-        $_this.find('.menu-titulo').prepend($btnAddEtiqueta)
+        $_thisMenuAlertas.find('.menu-titulo').prepend($btnAddEtiqueta)
       },{ 
-        target: this
+        target: $thisNavBarRight.get(0)
       })
 
-      if(! $this.find('li.menu-alertas').length)
-        $this.find('li.icone-menu-abas').before(jQ3(TEMPLATE_EMPTY))
+      if(! $thisNavBarRight.find('li.menu-alertas').length)
+        $thisNavBarRight.find('li.icone-menu-abas').before(jQ3(TEMPLATE_EMPTY))
     })
   }
   

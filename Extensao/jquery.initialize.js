@@ -209,6 +209,13 @@
 
     // Supported API
     $.initialize = function (selector, callback, options) {
+      for (let i = msobservers.length - 1; i >= 0; i--) {
+          if (! msobservers[i].target.isConnected ) {
+              const delMOs = msobservers.splice(i, 1)[0];
+              delMOs.observer.disconnect()
+          }
+      }
+
         return msobservers.initialize(selector, callback, $.extend({}, $.initialize.defaults, options));
     };
 
