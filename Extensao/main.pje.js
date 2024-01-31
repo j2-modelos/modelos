@@ -4409,10 +4409,10 @@ function pjeLoad(){
           IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO.has(parseInt(codMov.codEvento))
         )
         
-        temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').prepend(/*html*/`
+        temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').append(/*html*/`
           <li>
             <div title="Processo de classe judicial com julgamento proferido" style="padding-top: 15px; padding-right: 15px;color:#fff;padding-left: 10px;">
-              <i class="fa fa-gavel"></i>
+              <i class="fa fa-gavel" ></i>
             </div>
           </li>
         `)
