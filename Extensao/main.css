@@ -1562,6 +1562,20 @@ input[j2e-data-input]{
     user-select: none;
 }
 
+
+.j2-container-datas{
+    display: none !important;
+    width: 330px;
+}
+
+.j2-container-datas.open{
+    display: inherit !important;
+}
+
+.ui-datepicker-inline.ui-datepicker {
+    width: 1em !important;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

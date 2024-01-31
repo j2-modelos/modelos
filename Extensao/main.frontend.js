@@ -2966,6 +2966,106 @@ function fronendLoad(){
           })
       
           $tooB.prepend($butSentinela)
+
+
+          /* preparar o menu de data do processo */
+          jQ3.initialize('#btn-gerenciar-etiquetas', function(){
+            const $buttonTarget = jQ3(this)
+            const $containerPai = $buttonTarget.parent()
+            if($containerPai.is('[j2e-etq-calendario]'))
+              return
+            $containerPai.attr('j2e-etq-calendario')
+
+            const j2eLinhaDeComandos = {
+              $containerPai: $containerPai
+            }
+
+            ;(function _prepararLinhaDeComandos(){
+              const $linhaComandos = $containerPai.clone(false)
+              $linhaComandos.empty()
+              
+              j2eLinhaDeComandos.$linhaComandos = $linhaComandos
+              $containerPai.find('ul:first-of-type .selecionar-etiquetas').append($linhaComandos)
+            })();
+            
+
+            (function _prepararBotaoComandoAbrirCalendario(){
+              const $newButton = $buttonTarget.clone(true)
+              const $i = $newButton.find('i')
+              const $iC = $i.clone(true)
+
+              $newButton.attr('id', 'j2-btn-abrir-calendario')
+              $iC.switchClass('fa-tag', 'fa-calendar-alt')
+              $i.after($iC)
+              $newButton.find('.numero-etiquetas-atribuidas').remove()
+              
+
+              const __callback = ($ev)=>{
+                $ev.preventDefault()
+                $ev.stopPropagation()
+
+                j2eLinhaDeComandos.$dropCalendario.addClass('open')
+              }
+
+              $newButton.click(__callback)
+              $newButton.mousedown(__callback)
+              $newButton.mouseup(__callback)
+
+              j2eLinhaDeComandos.$btnAbrirCalendario = $newButton
+              j2eLinhaDeComandos.$linhaComandos.append($newButton)
+            })();
+
+            
+            (function _preparDropDownCalendario(){
+              const $newUlContCal = $containerPai.find('ul').clone(true)
+              $newUlContCal.find('li').empty()
+              $newUlContCal.find('li').append(/*html*/`
+                <div>
+                    <div id="date-picker"></div>
+                </div>  
+              `)
+
+              $newUlContCal.addClass('j2-container-datas')
+
+              j2eLinhaDeComandos.$dropCalendario = $newUlContCal
+              j2eLinhaDeComandos.$jQDatePicker = $newUlContCal.find('#date-picker')
+              $containerPai.append($newUlContCal)
+            })();
+
+            ;(function _construirDatePicker(){
+              j2eLinhaDeComandos.$jQDatePicker.datepicker({
+                showButtonPanel: true,
+                showAnim: "fold",
+                showOtherMonths: false,
+                dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
+                monthNames: [
+                  "Janeiro", 
+                  "Fevereiro",
+                  "Março",
+                  "Abril",
+                  "Maio",
+                  "Junho",
+                  "Julho",
+                  "Agosto",
+                  "Setembro",
+                  "Outubro",
+                  "Novembro",
+                  "Dezembro"
+                ],
+                beforeShow: function(input, inst) {
+                  debugger;
+                },
+                beforeShowDay: function(input, inst){
+                  /*[0]: true/false indicating whether or not this date is selectable
+                  [1]: a CSS class name to add to the date's cell or "" for the default presentation
+                  [2]: an optional popup tooltip for this date**/
+
+                  return [true, "", ""]
+                }
+              })
+            })()
+
+          }, {target : this})
           
           return 
           $aLinkAutos.observe('attributes', (rec)=>{
@@ -2986,6 +3086,8 @@ function fronendLoad(){
           
   
         }, {target : this})
+
+        
 
       }, {target : this})
     });
