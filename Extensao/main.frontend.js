@@ -2976,15 +2976,17 @@ function fronendLoad(){
               return
             $containerPai.attr('j2e-etq-calendario')
 
-            const j2eLinhaDeComandos = {
-              $containerPai: $containerPai
+            const calComponente = {
+              $containerPai: $containerPai,
+              datasEtiquetasAdicionas: []
             }
 
             ;(function _prepararLinhaDeComandos(){
-              const $linhaComandos = $containerPai.clone(false)
+              const $linhaComandos = $containerPai.clone(true)
               $linhaComandos.empty()
+              $linhaComandos.addClass('pb-5 pt-10')
               
-              j2eLinhaDeComandos.$linhaComandos = $linhaComandos
+              calComponente.$linhaComandos = $linhaComandos
               $containerPai.find('ul:first-of-type .selecionar-etiquetas').append($linhaComandos)
             })();
             
@@ -3004,15 +3006,24 @@ function fronendLoad(){
                 $ev.preventDefault()
                 $ev.stopPropagation()
 
-                j2eLinhaDeComandos.$dropCalendario.addClass('open')
+                calComponente.datasEtiquetasAdicionas = Array.from(jQ3('pje-selecionar-etiquetas .label-etiqueta'))
+                .map(e => e.textContent || e.innerText)
+                .filter(e => e.match(/\d{4}\.\d{2}\.\d{2}/))
+                .map(e => e.match(/\d{4}\.\d{2}\.\d{2}/).at(0))
+                .map(e => e.replaceAll('.', '-'))
+
+                calComponente.$jQDatePicker.datepicker( "refresh" )
+                calComponente.$dropCalendario.addClass('open')
+                calComponente.$dropCalendario.attr('j2-afc', '')
+                setTimeout(()=> calComponente.$dropCalendario.removeAttr('j2-afc'), 250)
               }
 
               $newButton.click(__callback)
               $newButton.mousedown(__callback)
               $newButton.mouseup(__callback)
 
-              j2eLinhaDeComandos.$btnAbrirCalendario = $newButton
-              j2eLinhaDeComandos.$linhaComandos.append($newButton)
+              calComponente.$btnAbrirCalendario = $newButton
+              calComponente.$linhaComandos.append($newButton)
             })();
 
             
@@ -3020,48 +3031,143 @@ function fronendLoad(){
               const $newUlContCal = $containerPai.find('ul').clone(true)
               $newUlContCal.find('li').empty()
               $newUlContCal.find('li').append(/*html*/`
-                <div>
-                    <div id="date-picker"></div>
-                </div>  
+                  <div id="date-picker"></div>
+                  <div class="col-md-12">
+                    <div class="pull-left  pb-5" id="ferr">
+                      <a class="btn btn-sm j2-tag-btn hidden" title="Fluir para Certificar Trânsito" j2-tag-a="">
+                        <i class="fa fa-tag" j2-tag-i></i>
+                        <span>YYYY.MM.DD</span>
+                      </a>
+                    </div>
+                    <div class="pull-right  pb-5" id="ferr">
+                      <button type="button" class="btn btn-primary">Hoje</button>
+                    </div>
+                  </div>
               `)
 
               $newUlContCal.addClass('j2-container-datas')
 
-              j2eLinhaDeComandos.$dropCalendario = $newUlContCal
-              j2eLinhaDeComandos.$jQDatePicker = $newUlContCal.find('#date-picker')
+              calComponente.$dropCalendario = $newUlContCal
+              calComponente.$jQDatePicker = $newUlContCal.find('#date-picker')
+              calComponente.$ferramentas = { 
+                $hoje: $newUlContCal.find('#ferr button'),
+                $etiqueta: $newUlContCal.find('#ferr a') 
+              }
               $containerPai.append($newUlContCal)
             })();
 
             ;(function _construirDatePicker(){
-              j2eLinhaDeComandos.$jQDatePicker.datepicker({
-                showButtonPanel: true,
+              jQ3.initialize('.ui-icon-circle-triangle-w, .ui-icon-circle-triangle-e, .ui-datepicker-buttonpane button', function(){
+                const $this = jQ3(this)
+                $this.is('.ui-icon-circle-triangle-w') && $this.addClass('pi pi-chevron-left')
+                $this.is('.ui-icon-circle-triangle-e') && $this.addClass('pi pi-chevron-right')
+                $this.is('button') && $this.attr('class', 'btn btn-primary')
+
+              }, {
+                target: calComponente.$jQDatePicker.get(0)
+              })
+
+              calComponente.$jQDatePicker.datepicker({
+                showButtonPanel: false,
                 showAnim: "fold",
-                showOtherMonths: false,
+                showOtherMonths: true,
+                currentText: "Hoje",
+                prevText: "",
+                nextText: "",
                 dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
                 monthNames: [
-                  "Janeiro", 
-                  "Fevereiro",
-                  "Março",
-                  "Abril",
-                  "Maio",
-                  "Junho",
-                  "Julho",
-                  "Agosto",
-                  "Setembro",
-                  "Outubro",
-                  "Novembro",
-                  "Dezembro"
+                  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
                 ],
-                beforeShow: function(input, inst) {
-                  debugger;
-                },
                 beforeShowDay: function(input, inst){
                   /*[0]: true/false indicating whether or not this date is selectable
                   [1]: a CSS class name to add to the date's cell or "" for the default presentation
                   [2]: an optional popup tooltip for this date**/
+                  
+                  const inputIsoString = input.toISOString().split('T').at(0)
 
-                  return [true, "", ""]
+                  let selecionavel = true
+                  let cssClasses = `d${inputIsoString}`
+                  let tooltip = ''
+
+                  if(calComponente.datasEtiquetasAdicionas.includes(inputIsoString))
+                    cssClasses = 'j2-data-tagged'
+
+                  return [selecionavel, cssClasses, tooltip]
+                },
+                onSelect: function(dateText, instDatpicker){
+                  const [mes, dia, ano] = dateText.split('/')
+                  const dataTexxIsoString = `${ano}-${mes}-${dia}`
+                  const $etiqueta = calComponente.$ferramentas.$etiqueta
+
+                  $etiqueta.find('span').text(`PZ ${ano}.${mes}.${dia}`)
+                  $etiqueta.removeClass('hidden')
+
+                  if(calComponente.datasEtiquetasAdicionas.includes(dataTexxIsoString))
+                    $etiqueta.addClass('disabled')
+                  else
+                    $etiqueta.removeClass('disabled')
+                },
+                onChangeMonthYear: function(year, month, inst){
+                  calComponente.$ferramentas.$etiqueta.addClass('hidden')
                 }
+              })
+              
+              //j2E.mods.Calendario.contarPrazo(new Date(`${items[i].data_disponibilizacao}T00:00:00.000-03:00`), 1)
+
+              jQ3(document).on('click', function(event) {
+                const $elVisivel = calComponente.$dropCalendario
+                const $target = jQ3(event.target)
+
+                if( $target.parents('.ui-datepicker-header').length )
+                  return
+                if (
+                  !$elVisivel.is(event.target) && 
+                  $elVisivel.has(event.target).length === 0 &&
+                  !$elVisivel.is('[j2-afc]')
+                  ) {
+                  $elVisivel.removeClass('open')
+                }
+              });
+
+              calComponente.$ferramentas.$hoje.click(()=>{
+                calComponente.$jQDatePicker.datepicker( "setDate", 0 )
+              })
+
+              calComponente.$ferramentas.$etiqueta.click(()=>{
+                const $_this = calComponente.$ferramentas.$etiqueta
+                const idProcesso = $aLinkAutos.attr('href').match(/idProcesso=[0-9]+/)?.at(0).match(/(\d+)/g)?.at(0)
+                const textoEtiqueta = $_this.text().trim()
+                const textoEtiquetaISO = textoEtiqueta.match(/\d{4}\.\d{2}\.\d{2}/).at(0).replaceAll('.', '-')
+              
+                __sendMessageToPje({
+                  action : 'requisitarJ2EPJeRest',
+                  PJeRest : 'j2EPJeRest.etiquetas.inserir',
+                  waitsResponse : true,
+                  arguments : [idProcesso, textoEtiqueta]
+                }, 
+                "PARENT_TOP", 
+                etiquetaNova => { 
+                  if(!etiquetaNova){
+                    jQ3.Toast("Etiqueta de data", `Etiqueta "${textoEtiqueta}" já está vinculada ao processo.`, "info")
+                    return
+                  }
+                  const taskId = $aLinkAutos.attr('href').match(/idTaskInstance=[0-9]+/)?.at(0).match(/(\d+)/g)?.at(0)
+
+                  etiquetaNova.taskId = taskId
+                  etiquetaNova.tag = etiquetaNova.nomeTag
+
+                  evBus.fire('on-adicionar-etiqueta-via-pje', {
+                    data: etiquetaNova,
+                  }, 'Etiqueta de data')
+
+                  jQ3.Toast('Etiqueta de data', `"${textoEtiqueta}" vinculada ao processo.`, "success")
+
+                  calComponente.datasEtiquetasAdicionas.push(`${textoEtiquetaISO}`)
+                  $_this.addClass('hidden')
+                  jQ3(`.j2-container-datas .d${textoEtiquetaISO}`).addClass('j2-data-tagged')
+                })
+
               })
             })()
 
@@ -3108,12 +3214,14 @@ function fronendLoad(){
   listenMessages();
 
 
-  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args) {
+  evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args, toasterTitulo) {
     const etiqueta = args.data
 
     const $_id = jQ3(`#${etiqueta.taskId}`)
     if(! $_id.length )
       return;
+    
+    toasterTitulo = toasterTitulo ? toasterTitulo : "Etiqueta rápida"
 
     var $card = $_id.parents('processo-datalist-card')
 
