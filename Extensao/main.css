@@ -1581,6 +1581,62 @@ input[j2e-data-input]{
     user-select: none;
 }
 
+ul[aria-labelledby="btn-gerenciar-etiquetas"]{
+    width: 340px;
+}
+
+ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
+    width: inherit
+}
+
+.j2-container-datas{
+    display: none !important;
+    width: 340px;
+    user-select: none;
+}
+
+.j2-container-datas.open{
+    display: flex !important;
+}
+
+.j2-container-datas li{
+    width: inherit;
+}
+
+.j2-container-datas span.ui-icon{
+    text-indent: unset;
+}
+
+.j2-container-datas .ui-state-active{
+    background-color: #0084ac !important;
+}
+
+.j2-container-datas .j2-tag-btn{
+    color: black;
+}
+
+.j2-container-datas td.j2-data-tagged a {
+    background-color: #f6d290;
+    font-weight: bolder;
+    border-radius: 5px !important;
+}
+
+.j2-container-datas td.j2-data-tagged a:hover {
+    background-color: rgb(246 210 144 / 60%) !important;
+}
+
+.j2-container-datas td.j2-data-tagged a.ui-state-active {
+    border: 0px solid;
+    background-color: #ffbd45 !important;
+    color: black !important;
+    box-shadow: 0px 0px 0px 2px rgb(0 0 0);
+}
+
+.j2-container-datas .j2-data-tagged.ui-datepicker-today a{
+    background-color: #c6b89e !important;
+}
+
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
