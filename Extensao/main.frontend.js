@@ -3043,6 +3043,7 @@ function fronendLoad(){
               $iC.switchClass('fa-tag', 'fa-calendar-alt')
               $i.after($iC)
               $newButton.find('.numero-etiquetas-atribuidas').remove()
+              $newButton.removeClass('etiqueta-ativa')
               
 
               const __callback = ($ev)=>{
@@ -3056,6 +3057,7 @@ function fronendLoad(){
                 .map(e => e.replaceAll('.', '-'))
 
                 calComponente.$jQDatePicker.datepicker( "refresh" )
+                calComponente.$ferramentas.$etiqueta.addClass('hidden')
                 calComponente.$dropCalendario.addClass('open')
                 calComponente.$dropCalendario.attr('j2-afc', '')
                 setTimeout(()=> calComponente.$dropCalendario.removeAttr('j2-afc'), 250)
@@ -3197,12 +3199,16 @@ function fronendLoad(){
                   }
                   const taskId = $aLinkAutos.attr('href').match(/idTaskInstance=[0-9]+/)?.at(0).match(/(\d+)/g)?.at(0)
 
-                  etiquetaNova.taskId = taskId
-                  etiquetaNova.tag = etiquetaNova.nomeTag
+                  const eventData = {
+                    data: {
+                      taskId: taskId,
+                      tag: etiquetaNova.nomeTag,
+                      idTag: etiquetaNova.id,
+                      idProcesso: idProcesso
+                    }
+                  }
 
-                  evBus.fire('on-adicionar-etiqueta-via-pje', {
-                    data: etiquetaNova,
-                  }, 'Etiqueta de data')
+                  evBus.fire('on-adicionar-etiqueta-via-pje', eventData, 'Etiqueta de data')
 
                   jQ3.Toast('Etiqueta de data', `"${textoEtiqueta}" vinculada ao processo.`, "success")
 
@@ -3259,16 +3265,15 @@ function fronendLoad(){
 
   evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args, toasterTitulo) {
     const etiqueta = args.data
-
-    const $_id = jQ3(`#${etiqueta.taskId}`)
-    if(! $_id.length )
-      return;
-    
     toasterTitulo = toasterTitulo ? toasterTitulo : "Etiqueta rápida"
 
-    var $card = $_id.parents('processo-datalist-card')
+    const $card = jQ3(`#${etiqueta.taskId}`).parents('processo-datalist-card')
+    const $selEtiqContainer = jQ3('pje-selecionar-etiquetas .labels-etiquetas')
+    const $botaoGerenciarEtiqueta = jQ3('#btn-gerenciar-etiquetas')
+    const $qtdEtiquetas = $botaoGerenciarEtiqueta.find('.numero-etiquetas-atribuidas')
+    
 
-    var $novaEtiqueta = jQ3(`
+    const $novaEtiqueta = jQ3(/*html*/`
       <div _ngcontent-nam-c13 class="label label-info label-etiqueta ng-star-inserted j2EtiquetaEstilo">
         <span _ngcontent-nam-c13 >${etiqueta.tag}</span>
         <span _ngcontent-nam-c13 class="icon-desvincular-tag pl-5" title="Excluir etiqueta ${etiqueta.tag}">
@@ -3276,10 +3281,16 @@ function fronendLoad(){
         </span>
       </div>
     `)
+    const $novaEtiqueta2 = $novaEtiqueta.clone(true)
 
     $card.find(' > div > div:nth-child(3)').append($novaEtiqueta)
+    $selEtiqContainer.append($novaEtiqueta2)
+    
 
-    $novaEtiqueta.find('i').click(()=>{
+    $botaoGerenciarEtiqueta.addClass('etiqueta-ativa')
+    $qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) + 1)
+
+    const ____clickCallback = ()=>{
       __sendMessageToPje({
         action : 'requisitarJ2EPJeRest',
         PJeRest : 'j2EPJeRest.etiquetas.remover',
@@ -3290,10 +3301,19 @@ function fronendLoad(){
       function(data){
         if(data === etiqueta.idTag){
           $novaEtiqueta.remove()
+          $novaEtiqueta2.remove()
+
+          $qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) - 1)
+          if($qtdEtiquetas.text() === 0 )
+            $botaoGerenciarEtiqueta.removeClass('etiqueta-ativa')
+
           jQ3.Toast("Etiqueta rápida", `"${etiqueta.tag}" desvinculada.`, "success")
         }else
           jQ3.Toast("Etiqueta rápida", `Erro ao desvincular "${etiqueta.tag}": ${data}.`, "error")
       })
-    })
+    }
+
+    $novaEtiqueta.find('i').click(____clickCallback)
+    $novaEtiqueta2.find('i').click(____clickCallback)
   })
 };
