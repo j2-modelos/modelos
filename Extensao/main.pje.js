@@ -72,8 +72,16 @@ function pjeLoad(){
         case 'triggerEventFromFrontend':
           triggerEventFromFrontend(_act, _load);
           break;
+        case 'abrirAutosDigitaisFixados':
+          abrirAutosDigitaisFixados(_act, _load);
+          break;
       }
     
+    }
+
+    const ID_JANELA_AUTOS_DIGITAIS_FIXADOS = guid()
+    function abrirAutosDigitaisFixados(action, load){
+      j2EOpW.center(load.url, 'autosDigSentinela', ID_JANELA_AUTOS_DIGITAIS_FIXADOS)
     }
 
     function triggerEventFromFrontend(action, load){
@@ -585,6 +593,10 @@ function pjeLoad(){
             }
         })
       }
+
+      const _criarTaskScroller = ()=>{
+        j2EUi.createTaskScroller(_tarfProp.personalizacao.scroller)
+      }
       
       if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
         return; 
@@ -598,6 +610,7 @@ function pjeLoad(){
       _tarfProp.personalizacao.transicaoRemover                          && _transicaoRemover();
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
       _tarfProp.personalizacao.painel                                    && _criarPainel();
+      _tarfProp.personalizacao.scroller                                  && _criarTaskScroller()
       
       if( !(_tarfProp.personalizacao.procedimentoEspecializado) )
         return;
@@ -634,7 +647,7 @@ function pjeLoad(){
                 if(_tarfProp.exibirADMGrupos && !(_tarfProp.exibirADMGrupos.includes(val.j2eG)))
                   return;
                 
-                var jGrpDiv = jQ3('<div>', {class : 'rich-panel-body panel j2eADMPanel', j2e : val.j2eG});
+                var jGrpDiv = jQ3('<div>', {class : 'rich-panel-body panel j2eADMPanel', j2e : val.j2eG, id: `j2eADMPanel-${val.j2eG.toLowerCase()}`});
                 jQ3('<div>', {class : 'rich-panel col-sm-12'}).append(
                   jQ3('<div>', {class : 'rich-panel-header j2eADMHeader', text : val.text})
                 ).append(
@@ -1650,6 +1663,7 @@ function pjeLoad(){
           //Seletor
           if(!(j2E?.env?.urlParms?.j2Expedientes))
             return;
+
           if( ! $tr.parents('table:first').find('> thead[j2]').length ){
             $tr.parents('table:first').find('> thead').attr('j2', '')
             .find('tr').prepend('<th j2-seletor-expediente></td>')
@@ -1670,6 +1684,9 @@ function pjeLoad(){
           $tr.prepend($seletor)
 
           //inserir o lápis
+          if(! EstaVencido)
+            return
+          
           const $alvoEditorData = $tr.find('td h6:first-child:not(.alert-heading)')
           const dataText = $alvoEditorData.text()
           if(!dataText.length) 
@@ -4233,6 +4250,18 @@ function pjeLoad(){
     });
   }
 
+  function destacarPrazoDeSistema(){
+    jQ3.initialize('#consultaPrazosListDataTable\\:tb', function(){
+      const $this = jQ3(this)
+
+      $this.find('td:nth-child(5)').each(function(idx, td){
+        const $td = jQ3(td)
+        if($td.text().trim().toLowerCase().match(/sistema/))
+          $td.parent().addClass('danger')
+      })
+    })
+  }
+
 
   function personalizarAtalhosADireitaAutosDigitais(){
     jQ3.initialize('#navbar\\:ajaxPanelAlerts .icone-menu-abas', function(){
@@ -4469,6 +4498,7 @@ function pjeLoad(){
     case '/pje/ConsultaPrazos/listView.seam':
     case '/pje/ConsultaPrazos/listView.seam#':
       preparComandoDeEtiquetagem();
+      destacarPrazoDeSistema()
       break;
     
     case '/pje/Painel/painel_usuario/include/agrupadorPje2.seam':

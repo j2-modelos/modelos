@@ -35,10 +35,10 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesigSemSala"/>
-            <gItem id="intmItAudDesigSemSalaUNA"/>
+            <!--gItem id="intmItAudDesigSemSalaUNA"/-->
             <gItem id="intmItAudDesigExTiExSemSala"/>
             <gItem id="intmItAudRedesigSemSala"/>
-            <gItem id="intmItAudRedesigSemSalaUNA"/>
+            <!--gItem id="intmItAudRedesigSemSalaUNA"/-->
             <gItem id="intmItAudCEJUSC"/>
             <gItem id="intmItAudCancel"/>
             <gItem id="intmItAudInstrucaoDeferimento"/>

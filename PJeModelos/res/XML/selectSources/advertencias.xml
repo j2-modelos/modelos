@@ -96,7 +96,7 @@ and open the template in the editor.
             </itemContent>
         </item>    
         
-        <item id="advtItApresentacaoDefesaJec" label="CDC" dataPlus="">
+        <item id="advtItApresentacaoDefesaJec-velho" label="CDC" dataPlus="">
             <competencias>
                 <competencia id="juizadoCivel"/>
             </competencias>
@@ -105,6 +105,20 @@ and open the template in the editor.
                    #:u{#:b{A CONTESTAÇÃO, DEVERÁ SER APRESENTADA ATÉ A DATA ACIMA ESPECIFICADA}}, por escrito ou oralmente, por si ou através de 
                    advogado, e na oportunidade de audiência de instrução, terá oportunidade de produzir todas as provas admitidas no sistema dos Juizados 
                    Especiais, inclusive testemunhal, podendo apresentar em banca até três testemunhas maiores, ou, caso seja 
+                   necessária à intimação, o requerimento deverá ser encaminhado à Secretaria deste Juizado no mínimo até 05 (cinco) 
+                   dias antes da data agendada para realização dessa audiência,
+                </data>
+            </itemContent>
+        </item>
+        <item id="advtItApresentacaoDefesaJec" label="CDC" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                   #:u{#:b{A CONTESTAÇÃO, DEVERÁ SER APRESENTADA}}, por escrito ou oralmente, por si ou através de 
+                   advogado, e na oportunidade de audiência de instrução, terá oportunidade de produzir todas as provas admitidas no sistema dos Juizados 
+                   Especiais, inclusive testemunhal, podendo apresentar em ban ca até três testemunhas maiores, ou, caso seja 
                    necessária à intimação, o requerimento deverá ser encaminhado à Secretaria deste Juizado no mínimo até 05 (cinco) 
                    dias antes da data agendada para realização dessa audiência,
                 </data>

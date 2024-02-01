@@ -4767,7 +4767,7 @@ try {
                                       ${meioDeComunicacao.toLowerCase().match(/diário eletrônico/) ?
                                        '#:BR{}Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!' :
                                        `#:BR{}
-                                        Contudo, em sendo o caso de a(s) parte(s) pode(m) ser #:I{jus postulandi}, prossiga normalmente.
+                                        Contudo, em sendo o caso de a(s) parte(s) ser(em) #:I{jus postulandi}, prossiga normalmente.
                                         #:BR{}#:BR{}
                                         Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!`
                                       }
@@ -5835,7 +5835,7 @@ try {
             text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, onde se achava presente Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.'
           },            
           magistrado : {
-            text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, onde se achava presente Sua Excelência XXXDeOrdemXXX, comigo, Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.',
+            text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, sob a presidência de Sua Excelência XXXDeOrdemXXX, comigo, Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.',
             opts : {
               ucased : false,
               styleFormatIndex : 1,

@@ -1118,6 +1118,7 @@ function fronendLoad(){
       jQ3('div.label.label-info.label-etiqueta.ng-star-inserted', _this).addClass('j2EtiquetaEstilo');
     }
     function inserirFolder(_this){
+      const __lockr = new createLockr('j2E')
       var ___TEMPLATE___ = '<div j2e-folder class="col-sm-12 no-padding"><span j2e-folder class="ui-multiselect-trigger-icon ui-clickable pi pi-chevron-up" style="float: right;cursor: pointer;"></span></div>';
       var $div = jQ3(___TEMPLATE___);
       var $span = $div.find('span');
@@ -1126,18 +1127,30 @@ function fronendLoad(){
       
       $div.appendTo($this);
       
-      function __foldIn(){
+      function __foldIn(noAnimation){
         $this.attr('j2-initial-height', $this.css('height') );
 
-        var cl = $this.find('> div:not("[j2e-folder]"):last').clone();
-        $this.animate({ height : '45px' }, 500).find(' > div:not("[j2e-folder]")').hide(500);
-        setTimeout(function(){
+        if(noAnimation){
+          var cl = $this.find('> div:not("[j2e-folder]"):last').clone();
+          $this.css({ height : '45px' }).find(' > div:not("[j2e-folder]")').hide();
+            
           cl.find('> span, > div').remove();
           cl.appendTo($this);
           cl.css({opacity : 0, display : '', marginTop : '-16px'});
-          cl.animate({opacity : 1, paddingLeft : '25px'}, 500);
-          setTimeout(function(){ $span.animateRotate(0, 180, 500); }, 500 );
-        }, 500);
+          cl.css({opacity : 1, paddingLeft : '25px'});
+          $span.animateRotate(0, 180, 500);
+            
+        }else{
+          var cl = $this.find('> div:not("[j2e-folder]"):last').clone();
+          $this.animate({ height : '45px' }, 500).find(' > div:not("[j2e-folder]")').hide(500);
+            setTimeout(function(){
+              cl.find('> span, > div').remove();
+              cl.appendTo($this);
+              cl.css({opacity : 0, display : '', marginTop : '-16px'});
+              cl.animate({opacity : 1, paddingLeft : '25px'}, 500);
+              setTimeout(function(){ $span.animateRotate(0, 180, 500); }, 500 );
+            }, 500);
+        }
         $span.attr('j2e-is-folded', true);
         
       }
@@ -1147,7 +1160,7 @@ function fronendLoad(){
         if(!(_fg)){
           __foldIn();
           
-          lockrSes.set('.j2e-is-folded:' + $this.find('[id]').prop('id'), true );
+          __lockr.set('.j2e-is-folded:' + $this.find('[id]').prop('id'), true );
         }else{
           var cl = $this.find('> div:not("[j2e-folder]"):last');
           cl.animate({opacity : 0, paddingLeft : '0px'}, 500);
@@ -1160,12 +1173,12 @@ function fronendLoad(){
           }, 525);
           $span.removeAttr('j2e-is-folded');
           
-          lockrSes.set('.j2e-is-folded:' + $this.find('[id]').prop('id'), false );
+          __lockr.set('.j2e-is-folded:' + $this.find('[id]').prop('id'), false );
         }
       });
       
-      if( lockrSes.get('.j2e-is-folded:' + $this.find('[id]').prop('id'), false) === true ){
-        __foldIn();
+      if( __lockr.get('.j2e-is-folded:' + $this.find('[id]').prop('id'), false) === true ){
+        __foldIn(true);
       }
     }
     function formatarPrioridade(_this){
@@ -1580,6 +1593,8 @@ function fronendLoad(){
           "PARENT_TOP", 
           __buildPseudotarefa);
           
+          $procsUl.find('.selecionado').removeClass('selecionado')
+          $target.parents('.datalist-content').addClass('selecionado')
           return;
         }
         
@@ -1904,6 +1919,30 @@ function fronendLoad(){
             const movText = $cardUltimoMovText.text()
             $cardUltimoMovText.text( `${movText} (${data.PJeFrontEndTarefaCardDataNaDescricaoDoMovimento()})` )
           });
+
+          if(!decodeURI(window.location.hash.split('/')[3]).match(/intimação/))
+            return
+
+          __sendMessageToPje({
+            action : 'requisitarJ2EPJeRest',
+            PJeRest : 'j2EPJeRest.processo.getDadosCompletos',
+            waitsResponse : true,
+            arguments : [ numProc ] 
+          }, 
+          "PARENT_TOP",
+          function(response){
+            const partesPoloAtivo  = response.result.polo[0].parte.filter(p=>p.any[0].tipoParte.tipoParte!=='ADVOGADO')
+            const partesPoloPassivo  = response.result.polo[1].parte.filter(p=>p.any[0].tipoParte.tipoParte!=='ADVOGADO')
+
+            $this.find('a.selecionarProcesso').after(`<div style="position: absolute; right:0; color: rgb(51 51 51);">
+              ${partesPoloAtivo.length > 1 ? `<span style="vertical-align: sub;font-size: 75%;">${partesPoloAtivo.length}</span>` : ''}
+              <i class="fa ${partesPoloAtivo?.some(p=>p.advogado) ? 'fa-user-friends' : 'fa-user'} mr-5" title="Representante"></i>
+              X
+              <i class="fa ${partesPoloPassivo?.some(p=>p.advogado) ? 'fa-user-friends' : 'fa-user'} ml-5" title="Representante"></i>
+              ${partesPoloPassivo.length > 1 ? `<span style="vertical-align: sub;font-size: 75%;">${partesPoloPassivo.length}</span>` : ''}
+            </div>`)
+              
+          })
           
           /*delayCall(function(){
             var tarfData = {
@@ -2190,7 +2229,7 @@ function fronendLoad(){
 
         //persolanizações
         const TEMPLATE_BUTTON_SEM_TOGGLER = `
-          <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Vincular etiqueta">
+          <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Fixar janela dos autos digitais">
             <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-lock-open" j2-i-lock></i>
             <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-book"></i>
           </button>`
@@ -2212,7 +2251,7 @@ function fronendLoad(){
             return;
 
           const $eventTargetLi = $uiDadosDaList.find('.selecionado').parents('li')
-          __openSentinela($eventTargetLi)
+          __openAutosDigitaisFixados($eventTargetLi)
         })
 
         const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
@@ -2223,12 +2262,12 @@ function fronendLoad(){
 
           const $eventTargetLi = jQ3(_ev.target).parents('li');
           console.log('TESTANDO: click')
-          __openSentinela($eventTargetLi)
+          __openAutosDigitaisFixados($eventTargetLi)
         })
 
         const idJanel = _guid()
 
-        function __openSentinela($eventTargetLi){
+        function __openAutosDigitaisFixados($eventTargetLi){
           if( ! $butSentinela.is('.btn-primary') )
             return;
 
@@ -2242,7 +2281,11 @@ function fronendLoad(){
           _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
             const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}`
 
-            j2EOpW.center(url, 'autosDigSentinela', idJanel)
+            __sendMessageToPje({
+              action : 'abrirAutosDigitaisFixados',
+              url
+            }, 
+            "PARENT_TOP");
           })
         }
 

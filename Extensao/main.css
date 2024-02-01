@@ -1331,8 +1331,27 @@ th[j2-seletor-expediente]{
     height: 0px;
 }
 
-div > .tarefa-numero-processo.process {
+.selecionarProcesso > div > .tarefa-numero-processo {
     font-size: 16px !important;
+}
+
+.tarefa-numero-processo.text-danger{
+    font-size: 14px !important;
+}
+  
+
+div.datalist-content.selecionado{
+    background: rgb(243 255 238);
+    border-left: 3px solid #48ce35;
+}
+
+div.datalist-content.selecionado:hover {
+    background: rgb(227 244 220);
+    border-left: 3px solid #48ce35;
+}
+
+div.datalist-content.selecionado .tarefa-numero-processo{
+    color: rgb(34 123 21);
 }
 
 i[j2-np-copiar]{

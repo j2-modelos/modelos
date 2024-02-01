@@ -945,6 +945,9 @@ try {
               })(),
               'nomeOAB' : (function(){
                 if( gVG('partesDetalhadaPoloPasssivo').length > 2){
+                  if(! gVG('partesDetalhadaPoloPasssivo').split(': ')[1]?.split(', '))
+                    return ''
+
                   var _ = [];
                   var __ = gVG('partesDetalhadaPoloPasssivo').split(': ')[1].split(', ');
                   forEach(__, function(el){
@@ -1087,10 +1090,11 @@ try {
           },
           validacao: {
             desabilitarSeAudienciaConciliacaoPJEC: function(){ 
-              if ( gVG('classeProcesso').toLowerCase().match(/procedimento do juizado especial cível/) !== null )
+              return false
+              /*if ( gVG('classeProcesso').toLowerCase().match(/procedimento do juizado especial cível/) !== null )
                 return gVG('tipoAudiencia').toLowerCase().match(/conciliação/) !== null
               else
-                return false
+                return false*/
             }
           }
          },
