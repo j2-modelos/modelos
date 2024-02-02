@@ -1408,7 +1408,6 @@ function pjeLoad(){
     jQ3.initialize('select#cbTDDecoration\\:cbTD option', function(a, b, c){
       var jEl = jQ3(this);
       switch(jEl.text()){
-        case 'Selecione':
         case 'Ato Ordinatório':
         case 'Certidão':
         case 'Mensagem(ns) de E-mail':

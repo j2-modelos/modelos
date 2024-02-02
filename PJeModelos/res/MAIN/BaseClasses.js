@@ -1571,6 +1571,7 @@ try {
                   'quarta-feira', 'quinta-feira', 'sexta-feira', 
                   'sábado'];
         var _feriadosReligiososPadroes;
+        const anoCorrente = new Date().getFullYear()
         
         var _id = function(id){
           return id + '.'  + escopoTemporalAno; 
@@ -1644,7 +1645,7 @@ try {
           return calendarioEvento;
         };
 
-        var __parseData = function(_data, mes, ev){
+        var __parseData = function(_data, mes, ev, eDataFinal){
           var _data = _feriadosReligiososPadroes[_data] ? _feriadosReligiososPadroes[_data] : _data;
           var _thisScopeYYYY = escopoTemporalAno;
           var _thisScopeYYAA = escopoTemporalAno;
@@ -1652,10 +1653,16 @@ try {
           if(mes.month.calId === 1){
             _thisScopeYYAA = escopoTemporalAno - 1;
             _thisScopeYYYY = escopoTemporalAno;
-          }else if(mes.month.calId === 12){
-            _thisScopeYYAA = escopoTemporalAno;
-            _thisScopeYYYY = escopoTemporalAno + 1;
+          }else if(mes.month.calId === 12) {
+            if (escopoTemporalAno === anoCorrente){
+              _thisScopeYYAA = escopoTemporalAno
+              _thisScopeYYYY = escopoTemporalAno + 1
+            }else if(eDataFinal){
+              _thisScopeYYAA = escopoTemporalAno
+              _thisScopeYYYY = anoCorrente
+            }
           }
+          
           
           var rep = [
             { key : 'YYYY', value : _thisScopeYYYY },
@@ -1700,7 +1707,7 @@ try {
           calendarioEvento = __verificarTransferenciaDeData(calendarioEvento);
           
           var __dataIn = __parseData( calendarioEvento.dataInicial, mes, calendarioEvento );
-          var __dataFin = calendarioEvento.dataFinal ? __parseData( calendarioEvento.dataFinal, mes, calendarioEvento ) : -1;
+          var __dataFin = calendarioEvento.dataFinal ? __parseData( calendarioEvento.dataFinal, mes, calendarioEvento, true ) : -1;
           
           function __descDatas(){
             var ini = __dataIn;
@@ -2001,7 +2008,7 @@ try {
                    ( dispLeg.idDropbox 
                      ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) 
                      : (dispLeg.idDropboxV2 
-                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao))
+                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao).replaceAll('/', '-'))
                         : '') );
         
         if( _url.length === 0 )

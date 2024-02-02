@@ -34,6 +34,8 @@
                       dataInicial="YYYY-CARNAVAL-SEG" tipo="feriado" abrangencia="estadual-forense" recorrencia="anual">
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" anoVigencia="2023" refArtParInc="Art. 1º, I"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, II" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     <CalendarioEvento id="ceedcd88-f711-4797-8156-52712e2c248f" descricao="Feriado Forense - Terça-feira de Carnaval" 
@@ -41,6 +43,8 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, II"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, III" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     <CalendarioEvento id="16fd7e25-8222-4cc7-96c0-fd4b9351fbab" descricao="Feriado Forense - Quarta-feira de Cinzas" 
                       dataInicial="YYYY-CARNAVAL-QUA" tipo="ponto-facultativo" abrangencia="estadual-forense" recorrencia="anual">
@@ -55,20 +59,37 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 3º, I"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 3º, I" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     <CalendarioEvento id="0958fab9-206b-4884-b3ba-48c30ca00206" descricao="Feriado Forense - Semana Santa - quinta-feira" 
                       dataInicial="YYYY-PASCOA-QUI" tipo="feriado" abrangencia="estadual-forense" recorrencia="anual">
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, III"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, IV" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     <CalendarioEvento id="36dc4430-a756-44ac-90c5-64149bec5abb" descricao="Feriado Forense - Semana Santa - Paixão de Cristo - sexta-feira" 
                       dataInicial="YYYY-PASCOA-SEX" tipo="feriado" abrangencia="estadual-forense" recorrencia="anual">
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, IV"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, V" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     
+    <!-- CORPUS CHRIST -->
+    <CalendarioEvento id="da238460-d1df-4348-8a03-d419ebac6dc9" descricao="Dia de Corpus Christi" 
+                      dataInicial="YYYY-CORPUS" tipo="feriado" abrangencia="municipal" recorrencia="anual">
+        <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
+        <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
+                         anoVigencia="2023" refArtParInc="Art. 3º, II"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 2º" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        
+        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, II" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
+    </CalendarioEvento>
     
     
     <!-- ABRIL -->
@@ -87,16 +108,12 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, VI"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, VI" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     
     
-    <!-- CORPUS CHRIST -->
-    <CalendarioEvento id="da238460-d1df-4348-8a03-d419ebac6dc9" descricao="Dia de Corpus Christi" 
-                      dataInicial="YYYY-CORPUS" tipo="ponto-facultativo" abrangencia="estadual-forense" recorrencia="anual">
-        <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
-        <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
-                         anoVigencia="2023" refArtParInc="Art. 3º, II"/>
-    </CalendarioEvento>
+
     
     
     <!-- JULHO -->
@@ -105,7 +122,10 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" refArtParInc="Art. 2º" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 2º"/>
-        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 2º" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+
+        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, III" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
     </CalendarioEvento>
     <CalendarioEvento id="1a06dd22-8731-4c2c-9b53-a94bbca6536b" descricao="Adesão do Maranhão à Independência do Brasil;" 
                       dataInicial="YYYY-07-28" tipo="feriado" abrangencia="estadual" recorrencia="anual">
@@ -151,12 +171,17 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" refArtParInc="Art. 2º" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 2º"/>
-        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 2º" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+
+        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, IV" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
     </CalendarioEvento>
     
     <CalendarioEvento id="8227473e-9d0d-405a-a859-467e6c9b8196" descricao="Dia do Servidor Público" 
                       dataInicial="YYYY-10-28" tipo="feriado" abrangencia="estadual" recorrencia="anual">
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, VII" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
         
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
@@ -178,6 +203,8 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, XII"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 1º, VIII" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
