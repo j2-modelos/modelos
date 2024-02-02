@@ -22,6 +22,7 @@ function pjeLoad(){
       switch(event.origin){
         case 'https://frontend.prd.cnj.cloud':
         case 'https://web.whatsapp.com':
+        case 'https://pje.tjma.jus.br':
           break;
           
         default:
@@ -72,6 +73,9 @@ function pjeLoad(){
         case 'triggerEventFromFrontend':
           triggerEventFromFrontend(_act, _load);
           break;
+        case 'triggerEventToFrontend':
+          triggerEventToFrontend(_act, _load);
+          break;
         case 'abrirAutosDigitaisFixados':
           abrirAutosDigitaisFixados(_act, _load);
           break;
@@ -82,6 +86,16 @@ function pjeLoad(){
     const ID_JANELA_AUTOS_DIGITAIS_FIXADOS = guid()
     function abrirAutosDigitaisFixados(action, load){
       j2EOpW.center(load.url, 'autosDigSentinela', ID_JANELA_AUTOS_DIGITAIS_FIXADOS)
+    }
+
+    function triggerEventToFrontend(action, _load){
+      var load = {
+        action : 'triggerEventFromPJe',
+        evento : action.evento,
+        orgAction: action
+      };
+  
+      __sendMessageToFrotEnd(load, '#ngFrame');
     }
 
     function triggerEventFromFrontend(action, load){
@@ -2109,6 +2123,21 @@ function pjeLoad(){
       lg('verificarSePaginaDeuErro', 'window load :', new Date().getTime() );     
       setTimeout(function(){obs.disconnect();}, 1000);
     });*/
+  }
+
+  function __sendMessageToOpener(load){
+    if(!(load.j2)) 
+      load.j2 = true;
+    if(!(load.pathname)) 
+      load.pathname = window.location.pathname;
+    if(!(load.origin)) 
+      load.origin = window.location.origin;
+
+    const openerOrigin = window.opener?.location?.origin
+            
+    lg('https://pje.tjma.jus.br sending message to opener ' + window.opener?.location?.origin + ':', load );  
+
+    window.opener.postMessage( load, openerOrigin );
   }
 
   function __sendMessageToFrotEnd(load, iframe){
@@ -4293,8 +4322,28 @@ function pjeLoad(){
           if(etiquetaDocNaoLido)
             j2EPJeRest.etiquetas.remover(idProcesso, etiquetaDocNaoLido.id)
             .done(()=>{
-              toaster("Autos Digitais", `Etiqueta "Documento não lido" removida.`, "success") 
-            })
+            toaster("Autos Digitais", `Etiqueta "Documento não lido" removida.`, "success") 
+            
+            if( j2E.env.urlParms.j2 !== 'fixarAutos' )
+              return
+
+            const j2Action = {
+              action : 'triggerEventToFrontend',
+              evento : {
+                tipo : `on-remover-etiqueta-via-autos-digitais`,
+                argumentos : { 
+                  origem: 'autos digistais com sentinela',
+                  idProcesso: idProcesso,
+                  idTag: etiquetaDocNaoLido.id,
+                  etiquetaInst: etiquetaDocNaoLido,
+                  numeroUnico:  jQ3('a.titulo-topo.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.at(0),
+                  idTask: j2E.env.urlParms?.idTaskInstance || 0,
+                  tipo : 'informa a remoção de etiqueta pelo comando de marcar leitura'
+                }
+              }
+            }
+            __sendMessageToOpener(j2Action)  
+          })
         })
       })
     })

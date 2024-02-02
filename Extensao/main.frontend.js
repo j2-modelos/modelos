@@ -2206,6 +2206,23 @@ function fronendLoad(){
       })*/
     }
 
+    function registrarEventosListaTarefas(_processos_tarefa){
+      evBus.on('on-remover-etiqueta-via-autos-digitais', function(evento, argumentos){
+        console.log('argumentos: ', argumentos)
+        const $processosTarefa = jQ3(_processos_tarefa)
+        const $tagLiEventIdTask = $processosTarefa.find(`[id="${argumentos.idTask}"]`).parents('li')
+        const nomeTarefa = decodeURIComponent(window.location.hash.split('/').at(3))
+
+        switch(nomeTarefa){
+          case 'Documentos não lidos':
+            $tagLiEventIdTask.hide(750)
+            return
+        }
+
+        //remover etiqueta do cartão
+        $tagLiEventIdTask.find(`.label-etiqueta:contains("${argumentos.etiquetaInst.tagNome}")`).remove()
+      })
+    }
     
     function ajustarBarraSelecacoProcessosEAplicarPersonalizacoes(_this){
       function _guid() {
@@ -2272,6 +2289,7 @@ function fronendLoad(){
             return;
 
           const [numProc] = $eventTargetLi.find('.tarefa-numero-processo').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+          const idTaskInstance = $eventTargetLi.find('.tarefa-numero-processo [id]').attr('id')
 
           if($uiDadosDaList.lasNumProc === numProc)
             return;
@@ -2279,7 +2297,7 @@ function fronendLoad(){
           $uiDadosDaList.lasNumProc = numProc
 
           _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
-            const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}`
+            const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}&idTaskInstance=${idTaskInstance}&j2=fixarAutos`
 
             __sendMessageToPje({
               action : 'abrirAutosDigitaisFixados',
@@ -2324,6 +2342,7 @@ function fronendLoad(){
     function inicializacaoDiversasDeTarefaAtivaComListaDePendencias(){
       jQ3.initialize('processos-tarefa', function(){
         var _processos_tarefa = this
+        
         jQ3.initialize('filtro-tarefas span.text-truncate.uppercase.nome-tarefa:first-child', function(){          
           formatarNomeAlternativoListaTrefaAtiva(this);
           prepararPseudotarefaAtiva(this);
@@ -2354,6 +2373,8 @@ function fronendLoad(){
           personalisarFiltroTarefas( this )
         },
         {target : this});
+
+        registrarEventosListaTarefas(_processos_tarefa)
 
       });
     }
@@ -2978,7 +2999,7 @@ function fronendLoad(){
           var $head = jQ3(_thisHeader)
           var $butExpand = $tooB.find(' > :first-child')
           
-          var $butSentinela = jQ3(`
+          /*var $butSentinela = jQ3(`
 
           <button class="btn btn-sm btn-default pull-right" placement="bottom" title="Fixar autos digitais à tarefa" 
                   type="button">
@@ -3008,7 +3029,7 @@ function fronendLoad(){
             __openSentinela()
           })
       
-          $tooB.prepend($butSentinela)
+          $tooB.prepend($butSentinela)*/
 
 
           /* preparar o menu de data do processo */
