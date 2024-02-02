@@ -4501,6 +4501,34 @@ function pjeLoad(){
       }
     }
 
+    function ___enviarEventoDeRemocaoDeEtiquetaAoOpener({
+      idProcesso, 
+      idTag, 
+      etiquetaInst, 
+      idTaskInstance,
+      numeroUnico
+    }){
+      if( j2E.env.urlParms.j2 !== 'fixarAutos' )
+        return
+
+      const j2Action = {
+        action : 'triggerEventToFrontend',
+        evento : {
+          tipo : `on-remover-etiqueta-via-autos-digitais`,
+          argumentos : { 
+            origem: 'autos digistais com sentinela',
+            idProcesso,
+            idTag,
+            etiquetaInst,
+            numeroUnico,
+            idTask: idTaskInstance || 0,
+            tipo : 'informa a remoção de etiqueta pelo comando de marcar leitura'
+          }
+        }
+      }
+      __sendMessageToOpener(j2Action)  
+    }
+
     const TEMPLATE_EMPTY = /*html*/`
       <li class="dropdown drop-menu menu-alertas">
           <a href="#" class="btn-alertas dropdown-toggle" title="Etiquetas do processo" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
@@ -4560,7 +4588,8 @@ function pjeLoad(){
         if($badge.j2E.equals(0))
           $containerEtiquetas.find('#info-nenhuma-etiqueta').show()        
         const idProcesso =  j2E.env.urlParms.idProcesso
-        
+        const numeroUnico = jQ3('a.titulo-topo.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.at(0)
+        const idTaskInstance = j2E.env.urlParms.idTaskInstance
 
         jQ3.initialize('li.menu-conteudo div.media-body:not(.j2-tag-btn)', function(){
           const $__thisMediaBody = jQ3(this)
@@ -4815,6 +4844,17 @@ function pjeLoad(){
               if($badge.j2E.equals(0))
                 $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
               toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
+              ___enviarEventoDeRemocaoDeEtiquetaAoOpener({
+                idProcesso: idProcesso,
+                idTag: idEtiqueta,
+                etiquetaInst: {
+                  id: idEtiqueta,
+                  idProcesso: idProcesso,
+                  tagNome: textoEtiqueta,
+                },
+                idTaskInstance: idTaskInstance,
+                numeroUnico: numeroUnico
+              })
             })
             .fail(err => {
               toaster('Etiquetas', `Erro ao remover desvincular "${textoEtiqueta}".`, 'error')
