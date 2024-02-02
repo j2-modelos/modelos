@@ -2586,6 +2586,11 @@ function loadPJeRestAndSeamInteraction(){
       }
     },
     etiquetas : {
+      listarTodas : function(queryCriteria, sucCB, errCB){
+        
+        return j2EPJeRest.ajax.get("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/todas", 
+                              sucCB, errCB);
+      },
       listar : function(queryCriteria, sucCB, errCB){
 
         function _data(){
@@ -2620,8 +2625,8 @@ function loadPJeRestAndSeamInteraction(){
       remover : function(idProcesso, etiqueta, sucCB, errCB) {
         function _data(){
           return JSON.stringify({
-            'idProcesso' : idProcesso,
-            'idTag' : etiqueta
+            'idProcesso' : parseInt(idProcesso),
+            'idTag' : parseInt(etiqueta)
           });
         }
         return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/remover", 
