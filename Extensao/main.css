@@ -1331,8 +1331,27 @@ th[j2-seletor-expediente]{
     height: 0px;
 }
 
-div > .tarefa-numero-processo.process {
+.selecionarProcesso > div > .tarefa-numero-processo {
     font-size: 16px !important;
+}
+
+.tarefa-numero-processo.text-danger{
+    font-size: 14px !important;
+}
+  
+
+div.datalist-content.selecionado{
+    background: rgb(243 255 238);
+    border-left: 3px solid #48ce35;
+}
+
+div.datalist-content.selecionado:hover {
+    background: rgb(227 244 220);
+    border-left: 3px solid #48ce35;
+}
+
+div.datalist-content.selecionado .tarefa-numero-processo{
+    color: rgb(34 123 21);
 }
 
 i[j2-np-copiar]{
@@ -1364,7 +1383,7 @@ div.j2-tags-tarefa-num-clique{
     max-width: 300px;
 }
 
-a.j2-tag-btn{
+div.j2-tag-btn, a.j2-tag-btn{
     background-color: #f6d290;
     text-transform: none !important;
     font-size: 13px !important;
@@ -1375,6 +1394,90 @@ a.j2-tag-btn i{
     font-size: 18px;
     vertical-align: sub;
     margin-right: 3px;
+}
+
+div.j2-tag-btn i{
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+div.j2-tag-btn i.fa-times {
+    padding-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.j2-menu-conteudo{
+    /*max-height: 170px !important;*/
+}
+
+.j2-menu-conteudo ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.j2-menu-conteudo ul li{
+    max-width: 100%;
+}
+
+.j2-menu-conteudo ul div{
+    max-width: 100%;
+}
+
+.j2-menu-conteudo ul div div{
+    display: inline-block;
+    max-width: 90%;
+    vertical-align: middle;
+}
+
+.j2-menu-conteudo ul div div div{
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+a.j2-tbn-add-etiqueta i {
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+.j2-add-etiqueta {
+    overflow: hidden;
+    overflow-y: hidden !important;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #e0e0e0;
+}
+
+.j2-add-etiqueta .value {
+    display: table;
+}
+
+.j2-container-etiquetas {
+    overflow-y: auto;
+    max-height: 230px;
+}
+
+.j2-container-etiquetas table tbody tr td:first-child{
+    width: 25px;
+}
+
+.j2-container-etiquetas table [j2]{
+    cursor: pointer;
+}
+
+.j2-danger {
+    border-color: #d43f3a;
+}
+
+.j2-danger:focus{
+    border-color: #d43f3a !important;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(233 102 102 / 60%) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(233 102 102 / 60%) !important;
 }
 
 [j2-painel-basic-css]{
@@ -1568,6 +1671,62 @@ input[j2e-data-input]{
     font-size: inherit;
     user-select: none;
 }
+
+ul[aria-labelledby="btn-gerenciar-etiquetas"]{
+    width: 340px;
+}
+
+ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
+    width: inherit
+}
+
+.j2-container-datas{
+    display: none !important;
+    width: 340px;
+    user-select: none;
+}
+
+.j2-container-datas.open{
+    display: flex !important;
+}
+
+.j2-container-datas li{
+    width: inherit;
+}
+
+.j2-container-datas span.ui-icon{
+    text-indent: unset;
+}
+
+.j2-container-datas .ui-state-active{
+    background-color: #0084ac !important;
+}
+
+.j2-container-datas .j2-tag-btn{
+    color: black;
+}
+
+.j2-container-datas td.j2-data-tagged a {
+    background-color: #f6d290;
+    font-weight: bolder;
+    border-radius: 5px !important;
+}
+
+.j2-container-datas td.j2-data-tagged a:hover {
+    background-color: rgb(246 210 144 / 60%) !important;
+}
+
+.j2-container-datas td.j2-data-tagged a.ui-state-active {
+    border: 0px solid;
+    background-color: #ffbd45 !important;
+    color: black !important;
+    box-shadow: 0px 0px 0px 2px rgb(0 0 0);
+}
+
+.j2-container-datas .j2-data-tagged.ui-datepicker-today a{
+    background-color: #c6b89e !important;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

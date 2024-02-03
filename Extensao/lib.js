@@ -788,12 +788,12 @@ var j2EUi = {
   },
   createRichModalComIframePainelUsuario: (headerDoPainel, urlIframe, userCloseCallback)=>{
     const $modal = jQ3(`<div class="rich-modalpanel modal-small" id="j2E-modalWithIframePainelUsuario" style="position: absolute; z-index: 100; background-color: inherit;">
-                          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+                          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv-j2" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref-j2"></button></div>
                           <div class="rich-mpnl-panel">
-                              <div class="rich-mp-container" id="modalWithIframePainelUsuarioDiv" style="position: absolute; left: 960px; top: 440px; z-index: 9;">
-                                  <div class="rich-mpnl-shadow" id="modalWithIframePainelUsuarioDivDiv" style="width: 0px; height: 0px;"></div>
-                                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 80vw; height: 80vh; max-width: unset;">
-                                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                              <div class="rich-mp-container" id="modalWithIframePainelUsuarioDiv-j2" style="position: absolute; left: 960px; top: 440px; z-index: 9;">
+                                  <div class="rich-mpnl-shadow" id="modalWithIframePainelUsuarioDivDiv-j2" style="width: 0px; height: 0px;"></div>
+                                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv-j2" style="width: 80vw; height: 80vh; max-width: unset;">
+                                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable-j2" style="height: 100%; width: 100%;">
                                           <tbody>
                                               <tr style="height: 99%;">
                                                   <td class="rich-mpnl-body" valign="top">
@@ -811,7 +811,7 @@ var j2EUi = {
                                   </div>
                               </div>
                           </div>
-                          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+                          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv-j2" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref-j2"></button></div>
                       </div>`)
 
     jQ3('body').append($modal)
@@ -917,6 +917,27 @@ var j2EUi = {
       jQ3('body').append(_html)
     else
       jQ3('#modalStatusContainer-j2').remove()
+  },
+  createTaskScroller: ({ appendTo = '#taskInstanceDiv' })=>{
+    const __TOOL_TEMPLATE = `<div class="rich-panel" style="position: fixed; z-index: 35; right: 0;">
+        <div class="rich-panel-body" style="display: flex; flex-direction: column; padding: 5px;">
+            <a class="btn btn-sm btn-primary" href="#taskInstanceDiv"> 
+              <i class="fa fa-arrow-up"></i></a>
+            <a class="btn btn-sm btn-primary" href="#j2eADMPanel-exps"> 
+              <i class="fa fa-minus"></i></a>
+            <a class="btn btn-sm btn-primary" href="#divMovimentarPoll"> 
+              <i class="fa fa-arrow-down"></i></a>
+        </div>
+    </div>`
+
+    const $scroller = jQ3(__TOOL_TEMPLATE)
+ /*   $scroller.find('a').click($event=>{
+      const direction = $event.target.find('.fa-arrow-up').length ? 'UP' : 'DOWN'
+
+
+    })*/
+    jQ3(appendTo).prepend($scroller)
+
   }
 };
 
@@ -2565,6 +2586,11 @@ function loadPJeRestAndSeamInteraction(){
       }
     },
     etiquetas : {
+      listarTodas : function(queryCriteria, sucCB, errCB){
+        
+        return j2EPJeRest.ajax.get("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/todas", 
+                              sucCB, errCB);
+      },
       listar : function(queryCriteria, sucCB, errCB){
 
         function _data(){
@@ -2599,8 +2625,8 @@ function loadPJeRestAndSeamInteraction(){
       remover : function(idProcesso, etiqueta, sucCB, errCB) {
         function _data(){
           return JSON.stringify({
-            'idProcesso' : idProcesso,
-            'idTag' : etiqueta
+            'idProcesso' : parseInt(idProcesso),
+            'idTag' : parseInt(etiqueta)
           });
         }
         return j2EPJeRest.ajax.post("https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/remover", 
@@ -2788,7 +2814,7 @@ function loadPJeRestAndSeamInteraction(){
   if( typeof window.j2E === 'undefined')
     window.j2E = {}
 
-  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E'); var _this = {
+  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E', 'sessionStorage'); var _this = {
     session : [],
     util : {
       conformPayload : PAYLOAD =>{
@@ -4703,7 +4729,7 @@ j2E.mods.runTimeConnect = function(){
   j2E.conn.reconnect();
 };
 
-j2E.mods.registerNumeroUnicoReplacer = function (){
+j2E.mods.registerNumeroUnicoReplacer = function (contextObserverSelector){
   /*if( !(jQ3) || !(jQ3.initialize) || )
     return;*/
   
@@ -4873,6 +4899,9 @@ j2E.mods.registerNumeroUnicoReplacer = function (){
         return;
       if( ! jQ3(rec.target).text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/) )
         return;
+      
+      if( !rec.target.matches(contextObserverSelector) && ! jQ3(rec.target).parents(contextObserverSelector).length )
+        return
       if( rec.target.querySelectorAll ) 
         _processNodes( rec.target.querySelectorAll('*') );
     }); 
