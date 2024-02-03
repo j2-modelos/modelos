@@ -4872,6 +4872,41 @@ function pjeLoad(){
         $thisNavBarRight.find('li.icone-menu-abas').before(jQ3(TEMPLATE_EMPTY))
     })
   }
+
+  function sinalizarProcessoJulgado(){
+    const toaster = (a, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
+
+    const IDS_CLASSES = new Set([436])
+    const IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO = new Set([3,193,196,198,200,202,208,210,212,214,218,219,220,221,228,230,235,236,237,238,239,240,241,242,244,385,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,471,472,473,853,871,884,900,901,972,973,1042,1043,1044,1045,1046,1047,1048,1049,1050,10953,10961,10964,10965,11009,11373,11374,11375,11376,11377,11378,11379,11380,11381,11394,11396,11401,11402,11403,11404,11405,11406,11407,11408,11409,11411,11795,11796,11801,11876,11877,11878,11879,12028,12032,12033,12034,12041,12184,12187,12252,12253,12254,12256,12257,12258,12298,12319,12321,12322,12323,12324,12325,12326,12327,12328,12329,12330,12331,12433,12434,12435,12436,12437,12438,12439,12440,12441,12442,12443,12450,12451,12452,12453,12458,12459,12475,12615,12616,12617,12649,12650,12651,12652,12653,12654,12660,12661,12662,12663,12664,12665,12666,12667,12668,12669,12670,12672,12673,12674,12675,12676,12677,12678,12679,12680,12681,12682,12683,12684,12685,12686,12687,12688,12689,12690,12691,12692,12693,12694,12695,12696,12697,12698,12699,12700,12701,12702,12703,12704,12705,12706,12707,12708,12709,12710,12711,12712,12713,12714,12715,12716,12717,12718,12719,12720,12721,12722,12723,12724,12735,12738,12792,14092,14099,14210,14211,14213,14214,14215,14216,14217,14218,14219,14680,14777,14778,14848,14937,15022,15023,15024,15026,15027,15028,15029,15030,15165,15166,15185,15211,15212,15213,15214,15245,15249,15250,15251,15252,15253,15254,15255,15256,15257,15258,15259,15260,15261,15262,15263,15264,15265,15266])
+    jQ3.initialize('#maisDetalhes > dl > dd:first-of-type', async function(){
+      const $this = jQ3(this)
+      const idProc = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
+      const idClass = $this.text().match(/\((\d+)\)/)?.at(1)
+
+      try {
+        if(!IDS_CLASSES.has(parseInt(idClass)))
+          return
+
+        const movimentosProcesso = await j2EPJeRest.processo.movimentacoes.obterTodas(idProc)
+        const temElementoEmComum = movimentosProcesso.some(codMov =>
+          IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO.has(parseInt(codMov.codEvento))
+        )
+        
+        temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').append(/*html*/`
+          <li>
+            <div title="Processo de classe judicial com julgamento proferido" style="padding-top: 15px; padding-right: 15px;color:#fff;padding-left: 10px;">
+              <i class="fa fa-gavel" ></i>
+            </div>
+          </li>
+        `)
+      } catch (e) {
+        toaster("Autos Digitais", `Erro ao analisar se processo está julgado`, "error") 
+      }
+      
+    })
+  }
   
   switch(window.location.pathname){
     
@@ -4896,6 +4931,7 @@ function pjeLoad(){
       personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
       criarEditorEtiquetasPelosAutosDigitais()
+      sinalizarProcessoJulgado()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()

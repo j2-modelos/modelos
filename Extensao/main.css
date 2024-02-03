@@ -1498,6 +1498,13 @@ i[j2e-proc-data-task]{
 .row.icones > div:first-child{
     width: 41.66666667% !important;
 }
+
+.row.icones > div:first-child i{
+    font-size: 1.23em !important;
+    line-height: .65em !important;
+    vertical-align: -0.0667em !important;
+}
+
 .row.icones > div:last-child{
     width: 58.33333333% !important;
 }
