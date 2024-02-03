@@ -1926,6 +1926,33 @@ function fronendLoad(){
       })
     }
 
+    function _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso){
+      
+      if(!decodeURI(window.location.hash.split('/')[3]).match(/intimação/))
+            return
+
+      __sendMessageToPje({
+        action : 'requisitarJ2EPJeRest',
+        PJeRest : 'j2EPJeRest.processo.getDadosCompletos',
+        waitsResponse : true,
+        arguments : [ idProcesso ] 
+      }, 
+      "PARENT_TOP",
+      function(response){
+        const partesPoloAtivo  = response.result.polo[0].parte.filter(p=>p.any[0].tipoParte.tipoParte!=='ADVOGADO')
+        const partesPoloPassivo  = response.result.polo[1].parte.filter(p=>p.any[0].tipoParte.tipoParte!=='ADVOGADO')
+
+        $thisTagLi.find('a.selecionarProcesso').after(`<div style="position: absolute; right:0; color: rgb(51 51 51);">
+          ${partesPoloAtivo.length > 1 ? `<span style="vertical-align: sub;font-size: 75%;">${partesPoloAtivo.length}</span>` : ''}
+          <i class="fa ${partesPoloAtivo?.some(p=>p.advogado) ? 'fa-user-friends' : 'fa-user'} mr-5" title="Representante"></i>
+          X
+          <i class="fa ${partesPoloPassivo?.some(p=>p.advogado) ? 'fa-user-friends' : 'fa-user'} ml-5" title="Representante"></i>
+          ${partesPoloPassivo.length > 1 ? `<span style="vertical-align: sub;font-size: 75%;">${partesPoloPassivo.length}</span>` : ''}
+        </div>`)
+          
+      })
+    }
+
     function registrarAcoesLazied($thisTagLi){
       $thisTagLi.find('div.row.icones').lazyObserve({
         root: $thisTagLi.parents('#processosTarefa'),
@@ -1948,6 +1975,7 @@ function fronendLoad(){
             $thisTagLi.attr('j2-idProcesso', idProcesso)
 
             _acoesBaseadasEmMovimentosDoProcesso($thisTagLi, idProcesso)
+            _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso)
           })
         }
       })
