@@ -4907,6 +4907,12 @@ function pjeLoad(){
       
     })
   }
+
+  function destacarOsAtosDoMagistrado(){
+    jQ3.initialize('#divTimeLine:divEventosTimeLine .tipo-D a', function(){
+
+    })
+  }
   
   switch(window.location.pathname){
     
@@ -4932,6 +4938,7 @@ function pjeLoad(){
       melhorarBotaoMarcarTodosComoLido()
       criarEditorEtiquetasPelosAutosDigitais()
       sinalizarProcessoJulgado()
+      destacarOsAtosDoMagistrado()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()

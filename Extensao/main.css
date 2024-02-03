@@ -1727,6 +1727,10 @@ ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
     background-color: #c6b89e !important;
 }
 
+.j2-autos-digitais-ato-magistrado{
+    background-color: rgb(217, 237, 247);
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
