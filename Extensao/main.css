@@ -113,6 +113,10 @@ conteudo-tarefa span.tarefaTituloPequeno{
     border-left: 3px solid #058ec4;
 }
 
+.propertyViewJ2E tbody > tr:first-child > td:first-child {
+    font-weight: bold;
+}
+
 .j2eSpanAlert{
     vertical-align: middle;
     padding-left: 10px;
