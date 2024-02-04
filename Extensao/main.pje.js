@@ -4873,39 +4873,116 @@ function pjeLoad(){
     })
   }
 
-  function sinalizarProcessoJulgado(){
-    const toaster = (a, msg, severity)=> { 
-      jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
-    }
+  function sinalizarProcessoJulgado(movimentosProcesso){
 
     const IDS_CLASSES = new Set([436])
     const IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO = new Set([3,193,196,198,200,202,208,210,212,214,218,219,220,221,228,230,235,236,237,238,239,240,241,242,244,385,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,471,472,473,853,871,884,900,901,972,973,1042,1043,1044,1045,1046,1047,1048,1049,1050,10953,10961,10964,10965,11009,11373,11374,11375,11376,11377,11378,11379,11380,11381,11394,11396,11401,11402,11403,11404,11405,11406,11407,11408,11409,11411,11795,11796,11801,11876,11877,11878,11879,12028,12032,12033,12034,12041,12184,12187,12252,12253,12254,12256,12257,12258,12298,12319,12321,12322,12323,12324,12325,12326,12327,12328,12329,12330,12331,12433,12434,12435,12436,12437,12438,12439,12440,12441,12442,12443,12450,12451,12452,12453,12458,12459,12475,12615,12616,12617,12649,12650,12651,12652,12653,12654,12660,12661,12662,12663,12664,12665,12666,12667,12668,12669,12670,12672,12673,12674,12675,12676,12677,12678,12679,12680,12681,12682,12683,12684,12685,12686,12687,12688,12689,12690,12691,12692,12693,12694,12695,12696,12697,12698,12699,12700,12701,12702,12703,12704,12705,12706,12707,12708,12709,12710,12711,12712,12713,12714,12715,12716,12717,12718,12719,12720,12721,12722,12723,12724,12735,12738,12792,14092,14099,14210,14211,14213,14214,14215,14216,14217,14218,14219,14680,14777,14778,14848,14937,15022,15023,15024,15026,15027,15028,15029,15030,15165,15166,15185,15211,15212,15213,15214,15245,15249,15250,15251,15252,15253,15254,15255,15256,15257,15258,15259,15260,15261,15262,15263,15264,15265,15266])
+
     jQ3.initialize('#maisDetalhes > dl > dd:first-of-type', async function(){
       const $this = jQ3(this)
-      const idProc = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
       const idClass = $this.text().match(/\((\d+)\)/)?.at(1)
 
-      try {
-        if(!IDS_CLASSES.has(parseInt(idClass)))
-          return
+      if(!IDS_CLASSES.has(parseInt(idClass)))
+        return
 
-        const movimentosProcesso = await j2EPJeRest.processo.movimentacoes.obterTodas(idProc)
-        const temElementoEmComum = movimentosProcesso.some(codMov =>
-          IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO.has(parseInt(codMov.codEvento))
-        )
-        
-        temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').append(/*html*/`
-          <li>
-            <div title="Processo de classe judicial com julgamento proferido" style="padding-top: 15px; padding-right: 15px;color:#fff;padding-left: 10px;">
-              <i class="fa fa-gavel" ></i>
-            </div>
-          </li>
-        `)
-      } catch (e) {
-        toaster("Autos Digitais", `Erro ao analisar se processo está julgado`, "error") 
-      }
+      const temElementoEmComum = movimentosProcesso.some(codMov =>
+        IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO.has(parseInt(codMov.codEvento))
+      )
+      
+      temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').append(/*html*/`
+        <li>
+          <div title="Processo de classe judicial com julgamento proferido" style="padding-top: 15px; padding-right: 15px;color:#fff;padding-left: 10px;">
+            <i class="fa fa-gavel" ></i>
+          </div>
+        </li>
+      `)
       
     })
+  }
+
+  function destacarOsAtosDoMagistrado(movimentosProcesso){
+    const IDS_MOVIMENTOS_MAGISTRADOS_SET = new Set([
+      3, 7, 11, 25, 56, 63, 83, 108, 113, 117, 122, 128, 133, 138, 146, 151, 157, 160, 163, 172, 175,
+      190, 193, 196, 198, 200, 202, 206, 207, 208, 210, 212, 214, 218, 219, 220, 221, 228, 230, 235,
+      236, 237, 238, 239, 240, 241, 242, 244, 263, 264, 265, 266, 268, 269, 270, 271, 272, 275, 276,
+      277, 278, 279, 332, 334, 335, 339, 347, 348, 349, 352, 353, 354, 355, 357, 358, 371, 373, 374,
+      377, 378, 381, 383, 385, 388, 389, 390, 391, 392, 393, 394, 399, 400, 402, 404, 429, 430, 431,
+      432, 433, 434, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457,
+      458, 459, 460, 461, 462, 463, 464, 465, 466, 471, 472, 473, 785, 787, 788, 792, 799, 803, 804,
+      817, 818, 819, 821, 823, 824, 853, 871, 884, 888, 889, 892, 898, 900, 901, 905, 940, 941, 944,
+      945, 947, 960, 961, 968, 971, 972, 973, 988, 990, 1002, 1003, 1004, 1008, 1009, 1010, 1011, 1013,
+      1014, 1015, 1016, 1017, 1018, 1019, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1059,
+      1060, 1063, 10953, 10961, 10962, 10963, 10964, 10965, 11002, 11009, 11010, 11011, 11012, 11013,
+      11014, 11015, 11016, 11017, 11018, 11019, 11020, 11021, 11022, 11023, 11024, 11025, 11373, 11374,
+      11375, 11376, 11377, 11378, 11379, 11380, 11381, 11382, 11393, 11394, 11395, 11396, 11401, 11402,
+      11403, 11404, 11405, 11406, 11407, 11408, 11409, 11411, 11415, 11423, 11424, 11425, 11426, 11554,
+      11792, 11795, 11796, 11801, 11876, 11877, 11878, 11879, 11975, 12028, 12032, 12033, 12034, 12035,
+      12036, 12037, 12038, 12039, 12040, 12041, 12067, 12068, 12092, 12093, 12094, 12095, 12096, 12097,
+      12098, 12099, 12100, 12140, 12141, 12144, 12145, 12146, 12147, 12148, 12149, 12150, 12151, 12163,
+      12164, 12180, 12181, 12182, 12183, 12184, 12185, 12187, 12188, 12206, 12207, 12208, 12209, 12210,
+      12211, 12213, 12252, 12253, 12254, 12255, 12256, 12257, 12258, 12259, 12261, 12262, 12298, 12299,
+      12300, 12301, 12302, 12303, 12304, 12305, 12306, 12307, 12308, 12310, 12311, 12312, 12313, 12314,
+      12318, 12319, 12320, 12321, 12322, 12323, 12324, 12325, 12326, 12327, 12328, 12329, 12330, 12331,
+      12332, 12359, 12387, 12421, 12422, 12425, 12427, 12428, 12429, 12430, 12431, 12432, 12433, 12434,
+      12435, 12436, 12437, 12438, 12439, 12440, 12441, 12442, 12443, 12444, 12445, 12446, 12447, 12448,
+      12449, 12450, 12451, 12452, 12453, 12454, 12455, 12456, 12457, 12458, 12459, 12467, 12472, 12473,
+      12474, 12475, 12476, 12477, 12478, 12479, 12548, 12615, 12616, 12617, 12646, 12647, 12648, 12649,
+      12650, 12651, 12652, 12653, 12654, 12660, 12661, 12662, 12663, 12664, 12665, 12666, 12667, 12668,
+      12669, 12670, 12671, 12672, 12673, 12674, 12675, 12676, 12677, 12678, 12679, 12680, 12681, 12682,
+      12683, 12684, 12685, 12686, 12687, 12688, 12689, 12690, 12691, 12692, 12693, 12694, 12695, 12696,
+      12697, 12698, 12699, 12700, 12701, 12702, 12703, 12704, 12705, 12706, 12707, 12708, 12709, 12710,
+      12711, 12712, 12713, 12714, 12715, 12716, 12717, 12718, 12719, 12720, 12721, 12722, 12723, 12724,
+      12733, 12734, 12735, 12736, 12737, 12738, 12765, 12766, 12767, 12768, 12769, 12792, 14092, 14093,
+      14094, 14095, 14099, 14210, 14211, 14213, 14214, 14215, 14216, 14217, 14218, 14219, 14230, 14231,
+      14232, 14233, 14234, 14235, 14680, 14681, 14682, 14683, 14702, 14730, 14733, 14776, 14777, 14778,
+      14848, 14937, 14968, 14969, 14970, 14971, 14972, 14973, 15009, 15022, 15023, 15024, 15025, 15026,
+      15027, 15028, 15029, 15030, 15032, 15057, 15058, 15059, 15060, 15061, 15062, 15063, 15064, 15065,
+      15067, 15078, 15079, 15080, 15081, 15082, 15083, 15084, 15085, 15086, 15103, 15162, 15163, 15164,
+      15165, 15166, 15183, 15185, 15200, 15201, 15202, 15203, 15204, 15205, 15206, 15207, 15208, 15209,
+      15210, 15211, 15212, 15213, 15214, 15216, 15223, 15225, 15226, 15227, 15229, 15230, 15231, 15232,
+      15233, 15234, 15235, 15238, 15244, 15245, 15247, 15248, 15249, 15250, 15251, 15252, 15253, 15254,
+      15255, 15256, 15257, 15258, 15259, 15260, 15261, 15262, 15263, 15264, 15265, 15266
+    ])
+
+    const movimentosMagistraoProcesso = movimentosProcesso.filter(mov => IDS_MOVIMENTOS_MAGISTRADOS_SET.has(parseInt(mov.codEvento)))
+                                        .map(mov => mov.textoFinalExterno.toLowerCase())
+    const movimentosMagistradoProcessoSet = new Set(movimentosMagistraoProcesso)                                        
+    
+    jQ3.initialize('#divTimeLine\\:divEventosTimeLine .texto-movimento', function(){
+      const $this = jQ3(this)
+      const textoMovimento = $this.text().toLowerCase()
+      if( !movimentosMagistradoProcessoSet.has( textoMovimento ) && !textoMovimento.includes('conduzida por juiz') )
+        return
+
+      const $container = $this.parents('.interno')
+      $container.find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+      if( !$container.find('.anexos').children().length ){
+        if($container.next().is('.tipo-D'))
+          $container.next().find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+        if($container.prev().is('.tipo-D'))
+          $container.prev().find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+      }
+    })
+  }
+
+  function acoesBaseadasEmMovimentosDoProcesso(){
+    const __toaster = (a, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
+
+    const idProc = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
+
+    j2EPJeRest.processo.movimentacoes.obterTodas(idProc)
+    .done(todosMovimentos => {
+      todosMovimentos.sort((a, b) => b.dataAtualizacao - a.dataAtualizacao)
+
+      sinalizarProcessoJulgado(todosMovimentos)
+      destacarOsAtosDoMagistrado(todosMovimentos)
+    })
+    .fail(err => {
+      __toaster("Autos Digitais", `Erro ao recuperar todos os movimentos do processo.`, "error") 
+    })
+    
   }
   
   switch(window.location.pathname){
@@ -4931,7 +5008,7 @@ function pjeLoad(){
       personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
       criarEditorEtiquetasPelosAutosDigitais()
-      sinalizarProcessoJulgado()
+      acoesBaseadasEmMovimentosDoProcesso()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()

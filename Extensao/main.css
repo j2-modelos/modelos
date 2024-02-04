@@ -1727,6 +1727,19 @@ ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
     background-color: #c6b89e !important;
 }
 
+.media-body.j2-autos-digitais-ato-magistrado{
+    background-color: rgb(217, 237, 247);
+}
+.media-left.j2-autos-digitais-ato-magistrado::after{
+    border-right-color: rgb(217, 237, 247) !important;
+}
+.interno.active .media-body.j2-autos-digitais-ato-magistrado{
+    background-color: #BBD5E2;
+}
+.interno.active .media-left.j2-autos-digitais-ato-magistrado::after{
+    border-right-color: #BBD5E2 !important;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
