@@ -937,7 +937,7 @@ var j2EUi = {
     },
     createLinkExibirPautaAudienciaDataAudienciaTarefa: (dataPtBrFormato)=>{
       const $aLink = jQ3(/*html*/`
-        <a style="cursor:pointer" title="Ver pauta de audiência para ${dataPtBrFormato}">
+        <a style="cursor:pointer" class="j2-line-force-0" title="Ver pauta de audiência para ${dataPtBrFormato}">
           <span>${dataPtBrFormato}<i class="far fa-calendar-alt pl-5"></i></span>
         </a>
       `)
