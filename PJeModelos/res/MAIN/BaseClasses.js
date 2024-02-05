@@ -1571,6 +1571,7 @@ try {
                   'quarta-feira', 'quinta-feira', 'sexta-feira', 
                   'sábado'];
         var _feriadosReligiososPadroes;
+        const anoCorrente = new Date().getFullYear()
         
         var _id = function(id){
           return id + '.'  + escopoTemporalAno; 
@@ -1644,7 +1645,7 @@ try {
           return calendarioEvento;
         };
 
-        var __parseData = function(_data, mes, ev){
+        var __parseData = function(_data, mes, ev, eDataFinal){
           var _data = _feriadosReligiososPadroes[_data] ? _feriadosReligiososPadroes[_data] : _data;
           var _thisScopeYYYY = escopoTemporalAno;
           var _thisScopeYYAA = escopoTemporalAno;
@@ -1652,10 +1653,16 @@ try {
           if(mes.month.calId === 1){
             _thisScopeYYAA = escopoTemporalAno - 1;
             _thisScopeYYYY = escopoTemporalAno;
-          }else if(mes.month.calId === 12){
-            _thisScopeYYAA = escopoTemporalAno;
-            _thisScopeYYYY = escopoTemporalAno + 1;
+          }else if(mes.month.calId === 12) {
+            if (escopoTemporalAno === anoCorrente){
+              _thisScopeYYAA = escopoTemporalAno
+              _thisScopeYYYY = escopoTemporalAno + 1
+            }else if(eDataFinal){
+              _thisScopeYYAA = escopoTemporalAno
+              _thisScopeYYYY = anoCorrente
+            }
           }
+          
           
           var rep = [
             { key : 'YYYY', value : _thisScopeYYYY },
@@ -1700,7 +1707,7 @@ try {
           calendarioEvento = __verificarTransferenciaDeData(calendarioEvento);
           
           var __dataIn = __parseData( calendarioEvento.dataInicial, mes, calendarioEvento );
-          var __dataFin = calendarioEvento.dataFinal ? __parseData( calendarioEvento.dataFinal, mes, calendarioEvento ) : -1;
+          var __dataFin = calendarioEvento.dataFinal ? __parseData( calendarioEvento.dataFinal, mes, calendarioEvento, true ) : -1;
           
           function __descDatas(){
             var ini = __dataIn;
@@ -2001,7 +2008,7 @@ try {
                    ( dispLeg.idDropbox 
                      ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) 
                      : (dispLeg.idDropboxV2 
-                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao))
+                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao).replaceAll('/', '-'))
                         : '') );
         
         if( _url.length === 0 )
@@ -4767,7 +4774,7 @@ try {
                                       ${meioDeComunicacao.toLowerCase().match(/diário eletrônico/) ?
                                        '#:BR{}Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!' :
                                        `#:BR{}
-                                        Contudo, em sendo o caso de a(s) parte(s) pode(m) ser #:I{jus postulandi}, prossiga normalmente.
+                                        Contudo, em sendo o caso de a(s) parte(s) ser(em) #:I{jus postulandi}, prossiga normalmente.
                                         #:BR{}#:BR{}
                                         Confirma prosseguir #:B{MESMO CIENTE DA DIVERGÊNCIA}?!`
                                       }
@@ -5835,7 +5842,7 @@ try {
             text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, onde se achava presente Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.'
           },            
           magistrado : {
-            text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, onde se achava presente Sua Excelência XXXDeOrdemXXX, comigo, Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.',
+            text : 'Aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, #:span@ambiente-audiencia{na sala de audiências deste Juizado}, sob a presidência de Sua Excelência XXXDeOrdemXXX, comigo, Conciliador Judicial, para audiência de #{j2.env.PJeVars.audiencia.tipo}.',
             opts : {
               ucased : false,
               styleFormatIndex : 1,

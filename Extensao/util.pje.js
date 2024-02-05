@@ -278,3 +278,8 @@ function popupRetificarAutuacao(){
 
   window.open(retificarAutuacaoUrl,'processooRetificaAutuacao');
 }
+
+setTimeout(()=>{
+  document.body.textContent.includes('Escolher destinatários') &&
+  document.getElementById('mpLoadingMovimentarContainer').remove()
+}, 1500)

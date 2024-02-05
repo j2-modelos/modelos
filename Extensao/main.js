@@ -702,7 +702,10 @@ var TarefasProps = {
   },
   'Avaliar determinações do magistrado' :{
     personalizacao : {
-      procedimentoEspecializado : 'ADM-reorganizarTarefas'
+      procedimentoEspecializado : 'ADM-reorganizarTarefas',
+      scroller: { 
+        
+      }
     }
   },
   'Avaliar Expediente Fechado' : {
@@ -744,6 +747,10 @@ var TarefasProps = {
   },
   'Certificar consulta SIEL' : {
     altNomeADM : 'Consultar SIEL',
+    ADMGrupo : 'cnslts'
+  },
+  'Certificar consulta PREVJUD' : {
+    altNomeADM : 'Consultar PREVJUD',
     ADMGrupo : 'cnslts'
   },
   'Designar leilão' : {
@@ -795,7 +802,7 @@ var TarefasProps = {
   'Expedir alvará' : {
     ADMGrupo : 'exps',
     personalizacao : {
-      ignorarPersonalizacaoDev : true,
+      ignorarPersonalizacaoDev : false,
       prepararSeamIteraction : [
         'processo'
       ],
@@ -877,8 +884,21 @@ var TarefasProps = {
               tipo : 'button',
               data : {
                 classButton : 'btn-primary',
-                onclickAttr : "window.open('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp')",
-                id : 'j2-abrir-siscondej',
+                //onclickAttr : "window.open('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp')",
+                callback: ()=>j2EOpW.center('https://www.dropbox.com/scl/fi/u9up2lsgs5v98s43e3ylw/2JECIVEL-Agendamento-de-ALVAR.xlsx?cloud_editor=excel&dl=0&force_role=personal&rlkey=00ysu18h9hj06amzopnoeqak6',
+                  'j2-abrir-agendamento-alvara'),
+                id : 'j2-abrir-agendamento-alvara',
+                tag : 'a',
+                textoButton : 'Abrir Agendamento de Alvará'
+              }
+            },
+            {
+              tipo : 'button',
+              data : {
+                classButton : 'btn-primary',
+                //onclickAttr : "window.open('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp')",
+                callback: ()=>j2EOpW.center('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp', 'j2-abrir-siscondj'),
+                id : 'j2-abrir-siscondj',
                 tag : 'a',
                 textoButton : 'Abrir SISCONDJ'
               }
@@ -887,8 +907,9 @@ var TarefasProps = {
               tipo : 'button',
               data : {
                 classButton : 'btn-primary',
-                onclickAttr : "window.open('https://www63.bb.com.br/portalbb/djo/login.bbx')",
-                id : 'j2-abrir-siscondej',
+                //onclickAttr : "window.open('https://www63.bb.com.br/portalbb/djo/login.bbx')",
+                callback: ()=>j2EOpW.center('https://www63.bb.com.br/portalbb/djo/login.bbx', 'j2-abrir-bancobrasils'),
+                id : 'j2-abrir-bancobrasil',
                 tag : 'a',
                 textoButton : 'Abrir Depósitos Judicais Banco do Brasil'
               }
@@ -1006,6 +1027,7 @@ var TarefasProps = {
       limpaCorpoTarefa : true,
       transicaoManterApenasIgnorarESairTarefa : true,
       mostraAutosDigitais : true,
+      mostraExpedientes : true,
       painel : [
         {
           appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
@@ -1465,7 +1487,8 @@ const estaTarefaNaoRequerOIframeComExpedientes = false;
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   [
     'Processo com prazo em curso', 
-    'Processo com prazo decorrido'
+    'Processo com prazo decorrido',
+    'Expedir precatório'
   ],
   'col-sm-9',
   'Certificar o decurso de prazo dos expedientes abaixo selecionados',
@@ -1578,6 +1601,70 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   ]
 )
 
+TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  [
+    'Expedir precatório'
+  ],
+  'col-sm-9',
+  'Certificar o abando da causa pela parte a ser selecionada',
+  'Juntar certidão de abandono',
+  estaTarefaRequerOIframeComExpedientes,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: 'Abandono',
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItPrazoAbandono'
+        ]
+      },         
+      {
+        tipo: 'copiarElmento',
+        elemento: '#certItPrazoAbandono_li',
+        copias: 0 // vai avaliar dadosExpedientes.length - 1
+      }, 
+      {
+        tipo: 'iterarCopias',
+        elemento: '#certItPrazoAbandono_li',
+        mapaSubstituicao : {
+            '#pessoa-polo-parte-LCase': '_obterPoloParte(it.parte).parte.LCase',
+            '#selParte': 'it.parte'
+        },
+        fonte : {} // vai avaliar dadosExpedientes
+      },               
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
+    {
+      toEval : (robot, dadosExpedientes)=> {
+        robot.passos[1].copias = dadosExpedientes.length - 1
+        robot.passos[2].fonte = dadosExpedientes
+      },
+      contexto : [
+        'robot',
+        'dadosExpedientes'
+      ]
+    }
+  ]
+)
+
 /*TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   [
     'Expedir precatório'
@@ -1632,14 +1719,17 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   'Processo com prazo em curso',
   'col-sm-3',
   [
-    'Certificar Publicação DJEN'
+    'Certificar Publicação DJEN',
+    'Fluir para Certificar Trânsito',
+    'Fluir para Extinção'
   ]
 )
 TarefaPersonalizadaAvancada.etiquetasRapidas(
   'Processo com prazo decorrido',
   'col-sm-3',
   [
-    'Fluir para Certificar Trânsito'
+    'Fluir para Certificar Trânsito',
+    'Fluir para Extinção'
   ]
 )
 

@@ -23,7 +23,7 @@ and open the template in the editor.
         </group>
         <group label="Audiencia">
             <gItem id="intmItAudDesig"/>
-            <gItem id="intmItAudDesigSemSalaUNA"/>
+            <!--gItem id="intmItAudDesigSemSalaUNA"/-->
             <gItem id="intmItAudRedesigSemSala"/>
             <gItem id="intmItAudRedesigSemSalaUNA"/>
         </group>
@@ -219,6 +219,25 @@ and open the template in the editor.
         </item>                                    
         
         <item id="intmItCitacaoJec" label="Citação" dataPlus="{ 'titleAppend':'CITAÇÃO' }">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>
+            <eventFire event="CartaPrecatoria.onSelectItemLinkedExecutionValue"/>
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
+                            da presente ação, acima especificada. Cientificando-o(a) ainda que o não comparecimento a
+                            qualquer audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
+
+        <item id="intmItCitacaoJec-velho" label="Citação" dataPlus="{ 'titleAppend':'CITAÇÃO' }">
             <competencias>
                 <competencia id="juizadoCivel"/>
             </competencias>

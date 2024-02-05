@@ -22,6 +22,7 @@ function pjeLoad(){
       switch(event.origin){
         case 'https://frontend.prd.cnj.cloud':
         case 'https://web.whatsapp.com':
+        case 'https://pje.tjma.jus.br':
           break;
           
         default:
@@ -72,8 +73,29 @@ function pjeLoad(){
         case 'triggerEventFromFrontend':
           triggerEventFromFrontend(_act, _load);
           break;
+        case 'triggerEventToFrontend':
+          triggerEventToFrontend(_act, _load);
+          break;
+        case 'abrirAutosDigitaisFixados':
+          abrirAutosDigitaisFixados(_act, _load);
+          break;
       }
     
+    }
+
+    const ID_JANELA_AUTOS_DIGITAIS_FIXADOS = guid()
+    function abrirAutosDigitaisFixados(action, load){
+      j2EOpW.center(load.url, 'autosDigSentinela', ID_JANELA_AUTOS_DIGITAIS_FIXADOS)
+    }
+
+    function triggerEventToFrontend(action, _load){
+      var load = {
+        action : 'triggerEventFromPJe',
+        evento : action.evento,
+        orgAction: action
+      };
+  
+      __sendMessageToFrotEnd(load, '#ngFrame');
     }
 
     function triggerEventFromFrontend(action, load){
@@ -585,6 +607,10 @@ function pjeLoad(){
             }
         })
       }
+
+      const _criarTaskScroller = ()=>{
+        j2EUi.createTaskScroller(_tarfProp.personalizacao.scroller)
+      }
       
       if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
         return; 
@@ -598,6 +624,7 @@ function pjeLoad(){
       _tarfProp.personalizacao.transicaoRemover                          && _transicaoRemover();
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
       _tarfProp.personalizacao.painel                                    && _criarPainel();
+      _tarfProp.personalizacao.scroller                                  && _criarTaskScroller()
       
       if( !(_tarfProp.personalizacao.procedimentoEspecializado) )
         return;
@@ -634,7 +661,7 @@ function pjeLoad(){
                 if(_tarfProp.exibirADMGrupos && !(_tarfProp.exibirADMGrupos.includes(val.j2eG)))
                   return;
                 
-                var jGrpDiv = jQ3('<div>', {class : 'rich-panel-body panel j2eADMPanel', j2e : val.j2eG});
+                var jGrpDiv = jQ3('<div>', {class : 'rich-panel-body panel j2eADMPanel', j2e : val.j2eG, id: `j2eADMPanel-${val.j2eG.toLowerCase()}`});
                 jQ3('<div>', {class : 'rich-panel col-sm-12'}).append(
                   jQ3('<div>', {class : 'rich-panel-header j2eADMHeader', text : val.text})
                 ).append(
@@ -748,12 +775,61 @@ function pjeLoad(){
                   }
                   
                   function __estenderControlarTarefa(){
-                    var idProc = (function(){
-                      var b = window.location.search.match(/idProcesso=[0-9]+&/);
-                      return b[0].split('=')[1].split('&')[0];
-                    })();
+                    var _j = jElSet.clone(true);
+                    var _div = _j.find('div.propertyView');
                     
-                    jQ3.get('/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/$'.replace('$', idProc), function(data, status){
+                    _div.empty();
+                    _div.removeClass('col-sm-4');
+                    _div.addClass('col-sm-8');
+
+                    _div.append( j2EUi.spinnerHTML() )
+                    
+                    _j.insertAfter(jElSet);
+
+
+                    j2E.SeamIteraction.processo.acoes.abrirProcesso()
+                    .pipe( (a, acoes) => acoes.obterAudiencasDoProcesso() )
+                    .done((audiencias, $tabela) => { 
+                      _div.empty()
+                      const ___infoNenhumaAudiencia = ()=>{
+                        _div.append(/*html*/`
+                          <img src="/pje/img/al/secam.png">
+                          <span class="j2eSpanAlert"><b>Nenhuma audiência designada.</b></span>
+                        `);
+                      }
+
+                      if(!audiencias.length) {
+                        ___infoNenhumaAudiencia()
+                        return
+                      }
+
+                      if(!audiencias.filter(aud => aud.status_da_audiencia === 'designada').length) {
+                        ___infoNenhumaAudiencia()
+                        return
+                      }
+
+                      $tabela.find("tbody > tr").each(function () {
+                          const linha = $(this);
+                          const texto = linha.text().toLowerCase();
+
+                          if (texto.includes('redesignada')) {
+                            linha.remove();
+                          }
+                          else if (!texto.includes('designada')) {
+                              linha.remove();
+                          }
+                      });
+                      
+                      _div.append( $tabela );
+                    })
+                    .fail(err=>{
+                      _div.empty()
+                      _div.append(/*html*/`
+                          <span class="j2eSpanAlert"><b>###ERRO: Falha ao consultar audiências (${err}).</b>.</span>
+                        `);
+                    })
+                    
+                  /*  jQ3.get('/pje/seam/resource/rest/pje-legacy/painelUsuario/historicoTarefas/$'.replace('$', idProc), function(data, status){
                       if(status !== 'success')
                         return;
                       
@@ -781,7 +857,7 @@ function pjeLoad(){
                       _j.insertAfter(jElSet);
                       
                       _j.find('div.propertyView').append('<img src="/pje/img/al/secam.png"><span class="j2eSpanAlert">O histórico de tarefas do processo sugere que <b>existe audiência desiganda</b>.</span>');
-                    });
+                    });*/
                   }
                   
                   function __alterarAltNomeLabel(){
@@ -1381,7 +1457,6 @@ function pjeLoad(){
     jQ3.initialize('select#cbTDDecoration\\:cbTD option', function(a, b, c){
       var jEl = jQ3(this);
       switch(jEl.text()){
-        case 'Selecione':
         case 'Ato Ordinatório':
         case 'Certidão':
         case 'Mensagem(ns) de E-mail':
@@ -1650,6 +1725,7 @@ function pjeLoad(){
           //Seletor
           if(!(j2E?.env?.urlParms?.j2Expedientes))
             return;
+
           if( ! $tr.parents('table:first').find('> thead[j2]').length ){
             $tr.parents('table:first').find('> thead').attr('j2', '')
             .find('tr').prepend('<th j2-seletor-expediente></td>')
@@ -1670,6 +1746,9 @@ function pjeLoad(){
           $tr.prepend($seletor)
 
           //inserir o lápis
+          if(! EstaVencido)
+            return
+          
           const $alvoEditorData = $tr.find('td h6:first-child:not(.alert-heading)')
           const dataText = $alvoEditorData.text()
           if(!dataText.length) 
@@ -2092,6 +2171,21 @@ function pjeLoad(){
       lg('verificarSePaginaDeuErro', 'window load :', new Date().getTime() );     
       setTimeout(function(){obs.disconnect();}, 1000);
     });*/
+  }
+
+  function __sendMessageToOpener(load){
+    if(!(load.j2)) 
+      load.j2 = true;
+    if(!(load.pathname)) 
+      load.pathname = window.location.pathname;
+    if(!(load.origin)) 
+      load.origin = window.location.origin;
+
+    const openerOrigin = window.opener?.location?.origin
+            
+    lg('https://pje.tjma.jus.br sending message to opener ' + window.opener?.location?.origin + ':', load );  
+
+    window.opener.postMessage( load, openerOrigin );
   }
 
   function __sendMessageToFrotEnd(load, iframe){
@@ -4233,6 +4327,18 @@ function pjeLoad(){
     });
   }
 
+  function destacarPrazoDeSistema(){
+    jQ3.initialize('#consultaPrazosListDataTable\\:tb', function(){
+      const $this = jQ3(this)
+
+      $this.find('td:nth-child(5)').each(function(idx, td){
+        const $td = jQ3(td)
+        if($td.text().trim().toLowerCase().match(/sistema/))
+          $td.parent().addClass('danger')
+      })
+    })
+  }
+
 
   function personalizarAtalhosADireitaAutosDigitais(){
     jQ3.initialize('#navbar\\:ajaxPanelAlerts .icone-menu-abas', function(){
@@ -4264,8 +4370,28 @@ function pjeLoad(){
           if(etiquetaDocNaoLido)
             j2EPJeRest.etiquetas.remover(idProcesso, etiquetaDocNaoLido.id)
             .done(()=>{
-              toaster("Autos Digitais", `Etiqueta "Documento não lido" removida.`, "success") 
-            })
+            toaster("Autos Digitais", `Etiqueta "Documento não lido" removida.`, "success") 
+            
+            if( j2E.env.urlParms.j2 !== 'fixarAutos' )
+              return
+
+            const j2Action = {
+              action : 'triggerEventToFrontend',
+              evento : {
+                tipo : `on-remover-etiqueta-via-autos-digitais`,
+                argumentos : { 
+                  origem: 'autos digistais com sentinela',
+                  idProcesso: idProcesso,
+                  idTag: etiquetaDocNaoLido.id,
+                  etiquetaInst: etiquetaDocNaoLido,
+                  numeroUnico:  jQ3('a.titulo-topo.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.at(0),
+                  idTask: j2E.env.urlParms?.idTaskInstance || 0,
+                  tipo : 'informa a remoção de etiqueta pelo comando de marcar leitura'
+                }
+              }
+            }
+            __sendMessageToOpener(j2Action)  
+          })
         })
       })
     })
@@ -4388,6 +4514,526 @@ function pjeLoad(){
     }
   }
 
+  function criarEditorEtiquetasPelosAutosDigitais(){
+    function ___unaccent(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+    function ___normalizeString(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9]/g, ""); // Remove caracteres não alfanuméricos
+    }
+    function ___idFrom$el($el){
+      try {
+        return $el.attr('id').match(/\d/g).join('')
+      } catch (error) {
+        return -1
+      }            
+    }
+    const toaster = (title, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(title, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
+    const ___personalizar$Badge = $badge =>{
+      $badge.j2E = {
+        inc: ()=> {
+          let val = parseInt($badge.text().trim())
+          val++
+          $badge.text(val)
+        },
+        dec: ()=> {
+          let val = parseInt($badge.text().trim())
+          val--
+          $badge.text(val)
+        },
+        equals: (val)=>{
+          return val === parseInt($badge.text().trim())
+        }
+      }
+    }
+
+    function ___enviarEventoDeRemocaoDeEtiquetaAoOpener({
+      idProcesso, 
+      idTag, 
+      etiquetaInst, 
+      idTaskInstance,
+      numeroUnico
+    }){
+      if( j2E.env.urlParms.j2 !== 'fixarAutos' )
+        return
+
+      const j2Action = {
+        action : 'triggerEventToFrontend',
+        evento : {
+          tipo : `on-remover-etiqueta-via-autos-digitais`,
+          argumentos : { 
+            origem: 'autos digistais com sentinela',
+            idProcesso,
+            idTag,
+            etiquetaInst,
+            numeroUnico,
+            idTask: idTaskInstance || 0,
+            tipo : 'informa a remoção de etiqueta pelo comando de marcar leitura'
+          }
+        }
+      }
+      __sendMessageToOpener(j2Action)  
+    }
+
+    const TEMPLATE_EMPTY = /*html*/`
+      <li class="dropdown drop-menu menu-alertas">
+          <a href="#" class="btn-alertas dropdown-toggle" title="Etiquetas do processo" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <i class="fa fa-tag"></i>
+              <span class="sr-only">Ícone de etiquetas</span>
+              <span class="badge">0</span>
+          </a>
+          <ul class="dropdown-menu">
+              <li class="menu-titulo">Etiquetas</li>
+              <li class="menu-conteudo">
+                  <ul></ul>
+              </li>
+          </ul>
+      </li>
+    `
+
+    const BTN_ADD_ETIQUETA = /*html*/`
+      <a class="btn btn-default btn-sm j2-tbn-add-etiqueta" title="Inserir etiqueta">
+        <i class="fa fa-tag mr-5"></i>
+        <i class="fa fa-plus mr-5"></i>
+      </a>
+    `
+
+    const TEMPLATE_DROP_DOWN_LI = /*html*/`
+      <li class="menu-conteudo j2-add-etiqueta"></li>
+    `
+    const TEMPLATE_ETIQUETAS_CONTAINER = /*html*/`   
+      <div class="value col-sm-12">
+        <input id="j2-etq-pesquisar" type="text" class="" maxlength="255" placeholder="Pesquisar etiqueta">
+      </div>
+      <div class="j2-container-etiquetas">
+        <table class="rich-table clearfix" border="0" cellpadding="0" cellspacing="0" style="overflow-y: auto;">
+          <thead class="rich-table-thead">
+            <tr class="rich-table-subheader"></tr>
+          </thead>
+          <tbody>
+           
+          </tbody>
+        </table>
+      </div>
+    
+    `
+
+    jQ3.initialize('#navbar\\:ajaxPanelAlerts ul.navbar-right', function(){
+      const $thisNavBarRight = jQ3(this)
+      jQ3.initialize('li.menu-alertas', function(){
+
+        const $_thisMenuAlertas = jQ3(this)
+        if(!$_thisMenuAlertas.find('.fa-tag').length) return
+        
+        const $containerEtiquetas = $_thisMenuAlertas.find('.menu-conteudo')
+        const $badge = $_thisMenuAlertas.find('.badge')
+        ___personalizar$Badge($badge)
+        $containerEtiquetas.prepend(/*html*/`
+          <span id="info-nenhuma-etiqueta" style="display:none;">Nenhuma etiqueta vinculada.</span>
+        `)
+        if($badge.j2E.equals(0))
+          $containerEtiquetas.find('#info-nenhuma-etiqueta').show()        
+        const idProcesso =  j2E.env.urlParms.idProcesso
+        const numeroUnico = jQ3('a.titulo-topo.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.at(0)
+        const idTaskInstance = j2E.env.urlParms.idTaskInstance
+
+        jQ3.initialize('li.menu-conteudo div.media-body:not(.j2-tag-btn)', function(){
+          const $__thisMediaBody = jQ3(this)
+          $__thisMediaBody.addClass('btn btn-sm j2-tag-btn  j2-tag-no-pointer')
+          $__thisMediaBody.append(/*html*/`
+            <div>
+              <div>${$__thisMediaBody.text()}</div>
+            </div>
+            <i class="fa fa-times" j2-tag-i></i>
+          `)
+          $__thisMediaBody.contents().filter(function() {
+            return this.nodeType === 3; // 3 representa o tipo de nó de texto
+          }).remove();
+        },{ 
+          target: $_thisMenuAlertas.get(0)
+        })
+
+        const $pai = $_thisMenuAlertas.find('ul.dropdown-menu')
+
+        const $btnAddEtiqueta = jQ3(BTN_ADD_ETIQUETA).click(()=>{
+
+          const $dropLi = jQ3(TEMPLATE_DROP_DOWN_LI).append(j2EUi.spinnerHTML())
+          const $container = jQ3(TEMPLATE_ETIQUETAS_CONTAINER)
+          const $tbody = $container.find('tbody')
+          let etiqDataAr
+
+          $container.find('#j2-etq-pesquisar').on('input', function(){
+            const $this = jQ3(this)
+
+            $this.removeClass('j2-danger')
+
+            if($this.val().length < 3 && $this.val().length > 0)
+              return
+
+            if( $this.val().length === 0 ){
+              ___buildEtiquetasTBody(etiqDataAr)
+              return
+            }
+
+            const filtro = ___normalizeString($this.val().trim().toLowerCase()); 
+            const etqsFiltradass = etiqDataAr.filter(etq => etq.tagNorm.includes(filtro))
+
+            ___buildEtiquetasTBody( etqsFiltradass )
+          })
+
+          $container.find('#j2-etq-pesquisar').on('keydown', function($event){
+            if ($event.which !== 13)
+              return
+
+            $event.preventDefault();
+
+            const $this = jQ3(this)
+            const textoEtiqueta = $this.val().trim()
+
+            if(textoEtiqueta.length < 3){
+              $this.addClass('j2-danger')
+              toaster('Etiquetas', `A etiqueta deve possuir três ou mais caracteres.`, 'error')
+              return
+            }
+
+            const filtro = ___normalizeString($this.val().trim().toLowerCase()); 
+            const etqsFiltradass = etiqDataAr.filter(etq => etq.nomeTag === filtro)
+
+            if(etqsFiltradass.length){
+              $this.addClass('j2-danger')
+              toaster('Etiquetas', `A etiqueta "${textoEtiqueta}" já existe em sua unidade.`, 'error')
+              return
+            }
+
+            j2EPJeRest.etiquetas.inserir(idProcesso, textoEtiqueta)
+            .done((newEtq)=>{
+              $containerEtiquetas.find('ul').append(/*html*/`
+                <li id="etiqueta${newEtq.id}">
+                  <div class="media-body">
+                    <i class="fa fa-tag mr-5" title="${textoEtiqueta}"></i>
+                    ${textoEtiqueta}
+                  </div>
+                </li>
+              `);
+
+              newEtq.nomeTagCompleto = newEtq.nomeTag
+              newEtq.tagNorm = ___normalizeString(newEtq.nomeTagCompleto.toLowerCase().trim())
+              etiqDataAr.push(newEtq)
+              etiqDataAr.sort((a, b) => a.tagNorm.localeCompare(b.tagNorm) )
+
+              const htmlElemento = /*html*/`
+                <tr class="rich-table-row rich-table-firstrow success">
+                  <td class="rich-table-cell">
+                    <span><center>
+                      <input type="checkbox" id="etq-${newEtq.id}" j2 checked>
+                    </center></span>
+                  </td>
+                  <td class="rich-table-cell">
+                    <span>
+                      <div class="col-sm-12" j2>${newEtq.nomeTagCompleto}</div>
+                    </span>
+                  </td>
+                </tr>
+              `
+              $tbody.find('tr:first-child').removeClass('rich-table-firstrow')
+              $tbody.prepend(htmlElemento)
+
+              $badge.j2E.inc()
+              $containerEtiquetas.find('#info-nenhuma-etiqueta').hide()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" vinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', false)
+              toaster('Etiquetas', `Erro ao vincular etiqueta "${textoEtiqueta}".`, 'error')
+            })
+          })
+
+          $pai.append($dropLi)
+          $btnAddEtiqueta.hide(500)
+
+          j2EPJeRest.etiquetas.listarTodas()
+          .then(etqsArResp=>{
+            etiqDataAr = etqsArResp.map(etq => {
+              etq.tagNorm = ___normalizeString(etq.nomeTagCompleto.toLowerCase().trim())
+              return etq
+            }).sort((a, b) => a.tagNorm.localeCompare(b.tagNorm) )
+
+            ___buildEtiquetasTBody(etiqDataAr)
+            
+            $dropLi.empty()
+            $dropLi.append($container)
+          })
+
+          const ___buildEtiquetasTBody =(etqArray)=>{
+            let htmlElementos = ''
+            etqArray.forEach(etq => {
+              htmlElementos += /*html*/`
+                <tr class="rich-table-row">
+                  <td class="rich-table-cell">
+                    <span><center>
+                      <input type="checkbox" id="etq-${etq.id}" j2>
+                    </center></span>
+                  </td>
+                  <td class="rich-table-cell">
+                    <span>
+                      <div class="col-sm-12" j2>${etq.nomeTagCompleto}</div>
+                    </span>
+                  </td>
+                </tr>
+            `})
+
+            $tbody.empty()
+            $tbody.append(htmlElementos)
+            $tbody.find('tr:first-child').addClass('rich-table-firstrow')
+            
+            const stSelector = $containerEtiquetas.find('li').toArray().map(el => {
+              return `#etq-${___idFrom$el(jQ3(el))}`
+            }).join(', ')
+            $tbody.find(stSelector).each(function(){
+              this.checked = true
+            })
+          }
+        })
+
+        $pai.click(($event)=>{
+          const $target = jQ3($event.target)
+          if((!$target.is( '[j2-tag-i]' )) && (!$target.is('[j2]')))
+            return;
+
+          //adição ou exclusão pela tabela de etiquetas
+          if($target.is('[j2]')){
+            let idEtiqueta = -1
+            let textoEtiqueta = ''
+            let $input = null
+            let acaoAdd = false
+            let acaoDel = false
+
+            if($target.is('input')){
+              $input = $target
+              idEtiqueta = ___idFrom$el($target)
+              textoEtiqueta = $target.parents('tr').find('div[j2]').text().trim()
+              if($input.is(':checked'))
+                acaoAdd = true
+              else
+                acaoDel = true
+            }else if ($target.is('div')){
+              $input = $target.parents('tr').find('input')
+              idEtiqueta = ___idFrom$el($input)
+              textoEtiqueta = $target.text().trim()
+              if($input.is(':checked'))
+                acaoDel = true
+              else
+                acaoAdd = true
+            }
+
+            if(idEtiqueta === -1)
+              return
+
+            //adicionar 
+            acaoAdd && j2EPJeRest.etiquetas.inserir(idProcesso, textoEtiqueta)
+            .done((newEtq)=>{
+              if( newEtq === undefined ){
+                toaster('Etiquetas', `A etiqueta "${textoEtiqueta}" já está vinculada.`, 'error')
+                return
+              }
+
+              $containerEtiquetas.find('ul').append(/*html*/`
+                <li id="etiqueta${newEtq.id}">
+                  <div class="media-body">
+                    <i class="fa fa-tag mr-5" title="${textoEtiqueta}"></i>
+                    ${textoEtiqueta}
+                  </div>
+                </li>
+              `)
+              $input.prop('checked', true)
+              $badge.j2E.inc()
+              $containerEtiquetas.find('#info-nenhuma-etiqueta').hide()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" vinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', false)
+              toaster('Etiquetas', `Erro ao vincular etiqueta "${textoEtiqueta}".`, 'error')
+            })
+
+            //remover
+            acaoDel && j2EPJeRest.etiquetas.remover(idProcesso, idEtiqueta)
+            .done(()=>{
+              $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
+              $input.prop('checked', false)
+              $badge.j2E.dec()
+              if($badge.j2E.equals(0))
+                $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
+            })
+            .fail(err => {
+              $input.prop('checked', true)
+              toaster('Etiquetas', `Erro ao remover desvincular "${textoEtiqueta}".`, 'error')
+            })
+          }
+
+          //remoção etiqueta
+          if($target.is('[j2-tag-i]')){
+            const $tbody = $containerEtiquetas.next().find('tbody')
+            const idEtiqueta = ___idFrom$el($target.parents('li:first'))
+            const textoEtiqueta = $target.parents('li:first').find('div > div > div').text().trim()
+            const $input = $tbody.find(`#etq-${idEtiqueta}`)
+
+            if(idEtiqueta === -1)
+              return
+
+            //remover
+            j2EPJeRest.etiquetas.remover(idProcesso, idEtiqueta)
+            .done(()=>{
+              $containerEtiquetas.find(`#etiqueta${idEtiqueta}`).remove()
+              $input.prop('checked', false)
+              $badge.j2E.dec()
+              if($badge.j2E.equals(0))
+                $containerEtiquetas.find('#info-nenhuma-etiqueta').show()
+              toaster('Etiquetas', `Etiqueta "${textoEtiqueta}" desvinculada.`, 'success')
+              ___enviarEventoDeRemocaoDeEtiquetaAoOpener({
+                idProcesso: idProcesso,
+                idTag: idEtiqueta,
+                etiquetaInst: {
+                  id: idEtiqueta,
+                  idProcesso: idProcesso,
+                  tagNome: textoEtiqueta,
+                },
+                idTaskInstance: idTaskInstance,
+                numeroUnico: numeroUnico
+              })
+            })
+            .fail(err => {
+              toaster('Etiquetas', `Erro ao remover desvincular "${textoEtiqueta}".`, 'error')
+            })
+          }
+        })
+
+        $containerEtiquetas.addClass('j2-menu-conteudo')
+        $_thisMenuAlertas.find('.menu-titulo').prepend($btnAddEtiqueta)
+      },{ 
+        target: $thisNavBarRight.get(0)
+      })
+
+      if(! $thisNavBarRight.find('li.menu-alertas').length)
+        $thisNavBarRight.find('li.icone-menu-abas').before(jQ3(TEMPLATE_EMPTY))
+    })
+  }
+
+  function sinalizarProcessoJulgado(movimentosProcesso){
+
+    const IDS_CLASSES = new Set([436])
+    const IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO = new Set([3,193,196,198,200,202,208,210,212,214,218,219,220,221,228,230,235,236,237,238,239,240,241,242,244,385,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,471,472,473,853,871,884,900,901,972,973,1042,1043,1044,1045,1046,1047,1048,1049,1050,10953,10961,10964,10965,11009,11373,11374,11375,11376,11377,11378,11379,11380,11381,11394,11396,11401,11402,11403,11404,11405,11406,11407,11408,11409,11411,11795,11796,11801,11876,11877,11878,11879,12028,12032,12033,12034,12041,12184,12187,12252,12253,12254,12256,12257,12258,12298,12319,12321,12322,12323,12324,12325,12326,12327,12328,12329,12330,12331,12433,12434,12435,12436,12437,12438,12439,12440,12441,12442,12443,12450,12451,12452,12453,12458,12459,12475,12615,12616,12617,12649,12650,12651,12652,12653,12654,12660,12661,12662,12663,12664,12665,12666,12667,12668,12669,12670,12672,12673,12674,12675,12676,12677,12678,12679,12680,12681,12682,12683,12684,12685,12686,12687,12688,12689,12690,12691,12692,12693,12694,12695,12696,12697,12698,12699,12700,12701,12702,12703,12704,12705,12706,12707,12708,12709,12710,12711,12712,12713,12714,12715,12716,12717,12718,12719,12720,12721,12722,12723,12724,12735,12738,12792,14092,14099,14210,14211,14213,14214,14215,14216,14217,14218,14219,14680,14777,14778,14848,14937,15022,15023,15024,15026,15027,15028,15029,15030,15165,15166,15185,15211,15212,15213,15214,15245,15249,15250,15251,15252,15253,15254,15255,15256,15257,15258,15259,15260,15261,15262,15263,15264,15265,15266])
+
+    jQ3.initialize('#maisDetalhes > dl > dd:first-of-type', async function(){
+      const $this = jQ3(this)
+      const idClass = $this.text().match(/\((\d+)\)/)?.at(1)
+
+      if(!IDS_CLASSES.has(parseInt(idClass)))
+        return
+
+      const temElementoEmComum = movimentosProcesso.some(codMov =>
+        IDS_MOVIMENTOS_MAGISTRADOS_JULGAMENTO.has(parseInt(codMov.codEvento))
+      )
+      
+      temElementoEmComum && jQ3('#navbar\\:ajaxPanelAlerts ul.navbar-left').append(/*html*/`
+        <li>
+          <div title="Processo de classe judicial com julgamento proferido" style="padding-top: 15px; padding-right: 15px;color:#fff;padding-left: 10px;">
+            <i class="fa fa-gavel" ></i>
+          </div>
+        </li>
+      `)
+      
+    })
+  }
+
+  function destacarOsAtosDoMagistrado(movimentosProcesso){
+    const IDS_MOVIMENTOS_MAGISTRADOS_SET = new Set([
+      3, 7, 11, 25, 56, 63, 83, 108, 113, 117, 122, 128, 133, 138, 146, 151, 157, 160, 163, 172, 175,
+      190, 193, 196, 198, 200, 202, 206, 207, 208, 210, 212, 214, 218, 219, 220, 221, 228, 230, 235,
+      236, 237, 238, 239, 240, 241, 242, 244, 263, 264, 265, 266, 268, 269, 270, 271, 272, 275, 276,
+      277, 278, 279, 332, 334, 335, 339, 347, 348, 349, 352, 353, 354, 355, 357, 358, 371, 373, 374,
+      377, 378, 381, 383, 385, 388, 389, 390, 391, 392, 393, 394, 399, 400, 402, 404, 429, 430, 431,
+      432, 433, 434, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457,
+      458, 459, 460, 461, 462, 463, 464, 465, 466, 471, 472, 473, 785, 787, 788, 792, 799, 803, 804,
+      817, 818, 819, 821, 823, 824, 853, 871, 884, 888, 889, 892, 898, 900, 901, 905, 940, 941, 944,
+      945, 947, 960, 961, 968, 971, 972, 973, 988, 990, 1002, 1003, 1004, 1008, 1009, 1010, 1011, 1013,
+      1014, 1015, 1016, 1017, 1018, 1019, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1059,
+      1060, 1063, 10953, 10961, 10962, 10963, 10964, 10965, 11002, 11009, 11010, 11011, 11012, 11013,
+      11014, 11015, 11016, 11017, 11018, 11019, 11020, 11021, 11022, 11023, 11024, 11025, 11373, 11374,
+      11375, 11376, 11377, 11378, 11379, 11380, 11381, 11382, 11393, 11394, 11395, 11396, 11401, 11402,
+      11403, 11404, 11405, 11406, 11407, 11408, 11409, 11411, 11415, 11423, 11424, 11425, 11426, 11554,
+      11792, 11795, 11796, 11801, 11876, 11877, 11878, 11879, 11975, 12028, 12032, 12033, 12034, 12035,
+      12036, 12037, 12038, 12039, 12040, 12041, 12067, 12068, 12092, 12093, 12094, 12095, 12096, 12097,
+      12098, 12099, 12100, 12140, 12141, 12144, 12145, 12146, 12147, 12148, 12149, 12150, 12151, 12163,
+      12164, 12180, 12181, 12182, 12183, 12184, 12185, 12187, 12188, 12206, 12207, 12208, 12209, 12210,
+      12211, 12213, 12252, 12253, 12254, 12255, 12256, 12257, 12258, 12259, 12261, 12262, 12298, 12299,
+      12300, 12301, 12302, 12303, 12304, 12305, 12306, 12307, 12308, 12310, 12311, 12312, 12313, 12314,
+      12318, 12319, 12320, 12321, 12322, 12323, 12324, 12325, 12326, 12327, 12328, 12329, 12330, 12331,
+      12332, 12359, 12387, 12421, 12422, 12425, 12427, 12428, 12429, 12430, 12431, 12432, 12433, 12434,
+      12435, 12436, 12437, 12438, 12439, 12440, 12441, 12442, 12443, 12444, 12445, 12446, 12447, 12448,
+      12449, 12450, 12451, 12452, 12453, 12454, 12455, 12456, 12457, 12458, 12459, 12467, 12472, 12473,
+      12474, 12475, 12476, 12477, 12478, 12479, 12548, 12615, 12616, 12617, 12646, 12647, 12648, 12649,
+      12650, 12651, 12652, 12653, 12654, 12660, 12661, 12662, 12663, 12664, 12665, 12666, 12667, 12668,
+      12669, 12670, 12671, 12672, 12673, 12674, 12675, 12676, 12677, 12678, 12679, 12680, 12681, 12682,
+      12683, 12684, 12685, 12686, 12687, 12688, 12689, 12690, 12691, 12692, 12693, 12694, 12695, 12696,
+      12697, 12698, 12699, 12700, 12701, 12702, 12703, 12704, 12705, 12706, 12707, 12708, 12709, 12710,
+      12711, 12712, 12713, 12714, 12715, 12716, 12717, 12718, 12719, 12720, 12721, 12722, 12723, 12724,
+      12733, 12734, 12735, 12736, 12737, 12738, 12765, 12766, 12767, 12768, 12769, 12792, 14092, 14093,
+      14094, 14095, 14099, 14210, 14211, 14213, 14214, 14215, 14216, 14217, 14218, 14219, 14230, 14231,
+      14232, 14233, 14234, 14235, 14680, 14681, 14682, 14683, 14702, 14730, 14733, 14776, 14777, 14778,
+      14848, 14937, 14968, 14969, 14970, 14971, 14972, 14973, 15009, 15022, 15023, 15024, 15025, 15026,
+      15027, 15028, 15029, 15030, 15032, 15057, 15058, 15059, 15060, 15061, 15062, 15063, 15064, 15065,
+      15067, 15078, 15079, 15080, 15081, 15082, 15083, 15084, 15085, 15086, 15103, 15162, 15163, 15164,
+      15165, 15166, 15183, 15185, 15200, 15201, 15202, 15203, 15204, 15205, 15206, 15207, 15208, 15209,
+      15210, 15211, 15212, 15213, 15214, 15216, 15223, 15225, 15226, 15227, 15229, 15230, 15231, 15232,
+      15233, 15234, 15235, 15238, 15244, 15245, 15247, 15248, 15249, 15250, 15251, 15252, 15253, 15254,
+      15255, 15256, 15257, 15258, 15259, 15260, 15261, 15262, 15263, 15264, 15265, 15266
+    ])
+
+    const movimentosMagistraoProcesso = movimentosProcesso.filter(mov => IDS_MOVIMENTOS_MAGISTRADOS_SET.has(parseInt(mov.codEvento)))
+                                        .map(mov => mov.textoFinalExterno.toLowerCase())
+    const movimentosMagistradoProcessoSet = new Set(movimentosMagistraoProcesso)                                        
+    
+    jQ3.initialize('#divTimeLine\\:divEventosTimeLine .texto-movimento', function(){
+      const $this = jQ3(this)
+      const textoMovimento = $this.text().toLowerCase()
+      if( !movimentosMagistradoProcessoSet.has( textoMovimento ) && !textoMovimento.includes('conduzida por juiz') )
+        return
+
+      const $container = $this.parents('.interno')
+      $container.find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+      if( !$container.find('.anexos').children().length ){
+        if($container.next().is('.tipo-D'))
+          $container.next().find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+        if($container.prev().is('.tipo-D'))
+          $container.prev().find('.media-body, .media-left').addClass('j2-autos-digitais-ato-magistrado')
+      }
+    })
+  }
+
+  function acoesBaseadasEmMovimentosDoProcesso(){
+    const __toaster = (a, msg, severity)=> { 
+      jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+    }
+
+    const idProc = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
+
+    j2EPJeRest.processo.movimentacoes.obterTodas(idProc)
+    .done(todosMovimentos => {
+      todosMovimentos.sort((a, b) => b.dataAtualizacao - a.dataAtualizacao)
+
+      sinalizarProcessoJulgado(todosMovimentos)
+      destacarOsAtosDoMagistrado(todosMovimentos)
+    })
+    .fail(err => {
+      __toaster("Autos Digitais", `Erro ao recuperar todos os movimentos do processo.`, "error") 
+    })
+    
+  }
+
   function modificarLinkAssociadosParaAbrirAutosDigitais(){
     jQ3.initialize('#associadosTab a', function(){
       const $this = jQ3(this)
@@ -4420,6 +5066,8 @@ function pjeLoad(){
       //registrarServiceWorker();
       personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
+      criarEditorEtiquetasPelosAutosDigitais()
+      acoesBaseadasEmMovimentosDoProcesso()
       modificarLinkAssociadosParaAbrirAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
@@ -4480,6 +5128,7 @@ function pjeLoad(){
     case '/pje/ConsultaPrazos/listView.seam':
     case '/pje/ConsultaPrazos/listView.seam#':
       preparComandoDeEtiquetagem();
+      destacarPrazoDeSistema()
       break;
     
     case '/pje/Painel/painel_usuario/include/agrupadorPje2.seam':

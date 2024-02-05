@@ -64,7 +64,7 @@
                       telefone="(99) 99989-6346, (99) 3523-7592"
                       eMail="juizciv2_itz@tjma.jus.br"
             />
-            <secretarios emExercicio="titular" titular="01682637506" substituto="05174785440" />
+            <secretarios emExercicio="substituto" titular="01682637506" substituto="05174785440" />
             <!--magistrados emExercicio="magisDEBORA" titular="75827298387" 
                                                respondente="47202467372" 
                                                respondente2="maGENIVALDO"
@@ -115,6 +115,9 @@
 
                 <exercicioTemporario usuarioId="47202467372" dataInicio="2023-11-23" dataFim="2023-11-24">
                     <PortariaDesignacao numero="5421" ano="2023" dataAto="2023-11-08"/>
+                </exercicioTemporario>
+                <exercicioTemporario usuarioId="47202467372" dataInicio="2023-12-06" dataFim="2023-12-19">
+                    <PortariaDesignacao numero="5761" ano="2023" dataAto="2023-12-05"/>
                 </exercicioTemporario>
             </magistrados>
             <!-- 47202467372 -DELVAN -->
