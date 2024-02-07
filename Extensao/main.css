@@ -1744,6 +1744,10 @@ ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
     border-right-color: #BBD5E2 !important;
 }
 
+.j2-line-force-0{
+    line-height: 0;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

@@ -1206,7 +1206,7 @@ MARCANÃ</span>
 <span>
 
 
-<img src="https://products.aspose.app/barcode/embed/image.Png?BarcodeType=DataMatrix&amp;Content=#{j2.mod.clsCnstr.AR.vars.AR_AA}MAJ&amp;TextLocation=None&amp;Height=62&amp;Width=62&amp;DataMatrix.DataMatrixEcc=Ecc200&amp;DataMatrix.DataMatrixEncodeMode=ASCII" style="
+<img src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR_AA}" style="
     width: 50px;
 ">
 </span>
@@ -1316,7 +1316,7 @@ objeto.</span>
 </p>
 <p align="center" style="margin:0px;text-align:center;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
 <span>
-<img j2e_sro_query src="https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&amp;Content=#{j2.mod.clsCnstr.AR.vars.AR}&amp;Height=60&amp;Width=325&amp;TextLocation=none" name="Figura2" width="" style="width:62mm; cursor:pointer;">
+<img j2e_sro_query src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR}" name="Figura2" width="" style="width:62mm; cursor:pointer;">
 </span>
 <span style="font-size:13.0pt;">
 </span>
@@ -1725,7 +1725,8 @@ Nº DOCUMENTO DE IDENTIDADE</span>
 			<!--img src="Sem%20t%C3%ADtulo%201_html_1b5341d472d3e007.png" name="Figura4" align="left" width="186" height="16" style="
     /* display: none; */
 "-->
-<img src="https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Postnet&amp;Content=#{j2.mod.clsCnstr.AR.vars.destinatario.CEP}&amp;TextLocation=None&amp;DimensionX=2.4&amp;BarHeight=50" name="Figura4" align="left" width="190" height="16" style="
+<img src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.destinatarioCEP}" name="Figura4" align="left" width="190" height="16" style="
+    transform: scalex(1.25);
 ">
 
   
@@ -1736,8 +1737,7 @@ Nº DOCUMENTO DE IDENTIDADE</span>
 	</tr>
 	<tr style="background: transparent" valign="top">
 		<td width="72" style="border: none; padding: 0cm">
-			<img src="https://products.aspose.app/barcode/embed/image.Png?BarcodeType=DataMatrix&amp;Content=#{j2.mod.clsCnstr.AR.vars.dataMatrix}&amp;TextLocation=None&amp;DataMatrix.DataMatrixEcc=Ecc200&amp;DataMatrix.DataMatrixEncodeMode=ASCII
-" align="certer" style="
+			<img src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.dataMatrix}" align="certer" style="
     width: 74px;
 ">
   
@@ -1781,7 +1781,7 @@ Nº DOCUMENTO DE IDENTIDADE</span>
 </b></span></p>
 			<p align="center" style="margin: 0;line-height: normal;"><!--img src="Sem%20t%C3%ADtulo%201_html_97b6dd61642f324e.png" name="Figura2" width="309" height="55"-->
 
-<img j2e_sro_query style="cursor:pointer;" src="https://products.aspose.app/barcode/embed/image.Png?BarcodeType=Code128&amp;Content=#{j2.mod.clsCnstr.AR.vars.AR}&amp;Height=60&amp;Width=325&amp;TextLocation=none" name="Figura2" width="">
+<img j2e_sro_query style="cursor:pointer;" src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR}" name="Figura2" width="325" Height="60">
   
 
 <br>
