@@ -774,17 +774,46 @@ var j2EUi = {
     return $newBut
   },
   createRichModal: ()=>{
-    jQ3('body').append(`<div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;"><div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div><div class="rich-mpnl-panel"><div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;"><div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div><div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;"><table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;"><tbody><tr style="height: 99%"><td class="rich-mpnl-body" valign="top">			
-		<div class="media">
-			<div class="media-left media-middle">
-				<div class="svg-preloader">
-					<svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
-				</div>
-			</div>
-			<div class="media-body">
-				<h6>Por favor aguarde</h6>
-			</div>
-		</div></td></tr></tbody></table></div></div></div><div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div></div>`)
+    const $modal = jQ3(/*html*/`
+      <div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;">
+          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+          <div class="rich-mpnl-panel">
+              <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;">
+                  <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div>
+                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;">
+                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                          <tbody>
+                              <tr style="height: 99%;">
+                                  <td class="rich-mpnl-body" valign="top">
+                                      <div class="media">
+                                          <div class="media-left media-middle">
+                                              <div class="svg-preloader">
+                                                  <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+                                              </div>
+                                          </div>
+                                          <div class="media-body">
+                                              <h6>Por favor aguarde</h6>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+      </div>
+    `)
+
+    jQ3('body').append($modal)
+
+    return {
+      $mainContainer: $modal,
+      replaceContent: ($newContent)=>{
+        $modal.find('.rich-mpnl-content').replaceWith($newContent)
+      }
+    }
   },
   createRichModalComIframePainelUsuario: (headerDoPainel, urlIframe, userCloseCallback)=>{
     const $modal = jQ3(`<div class="rich-modalpanel modal-small" id="j2E-modalWithIframePainelUsuario" style="position: absolute; z-index: 100; background-color: inherit;">
@@ -833,6 +862,97 @@ var j2EUi = {
     .hide(500, function(){
       this.remove()
     })
+  },
+  Audiencias: {
+    createPautaAudienciaContentOverlay:(result, dataPtBrFormato)=>{
+      const CONTENT_TEMPLATE = /*html*/`
+        <div class="rich-mpnl-content" >
+            <div class="rich-mpnl-text rich-mpnl-controls">
+                <a
+                    id="fechar-modal-pauta-j2"
+                    title="Fechar"
+                    class="btn-fechar"
+                >
+                    <i class="icon-fechar"></i>
+                </a>
+            </div>
+            <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table"  style="width: 800px; height: 1px;">
+                <tbody>
+                    <tr style="height: 1%;">
+                        <td class="rich-mpnl-header-cell">
+                            <div class="rich-mpnl-text rich-mpnl-header" style="white-space: nowrap; cursor: move;">Pauta de audiência para ${dataPtBrFormato}</div>
+                        </td>
+                    </tr>
+                    <tr style="height: 99%;">
+                        <td class="rich-mpnl-body" valign="top">
+                            <table class="rich-table" style="vertical-aligment: top; white-space: nowrap;" border="0" cellpadding="0" cellspacing="0">
+                                <colgroup span="5"></colgroup>
+                                <thead class="rich-table-thead">
+                                    <tr class="rich-table-header">
+                                        <th class="rich-table-headercell" >Sala</th>
+                                        <th class="rich-table-headercell" >Hora</th>
+                                        <th class="rich-table-headercell" >Processo</th>
+                                        <th class="rich-table-headercell" >Partes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="processo-pauta-j2">
+                                    
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      `
+      const $content = jQ3(CONTENT_TEMPLATE)
+      const $body = $content.find('tbody#processo-pauta-j2')
+
+      result.jsonTable.forEach(jsonTr=>{
+        const $tr = jQ3(/*html*/`
+          <tr class="rich-table-row rich-table-firstrow">
+              <td class="rich-table-cell text-center" >${jsonTr.Sala}</td>
+              <td class="rich-table-cell text-center" >${jsonTr['Data/Hora'].match(/\b(\d{2}:\d{2})\b/).at(1)}</td>
+              <td class="rich-table-cell text-center" ><a style="cursor:pointer" title="Visualizar processo ${jsonTr.Processo}">${jsonTr.Processo}</a></td>
+              <td class="rich-table-cell text-left" >${jsonTr.Partes.replace(' X ', '<br/>')}</td>
+          </tr>
+        `)
+
+        $tr.find('a').click(()=>{
+          const url = result.$elementoTableAudiencias.find(`tr:contains("${jsonTr.Processo}")`).find('a').prop('href')
+          if(!url) 
+            return
+          const [match, idProcesso, ca] = url.match(/(?:\?|&)id=(\d+).*?&ca=([a-f\d]+)/)
+          j2EOpW.center(url, 'visualizar-proesso-de-pauta-', idProcesso)
+        })
+
+        $body.append($tr)
+      })
+      
+
+      $content.find('#fechar-modal-pauta-j2').click(()=>{
+        j2EUi.removeModal()
+      })
+      return $content
+    },
+    createLinkExibirPautaAudienciaDataAudienciaTarefa: (dataPtBrFormato)=>{
+      const $aLink = jQ3(/*html*/`
+        <a style="cursor:pointer" class="j2-line-force-0" title="Ver pauta de audiência para ${dataPtBrFormato}">
+          <span>${dataPtBrFormato}<i class="far fa-calendar-alt pl-5"></i></span>
+        </a>
+      `)
+
+      $aLink.click(()=>{
+        const dataIsoString = dataPtBrFormato.split('/').reverse().join('-')
+        const $modal = j2EUi.createRichModal()
+        j2E.SeamIteraction.audiencia.acoes.consultaPautaAudienciaData(dataIsoString).then(result=>{
+          $modal.replaceContent(  j2EUi.Audiencias.createPautaAudienciaContentOverlay(result, dataPtBrFormato) )
+          $modal.$mainContainer.removeClass('modal-small')
+        })
+      })
+
+      return $aLink
+    }
   },
   TarefaNumClique : {
     createTags : (arrayTags, tagsContainerClass, excluivel)=>{
@@ -3222,6 +3342,193 @@ function loadPJeRestAndSeamInteraction(){
           .always( ()=> requestsIteractions.liberarAView() )
 
           return def.promise()
+        }
+      }
+    },
+    audiencia : {
+      requestsIteractionsGetter : () => { 
+        const requestsIteractions = {
+          baseURL : `/pje/ProcessoAudiencia/PautaAudiencia/listView.seam`,
+          responseHistory: [],
+          session: null,
+          liberarAView: ()=>{
+            requestsIteractions.session.ocupado = false
+            requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+            lockr.set('SeamIteraction.sessions', _this.session)
+          },
+          listView : () =>{
+            const def = $.Deferred()
+
+            _this.session = _lockr.get('SeamIteraction.sessions', [])
+            _this.util.liberarViewsExpiradas()
+
+            const audienciaSessions = _this.session.filter(ses => { 
+              return ses.pagina === 'audiencia' && !ses.ocupado
+            })
+
+            if( ! audienciaSessions.length ){
+              $.get(requestsIteractions.baseURL)
+              .done( (xml)=> { 
+                var $html = $(xml)
+                var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+
+                requestsIteractions.responseHistory.push({
+                  iteraction: 'listView',
+                  $xml: $html
+                })
+                
+                const containerId = $html.find('#processoAudienciaSearchForm')
+                    .prop('outerHTML').match(/'containerId':'processoAudienciaSearchForm:(j_id\d+)'/).at(1)
+                const paramId = $html.find('input.btn-primary')
+                    .prop('outerHTML').match(/'processoAudienciaSearchForm:(j_id\d+)':'1'/).at(1)
+                const jurisdicao = $html.find('#processoAudienciaSearchForm\\:jurisdicaoDecoration\\:jurisdicao').val()
+                const orgaoJulgador = $html.find('#processoAudienciaSearchForm\\:orgaoJulgadorDecoration\\:orgaoJulgador').val()
+
+                const parametros = {
+                  containerId,
+                  paramId,
+                  jurisdicao,
+                  orgaoJulgador
+                }             
+                
+                requestsIteractions.session = { 
+                  viewId: viewId,
+                  pagina: 'audiencia',
+                  expiration: _this.util.obterNovaExpiracao(),
+                  ocupado: true,
+                  parametros
+                }
+
+                _this.session.push(requestsIteractions.session)
+
+                lockr.set('SeamIteraction.sessions', _this.session)
+    
+                def.resolve( requestsIteractions ) 
+              } )
+              .fail( err => def.reject(err) )
+            }else{
+              requestsIteractions.session = audienciaSessions[0]
+              requestsIteractions.session.ocupado = true
+              requestsIteractions.session.expiration = _this.util.obterNovaExpiracao()
+              lockr.set('SeamIteraction.sessions', _this.session)
+              
+              def.resolve( requestsIteractions ) 
+            }
+
+            return def.promise()
+          },
+          limpar: ()=>{
+
+          },
+          consultaPautaData : (dataIsoString)=>{
+            var def = $.Deferred()
+
+            const [ano, mes, dia] = dataIsoString.split('-')
+            const parametros = requestsIteractions.session.parametros
+
+            var PAYLOAD = `
+              AJAXREQUEST: processoAudienciaSearchForm:${parametros.containerId}
+              processoAudienciaSearchForm:jurisdicaoDecoration:jurisdicao: ${parametros.jurisdicao}
+              processoAudienciaSearchForm:orgaoJulgadorDecoration:orgaoJulgador: ${parametros.orgaoJulgador}
+              processoAudienciaSearchForm:magistradoDecoration:magistrado: 
+              processoAudienciaSearchForm:conciliadorDecoration:conciliador: 
+              processoAudienciaSearchForm:listaSituacoes: M
+              processoAudienciaSearchForm:dtInicioDecoration:dtInicioFromFormInputDate: ${dia}/${mes}/${ano}
+              processoAudienciaSearchForm:dtInicioDecoration:dtInicioFromFormInputCurrentDate: ${mes}/${ano}
+              processoAudienciaSearchForm:dtInicioDecoration:dtInicioToFormInputDate: ${dia}/${mes}/${ano}
+              processoAudienciaSearchForm:dtInicioDecoration:dtInicioToFormInputCurrentDate: ${mes}/${ano}
+              processoAudienciaSearchForm:tipoAudienciaDecoration:tipoAudiencia: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              processoAudienciaSearchForm:salaAudienciaDecoration:salaAudiencia: org.jboss.seam.ui.NoSelectionConverter.noSelectionValue
+              processoAudienciaSearchForm:parteDecoration:parte: 
+              processoAudienciaSearchForm:nomeAdvogadoDecoration:nomeAdvogado: 
+              processoAudienciaSearchForm:processoAudienciaSearchFormclasseJudicialTreeDecoration:processoAudienciaSearchFormclasseJudicialPanel: 
+              processoAudienciaSearchForm:processoAudienciaSearchFormclasseJudicialTreeDecoration:processoAudienciaSearchFormclasseJudicialTree:input: 
+              processoAudienciaSearchForm:processoAudienciaSearchFormassuntoTrfTreeDecoration:processoAudienciaSearchFormassuntoTrfPanel: 
+              processoAudienciaSearchForm:processoAudienciaSearchFormassuntoTrfTreeDecoration:processoAudienciaSearchFormassuntoTrfTree:input: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:idProcessoAudienciaNumeroSequencial: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:idProcessoAudienciaNumeroDigitoVerificador: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:idProcessoAudienciaAno: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:labelJusticaFederal: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:labelTribunalRespectivo: 
+              processoAudienciaSearchForm:idProcessoAudienciaDecoration:idProcessoAudienciaNumeroOrgaoJustica: 
+              processoAudienciaSearchForm_link_hidden_: processoAudienciaSearchForm:clearButton
+              processoAudienciaSearchForm: processoAudienciaSearchForm
+              autoScroll: 
+              javax.faces.ViewState: ${requestsIteractions.session.viewId}
+              processoAudienciaSearchForm:searchButton: processoAudienciaSearchForm:searchButton
+              processoAudienciaSearchForm:${parametros.paramId}: 1
+              AJAX:EVENTS_COUNT: 1
+            `
+            PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+            const it = requestsIteractions
+
+            $.post(it.baseURL, PAYLOAD)
+            .done( (xml) => { 
+              const $xml = jQ3(xml)
+              it.responseHistory.push({
+                iteraction: `consultaPautaData - ${dataIsoString}`,
+                $xml
+              })
+
+              it.$elementoTableAudiencias = jQ3($xml.find('#idProcessoAudiencia'))
+              def.resolve( it, $xml ) 
+            } )
+            .fail( err => def.reject(err) )
+
+            return def.promise();
+          }
+        }
+        return requestsIteractions
+      },
+      acoes : {
+        consultaPautaAudienciaData : (dataIsoString) => {
+          const def = $.Deferred()
+          const acoes = _this.audiencia.acoes
+          const requestsIteractions = _this.audiencia.requestsIteractionsGetter()
+          const util = _this.audiencia.util
+
+
+          requestsIteractions.listView()
+          .pipe(()=>{
+            return requestsIteractions.consultaPautaData(dataIsoString)
+          })
+          .done( (it, $xml) =>{
+            const jsonTable = util.tableToJson(it.$elementoTableAudiencias)
+            def.resolve({ 
+              jsonTable, 
+              $elementoTableAudiencias: it.$elementoTableAudiencias, 
+              $xml, 
+              acoes 
+            }) 
+          })
+          .fail( err => def.reject(err) )
+          .always( ()=>{
+            requestsIteractions.liberarAView()
+          })
+
+          return def.promise()
+        }
+      },
+      util: {
+        tableToJson: ($tableOrg)=>{
+          const $table = $tableOrg.clone()
+          $table.find('script, table').remove()
+
+
+          const headers = $table.find('thead th').map(function() {
+            return $(this).text().trim();
+          }).get();
+        
+          const jsonData = $table.find('tbody#idProcessoAudiencia\\:tb > tr').map(function() {
+            const rowData = {};
+            $(this).find('td').each(function(index) {
+              rowData[headers[index]] = $(this).text().trim();
+            });
+            return rowData;
+          }).get();
+        
+          return jsonData;
         }
       }
     },
