@@ -1558,26 +1558,26 @@ and open the template in the editor.
                         <data>
                             #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
-                            completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda,  inclusive em relação ao pedido 
-                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
+                            para comprovar o interesse processual mediante juntada aos autos comprovantes de que antes da 
+                            propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
+                            em relação aos danos morais alegados, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
-                            a 30 dias após a apresentação da reclamação administrativa}.
+                            a 30 dias após a apresentação da reclamação administrativa.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
                             #:B{INTIMAÇÃO} da parte acima qualificada para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
-                            completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                            ação apresentou requerimento(s) administrativo(s) para solução da demanda, inclusive em relação ao pedido 
-                            de indenização por danos morais}, por meio da plataforma pública digital de interlocução 
+                            para comprovar o interesse processual mediante juntada aos autos comprovantes de que antes da 
+                            propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
+                            em relação aos danos morais alegados, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                             com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
-                            a 30 dias após a apresentação da reclamação administrativa}.
+                            a 30 dias após a apresentação da reclamação administrativa.
                         </data>
                     </arElement>
                 </selectorArray>               

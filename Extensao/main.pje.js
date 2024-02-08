@@ -1453,28 +1453,38 @@ function pjeLoad(){
 
   function observeSelectTipoDocumento(){
     
-    
-    jQ3.initialize('select#cbTDDecoration\\:cbTD option', function(a, b, c){
-      var jEl = jQ3(this);
-      switch(jEl.text()){
-        case 'Ato Ordinatório':
-        case 'Certidão':
-        case 'Mensagem(ns) de E-mail':
-        case 'Ofício':
-        case 'Petição':
-        case 'Petição Inicial':
-        case 'Protocolo':
-        case 'Termo':
-        case 'Termo de Juntada':
-          return;         
+    jQ3.initialize('select#cbTDDecoration\\:cbTD', function(a, b, c){
+      const $sel = jQ3(this)
 
-        default:
-          jEl.remove();
+      jQ3.initialize('option', function(a, b, c){
+        const jEl = jQ3(this)
+        switch(jEl.text()){
+          case 'Ato Ordinatório':
+          case 'Certidão':
+          case 'Mensagem(ns) de E-mail':
+          case 'Ofício':
+          case 'Petição':
+          case 'Petição Inicial':
+          case 'Protocolo':
+          case 'Termo':
+          case 'Termo de Juntada':
+            return;         
 
-        
-      } 
-      
-      
+          case 'Selecione':
+            if(jQ3('body').is('[j2-selector-tipo-changed-once]'))
+              jEl.remove()
+            break;
+
+          default:
+            jEl.remove();
+
+          
+        } 
+      }, {target: this})
+
+      $sel.change(()=>{
+        jQ3('body').attr('j2-selector-tipo-changed-once', '')
+      })
     });
     
     function isExperied(cred, cusTime){

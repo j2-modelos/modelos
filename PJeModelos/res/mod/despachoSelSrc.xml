@@ -50,11 +50,22 @@ and open the template in the editor.
                         autor a emende, ou a complete, no prazo de 15 (quinze) dias.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Conforme determina o Código de Processo Civil, quando a parte propõe uma ação só terá 
+                        o mérito de seu processo julgado se comprovar a legitimidade e o interesse processual. 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O interesse de agir possui três aspectos: a necessidade de buscar o Poder Judiciário; 
+                        a utilidade do provimento judicial ao demandante; e a adequação entre o meio processual 
+                        escolhido pelo requerente e a tutela jurisdicional pretendida. Tal medida é necessária 
+                        para verificar a necessidade da propositura da ação.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         O princípio do amplo acesso à justiça vem sendo objeto de estudos constantes, 
                         diante da massificação de demandas, e da utilização do Poder Judiciário como 
                         primeira via de solução de conflitos. #:B{Os recentes estudos indicam a necessidade 
-                        de demonstração de uma pretensão resistida para a caracterização do interesse 
-                        processual}, oriundo da doutrina de Liebman, adotada pelo Código de Processo Civil.
+                        de demonstração de uma tentativa administrativa de solução do conflito para a 
+                        caracterização do interesse processual}, oriundo da doutrina de Liebman, 
+                        adotada pelo Código de Processo Civil.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         As mais recentes decisões do STF, já estabelecidas no RE 839353 #:B{já enfatizaram que 
@@ -74,11 +85,21 @@ and open the template in the editor.
                         Judiciário.}
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Assim sendo, #:B{#:U{há que se exigir o mínimo de interesse de agir, sob pena de se permitir 
+                        que a parte Requerida responda a processo sem lide, sem ter resistido contra qualquer 
+                        pretensão e acabe arcando com o ônus de sucumbência sem justo motivo}}, além de movimentar 
+                        advogados e o Poder Judiciário local, como todo um custo econômico e de tempo na 
+                        movimentação das pessoas que trabalham nesse processo, sem falar no incentivo à 
+                        indústria do dano moral. Utilizar diretamente o Poder Judiciário como se já existisse 
+                        conflito em relação ao um pedido que nunca foi formalmente feito, muito menos 
+                        indeferido, é incabível.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:U{#:B{De forma lamentável, ocorreu a revogação da Resolução 43/2017 do TJMA, que
                         sugeria a utilização prévia da plataforma Consumidor.gov.br.} Referida norma do TJ era apenas uma
                         recomendação de um caminho a ser utilizado para solução do conflito, não era essa resolução que
-                        fundamentava o argumento aqui exposto, que tem amparo legal na exigência de pretensão resistida do art.
-                        17 do CPC, na doutrina processualista e em precedentes do STF.}
+                        fundamentava o argumento aqui exposto, que tem amparo legal na exigência de comprovação do interesse 
+                        processual  do art. 17 do CPC, na doutrina processualista e em precedentes do STF.}
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         A criação da plataforma foi decorrente da observância ao #:I{disposto no artigo 4º inciso V
@@ -96,29 +117,48 @@ and open the template in the editor.
                         interesses dos respectivos clientes.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Pois bem, Da análise dos autos, verifico que a parte autora #:B{#:U{não apresentou
-                        comprovação acerca da existência de pretensão resistida com relação à presente demanda, seja
-                        pela ausência de uso da plataforma, procon, ou qualquer outro meio de interlocução direta e oficial
-                        com a parte que supostamente lesou seu direito}}.
-                    </elemento>   
+                        Pois bem, da análise dos autos, verifico que a parte autora não demonstrou interesse 
+                        processual com relação à presente demanda, pois não está evidenciada a prévia 
+                        tentativa de solução de conflitos por outros meios disponíveis ao consumidor, 
+                        tais como, uso da plataforma, procon e ouvidoria da instituição ou qualquer outro 
+                        meio de interlocução direta e oficial com a parte que supostamente lesou seu direito. 
+                        Portanto, não demonstrou a necessidade, condição para a existência da ação.
+                    </elemento>
                     <!-- AUTOMATIZAÇÃO NO PROXIMO ELEMENTO-->
-                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         Importante destacar , a esse respeito, que o autor apresentou como “reclamação
                         administrativa”, reclamação feita em sítio denominado “#:span@despacho-canalAtendimento{Proteste}”, o qual sequer consiste em canal oficial .
                         Ainda, a reclamação lá realizada, em nada corresponde ao tratado nessa demanda.
-                    </elemento>   
+                    </elemento-->   
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Diante destas considerações, #:B{para se comprovar o interesse processual}, intime-se a 
-                        parte autora para, #:B{#:U{no prazo de 15 (quinze) dias}, EMENDAR A PETIÇÃO INICIAL}}, 
-                        completando-a mediante #:B{juntada aos autos comprovantes de que antes da propositura da 
-                        ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
+                        Diante destas considerações, intime-se a 
+                        parte autora para, #:B{#:U{no prazo de 15 (quinze) dias}, EMENDAR A PETIÇÃO INICIAL}, 
+                        para comprovar o interesse processual mediante juntada aos autos comprovantes de que antes da 
+                        propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
                         em relação aos danos morais alegados, por meio da plataforma pública digital de interlocução 
                         direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                         PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
                         com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
-                        a 30 dias após a apresentação da reclamação administrativa.}
+                        a 30 dias após a apresentação da reclamação administrativa.
                     </elemento>   
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Deverá também, no prazo da emenda, juntar aos autos comprovante de endereço atualizado, 
+                        legível e em seu nome, ou alternativamente, um outro documento no nome da demandante capaz 
+                        de corroborar seu domicílio, tais como documentos de veículos, boletos de serviços prestados 
+                        no local do imóvel, contratos ou correspondências entregues pelos correios, uma vez que o 
+                        comprovante de endereço anexado aos autos é documento em nome de terceiro e não é capaz de 
+                        comprovar o domicílio da parte requerente.
+                    </elemento>
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Enfatizo, finalmente, que a demonstração efetiva do domicílio é extremamente relevante 
+                        principalmente porque a competência dos juizados desta cidade é estabelecida pelo 
+                        domicílio da parte. Referida medida - exigência de comprovante no próprio nome devidamente 
+                        atualizado - revela-se também imprescindível para evitar que a parte “escolha” o juizado 
+                        que pretende ver processado e julgado o seu processo.
+                    </elemento>
  
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         Caso a parte demandante já tenha apresentado pedido administrativo de resolução do

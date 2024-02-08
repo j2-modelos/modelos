@@ -704,7 +704,7 @@ var TarefasProps = {
     personalizacao : {
       procedimentoEspecializado : 'ADM-reorganizarTarefas',
       scroller: { 
-        
+        seletorBotaoMedio: '#j2eADMPanel-exps'
       }
     }
   },
@@ -1121,7 +1121,16 @@ var TarefasProps = {
       alt : 'agdStt'
     }
   },
-  'MiniPac - Preparar comunicação':{},
+  'MiniPac - Preparar comunicação':{
+    personalizacao : {
+      scroller: { 
+        botaoMedio: false,
+        posLeftRight: 'left',
+        top: '45%',
+        classTamanhoButton: 'btn-sm'
+      }
+    }
+  },
   'Processo com prazo decorrido' : {
     personalizacao : {
       'mostraAutosDigitais' : true,
@@ -1710,6 +1719,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   'col-sm-12',
   [
     'Aguardando Prazo de Abandono',
+    'Ag. Prazo de Pagamento Voluntário',
+    'Ag. Prazo de Expediente Fechado',
     'Aguardando Trânsito em Julgado',
   ],
   'container-sem-classe'

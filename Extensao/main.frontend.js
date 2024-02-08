@@ -3005,6 +3005,7 @@ function fronendLoad(){
           var $tooB = jQ3(this)
           var $head = jQ3(_thisHeader)
           var $butExpand = $tooB.find(' > :first-child')
+          const $aLinkAutos = $head.find('a:first-child')
           
           /*var $butSentinela = jQ3(`
 
@@ -3015,7 +3016,7 @@ function fronendLoad(){
           </button>
 
           `)
-          var $aLinkAutos = $head.find('a:first-child')
+          
           var id = _guid()
           var prevIdProcesso = ''
       
@@ -3296,9 +3297,9 @@ function fronendLoad(){
     toasterTitulo = toasterTitulo ? toasterTitulo : "Etiqueta rápida"
 
     const $card = jQ3(`#${etiqueta.taskId}`).parents('processo-datalist-card')
-    const $selEtiqContainer = jQ3('pje-selecionar-etiquetas .labels-etiquetas')
-    const $botaoGerenciarEtiqueta = jQ3('#btn-gerenciar-etiquetas')
-    const $qtdEtiquetas = $botaoGerenciarEtiqueta.find('.numero-etiquetas-atribuidas')
+    //const $selEtiqContainer = jQ3('pje-selecionar-etiquetas .labels-etiquetas')
+    //const $botaoGerenciarEtiqueta = jQ3('#btn-gerenciar-etiquetas')
+    //const $qtdEtiquetas = $botaoGerenciarEtiqueta.find('.numero-etiquetas-atribuidas')
     
 
     const $novaEtiqueta = jQ3(/*html*/`
@@ -3309,14 +3310,14 @@ function fronendLoad(){
         </span>
       </div>
     `)
-    const $novaEtiqueta2 = $novaEtiqueta.clone(true)
+    //const $novaEtiqueta2 = $novaEtiqueta.clone(true)
 
     $card.find(' > div > div:nth-child(3)').append($novaEtiqueta)
-    $selEtiqContainer.append($novaEtiqueta2)
+    //$selEtiqContainer.append($novaEtiqueta2)
     
 
-    $botaoGerenciarEtiqueta.addClass('etiqueta-ativa')
-    $qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) + 1)
+    //$botaoGerenciarEtiqueta.addClass('etiqueta-ativa')
+    //$qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) + 1)
 
     const ____clickCallback = ()=>{
       __sendMessageToPje({
@@ -3329,11 +3330,11 @@ function fronendLoad(){
       function(data){
         if(data === etiqueta.idTag){
           $novaEtiqueta.remove()
-          $novaEtiqueta2.remove()
+          //$novaEtiqueta2.remove()
 
-          $qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) - 1)
-          if($qtdEtiquetas.text() === 0 )
-            $botaoGerenciarEtiqueta.removeClass('etiqueta-ativa')
+          //$qtdEtiquetas.text(parseInt($qtdEtiquetas.text()) - 1)
+          //if($qtdEtiquetas.text() === 0 )
+            //$botaoGerenciarEtiqueta.removeClass('etiqueta-ativa')
 
           jQ3.Toast("Etiqueta rápida", `"${etiqueta.tag}" desvinculada.`, "success")
         }else
@@ -3342,6 +3343,6 @@ function fronendLoad(){
     }
 
     $novaEtiqueta.find('i').click(____clickCallback)
-    $novaEtiqueta2.find('i').click(____clickCallback)
+    //$novaEtiqueta2.find('i').click(____clickCallback)
   })
 };

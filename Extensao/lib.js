@@ -918,14 +918,21 @@ var j2EUi = {
     else
       jQ3('#modalStatusContainer-j2').remove()
   },
-  createTaskScroller: ({ appendTo = '#taskInstanceDiv' })=>{
-    const __TOOL_TEMPLATE = `<div class="rich-panel" style="position: fixed; z-index: 35; right: 0;">
+  createTaskScroller: ({ 
+    appendTo = '#taskInstanceDiv', 
+    botaoMedio = true, 
+    seletorBotaoMedio= '', 
+    classTamanhoButton = '',
+    posLeftRight = 'right',
+    top = 0
+   })=>{
+    const __TOOL_TEMPLATE = `<div class="rich-panel" style="position: fixed; z-index: 35; ${posLeftRight}: 0; top: ${top}">
         <div class="rich-panel-body" style="display: flex; flex-direction: column; padding: 5px;">
-            <a class="btn btn-sm btn-primary" href="#taskInstanceDiv"> 
+            <a class="btn ${classTamanhoButton}  btn-primary" href="#taskInstanceDiv"> 
               <i class="fa fa-arrow-up"></i></a>
-            <a class="btn btn-sm btn-primary" href="#j2eADMPanel-exps"> 
-              <i class="fa fa-minus"></i></a>
-            <a class="btn btn-sm btn-primary" href="#divMovimentarPoll"> 
+            ${ botaoMedio ? `<a class="btn ${classTamanhoButton} btn-primary" href="${seletorBotaoMedio}"> 
+              <i class="fa fa-minus"></i></a>` : ''}
+            <a class="btn ${classTamanhoButton} btn-primary" href="#divMovimentarPoll"> 
               <i class="fa fa-arrow-down"></i></a>
         </div>
     </div>`
