@@ -30,6 +30,18 @@ try {
     //var parseVar = window.j2.mod._._parseVar;
     //var j2Conv = window.j2.mod._._j2TagsConverter;
     //window.j2.mod.j2Moddle;
+    const sequencAr = {
+      inicial: 'nesta data',
+      intermediarios: [
+        'ainda',
+        'também',
+        'inclusive',
+        'ademais',
+        'outrossim'
+      ],
+      final: 'por fim',
+      tamanho: 7
+    }
     
     pkg.Certidao = {
       contructor_ : function(){
@@ -40,6 +52,33 @@ try {
         pkg.Certidao.setEvents();
         
         j2.mod._.styleSetter(mod.edt.gE('selectorPessoa'), 'Hidden', false);
+      },
+      sequencializarFinalidades(){
+        jQ3('#normalizeFormtas')
+        .find('[name="j2-cert-sequencializador"]')
+        .toArray()
+        .forEach((el, idx, arJ2Els)=>{
+          const $el = jQ3(el)
+
+          if(idx === 0)
+            $el.text(`${sequencAr.inicial},`)
+          else if(arJ2Els.length <= sequencAr.tamanho && idx === (sequencAr.tamanho -1) ){
+            $el.text(`${sequencAr.final},`)
+          }
+          else if(arJ2Els.length <= sequencAr.tamanho ){
+            const interIdx = (idx - 1) % (sequencAr.tamanho-1)
+            $el.text(`${sequencAr.intermediarios.at(interIdx)},`)
+          }
+          else if(arJ2Els.length > sequencAr.tamanho){
+            if(idx === arJ2Els.length -1)
+              $el.text(`${sequencAr.final},`)
+            else{
+              const interIdx = (idx - 1) % (sequencAr.tamanho-2)
+              $el.text(`${sequencAr.intermediarios.at(interIdx)},`)
+            }
+
+          }
+        })
       },
       setEvents : function(){
         var cb = function(event, closer){
@@ -182,9 +221,61 @@ try {
                   
                   switch($this.prop('id')){
                     
+                    case 'certItPrazoSemExpedienteForense-textoNegacaoDeMarcao':
+                      if(!_dataPlus.negacaoDeMarco)
+                        break
+                      let tempoVerbal = ''
+                      switch(_dataPlus.temporalidade){
+                        case 'PRESENTE':
+                        case 'EM CURSO':
+                          $this.text(`razão pela qual os prazos processuais que iniciam 
+                            ou finalizam nesta data serão protraídos para o próximo 
+                            dia útil`)
+                          break;
+                        case 'FUTURO':
+                          $this.text(`razão pela qual os prazos processuais que iniciarão
+                            ou finalizarão nesta data serão protraídos para o próximo 
+                            dia útil`)
+                          break;
+                        case 'PASSADO':
+                          $this.text(`razão pela qual os prazos processuais iniciados 
+                            ou finalizados nesta data foram protraídos para o próximo 
+                            dia útil`)
+                          break;
+                      }
+                      $this.prev().append(',')
+                      break
+                    case 'certItPrazoSemExpedienteForense-adverbial':
+                      if(_dataPlus.negacaoDeMarco)
+                        $this.remove()
+                      break
+                    case 'certItPrazoSemExpedienteForense-tipo-abrangencia':
+                      //tios em XML/j2.xsd
+                      switch(_dataPlus.abrangencia){
+                        case 'nacional':
+                        case 'estadual':
+                        case 'estadual-forense':
+                          $this.text( 'no TJMA' )
+                          break;
+                        
+                        case 'comarca':
+                        case 'forum':
+                        case 'municipal':
+                          $this.text( `na Comarca de ${j2.env.modId.unidade.comarca}` )
+                          break;
+
+                        case 'unidade':
+                        case 'termo': 
+                            $this.text( `${j2.env.modId.unidade.genr === 'M' ? 'neste' : 'nesta'} ${j2.env.modId.unidade.nomeFormal}` )
+                            break;
+                      }
+                      break;
                     case 'certItPrazoSemExpedienteForense-tipo':
                       if(  _dataPlus.tipo === 'suspensao-prazo')
-                        $this.text( 'decurso de prazo processual' );
+                        $this.text( 'decurso de prazo processual' )
+                      else if(_dataPlus.negacaoDeMarco)
+                        $this.find('#certItPrazoSemExpedienteForense-tipo-subtipo')
+                        .text('expediente forense excepcional')
                       break;
                     case 'certItPrazoSemExpedienteForense-data':
                       $this.text( _dataPlus.data + (_dataPlus.dataFin ? ' a ' +  _dataPlus.dataFin : '') );
@@ -272,6 +363,9 @@ try {
           });
         });
         
+        
+        evBus.on('afterChange.selectorprazoSemExpedienteItens', pkg.Certidao.sequencializarFinalidades);
+        evBus.on('afterChange.selectorcertidaoItens', pkg.Certidao.sequencializarFinalidades);
       },
       setHTMLToolsListeners : function(){        
         var bindInfo = {

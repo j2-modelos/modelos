@@ -250,7 +250,15 @@
         <versao id="1.0">
             <classe id="Calendario" versao="empty">
                 <constructs value="Certifico, ainda, que #:span@certItPrazoSemExpedienteForense-emCurso{no(s) dia(s) #:span@certItPrazoSemExpedienteForense-data{XX/XX/XXXX} 
-                        #:U{não #:span@certItPrazoSemExpedienteForense-verHaver{houve/haverá} #:span@certItPrazoSemExpedienteForense-tipo{expediente forense no TJMA}} (#:span@certItPrazoSemExpedienteForense-data_{Dia do XXX}), 
+                        #:U{não #:span@certItPrazoSemExpedienteForense-verHaver{houve/haverá} 
+                        #:span@certItPrazoSemExpedienteForense-tipo{
+                            #:span@certItPrazoSemExpedienteForense-tipo-subtipo{
+                                expediente forense
+                            }
+                            #:span@certItPrazoSemExpedienteForense-tipo-abrangencia{
+                                no TJMA
+                            }}
+                        } (#:span@certItPrazoSemExpedienteForense-data_{Dia do XXX}), 
                         #:span@certItPrazoSemExpedienteForense-transf{}} nos termos do(a) #:span@certItPrazoSemExpedienteForense-atoRes{Resolução GP 662021}." 
                     param="itemFormats" type="string"/>
                 <constructs param="itemFormatsClass" value="p FntModDefault Indnt1cm marginAtoJudicial"  type="string" />
@@ -288,9 +296,23 @@
     
         <versao id="4.0">
             <classe id="Calendario" versao="empty">
-                <constructs value="Certifico, ainda, que #:span@certItPrazoSemExpedienteForense-emCurso{no(s) dia(s) #:span@certItPrazoSemExpedienteForense-data{XX/XX/XXXX} 
-                        #:U{não #:span@certItPrazoSemExpedienteForense-verHaver{houve/haverá} #:span@certItPrazoSemExpedienteForense-tipo{expediente forense no TJMA}} (#:span@certItPrazoSemExpedienteForense-data_{Dia do XXX}), 
-                        #:span@certItPrazoSemExpedienteForense-transf{}} nos termos do(a) #:span@certItPrazoSemExpedienteForense-atoRes{Resolução GP 662021}." 
+                <constructs value="Certifico, 
+                        #:span!j2-cert-sequencializador{ainda,}
+                        que #:span@certItPrazoSemExpedienteForense-emCurso{no(s) dia(s) #:span@certItPrazoSemExpedienteForense-data{XX/XX/XXXX} 
+                        #:U{
+                            #:span@certItPrazoSemExpedienteForense-adverbial{não}
+                            #:span@certItPrazoSemExpedienteForense-verHaver{houve/haverá} 
+                        #:span@certItPrazoSemExpedienteForense-tipo{
+                            #:span@certItPrazoSemExpedienteForense-tipo-subtipo{
+                                expediente forense
+                            }
+                            #:span@certItPrazoSemExpedienteForense-tipo-abrangencia{
+                                no TJMA
+                            }}
+                        } (#:span@certItPrazoSemExpedienteForense-data_{Dia do XXX}), 
+                        #:span@certItPrazoSemExpedienteForense-transf{}} nos termos do(a) #:span@certItPrazoSemExpedienteForense-atoRes{Resolução GP 662021}
+                        #:span@certItPrazoSemExpedienteForense-textoNegacaoDeMarcao{}
+                        ." 
                     param="itemFormats" type="string"/>
                 <constructs param="itemFormatsClass" value="p FntModDefault Indnt1cm marginAtoJudicial"  type="string" />
                 <constructs param="mesesPraFrenteEPraTras" value="3"  type="string" />
@@ -322,6 +344,14 @@
               <!--constructs param="filter" value="true" type="boolean"/-->
               <!--constructs param="label" value="Atos" type="string"/-->
               <constructs param="hideLabel" value="true" type="boolean"/>
+
+              <!-- versão 4.1 -->
+                <constructs param="mostrarToggler" value="nao" type="boolean"/>
+
+                <constructs param="botaoAuxiliar" value="sim" type="boolean"/>
+                <constructs param="botaoAuxiliarFaIcont" value="fa-calendar-alt" type="string"/>
+                <constructs param="botaoAuxiliarOnClick" value="#{j2.mod.clsCnstr.Calendario.abrirCalendarioJ2}" type="string"/>
+
             </classe> 
             
             

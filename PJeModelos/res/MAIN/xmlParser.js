@@ -3119,7 +3119,27 @@
               'name': 'transferenciaEvento',
               'isMany': true,
               'type': 'TransferenciaEvento'
-            }        
+            },   
+            { 
+              'name': 'cancelamentoVigencia',
+              'isMany': true,
+              'type': 'CancelamentoVigencia'
+            },
+            {
+              'name': 'negacaoDeMarco',
+               'isAttr': true,
+               'type': 'Boolean'
+            },        
+            {
+              'name': 'explicitarVigencia',
+               'isAttr': true,
+               'type': 'Boolean'
+            },        
+            { 
+              'name': 'vigenciaExplicita',
+              'isMany': true,
+              'type': 'VigenciaExplicita'
+            },
           ]
         },              
         {
@@ -4291,6 +4311,36 @@
           ]
         },
        {
+          'name': 'CancelamentoVigencia', 
+          'properties': [
+            {
+              'name': 'anoVigencia',
+               'isAttr': true,
+               'type': 'String'
+            },
+            {
+             'name' : 'disposicaoLegal',
+             'isMany': true,
+             'type' : 'DisposicaoLegal'
+           }   
+          ]
+        },
+       {
+          'name': 'VigenciaExplicita', 
+          'properties': [
+            {
+              'name': 'anoVigencia',
+               'isAttr': true,
+               'type': 'String'
+            },
+            {
+             'name' : 'disposicaoLegal',
+             'isMany': true,
+             'type' : 'DisposicaoLegal'
+           }   
+          ]
+        },
+       {
          'name': 'valueAr',
          'properties': [
            /*{
@@ -4709,10 +4759,16 @@
                 'name': 'feriado'
               },
               {
+                'name': 'expediente-excepcional'
+              },
+              {
                 'name': 'suspensao-expediente'
               },
               {
                 'name': 'ponto-facultativo'
+              },
+              {
+                'name': 'suspensao-prazo'
               }
             ]
           },          

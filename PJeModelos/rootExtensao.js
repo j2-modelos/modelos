@@ -355,7 +355,10 @@ function RUN(e) {
     
     
     function getURL(id, fn) {
+      if(!id.startsWith('..'))
         return URL_PATERN + 'PJeModelos' + id;
+      else
+        return URL_PATERN + id.replace('../', '')
     };
 
     return getURL;

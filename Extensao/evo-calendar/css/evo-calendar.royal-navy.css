@@ -140,6 +140,31 @@
 .royal-navy .event-container:hover > .event-info >  p {
     color: #164255;
 }
+
+.royal-navy .event-container div.j2e-descricao-eventos {
+    font-size: 14px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.royal-navy .event-container div.j2e-descricao-eventos span{
+    color: #fff;
+    display: list-item;
+}
+
+.royal-navy .event-container:hover div.j2e-descricao-eventos span{
+    color: #164255;
+}
+
+.royal-navy .event-container div.j2e-descricao-eventos span img{
+    filter: brightness(0) invert(1);
+}
+
+.royal-navy .event-container:hover div.j2e-descricao-eventos span img{
+    filter: hue-rotate(180deg) saturate(100%) brightness(100%);
+}
+
 .royal-navy .event-container > .event-info > p.event-title > span {
     color: #fff;
     border: 1px solid #164255;
