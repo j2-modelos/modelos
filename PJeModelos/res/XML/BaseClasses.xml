@@ -3504,7 +3504,7 @@
 
                 <elemento tag="form" classBS="needs-validation mb-1" id="selector-form-" scope="EDT">
                     <elemento tag="fieldset" scope="EDT" id="selector-form-fieldset-">
-
+                        <!-- SELETOR -->
                         <elemento tag="div" id="SDAdd" classBS="input-group mb-1" scope="EDT">
                             <!-- LABEL -->
                             <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="EDT">
@@ -3562,6 +3562,7 @@
                             </elemento>
                         </elemento>
 
+                        <!-- MONITOR -->
                         <elemento tag="div" id="SDDel" classBS="input-group mb-1" scope="EDT">
                             <!-- SELECT MONITOR -->
                             <elemento tag="select" id="selectorMonitor" classBS="form-control" scope="EDT">
@@ -3570,96 +3571,11 @@
                                 <HTMLAttribute name="class" value="form-control"/>
                             </elemento>                        
                             <!-- DELL BUTTON MONITOR -->
-                            <elemento tag="div" scope="EDT" id="">
-                                <HTMLAttribute name="style" value="float:right"/>
-                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-light" scope="EDT" >
+                            <elemento tag="div" scope="EDT" id="" class="seletorMonitorOptions" >
+                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-secondary btn-sm" scope="EDT" >
                                     <HTMLAttribute name="type" value="button"/>
                                     <HTMLAttribute name="disabled" value=""/>
-                                    <elemento tag="img" scope="EDT" >
-                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/remove.png"/>
-                                    </elemento>
-                                </elemento>
-                            </elemento>
-                        </elemento>
-                    </elemento>
-                </elemento>
-            </elemento>
-
-        </versao>      
-        <versao id="4.1-with-toggle">
-            <elemento tag="div" scope="EXP" id="SDLinkedElement"/>
-            <elemento tag="div" classBS="container" id="selector-container-" scope="EDT_CORE">
-
-                <elemento tag="form" classBS="needs-validation mb-1" id="selector-form-" scope="EDT">
-                    <elemento tag="fieldset" scope="EDT" id="selector-form-fieldset-">
-
-                        <elemento tag="div" id="SDAdd" classBS="input-group mb-1" scope="EDT">
-                            <!-- LABEL -->
-                            <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="EDT">
-                                <elemento tag="span" classBS="input-group-text" id="seletor-label-text-" scope="EDT">[Texto]</elemento>
-                            </elemento>
-
-                            <!--input type="text" class="form-control" id="myInput" placeholder="Digite para pesquisar"-->
-                            <!--elemento tag="input" id="selector-input" classBS="form-control" scope="EDT">
-                                <elemento tag="type" scope="text"></elemento>
-                                <elemento tag="placeholder" scope="Digite para pesquisar"></elemento>
-                            </elemento-->  
-
-                            <!-- SELECT -->
-                            <!--elemento tag="div" scope="EDT" id="SDCtrl">
-                            <HTMLAttribute name="style" value="width:90%"/-->
-                            <elemento tag="select" id="selector" classBS="form-control" scope="EDT">
-                                <elemento tag="option" scope="EDT"></elemento>
-                                <elemento tag="option" scope="EDT">[Carregando...]</elemento>
-                            </elemento>                          
-                            <!--/elemento-->
-
-                            <!-- ADD BUTTON GROUP -->
-                            <elemento tag="div" scope="EDT" classBS="input-group-append">
-                                <!-- PRINCIPAL -->
-                                <elemento tag="button" id = "selectorAdd" classBS="btn btn-secondary" scope="EDT">
-                                    <HTMLAttribute name="type" value="button"/>
-                                    <elemento tag="i" classBS="fa-solid fa-plus" class="faIcon" scope="EDT"/>
-                                </elemento>
-
-                                <!-- AUXILIARES -->
-                                <elemento tag="button"  scope="EDT" 
-                                    classBS="btn btn-secondary dropdown-toggle dropdown-toggle-split">
-                                    <HTMLAttribute name="data-toggle" value="dropdown"/>
-                                    <HTMLAttribute name="aria-haspopup" value="true"/>
-                                    <HTMLAttribute name="aria-expanded" value="false"/>
-
-                                    <elemento tag="span" scope="EDT" classBS="sr-only">
-                                        Toggle Dropdown
-                                    </elemento>
-                                </elemento>
-
-                                <elemento tag="div" scope="EDT" classBS="dropdown-menu">
-                                    <elemento tag="a" scope="EDT" id="Selector-Preseted" 
-                                        classBS="dropdown-item">
-                                        <HTMLAttribute name="href" value="javascript: void 0;"/>
-                                        [???????????]
-                                    </elemento>
-                                </elemento>
-                            </elemento>
-                        </elemento>
-
-                        <elemento tag="div" id="SDDel" classBS="input-group mb-1" scope="EDT">
-                            <!-- SELECT MONITOR -->
-                            <elemento tag="select" id="selectorMonitor" classBS="form-control" scope="EDT">
-                                <HTMLAttribute name="multiple"/>
-                                <HTMLAttribute name="size" size="4"/>
-                                <HTMLAttribute name="class" value="form-control"/>
-                            </elemento>                        
-                            <!-- DELL BUTTON MONITOR -->
-                            <elemento tag="div" scope="EDT" id="">
-                                <HTMLAttribute name="style" value="float:right"/>
-                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-light" scope="EDT" >
-                                    <HTMLAttribute name="type" value="button"/>
-                                    <HTMLAttribute name="disabled" value=""/>
-                                    <elemento tag="img" scope="EDT" >
-                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/remove.png"/>
-                                    </elemento>
+                                    <elemento tag="i" classBS="fa-solid fa-trash"  scope="EDT"/>
                                 </elemento>
                             </elemento>
                         </elemento>
