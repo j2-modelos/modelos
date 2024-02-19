@@ -1,6 +1,43 @@
 Date.prototype.newIsoAdjust = function(iso){
   return new Date(iso + 'T00:00:00'); 
 };
+String.prototype.toURLDropboxV2 = function(nomeArquivoComExtensao) {
+  const _guid = function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+
+  const resolveDomain = ()=>{
+    let extensao = !nomeArquivoComExtensao ? 'pdf' : (()=>{
+      const splited = nomeArquivoComExtensao.split('.')
+      if(this.length > 1)
+        return splited.pop()
+      else
+        return '[desconhecido]'
+    })()
+    
+    switch(extensao){
+      case 'pdf':
+        return 'https://www.dropbox.com/scl/fi'
+
+      default:
+        return 'https://dl.dropboxusercontent.com/s'
+    }
+  } 
+
+  const [idD, rlkey] = this.split(';')
+  if(typeof idD !== 'undefined' && typeof rlkey !== 'undefined'){
+    return `${resolveDomain()}/${
+      idD}/${
+        encodeURI(nomeArquivoComExtensao || _guid())
+      }${nomeArquivoComExtensao ? '' : '.pdf'}?rlkey=${
+        rlkey
+      }&raw=1`
+  }else
+    return 'https://www.tjma.jus.br'
+};
 function guid() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -21,6 +58,8 @@ j2E.Calendario = {
     var u = self.util;
     
     function __resolveTypeEvent($el){
+      if($el.attr('negacaoDeMarco'))
+        return 'holiday'
       return 'event';
     }
     function __resolveDateEvent($el){
@@ -38,6 +77,30 @@ j2E.Calendario = {
       
       return dates;
     }
+
+    function __resolveBadge($el){
+      const badgeText = []
+      if( $el.attr('transferenciaEventoVigente') )
+        badgeText.push('Transferido')
+
+      if( $el.attr('negacaoDeMarco') )
+        badgeText.push('Art. 224, § 1º')
+      
+      return badgeText.length ? badgeText.join(' | ') : null
+    }
+
+    function __resolveDescription($el){
+      let dispLegsAr = []
+
+      dispLegsAr = dispLegsAr.concat(
+        $el.find('DisposicaoLegal')
+        .toArray()
+        .filter(disp => typeof jQ3(disp).attr('anoVigencia') === 'undefined' || jQ3(disp).attr('anoVigencia') == ( currDate ? currDate.getFullYear() : self.evoCalendar.$active.year ) )
+        .map( disp => self.criarLinkParaDisposicaoLegal( jQ3(disp) )) 
+      )
+
+      return { jQ: dispLegsAr}
+    }
       
     
     var $evsFilt = self.matchMonthCalendarioEventos(currDate);
@@ -46,14 +109,19 @@ j2E.Calendario = {
     $evsFilt.forEach(function(el){
       var $el = jQ3(el);
       var year = currDate ? currDate.getFullYear() : self.evoCalendar.$active.year;
+      var month = currDate ? currDate.getMonth() : self.evoCalendar.$active.month;
       
       evCalEvsFormat.push({
-        id: $el.attr('id') + '-' + year,
+        id: `${$el.attr('id')}-${month == 0 && $el.attr('dataInicial').startsWith('YYPP')
+         ? year-1
+         : year}`,
         name: $el.attr('descricao'),
         date: __resolveDateEvent($el),
         type: __resolveTypeEvent($el),
-        description: ( $el.attr('transferenciaEventoVigente') ? '(transferido)' : null )
+        badge: __resolveBadge($el),
         //everyYear: true // optional
+        description: /*'vamos ver o css' ||*/ __resolveDescription($el),
+        $CalendarioEvento: $el
       });
     });
     
@@ -115,6 +183,14 @@ j2E.Calendario = {
       var $el = jQ3(el);
       
       var _itInitIds = self.monthFromIsoString($el.attr('dataInicial'));
+
+      if ($el.find('CancelamentoVigencia').length && $el.find('CancelamentoVigencia')?.toArray().some(cv=> { 
+        return jQ3(cv).attr('anoVigencia') == currMonth.getFullYear() 
+      })) return false
+
+      if ($el.attr('explicitarVigencia') === 'true' && !$el.find('VigenciaExplicita')?.toArray().some(cv=> { 
+        return jQ3(cv).attr('anoVigencia') == currMonth.getFullYear()
+      })) return false
 
       if(!($el.attr('dataFinal'))){
         return _itInitIds.jsId === currMonth.month.jsId;
@@ -210,7 +286,7 @@ j2E.Calendario = {
       'YYYY-CORPUS'     : toIso(corpusChr)
     };  
   },
-  criarLinkParaDisposicaoLegal : function(dispLeg){    
+  criarLinkParaDisposicaoLegal : function($dispLeg){    
     var imgViewCln = jQ3('<img id="ReferenciaDocumento.View" src="https://pje.tjma.jus.br/pje/img/view.gif" style="vertical-align: bottom;">')[0]; 
 
     imgViewCln.style.height = '16px';
@@ -219,17 +295,21 @@ j2E.Calendario = {
     var spn = document.createElement('span');
     var u = document.createElement('u');
     spn.style.cursor = 'pointer';
-    spn.title = 'Visualizar ' + dispLeg.disposicao + ( dispLeg.dataAto ? ' de ' + dispLeg.dataAto : '' );
+    spn.title = 'Visualizar ' + $dispLeg.attr('disposicao') + ( $dispLeg.attr('dataAto') ? ' de ' + $dispLeg.attr('dataAto') : '' );
     spn.setAttribute('contenteditable', false);
-    u.innerHTML = dispLeg.disposicao + ( dispLeg.refArtParInc ? ', ' + dispLeg.refArtParInc + ' ' : '' ); 
+    u.innerHTML = $dispLeg.attr('disposicao') + ( $dispLeg.attr('refArtParInc') ? ', ' + $dispLeg.attr('refArtParInc') + ' ' : '' ); 
 
 
 
-    var _url = dispLeg.url ? dispLeg.url : 
-               ( dispLeg.idDropbox ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) : '' );
+    var _url = $dispLeg.attr('url') ? $dispLeg.attr('url') : 
+    ( $dispLeg.attr('idDropbox')
+      ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', $dispLeg.attr('idDropbox')).replace('$', encodeURI($dispLeg.attr('disposicao'))) 
+      : ($dispLeg.attr('idDropboxV2')
+         ? $dispLeg.attr('idDropboxV2').toURLDropboxV2(encodeURI(`${$dispLeg.attr('disposicao')}.pdf`).replaceAll('/', '-'))
+         : '') );
 
     if( _url.length === 0 )
-      return dispLeg.disposicao; 
+      return $dispLeg.attr('disposicao'); 
 
     var oCSrc = "window.open( '$', '$', 'width=940, height=740, scrollbars=yes').focus();";
     oCSrc = oCSrc.replace('$', _url).replace('$', guid());
@@ -243,21 +323,33 @@ j2E.Calendario = {
 
     return spn;
   },
-  contarPrazo : function(dataInicial, prazo){
+  contarPrazo : function(dataInicial, prazoAssinalado){
+    const RESTRINGIR_A_NEGACAO_MARCO = true
     var self = j2E.Calendario;
     var u = self.util;
+    
+    let iteracaoPrazo = prazoAssinalado
+    let comecoExcluido = false
     
     dataInicial = new Date().newIsoAdjust(u.toIso2(dataInicial)); 
      
     do{
+      //art 224, § 1º, protraíndo pro próximo dia útil
+      if(! comecoExcluido)
+        while( ! u.EValidaPraContagemDeData(dataInicial, true, RESTRINGIR_A_NEGACAO_MARCO))
+          dataInicial = u.somarDias(dataInicial, 1);
+      
       dataInicial = u.somarDias(dataInicial, 1);
+      comecoExcluido = true
+
       self.setFeriadosReligiosos(dataInicial.getFullYear());
       
-      while( ! u.EValidaPraContagemDeData(dataInicial) ){
+      while( ! u.EValidaPraContagemDeData(dataInicial, (iteracaoPrazo == 1)) ){
         dataInicial = u.somarDias(dataInicial, 1);
       }
-      prazo --;
-    }while(prazo > 0);
+
+      iteracaoPrazo --;
+    }while(iteracaoPrazo > 0);
     
     return u.toIso2(dataInicial);
   },
@@ -295,16 +387,16 @@ j2E.Calendario = {
 
       return _data;
     },
-    EValidaPraContagemDeData : function(data){
+    EValidaPraContagemDeData : function(data, comecoOuFimDoPrazo, restritoANegacaoDeMarco){
       var self = j2E.Calendario;
       var u = self.util;
       var _this = u.EValidaPraContagemDeData;
-      var __SAB = 6, __DOM = 0;
+      const __SAB = 6, __DOM = 0;
       
       if(data.getDay() === __SAB || data.getDay() === __DOM)
-        return false;
+        return restritoANegacaoDeMarco ? true : false
       
-      !_this.monthDates && ( _this.monthDates = {} );
+      !_this.monthDates && ( _this.monthDates = {} )
       
       var _monthRef = data.getFullYear() + '.' + ( data.getMonth() + 1 ).toString().padStart(2, "0");
       if( ! _this.monthDates[ _monthRef ] ){
@@ -314,14 +406,28 @@ j2E.Calendario = {
         _ar.forEach(function(el){
           if( Object.prototype.toString.call(el.date) === '[object Array]' )
             el.date.forEach(function(ell){
-              _this.monthDates[_monthRef].push(ell);
+              _this.monthDates[_monthRef].push({
+                dt: ell,
+                $cev: el.$CalendarioEvento
+              });
             });
           else
-            _this.monthDates[_monthRef].push(el.date);
+            _this.monthDates[_monthRef].push({
+              dt: el.date,
+              $cev: el.$CalendarioEvento
+            });
         });
       }
-      return _this.monthDates[_monthRef].filter(function(el){
-        return u.toIso2(data) === el;
+      return _this.monthDates[_monthRef].filter(function(it){
+        if(u.toIso2(data) === it.dt){
+          if(typeof it.$cev.attr('negacaoDeMarco') !== 'undefined')
+            return comecoOuFimDoPrazo ? true : false
+          else if(restritoANegacaoDeMarco)
+            return false
+          else
+            return true
+        }else
+          return false
       }).length === 0;
     }
   }
@@ -335,8 +441,10 @@ function initEvoCalendar(){
     j2Cal.evoCalendar.addCalendarEvent( j2Cal.addEventsFromCurrMonth().evCalEvsFormat );
   }
   
-  $('#j2Calendar').on('evoCalendarInit', function(event, evCal) {
-    jQ3.get(window.opener.sessionStorage.getItem('j2EExtensionURLPattern')  + 'PJeModelos/res/XML/Calendario.xml', function(xmlDoc){
+  jQ3('#j2Calendar:not([inicializado])').on('evoCalendarInit', function(event, evCal) {
+    this.setAttribute('inicializado', 'sim')
+
+    function __handlerXmlDoc(xmlDoc){
       var j2CalEv = jQ3('CalendarioEvento', xmlDoc);
       
       j2Cal.constructor_(j2CalEv, evCal);
@@ -346,7 +454,13 @@ function initEvoCalendar(){
       
       evCal.addCalendarEvent( j2Cal.addEventsFromCurrMonth().evCalEvsFormat );
       
-    });
+    }
+
+    if(window.opener.sessionStorage.getItem('j2EExtensionURLPattern'))
+      jQ3.get(window.opener.sessionStorage.getItem('j2EExtensionURLPattern')  + 'PJeModelos/res/XML/Calendario.xml', __handlerXmlDoc);
+    else
+    __handlerXmlDoc(j2.env.xmls.calendario)
+
   }).evoCalendar({
     theme : 'Royal Navy',
     language : 'pt',
@@ -356,9 +470,12 @@ function initEvoCalendar(){
     todayHighlight : true,
     sidebarToggler : false,
     eventListToggler : false
-  }).on('selectMonth', _updateMonth).on('selectYear', _updateMonth).on('selectDate', function(event, newDate, oldDate){
-    if( ! j2Cal.util.EValidaPraContagemDeData(j2Cal.evoCalendar.$active.jsDate) )
-      return;
+  })
+  .on('selectMonth', _updateMonth)
+  .on('selectYear', _updateMonth)
+  .on('selectDate', function(event, newDate, oldDate){
+    /*if( ! j2Cal.util.EValidaPraContagemDeData(j2Cal.evoCalendar.$active.jsDate) )
+      return;*/
     
     var __TEMPLATE__ = '<input type="number" value="0" style="text-align: center; width: 35px; background: transparent; color: white; border: none; margin: 0; -webkit-appearance: none;">';
     
@@ -374,7 +491,7 @@ function initEvoCalendar(){
       });
     });
     
-    var $calcInp = $(__TEMPLATE__);    
+    var $calcInp = jQ3(__TEMPLATE__);    
     dafultsDates.push({
       id:  'd-Calculado-' + newDate,
       description: '------',
@@ -397,10 +514,10 @@ function initEvoCalendar(){
           
 }
 
-setTimeout(initEvoCalendar, 1);
-
-
-
-
-
-
+(function checkEvoCalendarReady() { // tappac as new
+  if (typeof jQ3?.fn?.evoCalendar !== 'undefined') {
+    setTimeout(initEvoCalendar, 1);
+  }else {
+    setTimeout( checkEvoCalendarReady, 10 );
+  }
+})()

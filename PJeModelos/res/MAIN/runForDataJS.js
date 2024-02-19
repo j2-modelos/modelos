@@ -138,6 +138,50 @@ setInterval(function() {
     
 })();*/
 
+/**
+ * Este método sobrescreve o método URLGetter nativo em cada
+ * modelo salvo do PJe para dar suporte a nova versão de links
+ * do dropbox
+ */
+(function sobrescreverMetodos(){
+  if(window.j2Extension)
+    return
+
+  /*
+  * 
+  * @param {type} id - dropbox id
+  * @param string fn - file name
+  * @returns {RUN.root_L205.getURL}
+  */
+  window.j2.mod.com.URLGetter = new function () {
+
+    var URL_PATERN;
+    /*if (w.j2ModDebug)
+      URL_PATERN = window.location.origin + '/';
+    else
+      URL_PATERN = 'https://pje.tjma.jus.br/pje/Painel/painel_usuario/documentoHTML.seam?idBin=';*/
+    
+    if (window.location.protocol === 'http:')
+      URL_PATERN = window.location.origin;
+    else
+      URL_PATERN = window.location.protocol +  '//dl.dropboxusercontent.com/s/'; 
+    
+    
+    function getURL(idDropboxV1OuV2OuCaminhoLegado, nomeDoArquivo) {
+      if (window.location.protocol === 'https:'){
+        if(!idDropboxV1OuV2OuCaminhoLegado.includes(';'))
+          return URL_PATERN + idDropboxV1OuV2OuCaminhoLegado + '/' + nomeDoArquivo;
+        else
+          return idDropboxV1OuV2OuCaminhoLegado.toURLDropboxV2(nomeDoArquivo)
+      }
+      else
+        return URL_PATERN + idDropboxV1OuV2OuCaminhoLegado;
+    };
+
+    return getURL;
+  };/*********************************/
+})();
+
 /* simple modules definitions */
 (function () {
   console.log('run.js - rev 03');
@@ -2343,20 +2387,38 @@ setInterval(function() {
     }
     return hash;
   };
-  String.prototype.toURLDropboxV2 = function(nomeArquivo) {
+  String.prototype.toURLDropboxV2 = function(nomeArquivoComExtensao) {
     const _guid = function () {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
       });
     };
-
+  
+    const resolveDomain = ()=>{
+      let extensao = !nomeArquivoComExtensao ? 'pdf' : (()=>{
+        const splited = nomeArquivoComExtensao.split('.')
+        if(this.length > 1)
+          return splited.pop()
+        else
+          return '[desconhecido]'
+      })()
+      
+      switch(extensao){
+        case 'pdf':
+          return 'https://www.dropbox.com/scl/fi'
+  
+        default:
+          return 'https://dl.dropboxusercontent.com/s'
+      }
+    } 
+  
     const [idD, rlkey] = this.split(';')
     if(typeof idD !== 'undefined' && typeof rlkey !== 'undefined'){
-      return `https://www.dropbox.com/scl/fi/${
+      return `${resolveDomain()}/${
         idD}/${
-          encodeURI(nomeArquivo || _guid())
-        }.pdf?rlkey=${
+          encodeURI(nomeArquivoComExtensao || _guid())
+        }${nomeArquivoComExtensao ? '' : '.pdf'}?rlkey=${
           rlkey
         }&raw=1`
     }else
@@ -3406,6 +3468,8 @@ try {
   var myWindow;
   var evBus = window.j2.mod.eventBus.EventBus;
   var libLoad = window.j2.mod.com.libLoader;
+  var defer = new window.j2.mod._._101; // tappac as new
+
   (function () {     
     window.j2.mod.com.libCheck = function(eventName, libs, fire){      
       
@@ -3513,25 +3577,32 @@ try {
         }
       },
       'sup': { 
-        open : function(name, method){
-          j2.modelo.sup[name] = {};
-          j2.modelo.sup[name].name = name; // tappac as new
-          j2.modelo.sup[name].win = method();
-          function ___sub() {
-            j2.modelo.sup[name].doc = /*() => { return*/ j2.modelo.sup[name].win.document /*};*/
-            j2.modelo.sup[name].gE = function(e){
-              return j2.modelo.sup[name].win.document.getElementById(e);
+        open : function(name, method, callback){
+          const _this = j2.modelo.sup[name] = {};
+          _this.name = name; // tappac as new
+          _this.win = method();
+
+          let callSubOnce = false
+          function ___sub() {            
+            _this.doc = /*() => { return*/ _this.win.document /*};*/
+            _this.gE = function(e){
+              return _this.win.document.getElementById(e);
             };
             
-            j2.modelo.sup[name].jQ3 = jQ3Factory(j2.modelo.sup[name].win, true);
-            j2.modelo.sup[name].win.jQ3 = j2.modelo.sup[name].jQ3
-            j2.modelo.sup[name].$_ = function(){ // tappac as new
-              return j2.modelo.sup[name].win.jQ3;
+            _this.jQ3 = jQ3Factory(_this.win, true);
+            _this.win.jQ3 = _this.jQ3
+            _this.$_ = function(){ // tappac as new
+              return _this.win.jQ3;
             };
+
+            if(callSubOnce)
+              return
+            callSubOnce = true
+            defer(()=> callback && callback(_this) )
           }
 
-          j2.modelo.sup[name].win.addEventListener('load', ___sub)
-          ___sub()
+          _this.win.addEventListener('load', ___sub)
+          defer( ()=>___sub() )
         }
       }
     };
@@ -4044,12 +4115,23 @@ try {
       });
     }
     
-    function processJ2ApiExtDependecy(){ // pl as new
+    /**
+     * Processar dependencias externas.
+     * Feito para fazer o boot padrão dos modelos j2
+     * 
+     * Os parametrso são necessários apenas para um carregamento
+     * personalizado, como para uma janela supelementar
+     * @param {*} dependencies 
+     * @param {*} callback 
+     * @param {*} contexto 
+     */
+
+    function processJ2ApiExtDependecy(dependencies, eventId, contexto, callback){ // pl as new
       ___J2_API_EXT_DEPENDENCY = {};
       var forEach = window.j2.mod.forEach;
       var last = new window.j2.mod._._87;
       
-      forEach(j2.api.extDependency, function(extD){
+      forEach(dependencies || j2.api.extDependency, function(extD){
         ___J2_API_EXT_DEPENDENCY['"' + extD.lib + '"'] = {
           processed : false
         };
@@ -4061,7 +4143,9 @@ try {
           
           if(!(_lib.xmlEncode)){
             ___J2_API_EXT_DEPENDENCY['"' + extD.lib + '"'].processed = true;
-            evBus.fire('j2ApiExtDependency.onLoadPartialContent');
+            if( contexto?.xmls ) 
+              contexto.xmls[last(extD.lib.split('.'))] = xml
+            evBus.fire('j2ApiExtDependency.onLoadPartialContent' + (eventId ? eventId : ''));
             return;
           }
           
@@ -4081,23 +4165,27 @@ try {
             ___J2_API_EXT_DEPENDENCY['"' + extD.lib + '"'].processed = true;
             
             
-            evBus.fire('j2ApiExtDependency.onLoadPartialContent');
+            evBus.fire('j2ApiExtDependency.onLoadPartialContent' + (eventId ? eventId : ''));
           });
         });  
         
-        libLoad( _lib );
+        libLoad( _lib, contexto );
       });
             
-      evBus.on('j2ApiExtDependency.onLoadPartialContent', function(e){
+      evBus.on('j2ApiExtDependency.onLoadPartialContent' + (eventId ? eventId : ''), function(e){
         var _ctrl = true;
         forEach(___J2_API_EXT_DEPENDENCY, function(dep){
           _ctrl = _ctrl && dep.processed;
         });
         if(_ctrl)
-          libLoad( window.j2.res.MAIN.builder );
+          if(callback)
+            defer( ()=> callback() )
+          else // padrão
+            libLoad( window.j2.res.MAIN.builder );
       });
     }
-    
+    window.j2.mod._._processJ2ApiExtDependecy = processJ2ApiExtDependecy
+
     evBus.on('onPreBuildWindowEdition', 10000, function(event){
       var _ = {
         url : '',

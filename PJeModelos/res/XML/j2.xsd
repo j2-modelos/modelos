@@ -532,6 +532,7 @@
   <xs:simpleType name="ENUM_CALENDARIO_EVENTO_TIPO" final="restriction">
     <xs:restriction base="xs:string"> 
       <xs:enumeration value="feriado"/>         
+      <xs:enumeration value="expediente-excepcional"/>   
       <xs:enumeration value="suspensao-expediente"/>   
       <xs:enumeration value="ponto-facultativo"/>   
       <xs:enumeration value="suspensao-prazo"/>   
@@ -567,10 +568,26 @@
         <xs:attribute type="j2:ENUM_CALENDARIO_EVENTO_TIPO" name="tipo" use="required" xmlns:j2="http://j2"/>
         <xs:attribute type="j2:ENUM_CALENDARIO_EVENTO_ABRANGENCIA" name="abrangencia" use="required" xmlns:j2="http://j2"/>
         <xs:attribute type="j2:ENUM_CALENDARIO_EVENTO_RECORRENCIA" name="recorrencia" use="required" xmlns:j2="http://j2"/>
+
+        <!-- Negação de marco diz respeito à previsão do §1º do art. 224 do CPC -->
+        <xs:attribute name="negacaoDeMarco" type="xs:boolean" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:boolean">
+                    <xs:enumeration value="true"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <!-- usar vigência explicita em caso de necessidade de definir evento com recorrencia não única (anual)
+             em que de fato não há a expectativa de acontercer o evento em razão de sobrepor do da expectaiva
+             é o que ocorre com quarta-feira de cinzas, cujo expediente é definido a critéio da administração
+        -->
+        <xs:attribute type="xs:boolean" name="explicitarVigencia" use="optional"/>
         
         <xs:choice>
             <xs:element ref="j2:DisposicaoLegal" maxOccurs="unbounded" minOccurs="1" xmlns:j2="http://j2"/>
             <xs:element ref="j2:TransferenciaEvento" maxOccurs="unbounded" minOccurs="0" xmlns:j2="http://j2"/>
+            <xs:element ref="j2:CancelamentoVigencia" maxOccurs="unbounded" minOccurs="0" xmlns:j2="http://j2"/>
+            <xs:element ref="j2:VigenciaExplicita" maxOccurs="unbounded" minOccurs="0" xmlns:j2="http://j2"/>
         </xs:choice>
         
     </xs:complexType>
@@ -598,6 +615,25 @@
             <xs:element ref="j2:DisposicaoLegal" maxOccurs="unbounded" minOccurs="1" xmlns:j2="http://j2"/>
         </xs:choice>
     </xs:complexType>
+  </xs:element>      
+
+  <xs:element name="CancelamentoVigencia">
+    <xs:complexType mixed="true">        
+        <xs:attribute type="xs:string" name="anoVigencia" use="required"/>
+        <xs:choice>
+            <xs:element ref="j2:DisposicaoLegal" maxOccurs="unbounded" minOccurs="0" xmlns:j2="http://j2"/>
+        </xs:choice>
+    </xs:complexType>
+  </xs:element>         
+
+  <xs:element name="VigenciaExplicita">
+    <xs:complexType mixed="true">        
+        <xs:attribute type="xs:string" name="anoVigencia" use="required"/>
+        <xs:choice>
+            <xs:element ref="j2:DisposicaoLegal" maxOccurs="unbounded" minOccurs="0" xmlns:j2="http://j2"/>
+        </xs:choice>
+    </xs:complexType>
   </xs:element>                                                                         
+                                                               
                                                                                                                                                                   
 </xs:schema>

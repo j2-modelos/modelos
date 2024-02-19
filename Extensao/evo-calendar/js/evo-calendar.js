@@ -715,8 +715,20 @@ function evoCalendarFactory(){
           }
           
           if (event_data.description){
-            markup.eventInfoDescription = $('<p class="event-desc">'+event_data.description+'</p>')
-                    .appendTo(markup.eventInfo);
+            let $jq = $('<p class="event-desc">')
+            
+            
+            if(event_data.description.jQ){
+                $jq = $('<div>', { class: 'j2e-descricao-eventos'})
+                $jq.append(event_data.description.jQ)
+            }
+            else if(event_data.description.html)
+              $jq = $(event_data.description.html)
+            else
+              $jq.text(event_data.description);
+
+            $jq.appendTo(markup.eventInfo);
+            markup.eventInfoDescription = $jq
           } 
                     
           eventListEl.append(markup.container);
@@ -1187,7 +1199,7 @@ function evoCalendarFactory(){
 
   }));
   
-  document.getElementById('Extensao/evo-calendar/js/evo-calendar.js').setAttribute('evo-calendar-ready', 'true');
+  document.getElementById('Extensao/evo-calendar/js/evo-calendar.js')?.setAttribute('evo-calendar-ready', 'true');
 };
 
 function checkEvoCalendarFactory() { // tappac as new

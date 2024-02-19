@@ -47,11 +47,30 @@
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     <CalendarioEvento id="16fd7e25-8222-4cc7-96c0-fd4b9351fbab" descricao="Feriado Forense - Quarta-feira de Cinzas" 
-                      dataInicial="YYYY-CARNAVAL-QUA" tipo="ponto-facultativo" abrangencia="estadual-forense" recorrencia="anual">
+                      dataInicial="YYYY-CARNAVAL-QUA" tipo="ponto-facultativo" abrangencia="estadual-forense" recorrencia="anual"
+                      >
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
+        <CancelamentoVigencia anoVigencia="2023" />
+        <CancelamentoVigencia anoVigencia="2024" />
+        <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
+    </CalendarioEvento>
+    <CalendarioEvento id="16fd7e25-8222-4cc7-96c0-fd4b9351fbab-2" descricao="Quarta-feira de Cinzas" 
+                      dataInicial="YYYY-CARNAVAL-QUA" tipo="expediente-excepcional" abrangencia="estadual-forense" recorrencia="anual"
+
+                      negacaoDeMarco="true" 
+                      explicitarVigencia="true">
+        
+        <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 4º" 
+                         dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="CPC2015" refArtParInc="Art. 224, $1º" dataAto="16/03/2015" 
+            url="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm#art224%C2%A71"/>
+
+        <VigenciaExplicita anoVigencia="2023" />
+        <VigenciaExplicita anoVigencia="2024" />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
+
     
     <!-- SEMANA SANTA -->
     <CalendarioEvento id="fa4f0cea-c584-493f-bac1-9b7bc2ecffae" descricao="Ponto Facultativo - Semana Santa - quarta-feira" 
@@ -79,6 +98,7 @@
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
     </CalendarioEvento>
     
+
     <!-- CORPUS CHRIST -->
     <CalendarioEvento id="da238460-d1df-4348-8a03-d419ebac6dc9" descricao="Dia de Corpus Christi" 
                       dataInicial="YYYY-CORPUS" tipo="feriado" abrangencia="municipal" recorrencia="anual">
@@ -92,6 +112,8 @@
     </CalendarioEvento>
     
     
+
+
     <!-- ABRIL -->
     <CalendarioEvento id="782f3c3f-c7b1-4ad5-9592-a4fcfc2b8744" descricao="Tiradentes" 
                       dataInicial="YYYY-04-21" tipo="feriado" abrangencia="nacional" recorrencia="anual">
@@ -101,6 +123,8 @@
     </CalendarioEvento>
     
     
+
+
     
     <!-- MAIO -->
     <CalendarioEvento id="2217ca0f-e7f2-4142-a68f-2b1cda0d2f2f" descricao="Dia do Trabalhador" 
@@ -134,6 +158,7 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, VII"/>
     </CalendarioEvento>
     
+
     
     
     <!-- AGOSTO -->
@@ -145,6 +170,9 @@
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
+
+
+
     
     <!-- SETEMBRO -->
     <CalendarioEvento id="aabebc84-e1b5-4319-a247-a409bbe0b1d6" descricao="Independência do Brasil" 
@@ -155,6 +183,9 @@
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
+
+
+
     
     
     <!-- OUTUBRO -->
@@ -188,6 +219,8 @@
     
     
     
+
+
     
     <!-- NOVEMBRO -->
     <CalendarioEvento id="889bff71-907d-4eb3-971b-d6cd7cf53027" descricao="Dia de Finados" 
@@ -239,6 +272,8 @@
 
     </CalendarioEvento>
     
+    
+
     
     <!-- RECORRENCIAS PONTUAIS -->
     <!-- suspensão dia do servidor público 2023-10.27 -->

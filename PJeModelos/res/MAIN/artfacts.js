@@ -230,6 +230,41 @@ try {
         'fileName' : 'jquery.contextMenu.css'
       }
     };
+
+    w.j2.res.Extensao = {
+      CSS: {
+        'evoCalendar' : {  // chosen
+          'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '../Extensao/evo-calendar/css/evo-calendar.css' : 'akhlwq85khcgy6ym3skbn;exqlqihqu5x7zy2hiawwn6u6n'; },
+          'lib': 'Extensao/evo-calendar/css/evo-calendar.css',
+          'type': 'j2/styleSheet',
+          'version' : '1.1.3', 
+          'fileName' : 'evo-calendar.css'
+        },
+        'evoCalendarRoyalNavy' : {  // chosen
+          'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '../Extensao/evo-calendar/css/evo-calendar.royal-navy.css' : 'pmlpt592aml2g3trzc0w4;lv9iu685s8qptf4gpp40qaucq'; },
+          'lib': 'Extensao/evo-calendar/css/evo-calendar.royal-navy.css',
+          'type': 'j2/styleSheet',
+          'version' : '1.1.3', 
+          'fileName' : 'evo-calendar.royal-navy.css'
+        }
+      },
+      mod: {
+        'evoCalendar' : {  // chosen
+          'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '../Extensao/evo-calendar/js/evo-calendar.js' : 'mexfo1dci1fw9bv69ueeq;x55zvgbh5bxmx60t7f5czi4rh'; },
+          'lib': 'Extensao/evo-calendar/js/evo-calendar.js',
+          'type': 'j2/javascript',
+          'version' : '1.1.3', 
+          'fileName' : 'evo-calendar.js'
+        },
+        'evoCalendarBooter' : {  // chosen
+          'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '../Extensao/evo-calendar/booter.js' : '55eznd0qvczdcnqiudqrq;d75499e4c927andrrqev7cfmw'; },
+          'lib': 'Extensao/evo-calendar/booter.js',
+          'type': 'j2/javascript',
+          'version' : '1.1.3', 
+          'fileName' : 'booter.js'
+        },
+      }
+    }
     
 
     w.j2.res.selectSources = {

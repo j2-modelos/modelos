@@ -3497,14 +3497,15 @@
 
         </versao>                
 
+        <!-- versão com toggle button opção-->
         <versao id="4.1">
             <elemento tag="div" scope="EXP" id="SDLinkedElement"/>
-            <elemento tag="div" classBS="container" id="selector-container-" scope="EDT">
+            <elemento tag="div" classBS="container j2-container-selector" id="selector-container-" scope="EDT_CORE">
 
                 <elemento tag="form" classBS="needs-validation mb-1" id="selector-form-" scope="EDT">
                     <elemento tag="fieldset" scope="EDT" id="selector-form-fieldset-">
-
-                        <elemento tag="div" id="seletor-inputGroup-" classBS="input-group mb-1" scope="EDT">
+                        <!-- SELETOR -->
+                        <elemento tag="div" id="SDAdd" classBS="input-group mb-1" scope="EDT">
                             <!-- LABEL -->
                             <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="EDT">
                                 <elemento tag="span" classBS="input-group-text" id="seletor-label-text-" scope="EDT">[Texto]</elemento>
@@ -3525,18 +3526,43 @@
                             </elemento>                          
                             <!--/elemento-->
 
-                            <!-- ADD BUTTON -->
-                            <elemento tag="div" scope="EDT" id="SDAdd">
-                                <HTMLAttribute name="style" value=" width:15%"/>
-                                <elemento tag="button" id = "selectorAdd" classBS="form-control btn btn-light" scope="EDT">
+                            <!-- ADD BUTTON GROUP -->
+                            <elemento tag="div" scope="EDT" classBS="input-group-append">
+                                <!-- PRINCIPAL -->
+                                <elemento tag="button" id = "selectorAdd" classBS="btn btn-secondary" scope="EDT">
                                     <HTMLAttribute name="type" value="button"/>
-                                    <elemento tag="img" scope="EDT" >
-                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/add.gif"/>
+                                    <elemento tag="i" classBS="fa-solid fa-plus" class="faIcon" scope="EDT"/>
+                                </elemento>
+
+                                <!-- AUXILIARES -->
+                                <elemento tag="button" id = "seletcotr-auxiliar-btn-" classBS="btn btn-secondary" scope="EDT">
+                                    <HTMLAttribute name="type" value="button"/>
+                                    <elemento tag="i" classBS="fa-solid" class="faIcon" scope="EDT"/>
+                                </elemento>
+
+                                <elemento tag="button"  scope="EDT" id="selectorAdd-toggler"
+                                    classBS="btn btn-secondary dropdown-toggle dropdown-toggle-split">
+                                    <HTMLAttribute name="data-toggle" value="dropdown"/>
+                                    <HTMLAttribute name="aria-haspopup" value="true"/>
+                                    <HTMLAttribute name="aria-expanded" value="false"/>
+                                    <HTMLAttribute name="j2-selector-" value="false"/>
+
+                                    <elemento tag="span" scope="EDT" classBS="sr-only">
+                                        Toggle Dropdown
+                                    </elemento>
+                                </elemento>
+
+                                <elemento tag="div" scope="EDT" classBS="dropdown-menu" id="selectorAdd-toggler-dropdown" >
+                                    <elemento tag="a" scope="EDT" id="Selector-Preseted" 
+                                        classBS="dropdown-item">
+                                        <HTMLAttribute name="href" value="javascript: void 0;"/>
+                                        [???????????]
                                     </elemento>
                                 </elemento>
                             </elemento>
                         </elemento>
 
+                        <!-- MONITOR -->
                         <elemento tag="div" id="SDDel" classBS="input-group mb-1" scope="EDT">
                             <!-- SELECT MONITOR -->
                             <elemento tag="select" id="selectorMonitor" classBS="form-control" scope="EDT">
@@ -3545,14 +3571,11 @@
                                 <HTMLAttribute name="class" value="form-control"/>
                             </elemento>                        
                             <!-- DELL BUTTON MONITOR -->
-                            <elemento tag="div" scope="EDT" id="">
-                                <HTMLAttribute name="style" value="float:right"/>
-                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-light" scope="EDT" >
+                            <elemento tag="div" scope="EDT" id="" class="seletorMonitorOptions" >
+                                <elemento tag="button" id = "selectorDel" classBS="form-control btn btn-secondary btn-sm" scope="EDT" >
                                     <HTMLAttribute name="type" value="button"/>
                                     <HTMLAttribute name="disabled" value=""/>
-                                    <elemento tag="img" scope="EDT" >
-                                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/remove.png"/>
-                                    </elemento>
+                                    <elemento tag="i" classBS="fa-solid fa-trash"  scope="EDT"/>
                                 </elemento>
                             </elemento>
                         </elemento>

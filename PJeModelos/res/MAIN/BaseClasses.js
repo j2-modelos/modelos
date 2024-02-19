@@ -39,6 +39,7 @@ try {
     var defer = new window.j2.mod._._101;
     var guid = window.j2.mod._._guid;
     var extend = window.j2.mod._._extend;
+    var libLoad = window.j2.mod.com.libLoader;
     
     function styleSetter(element, classesAsString){
       forEach(classesAsString.split(' '), function(clss){
@@ -1438,6 +1439,14 @@ try {
                             
               var _calEvenFilt = filter(j2.env.xmls.calendario.CalendarioEvento, function(it, idx, obj){
                 var _itInitIds = monthFromIsoString(it.dataInicial);
+
+                if (it.cancelamentoVigencia?.some(cv=> { 
+                  return cv.anoVigencia == mes.inicio.getFullYear() 
+                })) return false
+
+                if (it.explicitarVigencia && !it.vigenciaExplicita?.some(cv=> { 
+                  return cv.anoVigencia == mes.inicio.getFullYear() 
+                })) return false
                 
                 if(!(it.dataFinal)){
                   return _itInitIds.jsId === mes.month.jsId;
@@ -1745,7 +1754,6 @@ try {
           cont.appendChild(d);
           
           
-          
           var _dataPlus = {
             isoDate : __dataIn,
             data : __dataIn.split('-').reverse().join('/'),
@@ -1755,7 +1763,9 @@ try {
             temporalidade : pkg.Calendario.util.temporalidadeData(__dataIn, (__dataFin !== -1 ) ? __dataFin : null),
             tipo : calendarioEvento.tipo,
             isoDateFin : (__dataFin !== -1 ) ? __dataFin : null,
-            dataFin : (__dataFin !== -1 ) ? __dataFin.split('-').reverse().join('/') : null
+            dataFin : (__dataFin !== -1 ) ? __dataFin.split('-').reverse().join('/') : null,
+            abrangencia: calendarioEvento.abrangencia,
+            negacaoDeMarco: calendarioEvento.negacaoDeMarco
           }; 
           
           function ___descEventoLabel(){
@@ -1919,7 +1929,7 @@ try {
               break;
               
             case 1: //fevereiro
-              date.setDate( 28 );
+              date.setDate( (date.getFullYear() % 4 === 0) ? 29 : 28 );
               break;
           }  
             
@@ -2008,7 +2018,7 @@ try {
                    ( dispLeg.idDropbox 
                      ? 'https://www.dropbox.com/s/$/$.pdf?raw=1'.replace('$', dispLeg.idDropbox).replace('$', encodeURI(dispLeg.disposicao)) 
                      : (dispLeg.idDropboxV2 
-                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(dispLeg.disposicao).replaceAll('/', '-'))
+                        ? dispLeg.idDropboxV2.toURLDropboxV2(encodeURI(`${dispLeg.disposicao}.pdf`).replaceAll('/', '-'))
                         : '') );
         
         if( _url.length === 0 )
@@ -2025,6 +2035,59 @@ try {
         u.appendChild( imgViewCln );
 
         return spn;
+      },
+      abrirCalendarioJ2: function(ctx){
+        if(mod.sup.j2Calendar){
+          if( ! mod.sup.j2Calendar.win.closed ){
+            mod.sup.j2Calendar.win.focus()
+            return
+          }
+        }
+
+        mod.sup.open('j2Calendar', function(){          
+          var _w = {
+            url : '',
+            name : 'j2Calendar',
+            idProcesso : j2.env.PJeVars.processo.idProcesso,
+            winSize : {
+              width : screen.width * 0.7,
+              height : screen.height * 0.50
+            }
+          };
+
+          return j2.mod._._opW.center( _w.url, _w.name, _w.idProcesso, _w.winSize );
+        }, function(supDef){
+          const dependenciesLoader = window.j2.mod._._processJ2ApiExtDependecy
+          const extDependency = [ // boot
+            /*{lib : 'j2.res.MAIN.xmlParser'},
+            {lib : 'j2.res.MAIN.PJeVars'}, 
+            {lib : 'j2.res.MAIN.baseClasses'}, 
+            {lib : 'j2.res.MAIN.builder'}, 
+            {lib : 'j2.res.XML.modelos'},
+            {lib : 'j2.res.XML.unidadesAutorizadas'}, 
+            {lib : 'j2.res.XML.baseClasses'},*/
+            {lib : 'j2.res.XML.calendario'},
+            {lib : 'j2.res.Extensao.CSS.evoCalendar'},
+            {lib : 'j2.res.Extensao.CSS.evoCalendarRoyalNavy'},
+            {lib : 'j2.res.Extensao.mod.evoCalendar'},
+            {lib : 'j2.res.Extensao.mod.evoCalendarBooter'},
+          ]
+
+          supDef.doc.body.innerHTML = '<div id="j2Calendar" j2-via-modelosj2 ></div>';
+          supDef.win.j2 = {
+            env :{
+              xmls: {}
+            }
+          }
+
+          dependenciesLoader(extDependency, 'j2-calendar', {
+            doc: supDef.doc,
+            xmls: supDef.win.j2.env.xmls,
+            loc: 'head'
+          }, ()=> { 
+            
+           })
+        });
       }
     };
     
@@ -3489,7 +3552,7 @@ try {
               }
             };
 
-            j2.mod._._opW.center( _w.url, _w.name, _w.idProcesso, _w.winSize );
+            return j2.mod._._opW.center( _w.url, _w.name, _w.idProcesso, _w.winSize );
           });
         });
         
@@ -6726,6 +6789,12 @@ try {
           fieldSet : $(el.edtCore()).find('#selector-form-fieldset-')[0],
           label : $(el.edtCore()).find('#seletor-label-text-')[0],
           labelDiv : $(el.edtCore()).find('#seletor-label-div-')[0],
+          /* 4.1 implements */
+          togglerButton : $(el.edtCore()).find('#selectorAdd-toggler')[0],
+          togglerDropdown : $(el.edtCore()).find('#selectorAdd-toggler-dropdown')[0],
+          auxiliarBtn : $(el.edtCore()).find('#seletcotr-auxiliar-btn-')[0],
+
+
           __class__ : { // dlg4 as new
             class : 'Selector'
           },
@@ -6782,9 +6851,36 @@ try {
             if(args.label){
               _.label.innerHTML = args.label;
             }
-            if(args.hideLabel && ( args.hideLabel === 'true' || args.hideLabel === 'true' ) ){
+            if(args.hideLabel && ( args.hideLabel === 'true' || args.hideLabel === 'sim' ) ){
               _.labelDiv.remove();
             }
+
+            // 4.1 implements
+            if(args.mostrarToggler && ( args.hideToggler === 'true' || args.hideToggler === 'sim' ) ){
+              
+            }else{
+              _.togglerButton?.remove()
+              _.togglerDropdown?.remove()
+            }
+
+            // 4.1 implements
+            if(args.botaoAuxiliar && ( args.botaoAuxiliar === 'sim' || args.esconderBotaoAuxiliar === 'true' ) ){
+              _.auxiliarBtn?.classList.remove('hidden');
+              
+              if(args.botaoAuxiliarFaIcont)
+                _.auxiliarBtn?.querySelector('i').classList.add(args.botaoAuxiliarFaIcont)
+              
+              if(args.botaoAuxiliarOnClick)
+                if(args.botaoAuxiliarOnClick.indexOf('default')!==-1)
+                  _.auxiliarBtn.onclick = function(){
+                    alert('botão auxiliar clicado')
+                  };
+                else
+                  _.auxiliarBtn.onclick = function(){
+                    parseVar(args.botaoAuxiliarOnClick, [ _ ]);
+                  };
+            }else
+              _.auxiliarBtn?.remove()
             
             if(args.multiple){
               if(args.multiple==='nao'){

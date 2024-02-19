@@ -714,6 +714,12 @@
             <prop name="paddingTop" value="10px"/>
         </style> 
 
+        <style id="seletorMonitorOptions">
+            <prop name="position" value="absolute"/>
+            <prop name="top" value="5px"/>
+            <prop name="right" value="5px"/>
+            <prop name="z-index" value="10"/>
+        </style> 
 
     </classStyles>
 </Definitions>
