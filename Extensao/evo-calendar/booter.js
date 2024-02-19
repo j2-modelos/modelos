@@ -442,7 +442,9 @@ function initEvoCalendar(){
   }
   
   jQ3('#j2Calendar:not([inicializado])').on('evoCalendarInit', function(event, evCal) {
-    this.setAttribute('inicializado', 'sim')
+    const $this = jQ3(this)
+
+    $this.attr('inicializado', 'sim')
 
     function __handlerXmlDoc(xmlDoc){
       var j2CalEv = jQ3('CalendarioEvento', xmlDoc);
@@ -456,7 +458,7 @@ function initEvoCalendar(){
       
     }
 
-    if(window.opener.sessionStorage.getItem('j2EExtensionURLPattern'))
+    if(!$this.is('[j2-via-modelosj2]'))
       jQ3.get(window.opener.sessionStorage.getItem('j2EExtensionURLPattern')  + 'PJeModelos/res/XML/Calendario.xml', __handlerXmlDoc);
     else
     __handlerXmlDoc(j2.env.xmls.calendario)
