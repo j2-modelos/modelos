@@ -1154,7 +1154,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item>  
 
-        <item id="certItRetificacaoOrdemJudicial" label="Por ordem judicial" dataPlus="">
+        <item id="certItRetificacaoOrdemJudicial" label="Por ordem judicial" dataPlus="{ 'descricaoAppend': 'Retificação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento à determinação judicial constante no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} 
@@ -1162,7 +1162,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item>     
-        <item id="certItRetificacaoOrdinatorio" label="Por ato ordinatório" dataPlus="">
+        <item id="certItRetificacaoOrdinatorio" label="Por ato ordinatório" dataPlus="{ 'descricaoAppend': 'Retificação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que por ser ato meramente ordinatório delegada á Secretaria Judicial - Provimento 01/2007-CGJ-MA -

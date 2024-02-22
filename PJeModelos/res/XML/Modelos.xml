@@ -2454,7 +2454,7 @@
                         <constructs param="text" value="TERMO" type="string"/>
                     </classe>          
                     <classe id="NormalizarFormatacao" versao="3.0">
-                        <classe id="Selector" versao="4.0" >
+                        <classe id="Selector" versao="4.1" >
                             <constructs param="newId" value="termoItens" type="string"/>
                             <constructs param="multiple" value="sim" type="bool"/>
                             <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->

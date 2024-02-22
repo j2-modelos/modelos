@@ -1748,6 +1748,32 @@ ul[aria-labelledby="btn-gerenciar-etiquetas"] .selecionar-etiquetas{
     line-height: 0;
 }
 
+div#ui-datepicker-div {
+    display: none;
+}
+
+#j2-doc-html-tools {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    position: absolute;
+    right: 30px;
+    top: 14px;
+    padding: 5px;
+}
+
+#j2-doc-html-tools ul.nav{
+    display: flex;
+    flex-direction: column;
+}
+
+#j2-doc-html-tools a {
+    
+}
+
+#j2-doc-html-tools i {
+    font-size: 18px
+}
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

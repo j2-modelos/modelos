@@ -3827,41 +3827,42 @@ try {
             }
           };
           return j2.mod._._opW.corner( _.url, _.name, null, _.winSize );
-        });
+        }, ()=>{
 
-        var j2ExpC = jQ3(mod.exp.doc.getElementById('j2Exp')).clone(true);
-        //j2ExpC.find('#textMargins').css('box-shadow', '');
-        j2ExpC.find('div').filter(function() {
-            return $(this).css('box-shadow').length > 0;
-          }
-        ).css('box-shadow', '');
-        j2ExpC.find('#normalizeFormtas').css('border', '');
+          var j2ExpC = jQ3(mod.exp.doc.getElementById('j2Exp')).clone(true);
+          //j2ExpC.find('#textMargins').css('box-shadow', '');
+          j2ExpC.find('div').filter(function() {
+              return $(this).css('box-shadow').length > 0;
+            }
+          ).css('box-shadow', '');
+          j2ExpC.find('#normalizeFormtas').css('border', '');
 
-        var _pdfWin = mod.sup.FerramentasProcessoBaixarPDF;
-        var _wB = _pdfWin.jQ3('body');
-        _wB.empty();
-        _wB.append(j2ExpC);
+          var _pdfWin = mod.sup.FerramentasProcessoBaixarPDF;
+          var _wB = _pdfWin.jQ3('body');
+          _wB.empty();
+          _wB.append(j2ExpC);
 
-        evBus.once('loaded-'+window.j2.res.lib.html2pdf.lib, function(event){            
+          evBus.once('loaded-'+window.j2.res.lib.html2pdf.lib, function(event){            
 
-          var opt = { 
-            margin:       [10, 0, 10, 0], 
-            filename:     j2.env.modId.id + ' ' + idPF + '.pdf',
-            image:        { type: 'jpeg', quality: 1.00 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
+            var opt = { 
+              margin:       [10, 0, 10, 0], 
+              filename:     j2.env.modId.id + ' ' + idPF + '.pdf',
+              image:        { type: 'jpeg', quality: 1.00 },
+              html2canvas:  { scale: 2 },
+              jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
 
-          _pdfWin.win.html2pdf().set(opt).from(_pdfWin.jQ3('#j2Exp')[0]).save(null, mod.exp.doc);
-          setTimeout(function(){_pdfWin.win.close();},250);
-        });
-        
-        setTimeout(function(){
-          j2.mod.com.libLoader(j2.res.lib.html2pdf, {
-            doc : _pdfWin.doc, 
-            loc : 'head'
+            _pdfWin.win.html2pdf().set(opt).from(_pdfWin.jQ3('#j2Exp')[0]).save(null, mod.exp.doc);
+            setTimeout(function(){_pdfWin.win.close();},250);
           });
-        }, 100);
+          
+          setTimeout(function(){
+            j2.mod.com.libLoader(j2.res.lib.html2pdf, {
+              doc : _pdfWin.doc, 
+              loc : 'head'
+            });
+          }, 100);
+        });
       }
     };    
     

@@ -5052,6 +5052,84 @@ function pjeLoad(){
         '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso'))
     })
   }
+
+  function incluirFerramentaZoomVisualizacaoDocAutosDigitais(){
+    const TEMPLATE = /*html*/`
+      <div class="rich-panel" id="j2-doc-html-tools">
+          <ul class="nav nav-pills btn-documento pull-right" style="display: flex; flex-direction: column;">
+              <li>
+                  <a id="zoom-in" title="Aumentar zoom">
+                      <i class="fa fa-search-plus" aria-hidden="true"></i>
+                      <span class="sr-only">Ícone de aumentar zoom</span>
+                  </a>
+              </li>
+              <li>
+                  <a id="zoom-out" title="Diminuir zoom">
+                      <i class="fa fa-search-minus" aria-hidden="true"></i>
+                      <span class="sr-only">Ícone de diminuir zoom</span>
+                  </a>
+              </li>
+              <li>
+                  <a id="rolar-topo" title="Rolar para o topo">
+                      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                      <span class="sr-only">Ícone de rolar para o topo</span>
+                  </a>
+              </li>
+              <li>
+                  <a id="rolar-fim" title="Rolar para o fim">
+                      <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                      <span class="sr-only">Ícone de rolar para o fim</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+    `
+
+    function alterarZoom(valor){
+      const $iframeBody = jQ3('#frameHtml').contents().find('body');
+      const currentZoom = parseFloat($iframeBody.css('zoom')) || 1;
+      const newZoom = currentZoom + valor;
+      $iframeBody.css('zoom', newZoom);
+    }
+
+    function rolarFim(){
+      const $iframeBody = jQ3('#frameHtml').contents().find('body');
+      const iframeHeight = $iframeBody.height();
+      const iframeInnerHeight = jQ3('#frameHtml').height();
+      if (iframeHeight > iframeInnerHeight) {
+        const maxScroll = iframeHeight - iframeInnerHeight;
+        $iframeBody.scrollTop(maxScroll);
+      }
+    }
+
+    function rolarTopo(){
+      const $iframeBody = jQ3('#frameHtml').contents().find('body');
+      $iframeBody.scrollTop(0);
+    }
+
+    jQ3.initialize('#detalheDocumento\\:docHtml', function(){
+      const $this = jQ3(this)
+
+      const $too = jQ3(TEMPLATE)
+      $this.append($too)
+
+      $too.find('#zoom-in').on('click', function(e){   
+        alterarZoom(0.1);
+      });
+
+      $too.find('#zoom-out').on('click', function(e){   
+        alterarZoom(-0.1);
+      });
+
+      $too.find('#rolar-fim').on('click', function(e){
+        rolarFim();
+      });
+
+      $too.find('#rolar-topo').on('click', function(e){
+        rolarTopo();
+      });
+    })
+  }
   
   switch(window.location.pathname){
     
@@ -5079,6 +5157,7 @@ function pjeLoad(){
       criarEditorEtiquetasPelosAutosDigitais()
       acoesBaseadasEmMovimentosDoProcesso()
       modificarLinkAssociadosParaAbrirAutosDigitais()
+      incluirFerramentaZoomVisualizacaoDocAutosDigitais()
       break;
     case '/pje/ng2/dev.seam':
       destacarNomeUnidade()
