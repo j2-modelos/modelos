@@ -5094,12 +5094,8 @@ function pjeLoad(){
 
     function rolarFim(){
       const $iframeBody = jQ3('#frameHtml').contents().find('body');
-      const iframeHeight = $iframeBody.height();
-      const iframeInnerHeight = jQ3('#frameHtml').height();
-      if (iframeHeight > iframeInnerHeight) {
-        const maxScroll = iframeHeight - iframeInnerHeight;
+      const maxScroll = $iframeBody.prop('scrollHeight') - $iframeBody.height();
         $iframeBody.scrollTop(maxScroll);
-      }
     }
 
     function rolarTopo(){
