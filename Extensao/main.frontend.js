@@ -2096,17 +2096,17 @@ function fronendLoad(){
     }
 
     function aplicarFiltrosJ2(_this){
-      var $li = jQ3(_this)
+      const $li = jQ3(_this)
 
           
-      var num = $li.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
+      let num = $li.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/);
       num = num ? num[0] : { semNumero : true }
 
       if( num.semNumero ){
         return;
       }
 
-      var toRemove = false
+      let toRemove = false
       switch( jQ3('select#expressaoNumero').val() ){
         case 'digito-impar':
           toRemove = (num.substring(8,10) % 2) == 0
@@ -2115,6 +2115,14 @@ function fronendLoad(){
           toRemove = (num.substring(8,10) % 2) == 1
           break;
       }
+
+      const $ultimoMovimento = jQ3('input#ultimoMovimento')
+      if( !toRemove && $ultimoMovimento.val()){
+        const textoMovimentoCartao = $li.find('.tituloNegrito').next().text()
+        const regExpCalc = new RegExp(`${$ultimoMovimento.val().trim()}`, 'i')
+        toRemove = !regExpCalc.test(textoMovimentoCartao)
+      }
+
       if(toRemove)
         $li.remove();
     }
@@ -2192,19 +2200,32 @@ function fronendLoad(){
 
     function personalisarFiltroTarefas(_this){
       var $filtro = jQ3(_this).parents('#filtro-tarefas')
-      var $recolherPorParidadeDigito = $filtro.find('#cargoJudicial').parents('.col-md-4.form-group').clone()
 
-      $recolherPorParidadeDigito.find('label').text('Expressão do número')
-      var $option = $recolherPorParidadeDigito.find('option:first').detach()
-      $recolherPorParidadeDigito.find('option').remove()
-      $recolherPorParidadeDigito.find('select').attr('id', 'expressaoNumero')
-      $recolherPorParidadeDigito.find('select').attr('name', 'expressaoNumero')
-      $recolherPorParidadeDigito.find('select')
-      .append($option)
-      .append($option.clone().attr('value', 'digito-impar').text('Dígito ímpar'))
-      .append($option.clone().attr('value', 'digito-par').text('Dígito par'))
-      
-      $recolherPorParidadeDigito.insertBefore($filtro.find('fieldset > div:last-child'))
+      ;(function _adicionarSelectExpressaoDoNumero(){
+        var $recolherPorParidadeDigito = $filtro.find('#cargoJudicial').parents('.col-md-4.form-group').clone()
+
+        $recolherPorParidadeDigito.find('label').text('Expressão do número')
+        var $option = $recolherPorParidadeDigito.find('option:first').detach()
+        $recolherPorParidadeDigito.find('option').remove()
+        $recolherPorParidadeDigito.find('select').attr('id', 'expressaoNumero')
+        $recolherPorParidadeDigito.find('select').attr('name', 'expressaoNumero')
+        $recolherPorParidadeDigito.find('select')
+        .append($option)
+        .append($option.clone().attr('value', 'digito-impar').text('Dígito ímpar'))
+        .append($option.clone().attr('value', 'digito-par').text('Dígito par'))
+        
+        $recolherPorParidadeDigito.insertBefore($filtro.find('fieldset > div:last-child'))
+      })()
+
+      ;(function _adicionarTextoUltimoMovimento(){
+        const $ultimoMovimento = $filtro.find('#objeto').parents('.col-md-4.form-group').clone()
+
+        $ultimoMovimento.find('label').text('Ultimo Movimento')
+        $ultimoMovimento.find('input').attr('id', 'ultimoMovimento')
+        $ultimoMovimento.find('input').attr('name', 'ultimoMovimento')
+        
+        $ultimoMovimento.insertBefore($filtro.find('fieldset > div:last-child'))
+      })()
 
       /*$recolherPorParidadeDigito.find('select').change(()=>{
         $filtro.parents('processos-tarefa').find('p-datalist ul.ui-datalist-data li').filter(function() {

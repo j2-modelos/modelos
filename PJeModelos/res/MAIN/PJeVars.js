@@ -1002,7 +1002,7 @@ try {
           }
         },
         'salarioMinimo' : (function(){
-              var v = 'R$ 1.320,00';
+              var v = 'R$ 1.412,00';
               if(v.match(/\d+/g))
                 return parseFloat(v.replace(/\D+/g,'').replace('.','').replace(',','.'))/100;
               else

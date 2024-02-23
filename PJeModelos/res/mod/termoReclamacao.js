@@ -322,19 +322,18 @@ try {
         evBus.fire("afterChange." + _.monitr.id, _.monitr, _);
       },
       editarParte : function(){      
-          mod.sup.open('parteEdit', function(){
-            var _ = {
-              url : '',
-              name : 'parteEdit',
-              winSize : {
-                width : 335,
-                height : 490
-              },
-              scrolled : false
-            };
-            return j2.mod._._opW.center( _.url, _.name, null, _.winSize );
-          });
-          
+        mod.sup.open('parteEdit', function(){
+          var _ = {
+            url : '',
+            name : 'parteEdit',
+            winSize : {
+              width : 335,
+              height : 490
+            },
+            scrolled : false
+          };
+          return j2.mod._._opW.center( _.url, _.name, null, _.winSize );
+        }, ()=>{
           
           mod.sup.parteEdit.win.focus();       
           while(mod.sup.parteEdit.doc.body.firstChild)
@@ -370,7 +369,7 @@ try {
           declWA && (declWA.onclick = function(event){
             pkg.TermoReclamacaoSeletorParte.gerarDeclaracaoWhatsApp();
           })
-      
+        });
       },
       build : function(containers){
         var parteEditVersion;

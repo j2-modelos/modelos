@@ -24,7 +24,7 @@ and open the template in the editor.
             <gItem id="meioComunicItTelefone"/>
         </group-->
     </groupsDefs>
-    <items initialSelected="meioComunicItSistema">
+    <items initialSelected="meioComunicItDJe">
         <item id="meioComunicItCorreios" label="Correios" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

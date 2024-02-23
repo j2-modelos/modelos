@@ -1,6 +1,65 @@
 
 (function () {
+    ;(function sobreporWindowConsole(){
+      const VERBOSE_ATIVADA = false
+      const console = window.console
+
+      const meuConsole = {
+        log: function(...args) {
+          VERBOSE_ATIVADA && console.log(...args);
+        },
+        warn: function(...args) {
+          VERBOSE_ATIVADA && console.warn(...args);
+        },
+        error: function(...args) {
+            console.error(...args);
+        },
+        info: function(...args) {
+          VERBOSE_ATIVADA && console.info(...args);
+        },
+        debug: function(...args) {
+          VERBOSE_ATIVADA && console.debug(...args);
+        },
+        assert: function(assertion, ...args) {
+          VERBOSE_ATIVADA && console.assert(assertion, ...args);
+        },
+        clear: function() {
+          VERBOSE_ATIVADA && console.clear();
+        },
+        count: function(label) {
+          VERBOSE_ATIVADA && console.count(label);
+        },
+        countReset: function(label) {
+          VERBOSE_ATIVADA && console.countReset(label);
+        },
+        group: function(...label) {
+          VERBOSE_ATIVADA && console.group(...label);
+        },
+        groupCollapsed: function(...label) {
+          VERBOSE_ATIVADA && console.groupCollapsed(...label);
+        },
+        groupEnd: function() {
+          VERBOSE_ATIVADA && console.groupEnd();
+        },
+        time: function(label) {
+          VERBOSE_ATIVADA && console.time(label);
+        },
+        timeEnd: function(label) {
+          VERBOSE_ATIVADA && console.timeEnd(label);
+        },
+        table: function(data, columns) {
+          VERBOSE_ATIVADA && console.table(data, columns);
+        }
+        // Adicione outros métodos conforme necessário
+    };
+
+    // Substituindo o console padrão pelo console personalizado
+    window.console = meuConsole;
+  })()
+
+
   console.log('run.js - rev 03');
+
   
   /*stringfy RUN for other purposes in framework*/  
   if (!window.j2)

@@ -2983,12 +2983,13 @@ try {
           edt : {
             activatorButton : $(el.edt).find('#DJeControls-Activator')[0],
             container : $(el.edt).find('#DJeControls-Activated')[0]
-          }
+          },
+          args
         };
         
         /* register actions */
         _.edt.activatorButton.onclick = function(){
-          pkg.DJeControls.activateControls();
+          pkg.DJeControls.activateControls(_);
         };
         
         pkg.DJeControls._ = _;
@@ -3008,7 +3009,7 @@ try {
         
         pkg.DJeControls.activated = false;        
       },
-      activateControls : function(){
+      activateControls : function(_){
         if(pkg.DJeControls.activated)
           return;
           
@@ -7521,7 +7522,7 @@ try {
             if(selectorDefModdle.selectorDef.groupsDefs.group.length){
               itrGroup(selectorDefModdle.selectorDef.groupsDefs.group, selct, selectorDefModdle.selectorDef.items.item, selectorDefModdle.selectorDef.groupsDefs.naoOrdenado);
               _selInst.__loadedItems = true;
-              defer(function(){evBus.fire('afterLoadItems.' + selct.id);});
+              defer(function(){evBus.fire('afterLoadItems.' + selct.id, _selInst, selct);});
               // slck
               if(_selInst.salvarUltimaEscolha && pkg.Selector.cookies.get('ultimaFinalidade-' + selct.id))
                 selct.value = pkg.Selector.cookies.get('ultimaFinalidade-' + selct.id);
@@ -7537,7 +7538,7 @@ try {
           selct.value = pkg.Selector.cookies.get('ultimaFinalidade-' + selct.id);
         
         _selInst.__loadedItems = true;
-        defer(function(){evBus.fire('afterLoadItems.' + selct.id);});
+        defer(function(){evBus.fire('afterLoadItems.' + selct.id, _selInst, selct);});
       }
     };     
     

@@ -1347,6 +1347,23 @@
                 <elemento tag="div" scope="EDT" class="DivLikeHr"/>
             </elemento>
         </versao>
+        <versao id="4.0">
+            <elemento tag="div" id="DJeControls-Core" scope="EDT_BOTTOM" classBS="container">
+                <elemento tag="div" scope="EDT" class="DivLikeHr"/>
+                
+                <elemento tag="div" id="DJeControls-Initial" scope="EDT">
+                    <elemento tag="button" id="DJeControls-Activator" scope="EDT" classBS="btn btn-secondary btn-block">
+                        Inserir Transcrição
+                        <elemento tag="i" classBS="fa-solid fa-pen" class="iconSepL faIcon vertAlignBottom" scope="EDT"/>
+                    </elemento>
+                </elemento>
+                <elemento tag="div" id="DJeControls-Activated" scope="EDT" class="Hidden">
+
+                </elemento>
+                
+                <elemento tag="div" scope="EDT" class="DivLikeHr"/>
+            </elemento>
+        </versao>
     </classeDef>
     
     <classeDef id="DestinatarioExpediente">
@@ -1584,7 +1601,7 @@
             <!-- RETIFICAR -->
             <elemento tag="li" scope="EDT" classBS="nav-item active">
                 <elemento tag="a" scope="EDT" classBS="nav-link active" id="FerramentasProcesso.Retificar">
-                    <HTMLAttribute name="href" value="#"/>
+                    <HTMLAttribute name="href" value="javascript:void(0)"/>
                     <elemento tag="i" classBS="fa-sharp fa-solid fa-pen-to-square" class="faIcon iconSepR vertAlignBottom" scope="EDT"/>
                     <elemento tag="span" scope="EDT">Retificar processo</elemento>
                 </elemento>
@@ -1593,7 +1610,7 @@
             <!-- PDF -->
             <elemento tag="li" scope="EDT" classBS="nav-item active">
                 <elemento tag="a" scope="EDT" classBS="nav-link active" id="FerramentasProcesso-baixarPDF">
-                    <HTMLAttribute name="href" value="#"/>
+                    <HTMLAttribute name="href" value="javascript:void(0)"/>
                     <elemento tag="i" classBS="fa-solid fa-file-pdf" class="faIcon iconSepR vertAlignBottom" scope="EDT"/>
                     <elemento tag="span" scope="EDT">Baixar PDF</elemento>
                 </elemento>
@@ -1602,7 +1619,7 @@
             <!-- WHATSAPP -->
             <elemento tag="li" scope="EDT" classBS="nav-item active">
                 <elemento tag="a" scope="EDT" classBS="nav-link active" id="FerramentasProcesso-whatsappTool">
-                    <HTMLAttribute name="href" value="#"/>
+                    <HTMLAttribute name="href" value="javascript:void(0)"/>
                     <elemento tag="i" classBS="fa-brands fa-whatsapp" class="faIcon iconSepR vertAlignBottom" scope="EDT"/>
                     <elemento tag="span" scope="EDT">Enviar via WhatsApp</elemento>
                 </elemento> 
@@ -3057,6 +3074,30 @@
                 <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorOJ.selectorSource}" type="string"/>
             </classeImp>    
         </versao>
+        <versao id="4.0">
+            <elemento tag="p" id="oficialJustica" scope="EXP" class="p FntModDefault AlignlEFT marginAtoJudicial">
+                <textHTML scope="EXP">
+                    <data>
+                        <![CDATA[
+                            <B><U>Oficial de Justiça:</U></B>&nbsp;<span id="oficialJusticaText">[indefinido]</span>
+                        ]]>
+                    </data>
+                </textHTML>
+            </elemento>           
+
+        
+            <classeImp id="Selector" versao="4.1" scope="EDT" >
+                <constructs param="newId" value="OJsItems" type="string"/>
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="linkedElement" value="oficialJusticaText" type="string"/>
+                <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorOJ.selectorSource}" type="string"/>
+
+                <constructs param="hideLabel" value="true" type="boolean"/>
+            </classeImp>    
+        </versao>
     </classeDef>
     
     <classeDef id="SeletorDeOrdem">
@@ -3079,6 +3120,29 @@
                 <constructs param="onDelAction" value="default" type="string"/-->
                 <constructs param="linkedElement" value="porOrdemExpediente" type="string"/>
                 <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorDeOrdem.selectorSource}" type="string"/>
+            </classeImp>    
+        </versao>
+        <versao id="4.0">
+            <elemento tag="p" id="porOrdemExpediente" scope="EXP" class="p Indnt3cm">                 
+                <textHTML scope="EXP">
+                    <data>
+                        <![CDATA[
+                            De Ordem de Sua Excelência o  Juiz de Direito deste Juízo fica Vossa Senhoria, empresa ou ente público através desta <u>devidamente</u>
+                        ]]>
+                    </data>
+                </textHTML>
+            </elemento>    
+            
+            <classeImp id="Selector" versao="4.1" scope="EDT" >
+                <constructs param="newId" value="DeOrdemDoExpediente" type="string"/>
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="linkedElement" value="porOrdemExpediente" type="string"/>
+                <constructs param="manualSource" value="#{j2.mod.clsCnstr.SeletorDeOrdem.selectorSource}" type="string"/>
+
+                <constructs param="hideLabel" value="true" type="boolean"/>
             </classeImp>    
         </versao>
     </classeDef>    
@@ -3296,6 +3360,19 @@
                 <constructs param="source" value="prioridadeExpedientesItem" type="bool"/>
             </classeImp>    
         </versao>
+
+        <versao id="4.0">
+            <classeImp id="Selector" versao="4.1" scope="EDT" >
+                <constructs param="newId" value="prioridadeExpedientesItems" type="string"/>
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="source" value="prioridadeExpedientesItem" type="bool"/>
+
+                <constructs param="hideLabel" value="true" type="boolean"/>
+            </classeImp>    
+        </versao>
     </classeDef>
 
     <classeDef id="Selector">
@@ -3505,7 +3582,7 @@
                 <elemento tag="form" classBS="needs-validation mb-1" id="selector-form-" scope="EDT">
                     <elemento tag="fieldset" scope="EDT" id="selector-form-fieldset-">
                         <!-- SELETOR -->
-                        <elemento tag="div" id="SDAdd" classBS="input-group mb-1" scope="EDT">
+                        <elemento tag="div"  classBS="input-group mb-1" scope="EDT">
                             <!-- LABEL -->
                             <elemento tag="div" classBS="input-group-prepend" id="seletor-label-div-" scope="EDT">
                                 <elemento tag="span" classBS="input-group-text" id="seletor-label-text-" scope="EDT">[Texto]</elemento>
@@ -3527,7 +3604,7 @@
                             <!--/elemento-->
 
                             <!-- ADD BUTTON GROUP -->
-                            <elemento tag="div" scope="EDT" classBS="input-group-append">
+                            <elemento tag="div" id="SDAdd" scope="EDT" classBS="input-group-append">
                                 <!-- PRINCIPAL -->
                                 <elemento tag="button" id = "selectorAdd" classBS="btn btn-secondary" scope="EDT">
                                     <HTMLAttribute name="type" value="button"/>

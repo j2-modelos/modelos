@@ -5094,8 +5094,17 @@ function pjeLoad(){
 
     function rolarFim(){
       const $iframeBody = jQ3('#frameHtml').contents().find('body');
-      const maxScroll = $iframeBody.prop('scrollHeight') - $iframeBody.height();
-        $iframeBody.scrollTop(maxScroll);
+      const iframeHeight = $iframeBody.height();
+      const iframeInnerHeight = jQ3('#frameHtml').height();
+    /*  if (iframeHeight > iframeInnerHeight) {
+        const maxScroll = iframeHeight - iframeInnerHeight;
+        const currentZoom = parseFloat($iframeBody.css('zoom')) || 1;
+        $iframeBody.scrollTop(maxScroll * currentZoom * 1.1);
+      }*/
+      /*const maxScroll = $iframeBody.prop('scrollHeight') - $iframeBody.height();
+        $iframeBody.scrollTop(maxScroll);*/
+
+      $iframeBody.scrollTop($iframeBody.prop('scrollHeight'))
     }
 
     function rolarTopo(){

@@ -9,7 +9,7 @@ console.log('intimacao.js - módulo compilante');
 try {
   (function () { /* inits autoexec */
     var w = window;
-    var evBus = window.j2.mod.eventBus.EventBus;
+    const evBus = window.j2.mod.eventBus.EventBus;
     
     var pkg;
     if (w.j2.mod.clsCnstr)
@@ -19,17 +19,17 @@ try {
       pkg = w.j2.mod.clsCnstr;
     }
     
-    var mod = w.j2.modelo;
+    const mod = w.j2.modelo;
     
     //var isObject = new window.j2.mod._._201;
-    var forEach = w.j2.mod.forEach;
-    var filter = new window.j2.mod._._90;
+    const forEach = w.j2.mod.forEach;
+    const filter = new window.j2.mod._._90;
     //var assign = window.j2.mod._._206;
     //var domify = new window.j2.mod._._233;
-    var evBus = window.j2.mod.eventBus.EventBus;
     //var parseVar = window.j2.mod._._parseVar;
-    var j2Conv = window.j2.mod._._j2TagsConverter;
+    const j2Conv = window.j2.mod._._j2TagsConverter;
     //window.j2.mod.j2Moddle;
+    const defer = new window.j2.mod._._101; // tappac as new
     
     var tools = {
       styleSetter : function (element, classesAsString){
@@ -93,6 +93,15 @@ try {
         evBus.on('onChange.'+pkg.Intimacao.containers.edt.meio().id, function(event, value, obSelect){
           pkg.Intimacao.formatByExpMeio(value);
         });
+
+        function __callbackAoCarregarItensDoMeioDeComunicacao(event, _selInst, selct){
+          defer(()=> pkg.Intimacao.formatByExpMeio(selct.value));
+        }
+        const [selectorMeio] = filter(pkg.Selector.instances, {id: 'intimacaoSelectMeio'})
+        if( !selectorMeio && !selectorMeio.__loadedItems) 
+          evBus.on('afterLoadItems.'+pkg.Intimacao.containers.edt.meio().id, __callbackAoCarregarItensDoMeioDeComunicacao);
+        else
+          __callbackAoCarregarItensDoMeioDeComunicacao(undefined, undefined, selectorMeio.select)
                 
         
         /* trata antes de adicionar item */
