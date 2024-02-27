@@ -1892,7 +1892,7 @@ function fronendLoad(){
         <i class="fa fa-bookmark" j2e-proc-data-mov></i>
         <span txt>${data.PJeFrontEndTarefaCardData()}</span>
       </span>`;
-      $thisTagLi.find('.datasProcesso span:first').after(___SPAN_DATA___);
+      $thisTagLi.find('.datasProcesso span[j2highlighprazo]').after(___SPAN_DATA___);
 
       const $cardUltimoMovText = $thisTagLi.find('.tituloNegrito').next()
       const movText = $cardUltimoMovText.text()
@@ -1953,7 +1953,50 @@ function fronendLoad(){
       })
     }
 
-    function registrarAcoesLazied($thisTagLi){
+    function _criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa){
+
+      [/processo com prazo em curso/i].some(tarfRegExp =>{
+        if( ! tarfRegExp.test(nomeTarefa) )
+          return false
+
+        __sendMessageToPje({
+          action : 'requisitarJ2EPJeRest',
+          PJeRest : 'j2EPJeRest.tarefas.historico',
+          waitsResponse : true,
+          arguments : [ idProcesso ] 
+        }, 
+        "PARENT_TOP",
+        function(tarefaResposta){
+          const tarefas = tarefaResposta.tarefas.filter(t=> !t.aberta)
+  
+          tarefas.sort((a, b) => b.inicio - a.inicio)
+
+          let tarefaInicial = 0
+          tarefas.every((histTarf, idx)=> {
+            tarefaInicial = histTarf
+            //não deve iterar  proximo
+            return tarfRegExp.test(tarefas[idx + 1]?.nome.toLowerCase().trim())
+          })
+
+          const data = new DataComFromatos(tarefaInicial.inicio)
+          //<i class="fa fa-bookmark" j2e-proc-data-mov></i>
+          const ___SPAN_DATA___ = `
+          <span j2e-processo-data-movimento _ngcontent-orb-c14="" title="Data efetiva de entrada na tarefa">
+            <i class="fa fa-hourglass" j2e-proc-data-mov></i>
+            <span txt>${data.PJeFrontEndTarefaCardData()}</span>
+          </span>`;
+          $thisTagLi.find('.datasProcesso').prepend(___SPAN_DATA___);
+
+          
+
+        })
+
+      })
+      
+      
+    }
+
+    function registrarAcoesLazied($thisTagLi, nomeTarefa, $_processos_tarefa){
       $thisTagLi.find('div.row.icones').lazyObserve({
         root: $thisTagLi.parents('#processosTarefa'),
         load: function($li, ent, obs){
@@ -1976,12 +2019,14 @@ function fronendLoad(){
 
             _acoesBaseadasEmMovimentosDoProcesso($thisTagLi, idProcesso)
             _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso)
+            _criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
+
           })
         }
       })
     }
     
-    function personalizarCardDaTarefa(){  
+    function personalizarCardDaTarefa(nomeTarefa, $_processos_tarefa){  
       jQ3.initialize('ul.ui-datalist-data', function(){
         jQ3.initialize('li.ng-star-inserted', function(){       
           const $this = jQ3(this)   
@@ -2006,7 +2051,7 @@ function fronendLoad(){
 
           autoSelecionarAPrimeiraTarefaDaLista($this)
 
-          registrarAcoesLazied($this)
+          registrarAcoesLazied($this, nomeTarefa, $_processos_tarefa)
         },
         {target : this});
         const $this = jQ3(this)
@@ -2014,7 +2059,7 @@ function fronendLoad(){
         criarCmdCopiarNumeroProcesso(null, this)
         adicionarComandoAbrirExpedientesDoProcesso(null, this)
         ouvirClicksDeRemocaoDeEtiqueta($this)
-      });
+      }, {target: $_processos_tarefa[0]});
     }
 
     function _sinalizarProcessoJulgado($thisTagLi, movimentosProcesso){  
@@ -2370,6 +2415,8 @@ function fronendLoad(){
     function inicializacaoDiversasDeTarefaAtivaComListaDePendencias(){
       jQ3.initialize('processos-tarefa', function(){
         var _processos_tarefa = this
+        const $_processos_tarefa = jQ3(this)
+        const nomeTarefa = $_processos_tarefa.find('filtro-tarefas .nome-tarefa:first-child').text().trim()
         
         jQ3.initialize('filtro-tarefas span.text-truncate.uppercase.nome-tarefa:first-child', function(){          
           formatarNomeAlternativoListaTrefaAtiva(this);
@@ -2404,11 +2451,11 @@ function fronendLoad(){
 
         registrarEventosListaTarefas(_processos_tarefa)
 
+        personalizarCardDaTarefa(nomeTarefa, $_processos_tarefa);
       });
     }
 
        
-    personalizarCardDaTarefa();
     inicializacaoDiversasDeTarefaAtivaComListaDePendencias();
   };
 
