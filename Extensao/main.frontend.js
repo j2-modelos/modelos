@@ -2288,7 +2288,7 @@ function fronendLoad(){
 
         switch(nomeTarefa){
           case 'Documentos não lidos':
-            $tagLiEventIdTask.hide(750)
+            $tagLiEventIdTask.remove()
             return
         }
 
