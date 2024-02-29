@@ -5980,7 +5980,7 @@ j2E.mods.Armazenamento = {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {
-            resolve(result);
+            resolve( key ? result[key] : result);
           }
         });
       });

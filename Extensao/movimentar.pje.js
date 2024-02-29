@@ -889,7 +889,7 @@ function init(){
 
       //Implantará quando visualizar os paineis na view
       //  painel de quando o usuário tem de selecionar o endereço da parte
-      const initializeSelector = j2E.env.task.name !== 'Imprimir Correspondência_' ? '.rich-panel-header' : '.rich-panel-body'
+      const initializeSelector = `${j2E.env.task.name !== 'Imprimir Correspondência_' ? '.rich-panel-header' : '.rich-panel-body'}:not([j2-inicializado])`
       jQ3.initialize(initializeSelector, function(){
         const $div = jQ3(this);
         let TAREFA_VIEW = ''
@@ -907,7 +907,8 @@ function init(){
           TAREFA_VIEW = 'IMPRIMIR_CORRESPONDENCIA'
         else
           return;
-
+        
+        $div.attr('j2-inicializado', '')
         if (  TAREFA_VIEW === 'DEFINICAO_ENDERECO' ){
           if( ! ($div.parent().find('td:nth-child(4)').text().toLowerCase().includes('correios')) )
             return
