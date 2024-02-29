@@ -5952,6 +5952,61 @@ j2E.mods.shortcuts = function (){
   checkJQueryBuildCalendar();
 })
 
+j2E.mods.Armazenamento = {
+  /**
+   * Função para salvar dados no armazenamento
+   * 
+   * @param {*} key 
+   * @param {*} value 
+   */
+  guardar: async function(key, value) {
+    try {
+      await chrome.storage.local.set({ [key]: value });
+      console.log(`Dados salvos com sucesso: ${key}: ${value}`);
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+    }
+  },
+
+  /**
+   * Função para recuperar dados do armazenamento
+   * @param {*} key 
+   * @returns 
+   */
+  obter: async function(key) {
+    try {
+      const data = await new Promise((resolve, reject) => {
+        chrome.storage.local.get(key ? [key] : null, result => {
+          if (chrome.runtime.lastError) {
+            reject(chrome.runtime.lastError);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+      console.log(`Dados recuperados com sucesso: ${key}: ${data}`);
+      return data;
+    } catch (error) {
+      console.error('Erro ao recuperar os dados:', error);
+      return null;
+    }
+  },
+
+
+  /**
+   * Função para remover dados do armazenamento
+   * @param {*} key 
+   */
+  removeData: async function(key) {
+    try {
+      await chrome.storage.local.remove(key);
+      console.log(`Dados removidos com sucesso: ${key}`);
+    } catch (error) {
+      console.error('Erro ao remover os dados:', error);
+    }
+  }
+}
+
 
 /**
  *
