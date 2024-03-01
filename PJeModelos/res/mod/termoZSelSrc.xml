@@ -31,6 +31,7 @@ and open the template in the editor.
             <gItem id="termItJuntadaCartaPrecatoria"/>
             <gItem id="termItJuntadaCertidaoDivida"/>
             <gItem id="termItRemessaTR"/>
+            <gItem id="termItRetificacao"/>
         </group>
         
 
@@ -276,6 +277,27 @@ and open the template in the editor.
                 <data>
                     #:span!caput{Nesta data} faço juntada do #:B{#:U{SRO} DA CARTA DE CITAÇÃO} registrado sob nº #:B{XXXNumeroARXXX}, o qual foi devidamente entregue ao destinatário em #:B{XXXDataEntregaXXX}, conforme documento anexo ao presente termo#:span!dot{.}
                 </data>
+            </itemContent>
+        </item>
+        <item id="termItRetificacao" label="Retificação" dataPlus="{ 'titleAppend': 'RETIFICAÇÃO', 'descricaoAppend': 'Retificação' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        #:span!caput{Nesta data} faço retificação do #:B{XXXXNomeDocumentoXXXX #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}, em que, onde se lê
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault  marginAtoJudicial marginLeft2cm Indnt0 i" >
+                        XXXTextoARetificarXXX,
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        leia-se,
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault  marginAtoJudicial marginLeft2cm Indnt0 i" >
+                        XXXTextoARetificadoXXX.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        Do que para constar lavro o presente termo.
+                    </elemento>
+                </simpleElementsDefs>
             </itemContent>
         </item>
         

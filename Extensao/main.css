@@ -1762,6 +1762,25 @@ div#ui-datepicker-div {
     padding: 5px;
 }
 
+#j2-doc-html-tools[j2-hidden]  {
+    right: -40px;
+}
+
+#j2-doc-html-tools[j2-hidden]:hover  {
+    right: 0px;
+}
+
+#j2-doc-html-tools:not([j2-hidden]) .fa-arrow-left  {
+    display:none;
+}
+
+#j2-doc-html-tools[j2-hidden] .fa-arrow-right  {
+    display:none;
+}
+
+
+
+
 #j2-doc-html-tools ul.nav{
     display: flex;
     flex-direction: column;
@@ -1771,9 +1790,29 @@ div#ui-datepicker-div {
     
 }
 
-#j2-doc-html-tools i {
-    font-size: 18px
+#j2-doc-html-tools a i {
+    font-size: 18px;
 }
+
+#j2-doc-html-tools a[j2-hidder] {
+    padding: 0;
+	padding-bottom: 2.5px;
+    text-align: right;
+    opacity: 0.5;
+}
+
+#j2-doc-html-tools[j2-hidden] a[j2-hidder] {
+	text-align: left;
+}
+
+#j2-doc-html-tools a[j2-hidder]:hover {
+    opacity: 1;
+}
+
+#j2-doc-html-tools a[j2-hidder] i{
+    font-size: 14px;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

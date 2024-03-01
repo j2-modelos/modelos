@@ -177,6 +177,12 @@
 		<style id="marginLeft1cm">
             <prop name="marginLeft" value="1cm"/>
         </style> 
+		<style id="marginLeft2cm">
+            <prop name="marginLeft" value="2cm"/>
+        </style> 
+        <style id="Indnt2cm">
+            <prop name="textIndent" value="2cm"/>
+        </style>         
         <style id="Indnt3cm">
             <prop name="textIndent" value="3cm"/>
         </style>         
