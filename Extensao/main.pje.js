@@ -3427,6 +3427,13 @@ function pjeLoad(){
       <div class="rich-panel" id="j2-doc-html-tools">
           <ul class="nav nav-pills btn-documento pull-right" style="display: flex; flex-direction: column;">
               <li>
+                  <a id="hidder" title="Esconder" j2-hidder="">
+                      <i class="fa fa-arrow-right" aria-hidden="true" ></i>
+                      <i class="fa fa-arrow-left" aria-hidden="true" ></i>
+                      <span class="sr-only">Ícone de aumentar zoom</span>
+                  </a>
+              </li>
+              <li>
                   <a id="zoom-in" title="Aumentar zoom">
                       <i class="fa fa-search-plus" aria-hidden="true"></i>
                       <span class="sr-only">Ícone de aumentar zoom</span>
@@ -3501,6 +3508,13 @@ function pjeLoad(){
 
       $too.find('#rolar-topo').on('click', function(e){
         rolarTopo();
+      });
+
+      $too.find('#hidder').on('click', function(e){
+        if($too.is('[j2-hidden]'))
+          $too.removeAttr('j2-hidden')
+        else
+          $too.attr('j2-hidden', '')
       });
     })
   }

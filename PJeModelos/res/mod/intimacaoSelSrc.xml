@@ -1559,7 +1559,7 @@ and open the template in the editor.
                             #:B{INTIMADO(A)} para, no prazo de #{j2.env.PJeVars.expediente.prazo}, 
                             #:B{EMENDAR A PETIÇÃO INICIAL}, 
                             para comprovar o interesse processual mediante juntada aos autos comprovantes de que antes da 
-                            propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
+                            propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, inclusive 
                             em relação aos danos morais alegados, por meio da plataforma pública digital de interlocução 
                             direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
                             PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
