@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "version": "0.1.0",
-  "name": "j2",
+  "name": "j2-DEV-LOCAL",
   "description": "Extensao Modelos j2",
   "author": "Elmo de Moraes",
   "action": {
