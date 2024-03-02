@@ -4716,7 +4716,8 @@ PseudoTarefa.prototype.transporDados = function(){
           'descricaoUltimoMovimento': this.dados[i].descricaoUltimoMovimento,
           'poloAtivo' :               this.dados[i].poloAtivo,
           'poloPassivo' :             this.dados[i].poloPassivo,
-          'etiquetas':                this.dados[i].tagsProcessoList
+          'etiquetas':                this.dados[i].tagsProcessoList,
+          '__': this.dados[i]
         });
       }
       ['isTemporary', 'timestamp', 'dataSet'].forEach(function(prop){
@@ -6005,6 +6006,12 @@ j2E.mods.Armazenamento = {
       console.error('Erro ao remover os dados:', error);
     }
   }
+}
+
+j2E.mods.urlHash = {
+  decodeWindowLocationHash: () => JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop()))),
+  decode: (carga) => JSON.parse(atob(decodeURIComponent( carga ))),
+  encode: (carga) => encodeURIComponent(btoa( JSON.stringify( carga ) ))
 }
 
 
