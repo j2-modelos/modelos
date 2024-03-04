@@ -356,7 +356,15 @@ var TarefasProps = {
           
           $.extend(_new[item.nome], item);
           
-          TarefasProps[item.nome] = new PseudoTarefa( _new[item.nome] ) ;
+          TarefasProps[item.nome] = new PseudoTarefa( 
+            jQ3.extend(
+              {}, 
+              _new[item.nome], 
+              TarefasProps[item.nome], 
+              { 
+                personalizacao: jQ3.extend( {}, item.personalizacao, TarefasProps[item.nome].personalizacao  ) 
+              } )
+          ) ;
           
           _.push(TarefasProps[item.nome]);
         });

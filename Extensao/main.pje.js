@@ -611,10 +611,38 @@ function pjeLoad(){
       const _criarTaskScroller = ()=>{
         j2EUi.createTaskScroller(_tarfProp.personalizacao.scroller)
       }
+
+      const _criarCorpoParaPseudotarefaPura = ()=>{
+        const __FORM__ = /*html*/`
+          <form id="taskInstanceForm">
+            <div class="rich-panel" id="taskInstanceForm:j_id83">
+              <div class="rich-panel-body" id="taskInstanceForm:j_id83_body">
+                <div id="dialogMessage" class="modal-popup">
+                  <div id="title" class="modal-header">
+                    Mensagem
+                    <span class="btn-fechar" onclick="hideDialogMessage(this);"><i class="icon-fechar"></i></span>
+                  </div>
+
+                  <div class="modal-content text-center">
+                    <dl id="taskInstanceForm:taskInstanceFormMessage" class="rich-messages" style="display: none;"><dt></dt></dl>
+                  </div>
+                </div>
+                <div class="col-sm-12 clearfix">
+                  <div id="taskInstanceForm:divTransicao"></div>
+                </div>
+              </div>
+            </div>
+          </form>          
+        `
+        const $taskInstanceDiv = jQ3('#taskInstanceDiv')
+        $taskInstanceDiv.append(__FORM__)
+        body = $taskInstanceDiv.find('div.rich-panel-body')
+      }
       
       if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
         return; 
         
+      _tarfProp.personalizacao.criarCorpoParaPseudotarefaPura            && _criarCorpoParaPseudotarefaPura();
       _tarfProp.personalizacao.prepararInteracoes                        && _prepararInteracoes();
       _tarfProp.personalizacao.removeDoCorpo                             && _removeDoCorpo();
       _tarfProp.personalizacao.limpaCorpoTarefa                          && _limparCorpo();
@@ -2238,14 +2266,25 @@ function pjeLoad(){
 
   
   function requisitarDadosSeTarefaEPersonalisar(){	
-    if(window.location.pathname !== "/pje/Processo/movimentar.seam")	
+    if(! window.location.pathname.match(/error\.seam|movimentar\.seam/))	
       return;	
-    	
+    
+    const TAREFA_VAZIA = 0
     var idProc = j2E.env.urlParms.idProcesso,	
         idTask = j2E.env.urlParms.newTaskId;	
-    j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
-      personalizarTarefa(data);	
-    });	
+
+    if( typeof idTask !== 'undefined' && idTask != TAREFA_VAZIA )
+      j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
+        personalizarTarefa(data);	
+      });	
+    else{
+      j2E.env.urlParms.idProcesso = j2E.env.cargaHash._tarfData.idProcesso
+      j2E.env.urlParms.newTaskId = 0
+
+      TarefasProps.getPseudotarefas(
+        ()=> personalizarTarefa( [j2E.env.cargaHash.pseudoTarefaNome] )
+      )
+    }
   }
   
 
@@ -3518,6 +3557,228 @@ function pjeLoad(){
       });
     })
   }
+
+  function observarPreparacaoParaPseudoTarefa(){
+    const cargaHash = j2E.mods.urlHash.decodeWindowLocationHash()
+    if(!cargaHash)
+      return
+
+    j2E.env.cargaHash = cargaHash
+
+    if( window.location.pathname.match(/error\.seam/) ){
+      const __BODY__ = /*html*/`
+        <div id="popUp"></div>
+        <span id="_viewRoot:status">
+          <span id="_viewRoot:status.start" style="display: none;">
+            <div class="ajax-loader">
+              <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+              <div class="rich-mpnl-panel">
+                <div class="rich-mp-container">
+                  <div class="rich-mpnl-content"></div>
+                </div>
+              </div>
+            </div>
+          </span>
+          <span id="_viewRoot:status.stop"></span>
+        </span>
+        <div id="modalStatus" style="display: none;">
+          <input autocomplete="off" id="modalStatusOpenedState" name="modalStatusOpenedState" type="hidden" />
+          <div class="rich-modalpanel ajax-loader" id="modalStatusContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;">
+            <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="modalStatusDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="modalStatusFirstHref"></button></div>
+            <div class="rich-mpnl-panel">
+              <div class="rich-mp-container" id="modalStatusCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+                <div class="rich-mpnl-shadow" id="modalStatusShadowDiv" style="opacity: 0; filter: alpha(opacity=0);"></div>
+                <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="modalStatusContentDiv">
+                  <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="modalStatusContentTable" style="height: 100%; width: 100%;">
+                    <tbody>
+                      <tr style="height: 99%;">
+                        <td class="rich-mpnl-body" valign="top"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="modalStatusResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div>
+              </div>
+            </div>
+            <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="modalStatusCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="modalStatusLastHref"></button></div>
+          </div>
+        </div>
+        <form id="j_id51" name="j_id51" method="post" action="/pje/Processo/movimentar.seam" target="">
+          <span style="display: none;" id="j_id51:j_id53"></span><span style="display: none;" id="j_id51:j_id54"></span><input type="hidden" autocomplete="off" name="j_id51" value="j_id51" />
+          <input type="hidden" autocomplete="off" name="autoScroll" value="" /><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id5" autocomplete="off" />
+        </form>
+
+        <style>
+          .index-topo {
+            z-index: 2000 !important;
+          }
+        </style>
+        <div id="mpPJeOfficeIndisponivel" style="display: none;">
+          <input autocomplete="off" id="mpPJeOfficeIndisponivelOpenedState" name="mpPJeOfficeIndisponivelOpenedState" type="hidden" />
+          <div class="rich-modalpanel index-topo" id="mpPJeOfficeIndisponivelContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;">
+            <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpPJeOfficeIndisponivelDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelFirstHref"></button></div>
+            <div class="rich-mpnl-panel">
+              <div class="rich-mp-container" id="mpPJeOfficeIndisponivelCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+                <div class="rich-mpnl-shadow" id="mpPJeOfficeIndisponivelShadowDiv"></div>
+                <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpPJeOfficeIndisponivelContentDiv">
+                  <div class="rich-mpnl-text rich-mpnl-controls">
+                    <span class="btn-fechar" onclick="Richfaces.hideModalPanel('mpPJeOfficeIndisponivel')" title="Fechar"><i class="icon-fechar"></i></span>
+                  </div>
+                  <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpPJeOfficeIndisponivelContentTable" style="height: 100%; width: 100%;">
+                    <tbody>
+                      <tr style="height: 1%;">
+                        <td class="rich-mpnl-header-cell"><div class="rich-mpnl-text rich-mpnl-header" id="mpPJeOfficeIndisponivelHeader" style="white-space: nowrap; cursor: move;">PJeOffice Indisponível</div></td>
+                      </tr>
+                      <tr style="height: 99%;">
+                        <td class="rich-mpnl-body" valign="top">
+                          <h3>O aplicativo PJeOffice não está disponível!</h3>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerN" style="width: 40px; height: 4px; cursor: n-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerE" style="height: 40px; width: 4px; cursor: e-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerS" style="width: 40px; height: 4px; cursor: s-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerW" style="height: 40px; width: 4px; cursor: w-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWU" style="width: 40px; height: 4px; cursor: nw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEU" style="height: 40px; width: 4px; cursor: ne-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNEL" style="width: 40px; height: 4px; cursor: ne-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEU" style="height: 40px; width: 4px; cursor: se-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSEL" style="width: 40px; height: 4px; cursor: se-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWL" style="height: 40px; width: 4px; cursor: sw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerSWU" style="width: 40px; height: 4px; cursor: sw-resize;"></div>
+                <div class="rich-mpnl-resizer" id="mpPJeOfficeIndisponivelResizerNWL" style="height: 40px; width: 4px; cursor: nw-resize;"></div>
+              </div>
+            </div>
+            <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpPJeOfficeIndisponivelCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpPJeOfficeIndisponivelLastHref"></button></div>
+          </div>
+        </div>
+        <div id="mpProgresso" style="display: none;">
+          <input autocomplete="off" id="mpProgressoOpenedState" name="mpProgressoOpenedState" type="hidden" />
+          <div class="rich-modalpanel modal-small" id="mpProgressoContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;">
+            <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+            <div class="rich-mpnl-panel">
+              <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+                <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv"></div>
+                <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv">
+                  <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                    <tbody>
+                      <tr style="height: 99%;">
+                        <td class="rich-mpnl-body" valign="top">
+                          <div class="media">
+                            <div class="media-left media-middle">
+                              <div class="svg-preloader">
+                                <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+                              </div>
+                            </div>
+                            <div class="media-body">
+                              <h6>Por favor aguarde</h6>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+          </div>
+        </div>
+
+        <div id="j_id67" class="content">
+          <div id="pageBody" class="container-fluid scroll-y principal">
+            <span id="movimentarRegion:status">
+              <span id="movimentarRegion:status.start" style="display: none;">
+                <div id="mpLoadingMovimentar" style="display: none;">
+                  <input autocomplete="off" id="mpLoadingMovimentarOpenedState" name="mpLoadingMovimentarOpenedState" type="hidden" />
+                  <div class="rich-modalpanel ajax-loader" id="mpLoadingMovimentarContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;">
+                    <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpLoadingMovimentarDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpLoadingMovimentarFirstHref"></button></div>
+                    <div class="rich-mpnl-panel">
+                      <div class="rich-mp-container" id="mpLoadingMovimentarCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+                        <div class="rich-mpnl-shadow" id="mpLoadingMovimentarShadowDiv"></div>
+                        <div class="rich-mpnl-content" id="mpLoadingMovimentarContentDiv">
+                          <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpLoadingMovimentarContentTable" style="width: 1px; height: 1px;">
+                            <tbody>
+                              <tr style="height: 99%;">
+                                <td class="rich-mpnl-body" valign="top"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpLoadingMovimentarCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpLoadingMovimentarLastHref"></button></div>
+                  </div>
+                </div>
+              </span>
+              <span id="movimentarRegion:status.stop"></span>
+            </span>
+            <div id="script"></div>
+            <form id="j_id70" name="j_id70" method="post" action="/pje/Processo/movimentar.seam" target="">
+              <input type="hidden" autocomplete="off" name="j_id70" value="j_id70" /><input type="hidden" autocomplete="off" name="autoScroll" value="" />
+              <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id5" autocomplete="off" />
+            </form>
+            <div id="idModalAguarde" style="display: none;">
+              <input autocomplete="off" id="idModalAguardeOpenedState" name="idModalAguardeOpenedState" type="hidden" />
+              <div class="rich-modalpanel" id="idModalAguardeContainer" style="position: absolute; display: none; z-index: 100; background-color: inherit;">
+                <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="idModalAguardeDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="idModalAguardeFirstHref"></button></div>
+                <div class="rich-mpnl-panel">
+                  <div class="rich-mp-container" id="idModalAguardeCDiv" style="position: absolute; left: 0px; top: 0px; z-index: 9;">
+                    <div class="rich-mpnl-shadow" id="idModalAguardeShadowDiv"></div>
+                    <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="idModalAguardeContentDiv">
+                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="idModalAguardeContentTable" style="height: 100%; width: 100%;">
+                        <tbody>
+                          <tr style="height: 99%;">
+                            <td class="rich-mpnl-body" valign="top">
+                              <div class="ajax-loader">
+                                <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div"></div>
+                                <div class="rich-mpnl-panel">
+                                  <div class="rich-mp-container">
+                                    <div class="rich-mpnl-content"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="idModalAguardeCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="idModalAguardeLastHref"></button></div>
+              </div>
+            </div>
+            <div id="taskInstanceDiv" class="divMovimentarProcesso">
+              <div id="msgSaida">
+                <dl id="j_id82" class="rich-messages" style="display: none;"><dt></dt></dl>
+              </div>
+            </div>
+            <div id="divMovimentarPoll">
+              <form id="j_id85" name="j_id85" method="post" action="/pje/Processo/movimentar.seam" target="">
+                <span style="display: none;" id="j_id85:poll"></span><input type="hidden" autocomplete="off" name="j_id85" value="j_id85" /><input type="hidden" autocomplete="off" name="autoScroll" value="" />
+                <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id5" autocomplete="off" />
+              </form>
+            </div>
+          </div>
+        </div>`
+      
+      jQ3('body').html(__BODY__)
+    }
+
+  }
   
   switch(window.location.pathname){
     
@@ -3589,9 +3850,12 @@ function pjeLoad(){
     case '/pje/error.seam':
       verificarSePaginaDeuErro();
       verificarSePaginaExpirou();
+      observarPreparacaoParaPseudoTarefa()
+      requisitarDadosSeTarefaEPersonalisar()
       break;
     
     case '/pje/Processo/movimentar.seam':
+      observarPreparacaoParaPseudoTarefa()
       observeTarefaComPAC();
       //observeFormDetalheProcessoTarefasDoProcesso();
       observeProcessoFolhaExpedientes();

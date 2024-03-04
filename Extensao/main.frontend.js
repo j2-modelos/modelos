@@ -1294,8 +1294,8 @@ function fronendLoad(){
       var ___LAZY_DATA___ = '<span j2e-lazy-load id="tarfData-$">[carregando...]</span>';
       var jElOrg = jQ3(_this);
       var $this = jQ3(_this);
-      var pjeQuery = JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop())));
-      var initNome = pjeQuery['j2-pseudotarefa'] ? pjeQuery['j2-pseudotarefa'].nome : jElOrg.text().trim();
+      var pjeQuery = j2E.mods.urlHash.decodeWindowLocationHash()
+      var initNome = (pjeQuery['j2-pseudotarefa'] && pjeQuery['j2-pseudotarefa'].tipo === 'TAREFA-ETIQUETA-VARIAS') ? pjeQuery['j2-pseudotarefa'].nome : jElOrg.text().trim();
       var tarf = TarefasProps[initNome];
       var delayCall = new DelayedCall(750, 1500);
       
@@ -1532,66 +1532,237 @@ function fronendLoad(){
           if( $procsUl.lastIdProcesso === getIdProcesso() )
             return;
           
-          $procsUl.lastIdProcesso = getIdProcesso();
           
-          function __buildPseudotarefa(_qData){
-            var ___TEMPLATE__CONTEUDO___TAREFA___  = '<div _ngcontent-bdb-c14="" id="conteudoTarefa" class="col-md-12 conteudoTarefa ng-star-inserted"><spinner _ngcontent-bdb-c14="" _nghost-bdb-c10=""><!----></spinner><!----><div _ngcontent-bdb-c23="" class="row"><div _ngcontent-bdb-c23="" class="col-md-12 no-padding"><!----><!----><iframe _ngcontent-bdb-c23="" class="editorFrame ng-star-inserted" id="frame-tarefa" name="frame-tarefa" src="$"></iframe></div></div></div>';
-            var ___TEMPLATE__URL___ = 'https://pje.tjma.jus.br/pje/ng2/dev.seam?$&$#/painel-usuario-interno';
-            var ___TEMPLATE__SPINNER___ = '<div _ngcontent-bsf-c10="" class="loaderWrapper ng-star-inserted"><mat-progress-spinner _ngcontent-bsf-c10="" class="position mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation" mode="indeterminate" role="progressbar" aria-valuenow="0" style="width: 100px; height: 100px;"><svg focusable="false" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" style="width: 100px; height: 100px;"><!----><circle cx="50%" cy="50%" r="45" class="ng-star-inserted" style="animation-name: mat-progress-spinner-stroke-rotate-100; stroke-dasharray: 282.743px; stroke-width: 10%;"></circle><!----></svg></mat-progress-spinner></div>';
-            
-            const nomeTarefa = _qData[0].nome
-            const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
-              competencia: "",
-              etiquetas:[],
-              numeroProcesso: _tarfData.num
-            }, 'j2pseudotarefaMovimentar=true')
+          $procsUl.lastIdProcesso = getIdProcesso();
 
-            /*var _action = encodeURIComponent( btoa( JSON.stringify( {
-                j2: true,
-                action: "abrirAutomaticoTarefa",
-                processo: _tarfData.num,
-                tarefa: _qData[0].nome,
-                j2pseudotarefaMovimentar : true
-            }) ) );
-            var _url = ___TEMPLATE__URL___.replaceOrd('$', 'j2pseudotarefaMovimentar=true', 'action=' + _action);*/
+          const ___TEMPLATE_TAREFA_CUSTOMIZAVEL = /*html*/`
+              <div _ngcontent-rnb-c14 id="conteudoTarefa" class="col-md-12 conteudoTarefa ng-star-inserted">
+                <spinner _ngcontent-bdb-c14 _nghost-bdb-c10><!----></spinner>
+                <div _ngcontent-rnb-c14 class="row" id="frameTarefas">
+                  <div _ngcontent-rnb-c14 class="vcenter col-md-12 no-padding  header-wrapper">
+                    <div _ngcontent-rnb-c14 class="vcenter col-md-7 no-padding header-processo">
+                      <div _ngcontent-rnb-c14 class="vcenter col-md-11 no-padding">
+                        <div _ngcontent-rnb-c14 class="no-padding col-md-11">
+                          <div _ngcontent-rnb-c14><!---->
+                            <a j2-autos _ngcontent-rnb-c14 target="_blank" 
+                                title="Fluxo Principal do 1 Grau > Dar cumprimento a ato judicial > Expedir carta precatoria - S_CMP_DEC > Expedir carta precatória" 
+                                href="javascript:return;" class="processo-publico text-truncate"> 
+                              ExTiEx 0800828-65.2020.8.10.0047 - Expedir carta precatória 
+                            </a>
+                          </div>
+                        <div _ngcontent-rnb-c14 class="partes text-truncate">
+                          FRANCISCO BORGES DE SOUZA X GELDO XAVIER DA SILVA
+                        </div>
+                      </div>
+                    </div>
+                    <div _ngcontent-rnb-c14 class="col-md-1 mais-detalhes no-padding" j2-dev-hidden>
+                      <div _ngcontent-rnb-c14 class="toggleDetalhes ng-star-inserted" placement="bottom" tooltip="Mais detalhes">
+                        <i _ngcontent-rnb-c14 aria-hidden="true" class="fa fa-angle-down icon-detalhes"></i>
+                        <span _ngcontent-rnb-c14 class="sr-only">Mostrar mais detalhes</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div _ngcontent-rnb-c14 class="col-md-5 btn-toolbar pb-5 toolbar-processo">
+                    <button _ngcontent-rnb-c14 class="btn btn-sm btn-default pull-right" placement="bottom" tooltip="Expandir | Recolher" type="button" j2-dev-hidden><!---->
+                      <i _ngcontent-rnb-c14 aria-hidden="true" class="fa fa-expand ng-star-inserted"></i>
+                    </button>
+                    <button _ngcontent-rnb-c14 class="btn btn-sm btn-default pull-right" data-target="#modal-historico-tarefas" data-toggle="modal" placement="bottom" tooltip="Histórico de tarefas" type="button">
+                      <i _ngcontent-rnb-c14 aria-hidden="true" class="fas fa-history"></i>
+                    </button>
+                    <div _ngcontent-rnb-c14 class="dropdown pull-right" j2-dev-hidden>
+                    <button _ngcontent-rnb-c14 aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-default btn-etiqueta dropdown-toggle etiqueta-ativa" data-toggle="dropdown" id="btn-gerenciar-etiquetas" placement="bottom" tooltip="Etiquetas do processo" type="button">
+                      <i _ngcontent-rnb-c14 aria-hidden="true" class="fa fa-tag"></i>
+                      <span _ngcontent-rnb-c14 class="numero-etiquetas-atribuidas ml-5">1</span>
+                      <span _ngcontent-rnb-c14 class="sr-only">Etiquetas do processo</span>
+                    </button>
+                      <ul _ngcontent-rnb-c14 aria-labelledby="btn-gerenciar-etiquetas" class="dropdown-menu">
+                        <li _ngcontent-rnb-c14>
+                          <pje-selecionar-etiquetas _ngcontent-rnb-c14 _nghost-rnb-c25>
+                            <div _ngcontent-rnb-c25 class="selecionar-etiquetas" style="top: 30px; left: 130px;">
+                              <div _ngcontent-rnb-c25 class="content ng-star-inserted">
+                                <div _ngcontent-rnb-c25 class="labels-etiquetas ng-star-inserted"><!---->
+                                  <div _ngcontent-rnb-c25 class="label label-info label-etiqueta ng-star-inserted">
+                                    <span _ngcontent-rnb-c25>CORREIÇÃO 2024</span>
+                                    <span _ngcontent-rnb-c25 class="icon-desvincular-tag pl-5" title="Excluir etiqueta CORREIÇÃO 2024">
+                                      <i _ngcontent-rnb-c25 class="fa fa-times "></i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div _ngcontent-rnb-c25 class="input-group col-md-12 pesquisar-etiquetas" id="pesquisar-etiquetas">
+                                  <input _ngcontent-rnb-c25 class="form-control ng-untouched ng-pristine ng-valid" id="itPesquisarEtiquetas" name="itPesquisarEtiquetas" placeholder="Pesquisar etiquetas..." type="text">
+                                </div>
+                                <table _ngcontent-rnb-c25 class="table table-hover table-striped table-etiquetas">
+                                  <tbody _ngcontent-rnb-c25>
+                                    <tr _ngcontent-rnb-c25 class="ng-star-inserted">
+                                      <td _ngcontent-rnb-c25 class="col-md-1"><!----><!---->
+                                        <button _ngcontent-rnb-c25 class="botao-selecionar check-etiqueta ng-star-inserted" type="button">
+                                          <i _ngcontent-rnb-c25 class="far fa-square"></i>
+                                        </button>
+                                      </td>
+                                      <td _ngcontent-rnb-c25 class="col-md-11">Ag. Cumprimento de Mandado</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </pje-selecionar-etiquetas>
+                        </li>
+                      </ul>
+                    </div>
+                    <div _ngcontent-rnb-c14 class="dropdown pull-right ml-5" j2-dev-hidden>
+                      <button _ngcontent-rnb-c14 aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" id="btnTransicoesTarefa" placement="bottom" tooltip="Encaminhar para..." type="button">
+                        <i _ngcontent-rnb-c14 aria-hidden="true" class="far fa-share-square"></i>
+                      </button>
+                      <ul _ngcontent-rnb-c14 aria-labelledby="btnTransicoesTarefa" class="dropdown-menu dropdown-transicoes"><!----><!----></ul>
+                    </div><!----><!----><!----><!---->
+                    <button j2-autos _ngcontent-rnb-c14 class="btn btn-sm btn-primary pull-right" placement="bottom" tooltip="Autos" type="button">
+                      <i _ngcontent-rnb-c14 aria-hidden="true" class="fa fa-book"></i>
+                    </button>
+                  </div>
+                </div>
+              </div><!---->
+              <pje-frames _ngcontent-rnb-c14 _nghost-rnb-c26>
+                <div _ngcontent-rnb-c26 class="row">
+                  <div _ngcontent-rnb-c26 class="col-md-12 no-padding"><!----><!---->
+                    <iframe _ngcontent-rnb-c26 class="editorFrame ng-star-inserted" id="frame-tarefa" name="frame-tarefa"  >
+                    </iframe>
+                  </div>
+                </div>
+              </pje-frames>
+            </div>
+            `
+          const ___TEMPLATE__SPINNER___ = '<div j2-spinner _ngcontent-bsf-c10="" class="loaderWrapper ng-star-inserted"><mat-progress-spinner _ngcontent-bsf-c10="" class="position mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation" mode="indeterminate" role="progressbar" aria-valuenow="0" style="width: 100px; height: 100px;"><svg focusable="false" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" style="width: 100px; height: 100px;"><!----><circle cx="50%" cy="50%" r="45" class="ng-star-inserted" style="animation-name: mat-progress-spinner-stroke-rotate-100; stroke-dasharray: 282.743px; stroke-width: 10%;"></circle><!----></svg></mat-progress-spinner></div>';
+          const ___TEMPLATE__CONTEUDO___TAREFA___  = '<div _ngcontent-bdb-c14="" id="conteudoTarefa" class="col-md-12 conteudoTarefa ng-star-inserted"><spinner _ngcontent-bdb-c14="" _nghost-bdb-c10=""><!----></spinner><!----><div _ngcontent-bdb-c23="" class="row"><div _ngcontent-bdb-c23="" class="col-md-12 no-padding"><!----><!----><iframe _ngcontent-bdb-c23="" class="editorFrame ng-star-inserted" id="frame-tarefa" name="frame-tarefa" src="$"></iframe></div></div></div>';
+
+          const $conteudoTarefa = $this.parents('processos-tarefa').find('> #divMainPanel > conteudo-tarefa');
+          if(! $conteudoTarefa.find('#conteudoTarefa').length ){            
+            const $html = jQ3( 
+              tarf.tipo === 'ETIQUETA-VARIAS' && tarf.personalizacao 
+              ? ___TEMPLATE_TAREFA_CUSTOMIZAVEL 
+              : ___TEMPLATE__CONTEUDO___TAREFA___ 
+            );
+            $conteudoTarefa.prepend($html);            
+          }
+          !$conteudoTarefa.find('spinner').find('div[j2-spinner]').length 
+          && $conteudoTarefa.find('spinner').append(___TEMPLATE__SPINNER___)
+          $conteudoTarefa.find('.nenhum-processo-selecionado').remove();
+          
+          function __buildPseudotarefa(_qData){     
+            const ___TEMPLATE_TAREFA_MODAL_HISTORICO_TAREFA___ = /*html*/`
+              <div _ngcontent-rnb-c14="" class="modal fade" id="modal-historico-tarefas" j2-dev-hidden="">
+                <div _ngcontent-rnb-c14="" class="modal-dialog modal-lg">
+                  <div _ngcontent-rnb-c14="" class="modal-content">
+                    <div _ngcontent-rnb-c14="" class="modal-header">
+                      <button _ngcontent-rnb-c14="" aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                      <span _ngcontent-rnb-c14="" class="modal-title">Histórico de tarefas do processo</span>
+                    </div>
+                    <div _ngcontent-rnb-c14="" class="modal-body"></div>
+                  </div>
+                </div>
+              </div>
+            `
+            const ___TEMPLATE__URL___ = 'https://pje.tjma.jus.br/pje/ng2/dev.seam?$&$#/painel-usuario-interno'
+            const nomeTarefa = _qData.at(0)
             
-            var $conteudoTarefa = $this.parents('processos-tarefa').find('> #divMainPanel > conteudo-tarefa');
-            if(! $conteudoTarefa.find('#conteudoTarefa').length ){            
-              var $html = jQ3( ___TEMPLATE__CONTEUDO___TAREFA___.replaceOrd('$', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND) );
-              $conteudoTarefa.prepend($html);            
-            }else{
+
+            if( ! tarf.personalizacao  ){
+              const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
+                competencia: "",
+                etiquetas:[],
+                numeroProcesso: _tarfData.num
+              }, 'j2pseudotarefaMovimentar=true')
+
+              $conteudoTarefa.find('div.row').css({
+                filter : 'blur(8px)'
+              });
+
               const $iframe = $conteudoTarefa.find('iframe')
               const $iframeC = $iframe.clone(false)
 
               $iframeC.attr('src', URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND);
               $iframe.replaceWith($iframeC)
-            }
               
-            
-            $conteudoTarefa.find('div.row').css({
-              filter : 'blur(8px)'
-            });
-            $conteudoTarefa.find('spinner').append(___TEMPLATE__SPINNER___);
-            $conteudoTarefa.find('.nenhum-processo-selecionado').remove();
-            evBus.once('fowardedNotifyPseudotarefaMovimentarLoaded', function(ev, j2Action){
-              setTimeout(function(){
-                $conteudoTarefa.find('div.row').css({
-                  filter : ''
+
+              evBus.once('fowardedNotifyPseudotarefaMovimentarLoaded', function(ev, j2Action){
+                setTimeout(function(){
+                  $conteudoTarefa.find('div.row').css({
+                    filter : ''
+                  });
+                  $conteudoTarefa.find('spinner').empty();
+                }, 500)
+                
+              });
+                
+            }else{
+              ;(function ___atualizarFrame(){
+                const $iframe = $conteudoTarefa.find('iframe')
+                //const $iframeC = $iframe.clone(false)
+                const carga = {
+                  EPseudotarefaPersonalizada: true,
+                  pseudoTarefaNome: tarf.nome,
+                  pjeQuery,
+                  pseudoTarefaDef: (()=>{
+                    const clone = {}
+                    for (let chave in tarf) 
+                      if (chave !== 'dados') 
+                        clone[chave] = tarf[chave]
+                    return clone
+                  })(),
+                  _tarfData,
+                  tarefasProcesso: _qData
+                }
+                
+                const EMPTY_TAREFA = 0
+
+                $iframe.attr('src', `https://pje.tjma.jus.br/pje/Processo/movimentar.seam?newTaskId=${
+                  EMPTY_TAREFA
+                }&idProcesso=${
+                  _tarfData.idProcesso
+                }&iframe=true#/${
+                  j2E.mods.urlHash.encode(carga)
+                }`);
+                //$iframe.replaceWith($iframeC)
+
+                $iframe.on('load', ()=>{
+                  $conteudoTarefa.find('spinner').empty();
+                })
+              })()
+
+              ;(function ___atualizarControlesAbremProcesso(){
+                __sendMessageToPje({
+                  action : 'requisitarJ2EPJeRest',
+                  PJeRest : 'j2EPJeRest.processo.getChaveAcesso',
+                  waitsResponse : true,
+                  arguments : [_tarfData.idProcesso]
+                }, 
+                "PARENT_TOP", 
+                (ca)=>{
+                  const href = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${_tarfData.idProcesso}&ca=${ca}`
+                  $conteudoTarefa.find('a[j2-autos]').attr('href', href)
+                  $conteudoTarefa.find('button[j2-autos]:not("[j2-init]")').click(()=>{
+                    window.open(href, $conteudoTarefa.find('a[j2-autos]').attr('href'))
+                  }).attr('j2-init', '')
                 });
-                $conteudoTarefa.find('spinner').empty();
-              }, 500)
-              
-            });
-          }
-          
-          __sendMessageToPje({
-            action : 'requisitarJ2EPJeRest',
-            PJeRest : 'j2EPJeRest.tarefas.painelUsuario',
-            waitsResponse : true,
-            arguments : [{ numeroProcesso: _tarfData.num }]
-          }, 
-          "PARENT_TOP", 
-          __buildPseudotarefa);
+              })()
+
+              ;(function ___cabecalhoTarefa(){
+                $conteudoTarefa.find('a[j2-autos]').text(` ${_tarfData.classeJudicial} ${_tarfData.num} - ${tarf.nome} `)
+                $conteudoTarefa.find('div.partes').text(` ${_tarfData.poloAtivo} X ${_tarfData.poloPassivo} `)
+              })()
+            }
+          }    
+
+          if( (new Date().getTime() - ($rootLi.prop('j2E')?.tarefasDoProcesso?.timestamp || Number.MAX_VALUE)) > 2 * 60 * 1000 )
+            __sendMessageToPje({
+              action : 'requisitarJ2EPJeRest',
+              PJeRest : 'j2EPJeRest.processo.obterTarefas',
+              waitsResponse : true,
+              arguments : [_tarfData.idProcesso]
+            }, 
+            "PARENT_TOP", 
+            __buildPseudotarefa);
+          else
+            __buildPseudotarefa($rootLi.prop('j2E')?.tarefasDoProcesso?.tarefas)
           
           $procsUl.find('.selecionado').removeClass('selecionado')
           $target.parents('.datalist-content').addClass('selecionado')
@@ -1630,7 +1801,7 @@ function fronendLoad(){
         var tarf = TarefasProps[orgNome];
         var tarfP = {};
         var pjeQuery = JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop())));
-        if( pjeQuery['j2-pseudotarefa']){ 
+        if( pjeQuery['j2-pseudotarefa'] && pjeQuery['j2-pseudotarefa'].tipo === 'TAREFA-ETIQUETA-VARIAS' ){ 
           tarfP.pseNome = pjeQuery['j2-pseudotarefa'].nome;
           if( ! ( tarfP.orgNome ) ) 
             tarfP.orgNome = 'Pseudotarefa';
@@ -1894,7 +2065,7 @@ function fronendLoad(){
       </span>`;
       $thisTagLi.find('.datasProcesso span[j2highlighprazo]').after(___SPAN_DATA___);
 
-      const $cardUltimoMovText = $thisTagLi.find('.tituloNegrito').next()
+      const $cardUltimoMovText = $thisTagLi.find('.tituloNegrito:not([j2-tarefa-pendente])').next()
       const movText = $cardUltimoMovText.text()
       $cardUltimoMovText.text( `${movText} (${data.PJeFrontEndTarefaCardDataNaDescricaoDoMovimento()})` )
 
@@ -1923,6 +2094,75 @@ function fronendLoad(){
 
         destacarUltimoMovimentoDoProcesso($thisTagLi, todosMovimentos.at(0))
         _sinalizarProcessoJulgado($thisTagLi, todosMovimentos)
+      })
+    }
+
+    function _sinalizarProcessoEmVariasTarefas($thisTagLi, tarefasDoProcesso, nomeTarefaAtual){  
+      let outrasTarefas = tarefasDoProcesso.filter(t => t.toLowerCase().trim() !== nomeTarefaAtual.toLowerCase().trim() )
+      if(! outrasTarefas.length )
+        return
+
+      let pseudoTarefas = []
+      outrasTarefas = outrasTarefas.map(t => {
+        if( TarefasProps[t]?.altNome ){
+          pseudoTarefas.push( { 
+            nome: TarefasProps[t].altNome,
+            temPseudo: false
+          })
+          return {
+            nome: t,
+            temPseudo: true
+          }
+        }else
+          return {
+            nome: t,
+            temPseudo: false
+          }
+      })
+      outrasTarefas = [...outrasTarefas, ...pseudoTarefas]
+      outrasTarefas.sort((a, b) => a.nome - b.nome).sort((a, b) => b.temPseudo - a.temPseudo)
+      
+
+
+
+      $thisTagLi.find('div.row.icones > div:first').append(/*html*/`
+        <i aria-hidden="true" 
+          class="fa fa-project-diagram text-info pull-left pt-10 pb-5 ng-star-inserted " 
+          title="Processo pedente de outras tarefas: ${`\n${outrasTarefas.join('\n')}`}" 
+        ></i>
+        &nbsp; 
+      `)
+
+      const $ultimoMovimento = $thisTagLi.find('.tituloNegrito:not([j2-tarefa-pendente])').parent()
+      outrasTarefas.forEach(ot=>{
+        const $tarefaPendente = $ultimoMovimento.clone(true)
+        $tarefaPendente.find('.tituloNegrito').text('Tarefa Pendente: ').attr('j2-tarefa-pendente', '')
+        $tarefaPendente.find('.dtPoloPassivo').text(ot.nome)
+        ot.temPseudo && $tarefaPendente.css({opacity: 0.5})
+        $ultimoMovimento.after($tarefaPendente)
+      })
+      
+    }
+
+    function _acoesBaseadasEmTarefasDoProcesso($thisTagLi, idProcesso, nomeTarefa){
+      __sendMessageToPje({
+        action : 'requisitarJ2EPJeRest',
+        PJeRest : 'j2EPJeRest.processo.obterTarefas',
+        waitsResponse : true,
+        arguments : [idProcesso]
+      }, 
+      "PARENT_TOP",
+      function(tarefasDoProcesso){
+        tarefasDoProcesso.sort((a, b) => a.dataAtualizacao - b.dataAtualizacao)
+
+        jQ3.extend( $thisTagLi.prop('j2E'), {
+          tarefasDoProcesso : {
+            tarefas: tarefasDoProcesso,
+            timestamp: new Date().getTime()
+          }
+        })
+
+        _sinalizarProcessoEmVariasTarefas($thisTagLi, tarefasDoProcesso, nomeTarefa)
       })
     }
 
@@ -1980,11 +2220,12 @@ function fronendLoad(){
 
           const data = new DataComFromatos(tarefaInicial.inicio)
           //<i class="fa fa-bookmark" j2e-proc-data-mov></i>
-          const ___SPAN_DATA___ = `
+          const ___SPAN_DATA___ = /*html*/`
           <span j2e-processo-data-movimento _ngcontent-orb-c14="" title="Data efetiva de entrada na tarefa">
             <i class="fa fa-hourglass" j2e-proc-data-mov></i>
             <span txt>${data.PJeFrontEndTarefaCardData()}</span>
-          </span>`;
+          </span>
+          `;
           $thisTagLi.find('.datasProcesso').prepend(___SPAN_DATA___);
 
           
@@ -2020,7 +2261,7 @@ function fronendLoad(){
             _acoesBaseadasEmMovimentosDoProcesso($thisTagLi, idProcesso)
             _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso)
             _criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
-
+            _acoesBaseadasEmTarefasDoProcesso($thisTagLi, idProcesso, nomeTarefa)
           })
         }
       })
@@ -2080,6 +2321,7 @@ function fronendLoad(){
           class="fa fa-gavel text-info pull-left pt-10 pb-5 ng-star-inserted " 
           title="Classe Judicial com julgamento proferido" 
         ></i>
+        &nbsp;
       `)
     }
 
@@ -2163,7 +2405,7 @@ function fronendLoad(){
 
       const $ultimoMovimento = jQ3('input#ultimoMovimento')
       if( !toRemove && $ultimoMovimento.val()){
-        const textoMovimentoCartao = $li.find('.tituloNegrito').next().text()
+        const textoMovimentoCartao = $li.find('.tituloNegrito:not([j2-tarefa-pendente])').next().text()
         const regExpCalc = new RegExp(`${$ultimoMovimento.val().trim()}`, 'i')
         toRemove = !regExpCalc.test(textoMovimentoCartao)
       }
@@ -2612,8 +2854,10 @@ function fronendLoad(){
                   "competencia": "",
                   "etiquetas": [],
                   "j2-pseudotarefa" : {
-                    "guid" : this.PseudoTarefa.guid,
-                    "nome" : this.name
+                    "guid": this.PseudoTarefa.guid,
+                    "nome": this.name,
+                    "tipo": this.PseudoTarefa.tipo,
+                    "PseudoTarefa": this.PseudoTarefa
                   }
                 }
               };
@@ -2677,11 +2921,14 @@ function fronendLoad(){
               var  pjeQuery = {
                 "numeroProcesso": "",
                 "competencia": "",
-                "etiquetas": []
-                /*"j2-pseudotarefa" : {
+                "etiquetas": [],
+                "j2-pseudotarefa" : {
                   "guid" : this.PseudoTarefa.guid,
-                  "name" : this.name
-                }*/
+                  "name" : this.name,
+                  "tipo": this.PseudoTarefa.tipo,
+                  "personalizacao" : this.PseudoTarefa.personalizacao,
+                  "PseudoTarefa": this.PseudoTarefa
+                }
               };
               
               for(var i=0; i < criteria.length; i++){
@@ -2796,7 +3043,7 @@ function fronendLoad(){
         var tarfP = {};
         var proc;
         var pjeQuery = JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop())));
-        if( pjeQuery['j2-pseudotarefa']){ 
+        if( pjeQuery['j2-pseudotarefa'] && pjeQuery['j2-pseudotarefa'].tipo === 'TAREFA-ETIQUETA-VARIAS'){ 
           tarfP.pseNome = pjeQuery['j2-pseudotarefa'].nome;
           if( ! ( tarfP.orgNome ) ) 
             tarfP.orgNome = 'Pseudotarefa';

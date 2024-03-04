@@ -753,6 +753,13 @@ var TarefasProps = {
     altNomeADM : 'Consultar PREVJUD',
     ADMGrupo : 'cnslts'
   },
+  'Certificar leitura WhatsApp': {
+    aliasParaDefinicaoLogicaPseudotarefa: true,
+    personalizacao : {
+      'mostraAutosDigitais' : true,
+      'mostraExpedientes' : true
+    }
+  },
   'Designar leilão' : {
     altNomeADM : 'Controlar leilão',
     ADMGrupo : 'outac'
@@ -1446,7 +1453,15 @@ var TarefasProps = {
           
           $.extend(_new[item.nome], item);
           
-          TarefasProps[item.nome] = new PseudoTarefa( _new[item.nome] ) ;
+          TarefasProps[item.nome] = new PseudoTarefa( 
+            jQ3.extend(
+              {}, 
+              _new[item.nome], 
+              TarefasProps[item.nome], 
+              { 
+                personalizacao: jQ3.extend( {}, item.personalizacao, TarefasProps[item.nome]?.personalizacao  ) 
+              } )
+          ) ;
           
           _.push(TarefasProps[item.nome]);
         });
@@ -1497,7 +1512,8 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   [
     'Processo com prazo em curso', 
     'Processo com prazo decorrido',
-    'Expedir precatório'
+    'Expedir precatório',
+    'Certificar leitura WhatsApp'
   ],
   'col-sm-9',
   'Certificar o decurso de prazo dos expedientes abaixo selecionados',
@@ -1741,6 +1757,14 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
     'Fluir para Certificar Trânsito',
     'Fluir para Extinção'
+  ]
+)
+
+TarefaPersonalizadaAvancada.etiquetasRapidas(
+  'Certificar leitura WhatsApp',
+  'col-sm-3',
+  [
+    'Leitura negativa'
   ]
 )
 

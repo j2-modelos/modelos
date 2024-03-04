@@ -295,8 +295,8 @@
       "guid": "609dd441-8d76-4dcc-8686-ee04c04d4d65",
       "nome": "Certificar leitura WhatsApp",
       "dataCriacao": 1709313938118,
-      "customizacao": {
-        "sim": true
+      "personalizacao": {
+        "criarCorpoParaPseudotarefaPura": true
       }
     }
   ]
