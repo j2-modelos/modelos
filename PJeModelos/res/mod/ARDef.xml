@@ -244,7 +244,7 @@ and open the template in the editor.
         </versao>
     </classeDef>
     
-    <classeDef id="AR.Body.Identifications.ConteudoDescricao>
+    <classeDef id="AR.Body.Identifications.ConteudoDescricao">
         <versao id="4.0">
             <elemento tag="div" scope="EXP" id="AR.Body.Identifications.ConteudoDescricao"><HTMLAttribute name="style" value="HEIGHT: 13mm"/>
                 <elemento tag="div" scope="EXP" ><HTMLAttribute name="style" value="HEIGHT: 100%"/>

@@ -24,6 +24,9 @@ and open the template in the editor.
             <gItem id="wtAppItHomologacaoDistrato"/>
             <gItem id="wtAppItTransmitir"/>
         </group>
+        <group label="Atermação">
+            <gItem id="wtAppItConclusaoAtermacao"/>
+        </group>
         <group label="Audiência">
             <gItem id="wtAppItLinkSalaAudiencia1"/>
             <gItem id="wtAppItRemessaDocumentosAudiencia"/>
@@ -31,6 +34,32 @@ and open the template in the editor.
     </groupsDefs>
     <!--items initialSelected="termReclReclamacao"-->
     <items naoOrdenado="true">
+        <item id="wtAppItConclusaoAtermacao" label="Conclusao atermação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Seu atendimento de abertura de uma nova ação está concluído.
+                    #:BR{}
+                    Seguem os documentos que comprovam o protocolo de sua ação, bem como, cópia da certidão de intimação
+                    para audiência de seu processo.
+                    #:BR{}
+                    #:BR{}
+                    AUDIÊNCIA: *#:B{Audiência de #{j2.env.PJeVars.audiencia.tipo}}, designada para o dia #:U{#:B{#{j2.env.PJeVars.audiencia.data}}}*
+                    #:BR{}
+                    Procure chegar com antecedência para a audiência. 
+                    #:BR{}
+                    Caso exista algum fator impeditivo para participar da audiência, 
+                    deverá ser comprovada com documentos ao juizado, em que #{j2.env.PJeVars.unidade.juiz.pelo} #{j2.env.PJeVars.unidade.juiz.juiz}
+                    decidirá acerca de sua remarcação.
+                    #:BR{}
+                    Caso não falte à audiência, o processo será consequentemente arquivado
+                    e você não receberá nenhuma notificação.
+                    #:BR{}
+                    Caso ache necessário anexar mais documentos ao seu processo, estes documentos
+                    deverão ser anexados até a data anterior da audiência.
+                </data>
+            </itemContent>
+        </item>   
+
         <item id="wtAppItCumprimento" label="Cumprimento" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
