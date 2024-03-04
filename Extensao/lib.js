@@ -2742,7 +2742,7 @@ function loadPJeRestAndSeamInteraction(){
       inserir : function(idProcesso, etiqueta, sucCB, errCB) {
         function _data(){
           return JSON.stringify({
-            'idProcesso' : idProcesso,
+            'idProcesso' : idProcesso.toString(),
             'tag' : etiqueta
           });
         }
@@ -6008,8 +6008,8 @@ j2E.mods.Armazenamento = {
   }
 }
 
-j2E.mods.urlHash = {
-  decodeWindowLocationHash: () => JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop()))),
+j2E.mods.urlHash = { 
+  decodeWindowLocationHash: () => window.location.hash ? JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop()))) : undefined,
   decode: (carga) => JSON.parse(atob(decodeURIComponent( carga ))),
   encode: (carga) => encodeURIComponent(btoa( JSON.stringify( carga ) ))
 }

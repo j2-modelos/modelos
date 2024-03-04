@@ -1537,7 +1537,7 @@ function fronendLoad(){
 
           const ___TEMPLATE_TAREFA_CUSTOMIZAVEL = /*html*/`
               <div _ngcontent-rnb-c14 id="conteudoTarefa" class="col-md-12 conteudoTarefa ng-star-inserted">
-                <spinner _ngcontent-bdb-c14="" _nghost-bdb-c10=""><!----></spinner>
+                <spinner _ngcontent-bdb-c14 _nghost-bdb-c10><!----></spinner>
                 <div _ngcontent-rnb-c14 class="row" id="frameTarefas">
                   <div _ngcontent-rnb-c14 class="vcenter col-md-12 no-padding  header-wrapper">
                     <div _ngcontent-rnb-c14 class="vcenter col-md-7 no-padding header-processo">
@@ -1698,6 +1698,7 @@ function fronendLoad(){
                 const $iframe = $conteudoTarefa.find('iframe')
                 //const $iframeC = $iframe.clone(false)
                 const carga = {
+                  EPseudotarefaPersonalizada: true,
                   pseudoTarefaNome: tarf.nome,
                   pjeQuery,
                   pseudoTarefaDef: (()=>{
@@ -1750,8 +1751,6 @@ function fronendLoad(){
               })()
             }
           }    
-
-          debugger
 
           if( (new Date().getTime() - ($rootLi.prop('j2E')?.tarefasDoProcesso?.timestamp || Number.MAX_VALUE)) > 2 * 60 * 1000 )
             __sendMessageToPje({

@@ -376,7 +376,8 @@
       "resources": [
         "Extensao/main.css",
         "Extensao/util.pje.js",
-        "Extensao/jquery-ui.css"
+        "Extensao/jquery-ui.css",
+        "JSON/*"
       ],
       "matches": [
         "https://pje.tjma.jus.br/*",
