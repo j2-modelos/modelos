@@ -799,7 +799,7 @@ function init(){
             return
 
           //prepara a observação de quando o  uusário irá ativar endereços adicionais            
-          /*jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
+          jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
             const $chk = jQ3(this);
             checkedEnderecos = 0
 
@@ -897,7 +897,7 @@ function init(){
 
             if(endsSelectedByUser.length)
               _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)
-          })*/
+          })
 
           jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaDestinatariosEndereco\\:tb td:nth-child(6)`, function(){
             debugger

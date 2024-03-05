@@ -1637,7 +1637,7 @@ function fronendLoad(){
           const $conteudoTarefa = $this.parents('processos-tarefa').find('> #divMainPanel > conteudo-tarefa');
           if(! $conteudoTarefa.find('#conteudoTarefa').length ){            
             const $html = jQ3( 
-              tarf.tipo === 'ETIQUETA-VARIAS' && tarf.personalizacao 
+              tarf.tipo === 'ETIQUETA-VARIAS' && tarf.personalizacao?.criarCorpoParaPseudotarefaPura 
               ? ___TEMPLATE_TAREFA_CUSTOMIZAVEL 
               : ___TEMPLATE__CONTEUDO___TAREFA___ 
             );
@@ -1665,7 +1665,7 @@ function fronendLoad(){
             const nomeTarefa = _qData.at(0)
             
 
-            if( ! tarf.personalizacao  ){
+            if( ! tarf.personalizacao?.criarCorpoParaPseudotarefaPura  ){
               const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
                 competencia: "",
                 etiquetas:[],
