@@ -756,8 +756,11 @@ var TarefasProps = {
   'Certificar leitura WhatsApp': {
     aliasParaDefinicaoLogicaPseudotarefa: true,
     personalizacao : {
-      'mostraAutosDigitais' : true,
-      'mostraExpedientes' : true
+      mostraAutosDigitais : true,
+      mostraExpedientes : true,
+      obterDosAutos: {
+        mostrarPolosDoProcesso : true
+      }
     }
   },
   'Designar leilão' : {
@@ -1481,6 +1484,13 @@ var TarefasProps = {
   'Triagem':{
     personalizacao : {
       'mostraAutosDigitais' : true
+    }
+  },
+  'Triagem de cálculo':{
+    personalizacao : {
+      obterDosAutos: {
+        mostrarPolosDoProcesso : true
+      }
     }
   },
   'Verificar providência a adotar' : {
