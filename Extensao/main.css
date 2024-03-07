@@ -2027,7 +2027,24 @@ a[_ngcontent-rnb-c14]:visited {
 }
 
 
+[j2-mostrar-polos-do-processo] th {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
 
+[j2-mostrar-polos-do-processo] .icon-auto {
+    margin-top: 0;
+}
+
+[j2-mostrar-polos-do-processo] .rich-panel-header {
+    display: none
+}
+/*
+[j2-mostrar-polos-do-processo] .rich-panel-body {
+    padding-top: 0;
+}
+*/
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
