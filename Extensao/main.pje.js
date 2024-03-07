@@ -437,6 +437,9 @@ function pjeLoad(){
       var _tarfProp = TarefasProps[_tarf];
       var _delayCall = new DelayedCall(10, 10);
       var _defTarf = j2E.env.deferring.personalizacaoTarefa
+      const toaster = (a, msg, severity)=> { 
+        jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+      }
       
       if(!(_tarfProp))
         return;
@@ -524,7 +527,7 @@ function pjeLoad(){
           jQ3(val).remove();
         });
       };
-      var _criarPainel = function(subPanel){
+      var _criarPainel = function(subPanel, definicaoDeSubPanelEPainelAutonomoDeOutroSetorDePersonalizacao){
         var jPOut
         jQ3.each(subPanel?.painel || _tarfProp.personalizacao.painel, function(key, painel){
           var _body = jQ3('<div>');
@@ -555,7 +558,7 @@ function pjeLoad(){
             })
           }
 
-          if( ! (subPanel )){
+          if( definicaoDeSubPanelEPainelAutonomoDeOutroSetorDePersonalizacao || ! (subPanel )){
             if( typeof painel.appendTo === 'function' )
               painel.appendTo().append( jP )
             else if( typeof painel.appendTo === 'string' )
@@ -638,6 +641,56 @@ function pjeLoad(){
         $taskInstanceDiv.append(__FORM__)
         body = $taskInstanceDiv.find('div.rich-panel-body')
       }
+
+      const _obterDosAutos = async ()=>{
+        const propriedadesDeObterDosAutos = Object.keys(_tarfProp.personalizacao.obterDosAutos)
+        if( !propriedadesDeObterDosAutos.length )
+          return
+
+        propriedadesDeObterDosAutos.forEach(propriedade => {
+          switch (propriedade) {
+            case 'mostrarPolosDoProcesso':
+              _criarPainel({ painel: [{
+                appendTo : 'form#taskInstanceForm > div > div.rich-panel-body',
+                header : '[SEM HEADER]',
+                panelClass : 'rich-panel col-sm-12',
+                j2Attr : 'j2-mostrar-polos-do-processo',
+                body : [
+                  {
+                    tipo : 'jQ3',
+                    data : [ 
+                      j2EUi.spinnerHTML()
+                    ]
+                  }
+                ],
+                // collapsable : {
+                //  initExpanded: false
+                // },
+                events : [
+                  ($thisPanel)=>{
+                    evBus.on('ao-obter-autos-digitais-personalizarTarefa', function(ev, $autosXml, acoes){
+                      $thisPanel.$body.empty()
+                      $thisPanel.$body.append($autosXml.find('#poloAtivo').toggleClass('col-sm-4 col-sm-6'))
+                      $thisPanel.$body.append($autosXml.find('#poloPassivo').toggleClass('col-sm-4 col-sm-6'))
+                    })
+                  }
+                ]
+              }]}, true)
+              break;
+
+            default:
+              throw new Error(`Propriedade desconhecida: ${propriedade}`);
+          }
+        });
+
+        j2E.SeamIteraction.processo.acoes.abrirProcesso()
+        .done((it, acoes, $autosXml )=>{
+          evBus.fire('ao-obter-autos-digitais-personalizarTarefa', $autosXml, acoes)
+        })
+        .fail((err)=>{
+          toaster('Autos Digitais', `Erro ao obter os autos digitais.`, 'error')
+        })
+      }
       
       if(_tarfProp.personalizacao.ignorarPersonalizacaoDev)
         return; 
@@ -653,6 +706,7 @@ function pjeLoad(){
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
       _tarfProp.personalizacao.painel                                    && _criarPainel();
       _tarfProp.personalizacao.scroller                                  && _criarTaskScroller()
+      _tarfProp.personalizacao.obterDosAutos                             && _obterDosAutos()
       
       if( !(_tarfProp.personalizacao.procedimentoEspecializado) )
         return;

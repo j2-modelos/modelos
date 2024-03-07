@@ -2941,7 +2941,7 @@ function loadPJeRestAndSeamInteraction(){
   if( typeof window.j2E === 'undefined')
     window.j2E = {}
 
-  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E', 'sessionStorage'); var _this = {
+  j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E', 'sessionStorage'); const armazenamento = j2E.mods.Armazenamento; var _this = {
     session : [],
     util : {
       conformPayload : PAYLOAD =>{
@@ -3924,7 +3924,7 @@ function loadPJeRestAndSeamInteraction(){
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
         listAutosDigitais : (_idProcesso)=>{
           var def = $.Deferred()
-          var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso;
+          var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
           var lockrKey = `SeamIteraction.processo-${idProcesso}.viewId`
           var viewIdStore = _lockr.get(lockrKey, { noData : true })
 
@@ -3943,7 +3943,7 @@ function loadPJeRestAndSeamInteraction(){
                 _this.session.viewIdProc = viewId
                 _this.session.processoXML = xml
 
-                lockr.set(lockrKey, {
+                _lockr.set(lockrKey, {
                   id : viewId,
                 }, {
                   expiration : 5 * 60 * 1000
@@ -3965,6 +3965,12 @@ function loadPJeRestAndSeamInteraction(){
                     def.resolve( _this.processo.requestsIteractions, $html) 
                   }).appendTo('body')*/
                 
+                armazenamento.guardar(`Processo:AutosDigitais:${viewId}`, {
+                  timestamp: new Date().getTime(),
+                  expiration: 5 * 60 * 1000,
+                  xml
+                })
+                
                 def.resolve( _this.processo.requestsIteractions, $html)
               } )
               .fail( err => def.reject(err) )
@@ -3973,10 +3979,16 @@ function loadPJeRestAndSeamInteraction(){
           }else{
             _this.session.viewIdProc = viewIdStore.id
 
-            def.resolve( _this.processo.requestsIteractions ) 
+            armazenamento.obter(`Processo:AutosDigitais:${viewIdStore.id}`)
+            .then(data =>{
+              def.resolve( _this.processo.requestsIteractions,  jQ3(data.xml)) 
+            })
+            .catch(reason => {
+              def.reject(reason)
+            })
           }
 
-          return def;
+          return def.promise();
         },
         juntarDocumento : ()=>{
           var def = $.Deferred()
@@ -4572,7 +4584,9 @@ function loadPJeRestAndSeamInteraction(){
           const acoes = j2E.SeamIteraction.processo.acoes
 
           _this.processo.requestsIteractions.listAutosDigitais()
-          .done( it => def.resolve( it, acoes ) )
+          .done( (it, $autosXml) => { 
+            def.resolve( it, acoes, $autosXml ) 
+          })
           .fail( err => def.reject(err) )
 
           return def.promise()
