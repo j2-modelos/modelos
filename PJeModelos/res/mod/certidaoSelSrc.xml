@@ -75,10 +75,16 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItCustasPendentes"/>
             <gItem id="certItCustasRecolhidas"/> 
         </group>      
+        <group label="Central de Mandados">
+            <gItem id="certCentralMandadoNotificacaoLudugero"/>
+            <gItem id="certCentralMandadoNotificacaoAirton"/> 
+        </group>      
         <group label="Encaminhamento">
             <gItem id="certItAlvaraEncaminhamentoContadoriaReferidoID"/>
             <gItem id="certItAlvaraEncaminhamentoContadoriaCustasFinais"/>
             <gItem id="certItEncaminhamentoExpedicaoCartaDeIntimacao"/>
+            <gItem id="certIEncaminhamentoConsultaEndereco"/>
+            <gItem id="certIEncaminhamentoGenerico"/>
         </group>
         <!--group label="Execução">
             <gItem id="certItSuspensTelemar"/>
@@ -190,6 +196,29 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item> 
+
+        <!-- CENTRAL MANDADOS -->
+        <item id="certCentralMandadoNotificacaoLudugero" label="Notificação Ludugero" 
+            dataPlus="{ 'descricaoAppend': 'notificação de oficial de justiça' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que notifiquei o oficial de 
+                    justiça LUDUGERO PEREIRA DE SÁ NETO, por aplicativo WhatsApp, 
+                    para que realize o cumprimento do mandado id xxxxxxxxxxxxx.
+                </data>
+            </itemContent>
+        </item> 
+        <item id="certCentralMandadoNotificacaoAirton" label="Notificação Ludugero" 
+            dataPlus="{ 'descricaoAppend': 'notificação de oficial de justiça' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que notifiquei o oficial de 
+                    justiça AIRTON DA SILVA TAVARES, por aplicativo WhatsApp, 
+                    para que realize o cumprimento do mandado id xxxxxxxxxxxxx.
+                </data>
+            </itemContent>
+        </item> 
+
         
         
         <!-- CONTADORIA -->
@@ -1424,6 +1453,26 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} em atenção ao teor da certidão do oficial de justiça do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, referente à citação por hora certa,  
                     #:B{encaminhei os autos para expedição de carta de intimação}, visando à formalização do ato, na forma prevista no art. 254 do CPC/2015.
+                </data>
+            </itemContent>
+        </item> 
+
+        <item id="certIEncaminhamentoConsultaEndereco" label="Consulta endereço" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento para consulta de endereço' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que encaminho os autos para #:B{consulta 
+                    de endereço nos sistemas conveniados} com o TJMA, em atenção ao pedido/documento do id xxxxxxxx e 
+                    ao disposto na Ordem de Serviço OD-2JECI-12023 desta serventia judicial.
+                </data>
+            </itemContent>
+        </item> 
+
+        <item id="certIEncaminhamentoGenerico" label="Genérico" 
+            dataPlus="{ 'descricaoAppend': 'Encaminhamento' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:B{encaminho os autos para xxxxxxx}, em atenção xxxxxxxxx.
                 </data>
             </itemContent>
         </item> 

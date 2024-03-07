@@ -29,6 +29,8 @@ and open the template in the editor.
         </group>
         <group label="Sentença Extinção">
             <gItem id="sentItExtincaoContumacia"/>
+    VERO PROCESSO
+            0800374-46.2024.8.10.0047
         </group-->
     </groupsDefs>
     <items>        
@@ -92,6 +94,52 @@ and open the template in the editor.
                         que também resultou frustrada. Assim, não viu alternativa senão buscar as vias judiciais para dirimir a questão a 
                         fim de não ter o fornecimento de energia suspensa.
                     </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+
+        <item id="trmRclFatoEmprestimoFraudulento" label="Empréstimo Fraudulento" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Informa a demandante que é aposentada/pensionista do INSS, conforme documentação anexa. Narra o demandante que desconhece possuir vínculo contratual com a parte demandada.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ocorre que, embora seja plenamente desconhecida a contratação pela demandante, existe o seguinte contrato consignado ao seu benefício previdenciário: (1) contrato de empréstimo consignado, qual seja, contrato 321744046-4, iniciado em 23/07/2018, em parcelas de R$ 126,14, acerca do importe supostamente emprestado de R$ 4.496,97; (2) contrato de cartão de crédito consignado registrado, qual seja, contrato 6233914531970040124, incluído em 27/12/2023, em descontos de R$ 28,66, acerca de importe desconhecido.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Aduz a demandante que apenas tomou conhecimento da existência do(s) contrato(s) objetos da presente lide apenas em XXXMesXXXX/XXXAnoXXXX, salvo engano. Ademais, não sabe precisar quando se iniciaram os descontos indevidos.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Apesar de ter procurado o PROCON desta cidade para mediar a demanda, não obteve resposta satisfatória à solução da lide.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Destaca a demandante que por ser pessoa idosa, tem sofrido abalo de ordem moral ante as situações e dispêndio de tempo que o banco demandado tem ocasionado à parte demandante, bem como ter subtraído sua única fonte de renda, a qual usa exclusivamente para sua subsistência.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Assim não viu alternativa senão procurar este juizado especial cível para dirimir a questão.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Instada a apresentar seus extratos bancários da época em que iniciaram os contratos fraudulentos, a parte demandante informou que, apesar de ter solicitado ao seu banco, não obteve êxito.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Instada a apresentar seus extratos bancários da época em que iniciaram os contratos fraudulentos, a parte demandante informou que providenciará os documentos ao juízo na maior brevidade possível.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Instada a informar expressamente qual o valor devido a título de restituição em dobro dos valores, a parte não soube informar, contudo, se comprometeu a apresentar a informação ao juízo até a data da audiência de conciliação.  
+                    </elemento>
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        XXXXXXXXXXXXXXXXXXXXXX  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        XXXXXXXXXXXXXXXXXXXXXX  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        XXXXXXXXXXXXXXXXXXXXXX  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        XXXXXXXXXXXXXXXXXXXXXX  
+                    </elemento>-->
                 </simpleElementsDefs>
             </itemContent>
         </item>

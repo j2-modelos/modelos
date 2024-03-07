@@ -26,12 +26,15 @@ and open the template in the editor.
         <group label="Geral">
             <gItem id="trmRcl.Comuns.Pagamento"/>
             <gItem id="trmRcl.Comuns.Inexistencia"/>
+            <gItem id="trmRcl-Comuns-Declarar-Inexistente-Contrato"/>
             <gItem id="trmRcl-Comuns-Restituicao"/>
             <gItem id="trmRcl-Comuns-Restituicao-dobro"/>
+            <gItem id="trmRcl-Comuns-Restituicao-dobro-generica"/>
             <gItem id="trmRcl-Comuns-Obrigacao-Fazer"/>
         </group>     
         <group label="Liminar">
             <gItem id="trmRcl.Comuns.Liminar"/>
+            <gItem id="trmRcl.Comuns.Liminar-suspensao-contrato"/>
         </group>     
         <group label="Obrigação de Fazer">
             <gItem id="trmRcl-ObgFaz-TransferenciaTitularidadeDebito"/>
@@ -98,10 +101,26 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>     
+        <item id="trmRcl.Comuns.Liminar-suspensao-contrato" label="Suspensao Contrtos" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Ante os fatos expostos o Reclamante vem à presença de Vossa Excelência, requerer a Tutela Jurisdicional, 
+                    ora intentada, #:B{COM PEDIDO DE LIMINAR}, determinando a suspensão imediata dos descontos 
+                    promovidos pela requerida referentes ao contrato objeto da lide, qual seja, contratos XXXXContratoNumeroXXX, sob pena de multa a ser fixada pelo juízo, bem como confirmar a medida em sentença.
+                </data>
+            </itemContent>
+        </item>  
         <item id="trmRcl.Comuns.Inexistencia" label="Inexistencia de Débito" dataPlus="">
             <itemContent type="plainText" addClassStyles="">
                 <data>
                     Requerer que seja #:U{JULGADA PROCEDENTE} a presente demandada a fim de #:U{#:B{DECLARAR INEXISTENTE}} o débito da importância de #:U{#:B@valor.trmRcl.Comuns.Inexistencia{R$ 0,00 (zero)}} objeto dos autos.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmRcl-Comuns-Declarar-Inexistente-Contrato" label="Declarar inexistente o contrato" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Requerer que seja #:U{JULGADA PROCEDENTE} a reclamação para #:B{DECLARAR NULO} o contrato de empréstimo/cartão de crédito objeto da presente lide sob nº 321744046-4 e 6233914531970040124. 
                 </data>
             </itemContent>
         </item>     
@@ -124,6 +143,16 @@ and open the template in the editor.
                     da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
                     à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Restituicao{R$ 0,00 (zero)}}, 
                     referentes ao dobro do valor objeto da lide cobrado indevidamente.
+                </data>
+            </itemContent>
+        </item>
+
+        <item id="trmRcl-Comuns-Restituicao-dobro-generica" label="Restituição em dobro genérica" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Requerer que seja #:U{JULGADA PROCEDENTE} a presente demandada a fim de promover 
+                    da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    à #:B{RESTITUIÇÃO} em dobro dos importes cobrados indevidamente das parcelas vencidas e vincendas, a serem apuradas e apresentados até o julgamento da presente lide.
                 </data>
             </itemContent>
         </item>

@@ -75,9 +75,12 @@ try {
           _ = _ === '&*EMPTY_STRING*&' ? pkg.AR.cookies.get('PLP') : _
           return _ ? _ : 0;
         },
-        MP : {
-          _ : false,
-          cssRule : 'none'
+        MP: ()=>{
+          const _mp = pkg.AR.j2EIntegracao.obterMaoPropria()
+          return {
+            _: _mp,
+            cssRule: _mp ? 'unset' : 'none'
+          }
         },
         destinatario : {
           nome : '[NOME DESTINATÁRIO]',

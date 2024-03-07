@@ -6088,6 +6088,7 @@ and open the template in the editor.
 
             <elemento tag="datalist" scope="EDT" id="escolaridades">
                 <elemento tag="option" value="analfabeto(a)" scope="EDT" />
+                <elemento tag="option" value="semi-analfabeto(a)" scope="EDT" />
                 <elemento tag="option" value="ensino fundamental incompleto" scope="EDT" />
                 <elemento tag="option" value="ensino fundamental completo" scope="EDT" />
                 <elemento tag="option" value="ensino médio incompleto" scope="EDT" />
@@ -6095,6 +6096,7 @@ and open the template in the editor.
                 <elemento tag="option" value="ensino superior incompleto" scope="EDT" />
                 <elemento tag="option" value="ensino superior completo" scope="EDT" />
                 <elemento tag="option" value="pós graduado(a)" scope="EDT" />
+                <elemento tag="option" value="especialista" scope="EDT" />
                 <elemento tag="option" value="mestre(a) em XXXXAreaXXXX" scope="EDT" />
                 <elemento tag="option" value="doutor(a) em XXXXAreaXXXX" scope="EDT" />
             </elemento>

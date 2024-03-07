@@ -443,7 +443,7 @@ function pjeLoad(){
       if(!(_tarfProp.personalizacao))
         return;
       
-      var body = jQ3('#taskInstanceForm div.rich-panel-body');
+      var body = jQ3('#taskInstanceForm > div.rich-panel > div.rich-panel-body');
       var form = body;
       
       var iframe;
@@ -501,9 +501,11 @@ function pjeLoad(){
 
           iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	
-          
-          defer(()=> _defTarf.carregarExpedientes.resolve(iframe))
         })});
+
+        iframe.on('load', function(){
+          defer(()=> _defTarf.carregarExpedientes.resolve(jQ3(this)))
+        })
       };
       var _limparCorpo = function(){
         form.find('span').remove();          

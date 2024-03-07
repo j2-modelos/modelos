@@ -229,7 +229,7 @@ and open the template in the editor.
                         <data>
                             #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, a fim de tomar conhecimento 
                             da presente ação, acima especificada. Cientificando-o(a) ainda que o não comparecimento a
-                            qualquer audiência, configurará revelia e confissão quanto à matéria de fato e serão consideradas verdadeiras as alegações 
+                            qualquer audiência, configurará #:B{revelia e confissão} quanto à matéria de fato e serão consideradas verdadeiras as alegações 
                             apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>            

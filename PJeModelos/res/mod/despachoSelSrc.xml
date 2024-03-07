@@ -23,6 +23,7 @@ and open the template in the editor.
             <gItem id="despItInitialtituloExecutivo"/>
             <!--<gItem id="despItInitialtituloExecutivoComConciliacao"/>-->
             <gItem id="despItPretensaoResistida"/>
+            <gItem id="despItEmendaDescontosIndevidos"/>
         </group>
         <group label="Execução">
             <!--gItem id="despItSuspOITelemar"/-->
@@ -280,6 +281,24 @@ and open the template in the editor.
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >    
                         Em havendo o cumprimento, retornem os autos conclusos para decisão com pedido de liminar.
                     </elemento>                           
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+        <item id="despItEmendaDescontosIndevidos" label="Emenda descontos indevidos" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e irregularidade capazes de dificultar o julgamento de mérito, determinará que o autor a emende, ou a complete, no prazo de 15 (quinze) dias. 
+                    </elemento>                           
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Da análise dos autos, verifico que a petição inicial está genérica e idêntica às de outras ações propostas e subscritas pelo advogado da parte autora, sem apresentar os fatos de forma clara e individualizada ao caso em tela. 
+                    </elemento>                           
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Em razão disto, #:B{#:U{intime-se}} a parte Demandante para que, no prazo de 15 (quinze) dias, #:B{#:U{emende a inicial para indicar de forma clara e precisa as seguintes informações: a) data em que o a parte autora percebeu os descontos indevidos; b) data de início dos descontos; c) juntar extrato bancário e planilha comprovando, mês a mês, a ocorrência dos descontos, com indicação do valor exato e data de cada desconto mensal desde a data do início das cobranças}}.  
+                    </elemento>                           
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Não havendo manifestação da parte autora, voltem conclusos para sentença de extinção. 
+                    </elemento>                                                    
                 </simpleElementsDefs>
             </itemContent>
         </item>
