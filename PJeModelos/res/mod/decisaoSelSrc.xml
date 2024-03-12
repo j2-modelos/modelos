@@ -122,7 +122,7 @@ and open the template in the editor.
                   
                   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de Conciliação, Instrução e Julgamento certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
+                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:B{Intimem-se as partes desta decisão.}
@@ -176,7 +176,7 @@ and open the template in the editor.
                   
                   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de Conciliação, Instrução e Julgamento certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
+                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:B{Intimem-se as partes desta decisão.}
@@ -231,7 +231,7 @@ and open the template in the editor.
                   
                   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de Conciliação, Instrução e Julgamento certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
+                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema PJe.}. #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:B{Intimem-se as partes desta decisão.}
@@ -307,7 +307,7 @@ and open the template in the editor.
                         #:U{A determinação restringe-se tão somente aos valores oriundos da multa de diferença de energia consumida apurada por conta da irregularidade, ficando possibilitado à requerida promover o corte caso surjam motivos justos supervenientes.}
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Cite-se e intime-se a reclamada para audiência de conciliação, instrução e julgamento agendada nos autos}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
+                        #:B{Cite-se e intime-se a reclamada para audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} agendada nos autos}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:B{Intimem-se as partes desta decisão.}
@@ -361,7 +361,7 @@ and open the template in the editor.
                         Diante do exposto,#:B{ #:U{CONCEDO A TUTELA DE URGÊNCIA} pleiteada pela parte autora na inicial}, com supedâneo no art. 300 do Código de Processo Civil, para determinar à empresa demandada que #:B{#:U{SUSPENDA}} a exigibilidade dos débitos em questão denominados “#:span@denominacaoServico{Serviços de Terceiros}” até a resolução da lide, #:B{sob pena de multa por fatura emitida com cobranças indevidas no valor de R$ 200,00 (duzentos reais)} em caso de descumprimento.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema Pje.}. CITE-SE e INTIME-SE a reclamada para audiência de Conciliação, Instrução e Julgamento certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
+                        #:B{Em não havendo tempo hábil para cumprimento das comunicações, redesigne-se a audiência registrada automaticamente pelo sistema Pje.}. CITE-SE e INTIME-SE a reclamada para audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido.
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         #:B{Intimem-se as partes desta decisão.}
@@ -405,7 +405,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #:B{#:U{Conciliação, Instrução e Julgamento designada}}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido. No mandado deverão ser consignadas as advertências necessárias.
+                        #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #:B{#:U{#{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} designada}}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido. No mandado deverão ser consignadas as advertências necessárias.
                     </elemento> 
                     
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -591,7 +591,7 @@ and open the template in the editor.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #:B{#:U{Conciliação, Instrução e Julgamento designada}}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido. No mandado deverão ser consignadas as advertências necessárias.
+                        #:B{CITE-SE e INTIME-SE} a reclamada para audiência de #:B{#:U{#{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst} designada}}, certo que sua ausência importará nos efeitos da confissão e revelia, com julgamento imediato da causa (arts. 23 e 30 da Lei 9.099/95). Alinhavo que, quanto à parte autora, o seu não comparecimento redundará em arquivamento prematuro do pedido. No mandado deverão ser consignadas as advertências necessárias.
                     </elemento> 
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 

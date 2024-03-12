@@ -3053,6 +3053,16 @@
           ]
         },  
         {
+          'name': 'audiencias',
+          'properties': [
+            {
+               'name': 'padrao',
+               'isAttr': true,
+               'type': 'String'
+            }
+          ]
+        },  
+        {
           'name': 'bodyInject',
           'properties': [    
             {
@@ -3324,6 +3334,11 @@
              'name': 'correicao',
              'isMany': false,
              'type': 'correicao'
+           },                  
+           {
+             'name': 'audiencias',
+             'isMany': false,
+             'type': 'audiencias'
            }                  
           ]
         },

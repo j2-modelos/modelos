@@ -212,6 +212,7 @@
         <xs:element ref="j2:OJs" xmlns:j2="http://j2"/>
         <xs:element ref="j2:secretarios" maxOccurs="1" xmlns:j2="http://j2"/>
         <xs:element ref="j2:magistrados" maxOccurs="1" xmlns:j2="http://j2"/>
+        <xs:element ref="j2:audiencias" maxOccurs="1" xmlns:j2="http://j2"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -298,6 +299,13 @@
       <xs:attribute name="j2:nominacao" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>      
+
+  <xs:element name="audiencias">
+    <xs:complexType>
+      <xs:attribute name="padrao" type="xs:string" use="required"/>    
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="magistrados">
     <xs:complexType>
       <xs:attribute name="j2:emExercicio" type="xs:string" use="required"/>

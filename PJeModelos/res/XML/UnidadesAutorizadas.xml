@@ -131,6 +131,7 @@
             </OJs>
             <listaPostagem enabled="true"/>
             <expedientes porProvimento="true"/>
+            <audiencias padrao="conciliação"/>
         </config>
         <correiosParam contrato="9912319221" codAdmin="03007170" cartaoPostagem="0066187478" codigoUnidade="18301363" unidPost="AC IMPERATRIZ" cliente="Tribunal de Justiça do Estado do Maranhão"/>
     </Unidade>

@@ -123,7 +123,7 @@ try {
     };
 
     window.j2.env.PJeVars = {
-        'audiencia': {
+        audiencia: {
           'listar' : gVG('audienciaProcesso'),
           'data' : gVG('dataAudiencia'),
           dataIso : (()=>{
@@ -162,7 +162,8 @@ try {
           'temDesignada' : (function(){
             return gVG('tipoAudiencia').length > 0;
           })(),
-          tipoLabel: gVG('tipoAudiencia').length ? gVG('tipoAudiencia') : '[SEM AUDIÊNCIA DESIGNADA]'
+          tipoLabel: gVG('tipoAudiencia').length ? gVG('tipoAudiencia') : '[SEM AUDIÊNCIA DESIGNADA]',
+          tipoPadraoUnidade: () => j2.env.modId.unidade.config.audiencias.padrao
         },      
         'processo': {
             'assuntos' : gVG('assuntosProcesso').substring(1, gVG('assuntosProcesso').length-1),
