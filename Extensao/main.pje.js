@@ -3835,6 +3835,58 @@ function pjeLoad(){
     }
 
   }
+
+  function observarParaCriarFerramentaWhatsApp(){
+    const idTask = j2E.env.urlParms.newTaskId
+    jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:documentoExistenteDiv > .rich-panel`, function(){
+      function _obterDestinatarioAtual(){ 
+        const text = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:edicaoExpedientePanel_header`).text().split(' - ')
+        text.shift()
+        const textToId = text.shift()
+        return { 
+          nome: text.join(' - ').trim(),
+          pacId: textToId.split(' ').pop()
+        }
+      }
+
+      function _obterDestinatariosExpediente(){
+        const $trDestinatarioAtual = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaDestinatarios\\:tb td:contains('${destinatarioAtual.pacId}')`)
+        return { $trDestinatarioAtual }
+      }
+
+      const destinatarioAtual = _obterDestinatarioAtual()
+      const destinatariosExpediente = _obterDestinatariosExpediente()
+      const $thisContainer = jQ3(this).parent()
+
+      const $WAPanel = j2EUi.createPanel(
+        'Enviar por WhatsApp', 
+        j2EUi.spinnerHTML(), 
+        'j2-enviar-whatsapp', 
+        undefined, 
+        'rich-panel j2-enviar-whatsapp'
+      );
+
+      evBus.on('ao-obter-autos-digitais-whatsapp', function(ev, $autosXml, acoes){
+        $WAPanel.$body.empty()
+        $WAPanel.$body.append($autosXml.find('#poloAtivo').toggleClass('col-sm-4 col-sm-6'))
+        $WAPanel.$body.append($autosXml.find('#poloPassivo').toggleClass('col-sm-4 col-sm-6'))
+
+        $WAPanel.$body.append( destinatariosExpediente )
+
+        
+      })
+
+      j2E.SeamIteraction.processo.acoes.abrirProcesso()
+      .done((it, acoes, $autosXml )=>{
+        evBus.fire('ao-obter-autos-digitais-whatsapp', $autosXml, acoes)
+      })
+      .fail((err)=>{
+        toaster('Autos Digitais', `Erro ao obter os autos digitais.`, 'error')
+      })
+
+      $thisContainer.after($WAPanel )
+    })
+  }
   
   switch(window.location.pathname){
     
@@ -3919,6 +3971,7 @@ function pjeLoad(){
       listenMessages();
       observeSeEModeloJ2();
       observarParaAcrescentarRecarregadorDeDocumento()
+      observarParaCriarFerramentaWhatsApp()
       break;
     
     case '/pje/ConsultaPrazos/listView.seam':

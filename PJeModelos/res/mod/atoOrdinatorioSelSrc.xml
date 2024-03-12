@@ -597,7 +597,7 @@ and open the template in the editor.
         <item id="atoOrdItDesignacaoAudiencia" label="Designação de Audiência" dataPlus="{ 'descricaoAppend': 'Designação audiência' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    #:B{DESIGNAÇÃO} da audiência de Audiência de Conciliação, Instrução e Julgamento, considerando o impulsionamento do feito promovido pela #{j2.env.PJeVars.processo.polos.parteAtiva}.
+                    #:B{DESIGNAÇÃO} da audiência de Audiência de #{j2.env.PJeVars.audiencia.tipoPadraoUnidade.captFirst}, considerando o impulsionamento do feito promovido pela #{j2.env.PJeVars.processo.polos.parteAtiva}.
                 </data>
             </itemContent>
         </item>   
