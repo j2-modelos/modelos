@@ -9,6 +9,129 @@ console.log('whatsapp em j2E');
 
 
 function init(){
+  const lockrSes = createLockr('j2E', 'sessionStorage')
+
+  function _obterPLPs(limit = 10, offset = 0, download = false) {
+    const token = sessionStorage.getItem('_uc')
+    const tokenValue = token ? JSON.parse(token).token : ''
+  
+    const headers = new Headers()
+    headers.append('sentinela-token', tokenValue)
+  
+    const queryParams = new URLSearchParams({
+      _limit: limit,
+      _offset: offset,
+      _download: download
+    })
+  
+    const requestOptions = {
+      method: 'GET',
+      headers,
+      redirect: 'follow'
+    }
+  
+    const url = `https://sistemas.tjma.jus.br/ardigital-api/rest/plps?${queryParams}`
+  
+    return fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        return data
+      })
+      .catch(error => {
+        console.error('Ocorreu um erro ao fazer a solicitação:', error)
+        throw error
+      })
+  }
+
+  function _obterPLPById(idPlp) {
+    const token = sessionStorage.getItem('_uc')
+    const tokenValue = token ? JSON.parse(token).token : ''
+  
+    const headers = new Headers()
+    headers.append('sentinela-token', tokenValue)
+  
+    const requestOptions = {
+      method: 'GET',
+      headers,
+      redirect: 'follow'
+    }
+  
+    const url = `https://sistemas.tjma.jus.br/ardigital-api/rest/plps/${idPlp}`
+  
+    return fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        return data
+      })
+      .catch(error => {
+        console.error('Ocorreu um erro ao fazer a solicitação:', error)
+        throw error
+      })
+  }
+
+  jQ3.initialize('tj-corpo-pagina[titulo="Consultar PLP (Pré Lista de Postagem)"]', function(){
+        
+    jQ3.initialize('table tbody tr:first-child', function(){
+      const $tbody = jQ3(this.parentNode)
+      const limit = jQ3('select[name="num_registros"]').val()
+      const offset = (parseInt(jQ3('a.atual').text()) - 1) * 10
+
+      _obterPLPs(limit, offset)
+      .then(data=>{
+        $tbody.find('tr').each((idx, tr)=>{
+          const $tr = jQ3(tr)
+          const id = data.result[idx].id
+
+          $tr.find('td:nth-child(1)').text(id)
+
+          _obterPLPById(id).then(data=>{
+            $tr.find('td:nth-child(2)').text(data.matriculaCriador)
+          })
+        })
+      })
+
+      const $headTr = $tbody.prev().find('tr:not([j2-set])')
+      $headTr.prepend(`<th style="width: 60px;">Usuario</th>`)
+      $headTr.prepend(`<th style="width: 60px;">id</th>`)
+      $headTr.attr('j2-set', '')
+
+      $tbody.find('tr').each(function(){
+        const $tr = jQ3(this)
+        $tr.prepend(jQ3(`<td></td>`))
+        $tr.prepend(jQ3(`<td></td>`))
+      })
+    }, {target: this})
+
+    const $this = jQ3(this)
+    $this.click((ev)=>{
+      const $evTarget = jQ3(ev.target)
+      if( !$evTarget.is('img') )
+        return
+
+      evBus.fire('ao-selecionar-uma-lista-de-postagem', parseInt($evTarget.parents('tr').find('td:first-child').text()) )
+    })
+  })
+
+  jQ3.initialize('tj-corpo-pagina[titulo="Cadastro de PLP (Pré Lista de Postagem)"]', function(){
+    const $this = jQ3(this)
+    evBus.once('ao-selecionar-uma-lista-de-postagem', function(ev, idPlp){
+      _obterPLPById(idPlp).then(data=>{
+        const $numeroPLP = $this.find('tj-campo-numero')
+        const $cloneId = $numeroPLP.clone(true)
+        const $cloneUsuario = $numeroPLP.clone(true)
+
+        $cloneUsuario.find('mat-label').text('Usuário')
+        $cloneId.find('mat-label').text('Id')
+
+        $cloneUsuario.find('input').val(data.matriculaCriador)
+        $cloneId.find('input').val(data.id)
+
+        $numeroPLP.before($cloneId )
+        $numeroPLP.before($cloneUsuario )
+      })
+    })
+  })
+
 
   /*jQ3.initialize('div.tj-toten', function(){
     var $this = jQ3(this);

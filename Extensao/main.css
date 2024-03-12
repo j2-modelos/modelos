@@ -2045,6 +2045,56 @@ a[_ngcontent-rnb-c14]:visited {
     padding-top: 0;
 }
 */
+
+[j2-ardigital-panel] div[j2-ui-content] table tr td:first-child{
+    text-align:center !important
+}
+
+[j2-ARDigital-destinatario-endereco-panel] .rich-panel-header{
+    font-size: 13px;
+    line-height: 14px;
+    
+}
+
+[j2-ARDigital-destinatario-endereco-panel] .rich-panel-body{
+   padding-top: 0;
+   padding-bottom: 0px; 
+}
+
+[j2-ARDigital-destinatario-endereco-panel] {
+    padding-bottom: 0px; 
+}
+
+[j2-ARDigital-destinatario-endereco-panel]  [j2-propriedades] .propertyView {
+    min-width: unset;
+}
+
+[j2-ARDigital-destinatario-endereco-panel]  [j2-propriedades] label {
+    font-size: 12px;
+    /*font-weight: normal;*/
+}
+
+[j2-ARDigital-destinatario-endereco-panel]  [j2-propriedades] .value input {
+    font-size: 12px;
+}
+
+[j2-ARDigital-destinatario-endereco-panel]  [j2-nao-inc-plp]  {
+    font-size: 12px;
+}
+
+[j2-ARDigital-destinatario-enderecos] {
+    margin-bottom: 0px;
+}
+
+[j2-ARDigital-destinatario-enderecos] > .rich-panel-header{
+    display: none;
+}
+
+[j2-ARDigital-destinatario-enderecos] .rich-panel-body{
+    margin-bottom: 0px;
+}
+
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);

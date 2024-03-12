@@ -1,7 +1,7 @@
 
 (function () {
     ;(function sobreporWindowConsole(){
-      const VERBOSE_ATIVADA = false
+      const VERBOSE_ATIVADA = true
       const console = window.console
 
       const meuConsole = {
