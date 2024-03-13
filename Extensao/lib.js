@@ -774,39 +774,43 @@ var j2EUi = {
     return $newBut
   },
   createRichModal: ()=>{
-    const $modal = jQ3(/*html*/`
-      <div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;">
-          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
-          <div class="rich-mpnl-panel">
-              <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;">
-                  <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div>
-                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;">
-                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
-                          <tbody>
-                              <tr style="height: 99%;">
-                                  <td class="rich-mpnl-body" valign="top">
-                                      <div class="media">
-                                          <div class="media-left media-middle">
-                                              <div class="svg-preloader">
-                                                  <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
-                                              </div>
-                                          </div>
-                                          <div class="media-body">
-                                              <h6>Por favor aguarde</h6>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
-      </div>
-    `)
+    let $modal
+    if( jQ3('#modalStatusContainer-j2').length === 0 ){
+      $modal = jQ3(/*html*/`
+        <div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;">
+            <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+            <div class="rich-mpnl-panel">
+                <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;">
+                    <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div>
+                    <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                            <tbody>
+                                <tr style="height: 99%;">
+                                    <td class="rich-mpnl-body" valign="top">
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <div class="svg-preloader">
+                                                    <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6>Por favor aguarde</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+        </div>
+      `)
 
-    jQ3('body').append($modal)
+      jQ3('body').append($modal)
+    }else
+      $modal = jQ3('#modalStatusContainer-j2')
 
     return {
       $mainContainer: $modal,
