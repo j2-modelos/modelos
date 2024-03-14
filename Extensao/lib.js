@@ -3926,6 +3926,7 @@ function loadPJeRestAndSeamInteraction(){
       xmlHistory : [],
       requestsIteractions : {
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
+        movimentarURL : 'https://pje.tjma.jus.br/pje/Processo/movimentar.seam',
         listAutosDigitais : (_idProcesso)=>{
           var def = $.Deferred()
           var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
@@ -4580,6 +4581,53 @@ function loadPJeRestAndSeamInteraction(){
           .fail( err => def.reject(err) )
 
           return def.promise();
+        },
+        selecionarEtapaPrepararAtoDoPAC: (viewIdProc, taskInstanceId, arrayChecados)=>{
+          var def = $.Deferred()
+
+          function __criarPayLoadDosChecados(){
+            return arrayChecados /* = [0, 1, 2, 10] */
+            .map(ck => `            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:tabelaEnderecosPessoa:${ck}:check: on`   )
+            .join('\n')
+          }
+
+          var PAYLOAD = `
+            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:atividadeRegion
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:tabelaDestinatariosEndereco:0:umExpedientePorEnderecoCK1: on
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCepDecoration:enderecosPanelPesquisarEnderecoCep: 
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCompletoDecoration:enderecosPanelPesquisarEnderecoCompleto: 
+            ${ __criarPayLoadDosChecados() }
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-taskInstanceId:modalPanelMessagesOpenedState: 
+            iframe: true
+            taskInstanceForm: taskInstanceForm
+            autoScroll: 
+            javax.faces.ViewState: ${viewIdProc}
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = `
+            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id95
+            ${ __criarPayLoadDosChecados() }
+            iframe: true
+            taskInstanceForm: taskInstanceForm
+            autoScroll: 
+            javax.faces.ViewState: ${viewIdProc}
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.movimentarURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'PAC-preparar-ato',
+              $xml : jQ3(xml)
+            })
+            def.resolve( jQ3(xml), _this.processo.requestsIteractions ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
         }
       },
       acoes : {
@@ -4671,6 +4719,17 @@ function loadPJeRestAndSeamInteraction(){
             const audiencias = converter( $tabela )
 
             def.resolve( audiencias, $tabela, $xml) 
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        salvarAsSelecoesEnderecoPAC: (viewIdProc, taskInstanceId, arrayChecados)=>{
+          const def = $.Deferred()
+
+          _this.processo.requestsIteractions.selecionarEtapaPrepararAtoDoPAC(viewIdProc, taskInstanceId, arrayChecados)
+          .done( ($xml, it) => { 
+            def.resolve( $xml ) 
           })
           .fail( err => def.reject(err) )
 
