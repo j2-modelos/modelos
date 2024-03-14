@@ -257,17 +257,17 @@ function init(){
       }
     },
     util : {
-      conformarEnderecoARDigigal : function(enderecoString){
-        if( typeof enderecoString === 'string' ){
-          const hashCode = enderecoString.hashCode()
-          enderecoString = j2E.ARDigital.util.parseEnderecosFrameComunicacao(enderecoString)
-          enderecoString.hashCode = hashCode
+      conformarEnderecoARDigigal : function(enderecoStringOrObjEnderecoFormat){
+        if( typeof enderecoStringOrObjEnderecoFormat === 'string' ){
+          const hashCode = enderecoStringOrObjEnderecoFormat.hashCode()
+          enderecoStringOrObjEnderecoFormat = j2E.ARDigital.util.parseEnderecosFrameComunicacao(enderecoStringOrObjEnderecoFormat)
+          enderecoStringOrObjEnderecoFormat.hashCode = hashCode
         }
 
         return jQ3.extend({
           "indPrincipal": false,
           "indAtivo": true
-        }, enderecoString )
+        }, enderecoStringOrObjEnderecoFormat )
       },
       validarEConformarDestinatarioCampos: destinatario =>{
         destinatario.nome.length > 50 && ( destinatario.nome = destinatario.nome.substr(0,49) )
@@ -823,7 +823,14 @@ function init(){
 
           //prepara a observação de quando o  uusário irá ativar endereços adicionais            
           jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaEnderecosPessoa\\:tb`, function(){
-            const $chk = jQ3(this);
+            const $chk = jQ3(this)
+
+            if ( $chk.data('onInitializeOnce') )
+              return
+            
+            $chk.data('onInitializeOnce', true)
+
+
             checkedEnderecos = 0
 
             //const endsSelectedByUser = []
@@ -916,10 +923,15 @@ function init(){
                   `)
                 )
               }
+
+              return
             }
 
-            /*if(endsSelectedByUser.length)
-              _treatDestinatarioEEnderecoARDigital(endsSelectedByUser)*/
+            /*setTimeout(()=>{
+              const arrayChecados = Array.from($chk.find('input:checked')).map(ip => ip.id.split(':').at(3))
+              const viewIdProc = jQ3('#javax\\.faces\\.ViewState').val()
+              j2E.SeamIteraction.processo.acoes.salvarAsSelecoesEnderecoPAC(viewIdProc, idTask, arrayChecados)
+            }, 1000)*/
           })
 
           jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:tabelaDestinatariosEndereco\\:tb td:nth-child(6)`, function(){
@@ -935,14 +947,49 @@ function init(){
             $tdEnderecos.prev().find('input').attr('disabled', '')
             const $trDoDestinatario = $tdEnderecos.parent()
 
-            const _handleInitialList = ()=>{
+            const _handleConstrucaoObjetosDoUsuario = ()=>{
+              const __deffaultFail = (jqXHR, textStatus, errorThrown) => { 
+                console.error("AR Digital", `Falha ao consultar o destinatário. (${ errorThrown || ''})`, "error")
+                console.error(jqXHR, textStatus, errorThrown)
+
+                j2EUi.richModal(false)
+                toaster("AR Digital", `Falha ao consultar o destinatário. (${ errorThrown || ''})`, "error") 
+              }
+
               $addButton.hide()
-              endPanelsArray.forEach( endPanel => endPanel.$panel.find('[j2-nao-inc-plp]').remove() )
-              _treatDestinatarioEEnderecoARDigital(endPanelsArray)
+              endPanelsArray.forEach( endPanel => { 
+                endPanel.$panel.find('[j2-nao-inc-plp]').remove() 
+
+                const $containerObjetoPanel = jQ3('<div j2-container-objeto-panel >')
+                $containerObjetoPanel.append( j2EUi.spinnerHTML() )
+                endPanel.$panel.$body.append( $containerObjetoPanel )
+              })
+              
+              j2EUi.richModal(true)
+              j2E.ARDigital.api.destinatarios.consultar( _obterDestinatarioAtual($trDoDestinatario).nome )
+              .done(resp => {
+                endPanelsArray.destConsulta = resp
+                
+                const destDefs = resp.result.map(destId => {
+                  return j2E.ARDigital.api.destinatarios.getById(destId.id)
+                  .done(destCompleto =>{
+                    destId.enderecos = destCompleto.enderecos
+                  })
+                })
+
+                jQ3.when(...destDefs)
+                .done(()=> {
+                  _treatDestinatarioEEnderecoARDigital(endPanelsArray)
+                })
+                .fail(__deffaultFail)
+              })
+              .fail(__deffaultFail)
             }
             
             const endPanelsArray = []
             endPanelsArray.$trDoDestinatario = $trDoDestinatario
+           
+
 
             const $tdEndClone = $tdEnderecos.clone(true)
 
@@ -954,7 +1001,7 @@ function init(){
               classButton: 'btn-sm btn-primary',
               callback: ()=>{
                 $addButton.hide()
-                _handleInitialList()
+                _handleConstrucaoObjetosDoUsuario()
               },
             })
             $tdEnderecos.append($panelPai)
@@ -965,9 +1012,14 @@ function init(){
             }).each(function(){
               const $text = jQ3(this)
 
+              const objEndForm = j2E.ARDigital.util.conformarEnderecoARDigigal($text.text())
+              const objEndFormAlt = __verificarSeExistemAlteracoesNoEnederecoFeitoLocalmente( { ...objEndForm } )
               const dataSetObjectPje = {
                 destinatario : _obterDestinatarioAtual($trDoDestinatario),
-                endereco : $text.text()
+                endereco : $text.text(),
+                objEnderecoFormat: objEndForm,
+                objEnderecoFormatAlterado: objEndFormAlt,
+                _altLocal: !!objEndFormAlt._altLocal
               }
               
               const $spanNaoAdd = jQ3('<span j2-nao-inc-plp >Não incluída à PLP</span>')
@@ -987,7 +1039,7 @@ function init(){
             if($endsTexts.length === 0 )
               $addButton.attr('disabled', '')
             
-            defMatchingListFound.done( _handleInitialList )
+            defMatchingListFound.done( _handleConstrucaoObjetosDoUsuario )
 
             evBus.on('on-select-a-plp', function(ev, data){
               if( data.EValida )
@@ -1440,26 +1492,29 @@ function init(){
     function __verificarSeExistemAlteracoesNoEnederecoFeitoLocalmente(parsedEnderecoComoObjeto){
       const hashCode = parsedEnderecoComoObjeto.hashCode
       if(!hashCode)
-        return;
+        return parsedEnderecoComoObjeto;
       
       const store = lockr.get(`ar-digital-endMaual-map-id-${idProc}-${hashCode}`, 
       { noData: true })
       if(store.noData)
-        return;
+        return parsedEnderecoComoObjeto;
       
       Object.keys(store).forEach(key=>{
         parsedEnderecoComoObjeto[key] = store[key]
       })
+
+      parsedEnderecoComoObjeto._altLocal = true
+
+      return parsedEnderecoComoObjeto
     }
 
-    function __getDestinatarioEnderecoResolvido(idDestinatario, dataSetObjectPJe){
+    function __getDestinatarioEnderecoResolvido(destinatarioOuSeuId, dataSetObjectPJe){
       const deferred = jQ3.Deferred();
       const parsedEndereco = j2E.ARDigital.util.conformarEnderecoARDigigal(dataSetObjectPJe.endereco)
 
       __verificarSeExistemAlteracoesNoEnederecoFeitoLocalmente(parsedEndereco)
 
-      j2E.ARDigital.api.destinatarios.getById(idDestinatario, 
-      destinatario =>{
+      function ___manipularDestinatario(destinatario){
         //Vai avaliar se 
         let destinatarioPossuiEsteEndereco = false
         let oEnderecoEstaMarcadoComoAtivoParaUsuario = true
@@ -1469,6 +1524,7 @@ function init(){
           Object.keys(parsedEndereco).forEach(propName=>{
             switch(propName){
               case 'indPrincipal': case 'indAtivo': case 'hashCode': case 'uuid': case 'id':
+              case '_altLocal':
                 return;
               default:
                 eIgual = eIgual && parsedEndereco[propName] === umDosEnderecoDestinatario[propName]
@@ -1499,13 +1555,23 @@ function init(){
         else
           deferred.resolve(destinatario)
         
-      }, 
-      error => deferred.reject(error) )
+      }
 
+      if (typeof destinatarioOuSeuId === 'object' && destinatarioOuSeuId !== null)
+        ___manipularDestinatario(destinatarioOuSeuId)
+      else 
+        j2E.ARDigital.api.destinatarios.getById(destinatarioOuSeuId)
+        .done(___manipularDestinatario)
+        .fail((jqXHR, textStatus, errorThrown) =>{
+          deferred.reject(errorThrown, destinatarioOuSeuId, jqXHR, textStatus)
+        })
+      
       return deferred.promise();
     }
 
-    function __getDestinatarioForCheckedPosition(dataSetObjectPJe, checkedEnderecosOrder, currentWorkingPLP){
+    function __getDestinatarioForCheckedPosition(
+      dataSetObjectPJe, checkedEnderecosOrder, currentWorkingPLP,
+      destConsulta){
       var deferred = jQ3.Deferred();
 
       function ___destinatarioJaNalista(idDestinatario, destinatarioContainer){
@@ -1538,7 +1604,7 @@ function init(){
                     &&
                     objEspelho.destinatarioPJe.nome === objetoEncontradoNaPLPTrabalhando[0].destinatario.nome
                     &&
-                    comparardorEnderecoFormat(objEspelho.endereco, enderecoFormatARDigital)
+                    comparardorEnderecoFormat(objEspelho.endereco, dataSetObjectPJe.objEnderecoFormatAlterado)
                     &&
                     comparardorEnderecoFormat(objEspelho.endereco, enderecoDoObjetoEncontradoDaWorkingList)
           })
@@ -1558,7 +1624,89 @@ function init(){
         return destinatarioEncontradoNaLista
       }
 
-      j2E.ARDigital.api.destinatarios.consultar(dataSetObjectPJe.destinatario.nome, res =>{
+      if(destConsulta.totalCount == 0){
+        __criarDestinatario(dataSetObjectPJe)
+        .done( _res => {
+          __getDestinatarioEnderecoResolvido(_res.id, dataSetObjectPJe)
+          .done( res => deferred.resolve(res) )
+          .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+        } )
+        .fail( (err, endObj) => deferred.reject(err, endObj, dataSetObjectPJe) )
+        // cópia desse blocl abaixo
+      }else{
+        const [destinatarioFiltradoENaLista] = destConsulta.result.filter(destIt => ! destIt.__J2E__)
+        .filter(destIt =>{
+          const container = {}
+          const jaNaLista = ___destinatarioJaNalista(destIt.id, container) 
+          if( container.destinatario )
+            destIt.__J2E__ = {
+              container
+            }
+          return jaNaLista
+        })
+
+        if ( destinatarioFiltradoENaLista?.__J2E__ )
+          deferred.resolve(destinatarioFiltradoENaLista.__J2E__.container.destinatario)
+        else{ 
+          const destinatarioDisponivelComEnderecoCombinando = destConsulta.result.find(destIt => { 
+            let matchedEndIdx
+            let indAtivo
+            const foundEnd = destIt.enderecos.find((end, idx) =>  { 
+              if( j2E.ARDigital.util.compararObjetosEnderecoFormat(end, dataSetObjectPJe.objEnderecoFormatAlterado) ){
+                matchedEndIdx = idx,
+                indAtivo = end.indAtivo
+                return true
+              }
+            })
+            if( foundEnd && !destIt.__J2E__ ){
+              destIt.__J2E__ = {
+                iterandoDestinatarioComEnderecoJaExistente: true,
+                matchedEndIdx,
+                indAtivo
+              }
+              return true   
+            }
+          })
+
+          const destinatarioDisponivel = destConsulta.result.find(destIt => !destIt.__J2E__)
+
+          if (destinatarioDisponivelComEnderecoCombinando){
+            if (destinatarioDisponivelComEnderecoCombinando.__J2E__.indAtivo )
+              deferred.resolve(destinatarioDisponivelComEnderecoCombinando)
+            else
+              __getDestinatarioEnderecoResolvido(destinatarioDisponivelComEnderecoCombinando, dataSetObjectPJe)
+              .done( res2 => deferred.resolve(res2) )
+              .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+          } else if ( destinatarioDisponivel ){
+            destinatarioDisponivel.__J2E__ = {
+              iterandoNovoEnderecoParaDestinatario: true
+            }
+
+            __getDestinatarioEnderecoResolvido(destinatarioDisponivel, dataSetObjectPJe)
+            .done( res2 => deferred.resolve(res2) )
+            .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+          }else
+            __criarDestinatario(dataSetObjectPJe)
+            .done( oIdNovoDestinatarioCriado => {
+              
+
+              __getDestinatarioEnderecoResolvido(oIdNovoDestinatarioCriado.id, dataSetObjectPJe)
+              .done( umNovoDestinatarioCriado => { 
+                debugger
+                umNovoDestinatarioCriado.__J2E__ = {
+                  iterandoNovoEnderecoParaDestinatario: true
+                }
+                destConsulta.result.push(umNovoDestinatarioCriado)
+
+                deferred.resolve(umNovoDestinatarioCriado) 
+              })
+              .fail( error => deferred.reject(error) )
+            } )
+            .fail( (err, endObj) => deferred.reject(err, endObj, dataSetObjectPJe) )
+        }
+      }
+
+      /*true && j2E.ARDigital.api.destinatarios.consultar(dataSetObjectPJe.destinatario.nome, res =>{
         if(res.totalCount < checkedEnderecosOrder){
 
           __criarDestinatario(dataSetObjectPJe)
@@ -1597,7 +1745,7 @@ function init(){
         }
       }, (error)=>{
         deferred.reject(error);
-      })
+      })*/
 
       return deferred.promise();
     }
@@ -1728,7 +1876,9 @@ function init(){
         linkedPLP.parents('tr').replaceWith(newTR)
         return newInputLinkedPLP;
       }
-        return linkedPLP
+      
+      linkedPLP.parents('tr').find('td:nth-child(4)').text(plp.objetos.length)
+      return linkedPLP
     }
 
     function __adicionarAPLPSelecionada(enderecosSelectedData){
@@ -1776,8 +1926,12 @@ function init(){
 
       }
       else{
-        let idPlp = linkedPLP.prop('id').split('-')[1]
+        const idPlp = linkedPLP.prop('id').split('-')[1]
+        const plpCompleta = linkedPLP.data('j2E').plpCompleta
 
+      if (plpCompleta && plpCompleta.status === 'FECHADA')
+        deferred.resolve( {plpFechada: true} ) 
+      else
         j2E.ARDigital.api.plp.getById(idPlp)
         .done( resPLP =>{
           const plpAntes = JSON.stringify(resPLP).hashCode()
@@ -1818,7 +1972,7 @@ function init(){
             return ojbetosMapped.length
                 && ! ojbetosMapped.some(obM => obM.id == o.objetoIdNaPLP )
                 && o.idProcesso == idProc 
-                && o.task === j2E.env.task
+                && o.task.name === j2E.env.task.name
                 && o.destinatarioPJe.nome === _obterDestinatarioAtual($trDoDestinatario).nome
           })
           // altera o resPLP objeto, filtrando  removendo os ids de objetoCorreios
@@ -1845,16 +1999,15 @@ function init(){
             deferred.resolve(resPLP, $trDoDestinatario, enderecosSelectedData)
         })
         .fail( ____defaultFail )   
+
       }
 
 
       return deferred.promise();
     }
 
-    function _treatDestinatarioEEnderecoARDigital(enderecosSelected, currentWorkingPLP){
-    //function _treatDestinatarioEEnderecoARDigital(data, $tr, $target){
-      j2EUi.richModal(true)
-
+    function _treatDestinatarioEEnderecoARDigital(destinatarioSetComEnderecosUsados, currentWorkingPLP){
+      
       let linkedInputPLP = jQ3('[j2-ardigital-panel]').find('input:checked')
       
       if( linkedInputPLP.length ){
@@ -1863,12 +2016,12 @@ function init(){
           .done( plp => {
             linkedInputPLP.data('j2E').plpFull = plp
             j2E.env.tempData.plpFull = plp
-            _treatDestinatarioEEnderecoARDigital(enderecosSelected, plp)
+            _treatDestinatarioEEnderecoARDigital(destinatarioSetComEnderecosUsados, plp)
           })
           .fail((err) => {
             alert('Falha ao obter a lista de postagem')
           })
-          .always( ()=> defer(()=>j2EUi.richModal(false)) )
+          //.always( ()=> defer(()=>j2EUi.richModal(false)) )
 
           return;
         }else if( linkedInputPLP.prop('id') !== 'plp-new' )
@@ -1878,7 +2031,7 @@ function init(){
 
       let destinatarioResolvidoDefer = jQ3.Deferred()
 
-      enderecosSelected.forEach((endSel, idx) =>{ 
+      destinatarioSetComEnderecosUsados.forEach((endSel, idx) =>{ 
         let checkedEnderecos = idx + 1
         let dataSetObjectPJe = endSel.data
         let $panel = endSel.$panel
@@ -1910,13 +2063,13 @@ function init(){
             __criarDestinatario(data, newObjEnd)
             .done( _res => {
               __getDestinatarioEnderecoResolvido(_res.id, data)
-              .done( res => _treatDestinatarioEEnderecoARDigital(enderecosSelected) )
+              .done( res => _treatDestinatar        ioEEnderecoARDigital(enderecosSelected) )
               .fail( error => alert('#####Manga this error') )
             } )
             .fail( (_err, _endObj) => ____defaultFail(_err, _endObj, data) )
             .then( () => j2EUi.richModal(false) )*/
 
-            _recarregarSelecoesDoUsuario(enderecosSelected)
+            _recarregarSelecoesDoUsuario(destinatarioSetComEnderecosUsados)
           }
 
           let $endEditorPanel = _ARDigitalObjFieldsWithError(
@@ -1957,11 +2110,7 @@ function init(){
 
         
 
-        const $containerObjetoPanel = jQ3('<div>')
-        $containerObjetoPanel.append( j2EUi.spinnerHTML() )
-        $panel.$body.append( $containerObjetoPanel )
-
-        endSel.$containerObjetoPanel = $containerObjetoPanel
+        endSel.$containerObjetoPanel = $panel.$body.find('[j2-container-objeto-panel]') 
         endSel.procDef = jQ3.Deferred()
         endSel.procDef.enderecoSelecionado = endSel
         endSel.id = guid ? guid() : Math.random()
@@ -1970,7 +2119,9 @@ function init(){
 
         ___delayCall((dataSetObjectPJe, $containerObjetoPanel, checkedEnderecos, endSel)=>{
 
-          jQ3.when(__getDestinatarioForCheckedPosition(dataSetObjectPJe, checkedEnderecos, currentWorkingPLP))
+          jQ3.when(__getDestinatarioForCheckedPosition(
+            dataSetObjectPJe, checkedEnderecos, currentWorkingPLP, 
+            destinatarioSetComEnderecosUsados.destConsulta))
           .then( destinatarioComEnderecoResolvido => {
             endSel.enderecoResolvido = destinatarioComEnderecoResolvido
 
@@ -1989,13 +2140,13 @@ function init(){
             $containerObjetoPanel.append(j2EUi.createPanel('Objeto', _ARDigitalObjFields(____obj,
               (objetoCorreiosAlterado)=>{
                 j2EUi.richModal(true)
-                __adicionarAPLPSelecionada(enderecosSelected)
+                __adicionarAPLPSelecionada(destinatarioSetComEnderecosUsados)
                 .then( ___persistirPLPEAtualizarViewNoPainelDoARDigital )
                 .fail(err => {
                   j2EUi.richModal(false)
                   toaster("AR Digital", `Erro ao atualizar objeto. (${err.responseText})`, "error")
                 })
-              }, enderecosSelected.$trDoDestinatario)
+              }, destinatarioSetComEnderecosUsados.$trDoDestinatario)
             ))
 
             /*if( checkResolution() )
@@ -2005,11 +2156,11 @@ function init(){
           .fail( ____defaultFail)
 
 
-        }, dataSetObjectPJe, $containerObjetoPanel, checkedEnderecos, endSel)
+        }, dataSetObjectPJe, endSel.$containerObjetoPanel, checkedEnderecos, endSel)
 
       })
 
-      const procDefSromises = enderecosSelected.map((endereco) => endereco.procDef.promise());
+      const procDefSromises = destinatarioSetComEnderecosUsados.map((endereco) => endereco.procDef.promise());
       jQ3.when(...procDefSromises)
       .done(() => destinatarioResolvidoDefer.resolve() )
       .fail((failedPromise, reason) => {
@@ -2019,9 +2170,19 @@ function init(){
 
       jQ3.when(destinatarioResolvidoDefer)
       .then(() => {
-        return __adicionarAPLPSelecionada(enderecosSelected);
+        return __adicionarAPLPSelecionada(destinatarioSetComEnderecosUsados);
       })
-      .then( ___persistirPLPEAtualizarViewNoPainelDoARDigital )
+      .then( (plpCompletaOrStatusFechada, $trDoDestinatario, enderecosSelectedData)=>{
+        return !plpCompletaOrStatusFechada.plpFechada 
+          ? ___persistirPLPEAtualizarViewNoPainelDoARDigital(plpCompletaOrStatusFechada, $trDoDestinatario, enderecosSelectedData) 
+          : jQ3.Deferred().resolve(plpCompletaOrStatusFechada).promise()
+      })
+      .done( plpStatus => {
+        if(plpStatus?.plpFechada){
+          toaster("AR Digital", `Lista de postagem associada já está fechada`, "info")  
+        }
+        defer(()=>j2EUi.richModal(false))
+      })
       .fail( (err) => {
         toaster("Jurisconsult", `Falha ao resolver o destinatário. (${ err || ''})`, "error")
 
@@ -2037,17 +2198,20 @@ function init(){
         plp.objetos.map(o => { return { idDestinatario: o.destinatario.id, selfObjecto: o }})
         .forEach(mpO => {
           const [endSel] = enderecosSelectedData.filter(endSel => endSel.objetoCorreios.destinatario.id === mpO.idDestinatario )
-          !endSel?.objetoCorreios?.id && (endSel.objetoCorreios.id = mpO.selfObjecto.id)
+          if (endSel){
+            !endSel?.objetoCorreios?.id && (endSel.objetoCorreios.id = mpO.selfObjecto.id)
+            mpO.selfObjecto.__J2E__ = { endSel }
+          }
         })
 
-        _persistPLP(plp, $trDoDestinatario)
+        _persistPLP(plp, enderecosSelectedData)
         .done( () => { 
           toaster("AR Digital", `PLP atualizada com sucesso`, "success")
 
           jQ3('[j2-ardigital-panel]').find('input').attr('disabled', 'disabled')
           defer(() => {
             j2EUi.richModal(false)
-            _marcarAutomaticamenteUmEnderecoPorExpediente(enderecosSelected)
+            _marcarAutomaticamenteUmEnderecoPorExpediente(destinatarioSetComEnderecosUsados)
           })
 
           def.resolve()
@@ -2058,8 +2222,22 @@ function init(){
       }
     }
 
-    function _persistPLP(plp, $trDoDestinatario){
+    function _persistPLP(plp, enderecosSelectedData){
       var deffered = jQ3.Deferred()
+
+      function __obterObjetoCorreiosEspelhoPersistido(objetoDePLP){
+        debugger
+        return {
+          idProcesso: idProc,
+          task: task,
+          objetoIdNaPLP: objetoDePLP.id,
+          destinatarioPJe: _obterDestinatarioAtual(
+            objetoDePLP.__J2E__.endSel.$trDoDestinatario
+          ),
+          endereco: objetoDePLP.destinatario.enderecos[0],
+          dataSetObjectPJe: objetoDePLP.__J2E__.endSel.data
+        }
+      }
 
       const idProc = parseFloat(j2E.env.urlParms.idProcesso),	
           idTask = j2E.env.urlParms.newTaskId,
@@ -2087,7 +2265,7 @@ function init(){
           root.id = plp.id      
           root.objs = []
 
-          plp.objetos.forEach( idObjPLP => root.objs.push( 
+          plp.objetos.forEach( objCoreiosPLP => root.objs.push( 
             /*[
               idProc,             // i ddo processo no PJe
               taskHash,           // hash code do nome da tarefa
@@ -2095,13 +2273,7 @@ function init(){
               destHash,           // hashcode do nome da parte no sistema mais cpf cnpj se houver
               endHash(idObjPLP),  // hashcode do endereço no PJe como é apresentado
             ]*/
-            {
-              idProcesso: idProc,
-              task: task,
-              objetoIdNaPLP: idObjPLP.id,
-              destinatarioPJe: _obterDestinatarioAtual($trDoDestinatario),
-              endereco: idObjPLP.destinatario.enderecos[0]
-            }
+            __obterObjetoCorreiosEspelhoPersistido(objCoreiosPLP)
           ))
 
           /*seamRequestIteractionPending.liberarAView()
@@ -2119,8 +2291,8 @@ function init(){
           root.id = plp.id      
           root.objs ??= []
 
-          plp.objetos.forEach( idObjPLP => {
-            const [objetoEncontrado] = root.objs.filter(o=>o.objetoIdNaPLP === idObjPLP.id)
+          plp.objetos.forEach( objCoreiosPLP => {
+            const [objetoEncontrado] = root.objs.filter(o=>o.objetoIdNaPLP === objCoreiosPLP.id)
             if(! (objetoEncontrado))
               root.objs.push(/*[
                 idProc,             // id ddo processo no PJe
@@ -2129,13 +2301,8 @@ function init(){
                 destHash,           // hashcode do nome da parte no sistema mais cpf cnpj se houver
                 endHash(idObjPLP),  // hashcode do endereço no PJe como é apresentado
               ]*/
-              {
-                idProcesso: idProc,
-                task: task,
-                objetoIdNaPLP: idObjPLP.id,
-                destinatarioPJe: _obterDestinatarioAtual($trDoDestinatario),
-                endereco: idObjPLP.destinatario.enderecos[0]
-              })
+                __obterObjetoCorreiosEspelhoPersistido(objCoreiosPLP)
+              )
           })
           root.objs = root.objs.filter(_itObjeto=>{
             const [objetoEncontrado] = 

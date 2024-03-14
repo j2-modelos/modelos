@@ -774,39 +774,43 @@ var j2EUi = {
     return $newBut
   },
   createRichModal: ()=>{
-    const $modal = jQ3(/*html*/`
-      <div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;">
-          <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
-          <div class="rich-mpnl-panel">
-              <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;">
-                  <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div>
-                  <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;">
-                      <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
-                          <tbody>
-                              <tr style="height: 99%;">
-                                  <td class="rich-mpnl-body" valign="top">
-                                      <div class="media">
-                                          <div class="media-left media-middle">
-                                              <div class="svg-preloader">
-                                                  <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
-                                              </div>
-                                          </div>
-                                          <div class="media-body">
-                                              <h6>Por favor aguarde</h6>
-                                          </div>
-                                      </div>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-          <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
-      </div>
-    `)
+    let $modal
+    if( jQ3('#modalStatusContainer-j2').length === 0 ){
+      $modal = jQ3(/*html*/`
+        <div class="rich-modalpanel modal-small" id="j2E-rich-modal" style="position: absolute; z-index: 100; background-color: inherit;">
+            <div class="rich-mpnl-mask-div-opaque rich-mpnl-mask-div" id="mpProgressoDiv" style="z-index: -1;"><button class="rich-mpnl-button" id="mpProgressoFirstHref"></button></div>
+            <div class="rich-mpnl-panel">
+                <div class="rich-mp-container" id="mpProgressoCDiv" style="position: absolute; left: 527px; top: 323px; z-index: 9;">
+                    <div class="rich-mpnl-shadow" id="mpProgressoShadowDiv" style="width: 0px; height: 0px;"></div>
+                    <div class="rich-mpnl-ovf-hd rich-mpnl-trim rich-mpnl-content" id="mpProgressoContentDiv" style="width: 300px; height: 110px;">
+                        <table border="0" cellpadding="0" cellspacing="0" class="rich-mp-content-table" id="mpProgressoContentTable" style="height: 100%; width: 100%;">
+                            <tbody>
+                                <tr style="height: 99%;">
+                                    <td class="rich-mpnl-body" valign="top">
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <div class="svg-preloader">
+                                                    <svg version="1.1" height="30" width="30" viewBox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"></circle></svg>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6>Por favor aguarde</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="rich-mpnl-mask-div rich-mpnl-mask-div-transparent" id="mpProgressoCursorDiv" style="z-index: -200;"><button class="rich-mpnl-button" id="mpProgressoLastHref"></button></div>
+        </div>
+      `)
 
-    jQ3('body').append($modal)
+      jQ3('body').append($modal)
+    }else
+      $modal = jQ3('#modalStatusContainer-j2')
 
     return {
       $mainContainer: $modal,
@@ -3922,6 +3926,7 @@ function loadPJeRestAndSeamInteraction(){
       xmlHistory : [],
       requestsIteractions : {
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
+        movimentarURL : 'https://pje.tjma.jus.br/pje/Processo/movimentar.seam',
         listAutosDigitais : (_idProcesso)=>{
           var def = $.Deferred()
           var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
@@ -4576,6 +4581,53 @@ function loadPJeRestAndSeamInteraction(){
           .fail( err => def.reject(err) )
 
           return def.promise();
+        },
+        selecionarEtapaPrepararAtoDoPAC: (viewIdProc, taskInstanceId, arrayChecados)=>{
+          var def = $.Deferred()
+
+          function __criarPayLoadDosChecados(){
+            return arrayChecados /* = [0, 1, 2, 10] */
+            .map(ck => `            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:tabelaEnderecosPessoa:${ck}:check: on`   )
+            .join('\n')
+          }
+
+          var PAYLOAD = `
+            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:atividadeRegion
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:tabelaDestinatariosEndereco:0:umExpedientePorEnderecoCK1: on
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCepDecoration:enderecosPanelPesquisarEnderecoCep: 
+            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCompletoDecoration:enderecosPanelPesquisarEnderecoCompleto: 
+            ${ __criarPayLoadDosChecados() }
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-taskInstanceId:modalPanelMessagesOpenedState: 
+            iframe: true
+            taskInstanceForm: taskInstanceForm
+            autoScroll: 
+            javax.faces.ViewState: ${viewIdProc}
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = `
+            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id95
+            ${ __criarPayLoadDosChecados() }
+            iframe: true
+            taskInstanceForm: taskInstanceForm
+            autoScroll: 
+            javax.faces.ViewState: ${viewIdProc}
+            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.processo.requestsIteractions.movimentarURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.processo.xmlHistory.push({
+              interaction : 'PAC-preparar-ato',
+              $xml : jQ3(xml)
+            })
+            def.resolve( jQ3(xml), _this.processo.requestsIteractions ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
         }
       },
       acoes : {
@@ -4667,6 +4719,17 @@ function loadPJeRestAndSeamInteraction(){
             const audiencias = converter( $tabela )
 
             def.resolve( audiencias, $tabela, $xml) 
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        salvarAsSelecoesEnderecoPAC: (viewIdProc, taskInstanceId, arrayChecados)=>{
+          const def = $.Deferred()
+
+          _this.processo.requestsIteractions.selecionarEtapaPrepararAtoDoPAC(viewIdProc, taskInstanceId, arrayChecados)
+          .done( ($xml, it) => { 
+            def.resolve( $xml ) 
           })
           .fail( err => def.reject(err) )
 
