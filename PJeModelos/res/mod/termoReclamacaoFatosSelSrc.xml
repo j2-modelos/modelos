@@ -17,6 +17,9 @@ and open the template in the editor.
             <gItem id="trmRclFatoItSelecione"/>
             <gItem id="trmRclFatoItCobranca"/>
             <gItem id="trmRclFatoVendaVeiculo"/>
+            <gItem id="trmRclFatoAcidenteDeTransito"/>
+            <gItem id="trmRclFatoEmprestimoFraudulento"/>
+            <gItem id="trmRclDescontosIndevidosContaBeneficio"/>
         </group>
         <group label="CEMAR">
             <gItem id="trmRclFatoCNR"/>
@@ -98,6 +101,25 @@ and open the template in the editor.
             </itemContent>
         </item>
 
+        <item id="trmRclFatoAcidenteDeTransito" label="Acidente de Trânsito" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Narra o demandante que no dia 12 de janeiro de 2024 às 23h00min trafegava com seu veículo Volkswagen Fox, QMU-4511, cor prata, pela Rua Benedito Leite, preferencial, quando passavam pelo cruzamento com a Rua Pará a parte demandada avançou a via preferencial com sua moto Honda CG 150 FAN, 2012-2012, cor preta, NXM 7H92, colidindo fortemente com o lado direito do veículo, caindo o corpo do demandado no para-brisa do veículo do demandante. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Aduz que em decorrência do acidente tentaram compor consensualmente um acordo a fim de evitar acionar o poder judiciário. Num primeiro momento o demandado ofereceu bom ânimo para resolver amigavelmente a demandada. Contudo, apesar da última proposta apresentada para sanar os danos materiais causados, o demandado não honrou com seu compromisso. Todavia, passado os dias a demandada está se furtando de sua responsabilidade e deixou de atender aos chamados feito pelo demandante.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ressaltam os demandantes quem em razão do sinistro causado por culpa da parte demandada estão sofrendo abalos morais em decorrência de passarem os últimos dias dedicando tempo e esforço no sentido de consertar seu veículo, sem falar do abalo e sofrimento causados no momento da ocorrência do sinistro.   
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Assim, não havendo alternativa para solução da lide senão pela via judicial, procuraram os demandantes este juizado especial cível para dirimir a questão.  
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+
         <item id="trmRclFatoEmprestimoFraudulento" label="Empréstimo Fraudulento" dataPlus="">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
@@ -140,6 +162,46 @@ and open the template in the editor.
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
                         XXXXXXXXXXXXXXXXXXXXXX  
                     </elemento>-->
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+
+        <item id="trmRclDescontosIndevidosContaBeneficio" label="Desconto indevido conta benefício/conta corrente/folha pagamento" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Informa a demandante que é aposentada INSS, conforme documentação anexa. Narra o demandante que possui vínculo contratual com a parte demandada, possuindo conta corrente para recebimento de provento.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Informa a demandante que é aposentada INSS, conforme documentação anexa. Narra o demandante que não possui vínculo contratual com a parte demandada.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ocorre que, embora seja plenamente desconhecida a contratação pela demandante, existe desconto sendo efetuado sob a rubrica PAULISTA SERVICOS (PSERV), contrato de nº desconhecido, em descontos mensais de R$ 86,90, acerca de serviço desconhecido pela demandante.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ocorre que, embora seja plenamente desconhecida a contratação pela demandante, existe desconto sendo efetuado sob a rubrica PAULISTA SERVICOS (PSERV), contrato de nº desconhecido, em descontos mensais de R$ 86,90, acerca de serviço desconhecido pela demandante. Valor descontado na conta corrente em que recebe seu benefício previdenciário.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ocorre que, embora seja plenamente desconhecida a contratação pela demandante, existe desconto sendo efetuado sob a rubrica CONTRIBUIÇÃO CONAFER, contrato de nº desconhecido, em descontos mensais de R$ 36,96, acerca de serviço desconhecido pela demandante. Desconto efetuado diretamente em folha de pagamento.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Aduz a demandante que apenas tomou conhecimento da existência do(s) contrato(s) objetos da presente lide apenas em dezembro/2023. Ademais, não sabe precisar quando se iniciaram os descontos indevidos.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Apesar de ter procurado o PROCON desta cidade para mediar a demanda, não obteve resposta satisfatória à solução da lide.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Destaca a demandante que a parte demandada tem subtraído sua única fonte de renda, a qual usa exclusivamente para sua subsistência.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Assim não viu alternativa senão procurar este juizado especial cível para dirimir a questão.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Instada a informar expressamente qual o valor devido a título de restituição em dobro dos valores, a parte não soube informar, contudo, se comprometeu a apresentar a informação ao juízo até a data da audiência de conciliação, caso o banco demandado não crie restrições para acesso às suas informações bancárias, como já aconteceu antes de propor esta demanda.  
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Instada a informar expressamente qual o valor devido a título de restituição em dobro dos valores, a parte não soube informar, contudo, se comprometeu a apresentar a informação ao juízo até a data da audiência de conciliação.  
+                    </elemento>
                 </simpleElementsDefs>
             </itemContent>
         </item>

@@ -6023,7 +6023,15 @@ j2E.mods.Armazenamento = {
 }
 
 j2E.mods.urlHash = { 
-  decodeWindowLocationHash: () => window.location.hash ? JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop()))) : undefined,
+  decodeWindowLocationHash: () => { 
+    if( window.location.hash )
+      try {
+        return JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop())))
+      } catch (error) {
+        return undefined
+      }
+    return undefined
+  },
   decode: (carga) => JSON.parse(atob(decodeURIComponent( carga ))),
   encode: (carga) => encodeURIComponent(btoa( JSON.stringify( carga ) ))
 }

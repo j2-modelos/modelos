@@ -1030,7 +1030,7 @@ function init(){
                 ob => obtidaMatachedList.store.objs.some(
                   obs=> obs.objetoIdNaPLP === ob.id 
                   && obs.idProcesso === parseInt(idProc) 
-                  && obs.task === j2E.env.task ))
+                  && obs.task.name === j2E.env.task.name ))
   
   
               $thisTable.find('tr').each((idx, el)=>{

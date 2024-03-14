@@ -4589,6 +4589,15 @@ try {
             elS.removeAttr('mce_style');
             elS.removeAttr('style');
           });
+          _el.find('font').each(function(idx, elS){
+            elS = _$(elS);
+            ['color', 'face', 'style', 'mce_style'].forEach(atr => elS.removeAttr(atr))
+          });
+          _el.contents().filter(function() {
+            return this.nodeType === 3 && (jQ3(this).text().trim() === "" || jQ3(this).text().trim() === "\u00A0");
+          }).each(function() {
+            jQ3(this).remove(); // Remove o nó de texto se for espaço em branco ou &nbsp;
+          });
         });
         
       }

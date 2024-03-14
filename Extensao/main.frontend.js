@@ -2549,9 +2549,22 @@ function fronendLoad(){
         });
       };
 
+      function _button(title ='', faClass='', iAttr='', $appendButton){
+        const $button = jQ3( /*html*/`
+            <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="${title}">
+              <i _ngcontent-pdi-c12 aria-hidden="true" class="fa ${faClass}" ${iAttr}></i>
+            </button>
+        `)
+
+        $appendButton && $button.append($appendButton)
+
+        return $button
+      }
+
       jQ3.initialize('#acoes-processos-selecionados', function(){       
         
         const $this = jQ3( this )
+        const nomeTarefaAtual = $this.parents('#divProcessosTarefa').find('filtro-tarefas .nome-tarefa:first-child').text().trim()
         $this.removeClass('col-md-12')
         $this.addClass('col-md-6')
 
@@ -2561,67 +2574,93 @@ function fronendLoad(){
 
         $this.after($divbspC)
 
-        //persolanizações
-        const TEMPLATE_BUTTON_SEM_TOGGLER = `
-          <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Fixar janela dos autos digitais">
-            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-lock-open" j2-i-lock></i>
-            <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-book"></i>
-          </button>`
-
-        const $butSentinela = jQ3(TEMPLATE_BUTTON_SEM_TOGGLER)
-
         const $j2Container = $divbspC.find(' > div > div')
         $j2Container.empty()
         $j2Container.removeClass('pull-left')
         $j2Container.addClass('pull-right')
         $j2Container.addClass('j2-alinhar-direita-items')
-        
-        $j2Container.append($butSentinela)
 
-        $butSentinela.click(()=>{
-          $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
-          $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
-          if( ! $butSentinela.is('.btn-primary') )
-            return;
 
-          const $eventTargetLi = $uiDadosDaList.find('.selecionado').parents('li')
-          __openAutosDigitaisFixados($eventTargetLi)
-        })
 
-        const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
-        $uiDadosDaList.lasNumProc = '0'
-        $uiDadosDaList.click((_ev)=>{
-          if( ! jQ3(_ev.target).is('.tarefa-numero-processo') )
-            return
+        //persolanizações
+        function criarSentinelaAutosDigitais(){
+          const TEMPLATE_BUTTON_SEM_TOGGLER = `
+            <button _ngcontent-pdi-c12 class="btn btn-sm btn-default ng-star-inserted" title="Fixar janela dos autos digitais">
+              <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-lock-open" j2-i-lock></i>
+              <i _ngcontent-pdi-c12 aria-hidden="true" class="fa fa-book"></i>
+            </button>`
 
-          const $eventTargetLi = jQ3(_ev.target).parents('li');
-          console.log('TESTANDO: click')
-          __openAutosDigitaisFixados($eventTargetLi)
-        })
+          const $butSentinela = jQ3(TEMPLATE_BUTTON_SEM_TOGGLER)
+          
+          $j2Container.append($butSentinela)
 
-        const idJanel = _guid()
+          $butSentinela.click(()=>{
+            $butSentinela.toggleClass('btn-default').toggleClass('btn-primary')
+            $butSentinela.find('[j2-i-lock]').toggleClass('fa-lock-open').toggleClass('fa-lock')
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
 
-        function __openAutosDigitaisFixados($eventTargetLi){
-          if( ! $butSentinela.is('.btn-primary') )
-            return;
-
-          const [numProc] = $eventTargetLi.find('.tarefa-numero-processo').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
-          const idTaskInstance = $eventTargetLi.find('.tarefa-numero-processo [id]').attr('id')
-
-          if($uiDadosDaList.lasNumProc === numProc)
-            return;
-
-          $uiDadosDaList.lasNumProc = numProc
-
-          _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
-            const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}&idTaskInstance=${idTaskInstance}&j2=fixarAutos`
-
-            __sendMessageToPje({
-              action : 'abrirAutosDigitaisFixados',
-              url
-            }, 
-            "PARENT_TOP");
+            const $eventTargetLi = $uiDadosDaList.find('.selecionado').parents('li')
+            __openAutosDigitaisFixados($eventTargetLi)
           })
+
+          const $uiDadosDaList = $this.parents('processos-tarefa').find('ul.ui-datalist-data')
+          $uiDadosDaList.lasNumProc = '0'
+          $uiDadosDaList.click((_ev)=>{
+            if( ! jQ3(_ev.target).is('.tarefa-numero-processo') )
+              return
+
+            const $eventTargetLi = jQ3(_ev.target).parents('li');
+            console.log('TESTANDO: click')
+            __openAutosDigitaisFixados($eventTargetLi)
+          })
+
+          const idJanel = _guid()
+
+          function __openAutosDigitaisFixados($eventTargetLi){
+            if( ! $butSentinela.is('.btn-primary') )
+              return;
+
+            const [numProc] = $eventTargetLi.find('.tarefa-numero-processo').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}|[0-9]{20}/)
+            const idTaskInstance = $eventTargetLi.find('.tarefa-numero-processo [id]').attr('id')
+
+            if($uiDadosDaList.lasNumProc === numProc)
+              return;
+
+            $uiDadosDaList.lasNumProc = numProc
+
+            _getAcessoAosAutosDigitais(numProc).then(acessoAutosDigitais=>{
+              const url = `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${acessoAutosDigitais.idProcesso}&ca=${acessoAutosDigitais.ca}&idTaskInstance=${idTaskInstance}&j2=fixarAutos`
+
+              __sendMessageToPje({
+                action : 'abrirAutosDigitaisFixados',
+                url
+              }, 
+              "PARENT_TOP");
+            })
+          }
+        }
+
+        criarSentinelaAutosDigitais()
+        debugger
+
+        switch (nomeTarefaAtual){
+          case 'Avaliar determinações do magistrado':{
+            const $button = _button('Distribuir em várias telas', 'fa-window-restore', 'j2-i-distribuir-adm' )
+            $j2Container.prepend($button)
+
+            $button.click(()=>{
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach(i =>{
+                const url = __prepararLinkTarefa(nomeTarefaAtual, {
+                  competencia: "",
+                  etiquetas:[],
+                  numeroProcesso: `${i}20`
+                })
+                window.open(url, `adm-${i}`)
+              })
+            })
+            break;
+          }
         }
 
         /*jQ3.initialize('processos-tarefa conteudo-tarefa .row a:first-child', function(){
