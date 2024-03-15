@@ -2050,6 +2050,11 @@ a[_ngcontent-rnb-c14]:visited {
     text-align:center !important
 }
 
+[j2-ardigital-panel] [j2-pje-salvar]{
+    margin-top: 12px;
+    float: right;
+}
+
 [j2-ARDigital-destinatario-endereco-panel] .rich-panel-header{
     font-size: 13px;
     line-height: 14px;
@@ -2092,6 +2097,45 @@ a[_ngcontent-rnb-c14]:visited {
 
 [j2-ARDigital-destinatario-enderecos] .rich-panel-body{
     margin-bottom: 0px;
+}
+
+.rich-panel[j2-panel-error] {
+    background-color: #f9bdbb;
+}
+
+.rich-panel[j2-panel-error] .rich-panel-header{
+    color: black;
+}
+
+.rich-panel[j2-panel-error]:hover {
+    background-color: #f7a6a4;
+}
+
+.rich-panel[j2-panel-error] img{
+    filter: unset;
+    transition: filter 0.5s ease; /* Transição suave de 0.5 segundos */
+}
+
+.rich-panel[j2-panel-error]:hover img{
+    filter: brightness(85%) contrast(85%) saturate(110%);
+    transition: filter 0.5s ease; /* Transição suave de 0.5 segundos */
+}
+
+.rich-panel[j2-panel-error] div {
+    background-color: unset;
+}
+
+.rich-panel[j2-panel-error] [j2-ui-content] span {
+    font-size: 12px
+}
+
+.rich-panel[j2-panel-error] [j2-ui-content] img {
+    height: 28px;
+    padding-right: 5px;
+}
+
+.rich-panel[j2-panel-error] [j2-ui-content] [j2-container-objeto-panel]{
+     text-align: center;   
 }
 
 
