@@ -1418,6 +1418,29 @@ function init(){
             var $el = jQ3(event.target)
             _avaliarSeEListaValida($el)
           })
+
+          evBus.on('ao-alterar-a-plp', function(__J2E__, plpStatusOuPlpCompleta){
+            if( ! __J2E__.alteradaQuantidadeObjetos )
+              return
+
+            if (! jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:enderecosPanel`).length ) 
+              return
+
+            if ( !ARDigitalPanel.$content.find('[j2-pje-salvar]').length ){
+              const $adHocButton = j2EUi.createButton({
+                textoButton: 'Salvar alterações do PJe',
+                classButton: 'btn-primary',
+                callback: ()=>{
+                  const [tagAPrepararAto] = jQ3('#wizard li:last-child').prev().find('a')
+                  tagAPrepararAto?.dispatchEvent( new Event('click') )
+                },
+                moreAttrs: { 'j2-pje-salvar': '' }
+              })
+              ARDigitalPanel.$content.append($adHocButton)
+            }
+
+            toaster("AR Digital", `Não deixe de salvar as alterações no PJe!`, "info")  
+          })
         })
 
 
@@ -1629,7 +1652,7 @@ function init(){
         .done( _res => {
           __getDestinatarioEnderecoResolvido(_res.id, dataSetObjectPJe)
           .done( res => deferred.resolve(res) )
-          .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+          .fail( (error, destinatario) => deferred.reject(error, destinatari, dataSetObjectPJe) )
         } )
         .fail( (err, endObj) => deferred.reject(err, endObj, dataSetObjectPJe) )
         // cópia desse blocl abaixo
@@ -1676,7 +1699,7 @@ function init(){
             else
               __getDestinatarioEnderecoResolvido(destinatarioDisponivelComEnderecoCombinando, dataSetObjectPJe)
               .done( res2 => deferred.resolve(res2) )
-              .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+              .fail( (error, destinatario) => deferred.reject(error, destinatario, dataSetObjectPJe) )
           } else if ( destinatarioDisponivel ){
             destinatarioDisponivel.__J2E__ = {
               iterandoNovoEnderecoParaDestinatario: true
@@ -1684,7 +1707,7 @@ function init(){
 
             __getDestinatarioEnderecoResolvido(destinatarioDisponivel, dataSetObjectPJe)
             .done( res2 => deferred.resolve(res2) )
-            .fail( (error, destinatario) => deferred.reject(error, destinatario) )
+            .fail( (error, destinatario) => deferred.reject(error, destinatario, dataSetObjectPJe) )
           }else
             __criarDestinatario(dataSetObjectPJe)
             .done( oIdNovoDestinatarioCriado => {
@@ -1692,7 +1715,7 @@ function init(){
 
               __getDestinatarioEnderecoResolvido(oIdNovoDestinatarioCriado.id, dataSetObjectPJe)
               .done( umNovoDestinatarioCriado => { 
-                debugger
+                
                 umNovoDestinatarioCriado.__J2E__ = {
                   iterandoNovoEnderecoParaDestinatario: true
                 }
@@ -1700,7 +1723,7 @@ function init(){
 
                 deferred.resolve(umNovoDestinatarioCriado) 
               })
-              .fail( error => deferred.reject(error) )
+              .fail( error => deferred.reject(error, destinatario, dataSetObjectPJe) )
             } )
             .fail( (err, endObj) => deferred.reject(err, endObj, dataSetObjectPJe) )
         }
@@ -1751,9 +1774,10 @@ function init(){
     }
 
     function __criarDestinatario(dataSetObjectPJe, handledEndereco){
-      var deferred = jQ3.Deferred();
+      const deferred = jQ3.Deferred();
 
-      var objEnd = j2E.ARDigital.util.conformarEnderecoARDigigal(handledEndereco || dataSetObjectPJe.endereco)
+      const objEnd = dataSetObjectPJe.objEnderecoFormatAlterado 
+        || j2E.ARDigital.util.conformarEnderecoARDigigal(handledEndereco || dataSetObjectPJe.endereco)
 
       j2E.ARDigital.api.destinatarios.criar({
         enderecos : [
@@ -1877,7 +1901,7 @@ function init(){
         return newInputLinkedPLP;
       }
       
-      linkedPLP.parents('tr').find('td:nth-child(4)').text(plp.objetos.length)
+      linkedPLP.parents('tr').find('td:nth-child(5)').text(plp.objetos.length)
       return linkedPLP
     }
 
@@ -1917,7 +1941,7 @@ function init(){
         j2E.ARDigital.api.plp.criar(dataPostagem, objetosAndRawData.map(o => o.objetoCorreios))
         .done( res98 => j2E.ARDigital.api.plp.getById(res98.id)
           .done( newPlp => {
-            //debugger;
+            //;
             __replaceTRDaNovaCiracaoDeListaDePostagem(linkedPLP, newPlp)
             deferred.resolve(newPlp, $trDoDestinatario, enderecosSelectedData)
           })
@@ -1935,6 +1959,7 @@ function init(){
         j2E.ARDigital.api.plp.getById(idPlp)
         .done( resPLP =>{
           const plpAntes = JSON.stringify(resPLP).hashCode()
+          const plpObjetosAntes = resPLP.objetos.length
 
           objetosAndRawData.map(o => o.objetoCorreios).forEach( _obj => {
             let objetoEncontrado = undefined
@@ -1992,6 +2017,10 @@ function init(){
               return j2E.ARDigital.api.plp.getById(response.id)
             })
             .done( upPlp => {
+              upPlp.__J2E__ = {
+                comAlteracoes: true,
+                alteradaQuantidadeObjetos: plpObjetosAntes !== upPlp.objetos.length
+              }
               deferred.resolve(upPlp, $trDoDestinatario, enderecosSelectedData) 
             })
             .fail( ____defaultFail )
@@ -2038,8 +2067,32 @@ function init(){
         let $target = endSel.$target
         
         function ____defaultFail(err, enderecoOuDestinatario, dataSetObjectPJe){
-          destinatarioResolvidoDefer.reject()
-          $containerObjetoPanel.empty()
+          destinatarioResolvidoDefer.reject('Destinatário com problemas no endereço')
+          endSel.$containerObjetoPanel.empty()
+
+          const $trLinked = jQ3(/*html*/`
+            <tr class="rich-table-row">
+              <td class="rich-table-cell" ></td>
+              <td class="rich-table-cell" colspan="5" j2-container-objeto-panel></td>
+            </tr>
+          `)
+          const $tdContainer = $trLinked.find('[j2-container-objeto-panel]')
+          const $panelClone = $panel.clone(true)
+          endSel.$trDoDestinatario.data('j2E', { 
+            $trLinked : $trLinked,
+            hash : endSel.data.objEnderecoFormat.hashCode,
+            $panelPrevious: $panel.prev()
+          })
+          $panel.after($panelClone)
+          $panelClone.attr('j2-panel-error', '')
+          $panelClone.find('[j2-container-objeto-panel]').append(j2EUi.createWarnElements(`
+            Endereço com problema
+          `))
+
+          $tdContainer.append($panel)
+          endSel.$trDoDestinatario.after($trLinked )
+
+
           //Com erro
           ____obj = {
             maoPropria : true,
@@ -2047,27 +2100,19 @@ function init(){
           }
 
           function ___butSaveClickCallBack(dadosDoFormulario){
-            if(enderecoOuDestinatario.enderecoNaoPersistido){
-              const end = enderecoOuDestinatario.enderecoNaoPersistido
-              const store = {}
-
-              dadosDoFormulario.alteracoes.forEach(alteracao=>{
-                store[alteracao] = dadosDoFormulario.objEnderecoAlterado[alteracao]
-              })
-
-              lockr.set(`ar-digital-endMaual-map-id-${idProc}-${end.hashCode}`, 
-              store, { expiration: 3 * 24 * 60 * 60 * 1000 })
+            if( dadosDoFormulario.alteracoes.length === 0 ){
+              toaster("AR Digital", `Erro ao atualizar objeto. (${err.responseText})`, 'warn')	
+              return;
             }
+                    
+            const store = {}
 
-            /*j2EUi.richModal(true)
-            __criarDestinatario(data, newObjEnd)
-            .done( _res => {
-              __getDestinatarioEnderecoResolvido(_res.id, data)
-              .done( res => _treatDestinatar        ioEEnderecoARDigital(enderecosSelected) )
-              .fail( error => alert('#####Manga this error') )
-            } )
-            .fail( (_err, _endObj) => ____defaultFail(_err, _endObj, data) )
-            .then( () => j2EUi.richModal(false) )*/
+            dadosDoFormulario.alteracoes.forEach(alteracao=>{
+              store[alteracao] = dadosDoFormulario.objEnderecoAlterado[alteracao]
+            })
+
+            lockr.set(`ar-digital-endMaual-map-id-${idProc}-${dataSetObjectPJe.objEnderecoFormat.hashCode}`, 
+            store, { expiration: 3 * 24 * 60 * 60 * 1000 })
 
             _recarregarSelecoesDoUsuario(destinatarioSetComEnderecosUsados)
           }
@@ -2092,7 +2137,7 @@ function init(){
           })
           errrorToUser = errrorToUser.join('<br>')
 
-          $containerObjetoPanel.append(j2EUi.createPanel('Corrigir Endereço para o AR Digital', 
+          endSel.$containerObjetoPanel.append(j2EUi.createPanel('Corrigir Endereço para o AR Digital', 
             [
               $endEditorPanel,
               j2EUi.createWarnElements(`
@@ -2141,7 +2186,16 @@ function init(){
               (objetoCorreiosAlterado)=>{
                 j2EUi.richModal(true)
                 __adicionarAPLPSelecionada(destinatarioSetComEnderecosUsados)
-                .then( ___persistirPLPEAtualizarViewNoPainelDoARDigital )
+                .then( (plpCompletaOrStatusFechada, $trDoDestinatario, enderecosSelectedData)=>{
+                  return !plpCompletaOrStatusFechada.plpFechada 
+                    ? ___persistirPLPEAtualizarViewNoPainelDoARDigital(plpCompletaOrStatusFechada, $trDoDestinatario, enderecosSelectedData) 
+                    : jQ3.Deferred().resolve(plpCompletaOrStatusFechada).promise()
+                })
+                .done( plpStatusOuPlpCompleta => {
+                  if(plpStatusOuPlpCompleta?.__J2E__?.comAlteracoes)
+                    evBus.fire('ao-alterar-a-plp', plpStatusOuPlpCompleta?.__J2E__, plpStatusOuPlpCompleta)
+                  //defer(()=>j2EUi.richModal(false))
+                })
                 .fail(err => {
                   j2EUi.richModal(false)
                   toaster("AR Digital", `Erro ao atualizar objeto. (${err.responseText})`, "error")
@@ -2177,10 +2231,13 @@ function init(){
           ? ___persistirPLPEAtualizarViewNoPainelDoARDigital(plpCompletaOrStatusFechada, $trDoDestinatario, enderecosSelectedData) 
           : jQ3.Deferred().resolve(plpCompletaOrStatusFechada).promise()
       })
-      .done( plpStatus => {
-        if(plpStatus?.plpFechada){
+      .done( plpStatusOuPlpCompleta => {
+        if(plpStatusOuPlpCompleta?.plpFechada){
           toaster("AR Digital", `Lista de postagem associada já está fechada`, "info")  
         }
+        if(plpStatusOuPlpCompleta?.__J2E__?.comAlteracoes)
+            evBus.fire('ao-alterar-a-plp', plpStatusOuPlpCompleta?.__J2E__, plpStatusOuPlpCompleta)
+        
         defer(()=>j2EUi.richModal(false))
       })
       .fail( (err) => {
@@ -2214,7 +2271,7 @@ function init(){
             _marcarAutomaticamenteUmEnderecoPorExpediente(destinatarioSetComEnderecosUsados)
           })
 
-          def.resolve()
+          def.resolve(plp, $trDoDestinatario, enderecosSelectedData)
         })
         .fail(err=> def.reject(err))
 
@@ -2226,7 +2283,7 @@ function init(){
       var deffered = jQ3.Deferred()
 
       function __obterObjetoCorreiosEspelhoPersistido(objetoDePLP){
-        debugger
+        
         return {
           idProcesso: idProc,
           task: task,
@@ -2619,12 +2676,8 @@ function init(){
     }
 
     function _recarregarSelecoesDoUsuario(enderecosSelected){ 
-      const $elementoTagTbodyDaDefinicaoDeEnderecos = _ObterElementoTagTRDaParteAtual(enderecosSelected)
-      if(!$elementoTagTbodyDaDefinicaoDeEnderecos.length)
-        return;
-      
-      let $elementosTagAPagina = $elementoTagTbodyDaDefinicaoDeEnderecos.find('a:first')
-      $elementosTagAPagina[0].dispatchEvent( new Event('click') )
+      const [elementosTagAPagina] = enderecosSelected.$trDoDestinatario.find('a:first')
+      elementosTagAPagina?.dispatchEvent( new Event('click') )
     }
 
     function _avaliarSeEListaValida($el, emitEvent, extendedReturn){
