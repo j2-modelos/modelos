@@ -122,6 +122,7 @@ try {
           { id : 'trmRcl.Comuns.DanosMateriais', ipLabel : 'D. Material' },
           { id : 'trmRcl.Comuns.Inexistencia', ipLabel : 'Débito' },
           { id : 'trmRcl-Comuns-Restituicao', ipLabel : 'Restituicao' },
+          { id : 'trmRcl-Comuns-Pagamento', ipLabel : 'Pagamento' },
           { id : 'trmRcl-ObgFaz-TransferenciaTitularidadeDebito', ipLabel : 'Débitos' },
           { id : 'trmRcl-Comuns-Restituicao-dobro', ipLabel : 'Rest. Dobro' },
           
@@ -704,6 +705,11 @@ try {
               
               pkg.TermoReclamacaoSeletorParte.changeParteTipo(event, selTpPss, prop.input.id);
             };
+
+            prop.input.onkeyup = function(event){
+              prop.input.value = prop.input.value.replace(/\t/g, '')
+            }
+            //prop.input.onkeypress = 
           });
         
           /* other events */
@@ -714,11 +720,13 @@ try {
                   pkg.Formatacao.filtraNumeros(prop.input, 16, event);
                 };
                 prop.input.onkeyup = function(event){
+                  prop.input.value = prop.input.value.replace(/\t/g, '')
                   pkg.Formatacao.formataCpf(prop.input, event);
                 }; 
                 break;
               case 'ParteCNPJ':
                 prop.input.onkeypress = function(event){
+                  prop.input.value = prop.input.value.replace(/\t/g, '')
                   pkg.Formatacao.filtraNumeros(prop.input, 16, event);
                 };
                 prop.input.onkeyup = function(event){

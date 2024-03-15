@@ -2039,7 +2039,7 @@ function init(){
         
         function ____defaultFail(err, enderecoOuDestinatario, dataSetObjectPJe){
           destinatarioResolvidoDefer.reject()
-          $containerObjetoPanel.empty()
+          endSel.$containerObjetoPanel.empty()
           //Com erro
           ____obj = {
             maoPropria : true,
@@ -2092,7 +2092,7 @@ function init(){
           })
           errrorToUser = errrorToUser.join('<br>')
 
-          $containerObjetoPanel.append(j2EUi.createPanel('Corrigir Endereço para o AR Digital', 
+          endSel.$containerObjetoPanel.append(j2EUi.createPanel('Corrigir Endereço para o AR Digital', 
             [
               $endEditorPanel,
               j2EUi.createWarnElements(`
