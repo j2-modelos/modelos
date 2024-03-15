@@ -2067,6 +2067,7 @@ function init(){
         let $target = endSel.$target
         
         function ____defaultFail(err, enderecoOuDestinatario, dataSetObjectPJe){
+
           destinatarioResolvidoDefer.reject('Destinatário com problemas no endereço')
           endSel.$containerObjetoPanel.empty()
 

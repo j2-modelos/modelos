@@ -15,6 +15,10 @@ and open the template in the editor.
         </elemento>
     </itemFormats>
     <groupsDefs>
+        <group label="#Geral">
+            <gItem id="trmRcl-Generico"/>
+            <gItem id="trmRcl-Consulta-Endereco"/>
+        </group>
         <group label="Padrão">
             <gItem id="trmRcl.Padrao.JusticaGratuita"/>
             <gItem id="trmRcl.Padrao.CitacaoPassivo"/>
@@ -24,7 +28,7 @@ and open the template in the editor.
             <gItem id="trmRcl.Comuns.DanosMorais"/>
         </group>             
         <group label="Geral">
-            <gItem id="trmRcl.Comuns.Pagamento"/>
+            <gItem id="trmRcl-Comuns-Pagamento"/>
             <gItem id="trmRcl.Comuns.Inexistencia"/>
             <gItem id="trmRcl-Comuns-Declarar-Inexistente-Contrato"/>
             <gItem id="trmRcl-Comuns-Restituicao"/>
@@ -74,7 +78,15 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>     
-        <item id="trmRcl-Comuns-Restituicao" label="Pagamento" dataPlus="">
+        <item id="trmRcl-Comuns-Pagamento" label="Pagamento" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Requerer a condenação da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
+                    à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Pagamento{R$ 0,00 (zero)}}, referentes ao negócio celebrados entres as partes.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmRcl-Comuns-Restituicao" label="Restituição" dataPlus="">
             <itemContent type="plainText" addClassStyles="">
                 <data>
                     Requerer a condenação da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
@@ -117,6 +129,21 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item>     
+        <item id="trmRcl-Generico" label="#Genérico" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    Requerer que seja #:U{JULGADA PROCEDENTE} a presente demandada a fim de XXXXPedidoXXXXX.
+                </data>
+            </itemContent>
+        </item>     
+        <item id="trmRcl-Consulta-Endereco" label="Consulta Enderco" dataPlus="">
+            <itemContent type="plainText" addClassStyles="">
+                <data>
+                    #:B{Requerer que este juizado especial cível diligencie nos sistemas conveniados pelo enderço da parte #{j2.env.PJeVars.processo.polos.partePassiva}}
+                </data>
+            </itemContent>
+        </item>     
+
         <item id="trmRcl-Comuns-Declarar-Inexistente-Contrato" label="Declarar inexistente o contrato" dataPlus="">
             <itemContent type="plainText" addClassStyles="">
                 <data>
@@ -141,7 +168,7 @@ and open the template in the editor.
                 <data>
                     Requerer que seja #:U{JULGADA PROCEDENTE} a presente demandada a fim de promover 
                     da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
-                    à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Restituicao{R$ 0,00 (zero)}}, 
+                    à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Restituicao-dobro{R$ 0,00 (zero)}}, 
                     referentes ao dobro do valor objeto da lide cobrado indevidamente.
                 </data>
             </itemContent>
