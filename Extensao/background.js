@@ -225,3 +225,263 @@ chrome.runtime.onMessage.addListener(
   
 })(); 
 
+(function criarAutoEtiquetarDocumentosNaoLidos(){
+  function fetchingAgrupadores(){
+    const urlAgrupadores = 'https://pje.tjma.jus.br/pje/Painel/painel_usuario/include/agrupadorPje2.seam'
+    let viewStateId = 0
+  
+    async function ___getUserSets(){
+      return { 
+        regex: /-0|-1|-2/, 
+        etiqueta: 'Documento não lido' 
+      }
+    }
+  
+    function ___removerDuplicados(array) {
+      const uniqueIds = new Set();
+      return array.filter(obj => {
+        if (!uniqueIds.has(obj.idProcesso)) {
+          uniqueIds.add(obj.idProcesso);
+          return true;
+        }
+        return false;
+      });
+    }
+    
+    function __extrairTabelasTBody(html) {
+      const tbodyRegex = /<tbody\b[^>]*>(.*?)<\/tbody>/gis;
+      const tables = [];
+      let match;
+      
+      while (match = tbodyRegex.exec(html)) {
+          tables.push(match[0]);
+      }
+      
+      return tables;
+    }
+    
+    function __extrairMaximoPaginas(tbodyHTML){
+      const tdRegex = /<td\b[^>]*>(.*?)<\/td>/gis;
+      let tdContents = [];
+      let match;
+  
+      while (match = tdRegex.exec(tbodyHTML)) {
+          // Acessando o grupo de captura 1 para obter o conteúdo interno da tag <td>
+          const tdContent = match[1];
+          tdContents.push(tdContent);
+      }
+      
+      tdContents = tdContents.filter(v=> !isNaN(v))
+      
+      return Math.max(...tdContents)
+    }
+    
+    function __extrairRegistrosProcessoPaginaHTML(tbodyHTML){
+      const trRegex = /<tr\b[^>]*>(.*?)<\/tr>/gis;
+        let trs = [];
+        let match;
+    
+        while (match = trRegex.exec(tbodyHTML)) {
+            // Acessando o grupo de captura 1 para obter o conteúdo interno da tag <td>
+            trs.push(match);
+        }
+          
+      return trs
+    }
+    
+    
+    function _fetchAgrupadores(){
+      return fetch(urlAgrupadores)
+        .then(response => {
+          // Verifica se a resposta foi bem-sucedida (código 200)
+          if (response.ok) {
+              // Extrai o texto da resposta
+              return response.text();
+          }
+          // Se a resposta não foi bem-sucedida, lança um erro
+          throw new Error('Erro ao obter a página: ' + response.status);
+        })
+    }
+  
+    function _fetchDocumentosNaoLidos(){
+      const postData = new URLSearchParams();
+      postData.append('AJAXREQUEST', 'j_id320');
+      postData.append('javax.faces.ViewState', `${viewStateId}`);
+      postData.append('j_id321', 'j_id321');
+      postData.append('AJAX:EVENTS_COUNT', '1');
+      
+      // Configurações da solicitação
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: postData,
+      };
+      
+      
+      // Faz a solicitação POST
+      return fetch(urlAgrupadores, requestOptions)
+      .then(response => {
+        // Verifica se a resposta foi bem-sucedida (código 200)
+        if (response.ok) {
+          // Extrai o texto da resposta
+          return response.text();
+        }
+        // Se a resposta não foi bem-sucedida, lança um erro
+        throw new Error('Erro ao obter a página: ' + response.status);
+      })
+    }
+  
+    function _fetchDocumentosNaoLidosPagina(pagina){
+      const postData = new URLSearchParams();
+      postData.append('AJAXREQUEST', 'j_id320');
+      postData.append('processoDocumentoNaoLidoForm', 'processoDocumentoNaoLidoForm');
+      postData.append('autoScroll', '');
+      postData.append('javax.faces.ViewState', `${viewStateId}`);
+      postData.append('processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id374', pagina);
+      postData.append('ajaxSingle', 'processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id374');
+      postData.append('AJAX:EVENTS_COUNT', '1');
+      
+      // Configurações da solicitação
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: postData,
+      };
+      
+      
+      // Faz a solicitação POST
+      return fetch(urlAgrupadores, requestOptions)
+      .then(response => {
+        // Verifica se a resposta foi bem-sucedida (código 200)
+        if (response.ok) {
+          // Extrai o texto da resposta
+          return response.text();
+        }
+        // Se a resposta não foi bem-sucedida, lança um erro
+        throw new Error('Erro ao obter a página: ' + response.status);
+      })
+    }
+  
+    function _fetchInserirEtiqueta(processo, etiqueta){
+      const data = {
+          idProcesso: processo,
+          tag: etiqueta
+      };
+      
+      // Configurações da solicitação
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      };
+      
+      
+      // Faz a solicitação POST
+      return fetch('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/inserir', 
+       requestOptions)
+      .then(response => {
+        // Verifica se a resposta foi bem-sucedida (código 200)
+        if (response.ok) {
+          // Extrai o texto da resposta
+          return response.json()
+        }
+        // Se a resposta não foi bem-sucedida, lança um erro
+        throw new Error('Erro ao obter a página: ' + response.status);
+      })
+      .catch(error => {
+        return ''
+      })
+    }
+    
+    _fetchAgrupadores()
+    .then(text => {
+      // Processa o texto retornado conforme necessário
+      // Por exemplo, você pode convertê-lo em um objeto Documento
+      const regex = /<input.*?id="javax\.faces\.ViewState".*?value="(.*?)".*?>/;
+      // Procura pela ocorrência da expressão regular no texto HTML
+      const match = text.match(regex);
+  
+      viewStateId = match.at(1)
+      
+      return _fetchDocumentosNaoLidos()
+    })
+    .then(text => { return (async () =>{ 
+      const tbodies = __extrairTabelasTBody(text)
+      const maxPagina = __extrairMaximoPaginas(tbodies.at(0))
+      let trProcessos = __extrairRegistrosProcessoPaginaHTML(tbodies.at(1))
+  
+      for(let pagina = 2; pagina <= maxPagina; pagina++)
+        await _fetchDocumentosNaoLidosPagina(pagina)
+        .then(textPag =>{
+          const tbodiesPag = __extrairTabelasTBody(textPag)
+          const trProcessosPag = __extrairRegistrosProcessoPaginaHTML(tbodiesPag.at(1))
+          
+          trProcessos = trProcessos.concat(trProcessosPag)
+        })
+  
+      const trMapIdNum = trProcessos.map(tr => {
+        return { 
+          idProcesso: /detalheProcessoVisualizacao\.seam\?id=(\d+)/.exec(tr.at(0)).at(1), 
+          num: /\d{7}-\d{2}\.\d{4}\.\d{1}\.\d{2}\.\d{4}/.exec(tr.at(0)).at(0) 
+        }
+      })
+  
+      // Processa o texto retornado conforme necessário
+      console.log("Resposta do POST:", maxPagina, trMapIdNum);
+  
+      return trMapIdNum
+    })()})
+    .then(trMapIdNum => { return ( async ()=>{
+      console.log('Processos com documentos não lidos: ', trMapIdNum)
+      
+      const unicosProcessos = ___removerDuplicados(trMapIdNum)
+      const userSets = await ___getUserSets()
+      const processosUsuarioFiltrado = unicosProcessos.filter(e=>e.num.match(userSets.regex))
+      const etiquetasAdicionadas = []
+  
+      for (let index = 0; index < processosUsuarioFiltrado.length; index++) {
+        const processo = processosUsuarioFiltrado[index]
+        const respJsonOrText = await _fetchInserirEtiqueta(processo.idProcesso, userSets.etiqueta)
+        
+        if(typeof respJsonOrText === 'object'){
+          etiquetasAdicionadas.push( { respJson: respJsonOrText, ...processo} )
+          console.log('Etiqueta adicionada', processo, respJsonOrText)
+        }
+      }
+  
+      return { 
+        trMapIdNum,
+        userSets,
+        unicosProcessos,
+        processosUsuarioFiltrado,
+        etiquetasAdicionadas
+      }
+    })()})
+    .then( obj =>{
+      console.log('Outras ações', obj)	
+    })
+    .catch(error => {
+      // Captura e manipula qualquer erro que ocorra durante o processo
+      console.error('Erro durante a solicitação:', error);
+    })
+  }
+  
+  
+  // Cria ou vatualiza o alarme para disparar a cada frequência definida
+  chrome.alarms.create('fetchingAgrupadores', { periodInMinutes: 15 });
+  
+  // Adiciona um ouvinte para tratar o evento do alarme
+  chrome.alarms.onAlarm.addListener(alarme => {
+      if (alarme.name === 'fetchingAgrupadores') {
+          fetchingAgrupadores()
+          // Coloque aqui o código que deseja executar periodicamente
+      }
+  });
+  
+})()
