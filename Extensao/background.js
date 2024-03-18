@@ -95,7 +95,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
 });
 
 chrome.windows.onFocusChanged.addListener(function(winId, a, b, c, d) {
-  chrome.windows.get(winId).then(win=> { 
+  chrome.windows.get(winId)
+  .then(win=> { 
     if (win.type !== 'popup')
       return
     const [uniquePopupTabId] = j2E.ports.all.filter(
@@ -108,6 +109,9 @@ chrome.windows.onFocusChanged.addListener(function(winId, a, b, c, d) {
     }
 
     _tabsOnActivatedListener(activeInfo)
+  })
+  .catch(error=>{
+    return
   })
 })
 
@@ -479,9 +483,41 @@ chrome.runtime.onMessage.addListener(
   // Adiciona um ouvinte para tratar o evento do alarme
   chrome.alarms.onAlarm.addListener(alarme => {
       if (alarme.name === 'fetchingAgrupadores') {
+          console.log('Disparado alarme fetchingAgrupadores')
           fetchingAgrupadores()
           // Coloque aqui o código que deseja executar periodicamente
       }
   });
   
+})()
+
+
+;(function keepBackgroundAlive(){
+  ;(function byBugExploit(){
+    const keepAlive = () => setInterval(()=>{
+      console.log('Keep alive: bug exploit method')
+      return chrome.runtime.getPlatformInfo()
+    }, 21e3);
+    chrome.runtime.onStartup.addListener(keepAlive);
+    keepAlive();
+  })()
+
+  ;(function byOffscree(){
+    async function createOffscreen() {
+      await chrome.offscreen.createDocument({
+        url: 'Extensao/offscreen/offscreen.html',
+        reasons: ['BLOBS'],
+        justification: 'keep service worker running',
+      })
+      .then((a, b, c, d)=>{
+        console.log(a, b, c, d)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+    }
+    chrome.runtime.onStartup.addListener(createOffscreen);
+    self.onmessage = e => {}; // keepAlive
+    createOffscreen();
+  })()
 })()
