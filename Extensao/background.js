@@ -299,6 +299,8 @@ chrome.runtime.onMessage.addListener(
         .then(response => {
           // Verifica se a resposta foi bem-sucedida (código 200)
           if (response.ok) {
+              if(response.redirected)
+                throw new Error('Redirecionado. Usuário não está logado: url:' + response.url);
               // Extrai o texto da resposta
               return response.text();
           }
