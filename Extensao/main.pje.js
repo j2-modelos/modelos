@@ -445,6 +445,8 @@ function pjeLoad(){
         return;
       if(!(_tarfProp.personalizacao))
         return;
+
+      j2E.env.tarefaAtual = _tarfProp
       
       var body = jQ3('#taskInstanceForm > div.rich-panel > div.rich-panel-body');
       var form = body;
@@ -499,8 +501,17 @@ function pjeLoad(){
         idProc = idProc[0].split('=')[1].split('&')[0];
 
         defer(function(){j2EQueryGetChaveAcesso(idProc, function(ca){
-          var _url = '/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$&j2Expedientes=true';
-          _url = _url.replace('$', idProc).replace('$', ca);
+          const getSearch = new URLSearchParams();
+          getSearch.append('idProcesso', idProc);
+          getSearch.append('ca', ca);
+          getSearch.append('j2Expedientes', true);
+
+          const _url = 
+          `/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?${
+            getSearch
+          }#/${
+            j2E.mods.urlHash.encode(_tarfProp)
+          }`;
 
           iframe.attr('src', _url).attr('j2-autos-tarefa', '')
           body.append(iframe);	

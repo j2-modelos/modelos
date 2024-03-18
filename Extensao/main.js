@@ -760,6 +760,14 @@ var TarefasProps = {
       mostraExpedientes : true,
       obterDosAutos: {
         mostrarPolosDoProcesso : true
+      },
+      iframeAutosDigitais: {
+        expedientes: {
+          destaqueDataLeitura: true,
+          destaqueDataVencimento: false,
+          checkboxExpedienteSempreAtivo: true,
+          filtrarMeiosComunicacao: ['telefone']
+        }
       }
     }
   },
