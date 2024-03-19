@@ -40,6 +40,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItAlvaraCadastradoSISCONDJ"/>
             <gItem id="certItAlvaraEncaminhamentoExpedicao"/>
             <gItem id="certItAlvaraProcuracaoSemPoderes"/>
+            <gItem id="certAlvaraAguardaDisponisbiildadeSISCONDJ"/>
         </group>
         <group label="Análise de Juntadas">
             <gItem id="certItHabilitacaoAutomatica"/>
@@ -191,7 +192,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItRemessaExpedienteViaEMail" label="Remessa expediente via e-mail" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que remeti o expediente #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} via e-mail ao jurídico da 
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que remeti o expediente #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} via e-mail ao jurídico da 
                     parte #{j2.env.PJeVars.processo.polos.partePassiva}.
                 </data>
             </itemContent>
@@ -225,7 +226,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certSERASAEnvio" label="Envio" dataPlus="{ 'descricaoAppend': 'SERASAJUD Envio Solicitação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao despacho/decisão/sentença de #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, nesta data, foi expedido ofício, via Serasajud, para #:B{INCLUSÃO/EXCLUSÃO} do nome do devedor no cadastro de inadimplentes da Serasa Experian.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao despacho/decisão/sentença de #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, nesta data, foi expedido ofício, via Serasajud, para #:B{INCLUSÃO/EXCLUSÃO} do nome do devedor no cadastro de inadimplentes da Serasa Experian.
                 </data>
             </itemContent>
         </item> 
@@ -249,10 +250,10 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
-                        Certifico, #:span!j2-cert-sequencializador{nesta data,} que a parte Executada foi condenada ao pagamento das custas processuais, conforme acórdão #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                        Certifico, #:span!j2-cert-sequencializador{nesta data,} que a parte Executada foi condenada ao pagamento das custas processuais, conforme acórdão #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                     </elemento>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
-                        Certifico, #:span!j2-cert-sequencializador{ainda,} que a parte recorrente/Executada pagou as custas processuais de preparo conforme #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, 
+                        Certifico, #:span!j2-cert-sequencializador{ainda,} que a parte recorrente/Executada pagou as custas processuais de preparo conforme #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, 
                         relativas às custas geradas até a interposição do recurso, tendo havido publicações geradoras de custas após o retorno 
                         dos autos do segundo grau, #:B{de acordo com o art. 55, § único, III da Lei 9.099/95}.
                     </elemento>
@@ -325,7 +326,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                   Certifico, #:span!j2-cert-sequencializador{nesta data,} que o(a)(s) advogado(a)(s) #:B{#:span@pessoa-advogado-nomes{#{j2.mod.clsCnstr.SeletorPessoa.selUtil.advogados.nomes}}}
                   solicitou(aram) habilitação via PJe em favor da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                   #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}, conforme petição 
-                  #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                  #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>   
@@ -336,7 +337,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                   #:B{#:span@pessoa-advogado-nomes{#{j2.mod.clsCnstr.SeletorPessoa.selUtil.advogados.nomes}}}
                   como patrono(a)(s) da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                   #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}, conforme solicitação em petição 
-                  #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                  #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>   
@@ -347,14 +348,14 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                   #:B{#:span@pessoa-advogado-nomes{#{j2.mod.clsCnstr.SeletorPessoa.selUtil.advogados.nomes}}}
                   como patrono(a)(s) da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                   #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}, conforme solicitação de #:U{publicações exclusivas} em petição 
-                  #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                  #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>     
         <item id="certItDiligenciaRealizadaEndereco" label="Endereço indicado possui diligência infrutífera" dataPlus="{ 'descricaoAppend': 'Endereço indicado possui diligência infrutífera' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                  Certifico, #:span!j2-cert-sequencializador{nesta data,} que o endereço apontado em petição de id #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} 
+                  Certifico, #:span!j2-cert-sequencializador{nesta data,} que o endereço apontado em petição de id #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} 
                   já foi objeto de diligência com resultado infrutífero, conforme certidão de diligência
                   #:span@docId{#:span@docIdDefaulttext{XXXXId2XXXX}}.
                 </data>
@@ -367,7 +368,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <data>
                   Certifico, #:span!j2-cert-sequencializador{nesta data,} que compareceu a esta Secretaria Judicial o(a) advogado(a) da parte 
                   #{j2.env.PJeVars.processo.polos.parteAtiva} #:B{#{j2.env.PJeVars.partes.ativa.advogado.nome_}} 
-                  a fim de, em cumprimento ao despacho inicial #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, 
+                  a fim de, em cumprimento ao despacho inicial #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, 
                   apresentar o(s) título(s) executivo(s) objeto(s) da lide, oportunidade em que o(s) mesmo(s) 
                   foi(foram) devidamente carimbado(s), digitalizado(s), juntado(s) aos autos e devolvido(s) a(o) mencionado(a) advogado(a).
                 </data>
@@ -508,7 +509,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItTransito1" label="Trânsito" dataPlus="{ 'descricaoAppend': 'Trânsito em julgado' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a sentença #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} prolatada nos presentes autos #:B{transitou livremente em julgado em #:U{#:span@certDataTransito{XXXDataTransitoXXXX}}}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a sentença #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} prolatada nos presentes autos #:B{transitou livremente em julgado em #:U{#:span@certDataTransito{XXXDataTransitoXXXX}}}.
                 </data>
             </itemContent>
         </item>                
@@ -567,7 +568,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItPrecatoriaDistribuidaPJe" label="Distribuída via PJe" dataPlus="{ 'descricaoAppend': 'Carta Precatória distribuída via PJe' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,}, termos do Provimento nº 42/2019, que a carta precatória de #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi protocolada no(a) XXXjuizodeprecadoXXX sob nº XXXprocessoXXX.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,}, termos do Provimento nº 42/2019, que a carta precatória de #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi protocolada no(a) XXXjuizodeprecadoXXX sob nº XXXprocessoXXX.
                 </data>
             </itemContent>
         </item>
@@ -575,7 +576,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItPrecatoriaEnviadaMalote" label="Enviada por Malote" dataPlus="{ 'descricaoAppend': 'Enviada por Malote' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a carta precatória de #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} fora expedida ao XXXjuizodeprecadoXXX via malote digital (XXXCodigoRastreamentoXXX).
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a carta precatória de #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} fora expedida ao XXXjuizodeprecadoXXX via malote digital (XXXCodigoRastreamentoXXX).
                 </data>
             </itemContent>
         </item>
@@ -626,7 +627,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                         (i1) determinar que se proceda à imediata devolução dos recursos que não tenham sido, até a data de hoje, repassados aos beneficiários das refendas decisões judiciais."
                     </elemento>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
-                        Certifico, #:span!j2-cert-sequencializador{ainda,} que nos autos consta #:B{bloqueio} em conta da #{j2.env.PJeVars.partes.passiva.nome} e #:B{transferência} de valor, conforme #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, sem levantamento de valor pela parte #{j2.env.PJeVars.processo.polos.partePassiva}.
+                        Certifico, #:span!j2-cert-sequencializador{ainda,} que nos autos consta #:B{bloqueio} em conta da #{j2.env.PJeVars.partes.passiva.nome} e #:B{transferência} de valor, conforme #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, sem levantamento de valor pela parte #{j2.env.PJeVars.processo.polos.partePassiva}.
                     </elemento>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
                         Desse modo, faço os autos presentes autos #:B{conclusos} para a Dra. Dayna Leão Tajra Reis Teixeira, juíza titular do 2º Juizado Especial Cível da Comarca de Imperatriz/MA, para deliberação.
@@ -774,7 +775,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAlvaraRemessaEmail" label="Remessa via e-mail" dataPlus="{ 'descricaoAppend': 'Remessa Alvará via e-mail' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} que foi/foram #:B{enviado(s) o(s) alvará(s) #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, via e-mail, para o Banco do Brasil}, para fins de crédito na conta informada, no prazo de 3(três) dias úteis.
+                    Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} que foi/foram #:B{enviado(s) o(s) alvará(s) #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, via e-mail, para o Banco do Brasil}, para fins de crédito na conta informada, no prazo de 3(três) dias úteis.
                 </data>
             </itemContent>
         </item>   
@@ -783,7 +784,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAlvaraCumrpimentoBB" label="Cumprimento Alvará" dataPlus="{ 'descricaoAppend': 'Cumprimento Alvará' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Banco do Brasil informou a este juízo via e-mail ter dado cumprimento ao(s) Alvará(s) Judicial(is) #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Banco do Brasil informou a este juízo via e-mail ter dado cumprimento ao(s) Alvará(s) Judicial(is) #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>   
@@ -793,7 +794,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <data>
                     Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} em atenção ao pedido de expedição de alvará judicial e à 
                     indicação de conta do advogado para fins de crédito destinado ao autor, que #:B{na procuração 
-                    constante no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.  não há concessão de poderes específicos para receber e dar quitação},  
+                    constante no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.  não há concessão de poderes específicos para receber e dar quitação},  
                     conforme art. 132, §1º, do Código de Normas da CGJ e da Portaria TJ 14232020, razão pela qual 
                     encaminhei os autos para expedição de ato ordinatório.
                 </data>
@@ -810,7 +811,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             </itemContent>
         </item> 
         
-        <item id="certItAlvaraCadastradoSISCONDJ" label="Cadastrado no SISCONDJ" 
+        <item id="certItAlvaraCadastradoSISCONDJ" label="SISCONDJ | Alvará Cadastrado" 
             dataPlus="{ 'descricaoAppend': 'Alvará(s) cadastrado(s) no SISCONDJ' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -835,7 +836,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que encaminhei os autos para #:B{a Contadoria Judicial}, 
-                    para fins de realização dos cálculos mencionados no #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}.
+                    para fins de realização dos cálculos mencionados no #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}}.
                 </data>
             </itemContent>
         </item> 
@@ -843,21 +844,21 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAlvaraEntregaParte" label="Selamento e Entrega a Parte" dataPlus="{ 'descricaoAppend': 'Entrega de Alvará' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue à Parte Demandante XXXDemandanteXXX.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue à Parte Demandante XXXDemandanteXXX.
                 </data>
             </itemContent>
         </item>        
         <item id="certItAlvaraEntregaAdvogado" label="Selamento e Entrega ao Advogado" dataPlus="{ 'descricaoAppend': 'Entrega de Alvará' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue a(o) advogado(a) XXXXAdvogadoXXX.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue a(o) advogado(a) XXXXAdvogadoXXX.
                 </data>
             </itemContent>
         </item>         
         <item id="certItAlvaraEntregaAdvogadoHabilitado" label="Selamento e Entrega ao Advogado Habilitado" dataPlus="{ 'descricaoAppend': 'entrega de Alvará' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue a(o) advogado(a) XXXXAdvogadoXXX, #:B{advogado(o) devidamente habilitados nos presentes autos por procuração subscrita pela parte demandante}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o Alvará Judicial #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi devidamente selado com #:B{ato judicial gratuito de nº XXXNumeroDoSeloXXXX} e entregue a(o) advogado(a) XXXXAdvogadoXXX, #:B{advogado(o) devidamente habilitados nos presentes autos por procuração subscrita pela parte demandante}.
                 </data>
             </itemContent>
         </item>         
@@ -923,7 +924,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItPublicacaoDJe" label="Publicação diário" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a #:B{#:U{INTIMAÇÃO #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} }}foi devidamente publicada no Diário da Justiça eletrônico conforme informações abaixo. #:BR{} #:BR{}
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a #:B{#:U{INTIMAÇÃO #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} }}foi devidamente publicada no Diário da Justiça eletrônico conforme informações abaixo. #:BR{} #:BR{}
                     XXXinformaçõesPublicação
                     #:BR{}
                     #:BR{}
@@ -934,7 +935,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItWhatsAppLeitura" label="Leitura" dataPlus="{ 'descricaoAppend': 'Leitura WhatsApp' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} foi devidamente #:B{#:U{lida}} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} através do aplicativo #:I{WhatsApp} em #:B{#:span@certItWhatsAppLeitura-prazoExtenso{XXXDataXXX}}. 
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}} foi devidamente #:B{#:U{lida}} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} através do aplicativo #:I{WhatsApp} em #:B{#:span@certItWhatsAppLeitura-prazoExtenso{XXXDataXXX}}. 
                 </data>
             </itemContent>
         </item>
@@ -942,7 +943,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItWhatsAppLeituraNao" label="Sem Leitura" dataPlus="{ 'descricaoAppend': 'Sem Leitura WhatsApp' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} não foi efetivada em razão da #:B{#:U{ausência de registro de leitura}} 
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}} não foi efetivada em razão da #:B{#:U{ausência de registro de leitura}} 
                     pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} no aplicativo #:I{WhatsApp} no prazo assinalado pelo Portaria conjunta 11/2017. 
                 </data>
             </itemContent>
@@ -953,7 +954,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <simpleElementsDefs>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
                         <elemento tag="span" scope="NONE">
-                            Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} 
+                            Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}} 
                             foi considerada como realizadas para a parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} em #:B{#:span@certItWhatsAppLeituraArt6-prazoExtenso{XXXDataXXX}}, conforme disposição do do Art. 6º 
                             da 
                         </elemento>
@@ -989,7 +990,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <simpleElementsDefs>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
                         <elemento tag="span" scope="NONE">
-                            Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}} 
+                            Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}} 
                             foi considerada como realizadas para a parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} em #:B{#:span@certItWhatsAppLeituraArt6ccPC142020-prazoExtenso{XXXDataXXX}}, conforme disposição do do Art. 6º 
                             da 
                         </elemento>
@@ -1047,7 +1048,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItTempestividadeEmbargos" label="Embargos - tempestivo" dataPlus="{ 'descricaoAppend': 'Embargos de declaração tempestivos' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que os #:U{EMBARGOS DE DECLARAÇÃO} #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foram interpostos #:B{TEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que os #:U{EMBARGOS DE DECLARAÇÃO} #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foram interpostos #:B{TEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}.
                 </data>
             </itemContent>
@@ -1055,7 +1056,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItTempestividadeEmbargosIntempest" label="Embargos - intempestivo" dataPlus="{ 'descricaoAppend': 'Embargos de declaração intempestivos' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que os #:U{EMBARGOS DE DECLARAÇÃO} #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foram interpostos #:B{INTEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que os #:U{EMBARGOS DE DECLARAÇÃO} #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foram interpostos #:B{INTEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}.
                 </data>
             </itemContent>
@@ -1065,14 +1066,14 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:U{#:span@certItPrazoSemCump-prazoExtenso{} decorreu #:I{in albis} o prazo} para a parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
-                  #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} dar cumprimento à #:B{intimação/determinação #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}.
+                  #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} dar cumprimento à #:B{intimação/determinação #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}}.
                 </data>
             </itemContent>
         </item>
         <item id="certItPrazoInAlbisManifEmbExec" label="Decurso Manifestação Embargos à Execução" dataPlus="{ 'descricaoAppend': 'Prazo decorrido' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que  #:B{fluiu sem manifestação o prazo para Embargos à Execução} (art. 915 do CPC/2015), conforme comprovação de intimação contido no  #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que  #:B{fluiu sem manifestação o prazo para Embargos à Execução} (art. 915 do CPC/2015), conforme comprovação de intimação contido no  #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>
@@ -1094,7 +1095,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItPrazoInAlbis" label="Sem manifestação" dataPlus="{ 'descricaoAppend': 'Prazo decorrido' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:U{decorreu #:I{in albis} o prazo} para parte manifestar-se, conforme à #:B{intimação/determinação #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:U{decorreu #:I{in albis} o prazo} para parte manifestar-se, conforme à #:B{intimação/determinação #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}}.
                 </data>
             </itemContent>
         </item>
@@ -1127,7 +1128,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItTempestividadeRecurso" label="Recurso Inominado - tempestivo" dataPlus="{ 'descricaoAppend': 'Recurso Inominado tempestivo' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o #:U{RECURSO INOMINADO} #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi interposto #:B{TEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o #:U{RECURSO INOMINADO} #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi interposto #:B{TEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}.
                 </data>
             </itemContent>
@@ -1135,7 +1136,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItTempestividadeRecursoIntepest" label="Recurso Inominado - intempestivo" dataPlus="{ 'descricaoAppend': 'Recurso Inominado intempestivo' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o #:U{RECURSO INOMINADO} #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi interposto #:B{INTEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o #:U{RECURSO INOMINADO} #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi interposto #:B{INTEMPESTIVAMENTE} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}..
                 </data>
             </itemContent>
@@ -1143,7 +1144,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItRemessaPorAR" label="Expediente Rmessa AR" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o expediente sob #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} foi remetida à Empresa de Correios e Telégrafos sob o Aviso de Recebimento abaixo consignado.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que o expediente sob #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi remetida à Empresa de Correios e Telégrafos sob o Aviso de Recebimento abaixo consignado.
                 </data>
             </itemContent>
         </item>    
@@ -1160,7 +1161,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que remeti à parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}
-                    os documentos relativos à intimação realizada em audiência #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    os documentos relativos à intimação realizada em audiência #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>  
@@ -1186,7 +1187,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItRetificacaoOrdemJudicial" label="Por ordem judicial" dataPlus="{ 'descricaoAppend': 'Retificação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento à determinação judicial constante no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} 
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento à determinação judicial constante no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} 
                     procedi á #:B{#:U{RETIFICAÇÃO}} dos autos realizando XXXXDescricaoXXX.
                 </data>
             </itemContent>
@@ -1203,7 +1204,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAudCancelamento" label="Cancelamento" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} realizei o #:B{#:U{CANCELAMENTO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} designada no presente feito para #{j2.env.PJeVars.audiencia.data}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} realizei o #:B{#:U{CANCELAMENTO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} designada no presente feito para #{j2.env.PJeVars.audiencia.data}.
                 </data>
             </itemContent>
         </item>    
@@ -1211,7 +1212,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAudDesignacao" label="Designação" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} realizei a #:B{#:U{DESIGNAÇÃO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} no presente feito para #{j2.env.PJeVars.audiencia.data}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} realizei a #:B{#:U{DESIGNAÇÃO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} no presente feito para #{j2.env.PJeVars.audiencia.data}.
                 </data>
             </itemContent>
         </item>     
@@ -1219,7 +1220,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItAudRedesignacao" label="Redesignação" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} realizei a #:B{#:U{REDESIGNAÇÃO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} no presente feito para #{j2.env.PJeVars.audiencia.data}.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que em cumprimento ao que consta no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} realizei a #:B{#:U{REDESIGNAÇÃO} da audiência} de #{j2.env.PJeVars.audiencia.tipo} no presente feito para #{j2.env.PJeVars.audiencia.data}.
                 </data>
             </itemContent>
         </item>      
@@ -1239,7 +1240,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
-                        Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} que no(s) #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}} consta(m) XXXTextoLivreXXX.
+                        Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} que no(s) #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} consta(m) XXXTextoLivreXXX.
                     </elemento>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
                         Desse modo, remeto os autos conclusos #{j2.env.PJeVars.unidade.juiz.ao} #{j2.env.PJeVars.unidade.juiz.doutor} #:B{#{j2.env.PJeVars.unidade.juiz.nome}} para deliberação.
@@ -1451,7 +1452,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             dataPlus="{ 'descricaoAppend': 'Encaminhamento para Expedição de carta de intimação' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,} em atenção ao teor da certidão do oficial de justiça do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}, referente à citação por hora certa,  
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} em atenção ao teor da certidão do oficial de justiça do #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}, referente à citação por hora certa,  
                     #:B{encaminhei os autos para expedição de carta de intimação}, visando à formalização do ato, na forma prevista no art. 254 do CPC/2015.
                 </data>
             </itemContent>
@@ -1484,10 +1485,27 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                     da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} 
                     no PJE, qual seja número #:U{#:span@pessoa-meiosContato-telefone-txt{#{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}}} 
-                    em atenção à certidão do #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                    em atenção à certidão do #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>        
+
+         <item id="certAlvaraAguardaDisponisbiildadeSISCONDJ" label="SISCONDJ | Aguardar disponibilidade de valor" 
+               dataPlus="{ 'descricaoAppend': 'Aguardar disponibilidade de valor no SISCONDJ' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        Certifico, para os devidos fins, #:span!j2-cert-sequencializador{nesta data,} que o valor objeto da transferência no SISBAJUD / depósito (#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}) ainda não está 
+                        disponível no #:B{sistema SISCONDJ}, conforme anexo, razão pela qual não foi possível a expedição de alvará judicial.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:B{encaminho os autos para que aguarde em secretaria a disponibilidade do valor} no sistema citado, 
+                        nos termos da Resolução GP 75.2022.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>
+
     </items>
   </selectorDef>
 </Definitions>
