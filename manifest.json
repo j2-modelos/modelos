@@ -18,6 +18,7 @@
     "128": "Extensao/icon.png"
   },
   "permissions": [
+    "alarms",
     "storage",
     "activeTab",
     "scripting",
@@ -26,6 +27,7 @@
     "clipboardRead",
     "clipboardWrite",
     "cookies",
+    "offscreen",
     "https://pje.tjma.jus.br/*",
     "https://pjeh.tjma.jus.br/*",
     "https://frontend.prd.cnj.cloud/*"
