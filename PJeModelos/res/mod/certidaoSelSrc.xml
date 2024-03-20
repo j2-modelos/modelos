@@ -103,6 +103,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItNaoIntRevelia"/>
             <gItem id="certItNaoIntNaoCitacao"/>
             <gItem id="certItRemessaExpedienteViaEMail"/>
+            <gItem id="certItIntimacaoRealizadaTelefone"/>
         </group>
         <!--group label="Intimação - Não Expedição">
             <gItem id="certItNaoIntEndDeconhecido"/>
@@ -936,6 +937,21 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que a intimação #:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}} foi devidamente #:B{#:U{lida}} pela parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} através do aplicativo #:I{WhatsApp} em #:B{#:span@certItWhatsAppLeitura-prazoExtenso{XXXDataXXX}}. 
+                </data>
+            </itemContent>
+        </item>
+
+        <item id="certItIntimacaoRealizadaTelefone" label="Intimação realizada por ligação telefônica" 
+              dataPlus="{ 'descricaoAppend': 'Intimação realizada por ligação telefônica' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, para os devidos fins, que a intimação 
+                    da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}} 
+                    #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} 
+                    (#:B{#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}})
+                    foi efetuada nesta data por meio de ligação telefônica, realizada às XXXHorárioXXX, para o 
+                    #:U{#:span@pessoa-meiosContato-telefone-txt{#{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}}} , 
+                    conforme registro de cadastro no sistema PJE. 
                 </data>
             </itemContent>
         </item>

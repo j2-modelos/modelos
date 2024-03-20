@@ -124,7 +124,8 @@ try {
           'certItIntimacaoTelefoneInfrutifera',
           'certItPrazoAbandono',
           'certItTelefoneInclusao',
-          'certItRemessaDocsAudiencia'
+          'certItRemessaDocsAudiencia',
+          'certItIntimacaoRealizadaTelefone',
         ], function(it){
           evBus.on('onAdd.selectorcertidaoItens.' + it, function(ev, arg){
 
