@@ -1738,66 +1738,8 @@ function pjeLoad(){
     }
     
     jQ3.initialize('table#panelDetalhesProcesso', function(){
-      jQ3.initialize('#processoExpedienteTab table.rich-table', function(){
-        function _dispararEventoExpedientesExibidosFrontend(){
-          const j2Action = {
-            j2 : true,
-            action : 'triggerEventFromPJe',
-            evento : {
-              tipo : 'on-exibir-expedientes-autos-digitais',
-              argumentos : { 
-              }
-            }
-          }
-          defer(()=>__sendMessageToFrotEnd( j2Action))
-        }
-        
-        _dispararEventoExpedientesExibidosFrontend()
-      }, {target:this});
-
-      var _parentThisTable = jQ3(this);
-      var tdPosShift = 0 //usado para discriminar que houve a adicição ou não de coluna na tabela
-
-      jQ3('#processoExpedienteTab table.rich-table.clearfix a[title="Visualizar ato"]', _parentThisTable).each(function(idx, el){
-
-        var jEl = jQ3(el);
-        var $tr = jEl.parents('tr:first');
-        
-        
-        function _adicionarComandoParaFecharOPrazo(){
-          if(jEl.parents('td').next().find('div[j2="editarExpediente"]').length !== 0 || jEl.parents('td').next().text().includes('SIM'))
-            return;
-          var _div = jQ3('<div>', {
-            class : 'col-sm-12 text-center',
-            style : 'margin-top: 5px;',
-            j2 : 'editarExpediente'
-          });
-
-          var _idExp = (function(){
-            var b = jEl.prop('href').match(/idProcessoParteExpediente=[0-9]+&/);
-            return b[0].split('=')[1].split('&')[0];
-          })();
-
-          var _onclick =  "openPopUp('popUpDetalheExpediente" + _idExp + "',";
-            _onclick += "'/pje/Expediente/popup/detalheExpediente.seam?idProcessoParteExpediente=" + _idExp + "',";
-            _onclick += "780, 470)";
-
-          var _a = jQ3('<a>', {
-            class : 'btn btn-default btn-sm',
-            title : 'Abrir expediente',
-            onclick : _onclick
-          });
-
-          var _i = jQ3('<i>', {
-            class : 'fa fa-pencil'
-          });
-
-          _div.append(_a);
-          _a.append(_i);
-          jEl.parents('td').next().find('span').append(_div);
-        }
-
-        function _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2(){
+      jQ3.initialize('#processoExpedienteTab', function(){
+        jQ3.initialize('#processoParteExpedienteMenuGridList', function(){
           function _converterParaISO(dataHora) {
             const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
             //const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
@@ -1812,112 +1754,6 @@ function pjeLoad(){
             
             return dataHora;
           }
-
-          var EstaVencido = false
-          var $h6Data = $tr.find('td:nth-child(2) > span:first h6:first')
-          if( $h6Data.text().length ){
-
-          var data = _extrairDataHora($h6Data.text())
-          var dataISO = _converterParaISO(data)
-          var jsData = new Date(dataISO)
-          var jsAgora = new Date()
-          EstaVencido = jsAgora > jsData
-          
-          if(! EstaVencido)
-            $tr.find('td:nth-child(2) > span:first h6').addClass('text-success')
-          }
-
-          //Seletor
-          if(!(j2E?.env?.urlParms?.j2Expedientes))
-            return;
-
-          if( ! $tr.parents('table:first').find('> thead[j2]').length ){
-            $tr.parents('table:first').find('> thead').attr('j2', '')
-            .find('tr').prepend('<th j2-seletor-expediente></td>')
-
-            $tr.parents('tbody:first').mouseup((ev)=>{
-              var $el = jQ3(ev.target)
-              if(!$el.is('input[j2-seletor-expediente]'))
-                return
-
-              $el.parents('tr:first')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
-              .find('td')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
-            })
-
-            tdPosShift = 1
-          }
-
-          var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
-          $tr.prepend($seletor)
-
-          //inserir o lápis
-          if(! EstaVencido)
-            return
-          
-          const $alvoEditorData = $tr.find('td h6:first-child:not(.alert-heading)')
-          const dataText = $alvoEditorData.text()
-          if(!dataText.length) 
-            return
-
-          $alvoEditorData.empty()
-          
-          const $span = jQ3(`<span>${dataText}</span>`)
-          $alvoEditorData.append($span)
-
-          const $i = jQ3(`<i j2e-data-i class="fa fa-pencil-alt" style="
-              padding-left: 2px;
-          "></i>`)
-
-          $alvoEditorData.append($i)
-          $i.click(()=>{
-            const $input = jQ3(`<input  j2e-data-input class="fa fa-plus" value="${dataText}">`)
-            const $plus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-plus" style="
-              padding-left: 2px;
-            "></i>`)
-            const $minus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-minus" style="
-                padding-left: 2px;
-            "></i>`)
-            const $check = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-check j2e-i-mp" style="
-                padding-left: 2px;
-            "></i>`)
-            const $times = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-times" style="
-                padding-left: 2px;
-            "></i>`)
-            
-            
-            $span.after($input)
-            $input.after($plus)
-            $plus.after($minus)
-            $minus.after($check)
-            $check.after($times)
-            $span.hide()
-
-            $plus.click(()=>{
-               $input.val( _incrementarDecrementarData(true, $input.val()) )
-            })
-            $minus.click(()=>{
-              $input.val( _incrementarDecrementarData(false, $input.val() ) )
-            })
-
-            $check.click(()=>{
-              $span.text($input.val())
-
-              $alvoEditorData.find('[j2e-data-i-cmd]').remove()
-              $input.remove()
-              $span.show()
-              $i.show()
-            })
-
-            $times.click(()=>{
-              $alvoEditorData.find('[j2e-data-i-cmd]').remove()
-              $input.remove()
-              $span.show()
-              $i.show()
-            })
-
-            $i.hide()
-          })
-
           function _incrementarDecrementarData(incrementaTrueDecrementaFalse, inputDate){
             const dataIsoAlterada = DataComFromatos.incrementarDecrementarDataString(incrementaTrueDecrementaFalse, inputDate)
             const dataPtBrAlterada = DataComFromatos.convertISOToBrazilianDateTime(dataIsoAlterada)
@@ -1925,129 +1761,356 @@ function pjeLoad(){
             return dataPtBrAlterada
           }
 
-        }
-        
-        function _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao(){
-          if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
-            return;
+          
+          ;(function _dispararEventoExpedientesExibidosFrontend(){
+            const j2Action = {
+              j2 : true,
+              action : 'triggerEventFromPJe',
+              evento : {
+                tipo : 'on-exibir-expedientes-autos-digitais',
+                argumentos : { 
+                }
+              }
+            }
+            defer(()=>__sendMessageToFrotEnd(j2Action))
+          })() 
 
-          jQ3('body').prepend(jEl.parents('#processoExpedienteTab').find('table:first'));
-          jQ3('body').find('div.navbar').hide();
-          jQ3('body').css('overflow', 'overlay');
-          jQ3('#pageBody').hide();
-        }
-        
-        _adicionarComandoParaFecharOPrazo();
-        _destacarPrazoSeNaoVencidoEAdicionarSeletoresDeExpedienteJ2()
-        _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao();
-      });
-      
-      (function _adicionarComandoParaVisualizarACertidaoPublicacaoDJEN(_parentThisTable){
+          jQ3.initialize('thead', function(){
 
-        function __iterateDjenItem(items, _parentThisTable){
-          for (var i = 0; i < items.length; i++){
-            //jQ3('#processoExpedienteTab tr', _parentThisTable).find('tr:contains(' + items[i].id + ')').each(function(idx, el){
-            jQ3('td > span:contains(' + items[i].id + ')').each(function(idx, el){
-              var $tr = jQ3(el).parents('tr:first');
-              if($tr.find('[j2=visualizarCertidaoDJEN]').length)
-                return;
+          }, {target:this} )
+
+          jQ3.initialize('#processoParteExpedienteMenuGridList\\:tb > tr', function(){
+            const $tr = jQ3(this)
+            let EstaVencido = false
+            const j2Props = [ 
+              { pos: 1, attrJ2: 'j2-ato-comunicacao'}, 
+              { pos: 2, attrJ2: 'j2-data-vencimento'}, 
+              { pos: 3, attrJ2: 'j2-documentos'}, 
+              { pos: 4, attrJ2: 'j2-fechado-info'} 
+            ]
+            const expedienteData = {
+              __: {}
+            }
+            
+            
+            j2Props.forEach(tdDef=>{
+              $tr.find(`td:nth-child(${tdDef.pos})`).attr(tdDef.attrJ2, '')
+            })
+
+            $tr.data('j2E', expedienteData)
+
+            ;(function _extrairExpedienteData(){
+              const $tagMeioELeitura = $tr.find('td[j2-ato-comunicacao] div:nth-child(3)')
+              const regexDataLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4})/ )
+              const regexDataHoraLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/ )
               
-              var $SpanIdMateria = $tr.find('td:first-child').find('span[title="Id da Matéria"]');
+              expedienteData.dataLeitura = {
+                ptBrStringData: regexDataLeitura.at(0),
+                ptBrStringDataHora: regexDataHoraLeitura.at(0),
+                isoString: _converterParaISO(regexDataHoraLeitura.at(0))
+              }
 
+              jQ3.extend(expedienteData.__, { $tagMeioELeitura, regexDataLeitura, regexDataHoraLeitura})
+            })()
 
+            ;(function _adicionarComandoParaFecharOPrazo(){
+              const $tdFechadoInfo = $tr.find('td[j2-fechado-info]')
+
+              if($tdFechadoInfo.find('div[j2="editarExpediente"]').length !== 0 || $tdFechadoInfo.text().includes('SIM'))
+                return;
+
+              const $tdDocumentos = $tr.find('td[j2-documentos]')
+              
               var _div = jQ3('<div>', {
                 class : 'col-sm-12 text-center',
                 style : 'margin-top: 5px;',
-                j2 : 'visualizarCertidaoDJEN'
+                j2 : 'editarExpediente'
               });
-
-              var _onclick =  "openPopUp('visualizarCertidaoDJEN" + items[i].id + "',";
-                _onclick += "'https://comunicaapi.pje.jus.br/api/v1/comunicacao/" + items[i].hash + "/certidao',";
-                _onclick += "940, 740)";
-
+    
+              var _idExp = (function(){
+                var b = $tdDocumentos.find('a[title="Visualizar ato"]').prop('href').match(/idProcessoParteExpediente=[0-9]+&/);
+                return b[0].split('=')[1].split('&')[0];
+              })();
+    
+              var _onclick =  "openPopUp('popUpDetalheExpediente" + _idExp + "',";
+                _onclick += "'/pje/Expediente/popup/detalheExpediente.seam?idProcessoParteExpediente=" + _idExp + "',";
+                _onclick += "780, 470)";
+    
               var _a = jQ3('<a>', {
                 class : 'btn btn-default btn-sm',
-                title : 'Abrir certidão DJEN',
+                title : 'Abrir expediente',
                 onclick : _onclick
               });
-
+    
               var _i = jQ3('<i>', {
-                class : 'fa fa-newspaper-o'
+                class : 'fa fa-pencil'
               });
-
+    
               _div.append(_a);
               _a.append(_i);
-              $tr.find(`td:nth-child(${3 + tdPosShift})`).append(_div);
-              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Disponibilizado em: ${items[i].datadisponibilizacao}`)
+
+              $tdFechadoInfo .find('span').append(_div);
+            })()
+
+            
+            ;(function _destacarPrazoSeNaoVencido(){
+              var $h6Data = $tr.find('td[j2-data-vencimento] > span:first h6:first')
+              if( $h6Data.text().length ){
+    
+              var data = _extrairDataHora($h6Data.text())
+              var dataISO = _converterParaISO(data)
+              var jsData = new Date(dataISO)
+              var jsAgora = new Date()
+              EstaVencido = jsAgora > jsData
               
-              const pubDataISO = j2E.mods.Calendario.contarPrazo(new Date(`${items[i].data_disponibilizacao}T00:00:00.000-03:00`), 1)
-              const pubData = pubDataISO.split('-').reverse().join('/')
-              $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div > span`).append(`<br>Publicado em: ${pubData}`)
+              if(! EstaVencido)
+                $tr.find('td[j2-data-vencimento] > span:first h6').addClass('text-success')
+              }
+            })()
 
-
-
-              if ( $tr.find(`td:nth-child(${2 + tdPosShift}) > span > div:first`).text().length && ( $tr.find(`td:nth-child(${1 + tdPosShift}) > span > div:first`).text().toLowerCase().includes('o sistema registrou ciência')  ) )
+            ;(function _adicionarSeletoresDeExpedienteJ2(){
+              //Seletor
+              if(!(j2E?.env?.urlParms?.j2Expedientes))
                 return;
+    
+              if( ! $tr.parents('table:first').find('> thead[j2]').length ){
+                $tr.parents('table:first').find('> thead').attr('j2', '')
+                .find('tr').prepend('<th j2-seletor-expediente></td>')
+    
+                $tr.parents('tbody:first').mouseup((ev)=>{
+                  var $el = jQ3(ev.target)
+                  if(!$el.is('input[j2-seletor-expediente]'))
+                    return
+    
+                  $el.parents('tr:first')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+                  .find('td')[$el.is(':checked') ? 'removeClass' : 'addClass']('info')
+                })
+    
+                tdPosShift = 1
+              }
+    
+              var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
+              $tr.prepend($seletor)
+            })() 
 
-              let _parsePrazo = $tr.find(`td:nth-child(${1 + tdPosShift})`).text().split('Prazo: ')[1].split(' dias')
+            ;(function _adicionarLapisEdicaoNaDataVencida(){
+              //inserir o lápis
+              if(! EstaVencido)
+                return
               
-              if( isNaN(_parsePrazo[0] ) )
-                return;
+              const $alvoEditorData = $tr.find('td[j2-data-vencimento] h6:first-child:not(.alert-heading)')
+              const dataText = $alvoEditorData.text()
+              if(!dataText.length) 
+                return
+    
+              $alvoEditorData.empty()
               
-              let dias = _parsePrazo[0]
-              const prazoVencimentoIso = j2E.mods.Calendario.contarPrazo(new Date(`${pubDataISO}T00:00:00.000-03:00`), dias)
-              const prazoVencimento = prazoVencimentoIso.split('-').reverse().join('/')
+              const $span = jQ3(`<span>${dataText}</span>`)
+              $alvoEditorData.append($span)
+    
+              const $i = jQ3(`<i j2e-data-i class="fa fa-pencil-alt" style="
+                  padding-left: 2px;
+              "></i>`)
+    
+              $alvoEditorData.append($i)
+              $i.click(()=>{
+                const $input = jQ3(`<input  j2e-data-input class="fa fa-plus" value="${dataText}">`)
+                const $plus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-plus" style="
+                  padding-left: 2px;
+                "></i>`)
+                const $minus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-minus" style="
+                    padding-left: 2px;
+                "></i>`)
+                const $check = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-check j2e-i-mp" style="
+                    padding-left: 2px;
+                "></i>`)
+                const $times = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-times" style="
+                    padding-left: 2px;
+                "></i>`)
+                
+                
+                $span.after($input)
+                $input.after($plus)
+                $plus.after($minus)
+                $minus.after($check)
+                $check.after($times)
+                $span.hide()
+    
+                $plus.click(()=>{
+                   $input.val( _incrementarDecrementarData(true, $input.val()) )
+                })
+                $minus.click(()=>{
+                  $input.val( _incrementarDecrementarData(false, $input.val() ) )
+                })
+    
+                $check.click(()=>{
+                  $span.text($input.val())
+    
+                  $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+                  $input.remove()
+                  $span.show()
+                  $i.show()
+                })
+    
+                $times.click(()=>{
+                  $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+                  $input.remove()
+                  $span.show()
+                  $i.show()
+                })
+    
+                $i.hide()
+              })
+            })()
+    
 
-              /*if( ! (new Date() > new Date(`${pubDataISO}T23:59:59.000-03:00`) ) )
-                return;*/
+    
+            })
+
+        }, {target:this} )
+          
+        jQ3.initialize('#processoParteExpedienteMenuGridList\\:tb', function(){
+          const $thisBody = jQ3(this)
+          ;(function _adicionarComandoParaVisualizarACertidaoPublicacaoDJEN(){
+            function __getDJENData(){
+              const def = jQ3.Deferred()
+
+              let proc = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/).at([0]);
+              proc = proc.replace(/[^\d]/g, '')
+              
+              const items = lockrSes.get('DJEN.' + proc, { noData : true });
+              if (items.noData){
+                jQ3.getJSON('https://comunicaapi.pje.jus.br/api/v1/comunicacao?numeroProcesso=' + proc)
+                .done((djenData)=>{
+                  if ( ! (djenData.status === 'success' && djenData.status !== 0) ){
+                    def.reject()
+                  }else{
+                    def.resolve(djenData.items)
+                    lockrSes.set('DJEN.' + proc, djenData.items);  
+                  }
+                })
+                .fail(() => {
+                  def.reject()
+                })
+              }else
+                def.resolve(items)
+
+              return def.promise()
+            }
+            __getDJENData()
+            .done((itemsDJEN)=>{
+              function __criarEApensarAtalhaoAbrirCertidaoDJEN(itemDJEN, $tr){
+                const $div = jQ3('<div>', {
+                  class : 'col-sm-12 text-center',
+                  style : 'margin-top: 5px;',
+                  j2 : 'visualizarCertidaoDJEN'
+                });
+  
+                var _onclick =  "openPopUp('visualizarCertidaoDJEN" + itemDJEN.id + "',";
+                  _onclick += "'https://comunicaapi.pje.jus.br/api/v1/comunicacao/" + itemDJEN.hash + "/certidao',";
+                  _onclick += "940, 740)";
+  
+                const _a = jQ3('<a>', {
+                  class : 'btn btn-default btn-sm',
+                  title : 'Abrir certidão DJEN',
+                  onclick : _onclick
+                });
+  
+                const _i = jQ3('<i>', {
+                  class : 'fa fa-newspaper-o'
+                });
+  
+                $div.append(_a);
+                _a.append(_i);
 
 
 
-              const htmlTemplate = `<span id="processoParteExpedienteMenuGridList:2:j_id883"><div id="processoParteExpedienteMenuGridList:2:j_id883:infoPPE"><span id="processoParteExpedienteMenuGridList:2:j_id883:j_id884"><div id="r" class="text-center" style="
-              "><h6 style="
-                  color: #a94442;
-              ">${prazoVencimento} 23:59:59</h6><h6></h6><h6><span title="Data limite prevista para manifestação" style="
-                  color: #a94442;
-              ">(para manifestação)</span></h6></div></span></div></span>`;
+                $tr.find('td:last-child').prev().append($div);
+              }
+              function __exibirDataDisponibilizacaoEPublicacao(itemDJEN, $tr){
+                $tr.find(`td[j2-ato-comunicacao] > span > div > span`).append(`<br>Disponibilizado em: ${itemDJEN.datadisponibilizacao}`)
+                    
+                const pubDataISO = j2E.mods.Calendario.contarPrazo(new Date(`${itemDJEN.data_disponibilizacao}T00:00:00.000-03:00`), 1)
+                const pubData = pubDataISO.split('-').reverse().join('/')
+                $tr.find(`td[j2-ato-comunicacao] > span > div > span`).append(`<br>Publicado em: ${pubData}`)
+              }
+              function __calcularDataVencimentoCasoNaoDisponivelPJe($tr){
+                if ( 
+                  $tr.find(`td[j2-data-vencimento] > span > div:first`).text().length 
+                  && 
+                  ( $tr.find(`td[j2-ato-comunicacao] > span > div:first`).text().toLowerCase().includes('o sistema registrou ciência')  ) )
+                  return;
 
-              $tr.find(`td:nth-child(${2 + tdPosShift})`).append(htmlTemplate);
-            });
-          }
-        }
-        
-        var proc = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
-        proc = proc.replace('.', '');        
-        
-        var items = lockrSes.get('DJEN.' + proc, { noData : true });
-        
-        if (items.noData){
-          var ____parentThisTable = _parentThisTable;
-          jQ3.getJSON('https://comunicaapi.pje.jus.br/api/v1/comunicacao?numeroProcesso=' + proc, function(djenData){
-            if ( ! (djenData.status === 'success' && djenData.status !== 0) )
+                let _parsePrazo = $tr.find(`td[j2-ato-comunicacao]`).text().split('Prazo: ')[1].split(' dias')
+                
+                if( isNaN(_parsePrazo[0] ) )
+                  return;
+                
+                let dias = _parsePrazo[0]
+                const prazoVencimentoIso = j2E.mods.Calendario.contarPrazo(new Date(`${pubDataISO}T00:00:00.000-03:00`), dias)
+                const prazoVencimento = prazoVencimentoIso.split('-').reverse().join('/')
+
+
+                const htmlTemplate = /*html*/`<span id="processoParteExpedienteMenuGridList:2:j_id883"><div id="processoParteExpedienteMenuGridList:2:j_id883:infoPPE"><span id="processoParteExpedienteMenuGridList:2:j_id883:j_id884"><div id="r" class="text-center" style="
+                "><h6 style="
+                    color: #a94442;
+                ">${prazoVencimento} 23:59:59</h6><h6></h6><h6><span title="Data limite prevista para manifestação" style="
+                    color: #a94442;
+                ">(para manifestação)</span></h6></div></span></div></span>`;
+
+                $tr.find(`td:nth-child(${2 + tdPosShift})`).append(htmlTemplate);
+              }
+
+
+              itemsDJEN.forEach(itemDJEN=>{
+                $thisBody.find('td > span:contains(' + itemDJEN.id + ')').each(function(idx, el){
+                  var $tr = jQ3(el).parents('tr:first');
+                  if($tr.find('[j2=visualizarCertidaoDJEN]').length)
+                    return;
+                  
+                  const $SpanIdMateria = $tr.find('td:first-child').find('span[title="Id da Matéria"]');
+
+                  __criarEApensarAtalhaoAbrirCertidaoDJEN(itemDJEN, $tr)
+                  __exibirDataDisponibilizacaoEPublicacao(itemDJEN, $tr)
+                  __calcularDataVencimentoCasoNaoDisponivelPJe($tr)
+
+                });
+              })
+            })
+          })
+        }, {target:this} )
+
+        }, {target:this})
+
+        jQ3.initialize('h5', function(){
+          var $this = jQ3(this);
+
+          ;(function _adicionarComandoParaAbrirCalendarioJ2(){
+            var ___TEMPLATE___ = '<ul j2Calendar class="nav nav-pills btn-documento pull-right" style="margin-top:-10px"><li><a id="processoExpedienteTab:calendar" href="#" title="Abrir calendário j2" onclick=""><i class="fa fa-calendar-alt" aria-hidden="true" style="font-size:1.2em"></i><span class="sr-only">Ícone calendário</span></a></li></ul>';
+          
+            if($this.find('[j2Calendar]').length !== 0)
               return;
             
-            lockrSes.set('DJEN.' + proc, djenData.items);  
-            __iterateDjenItem( djenData.items, ____parentThisTable );
-          });
-        }else
-          __iterateDjenItem(items, _parentThisTable);
-      })(_parentThisTable);
-      
-      jQ3.initialize('#processoExpedienteTab h5', function(){
-        var $this = jQ3(this);
-        var ___TEMPLATE___ = '<ul j2Calendar class="nav nav-pills btn-documento pull-right" style="margin-top:-10px"><li><a id="processoExpedienteTab:calendar" href="#" title="Abrir calendário j2" onclick=""><i class="fa fa-calendar-alt" aria-hidden="true" style="font-size:1.2em"></i><span class="sr-only">Ícone calendário</span></a></li></ul>';
-        
-        if($this.find('[j2Calendar]').length !== 0)
-          return;
-        
-        $this.append(___TEMPLATE___);
-        
-        $this.find('a').click( __abrirCalendarioJ2 );
-      });
-      
-      jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
-        var $this = jQ3(this);
-        
+            $this.append(___TEMPLATE___);
+            
+            $this.find('a').click( __abrirCalendarioJ2 );
+          })()
+        });
+
+        (function _ajustarLayoutExibicaoDocumentoEmIframeDaExtensao(){
+          if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
+            return;
+
+          jQ3('body').prepend(jQ3(this).find('table:first'));
+          jQ3('body').find('div.navbar').hide();
+          jQ3('body').css('overflow', 'overlay');
+          jQ3('#pageBody').hide();
+        })()
+    });
+
+    jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
+      var $this = jQ3(this);
+      ;(function _adicionarComandoDeBaixarPDFSimples(){
         var $li = $this.find('li:not([role])').last();
         var $liC = $li.clone(false, false);
         
@@ -2067,11 +2130,10 @@ function pjeLoad(){
         $liC.find('span').text('Ícone de PDF');
                 
         $li.parent().append( $liC );
-
-      }, { target : this } );
-
+      })()
+      
     });
-  };
+  }
 
   window.__abrirCalendarioJ2 = function(){
     //var j2EOpW = {
