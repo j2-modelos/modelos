@@ -2139,6 +2139,10 @@ a[_ngcontent-rnb-c14]:visited {
 }
 
 
+td[j2-ato-comunicacao] h6{
+    font-weight: bolder;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
