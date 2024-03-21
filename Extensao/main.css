@@ -2138,6 +2138,25 @@ a[_ngcontent-rnb-c14]:visited {
      text-align: center;   
 }
 
+/* j2-destaque-data-leitura */
+thead tr[_j2-ddl] th[j2-data-vencimento]{ 
+
+    max-width: 1em;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+    /*text-align: center !important;*/
+}
+
+/* j2-remover-destaque-data-vencimento */
+thead tr[_j2-rddv] th[j2-data-vencimento],
+tbody tr[_j2-rddv] td[j2-data-vencimento]{ 
+    display: none;
+}
+
+tbody tr[_j2-fmc="nao-mostrar"]{ 
+    display: none;
+}
+
 
 @keyframes mat-progress-spinner-linear-rotate {
     0% {

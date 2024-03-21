@@ -320,7 +320,11 @@ class TarefaPersonalizadaAvancada{
                   return false;
                 }
 
-                dadosExpedientes = j2E.Expedientes.util.parseLinhaDeExpedientesSelecionados($inps)
+                dadosExpedientes = j2E.Expedientes.util.parseLinhaDeExpedientesSelecionados(
+                  $inps, 
+                  personalizacaoUsaIframeExpedientes.selecionarCelula,
+                  personalizacaoUsaIframeExpedientes.formatoData
+                )
                 contextMap.set('dadosExpedientes', dadosExpedientes)
 
                 $inps = jQ3($inps)
@@ -389,6 +393,7 @@ class TarefaPersonalizadaAvancada{
                   jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
                   }) 
                   $inps.attr('disabled','')
+                  $inps.prop('checked', false)
                 }
               } )
               .fail( (err)=>{
@@ -764,7 +769,7 @@ var TarefasProps = {
       iframeAutosDigitais: {
         expedientes: {
           destaqueDataLeitura: true,
-          destaqueDataVencimento: false,
+          removerDestaqueDataVencimento: true,
           checkboxExpedienteSempreAtivo: true,
           filtrarMeiosComunicacao: ['telefone']
         }
@@ -1524,19 +1529,170 @@ var TarefasProps = {
   }
 };
 
-const estaTarefaRequerOIframeComExpedientes = true;
+const estaTarefaRequerOIframeComExpedientesComSelecaoDataLeituraCiencia = {
+  selecionarCelula: 'j2-destaque-data-leitura',
+  formatoData: 'ptBrData'
+};
+const estaTarefaRequerOIframeComExpedientesComSelecaoDataVencimento = {
+  selecionarCelula: 'j2-data-vencimento'
+};
 const estaTarefaNaoRequerOIframeComExpedientes = false;
+TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  [
+    'Certificar leitura WhatsApp'
+  ],
+  'col-sm-9',
+  'Certificar a leitura por aplicativo WhatsApp',
+  'Juntar certidão de leitura WhatsApp',
+  estaTarefaRequerOIframeComExpedientesComSelecaoDataLeituraCiencia,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: {
+      toEval: (dados) => { 
+        return `Leitura WhatsApp (${j2E.Expedientes.util.enumerarParteEVencimentoDoExpedientes(dados)})` 
+      }, 
+      contexto: [
+        'dadosExpedientes'
+      ]
+    },
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItWhatsAppLeitura'
+        ]
+      },             
+      {
+        tipo: 'copiarElmento',
+        elemento: '#certItWhatsAppLeitura_li',
+        copias: 0 // vai avaliar dadosExpedientes.length - 1
+      }, 
+      {
+        tipo: 'iterarCopias',
+        elemento: '#certItWhatsAppLeitura_li',
+        mapaSubstituicao : {
+            '#certItWhatsAppLeitura-prazoExtenso': 'it.data',
+            '#pessoa-polo-parte-LCase': '_obterPoloParte(it.parte).parte.LCase',
+            '#selParte': 'it.parte',
+            '#docId': 'it.idDocumentoLink'
+        },
+        fonte : {} // vai avaliar dadosExpedientes
+      },         
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
+    {
+      toEval : (robot, dadosExpedientes)=> {
+        robot.passos[1].copias = dadosExpedientes.length - 1
+        robot.passos[2].fonte = dadosExpedientes
+      },
+      contexto : [
+        'robot',
+        'dadosExpedientes'
+      ]
+    }
+  ]
+)
+TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  [
+    'Certificar leitura WhatsApp'
+  ],
+  'col-sm-9',
+  'Certificar a leitura por aplicativo WhatsApp Art. 6º',
+  'Juntar certidão de leitura WhatsApp Art. 6º',
+  estaTarefaRequerOIframeComExpedientesComSelecaoDataLeituraCiencia,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: {
+      toEval: (dados) => { 
+        return `Leitura WhatsApp Art. 6º (${j2E.Expedientes.util.enumerarParteEVencimentoDoExpedientes(dados)})` 
+      }, 
+      contexto: [
+        'dadosExpedientes'
+      ]
+    },
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItWhatsAppLeituraArt6'
+        ]
+      },             
+      {
+        tipo: 'copiarElmento',
+        elemento: '#certItWhatsAppLeituraArt6_li',
+        copias: 0 // vai avaliar dadosExpedientes.length - 1
+      }, 
+      {
+        tipo: 'iterarCopias',
+        elemento: '#certItWhatsAppLeituraArt6_li',
+        mapaSubstituicao : {
+            '#certItWhatsAppLeituraArt6-prazoExtenso': 'it.data',
+            '#pessoa-polo-parte-LCase': '_obterPoloParte(it.parte).parte.LCase',
+            '#selParte': 'it.parte',
+            '#docId': 'it.idDocumentoLink'
+        },
+        fonte : {} // vai avaliar dadosExpedientes
+      },         
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
+    {
+      toEval : (robot, dadosExpedientes)=> {
+        robot.passos[1].copias = dadosExpedientes.length - 1
+        robot.passos[2].fonte = dadosExpedientes
+      },
+      contexto : [
+        'robot',
+        'dadosExpedientes'
+      ]
+    }
+  ]
+)
+
+
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   [
     'Processo com prazo em curso', 
     'Processo com prazo decorrido',
-    'Expedir precatório',
-    'Certificar leitura WhatsApp'
+    'Expedir precatório'
   ],
   'col-sm-9',
   'Certificar o decurso de prazo dos expedientes abaixo selecionados',
   'Juntar certidão de decurso de prazo',
-  estaTarefaRequerOIframeComExpedientes,
+  estaTarefaRequerOIframeComExpedientesComSelecaoDataVencimento,
   {
     idModelo: 'j2Certidao',
     pjeTipoDocumento: 'certidão', //em lowercase
@@ -1651,7 +1807,7 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   'col-sm-9',
   'Certificar o abando da causa pela parte a ser selecionada',
   'Juntar certidão de abandono',
-  estaTarefaRequerOIframeComExpedientes,
+  estaTarefaRequerOIframeComExpedientesComSelecaoDataVencimento,
   {
     idModelo: 'j2Certidao',
     pjeTipoDocumento: 'certidão', //em lowercase

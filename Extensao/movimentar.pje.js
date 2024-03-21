@@ -545,20 +545,30 @@ function init(){
        * processo
        * @param {*} $input 
        */
-      parseLinhaDeExpedientesSelecionados : ($inputs)=>{
+      parseLinhaDeExpedientesSelecionados : ($inputs, selecionarCelula, formatoData)=>{
         function _converterParaISO(dataHora) {
           const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
           const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
           return dataISO;
         }
-        function _extrairUltimaDataHora(html) {
-          const regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
-          let ultimaDataHora = null;
-          let match;
-          while ((match = regex.exec(html)) !== null) {
-            [ultimaDataHora] = match;
+        function _extrairDataHoraDaSelecao($tr) {
+          const $td = $tr.find(`td[${selecionarCelula}]`)
+          let regex
+          switch(formatoData){
+            case 'ptBrDataHora':
+              regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
+              break;
+
+            case 'ptBrData':
+              regex = /(\d{2})\/(\d{2})\/(\d{4})/g;
+              break;
+
+            default:
+              regex = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/g;
           }
-          return ultimaDataHora;
+          const [match] = regex.exec($td.text())
+
+          return match || '00/00/0000 00:00:00';
         }
         function _extrairPrazo(html) {
           let regex = /Prazo:\s*(\d+)\s*(\w+)/;
@@ -590,7 +600,7 @@ function init(){
           var exp = {}
           var html = $tr.html()
 
-          exp.data    = _extrairUltimaDataHora(html)
+          exp.data    = _extrairDataHoraDaSelecao($tr)
           exp.dataEm  = `em ${exp.data}`
           exp.dataISO = _converterParaISO(exp.data)
           let prazo   = _extrairPrazo(html)
@@ -640,6 +650,19 @@ function init(){
         return `${exp?.parte ? exp.parte : '[ERRO AO PROCESSAR PARTE]'} em ${exp?.data ? exp.data : '[ERRO AO PROCESSAR DATA]'}`
       },
       enumerarParteEVencimentoDoExpedientes: (exps)=>{
+        var _enumerarParteEVencimentoDoExpediente = j2E.Expedientes.util.enumerarParteEVencimentoDoExpediente
+        var _exps = []
+        
+        exps.forEach(exp=>{
+          _exps.push(_enumerarParteEVencimentoDoExpediente(exp))
+        })
+
+        return _exps.joinListE()
+      },
+      enumerarParteDoExpediente: (exp)=>{
+        return `${exp?.parte ? exp.parte : '[ERRO AO PROCESSAR PARTE]'}`
+      },
+      enumerarParteDoExpedientes: (exps)=>{
         var _enumerarParteEVencimentoDoExpediente = j2E.Expedientes.util.enumerarParteEVencimentoDoExpediente
         var _exps = []
         

@@ -10,8 +10,9 @@ function pjeLoad(){
   const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
   const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
 
-  (function _default(){
-    j2E.mods.shortcuts();
+  ;(function _default(){
+    j2E.mods.shortcuts()
+    j2E.env.hashLoad = j2E.mods.urlHash.decodeWindowLocationHash() 
     
     addScript('Extensao/util.pje.js');
     console.log('j2Extension: loading origin https://pje.tjma.jus.br');
@@ -1739,6 +1740,8 @@ function pjeLoad(){
     
     jQ3.initialize('table#panelDetalhesProcesso', function(){
       jQ3.initialize('#processoExpedienteTab', function(){
+        const PersonalizacaoExpedientes = j2E.env?.hashLoad?.personalizacao?.iframeAutosDigitais?.expedientes
+
         jQ3.initialize('#processoParteExpedienteMenuGridList', function(){
           function _converterParaISO(dataHora) {
             const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
@@ -1760,6 +1763,71 @@ function pjeLoad(){
 
             return dataPtBrAlterada
           }
+          function _adicionarEditorDataEmCelulaDataExpediente($tdAlvo){
+            const $alvoEditorData = $tdAlvo.find('h6:first-child:not(.alert-heading)')
+            const dataText = $alvoEditorData.text()
+            if(!dataText.length) 
+              return
+  
+            $alvoEditorData.empty()
+            
+            const $span = jQ3(`<span>${dataText}</span>`)
+            $alvoEditorData.append($span)
+  
+            const $i = jQ3(`<i j2e-data-i class="fa fa-pencil-alt" style="
+                padding-left: 2px;
+            "></i>`)
+  
+            $alvoEditorData.append($i)
+            $i.click(()=>{
+              const $input = jQ3(`<input  j2e-data-input class="fa fa-plus" value="${dataText}">`)
+              const $plus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-plus" style="
+                padding-left: 2px;
+              "></i>`)
+              const $minus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-minus" style="
+                  padding-left: 2px;
+              "></i>`)
+              const $check = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-check j2e-i-mp" style="
+                  padding-left: 2px;
+              "></i>`)
+              const $times = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-times" style="
+                  padding-left: 2px;
+              "></i>`)
+              
+              
+              $span.after($input)
+              $input.after($plus)
+              $plus.after($minus)
+              $minus.after($check)
+              $check.after($times)
+              $span.hide()
+  
+              $plus.click(()=>{
+                  $input.val( _incrementarDecrementarData(true, $input.val()) )
+              })
+              $minus.click(()=>{
+                $input.val( _incrementarDecrementarData(false, $input.val() ) )
+              })
+  
+              $check.click(()=>{
+                $span.text($input.val())
+  
+                $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+                $input.remove()
+                $span.show()
+                $i.show()
+              })
+  
+              $times.click(()=>{
+                $alvoEditorData.find('[j2e-data-i-cmd]').remove()
+                $input.remove()
+                $span.show()
+                $i.show()
+              })
+  
+              $i.hide()
+            })
+          }
 
           
           ;(function _dispararEventoExpedientesExibidosFrontend(){
@@ -1775,14 +1843,54 @@ function pjeLoad(){
             defer(()=>__sendMessageToFrotEnd(j2Action))
           })() 
 
-          jQ3.initialize('thead', function(){
+          jQ3.initialize('thead > tr', function(){
+            const $tr = jQ3(this)
+            const trHeaders = [ 
+              { pos: 1, attrJ2: 'j2-ato-comunicacao'}, 
+              { pos: 2, attrJ2: 'j2-data-vencimento'}, 
+              { pos: 3, attrJ2: 'j2-documentos'}, 
+              { pos: 4, attrJ2: 'j2-fechado-info'} 
+            ]
 
+            trHeaders.forEach(thDef=>{
+              $tr.find(`th:nth-child(${thDef.pos})`).attr(thDef.attrJ2, '')
+            })
+
+            
+            ;(function _adicionarCabeçalhoDataLeitura(){
+              if( ! PersonalizacaoExpedientes?.destaqueDataLeitura )
+                return
+
+              $tr.attr('_j2-ddl', '')
+              
+              const $dataVencimento = $tr.find('[j2-data-vencimento]')
+              const $destaqueDataLeitura = $dataVencimento.clone(true)
+
+              $destaqueDataLeitura.removeAttr('j2-data-vencimento')
+              $destaqueDataLeitura.attr('j2-destaque-data-leitura', '')
+
+              $destaqueDataLeitura.find('form').empty()
+              $destaqueDataLeitura.find('form').text('Data registro leitura/ciência')
+
+              $dataVencimento.before($destaqueDataLeitura)
+            })()
+
+            ;(function _definirAtributosParaEstilosOdIframeAutoDigitaisExpediente(){
+              PersonalizacaoExpedientes?.destaqueDataLeitura
+              &&
+              $tr.attr('_j2-ddl', '')
+
+              PersonalizacaoExpedientes?.removerDestaqueDataVencimento
+              &&
+              $tr.attr('_j2-rddv', '')
+            })()
+            
           }, {target:this} )
 
           jQ3.initialize('#processoParteExpedienteMenuGridList\\:tb > tr', function(){
             const $tr = jQ3(this)
             let EstaVencido = false
-            const j2Props = [ 
+            const trTds = [ 
               { pos: 1, attrJ2: 'j2-ato-comunicacao'}, 
               { pos: 2, attrJ2: 'j2-data-vencimento'}, 
               { pos: 3, attrJ2: 'j2-documentos'}, 
@@ -1793,13 +1901,14 @@ function pjeLoad(){
             }
             
             
-            j2Props.forEach(tdDef=>{
+            trTds.forEach(tdDef=>{
               $tr.find(`td:nth-child(${tdDef.pos})`).attr(tdDef.attrJ2, '')
             })
 
             $tr.data('j2E', expedienteData)
 
             ;(function _extrairExpedienteData(){
+              return
               const $tagMeioELeitura = $tr.find('td[j2-ato-comunicacao] div:nth-child(3)')
               const regexDataLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4})/ )
               const regexDataHoraLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/ )
@@ -1811,6 +1920,59 @@ function pjeLoad(){
               }
 
               jQ3.extend(expedienteData.__, { $tagMeioELeitura, regexDataLeitura, regexDataHoraLeitura})
+            })()
+
+            ;(function _extrairExpedienteData2(){
+              const $tagMeioEExpedicao = $tr.find('td[j2-ato-comunicacao] div:nth-child(3)')
+              const regexDataExpedicao = $tagMeioEExpedicao.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4})/ )
+              const regexDataExpedicaoComHora = $tagMeioEExpedicao.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/ )
+              
+              const $tagRegistroLeitura = $tr.find('td[j2-ato-comunicacao] div[id]:nth-child(4)')
+              const regexDataHoraLeitura = $tagRegistroLeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/ )
+              
+              const dataRegistroLeitura = {
+                ptBrDataHora: regexDataHoraLeitura?.at(0),
+                isoString: _converterParaISO(regexDataExpedicaoComHora?.at(0)),
+                usuarioResponsavelPelaLeitura: $tagRegistroLeitura.text().match(/^(.*?)\s*registrou/i)?.at(1)?.trim()
+              }
+
+              const dataExpedicao = {
+                ptBrData: regexDataExpedicao.at(0),
+                ptBrDataHora: regexDataExpedicaoComHora.at(0),
+                isoString: _converterParaISO(regexDataExpedicaoComHora.at(0))
+              }
+
+              const meioComunicacao = $tagMeioEExpedicao.text().match(/^([^(]*)/)?.at(1)?.trim().toLowerCase()
+
+              jQ3.extend(expedienteData, { dataExpedicao, dataRegistroLeitura, meioComunicacao })
+              jQ3.extend(expedienteData.__, { $tagMeioELeitura: $tagMeioEExpedicao, regexDataLeitura: regexDataExpedicao, regexDataHoraLeitura: regexDataExpedicaoComHora})
+            })()
+
+            ;(function _criarDestaqueDataLeitura(){
+              if( ! PersonalizacaoExpedientes?.destaqueDataLeitura )
+                return
+
+              $tr.attr('_j2-ddl', '')
+
+              const $dataVencimento = $tr.find('[j2-data-vencimento]')
+              const $destaqueDataLeitura = $dataVencimento.clone(true)
+
+              $destaqueDataLeitura.removeAttr('j2-data-vencimento')
+              $destaqueDataLeitura.attr('j2-destaque-data-leitura', '')
+              Array.from($destaqueDataLeitura.find('*[id]'))
+              .concat([$destaqueDataLeitura.get(0)] )
+              .forEach(idEl =>idEl.removeAttribute('id')) 
+
+              $destaqueDataLeitura.find('h6:nth-child(1)').text( expedienteData.dataExpedicao.ptBrDataHora )
+              
+              $destaqueDataLeitura.find('h6:nth-child(3) span')
+              .attr('title','Data de registro da leitura/ciência do expediente')
+              .text( `(${expedienteData.dataRegistroLeitura.usuarioResponsavelPelaLeitura})`)
+
+              $dataVencimento.before($destaqueDataLeitura)
+
+              const $celulaAlvo = $destaqueDataLeitura
+              _adicionarEditorDataEmCelulaDataExpediente($celulaAlvo)
             })()
 
             ;(function _adicionarComandoParaFecharOPrazo(){
@@ -1888,8 +2050,9 @@ function pjeLoad(){
     
                 tdPosShift = 1
               }
-    
-              var $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${EstaVencido ? '' : 'disabled'}></td>`)
+              
+              const mostrarHabilitado = PersonalizacaoExpedientes?.checkboxExpedienteSempreAtivo || EstaVencido
+              const $seletor = jQ3(`<td j2-seletor-expediente><input type="Checkbox" j2-seletor-expediente ${mostrarHabilitado ? '' : 'disabled'}></td>`)
               $tr.prepend($seletor)
             })() 
 
@@ -1898,74 +2061,29 @@ function pjeLoad(){
               if(! EstaVencido)
                 return
               
-              const $alvoEditorData = $tr.find('td[j2-data-vencimento] h6:first-child:not(.alert-heading)')
-              const dataText = $alvoEditorData.text()
-              if(!dataText.length) 
-                return
-    
-              $alvoEditorData.empty()
-              
-              const $span = jQ3(`<span>${dataText}</span>`)
-              $alvoEditorData.append($span)
-    
-              const $i = jQ3(`<i j2e-data-i class="fa fa-pencil-alt" style="
-                  padding-left: 2px;
-              "></i>`)
-    
-              $alvoEditorData.append($i)
-              $i.click(()=>{
-                const $input = jQ3(`<input  j2e-data-input class="fa fa-plus" value="${dataText}">`)
-                const $plus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-plus" style="
-                  padding-left: 2px;
-                "></i>`)
-                const $minus = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-minus" style="
-                    padding-left: 2px;
-                "></i>`)
-                const $check = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-check j2e-i-mp" style="
-                    padding-left: 2px;
-                "></i>`)
-                const $times = jQ3(`<i j2e-data-i j2e-data-i-cmd class="fa fa-times" style="
-                    padding-left: 2px;
-                "></i>`)
-                
-                
-                $span.after($input)
-                $input.after($plus)
-                $plus.after($minus)
-                $minus.after($check)
-                $check.after($times)
-                $span.hide()
-    
-                $plus.click(()=>{
-                   $input.val( _incrementarDecrementarData(true, $input.val()) )
-                })
-                $minus.click(()=>{
-                  $input.val( _incrementarDecrementarData(false, $input.val() ) )
-                })
-    
-                $check.click(()=>{
-                  $span.text($input.val())
-    
-                  $alvoEditorData.find('[j2e-data-i-cmd]').remove()
-                  $input.remove()
-                  $span.show()
-                  $i.show()
-                })
-    
-                $times.click(()=>{
-                  $alvoEditorData.find('[j2e-data-i-cmd]').remove()
-                  $input.remove()
-                  $span.show()
-                  $i.show()
-                })
-    
-                $i.hide()
-              })
+              const $celulaAlvo = $tr.find('td[j2-data-vencimento]')
+              _adicionarEditorDataEmCelulaDataExpediente($celulaAlvo)
             })()
     
+            ;(function _definirAtributosParaEstilosOdIframeAutoDigitaisExpediente(){
+              PersonalizacaoExpedientes?.destaqueDataLeitura
+              &&
+              $tr.attr('_j2-ddl', '')
 
+              PersonalizacaoExpedientes?.removerDestaqueDataVencimento
+              &&
+              $tr.attr('_j2-rddv', '')
+
+              PersonalizacaoExpedientes?.filtrarMeiosComunicacao
+              &&
+              ($tr.attr('_j2-fmc', `${
+                PersonalizacaoExpedientes.filtrarMeiosComunicacao.includes(expedienteData.meioComunicacao)
+                ? '' : 'nao-mostrar'
+              }`) )
+            })()
     
-            })
+            
+          })
 
         }, {target:this} )
           
@@ -2101,7 +2219,7 @@ function pjeLoad(){
           if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
             return;
 
-          jQ3('body').prepend(jQ3(this).find('table:first'));
+          jQ3('body').prepend(jQ3('#processoExpedienteTab').find('table:first'));
           jQ3('body').find('div.navbar').hide();
           jQ3('body').css('overflow', 'overlay');
           jQ3('#pageBody').hide();
