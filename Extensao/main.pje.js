@@ -1700,47 +1700,12 @@ function pjeLoad(){
     }); 
   }
 
-  function observeProcessoFolhaExpedientes(){
-    function __pdfDownloadAction(){ 
-      var idPF = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];    
-
-      var j2ExpC = jQ3('#frameHtml').prop('contentWindow').jQ3('#j2Exp').clone();
-      
-      j2ExpC.find('div').filter(function() {
-          return jQ3(this).css('box-shadow').length > 0;
-        }
-      ).css('box-shadow', '');
-      j2ExpC.find('#normalizeFormtas').css('border', '');
-
-      var _pdfWin = j2EOpW.corner( '', 'FerramentasProcessoBaixarPDF' + guid(), null, { width : 25, height: 25} );
-      var _winDoc = jQ3('#frameHtml').prop('contentDocument');
-      var _wB = jQ3('body', _pdfWin.document);
-      _wB.empty();
-      _wB.append(j2ExpC);
-
-      var opt = {
-        margin:       [0.393701, 0, 0.393701, 0],
-        filename:     idPF + ' - id ' +  jQ3('div.titulo-documento span').text().trim() + '.pdf',
-        image:        { type: 'jpeg', quality: 1.00 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
-      
-      function ___makePdf(){
-        if (typeof _pdfWin.html2pdf !== 'undefined' ) {
-          _pdfWin.html2pdf().set(opt).from(_winDoc.getElementById('j2Exp')).save(null, _winDoc);
-          setTimeout(function(){_pdfWin.close();},250);
-        }else {
-          setTimeout( ___makePdf, 50 );
-        }
-      }
-      ___makePdf();      
-
-    }
-    
+  function observeProcessoFolhaExpedientes(){    
     jQ3.initialize('table#panelDetalhesProcesso', function(){
       jQ3.initialize('#processoExpedienteTab', function(){
         const PersonalizacaoExpedientes = j2E.env?.hashLoad?.personalizacao?.iframeAutosDigitais?.expedientes
+        const $processoExpedienteTab = jQ3(this)
+
 
         jQ3.initialize('#processoParteExpedienteMenuGridList', function(){
           function _converterParaISO(dataHora) {
@@ -1913,12 +1878,15 @@ function pjeLoad(){
               const regexDataLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4})/ )
               const regexDataHoraLeitura = $tagMeioELeitura.text().trim().match( /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})/ )
               
-              expedienteData.dataLeitura = {
+              const dataLeitura = {
                 ptBrStringData: regexDataLeitura.at(0),
                 ptBrStringDataHora: regexDataHoraLeitura.at(0),
                 isoString: _converterParaISO(regexDataHoraLeitura.at(0))
               }
 
+              const meioComunicacao = $tagMeioELeitura.text().match(/^([^(]*)/)?.at(1)?.trim()
+
+              jQ3.extend(expedienteData, { dataLeitura, meioComunicacao })
               jQ3.extend(expedienteData.__, { $tagMeioELeitura, regexDataLeitura, regexDataHoraLeitura})
             })()
 
@@ -2057,6 +2025,8 @@ function pjeLoad(){
             })() 
 
             ;(function _adicionarLapisEdicaoNaDataVencida(){
+              if(!(j2E?.env?.urlParms?.j2Expedientes))
+                return;
               //inserir o lápis
               if(! EstaVencido)
                 return
@@ -2152,13 +2122,14 @@ function pjeLoad(){
                 const pubData = pubDataISO.split('-').reverse().join('/')
                 $tr.find(`td[j2-ato-comunicacao] > span > div > span`).append(`<br>Publicado em: ${pubData}`)
               }
-              function __calcularDataVencimentoCasoNaoDisponivelPJe($tr){
+              function __calcularDataVencimentoCasoNaoDisponivelPJe(itemDJEN, $tr){
                 if ( 
                   $tr.find(`td[j2-data-vencimento] > span > div:first`).text().length 
                   && 
                   ( $tr.find(`td[j2-ato-comunicacao] > span > div:first`).text().toLowerCase().includes('o sistema registrou ciência')  ) )
                   return;
-
+                
+                const pubDataISO = j2E.mods.Calendario.contarPrazo(new Date(`${itemDJEN.data_disponibilizacao}T00:00:00.000-03:00`), 1)
                 let _parsePrazo = $tr.find(`td[j2-ato-comunicacao]`).text().split('Prazo: ')[1].split(' dias')
                 
                 if( isNaN(_parsePrazo[0] ) )
@@ -2176,7 +2147,7 @@ function pjeLoad(){
                     color: #a94442;
                 ">(para manifestação)</span></h6></div></span></div></span>`;
 
-                $tr.find(`td:nth-child(${2 + tdPosShift})`).append(htmlTemplate);
+                $tr.find(`td[j2-data-vencimento]`).append(htmlTemplate);
               }
 
 
@@ -2190,15 +2161,13 @@ function pjeLoad(){
 
                   __criarEApensarAtalhaoAbrirCertidaoDJEN(itemDJEN, $tr)
                   __exibirDataDisponibilizacaoEPublicacao(itemDJEN, $tr)
-                  __calcularDataVencimentoCasoNaoDisponivelPJe($tr)
+                  __calcularDataVencimentoCasoNaoDisponivelPJe(itemDJEN, $tr)
 
                 });
               })
             })
-          })
+          })()
         }, {target:this} )
-
-        }, {target:this})
 
         jQ3.initialize('h5', function(){
           var $this = jQ3(this);
@@ -2219,38 +2188,77 @@ function pjeLoad(){
           if( ! jQ3('body').is('[j2E="mostrarSoExpedientes"]') )
             return;
 
-          jQ3('body').prepend(jQ3('#processoExpedienteTab').find('table:first'));
+          jQ3('body').prepend($processoExpedienteTab.find('table:first'));
           jQ3('body').find('div.navbar').hide();
           jQ3('body').css('overflow', 'overlay');
           jQ3('#pageBody').hide();
         })()
+      }, {target:this})
+
+      jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
+        function __pdfDownloadAction(){ 
+          var idPF = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];    
+    
+          var j2ExpC = jQ3('#frameHtml').prop('contentWindow').jQ3('#j2Exp').clone();
+          
+          j2ExpC.find('div').filter(function() {
+              return jQ3(this).css('box-shadow').length > 0;
+            }
+          ).css('box-shadow', '');
+          j2ExpC.find('#normalizeFormtas').css('border', '');
+    
+          var _pdfWin = j2EOpW.corner( '', 'FerramentasProcessoBaixarPDF' + guid(), null, { width : 25, height: 25} );
+          var _winDoc = jQ3('#frameHtml').prop('contentDocument');
+          var _wB = jQ3('body', _pdfWin.document);
+          _wB.empty();
+          _wB.append(j2ExpC);
+    
+          var opt = {
+            margin:       [0.393701, 0, 0.393701, 0],
+            filename:     idPF + ' - id ' +  jQ3('div.titulo-documento span').text().trim() + '.pdf',
+            image:        { type: 'jpeg', quality: 1.00 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+          };
+          
+          function ___makePdf(){
+            if (typeof _pdfWin.html2pdf !== 'undefined' ) {
+              _pdfWin.html2pdf().set(opt).from(_winDoc.getElementById('j2Exp')).save(null, _winDoc);
+              setTimeout(function(){_pdfWin.close();},250);
+            }else {
+              setTimeout( ___makePdf, 50 );
+            }
+          }
+          ___makePdf();      
+    
+        }
+  
+        var $this = jQ3(this);
+        ;(function _adicionarComandoDeBaixarPDFSimples(){
+          var $li = $this.find('li:not([role])').last();
+          var $liC = $li.clone(false, false);
+          
+          $liC.find('a').attr('onclick', '');
+          $liC = jQ3( $liC.prop('outerHTML') );
+          
+          $liC.find('script').remove();
+          
+          $liC.find('i').removeClass()
+                        .addClass('fa fa-file-pdf')
+                        .css('font-size', '1.2em');
+          
+          $liC.find('a').click(__pdfDownloadAction)
+                        .attr('onclick', '')
+                        .attr('title', 'Download PDF simples');
+          
+          $liC.find('span').text('Ícone de PDF');
+                  
+          $li.parent().append( $liC );
+        })()
+        
+      }, {target: this});
     });
 
-    jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
-      var $this = jQ3(this);
-      ;(function _adicionarComandoDeBaixarPDFSimples(){
-        var $li = $this.find('li:not([role])').last();
-        var $liC = $li.clone(false, false);
-        
-        $liC.find('a').attr('onclick', '');
-        $liC = jQ3( $liC.prop('outerHTML') );
-        
-        $liC.find('script').remove();
-        
-        $liC.find('i').removeClass()
-                      .addClass('fa fa-file-pdf')
-                      .css('font-size', '1.2em');
-        
-        $liC.find('a').click(__pdfDownloadAction)
-                      .attr('onclick', '')
-                      .attr('title', 'Download PDF simples');
-        
-        $liC.find('span').text('Ícone de PDF');
-                
-        $li.parent().append( $liC );
-      })()
-      
-    });
   }
 
   window.__abrirCalendarioJ2 = function(){
@@ -4030,6 +4038,10 @@ function pjeLoad(){
   function observarParaCriarFerramentaWhatsApp(){
     const idTask = j2E.env.urlParms.newTaskId
     jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:documentoExistenteDiv > .rich-panel`, function(){
+      const toaster = (a, msg, severity)=> { 
+        jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
+      }
+
       function _obterDestinatarioAtual(){ 
         const text = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:edicaoExpedientePanel_header`).text().split(' - ')
         text.shift()

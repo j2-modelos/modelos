@@ -2158,6 +2158,10 @@ tbody tr[_j2-fmc="nao-mostrar"]{
 }
 
 
+td[j2-ato-comunicacao] h6{
+    font-weight: bolder;
+}
+
 @keyframes mat-progress-spinner-linear-rotate {
     0% {
         transform: rotate(0);
