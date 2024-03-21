@@ -85,7 +85,7 @@ and open the template in the editor.
             </elemento>
         </versao>
     </classeDef>
-    <classeDef id="AR.Body.DestRemPlus.Left">
+    <classeDef id="AR.Body.DestRemPlus.Left>
         <versao id="4.1">
             <elemento tag="div" scope="EXP" id="AR.Body.DestRemPlus.Right"><HTMLAttribute name="style" value="HEIGHT: 84mm; WIDTH: 75%; POSITION: relative; FLOAT: left"/>
                 <elemento tag="div" scope="EXP" ><HTMLAttribute name="style" value="HEIGHT: 40mm; BORDER-RIGHT: 1px solid; WIDTH: 100%; BORDER-BOTTOM: 1px solid; POSITION: relative; FLOAT: left"/>
