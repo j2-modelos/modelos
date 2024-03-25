@@ -182,7 +182,9 @@ class TarefaPersonalizadaAvancada{
       fontDocumento: 'text/html' //apenas
     }*/
     modeloJ2Robot, 
-    avaliacaoDinamicaParaRobot
+    avaliacaoDinamicaParaRobot,
+    onDone,
+    onFail
     ){
 
     var argumentosSemTarefa = [
@@ -192,7 +194,9 @@ class TarefaPersonalizadaAvancada{
       personalizacaoUsaIframeExpedientes,
       modeloJ2,
       modeloJ2Robot, 
-      avaliacaoDinamicaParaRobot
+      avaliacaoDinamicaParaRobot,
+      onDone,
+      onFail
     ]
 
     if(Array.isArray(nomeTarefaOuTarefasOuRegExpTarefa) ){
@@ -295,20 +299,21 @@ class TarefaPersonalizadaAvancada{
             return;
           }
 
-            var $this = $botaoDaAcaoEmUmClique
+          var $this = $botaoDaAcaoEmUmClique
             $this.attr('disabled', 'true')
             j2EUi.createRichModal()
             $this.disabledDef = jQ3.Deferred()
             $this.disabledDef.done( ()=> setTimeout(()=>{
-            $this.removeAttr('disabled')
-            j2EUi.removeModal()
-          }, 500 ))
+              $this.removeAttr('disabled')
+              j2EUi.removeModal()
+            }, 500 ))
             
             let dadosExpedientes
             let $inps
+            let $jQ3i
             if (personalizacaoUsaIframeExpedientes){
               function _obterCargaDaIframe(){
-                var $jQ3i = expedientesIFrame.prop('contentWindow').jQ3
+                $jQ3i = expedientesIFrame.prop('contentWindow').jQ3
                 if(!($jQ3i)){
                   $.Toast("Erro ao Juntar em um clique.", "Expedientes não estão prontos.", "error")
                   return false;
@@ -333,12 +338,10 @@ class TarefaPersonalizadaAvancada{
               }
 
               if(! _obterCargaDaIframe()){
-              $this.disabledDef.resolve()
-              return;
+                $this.disabledDef.resolve()
+                return;
               }
             }
-
-
             
             const idModelo = modeloJ2.idModelo
             const pjeTipoDocumento = modeloJ2.pjeTipoDocumento
@@ -390,14 +393,19 @@ class TarefaPersonalizadaAvancada{
 
                 if(personalizacaoUsaIframeExpedientes){
                   $inps.each((idx, el)=>{
-                  jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
+                    jQ3(el).parents('tr:first').addClass('success').removeClass('info') 
                   }) 
                   $inps.attr('disabled','')
                   $inps.prop('checked', false)
-                }
+
+                  onDone && onDone($jQ3i, $inps, dadosExpedientes)
+                  
+                }else
+                  onDone && onDone()
               } )
-              .fail( (err)=>{
+              .fail( (err, a, b, c)=>{
                 $.Toast("Erro ao Juntar num clique", err, "error")
+                onFail && onFail(err, a, b, c)
               } )
               .always(()=>{
                 $this.disabledDef.resolve()
@@ -773,6 +781,94 @@ var TarefasProps = {
           checkboxExpedienteSempreAtivo: true,
           filtrarMeiosComunicacao: ['telefone']
         }
+      }
+    },
+    callbackEvents: {
+      onDoneJuntarEmUmClique: ($jQ3i, $inps, dadosExpedientes) =>{
+        /**
+         * $inpu está no contexto jQ3
+         * $trs das inps está no contexto $jQ3i
+         */
+        const expedientesSetAr = []
+    
+        $inps.each(function() {
+          const $inp = jQ3(this)
+          const guid = $inp.data('j2E').guid  
+          const [dadosExpediente] = dadosExpedientes.filter(d => d.guid == guid)
+          const $tr = $jQ3i(this).parents('tr:first')
+          expedientesSetAr.push({ 
+            guid,
+            $tr,
+            $inp,
+            dadosExpediente: {
+              dataTr: $tr.data('j2E'),
+              parsedAcao: dadosExpediente,
+            }
+          })
+        })
+    
+    
+        ;(function _verificarSeUsuarioAlterouDataRegistroLeitura(){
+          expedientesSetAr.forEach(expSet=>{
+            const isoDataDaTr = expSet.dadosExpediente.dataTr.dataExpedicao.isoString.split('T').at(0)
+            const isoDataParsedAcao = expSet.dadosExpediente.parsedAcao.dataISO.split('T').at(0)
+    
+            if(isoDataDaTr === isoDataParsedAcao)
+              return
+    
+            const idProcesso = j2E.env.urlParms.idProcesso
+            const taskId = j2E.env.urlParms.newTaskId
+    
+            const expDt = expSet.dadosExpediente.parsedAcao
+            const prazo = parseInt(expDt.prazo)
+            const prazoVencimentoIso = !isNaN(prazo) ? j2E.mods.Calendario.contarPrazo(new Date(`${expDt.dataISO.split('T')[0]}T00:00:00.000-03:00`), prazo) : undefined
+            const prazoVencimentoPtBr = prazoVencimentoIso ? prazoVencimentoIso.split('-').reverse().join('/') : undefined
+    
+            const etiqueta1 = `PZ ${prazoVencimentoIso.replaceAll('-', '.')}`
+            const etiqueta2 = `Ag. Prazo de Expediente Divergente do Sistema`
+    
+            const lembrete1 = { texto: `Data divergente do sistema | ${expDt.tipoExpediente} id ${expDt.idDocumento} (Expediente ${expDt.idExpediente}) | Dada Leitura ${expDt.data}${
+              !isNaN(prazo) ?  ` | Data vencimento ${prazoVencimentoPtBr}` : ''
+            }${expedientesSetAr.length > 1 ? ` | ${expDt.parte}` : ''}` }
+            const lembrete2 = { texto: `Dada Leitura ${expDt.data}${expedientesSetAr.length > 1 ? ` - ${expDt.parte}` : ''}`, idDocumento: expDt.idDocumento } 
+    
+            ;([etiqueta1, etiqueta2]).forEach(etiqueta=>{
+              j2EPJeRest.etiquetas.inserir(idProcesso, etiqueta)
+              .done( (res)=>{
+                if(typeof res === 'undefined'){
+                  $.Toast("Juntar em um clique", `Etiqueta "${etiqueta}" já está vinculada.`, "info")
+                  return;
+                }
+    
+                $.Toast("Juntar em um clique", `Etiqueta "${etiqueta}" vinculada.`, "success")
+    
+                evBus.fire('on-adicionar-etiqueta-via-pje', {
+                  tag : etiqueta,
+                  idProcesso : idProcesso,
+                  taskId : taskId,
+                  idTag : res.id
+                })
+              })
+              .fail((err)=>{
+                $.Toast("Juntar em um clique", `Erro ao vincular Etiqueta "${etiqueta}": ${err}.`, "error")
+              })        
+            })
+    
+            const lembretesPromises = 
+            ([lembrete1, lembrete2]).map (lembrete=>{
+              return j2E.SeamIteraction.lembretes.acoes.cadastrarLembrete(
+                lembrete.texto, undefined, lembrete.idDocumento)  
+            })
+    
+            jQ3.when(...lembretesPromises)
+            .done( ()=>{
+              $.Toast("Juntar em um clique", `Lembretes de divergência vinculados.`, "success")
+            })
+            .fail((err)=>{
+              $.Toast("Juntar em um clique", `Erro ao vincular lembretes de divergência: ${err}.`, "error")
+            })      
+          })
+        })()
       }
     }
   },
@@ -1607,8 +1703,10 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
         'dadosExpedientes'
       ]
     }
-  ]
+  ],
+  TarefasProps['Certificar leitura WhatsApp'].callbackEvents.onDoneJuntarEmUmClique
 )
+
 TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
   [
     'Certificar leitura WhatsApp'
@@ -1679,7 +1777,8 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
         'dadosExpedientes'
       ]
     }
-  ]
+  ],
+  TarefasProps['Certificar leitura WhatsApp'].callbackEvents.onDoneJuntarEmUmClique
 )
 
 

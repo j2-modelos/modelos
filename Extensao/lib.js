@@ -2946,8 +2946,8 @@ function loadPJeRestAndSeamInteraction(){
     window.j2E = {}
 
   j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E', 'sessionStorage'); const armazenamento = j2E.mods.Armazenamento; var _this = {
-    session : [],
-    util : {
+    session: [],
+    util: {
       conformPayload : PAYLOAD =>{
         PAYLOAD=PAYLOAD.split('\n').map( function(_i ) { 
           _i = _i.replace(': ','=')
@@ -2986,9 +2986,17 @@ function loadPJeRestAndSeamInteraction(){
         });
 
         return dados
+      },
+      obterMesEAnoAtual: ()=> {
+        const dataAtual = new Date();
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se for necessário
+        const ano = dataAtual.getFullYear();
+        const mesEAnoAtual = `${mes}/${ano}`;
+      
+        return mesEAnoAtual;
       }
     },
-    alertas : {
+    alertas: {
       requestsIteractionsGetter : () => { 
         const requestsIteractions = {
           baseURL : `https://pje.tjma.jus.br/pje/Alerta/listView.seam`,
@@ -3349,7 +3357,7 @@ function loadPJeRestAndSeamInteraction(){
         }
       }
     },
-    audiencia : {
+    audiencia: {
       requestsIteractionsGetter : () => { 
         const requestsIteractions = {
           baseURL : `/pje/ProcessoAudiencia/PautaAudiencia/listView.seam`,
@@ -3536,7 +3544,7 @@ function loadPJeRestAndSeamInteraction(){
         }
       }
     },
-    autoTexto : {
+    autoTexto: {
       requestsIteractionsGetter : () => { 
         const requestsIteractions = {
           baseURL : `https://pje.tjma.jus.br/pje/Editor/AutoTexto/autoTexto.seam`,
@@ -3922,11 +3930,10 @@ function loadPJeRestAndSeamInteraction(){
         },
       }
     },
-    processo : {
+    processo: {
       xmlHistory : [],
       requestsIteractions : {
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
-        movimentarURL : 'https://pje.tjma.jus.br/pje/Processo/movimentar.seam',
         listAutosDigitais : (_idProcesso)=>{
           var def = $.Deferred()
           var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
@@ -4581,53 +4588,6 @@ function loadPJeRestAndSeamInteraction(){
           .fail( err => def.reject(err) )
 
           return def.promise();
-        },
-        selecionarEtapaPrepararAtoDoPAC: (viewIdProc, taskInstanceId, arrayChecados)=>{
-          var def = $.Deferred()
-
-          function __criarPayLoadDosChecados(){
-            return arrayChecados /* = [0, 1, 2, 10] */
-            .map(ck => `            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:tabelaEnderecosPessoa:${ck}:check: on`   )
-            .join('\n')
-          }
-
-          var PAYLOAD = `
-            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:atividadeRegion
-            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:tabelaDestinatariosEndereco:0:umExpedientePorEnderecoCK1: on
-            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCepDecoration:enderecosPanelPesquisarEnderecoCep: 
-            taskInstanceForm:Processo_Fluxo_prepararExpediente--${taskInstanceId}:enderecosPanelPesquisarEnderecoCompletoDecoration:enderecosPanelPesquisarEnderecoCompleto: 
-            ${ __criarPayLoadDosChecados() }
-            taskInstanceForm:Processo_Fluxo_prepararExpediente-taskInstanceId:modalPanelMessagesOpenedState: 
-            iframe: true
-            taskInstanceForm: taskInstanceForm
-            autoScroll: 
-            javax.faces.ViewState: ${viewIdProc}
-            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id100
-            AJAX:EVENTS_COUNT: 1
-          `
-          PAYLOAD = `
-            AJAXREQUEST: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id95
-            ${ __criarPayLoadDosChecados() }
-            iframe: true
-            taskInstanceForm: taskInstanceForm
-            autoScroll: 
-            javax.faces.ViewState: ${viewIdProc}
-            taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97: taskInstanceForm:Processo_Fluxo_prepararExpediente-${taskInstanceId}:j_id97
-            AJAX:EVENTS_COUNT: 1
-          `
-          PAYLOAD = _this.util.conformPayload(PAYLOAD)
-
-          $.post(_this.processo.requestsIteractions.movimentarURL, PAYLOAD)
-          .done( (xml) => { 
-            _this.processo.xmlHistory.push({
-              interaction : 'PAC-preparar-ato',
-              $xml : jQ3(xml)
-            })
-            def.resolve( jQ3(xml), _this.processo.requestsIteractions ) 
-          } )
-          .fail( err => def.reject(err) )
-
-          return def.promise();
         }
       },
       acoes : {
@@ -4730,6 +4690,155 @@ function loadPJeRestAndSeamInteraction(){
           _this.processo.requestsIteractions.selecionarEtapaPrepararAtoDoPAC(viewIdProc, taskInstanceId, arrayChecados)
           .done( ($xml, it) => { 
             def.resolve( $xml ) 
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        }
+      }
+    },
+    lembretes: {
+      xmlHistory : [],
+      requestsIteractions : {
+        baseURL : 'https://pje.tjma.jus.br/pje/Processo/lembretes.seam',
+        criarLembreteSeam : (_idProcesso, idDocumento)=>{
+          var def = $.Deferred()
+          var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
+
+          const search = new URLSearchParams();
+          search.append(
+            idDocumento ? 'idProcessoDocumento' : 'idProcessoTrf',
+            idDocumento ? idDocumento : idProcesso
+          )
+
+          const url = `${_this.lembretes.requestsIteractions.baseURL}?${search}`
+
+          $.get(url)
+          .done( (xml)=> { 
+            var $html = $(xml)
+            var viewId = $html.find('#javax\\.faces\\.ViewState').val()
+            
+            _this.session.viewIdLembretes = viewId
+            _this.session.lembreteXML = xml
+
+            _this.lembretes.xmlHistory.push({
+              interaction : 'abrirCadastrarLembrete',
+              $xml : $html
+            })
+                        
+            def.resolve( _this.lembretes.requestsIteractions, $html)
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        adicionarVisualizacaoPadrao : ($xml)=>{
+          var def = $.Deferred()
+
+          const obterMesEAnoAtual = _this.util.obterMesEAnoAtual
+
+          const containerId = `formLembretes:${(function obterContainerId() {
+            var $input = $xml.find('input[value=Adicionar]');
+            var onclickValue = $input.attr('onclick');
+            var regex = /'containerId':'formLembretes:(j_id\d+)/;
+            var match = onclickValue.match(regex);
+            var [_, part] = match ;
+
+            return part;
+          })()}`
+          const inputAdicionarId = $xml.find('input[value=Adicionar]').attr('id')
+          const viewId = $xml.find('#javax\\.faces\\.ViewState').val()
+          
+
+          var PAYLOAD = `
+            AJAXREQUEST: ${containerId}
+            formLembretes:descricao: 
+            formLembretes:dataVisivelAteInputDate: 
+            formLembretes:dataVisivelAteInputCurrentDate: ${obterMesEAnoAtual()}
+            formLembretes:ativo: true
+            formLembretes:orgaoJulgadorDecoration:orgaoJulgador: 0
+            formLembretes:j_id177:localizacao: 2º Juizado Especial Cível de Imperatriz
+
+            formLembretes:msgsOpenedState: 
+            formLembretes: formLembretes
+            autoScroll: 
+            javax.faces.ViewState: ${viewId}
+            ${inputAdicionarId}: ${inputAdicionarId}
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.lembretes.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.lembretes.xmlHistory.push({
+              interaction : 'adicionarVisualizacaoPadrao',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.lembretes.requestsIteractions, $xml, jQ3(xml) ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        },
+        escreverESalvarLembrete : ($xml, textoLembrete)=>{
+          var def = $.Deferred()
+
+          const obterMesEAnoAtual = _this.util.obterMesEAnoAtual
+
+          const containerId = `formLembretes:${(function obterContainerId() {
+            var $input = $xml.find('input[value=Salvar]');
+            var onclickValue = $input.attr('onclick');
+            var regex = /'containerId':'formLembretes:(j_id\d+)/;
+            var match = onclickValue.match(regex);
+            var [_, part] = match ;
+
+            return part;
+          })()}`
+          const inputSalvarId = $xml.find('input[value=Salvar]').attr('id')
+          const viewId = $xml.find('#javax\\.faces\\.ViewState').val()
+          
+
+          var PAYLOAD = `
+            AJAXREQUEST: ${containerId}
+            formLembretes:descricao: ${textoLembrete}
+            formLembretes:dataVisivelAteInputDate: 
+            formLembretes:dataVisivelAteInputCurrentDate: ${obterMesEAnoAtual()}
+            formLembretes:ativo: true
+            formLembretes:orgaoJulgadorDecoration:orgaoJulgador: 0
+            formLembretes:j_id177:localizacao: 2º Juizado Especial Cível de Imperatriz
+
+            formLembretes:msgsOpenedState: 
+            formLembretes: formLembretes
+            autoScroll: 
+            javax.faces.ViewState: ${viewId}
+            ${inputSalvarId}: ${inputSalvarId}
+            AJAX:EVENTS_COUNT: 1
+          `
+          PAYLOAD = _this.util.conformPayload(PAYLOAD)
+
+          $.post(_this.lembretes.requestsIteractions.baseURL, PAYLOAD)
+          .done( (xml) => { 
+            _this.lembretes.xmlHistory.push({
+              interaction : 'adicionarVisualizacaoPadrao',
+              $xml : jQ3(xml)
+            })
+            def.resolve( _this.lembretes.requestsIteractions, jQ3(xml) ) 
+          } )
+          .fail( err => def.reject(err) )
+
+          return def.promise();
+        }
+      },
+      acoes : {
+        cadastrarLembrete : (textoLembrete, idProcesso, idDocumento) =>{
+          var def = $.Deferred()
+          const acoes = j2E.SeamIteraction.lembretes.acoes
+
+          _this.lembretes.requestsIteractions.criarLembreteSeam(idProcesso, idDocumento)
+          .pipe((it, $xml)=> it.adicionarVisualizacaoPadrao($xml))
+          .pipe((it, $xml)=> it.escreverESalvarLembrete($xml, textoLembrete))
+          .done( (it, $xml) => { 
+            def.resolve( it, acoes ) 
           })
           .fail( err => def.reject(err) )
 
