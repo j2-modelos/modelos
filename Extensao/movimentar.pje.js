@@ -548,7 +548,7 @@ function init(){
       parseLinhaDeExpedientesSelecionados : ($inputs, selecionarCelula, formatoData)=>{
         function _converterParaISO(dataHora) {
           const [dia, mes, ano, horas, minutos, segundos] = dataHora.split(/\/|:|\s/);
-          const dataISO = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}Z`;
+          const dataISO = `${ano}-${mes}-${dia}T${horas || '00'}:${minutos || '00'}:${segundos || '00'}Z`;
           return dataISO;
         }
         function _extrairDataHoraDaSelecao($tr) {
@@ -599,6 +599,10 @@ function init(){
           var $tr = $el.parents('tr:first')
           var exp = {}
           var html = $tr.html()
+          
+          const _guid = guid ? guid() : Math.random()
+          exp.guid = _guid
+          $el.data('j2E', { guid: _guid })
 
           exp.data    = _extrairDataHoraDaSelecao($tr)
           exp.dataEm  = `em ${exp.data}`
@@ -612,9 +616,15 @@ function init(){
             
           exp.parte   = $tr.find('h6:first').text();
           [exp.idExpediente]   = $tr.find('h6').prev().text().trim().match(/(\d+)/);
+          exp.tipoExpediente   = $tr.find('h6').prev().text().trim().match(/^([^(]*)/)?.at(1)?.trim()
           exp.linkParaAto = $tr.find('a[title="Visualizar ato"]').attr('href');
           exp.idDocumento = _extrairUltimoValorNumerico(exp.linkParaAto);
           exp.idDocumentoLink = j2E.Expedientes.util.criarViewLinkHTMLAPartirDoEnderecao(exp.linkParaAto, exp.idDocumento)
+
+          exp.contextoSelecao = { 
+            selecionarCelula, 
+            formatoData
+          }
 
           dadosExpedientes.push(exp)
         })

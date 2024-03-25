@@ -2642,7 +2642,6 @@ function fronendLoad(){
         }
 
         criarSentinelaAutosDigitais()
-        debugger
 
         switch (nomeTarefaAtual){
           case 'Avaliar determinações do magistrado':{
