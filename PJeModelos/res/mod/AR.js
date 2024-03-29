@@ -236,7 +236,7 @@ try {
         if(mod.par.gE('j2Sigepper.cnt'))
           mod.par.gE('j2Sigepper.action').click();
         
-        pkg.BotaoVizualizarImpressao.registerOtherCallbacks(pkg.AR.onPrintProcedure);
+        pkg.BotaoVizualizarImpressao.registerOtherCallbacks(pkg.AR.buildOnPrintProcedure());
       },
       isVisible : false,
       visibleOn : function(trueOrFalse){
@@ -254,9 +254,45 @@ try {
         
         pkg.AR.isVisible = false;
       },
-      onPrintProcedure : function(event){
-        if(event.shiftKey)
-          window.alert('Print Post List');
+      buildOnPrintProcedure : function(event){
+        const cargaCSS = /*css*/`
+          @media print {
+              @page {
+                  margin: 12.5mm;
+              }
+              @page AR {
+                  margin: 1mm 8mm 12.5mm 8mm;
+              }
+
+              #p2{
+                  page: AR;
+              }
+
+              #BotaoVizualizarImpressao{
+                  display: none;
+              }
+          }
+        `; 
+        const cssCodificado = btoa(cargaCSS)
+
+        function onPrintProcedure(event){
+          const cargaCSS = '$$$CargaCSSExterna$$$'
+          const cssDecodificado = atob(cargaCSS)
+
+          const styleElement = document.createElement('style')
+        
+          if (styleElement.styleSheet)
+            styleElement.styleSheet.cssText = cssDecodificado
+          else
+            styleElement.appendChild(document.createTextNode(cssDecodificado))
+          
+
+          document.head.appendChild(styleElement)
+        }
+        
+        return new Function('event', `(${
+          onPrintProcedure.toString().replace('$$$CargaCSSExterna$$$', cssCodificado)
+          })(event)` )
       },
       modeloDef : {},
       getVersion : function(ver){
