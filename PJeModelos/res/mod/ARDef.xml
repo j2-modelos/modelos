@@ -998,609 +998,489 @@ and open the template in the editor.
             <textHTML scope="EXP"> 
                 <data>
                     <![CDATA[
-<table border="1" cellspacing="0" cellpadding="0" width="100%" style="border-collapse:collapse;border:none;/*min-width:210mm;*/">
-<tbody>
-<tr style="page-break-inside:avoid;height:1cm;">
-
-<!--td rowspan="10" valign="top" style="width:3.56%;border:solid windowtext 1.5pt;border-right:dashed windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;height:27.65pt;">
+<table border="1" cellspacing="0" cellpadding="0" width="100%" style="border-collapse: collapse; border: none; /*min-width:210mm;*/" data-bm="62">
+    <tbody>
+        <tr style="page-break-inside: avoid; height: 1cm;">
+            <!--td rowspan="10" valign="top" style="width:3.56%;border:solid windowtext 1.5pt;border-right:dashed windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;height:27.65pt;">
 </td>
 <td rowspan="10" valign="top" style="width:0.5%;border-top:dashed windowtext 1.5pt;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;height:27.65pt;">
 </td-->
 
-<td colspan="2" valign="top" style="width:34.24%;border-top: solid windowtext 1.5pt;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;height:27.65pt;border-right:none;">
-<div style="position: relative;"><span style="position:absolute;left: 13.6px;top: 5.9px;zoom: 1;opacity: 1;/* display: none; */">
-<div style="
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: 0px;
-    left: 15.3px;
-    /* display: none; */
-    /* opacity: 0.5; */
-    border-top: 7.7px solid black;
-    border-right: 6.1px solid transparent;
-    border-left: 6.1px solid transparent;
-">
-<span style="
-    position: absolute;
-">&nbsp;</span>
-</div><div style="
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: 16.1px;
-    left: 7.5px;
-    /* display: none; */
-    /* opacity: 0.4; */
-    border-bottom: 7.7px solid black;
-    border-right: 6.1px solid transparent;
-    border-left: 6.1px solid transparent;
-">
-<span style="
-    position: absolute;
-">&nbsp;</span>
-</div><div style="
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: 8.4px;
-    left: 0px;
-    border-bottom: 9.1px solid #353334 !important;
-    border-left: 2.1px solid transparent !important;
-    border-right: 7.1px solid transparent !important;
-    width: 10px;
-    transform: rotate(308deg);
-    /* display: none; */
-    /* opacity: 0.2; */
-">
-<span style="
-    position: absolute;
-">&nbsp;</span>
-</div><div style="
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: 6.4px;
-    left: 16px;
-    border-bottom: 9.1px solid #353334 !important;
-    border-left: 2.1px solid transparent !important;
-    border-right: 7.1px solid transparent !important;
-    width: 10px;
-    /* display: none; */
-    /* opacity: 0.2; */
-    transform: scaleX(-1) scaleY(-1) rotate(308deg);
-">
-<span style="
-    position: absolute;
-">&nbsp;</span>
-</div>
-</span><p class="" style="margin:0px;line-height:1;font-family: &quot;Trebuchet MS&quot;, Calibri, Arial, sans-serif;position: absolute;top: 11.1px;left: 187.4px;">
-<span style="font-size: 15.4pt;font-weight: bold;">Digital</span>
-</p><p class="" style="margin:0px;line-height:1;font-family: &quot;Trebuchet MS&quot;, Calibri, Arial, sans-serif;position: absolute;top: 12.4px;left: 47.4px;font-size: 7.5pt;line-height: 90%;">
-<span style="font-weight: bold;">AVISO DE</span><br>
-<span style="
-">RECEBIMENTO</span>
+            <td colspan="2" valign="top" style="width: 34.24%; border-top: solid windowtext 1.5pt; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; height: 27.65pt; border-right: none;">
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 13.6px; top: 5.9px; zoom: 1; opacity: 1; /* display: none; */">
+                        <div style="
+                                width: 0;
+                                height: 0;
+                                position: absolute;
+                                top: 0px;
+                                left: 15.3px;
+                                /* display: none; */
+                                /* opacity: 0.5; */
+                                border-top: 7.7px solid black;
+                                border-right: 6.1px solid transparent;
+                                border-left: 6.1px solid transparent;
+                            ">
+                            <span style="position: absolute;">&nbsp;</span>
+                        </div>
+                        <div style="
+                                width: 0;
+                                height: 0;
+                                position: absolute;
+                                top: 16.1px;
+                                left: 7.5px;
+                                /* display: none; */
+                                /* opacity: 0.4; */
+                                border-bottom: 7.7px solid black;
+                                border-right: 6.1px solid transparent;
+                                border-left: 6.1px solid transparent;
+                            ">
+                            <span style="position: absolute;">&nbsp;</span>
+                        </div>
+                        <div style="
+                                width: 0;
+                                height: 0;
+                                position: absolute;
+                                top: 8.4px;
+                                left: 0px;
+                                border-bottom: 9.1px solid #353334 !important;
+                                border-left: 2.1px solid transparent !important;
+                                border-right: 7.1px solid transparent !important;
+                                width: 10px;
+                                transform: rotate(308deg);
+                                /* display: none; */
+                                /* opacity: 0.2; */
+                            ">
+                            <span style="position: absolute;">&nbsp;</span>
+                        </div>
+                        <div style="
+                                width: 0;
+                                height: 0;
+                                position: absolute;
+                                top: 6.4px;
+                                left: 16px;
+                                border-bottom: 9.1px solid #353334 !important;
+                                border-left: 2.1px solid transparent !important;
+                                border-right: 7.1px solid transparent !important;
+                                width: 10px;
+                                /* display: none; */
+                                /* opacity: 0.2; */
+                                transform: scaleX(-1) scaleY(-1) rotate(308deg);
+                            ">
+                            <span style="position: absolute;">&nbsp;</span>
+                        </div>
+                    </span>
+                    <p class="" style="margin: 0px; line-height: 1; font-family: 'Trebuchet MS', Calibri, Arial, sans-serif; position: absolute; top: 11.1px; left: 187.4px;">
+                        <span style="font-size: 15.4pt; font-weight: bold;">Digital</span>
+                    </p>
+                    <p class="" style="margin: 0px; line-height: 1; font-family: 'Trebuchet MS', Calibri, Arial, sans-serif; position: absolute; top: 12.4px; left: 47.4px; font-size: 7.5pt; line-height: 90%;">
+                        <span style="font-weight: bold;">AVISO DE</span><br>
+                        <span style="">RECEBIMENTO</span>
+                    </p>
+                    <div id="trapezoid" style="border-bottom: 36px solid #e6e8e7 !important; border-left: 0px solid transparent !important; border-right: 29px solid transparent !important; width: 244px;">
+                        <span style="position: absolute;">&nbsp;</span>
+                    </div>
+                </div>
+            </td>
+            <td colspan="2" valign="top" style="min-width: 188px; border-top: solid windowtext 1.5pt; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 27.65pt;">
+                <p class="" align="center" style="margin: 3px 35pt 0.0001pt 0cm; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> AC CENTRAL DE SÃO LUIS/MA</span>
+                </p>
+                <p class="" align="center" style="margin: 0cm 35pt 0.0001pt 0cm; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;">#{j2.mod.clsCnstr.AR.vars.dataPostagem.dateISOtoBR}</span>
+                </p>
+                <p class="" align="center" style="margin: 0cm 35pt 0.0001pt 0cm; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;">#{j2.mod.clsCnstr.AR.vars.PLP}</span>
+                </p>
+            </td>
+            <td rowspan="2" valign="top" style="position: relative; width: 75px; min-width: 75px; border: none; border-top: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt; align-content: flex-end;">
+                <span style="position: absolute; z-index: 251659264; margin-left: 5px; margin-top: 2px; /* height:67px ;*/">
+                    <span style="position: absolute; left: 15.6px; top: 1px; zoom: 1.08;">
+                        <div style="width: 0px; height: 0px; line-height: 0px; border-bottom: 27.7px solid black; border-right: 16px solid transparent; border-left: 16px solid transparent;">
+                            <span style="position: absolute;">&nbsp;</span>
+                            <div style="
+                                    position: absolute;
+                                    margin: 2.4px 0px 0px -13.3px;
+                                    width: 0px;
+                                    height: 0px;
+                                    line-height: 0px;
+                                    border-bottom: 24.1px solid white;
+                                    border-left: 13.2px solid transparent;
+                                    border-right: 13.2px solid transparent; /* border-top: 0px solid transparent; */
+                                ">
+                                <span style="position: absolute;">&nbsp;</span>
+                            </div>
+                        </div>
+                    </span>
+                    <p align="center" style="margin: 0px; text-align: center; line-height: normal; position: absolute; top: 15.3px; left: 26.6px; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                        <span style="font-size: 8.2pt; font-weight: bold;"> AR</span>
+                    </p>
+                    <p class="" align="center" style="margin: 0px; text-align: center; line-height: normal; position: absolute; top: 31.2px; left: 2.6px; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                        <span style="font-size: 4.2pt;"> 9912319221/2018/DR-MA</span>
+                    </p>
+                    <p class="" align="center" style="text-align: center; line-height: normal; position: absolute; top: 38px; left: 1px; font-family: 'Trebuchet MS', Arial, sans-serif; margin: 0px;">
+                        <b>
+                            <span style="font-size: 4.5pt;"> TRIBUNAL DE JUSTIÇA DO MA</span>
+                        </b>
+                    </p>
+                    <img width="32" height="7" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAAAPCAMAAAHsXvI0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIrUExURf///3d3dywsLCcnJyYmJiAgIBwcHIyMjN/f31hYWCsrKyUlJSEhIR0dHUpKSo6OjoSEhPPz8/39/S8vLyQkJIODg4iIiH5+fvv7+/Dw8CIiIn19fXx8fIGBgY+Pj8rKynNzc25ubnR0dHt7e4KCgoqKiqampt3d3c/Pz9LS0tTU1NbW1vb29ru7u2RkZGpqanBwcIuLi8TExP7+/jIyMmxsbPLy8ufn58fHx8zMzNXV1erq6uPj41ZWVl5eXmVlZXFxcTY2NklJSWNjY1FRUTMzM+vr6+zs7Pj4+PX19fz8/PT09La2tr+/v8PDw8nJyc3NzdnZ2UxMTFNTU1lZWWtra3p6euXl5aSkpF1dXeTk5ERERFVVVTw8PMHBwaurq7Kysre3t8DAwMXFxcjIyMvLy9HR0UdHR01NTVJSUl9fX29vb5qamp6enjk5OYeHh5KSkldXV62trZOTkzQ0NPn5+aenp2lpaYaGhjc3N7S0tKCgoKqqqrOzs7y8vD09PU5OTltbW+Hh4Z2dnUFBQTU1NUtLS1paWqysrO3t7aKiorW1tbq6usLCwpmZmfHx8enp6VBQUK+vr7CwsO7u7jg4OO/v78bGxqWlpa6urnV1dZycnOjo6Do6OkBAQEVFRZubm/r6+s7OzoCAgGZmZkhISHZ2dmhoaImJiUZGRkJCQtzc3Nvb25aWlpeXl+bm5rGxsTs7Oz4+Pvf392JiYlRUVENDQ2dnZwAAAFfxLC4AAAC5dFJOU/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AQAvpHgAAAAlwSFlzAAAh1QAAIdUBBJy0nQAAAZ9JREFUKFONU8t1AyEMFBeXwEENcKIAClAVUinUwIkSKDQzLHYSPyf27PLTaqXRBxHJGBfaGjZEehfRI5LqIi6QEC2dzQM9YTI8Mfe5cdLb3v/G+vZzobYIKSIjh12AbJ2PJh1WPRUIN1QzXf2D2VqbsRbUzEHnIvSM0ns7XzpXhKchs08zNUYvTiKgkjNPhDMHIUtmhe0AuWlV0qGW9KYI4x1M83MGXiGlN2q1lVZiJZCzhTK9DLPX2kB5IZ1k2ayq2LA0fKjE8mQrm4xe7yFSC6NO1nLXwnFkCVCgSmeEY12N4v0AAQZ4AzxSHodLtbSz49QJjiuF9+ISYao3H5+k5D2mKvP2UYL/QmlMbCnowZVobbdyQluk1530N3pFK8IcKoASwBqFaqdJJvpMeY+QAimmLlXRexCgEdFNlCD1WJvU0WEMtUzmMBZrUxl6GF2dikoxyVPZnfyXs8VU+q02/HhuNNYvNg+UrQVcfw6bD1tqDq+onMXYjrZOg5D73hFZztD7AQd5w20Ae2fAtFUMwRaz2DxwfToN20IY7hZfdFZ+qqOMe1kAAAAASUVORK5CYII=" style="position: absolute; top: 53px; left: 18px;" data-bm="59">
+                    <span style="height: 1.7cm; width: 1.7cm; background-color: transparent; border-radius: 50%; display: inline-block; border: 1.5pt solid black;"> </span>
+                </span>
+            </td>
+            <td width="20.5%" valign="top" style="min-width: 27.2%; width: 32%; border-top: solid windowtext 1.5pt; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <table border="0" cellspacing="0" cellpadding="0" align="left" width="100%" style="border-collapse: collapse; border: none; margin-right: auto; margin-left: auto; width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td style="border: none;">
+                                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif; text-align: center;">
+                                    <b>
+                                        <span style="font-size: 19pt;"> MAJ</span>
+                                    </b>
+                                    <b>
+                                        <span style="font-size: 1pt;"> </span>
+                                    </b>
+                                </p>
+                            </td>
 
-</p><div id="trapezoid" style="
-    border-bottom: 36px solid #e6e8e7 !important;
-    border-left: 0px solid transparent !important;
-    border-right: 29px solid transparent !important;
-    width: 244px;
-"><span style="
-    position: absolute;
-">&nbsp;</span>
-    
-</div></div>
-</td>
-<td colspan="2" valign="top" style="min-width:188px;border-top: solid windowtext 1.5pt;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt;height:27.65pt;">
-<p class="" align="center" style="margin: 3px 35pt 0.0001pt 0cm;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 6pt;">
-AC CENTRAL DE SÃO LUIS/MA</span>
-</p>
-<p class="" align="center" style="margin:0cm 35pt 0.0001pt 0cm;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 6pt;">#{j2.mod.clsCnstr.AR.vars.dataPostagem.dateISOtoBR}</span>
-</p>
-<p class="" align="center" style="margin:0cm 35pt 0.0001pt 0cm;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 6pt;">#{j2.mod.clsCnstr.AR.vars.PLP}</span>
-</p>
-</td>
-<td rowspan="2" valign="top" style="position: relative; width:75px;min-width:75px;border:none;border-top: solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;align-content:flex-end;">
-<span style="position:absolute;z-index:251659264;margin-left:5px;margin-top:2px;/* height:67px ;*/ ">
-<span style="position:absolute;left:15.6px;top:1px;zoom:1.08;">
-<div style="width:0px;height:0px;line-height:0px;border-bottom: 27.7px solid black;border-right: 16px solid transparent;border-left: 16px solid transparent;"><span style="
-    position: absolute;
-">&nbsp;</span>
-<div style="position:absolute;margin: 2.4px 0px 0px -13.3px;width:0px;height:0px;line-height:0px;border-bottom: 24.1px solid white;border-left: 13.2px solid transparent;border-right: 13.2px solid transparent;/* border-top: 0px solid transparent; */">
-<span style="
-    position: absolute;
-">&nbsp;</span></div>
-</div>
-</span>
-<p align="center" style="margin:0px;text-align:center;line-height:normal;position:absolute;top:15.3px;left:26.6px;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:8.2pt;font-weight:bold;">
-AR</span>
-</p>
-<p class="" align="center" style="margin:0px;text-align:center;line-height:normal;position:absolute;top:31.2px;left: 2.6px;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 4.2pt;">
-9912319221/2018/DR-MA</span>
-</p>
-<p class="" align="center" style="text-align:center;line-height:normal;position:absolute;top: 38px;left:1px;font-family:'Trebuchet MS', Arial, sans-serif;margin:0px;">
-<b>
-<span style="font-size:4.5pt;">
-TRIBUNAL DE JUSTIÇA DO MA</span>
-</b>
-</p>
-<img width="32" height="7" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAAAPCAMAAAHsXvI0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIrUExURf///3d3dywsLCcnJyYmJiAgIBwcHIyMjN/f31hYWCsrKyUlJSEhIR0dHUpKSo6OjoSEhPPz8/39/S8vLyQkJIODg4iIiH5+fvv7+/Dw8CIiIn19fXx8fIGBgY+Pj8rKynNzc25ubnR0dHt7e4KCgoqKiqampt3d3c/Pz9LS0tTU1NbW1vb29ru7u2RkZGpqanBwcIuLi8TExP7+/jIyMmxsbPLy8ufn58fHx8zMzNXV1erq6uPj41ZWVl5eXmVlZXFxcTY2NklJSWNjY1FRUTMzM+vr6+zs7Pj4+PX19fz8/PT09La2tr+/v8PDw8nJyc3NzdnZ2UxMTFNTU1lZWWtra3p6euXl5aSkpF1dXeTk5ERERFVVVTw8PMHBwaurq7Kysre3t8DAwMXFxcjIyMvLy9HR0UdHR01NTVJSUl9fX29vb5qamp6enjk5OYeHh5KSkldXV62trZOTkzQ0NPn5+aenp2lpaYaGhjc3N7S0tKCgoKqqqrOzs7y8vD09PU5OTltbW+Hh4Z2dnUFBQTU1NUtLS1paWqysrO3t7aKiorW1tbq6usLCwpmZmfHx8enp6VBQUK+vr7CwsO7u7jg4OO/v78bGxqWlpa6urnV1dZycnOjo6Do6OkBAQEVFRZubm/r6+s7OzoCAgGZmZkhISHZ2dmhoaImJiUZGRkJCQtzc3Nvb25aWlpeXl+bm5rGxsTs7Oz4+Pvf392JiYlRUVENDQ2dnZwAAAFfxLC4AAAC5dFJOU/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AQAvpHgAAAAlwSFlzAAAh1QAAIdUBBJy0nQAAAZ9JREFUKFONU8t1AyEMFBeXwEENcKIAClAVUinUwIkSKDQzLHYSPyf27PLTaqXRBxHJGBfaGjZEehfRI5LqIi6QEC2dzQM9YTI8Mfe5cdLb3v/G+vZzobYIKSIjh12AbJ2PJh1WPRUIN1QzXf2D2VqbsRbUzEHnIvSM0ns7XzpXhKchs08zNUYvTiKgkjNPhDMHIUtmhe0AuWlV0qGW9KYI4x1M83MGXiGlN2q1lVZiJZCzhTK9DLPX2kB5IZ1k2ayq2LA0fKjE8mQrm4xe7yFSC6NO1nLXwnFkCVCgSmeEY12N4v0AAQZ4AzxSHodLtbSz49QJjiuF9+ISYao3H5+k5D2mKvP2UYL/QmlMbCnowZVobbdyQluk1530N3pFK8IcKoASwBqFaqdJJvpMeY+QAimmLlXRexCgEdFNlCD1WJvU0WEMtUzmMBZrUxl6GF2dikoxyVPZnfyXs8VU+q02/HhuNNYvNg+UrQVcfw6bD1tqDq+onMXYjrZOg5D73hFZztD7AQd5w20Ae2fAtFUMwRaz2DxwfToN20IY7hZfdFZ+qqOMe1kAAAAASUVORK5CYII=" style="position:absolute;top:53px;left:18px;">
-<span style="height:1.7cm;width:1.7cm;background-color:transparent;border-radius:50%;display:inline-block;border:1.5pt solid black;">
-</span>
-</span>
-</td>
-<td width="20.5%" valign="top" style="min-width: 27.2%;width: 32%;border-top: solid windowtext 1.5pt;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<table border="0" cellspacing="0" cellpadding="0" align="left" width="100%" style="border-collapse:collapse;border:none;margin-right:auto;margin-left:auto;width:100%;">
-<tbody>
-<tr>
-
-<td style="border:none;">
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;text-align: center;">
-<b>
-<span style="font-size:19pt;">
-MAJ</span>
-</b>
-<b>
-<span style="font-size:1pt;">
-</span>
-</b>
-</p>
-</td>
-
-<td style="border:none;">
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;text-align: center;">
-<b>
-<span style="font-size:19pt;display: #{j2.mod.clsCnstr.AR.vars.MP.cssRule}">MP</span>
-</b>
-
-</p>
-</td>
-</tr>
-
-
-
-
-
-
-
-
-</tbody>
-</table>
-</td>
-<!--td rowspan="10" valign="top" style="width:0.5%;border-top:dashed windowtext 1.5pt;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:dashed windowtext 1.5pt;">
+                            <td style="border: none;">
+                                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif; text-align: center;">
+                                    <b>
+                                        <span style="font-size: 19pt; display: #{j2.mod.clsCnstr.AR.vars.MP.cssRule};">MP</span>
+                                    </b>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <!--td rowspan="10" valign="top" style="width:0.5%;border-top:dashed windowtext 1.5pt;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:dashed windowtext 1.5pt;">
 </td>
 <td rowspan="10" valign="top" style="width:3.56%;border:solid windowtext 1.5pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt;">
 </td-->
-</tr>
-<tr style="page-break-inside:avoid;height:1.2cm;">
-<td rowspan="1" valign="top" style="width: 34.24%;border:none;padding-left: 10px;border-left: solid windowtext 1.5pt;">
-<p class="" style="margin:0px;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size:9pt;">
-DESTINATÁRIO</span>
-</b>
-<span style="font-size:10.0pt;">
-:</span>
-</p>
-<p class="" style="margin:0px;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:9pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.AREndElements}</span>
-</p>
+        </tr>
+        <tr style="page-break-inside: avoid; height: 1.2cm;">
+            <td rowspan="1" valign="top" style="width: 34.24%; border: none; padding-left: 10px; border-left: solid windowtext 1.5pt;">
+                <p class="" style="margin: 0px; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <b>
+                        <span style="font-size: 9pt;"> DESTINATÁRIO</span>
+                    </b>
+                    <span style="font-size: 10pt;"> :</span>
+                </p>
+                <p class="" style="margin: 0px; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 9pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.AREndElements}</span>
+                </p>
 
-<!-- p class="" style="margin:0px;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
+                <!-- p class="" style="margin:0px;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
 <span style="font-size:9pt;">
 MARCANÃ</span>
 </p-->
+            </td>
+            <td rowspan="1" valign="top" style="width: 3.88%; border: none; border-right: solid windowtext 1.5pt; padding: 3mm 3mm 0cm 0;" width="8%">
+                <p class="" align="right" style="margin: 0px; text-align: right; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span>
+                        <img src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR_AA}" style="width: 50px;" data-bm="60">
+                    </span>
+                    <span style="font-size: 10pt;"> </span>
+                </p>
+            </td>
+            <td colspan="2" valign="top" style="width: 23.48%; border: none; padding: 0cm 0pt 0cm 5.4pt;" width="23%" rowspan="2">
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <b>
+                        <span style="font-size: 8pt;"> TENTATIVAS DE ENTREGA</span>
+                    </b>
+                </p>
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 4pt;"> &nbsp;</span>
+                </p>
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 7.7pt;">
+                        1ª _____/_____/_____ <span> &nbsp;</span>
+                        <span> &nbsp;</span>
+                        ____<span class="GramE"> _:_</span> ____h
+                    </span>
+                </p>
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 8pt;"> &nbsp;</span>
+                </p>
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 7.7pt;">
+                        2ª _____/_____/_____ <span> &nbsp;</span>
+                        <span> &nbsp;</span>
+                        ____<span class="GramE"> _:_</span> ____h
+                    </span>
+                </p>
+                <p class="" style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 8pt;"> &nbsp;</span>
+                </p>
+                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 7.7pt;">
+                        3ª _____/_____/_____ <span> &nbsp;</span>
+                        <span> &nbsp;</span>
+                        ____<span class="GramE"> _:_</span> ____h
+                    </span>
+                </p>
+            </td>
+            <td rowspan="5" valign="top" style="width: 20.2%; border: solid windowtext 1.5pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;">
+                        CARIMBO<br>
+                        UNIDADE DE ENTREGA
+                    </span>
+                    <span style="font-size: 14pt;"> </span>
+                </p>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid; /* height:1.5cm; */">
+            <td valign="top" style="border: none; border-right: solid windowtext 1.5pt; padding-left: 10px; border-left: solid windowtext 1.5pt;" colspan="2">
+                <p class="" style="margin: 6px 0 0; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <b>
+                        <span style="font-size: 12pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.CEP}</span>
+                    </b>
 
+                    <span style="font-size: 9pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.cidade}/#{j2.mod.clsCnstr.AR.vars.destinatario.UF}</span>
+                </p>
+            </td>
+            <td valign="top" style="border: none; border-right: solid windowtext 1.5pt; padding-left: 10px; position: relative;">
+                <div style="position: absolute;">
+                    <div style="position: absolute; width: 49px; top: -26px; left: 13px;">
+                        <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                            <b>
+                                <span style="font-size: 7pt;"> ATENÇÃO</span>
+                            </b>
+                            <span style="font-size: 6pt;"> :</span>
+                        </p>
+                        <p align="center" style="margin: 0px; text-align: center; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                            <span style="font-size: 7pt;">
+                                Após a 3ª<br>
+                                tentativa,<br>
+                                devolver o<br>
+                                objeto.
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid;">
+            <td colspan="2" rowspan="2" valign="top" style="border-top: none; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 2.2cm;">
+                <p align="center" style="margin: 0px; text-align: center; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif; margin-top: 15px;">
+                    <span style="font-size: 12pt;">#{j2.mod.clsCnstr.AR.vars.AR_AA}</span>
+                </p>
+                <p align="center" style="margin: 0px; text-align: center; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span>
+                        <img j2e_sro_query="" src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR}" name="Figura2" width="" style="width: 62mm; cursor: pointer;" data-bm="61">
+                    </span>
+                    <span style="font-size: 13pt;"> </span>
+                </p>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid; height: 62.7pt;">
+            <td colspan="3" rowspan="3" valign="top" style="border-top: none; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0 5.4pt 0cm 5.4pt; height: 62.7pt;">
+                <p style="margin: 0px 0 14px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 8pt;"> MOTIVO DA DEVOLUÇÃO</span>
+                </p>
 
+                <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" align="left" width="90%" style="border-collapse: collapse; border: none; margin-right: auto; margin-left: auto; width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 6.58%; border: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 1</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td style="width: 55.42%; border: none; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Mudou-se</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td style="width: 6.64%; border: solid windowtext 1.5pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 5</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td style="width: 31.36%; border: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Recusado</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr style="height: 5px;"></tr>
+                        <tr>
+                            <td width="6%" style="width: 6.58%; border: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 2</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.42%; border: none; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Endereço Insuficiente</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="6%" style="width: 6.64%; border: solid windowtext 1.5pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 6</span>
+                                    <span> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.36%; border: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Não Procurado</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr style="height: 5px;"></tr>
+                        <tr>
+                            <td width="6%" style="width: 6.58%; border: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 3</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.42%; border: none; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Não Existe o Número</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="6%" style="width: 6.64%; border: solid windowtext 1.5pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 7</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.36%; border: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Ausente</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr style="height: 5px;"></tr>
+                        <tr>
+                            <td width="6%" style="width: 6.58%; border: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 4</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.42%; border: none; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Desconhecido</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="6%" style="width: 6.64%; border: solid windowtext 1.5pt; border-left: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 8</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="43%" style="width: 43.36%; border: none; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Falecido</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr style="height: 5px;"></tr>
+                        <tr style="border: none;">
+                            <td width="6%" style="width: 6.58%; border: solid black 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p align="center" style="margin: 0px; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 6pt;"> 9</span>
+                                    <span style="font-size: 8pt;"> </span>
+                                </p>
+                            </td>
+                            <td width="93%" colspan="3" style="width: 93.42%; padding: 0cm 5.4pt 0cm 5.4pt;">
+                                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                                    <span style="font-size: 7pt;"> Outros_________________________________________</span>
+                                    <span style="font-size: 5pt;"> </span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid;">
+            <td colspan="2" rowspan="2" valign="top" style="border-top: none; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 0.88cm;">
+                <p style="margin: 3px 0 0; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <b>
+                        <span style="font-size: 8pt;"> ENDEREÇO PARA DEVOLUÇÃO DO AR</span>
+                    </b>
+                </p>
+                <p style="margin: 4px 0 0; line-height: 1; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <b>
+                        <span style="font-size: 7pt;"> Centralizador Regional</span>
+                    </b>
+                </p>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid; height: 19.4pt;">
+            <td width="20%" rowspan="4" valign="top" style="width: 20.2%; border-top: none; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 19.4pt;">
+                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> RUBRICA E MATRÍCULA DO CARTEIRO</span>
+                    <span style="font-size: 14pt;"> </span>
+                </p>
+            </td>
+            
+        </tr>
+        <tr style="page-break-inside: avoid; height: 0.75cm;">
+            <td colspan="5" valign="top" style="border-top: none; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <div style="display: grid;">
+                    <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span style="font-size: 6pt;">
+                            PARA USO EXCLUSIVO DO REMETENTE (OPCIONAL): <u>2º Juizado de Imperatriz</u>
+                            #{j2.mod.clsCnstr.AR.vars.descricaoConteudo}
+                        </span>
+                    </p>
 
-</td>
-<td rowspan="1" valign="top" style="width: 3.88%;border:none;border-right:solid windowtext 1.5pt;padding:3mm 3mm 0cm 0;" width="8%">
-
-<p class="" align="right" style="margin:0px;text-align:right;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span>
-
-
-<img src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR_AA}" style="
-    width: 50px;
-">
-</span>
-<span style="font-size:10.0pt;">
-</span>
-</p>
-</td>
-<td colspan="2" valign="top" style="width:23.48%;border:none;padding:0cm 0pt 0cm 5.4pt;" width="23%" rowspan="2">
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size:8.0pt;">
-TENTATIVAS DE ENTREGA</span>
-</b>
-</p>
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:4pt;">
-&nbsp;</span>
-</p>
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7.7pt;">
-1ª _____/_____/_____ <span>
-&nbsp;</span>
-<span>
-&nbsp;</span>
-____<span class="GramE">
-_:_</span>
-____h</span>
-</p>
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 8pt;">
-&nbsp;</span>
-</p>
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7.7pt;">
-2ª _____/_____/_____ <span>
-&nbsp;</span>
-<span>
-&nbsp;</span>
-____<span class="GramE">
-_:_</span>
-____h</span>
-</p>
-<p class="" style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:8.0pt;">
-&nbsp;</span>
-</p>
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7.7pt;">
-3ª _____/_____/_____ <span>
-&nbsp;</span>
-<span>
-&nbsp;</span>
-____<span class="GramE">
-_:_</span>
-____h</span>
-</p>
-</td>
-<td rowspan="5" valign="top" style="width: 20.2%;border:solid windowtext 1.5pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-CARIMBO<br>
-UNIDADE DE ENTREGA</span>
-<span style="font-size:14.0pt;">
-</span>
-</p>
-</td>
-</tr>
-<tr style="page-break-inside:avoid;/* height:1.5cm; */">
-<td valign="top" style="border:none;border-right:solid windowtext 1.5pt;padding-left:10px;border-left: solid windowtext 1.5pt;" colspan="2">
-<p class="" style="margin:6px 0 0;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size:12pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.CEP}</span>
-</b>
-
-<span style="font-size:9pt;">#{j2.mod.clsCnstr.AR.vars.destinatario.cidade}/#{j2.mod.clsCnstr.AR.vars.destinatario.UF}</span>
-
-</p>
-</td><td valign="top" style="border:none;border-right:solid windowtext 1.5pt;padding-left:10px; position:relative"><div style="
-    position: absolute;
-"><div style="
-    position: absolute;
-    width: 49px;
-    top: -26px;
-    left: 13px;
-">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size:7pt;">
-ATENÇÃO</span>
-</b>
-<span style="font-size:6.0pt;">
-:</span>
-</p>
-<p align="center" style="margin:0px;text-align:center;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:7pt;">
-Após a 3ª<br>
-tentativa,<br>
-devolver o<br>
-objeto.</span>
-</p></div></div>
-</td>
-</tr>
-<tr style="page-break-inside:avoid;">
-<td colspan="2" rowspan="2" valign="top" style="border-top:none;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;height:2.2cm;">
-<p align="center" style="margin:0px;text-align:center;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;margin-top:15px;">
-<span style="font-size:12pt;">#{j2.mod.clsCnstr.AR.vars.AR_AA}</span>
-</p>
-<p align="center" style="margin:0px;text-align:center;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span>
-<img j2e_sro_query src="#{j2.mod.clsCnstr.AR.SVGCodeBarsDataUrl.AR}" name="Figura2" width="" style="width:62mm; cursor:pointer;">
-</span>
-<span style="font-size:13.0pt;">
-</span>
-</p>
-</td>
-
-</tr>
-<tr style="page-break-inside:avoid;height:62.7pt;">
-<td colspan="3" rowspan="3" valign="top" style="border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0 5.4pt 0cm 5.4pt;height:62.7pt;">
-<p style="margin:0px 0 14px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:8.0pt;">
-MOTIVO DA DEVOLUÇÃO</span>
-</p>
-
-
-<table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" align="left" width="90%" style="border-collapse:collapse;border:none;margin-right:auto;margin-left:auto;width:100%;">
-<tbody>
-<tr>
-<td style="width:6.58%;border:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-1</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td style="width: 55.42%;border:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Mudou-se</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td style="width:6.64%;border:solid windowtext 1.5pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-5</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td style="width: 31.36%;border:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Recusado</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-</tr>
-<tr style="height:5px;">
-
-
-</tr>
-<tr>
-<td width="6%" style="width:6.58%;border:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-2</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.42%;border:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Endereço Insuficiente</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="6%" style="width:6.64%;border:solid windowtext 1.5pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-6</span>
-<span>
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.36%;border:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Não Procurado</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-</tr>
-<tr style="height:5px;">
-
-
-</tr>
-<tr>
-<td width="6%" style="width:6.58%;border:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-3</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.42%;border:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Não Existe o Número</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="6%" style="width:6.64%;border:solid windowtext 1.5pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-7</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.36%;border:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Ausente</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-</tr>
-<tr style="height:5px;">
-
-
-</tr>
-<tr>
-<td width="6%" style="width:6.58%;border:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-4</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.42%;border:none;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Desconhecido</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="6%" style="width:6.64%;border:solid windowtext 1.5pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-8</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="43%" style="width:43.36%;border:none;padding:0cm 5.4pt 0cm 5.4pt">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Falecido</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-</tr>
-<tr style="height:5px;">
-
-
-</tr>
-<tr style="border:none;">
-<td width="6%" style="width:6.58%;border:solid black 1.5pt;padding:0cm 5.4pt 0cm 5.4pt">
-<p align="center" style="margin:0px;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-9</span>
-<span style="font-size:8.0pt;">
-</span>
-</p>
-</td>
-<td width="93%" colspan="3" style="width:93.42%;padding:0cm 5.4pt 0cm 5.4pt ">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size: 7pt;">
-Outros_________________________________________</span>
-<span style="font-size:5.0pt;">
-</span>
-</p>
-</td>
-</tr>
-</tbody>
+                    <p style="margin: 3px 0 0; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span style="font-size: 6pt;">
+                            #{j2.env.PJeVars.processo.numero} - #{j2.env.PJeVars.partes.ativa.nome.pad20} X #{j2.env.PJeVars.partes.passiva.nome.pad20} | #{j2.env.PJeVars.data.dataEHoraAtual} #{j2.env.PJeVars.usuario.respId}
+                        </span>
+                    </p>
+                </div>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid; height: 0.75cm;">
+            <td colspan="3" valign="top" style="border-top: none; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> ASSINATURA DO RECEBEDOR</span>
+                    <span style="font-size: 14pt;"> </span>
+                </p>
+            </td>
+            <td colspan="2" valign="top" style="border-top: none; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <p style="margin: 0px; line-height: normal; position: absolute; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> DATA DE ENTREGA</span>
+                </p>
+                <p align="center" style="margin: 8px 0 0; text-align: center; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 10pt;"> _______/_______/_______</span>
+                </p>
+            </td>
+        </tr>
+        <tr style="page-break-inside: avoid; height: 0.75cm;">
+            <td colspan="3" valign="top" style="border-top: none; border-left: solid windowtext 1.5pt; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> NOME LEGÍVEL DO RECEBEDOR</span>
+                    <span style="font-size: 14pt;"> </span>
+                </p>
+            </td>
+            <td colspan="2" valign="top" style="border-top: none; border-left: none; border-bottom: solid windowtext 1.5pt; border-right: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                <p style="margin: 0px; line-height: normal; font-family: 'Trebuchet MS', Arial, sans-serif;">
+                    <span style="font-size: 6pt;"> Nº DOCUMENTO DE IDENTIDADE</span>
+                    <span style="font-size: 14pt;"> </span>
+                </p>
+            </td>
+        </tr>
+    </tbody>
 </table>
-</td>
-
-</tr>
-<tr style="page-break-inside:avoid;">
-<td colspan="2" rowspan="2" valign="top" style="border-top:none;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;height:0.88cm;">
-<p style="margin:3px 0 0;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size: 8pt;">
-ENDEREÇO PARA DEVOLUÇÃO DO AR</span>
-</b>
-</p>
-<p style="margin: 4px 0 0;line-height:1;font-family:'Trebuchet MS', Arial, sans-serif;">
-<b>
-<span style="font-size: 7pt;">
-Centralizador Regional</span>
-</b>
-
-</p>
-</td>
-</tr>
-<tr style="page-break-inside:avoid;height:19.4pt;">
-<td width="20%" rowspan="4" valign="top" style="width:20.2%;border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;height:19.4pt;">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-RUBRICA E MATRÍCULA DO CARTEIRO</span>
-<span style="font-size:14pt;">
-</span>
-</p>
-</td>
-<td style="height:19.4pt;border:none" width="0" height="26">
-</td>
-</tr>
-<tr style="page-break-inside:avoid;height:0.75cm;">
-<td colspan="5" valign="top" style="border-top:none;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<div style="display: grid;">
-
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-<span style="font-size:6pt;">
-PARA USO EXCLUSIVO DO REMETENTE (OPCIONAL): <U>2º Juizado de Imperatriz</u>
-#{j2.mod.clsCnstr.AR.vars.descricaoConteudo}
-</span>
-</p>
-
-
-<p style="margin: 3px 0 0;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-<span style="font-size:6pt;">#{j2.env.PJeVars.processo.numero} - #{j2.env.PJeVars.partes.ativa.nome.pad20} X #{j2.env.PJeVars.partes.passiva.nome.pad20} | #{j2.env.PJeVars.data.dataEHoraAtual} #{j2.env.PJeVars.usuario.respId}</span>
-</p>
-
-</div>
-
-</td>
-</tr>
-<tr style="page-break-inside:avoid;height:0.75cm;">
-<td colspan="3" valign="top" style="border-top:none;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-ASSINATURA DO RECEBEDOR</span>
-<span style="font-size:14pt;">
-</span>
-</p>
-</td>
-<td colspan="2" valign="top" style="border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<p style="margin:0px;line-height:normal;position:absolute;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-DATA DE ENTREGA</span>
-</p>
-<p align="center" style="margin: 8px  0 0;text-align:center;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="
-    font-size: 10pt;
-">
-_______/_______/_______</span>
-</p>
-</td>
-</tr>
-<tr style="page-break-inside:avoid;height:0.75cm;">
-<td colspan="3" valign="top" style="border-top:none;border-left: solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-NOME LEGÍVEL DO RECEBEDOR</span>
-<span style="font-size:14pt;">
-</span>
-</p>
-</td>
-<td colspan="2" valign="top" style="border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;padding:0cm 5.4pt 0cm 5.4pt;">
-<p style="margin:0px;line-height:normal;font-family:'Trebuchet MS', Arial, sans-serif;">
-<span style="font-size:6pt;">
-Nº DOCUMENTO DE IDENTIDADE</span>
-<span style="font-size:14pt;">
-</span>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<form id="AR.Body.CodigoBarrasAR#QueryForm" method="post" action="https://www2.correios.com.br/sistemas/rastreamento/resultado_semcontent.cfm?" target="_self" style="display: none;"><textarea id="objetos" name="objetos">#{j2.mod.clsCnstr.AR.vars.AR}</textarea></form>
                     ]]>
                 </data>    
             </textHTML>

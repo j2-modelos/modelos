@@ -1318,22 +1318,24 @@ try {
           };
         };
         
-        var mI = new Image();
-        var qr = document.getElementById('imgCodBarras');
-        
-        mI.crossOrigin = 'Anonymous';
-        mI.onload = function(){
-          mI.imgCodBarras.setAttribute('src', removeImageBlanks(mI));
-          _main();
-        };
-        mI.imgCodBarras = qr;
-        if ( (qr.complete) && (qr.naturalHeight !== 0) )
-          mI.src =   mI.imgCodBarras.src;
-        else{
-          var sp = document.getElementsByTagName('span');
-          sp = sp[sp.length-1];
-          mI.src = 'https://chart.googleapis.com/chart?chs=125x125&cht=qr&chl=https://pje.tjma.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=' + sp.textContent.trim();
-        }
+        try {
+          var mI = new Image();
+          var qr = document.getElementById('imgCodBarras');
+          
+          mI.crossOrigin = 'Anonymous';
+          mI.onload = function(){
+            mI.imgCodBarras.setAttribute('src', removeImageBlanks(mI));
+            _main();
+          };
+          mI.imgCodBarras = qr;
+          if ( (qr.complete) && (qr.naturalHeight !== 0) )
+            mI.src =   mI.imgCodBarras.src;
+          else{
+            var sp = document.getElementsByTagName('span');
+            sp = sp[sp.length-1];
+            mI.src = 'https://chart.googleapis.com/chart?chs=125x125&cht=qr&chl=https://pje.tjma.jus.br:443/pje/Processo/ConsultaDocumento/listView.seam?x=' + sp.textContent.trim();
+          }
+        }catch(e){}
         
       }
     };
