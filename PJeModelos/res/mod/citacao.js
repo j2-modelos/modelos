@@ -152,7 +152,7 @@ try {
             
         });
       },
-      formatByExpMeio : function(meio){
+      formatByExpMeio : async function(meio){
         var makeARVisible = function(flg){
           try{
             if(flg)
@@ -251,6 +251,7 @@ try {
               makeDadoEPassadoVisible(false);
               makeLocalEDataVisible(true);
             }
+                        
             if(!(pkg.AR)){
               j2.mod.com.libLoader(j2.res.mod.AR);
               evBus.once('AR.onLoadLibs', function(event){

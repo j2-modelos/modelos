@@ -433,7 +433,7 @@ function pjeLoad(){
     }
   };
 
-  function personalizarTarefa(_load){
+  async function personalizarTarefa(_load){
       var _tarf = _load.at(-1);
       var _tarfProp = TarefasProps[_tarf];
       var _delayCall = new DelayedCall(10, 10);
@@ -448,7 +448,11 @@ function pjeLoad(){
         return;
 
       j2E.env.tarefaAtual = _tarfProp
-      
+
+      const idProcesso = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
+      let dadosCompletosProcesso = await j2EPJeRest.processo.getDadosCompletos(idProcesso)
+      j2E.env.getDadosCompletos = dadosCompletosProcesso = dadosCompletosProcesso.status === "ok" ? dadosCompletosProcesso.result : undefined
+
       var body = jQ3('#taskInstanceForm > div.rich-panel > div.rich-panel-body');
       var form = body;
       
@@ -4066,7 +4070,7 @@ function pjeLoad(){
         j2EUi.spinnerHTML(), 
         'j2-enviar-whatsapp', 
         undefined, 
-        'rich-panel j2-enviar-whatsapp'
+        'rich-panel j2-enviar-whatsapp col-sm-9'
       );
 
       evBus.on('ao-obter-autos-digitais-whatsapp', function(ev, $autosXml, acoes){
@@ -4076,7 +4080,7 @@ function pjeLoad(){
 
         $WAPanel.$body.append( destinatariosExpediente )
 
-        
+
       })
 
       j2E.SeamIteraction.processo.acoes.abrirProcesso()
@@ -4088,6 +4092,21 @@ function pjeLoad(){
       })
 
       $thisContainer.after($WAPanel )
+
+      TarefaPersonalizadaAvancada.etiquetasRapidas(
+        'Expedir precatório',
+        'col-sm-3',
+        [
+          `${
+            j2E.env?.getDadosCompletos.dadosBasicos.numero.value.match(/-(\d+)\./).at(1) % 2
+            ? 'ímpar' : 'par'} - certificar leitura WhatsApp`,
+          'Sem WhatsApp'
+        ],
+        'container-sem-classe',
+        { 
+          panelAppendTo:  $thisContainer
+        }
+      )
     })
   }
   

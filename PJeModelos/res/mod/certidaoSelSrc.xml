@@ -150,6 +150,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
             <gItem id="certItTelefoneInclusao"/>
             <gItem id="certItRetificacaoOrdemJudicial"/>
             <gItem id="certItRetificacaoOrdinatorio"/>
+            <gItem id="certItRetificacaoOrdinatorioInformacoesPoloPsssivo"/>
         </group> 
         <group label="SERASAJUD">
           <gItem id="certSERASAEnvio"/>
@@ -1213,6 +1214,18 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que por ser ato meramente ordinatório delegada á Secretaria Judicial - Provimento 01/2007-CGJ-MA -
                     procedi À #:B{#:U{RETIFICAÇÃO}} dos autos realizando XXXXDescricaoXXX.
+                </data>
+            </itemContent>
+        </item>    
+
+        <item id="certItRetificacaoOrdinatorioInformacoesPoloPsssivo" 
+              label="Por ato ordinatório | dados #{j2.env.PJeVars.processo.polos.partePassiva} " 
+              dataPlus="{ 'descricaoAppend': 'Retificação endereço/telefone #{j2.env.PJeVars.processo.polos.partePassiva}' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que por ser ato meramente ordinatório delegada á Secretaria Judicial - Provimento 01/2007-CGJ-MA -
+                    procedi À #:B{#:U{RETIFICAÇÃO}} dos autos realizando atualização do endereço/telefone da parte #{j2.env.PJeVars.processo.polos.partePassiva}, conforme
+                    informações constantes no #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}.
                 </data>
             </itemContent>
         </item>     

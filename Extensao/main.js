@@ -2029,7 +2029,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   'col-sm-3',
   [
     'Fluir para Certificar Trânsito',
-    'Fluir para Extinção'
+    'Fluir para Extinção',
+    'Fluir para Sentença'
   ]
 )
 
