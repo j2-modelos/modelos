@@ -698,7 +698,8 @@ function init(){
           'Preparar intimação',
           'Preparar citação e(ou) intimação',
           'Preparar citação',
-          'Imprimir Correspondência_'
+          'Imprimir Correspondência_',
+          'Preparar intimação de designação de audiência'
         ],
         checkedEnderecos = 0,
         deferPLPQuery,

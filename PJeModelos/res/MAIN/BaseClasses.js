@@ -2501,7 +2501,7 @@ try {
         if( !(j2.env.PJeVars.partes.list && j2.env.PJeVars.partes.list.todasPartes) )
           return;
         
-        var selPessTodas = j2.env.PJeVars.partes.list.todasPartes;
+        var selPessTodas = j2.env.PJeVars.partes.list.todasPartes.filter(p => p.ativo)
         var lines = _.initialLines;
         var newDests = [];
         var idFrmComId = 1;
@@ -5203,14 +5203,14 @@ try {
         };
         
         var lists = [];
-        lists.push(j2.env.PJeVars.partes.list.poloAtivo);
-        lists.push(j2.env.PJeVars.partes.list.poloPassivo);
-        lists.push(j2.env.PJeVars.partes.list.outrosInteressados);
+        lists.push(j2.env.PJeVars.partes.list.poloAtivo.filter(p => p.ativo));
+        lists.push(j2.env.PJeVars.partes.list.poloPassivo.filter(p => p.ativo));
+        lists.push(j2.env.PJeVars.partes.list.outrosInteressados.filter(p => p.ativo));
 
         forEach(lists, function(list){
           forEach(list, function(p){
             builLineFromPessoa(p);
-            p.advogado && forEach(p.advogado, function(a){
+            p.advogado && forEach(p.advogado.filter(a => a.ativo), function(a){
               builLineFromPessoa(a, true);
             });
           });

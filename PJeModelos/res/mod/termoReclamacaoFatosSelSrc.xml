@@ -20,6 +20,7 @@ and open the template in the editor.
             <gItem id="trmRclFatoAcidenteDeTransito"/>
             <gItem id="trmRclFatoEmprestimoFraudulento"/>
             <gItem id="trmRclDescontosIndevidosContaBeneficio"/>
+            <gItem id="trmRclFatoCobrancaContratoAluguel"/>
         </group>
         <group label="CEMAR">
             <gItem id="trmRclFatoCNR"/>
@@ -206,6 +207,33 @@ and open the template in the editor.
             </itemContent>
         </item>
                  
+        <item id="trmRclFatoCobrancaContratoAluguel" label="Cobrança obrigação contrato de aluguel" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Narra a parte demandante que manteve relação contratual com a parte demandada 
+                        em relação ao aluguel de imóvel residencial/comercial de propriedade da 
+                        parte demandante, situado à Rua xxxxxxxxxxx. O contrato foi celebrado 
+                        apenas de forma oral entre as partes.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Ocorre que, encerrado o contrato, a parte demandada não cumpriu integralmente 
+                        com suas obrigações contratuais, visto que deixou pendentes pagamentos de 
+                        xxxxxxxxxx, vencidos durante a vigência do contrato, bem como não devolveu o imóvel no estado em que encontrou, 
+                        uma vez que existem avarias deixadas pela demandante.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Apesar de tentar resolver consensualmente, não obteve êxito, em razão da parte
+                         demandada se furtar reiteradamente de sua responsabilidade.
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
+                        Assim, não viu alternativa a não ser procurar este juizado especial cível 
+                        para resolver a questão.
+                    </elemento>
+                </simpleElementsDefs>
+            </itemContent>
+        </item>      
+
         <item id="trmRclFatoItSelecione" label="#Genérico" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>

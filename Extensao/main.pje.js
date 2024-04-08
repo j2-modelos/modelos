@@ -2869,6 +2869,40 @@ function pjeLoad(){
     });
   }
   
+  function limitarAJurisdicaco(){
+    jQ3.initialize('#processoTrfForm, #formProcessoTrf', function(){
+      const filtroJurisdicao = new RegExp([
+        'Selecione',
+        '2º Juizado Especial Cível de Imperatriz' 
+      ].join('|'));
+
+      const filtroMateria = new RegExp([
+        'Selecione',
+        'DIREITO CIVIL > FATOS JURÍDICOS',
+        'DIREITO CIVIL > OBRIGAÇÕES',
+        'DIREITO CIVIL > RESPONSABILIDADE CIVIL',
+        'DIREITO DO CONSUMIDOR',
+        'DIREITO PROCESSUAL CIVIL E DO TRABALHO',
+    ].join('|'));
+
+      jQ3.initialize('select option', function(){
+        const $this = jQ3(this)
+        const toRemove = (()=> {
+          if($this.parent().attr('id').match(/jurisdicaoCombo/))
+            return !$this.text().trim().match(filtroJurisdicao)
+          if($this.parent().attr('id').match(/areaDireitoCombo/))
+            return !$this.text().trim().match(filtroMateria) 
+          
+          return false
+        })()
+
+        
+        toRemove && $this.remove()
+
+      }, {target: this})
+    })
+  }
+
   function inserirModeloTermoReclamacao(){
     jQ3.initialize('div.conteudo', function(){
       jQ3.initialize('#editorAnexar iframe', function(){
@@ -4163,6 +4197,7 @@ function pjeLoad(){
     case '/pje/Processo/cadastrar.seam':
     case '/pje/Processo/CadastroProcessoIncidente/listView.seam':
       inserirModeloTermoReclamacao();
+      limitarAJurisdicaco();
       break;
     
     case '/pje/Processo/RetificacaoAutuacao/listView.seam':

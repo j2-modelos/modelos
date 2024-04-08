@@ -82,7 +82,7 @@ and open the template in the editor.
             <itemContent type="plainText" addClassStyles="">
                 <data>
                     Requerer a condenação da parte #{j2.env.PJeVars.processo.polos.partePassiva} 
-                    à #:B{RESTITUIÇÃO} da importância de #:U{#:B@valor.trmRcl-Comuns-Pagamento{R$ 0,00 (zero)}}, referentes ao negócio celebrados entres as partes.
+                    à #:B{PAGAMENTO} da importância de #:U{#:B@valor.trmRcl-Comuns-Pagamento{R$ 0,00 (zero)}}, referentes ao negócio celebrados entres as partes.
                 </data>
             </itemContent>
         </item>

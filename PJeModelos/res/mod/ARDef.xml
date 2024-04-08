@@ -1094,8 +1094,8 @@ and open the template in the editor.
                 </p>
             </td>
             <td rowspan="2" valign="top" style="position: relative; width: 75px; min-width: 75px; border: none; border-top: solid windowtext 1.5pt; padding: 0cm 5.4pt 0cm 5.4pt; align-content: flex-end;">
-                <span style="position: absolute; z-index: 251659264; margin-left: 5px; margin-top: 2px; /* height:67px ;*/">
-                    <span style="position: absolute; left: 15.6px; top: 1px; zoom: 1.08;">
+                <span style="position: absolute; z-index: 251659264; margin-left: 5px; margin-top: 2px; top: 0;">
+                    <span style="position: absolute; left: 15.6px; top: 1px; zoom: 1.08; ">
                         <div style="width: 0px; height: 0px; line-height: 0px; border-bottom: 27.7px solid black; border-right: 16px solid transparent; border-left: 16px solid transparent;">
                             <span style="position: absolute;">&nbsp;</span>
                             <div style="

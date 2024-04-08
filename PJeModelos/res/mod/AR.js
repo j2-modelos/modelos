@@ -261,14 +261,15 @@ try {
                   margin: 12.5mm;
               }
               @page AR {
-                  margin: 1mm 8mm 12.5mm 8mm;
+                  margin: 4.5mm 6mm 12.5mm 6mm;
               }
 
               #p2{
                   page: AR;
               }
 
-              #BotaoVizualizarImpressao{
+              #BotaoVizualizarImpressao, #dialogMessage, 
+              div.impresso > div > center, div.impresso > div > br{
                   display: none;
               }
           }

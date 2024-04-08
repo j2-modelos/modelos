@@ -493,6 +493,38 @@ chrome.runtime.onMessage.addListener(
   
 })()
 
+;(function (){
+  function removerRegistrosExpirados() {
+    const agora = Date.now();
+  
+    chrome.storage.local.get(null, function(items) {
+      for (const chave in items) {
+        if (items.hasOwnProperty(chave)) {
+          const registro = items[chave];
+          if (registro.expiration) {
+            const expiracao = registro.timestamp + registro.expiration
+            if (expiracao < agora) {
+              chrome.storage.local.remove(chave);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Cria ou vatualiza o alarme para disparar a cada frequência definida
+  chrome.alarms.create('removerRegistrosExpirados', { periodInMinutes: 5 });
+
+  // Adiciona um ouvinte para tratar o evento do alarme
+  chrome.alarms.onAlarm.addListener(alarme => {
+      if (alarme.name === 'removerRegistrosExpirados') {
+          console.log('Disparado alarme removerRegistrosExpirados')
+          removerRegistrosExpirados()
+          // Coloque aqui o código que deseja executar periodicamente
+      }
+  });
+})()
+
 
 ;(function keepBackgroundAlive(){
   ;(function byBugExploit(){

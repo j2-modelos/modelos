@@ -2168,7 +2168,7 @@ function fronendLoad(){
 
     function _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso){
       
-      if(!decodeURI(window.location.hash.split('/')[3]).match(/intimação/))
+      if(!decodeURI(window.location.hash.split('/')[3]).toLowerCase().match(/intimação|processo com prazo decorrido/))
             return
 
       __sendMessageToPje({

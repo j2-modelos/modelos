@@ -225,13 +225,23 @@ and open the template in the editor.
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="meioComunicItCentralMandados">
-                        <data>
-                            #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
-                            a fim de ter ciência de todo o conteúdo do despacho e da petição inicial, cuja cópia segue em anexo, 
-                            como parte integrante deste, para que #:B{pague, no prazo de 3 dias} o valor 
-                            acima indicado ou ofereça bem(ns) suficiente(s) para a garantia do crédito em execução.
-                        </data>
-                    </arElement>            
+						<simpleElementsDefs> 
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{CITAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, para que #:B{pague, 
+								no prazo de #{j2.env.PJeVars.expediente.prazo}}, o valor acima indicado #:B{ou ofereça bem(ns) suficiente(s) para a garantia do crédito} em execução
+								para que tenha ciência de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
+								por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
+								conforme chaves de acesso aos documento listados abaixo. 
+								.
+                            </elemento>
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{Fica advertido o(a) executado(a)} de que, não efetuado tempestivamente o pagamento ou o oferecimento 
+								de bens em garantia, em cumprimento ao despacho exarado, serão efetuadas diligências para penhora e 
+								avaliação dos bens, observada a ordem preferencial constante no artigo 835 do CPC, mediante penhora 
+								de dinheiro via sistema e demais bens elencados, posteriormente, no referido artigo.
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>             
                 </selectorArray>        
             </itemContent>
         </item>        
