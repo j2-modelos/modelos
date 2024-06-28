@@ -108,7 +108,7 @@
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" refArtParInc="Art. 2º" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
         
-        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, II" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
+        <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, II" dataAto="22/11/1985" idDropboxV2="tt19755qc6bp4r3yym6w6;2yjuku7kiosem5hbs2dr2xjqt" />
     </CalendarioEvento>
     
     
@@ -285,6 +285,15 @@
 
     </CalendarioEvento>
 
+    <!-- ponto facultativo 2024-05-31 - pós corpus christi -->
+    <CalendarioEvento id="cd65d3ef-94d9-4b94-bbb5-6a4a2dadf612" descricao="Ponto facultativo" 
+                      dataInicial="2024-05-31" tipo="ponto-facultativo" abrangencia="estadual" recorrencia="unica">
+        <DisposicaoLegal disposicao="Resolução-GP nº 51/2024" refArtParInc="Art. 1º" 
+                         dataAto="27/05/2024" idDropboxV2="1iqglmrnaqwpbqkll0nj5;xuj9kralj0af988x9dcy3l25y" />
+        <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
+
+    </CalendarioEvento>
+
     <!--CalendarioEvento id="9109614d-ed4d-4311-981f-3e8e05d1f26b" descricao="Suspensão Exepediente por falha no Sistema Elétrico Nacional" 
                       dataInicial="2023-08-15" tipo="suspensao-prazo" abrangencia="estadual" recorrencia="unica">
         <DisposicaoLegal disposicao="Portaria Conjunta nº 342023" refArtParInc="Art. 1º e 2º" 
@@ -292,6 +301,5 @@
         <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
 
     <!-- /CalendarioEvento-->
-
 </Definitions>
 

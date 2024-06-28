@@ -44,11 +44,12 @@ and open the template in the editor.
         </group>
         <group label="Carta Precatória">
             <gItem id="atoOrdItPrecatoriaCumprimento"/>
-            <gItem id="atoOrdItDevolvPrec"/>
+            <!--gItem id="atoOrdItDevolvPrec"/-->
             <gItem id="atoOrdItPrecatoriaJuntarCertificarArquivar"/>
             <gItem id="atoOrdItTomarCienciaRetPrecatoria"/>
             <gItem id="atoOrdItRespondDepecante"/>
             <gItem id="atoOrdItSolicitarDevolucao"/>
+            <gItem id="atoOrdItPrecatoriaArquivar"/>
         </group>
         <group label="Central Mandados">
             <gItem id="atoOrdItDevMandAirton"/>
@@ -780,6 +781,14 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:U{#:B{CUMPRIMENTO} da finalidade deprecada}, servindo a carta como mandado.
+                </data>
+            </itemContent>
+        </item>   
+
+        <item id="atoOrdItPrecatoriaArquivar" label="Arquivamento" dataPlus="{ 'descricaoAppend': 'Arquivar carta precatória' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{ARQUIVAMENTO} da Carta Precatória considerando o seu devido cumprimento.
                 </data>
             </itemContent>
         </item>   

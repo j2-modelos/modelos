@@ -283,3 +283,10 @@ setTimeout(()=>{
   document.body.textContent.includes('Escolher destinatários') &&
   document.getElementById('mpLoadingMovimentarContainer').remove()
 }, 1500)
+
+
+document.addEventListener('j2-transitar-frame', function(event) {
+  console.log('Evento Personalizado Disparado:', event.detail, event);
+
+  window.transitarFrame(event.detail.nomeTransicao)
+});

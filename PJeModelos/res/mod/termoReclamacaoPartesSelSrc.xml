@@ -25,8 +25,8 @@ and open the template in the editor.
             <gItem id="poloPassivo.Demandado"/>
             <gItem id="poloPassivo.Demandado2"/>
             <gItem id="poloPassivo.Demandado3"/>
-            <gItem id="poloPassivo.Demandado.CAEMA"/>
-            <gItem id="poloPassivo.Demandado.CEMAR"/>
+            <!--gItem id="poloPassivo.Demandado.CAEMA"/-->
+            <gItem id="poloPassivo-Demandado-EQUATORIAL"/>
         </group>     
     </groupsDefs>
     <items naoOrdenado="true">
@@ -70,20 +70,33 @@ and open the template in the editor.
         </item>        
         
         <!-- POLOS PASSIVOS NOTÁVEIS -->
-        <!--item id="poloPassivo.Demandado.CAEMA" label="CAEMA" dataPlus="{ 'polo' : 'partesPoloAtivo', 'opt' : { 'endAut' : true, 'blckTpPs'  : true } }">
+        <item id="poloPassivo.Demandado.CAEMA" label="CAEMA" dataPlus="{ 'polo' : 'partesPoloAtivo', 'opt' : { 'endAut' : true, 'blckTpPs'  : true } }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{CAEMA}, COMPANHIA DE SANEAMENTO AMBIENTAL DO MARANHÃO
                 </data>
             </itemContent>
         </item>   
-        <item id="poloPassivo.Demandado.CEMAR" label="CEMAR" dataPlus="{ 'polo'    : 'partesPoloAtivo', 'opt' : { 'endAut' : true, 'blckTpPs'  : true } }">
+        <item id="poloPassivo-Demandado-EQUATORIAL" label="EQUATORIAL" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '06.272.793/0001-84',
+                'ParteNome': 'EQUATORIAL MARANHÃO',
+                'ParteNomeRazao': 'EQUATORIAL MARANHÃO DISTRIBUIDORA DE ENERGIA S/A',
+                'checkBoxProcuradoria': true
+            } 
+        }
+        ">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    #:B{CEMAR}, COMPANHIA ENERGÉTICA DO MARANHÃO
+                    #:B{EQUATORIAL MARANHÃO}
                 </data>
             </itemContent>
-        </item-->   
+        </item>   
                         
     </items>
   </selectorDef>

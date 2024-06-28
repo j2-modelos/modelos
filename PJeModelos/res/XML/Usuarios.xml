@@ -43,6 +43,9 @@
                 </simpleElementsDefs>
             </customSign>
         </Usuario>
+        <Usuario id="magisDENISE" nome="DENISE PEDROSA TORRES" matricula="0" cargo="Juíza de Direito" ini="DPT" genr="F">
+            <titularidade unidade="1º Juizado Especial Cível" unidadeGenr="M" nominacao="titular"/>
+        </Usuario>
         <Usuario id="magisDEBORA" nome="DÉBORA JANSEN CASTRO TROVÃO" matricula="0" cargo="Juíza de Direito" ini="DJCT" genr="F">
             <titularidade unidade="1º Juizado Especial Cível" unidadeGenr="M" nominacao="titular"/>
         </Usuario>

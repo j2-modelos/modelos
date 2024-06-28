@@ -201,6 +201,42 @@ try {
             
           });
         });
+
+        forEach([
+          'certItIntimacaoTelefoneInfrutifera',
+        ], function(it){
+          evBus.on('onAdd.selectorcertidaoItens.' + it, function(ev, arg){
+            evBus.once("addtionalControls.afterBuild.itIntimacaoTelefoneInfrutiferaComplemento", function(ev, instancia){
+              evBus.once('onDel.selectorcertidaoItens.' + it, function(ev, arg){
+                  jQ3(pkg.AddtionalControls.defaultContainer().edt).find('#selector-container-itIntimacaoTelefoneInfrutiferaComplemento-itens').remove()
+                  delete instancia
+              });  
+            });  
+            
+            if(pkg.AddtionalControls)
+              pkg.AddtionalControls.append(pkg.AddtionalControls.defaultContainer(), 
+              'itIntimacaoTelefoneInfrutiferaComplemento', '1.0', { contextEdtCore: true } );  
+            
+          });
+        });
+
+        forEach([
+          'certItPrecatoriaArquivamento',
+        ], function(it){
+          evBus.on('onAdd.selectorcertidaoItens.' + it, function(ev, arg){
+            evBus.once("addtionalControls.afterBuild.certItPrecatoriaArquivamento", function(ev, instancia){
+              evBus.once('onDel.selectorcertidaoItens.' + it, function(ev, arg){
+                  jQ3(pkg.AddtionalControls.defaultContainer().edt).find('#selector-container-certItPrecatoriaArquivamento-itens').remove()
+                  delete instancia
+              });  
+            });  
+            
+            if(pkg.AddtionalControls)
+              pkg.AddtionalControls.append(pkg.AddtionalControls.defaultContainer(), 
+              'certItPrecatoriaArquivamento', '1.0', { contextEdtCore: true } );  
+            
+          });
+        });
         
         forEach([
           'certItPrazoSemExpedienteForense'

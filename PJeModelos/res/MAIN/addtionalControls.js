@@ -123,7 +123,7 @@ try {
           });
         });  
       },
-      controlsDefByName : function(id){
+      controlsDefByName : function(id){ 
         var _ = null;
         forEach(pkg.AddtionalControls.modelDef.modelos, function(mD){
           if(mD.id === id)
@@ -192,6 +192,9 @@ try {
         
         if(ops.appendOnTop) // ndlg5 as new
           container = { edt : $('<div>', {name : controlsDefName + '-appendOnTop'}).prependTo( container.edt )[0] };
+        if(ops.contextEdtCore){
+            container.edtCore = function(){ return container.edt  } 
+        }
         
         j2.mod.builder.build(ARVersion, controlsDefName, container);
         

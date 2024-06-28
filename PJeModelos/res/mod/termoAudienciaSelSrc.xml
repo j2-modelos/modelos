@@ -156,16 +156,20 @@ and open the template in the editor.
             <!--gItem id="trmAud.Conciliacao.Renovacao2"/-->
         </group>
         
-        <group label="Deliberações">
-            <gItem id="trmAud.Fase.Deliberacoes"/>
+        <group label="Deliberações | Magistrado" ordenar="true">
+            <gItem id="trmAud.Fase.Deliberacoes" posicao="1"/>
             
-            <gItem id="trmAud.Deliberacoes.Magistrado.Genérico"/>
+            <gItem id="trmAud.Deliberacoes.Magistrado.Genérico" posicao="2"/>
             <gItem id="trmAud.Deliberacoes.Magistrado.ConclusaoSentenca"/>
             <gItem id="trmAud.Deliberacoes.Magistrado.RazoesFinaisSentenca"/>
             <gItem id="trmAud.Deliberacoes.Magistrado.DesignaçãoAudiencia"/>
             <gItem id="trmAud.Deliberacoes.Magistrado.JulgamnetoDiligencia"/>
-            <gItem id="trmAud.Deliberacoes.Magistrado.JuntadaAR"/>
-            
+            <gItem id="trmAud.Deliberacoes.Magistrado.JuntadaAR"/>            
+        </group>    
+
+        <group label="Deliberações | Conciliador" ordenar="true">
+            <gItem id="trmAud.Fase.Deliberacoes" posicao="1"/>
+                        
             <gItem id="trmAud.Deliberacoes.Conciliador.DesigAudiencia"/>
             <gItem id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca"/>
             <gItem id="trmAud.Deliberacoes.Conciliador.ConclusaoDespacho"/>
@@ -176,17 +180,19 @@ and open the template in the editor.
             <gItem id="trmAud.Deliberacoes.Conciliador.PrazoJuntadaDocumentos"/>
             <gItem id="trmAud.Deliberacoes.Conciliador.SecretariaProvidencia"/>
             <gItem id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva"/>
+            <gItem id="trmAud-Deliberacoes-Conciliador-prazo-contestacao-replica"/>
+            <gItem id="trmAud-Deliberacoes-Conciliador-consulta-endereco"/>
             
             
         </group>     
         
-        <group label="Requerimentos">
-            <gItem id="trmAud.Fase.RequerimentoDasPartes"/>
+        <group label="Requerimentos" ordenar="true">
+            <gItem id="trmAud.Fase.RequerimentoDasPartes" posicao="1"/>
             <gItem id="trmAud.Requerimentos.RenunciaPrazoRecursal"/>
             <gItem id="trmAud.Requerimentos.Publicacao"/>
             
-            <gItem id="trmAud.Requerimentos.GenericoAtivo"/>
-            <gItem id="trmAud.Requerimentos.GenéricoPassivo"/>
+            <gItem id="trmAud.Requerimentos.GenericoAtivo" posicao="2"/>
+            <gItem id="trmAud.Requerimentos.GenéricoPassivo" posicao="3"/>
             <gItem id="trmAud.Requerimentos.DesistenciaAtivo"/>
             
             <gItem id="trmAud.Requerimentos.InstrucaoAtivo"/>
@@ -196,6 +202,9 @@ and open the template in the editor.
             <gItem id="trmAud-Requerimentos-Ativa-julgaAntecip"/>
             <gItem id="trmAud-Requerimentos-Passiva-julgaAntecip"/>
             <gItem id="trmAud-Requerimentos-Ativa-ManifjulgaAntecip"/>
+            <gItem id="trmAud-Requerimentos-prazo-contestacao-julgamento"/>
+            <gItem id="trmAud-Requerimentos-prazo-contestacao-instrucao"/>
+            <gItem id="trmAud-Requerimentos-prazo-contestacao-consulta-endereco"/>
             
         </group>        
     </groupsDefs>
@@ -1120,24 +1129,48 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>
+        <!-- add 10/08/2022-->
+        <item id="trmAud-Requerimentos-prazo-contestacao-julgamento" label="#{j2.env.PJeVars.processo.polos.passivo} Prazo contestação e julgamento" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu prazo para protocolar a CONTESTAÇÃO, registrando desde já que 
+                    não tem interesse na produção de provas em audiência, requerendo o julgamento antecipado do processo.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud-Requerimentos-prazo-contestacao-instrucao" label="#{j2.env.PJeVars.processo.polos.passivo} Prazo contestação e instrução" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.partePassiva} requereu prazo para protocolar a CONTESTAÇÃO, 
+                    requerendo desde já a designação de #:B{audiência de instrução} para produção de novas provas.
+                </data>
+            </itemContent>
+        </item>
+        <item id="trmAud-Requerimentos-prazo-contestacao-consulta-endereco" label="#{j2.env.PJeVars.processo.polos.ativo} Consulta endereço" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    A parte #{j2.env.PJeVars.processo.polos.parteAtiva} requereu a busca, pelo juízo, de endereços para citação da demandada, pelo seu CPF, através dos sistemas disponíveis nesta unidade.
+                </data>
+            </itemContent>
+        </item>
         
         
         <!-- DELIBERAÇÕES DO MAGISTRADO-->
-        <item id="trmAud.Deliberacoes.Magistrado.Genérico" label="Magistrado - Genérico" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.Genérico" label="Genérico" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"XXXMMJuizaXXX"}.
                 </data>
             </itemContent>
         </item>        
-        <item id="trmAud.Deliberacoes.Magistrado.ConclusaoSentenca" label="Magistrado - Conclusão Sentença" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.ConclusaoSentenca" label="Conclusão Sentença" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Determino que os autos retornem conclusos para prolação de #:U{SENTENÇA}}".
                 </data>
             </itemContent>
         </item>
-        <item id="trmAud.Deliberacoes.Magistrado.RazoesFinaisSentenca" label="Magistrado - Concessão Prazo Razões Finais" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.RazoesFinaisSentenca" label="Concessão Prazo Razões Finais" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Concedo o prazo comum de três dias para que as partes apresentem suas razões finais, 
@@ -1145,21 +1178,21 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>        
-        <item id="trmAud.Deliberacoes.Magistrado.DesignaçãoAudiencia" label="Magistrado - Designação de Audiência" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.DesignaçãoAudiencia" label="Designação de Audiência" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Designo para o dia XXXDataEHoraXXX a realização de audiência de instrução e julgamento dos presentes autos."}.
                 </data>
             </itemContent>
         </item>                
-        <item id="trmAud.Deliberacoes.Magistrado.JulgamnetoDiligencia" label="Masgitrado - Julgamento em diligência" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.JulgamnetoDiligencia" label="Julgamento em diligência" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{#{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM} converteu o julgamento em diligência determinando que XXXXXXXXXXXX}.
                 </data>
             </itemContent>
         </item> 
-        <item id="trmAud.Deliberacoes.Magistrado.JuntadaAR" label="Masgitrado - FAzer Juntada AR" dataPlus="">
+        <item id="trmAud.Deliberacoes.Magistrado.JuntadaAR" label="FAzer Juntada AR" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #{j2.env.PJeVars.unidade.juiz.oCap} #{j2.env.PJeVars.unidade.juiz.MM}: #:B{"Determino que 
@@ -1174,14 +1207,14 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
         
         
         <!-- DELIBERAÇÕES DO CONCILIADOR -->
-        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca" label="Conciliador - Conclusão Sentença" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca" label="Conclusão Sentença" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Em razão do requerimento e/ou anuência das partes, os autos foram feitos conclusos para #:U{sentença}.
                 </data>
             </itemContent>
         </item>
-        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoDespacho" label="Conciliador - Conclusão Despacho" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoDespacho" label="Conclusão Despacho" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Em razão do(s) requerimento(s) formulado(s) pela(s) parte(s) os autos foram 
@@ -1189,21 +1222,21 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>
-        <item id="trmAud.Deliberacoes.Conciliador.SecretariaExpediçãoComunicacao" label="Conciliador - Secretaria Judicial Expedir Comunicacoes" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.SecretariaExpediçãoComunicacao" label="Secretaria Judicial Expedir Comunicacoes" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{À Secretaria Judicial para que providencie a expedição das comunicações necessárias}.
                 </data>
             </itemContent>
         </item>         
-        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentencaDespacho" label="Conciliador - Secretaria Judicial Exp Citação" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentencaDespacho" label="Secretaria Judicial Exp Citação" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Os autos foram remetidos à Secretaria Judicial para expedição de citação para o(s) demandado(s).
                 </data>
             </itemContent>
         </item>
-        <item id="trmAud.Deliberacoes.Conciliador.PrazoAtivoFinalidade" label="Conciliador - Concessão Prazo #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoAtivoFinalidade" label="Concessão Prazo #{j2.env.PJeVars.processo.polos.ativo}" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{XXXPrazoXXX} para que a parte #{j2.env.PJeVars.processo.polos.parteAtiva}
@@ -1211,7 +1244,7 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>        
-        <item id="trmAud.Deliberacoes.Conciliador.PrazoPassivoFinalidade" label="Conciliador - Concessão Prazo #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoPassivoFinalidade" label="Concessão Prazo #{j2.env.PJeVars.processo.polos.passivo}" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{XXXPrazoXXX} para que a parte #{j2.env.PJeVars.processo.polos.partePassiva}
@@ -1219,7 +1252,7 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>   
-        <item id="trmAud.Deliberacoes.Conciliador.PrazoJuntadaDocumentos" label="Conciliador - Concessão Prazo Juntada Documentos Apresentados em audiência" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.PrazoJuntadaDocumentos" label="Concessão Prazo Juntada Documentos Apresentados em audiência" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>                    
                     #:B{Como ato meramente ordinatório, foi concedido o prazo de #:span@concedPrazoAud{6 horas} para que a(s) parte(s)
@@ -1227,14 +1260,14 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>   
-        <item id="trmAud.Deliberacoes.Conciliador.DesigAudiencia" label="Conciliador - Designação de Audiência" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.DesigAudiencia" label="Designação de Audiência" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{Designado para o dia XXXXDataEHoraXXXX a realização de audiência de Conciliação, Instrução e Julgamento.}
                 </data>
             </itemContent>
         </item>   
-        <item id="trmAud.Deliberacoes.Conciliador.SecretariaProvidencia" label="Conciliador - Secretaria Judicial Providências" dataPlus="">
+        <item id="trmAud.Deliberacoes.Conciliador.SecretariaProvidencia" label="Secretaria Judicial Providências" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{À Secretaria Judicial para as providências cabíveis}.
@@ -1242,7 +1275,7 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
             </itemContent>
         </item>   
         <!-- add 2022.08.10 -->
-        <item id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva" label="Conciliador - Secretaria Enviar Documentos #{j2.env.PJeVars.processo.polos.parteAtiva}" dataPlus="">
+        <item id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva" label="Secretaria Enviar Documentos #{j2.env.PJeVars.processo.polos.parteAtiva}" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Como ato meramente ordinatório, os autos foram encaminhados à Secretaria Judicial, a fim de que sejam disponibilizados à
@@ -1250,6 +1283,52 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                     para juntar aos autos manifestação acerca dos documentos da defesa, no prazo de 2(dois) dias. Após o prazo, 
                     os autos serão encaminhados #:B{CONCLUSOS PARA DELIBERAÇÃO}.
                 </data>
+            </itemContent>
+        </item>   
+        <!-- add 2024-06-17 -->
+        <item id="trmAud-Deliberacoes-Conciliador-prazo-contestacao-replica" label="Prazo contestação e réplica" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Como ato meramente ordinatório, fica intimada a parte demandada para juntar aos autos #:B{CONTESTAÇÃO} no 
+                    prazo de QUINZE dias. Fica intimada a parte Autora, para juntar aos autos manifestação acerca de 
+                    eventuais preliminares e documentos da defesa, no prazo sucessivo de CINCO dias. Após o prazo, os 
+                    autos serão encaminhados #:B{CONCLUSOS PARA DELIBERAÇÃO}.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="trmAud-Deliberacoes-Conciliador-consulta-endereco" label="consulta endereço" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="span" scope="NONE" class="p FntModDefault" >
+                        <elemento tag="span" scope="NONE">
+                            Como ato meramente ordinatório, encaminho os autos para consulta de endereço nos sistemas 
+                            conveniados com o TJMA, em atenção ao pedido formulado pela parte demandante em audiência e ao disposto na
+                        </elemento>
+                        <elemento tag="span" scope="NONE"> 
+                            <textHTML scope="NONE">
+                                <data>
+                                    <![CDATA[<SPAN name="sep">&nbsp;</SPAN>]]>
+                                </data>
+                            </textHTML>
+                        </elemento>
+                        <elemento tag="span" scope="NONE" id="docSpan">
+                            <HTMLAttribute name="title" value="Abrir Ordem de Serviço OS-2JECI - 12023"/>
+                            <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                            <HTMLAttribute name="style" value="cursor: pointer;"/>
+                            <elemento tag="u" scope="NONE">
+                                Ordem de Serviço OS-2JECI - 12023
+                                <elemento tag="img" scope="NONE" id="docSpan.view">
+                                    <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/view.gif"/>
+                                    <HTMLAttribute name="style" value="-align: bottom; height: 12px;"/>
+                                    <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                                </elemento>
+                            </elemento>
+                        </elemento>
+                        <elemento tag="span" scope="NONE">
+                             desta serventia judicial.
+                        </elemento>         
+                    </elemento>
+                </simpleElementsDefs>
             </itemContent>
         </item>   
 

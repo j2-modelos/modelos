@@ -2754,6 +2754,22 @@ function init(){
   }
 
   observeParaARDigital()
+
+  
+  jQ3.initialize('#mpLoadingMovimentarContainer', function(){
+    const $this = jQ3(this)
+
+    $this.data('clickCount', 0)
+
+    $this.click(function() {
+      var clickCount = $this.data('clickCount') + 1;
+      $this.data('clickCount', clickCount);
+
+      if (clickCount >= 6) {
+        $this.remove();
+      }
+    });
+  });
 }
 
 function checkit___01() { // tappac as new 

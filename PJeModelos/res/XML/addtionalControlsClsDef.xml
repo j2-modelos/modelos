@@ -1383,5 +1383,98 @@
             </elemento>
         </versao>
     </classeDef>
+
+    <classeDef id="itIntimacaoTelefoneInfrutiferaComplemento">
+        <versao id="1.0">
+            <classeImp id="Selector" versao="4.1" scope="EDT_CORE">
+                <constructs param="newId" value="itIntimacaoTelefoneInfrutiferaComplemento-itens" type="string"/>
+                <constructs param="linkedElement" value="itIntimacaoTelefoneInfrutiferaComplemento-span" type="string"/>
+                <!--constructs param="linkedElTag" value="UL" type="string"/-->
+
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="source" type="j2Json" value="{
+                    'selectorId': 'itIntimacaoTelefoneInfrutiferaComplemento',
+                    'tag': 'span',
+                    'initialSelected': 'itPadrao',
+                    'items': [
+                        {
+                            'id': 'itPadrao',
+                            'label': 'Padrão',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'a operadora de telefonia informa que &quot;XXXTextoLivreXXXX&quot;'
+                        },
+                        {
+                            'id': 'itCaixaPostal',
+                            'label': 'Caixa Postal',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'a operadora de telefonia informa: &quot;deixe sua mensagem na caixa postal&quot;'
+                        },
+                        {
+                            'id': 'itChamadaNaoCompleta',
+                            'label': 'Chamada não completa',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'a operadora de telefonia não retorna nenhuma mensagem, apenas sinal de encerramento de chamada'
+                        }
+                    ]
+                }" />
+                <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                <constructs param="hideLabel" value="false" type="boolean"/>
+                <constructs param="label" value="Intimação frustrada" type="string"/>
+            </classeImp> 
+
+        </versao>
+    </classeDef>
+    <classeDef id="certItPrecatoriaArquivamento">
+        <versao id="1.0">
+            <classeImp id="Selector" versao="4.1" scope="EDT_CORE">
+                <constructs param="newId" value="certItPrecatoriaArquivamento-itens" type="string"/>
+                <constructs param="linkedElement" value="certItPrecatoriaArquivamento-span" type="string"/>
+                <!--constructs param="linkedElTag" value="UL" type="string"/-->
+
+                <constructs param="multiple" value="nao" type="bool"/>
+                <constructs param="onChange" value="default" type="string"/>
+                <!--constructs param="onAddAction" value="default" type="string"/>
+                <constructs param="onDelAction" value="default" type="string"/-->
+                <constructs param="source" type="j2Json" value="{
+                    'selectorId': 'certItPrecatoriaArquivamento',
+                    'tag': 'span',
+                    'initialSelected': 'itComFinalidade',
+                    'items': [
+                        {
+                            'id': 'itComFinalidade',
+                            'label': 'Com finalidade atingida',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'cumprida #:u{COM finalidade atingida}'
+                        },
+                        {
+                            'id': 'itCaixaPostal',
+                            'label': 'Sem finalidade atingida',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'cumprida #:u{SEM finalidade atingida}'
+                        },
+                        {
+                            'id': 'itChamadaNaoCompleta',
+                            'label': 'Não cumprida',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': '#:B{não cumprida}'
+                        }
+                    ]
+                }" />
+                <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                <constructs param="hideLabel" value="false" type="boolean"/>
+                <constructs param="label" value="Resultado" type="string"/>
+            </classeImp> 
+
+        </versao>
+    </classeDef>
     
 </Definitions>

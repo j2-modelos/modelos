@@ -349,7 +349,7 @@ try {
                 
         pkg.Intimacao.containers.edt.itemsMonitor().changeList();
       },
-      containers : { 
+      containers : {
         exp : {
           titulo : function (){ return mod.exp.gE('expTitle'); },
           destinatario : function (){return mod.exp.gE('singleBody.destinatarioExpediente'); },

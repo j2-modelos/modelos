@@ -357,15 +357,34 @@ try {
           else{
             _selParte.setListeners();
           }
+          for (prop in _selParte.selIProp.bindingValues) { 
+            const input = _selParte.binding[prop]
+            const propValue = _selParte.selIProp.bindingValues[prop]
+            if(!input) 
+              throw new Error('propriedade do bingind da parte é inválido')
+
+            switch(input.input.type){
+              case 'checkbox':
+                input.input.checked = propValue
+                break;
+              default:
+                input.input.value = propValue
+            }
+
+            input.input.dispatchEvent(  new Event('change')  )
+          }
           var tpPesSelect = mod.sup.parteEdit.gE('ReferenciaDocumento.SelectMethod');
           tpPesSelect.onchange = function(event, _){
             pkg.TermoReclamacaoSeletorParte.changeParteTipo(event, tpPesSelect);
           };
+          tpPesSelect.value = _selParte.selIProp.polo == 'partesPoloPassivo' ? 'PJ' : 'PF'
           tpPesSelect.onchange(null, tpPesSelect);
+
           var closeAction = mod.sup.parteEdit.gE('ReferenciaDocumento.closeAction');
           closeAction.onclick = function(event){
             mod.sup.parteEdit.win.close();
-          };          
+          };    
+
           var declWA = mod.sup.parteEdit.gE('buttonGenDecWA');
           declWA && (declWA.onclick = function(event){
             pkg.TermoReclamacaoSeletorParte.gerarDeclaracaoWhatsApp();

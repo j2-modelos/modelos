@@ -718,6 +718,37 @@ var TarefasProps = {
       procedimentoEspecializado : 'ADM-reorganizarTarefas',
       scroller: { 
         seletorBotaoMedio: '#j2eADMPanel-exps'
+      },
+      presets: {
+        items: [
+          {
+            label: 'Intimar', selecoes: [
+              'Expedir intimação'
+            ]
+          },
+          {
+            label: 'Citar', selecoes: [
+              'Controlar audiência',
+              'Expedir citação',
+              'Expedir vários documentos'
+            ]
+          },
+          {
+            label: 'Citar com liminar', selecoes: [
+              'Controlar audiência',
+              'Expedir citação e(ou) intimação',
+              'Expedir vários documentos'
+            ]
+          },
+          {
+            label: 'CumSen - início', selecoes: [
+              'Retificar processo',
+              'Expedir certidão'
+            ], etiquetas: [
+              'SISBAJUD - Ag. Bloqueio'
+            ]
+          }
+        ]
       }
     }
   },
@@ -2010,6 +2041,8 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
     'Aguardando Prazo de Abandono',
     'Ag. Prazo de Pagamento Voluntário',
     'Ag. Prazo de Expediente Fechado',
+    'Ag. Prazo de Expediente Mal Configurado',
+    'Aguardando Prazo interno',
     'Aguardando Trânsito em Julgado',
   ],
   'container-sem-classe'
@@ -2060,8 +2093,9 @@ TarefaPersonalizadaAvancada.etiquetasRapidas(
   [
     'Via WhatsApp',
     'Via Central de Manadados',
-    'Analise Detida',
     'Via Correios',
+    'Analise Detida',
+    'par - certificar leitura WhatsApp'
   ],
   'container-sem-classe'
 )

@@ -366,4 +366,18 @@
             </classe>
         </versao>
     </modelo>
+
+    <modelo id="itIntimacaoTelefoneInfrutiferaComplemento">
+        <versao id="1.0">
+            <classe id="itIntimacaoTelefoneInfrutiferaComplemento" versao="1.0">
+            </classe>
+        </versao>
+    </modelo>
+
+    <modelo id="certItPrecatoriaArquivamento">
+        <versao id="1.0">
+            <classe id="certItPrecatoriaArquivamento" versao="1.0">
+            </classe>
+        </versao>
+    </modelo>
 </Definitions>

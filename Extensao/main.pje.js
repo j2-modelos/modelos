@@ -632,6 +632,60 @@ function pjeLoad(){
       const _criarTaskScroller = ()=>{
         j2EUi.createTaskScroller(_tarfProp.personalizacao.scroller)
       }
+      const _criarTaskPresets = ()=>{
+        const createTaskPresets = ({ 
+          items,
+          appendTo = '#taskInstanceDiv', 
+          classTamanhoButton = ''
+         })=>{
+
+          items.sort((a, b) => a.label.localeCompare(b.label))
+
+          const PRESET_TEMPLATE = /*HTML*/`
+          <div class="rich-panel" id="j2-sets-adm" j2-hidden="">
+            <div class="rich-panel-body" style="display: flex; flex-direction: column; padding: 5px;">
+              <ul class="nav nav-pills btn-documento pull-right" style="display: flex; flex-direction: column;">
+                  ${items.map((it, idx) => /*html*/` 
+                    <li>
+                      <a class="btn ${classTamanhoButton}  btn-primary" j2-a-action="${idx}"> 
+                        ${it.label}
+                      </a>
+                    </li>`).join('\n')
+                  }                  
+              </ul>
+            </div>
+          </div>`
+      
+          const $presetsPanel = jQ3(PRESET_TEMPLATE)
+          
+          jQ3(appendTo).prepend($presetsPanel)
+          $presetsPanel.css('--el-width',  `-${parseFloat($presetsPanel.width())-50}px`)
+          $presetsPanel.css('--el-height',  `${parseFloat($presetsPanel.height())}px`)
+
+          $presetsPanel.find('[j2-a-action]').click(($event)=>{
+            const idx = jQ3($event.target).attr('j2-a-action')
+            const thisItem = items.at(idx)
+            console.error(items.at(idx))
+            
+            
+            thisItem.selecoes.forEach(sel => jQ3(`#taskInstanceForm #${jQ3(`label:contains("${sel.trim()}")`).attr('for').replaceAll(':', '\\:')}`).get(0).checked = true)
+            //items.at(idx).selecoes.forEach(sel => delayCall((sel)=> jQ3(`#taskInstanceForm #${jQ3(`label:contains("${sel.trim()}")`).attr('for').replaceAll(':', '\\:')}`).get(0).checked = true, sel))
+
+            thisItem.etiquetas?.forEach(tag => window.j2EPJeRest.etiquetas.inserir(idProcesso, tag))
+
+            document.dispatchEvent( new CustomEvent('j2-transitar-frame', { 
+              detail: { 
+                nomeTransicao: "Prosseguir" 
+              } 
+            }))
+          })
+
+          
+      
+        }
+
+        createTaskPresets(_tarfProp.personalizacao.presets)
+      }
 
       const _criarCorpoParaPseudotarefaPura = ()=>{
         const __FORM__ = /*html*/`
@@ -723,6 +777,7 @@ function pjeLoad(){
       _tarfProp.personalizacao.transicaoRemover                          && _transicaoRemover();
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
       _tarfProp.personalizacao.painel                                    && _criarPainel();
+      _tarfProp.personalizacao.presets                                   && _criarTaskPresets()
       _tarfProp.personalizacao.scroller                                  && _criarTaskScroller()
       _tarfProp.personalizacao.obterDosAutos                             && _obterDosAutos()
       
@@ -2668,7 +2723,7 @@ function pjeLoad(){
   }
   
   function personaliazarMenu(){
-    jQ3.initialize('nav#menu > div.nivel > ul > li:last-child a[href="/pje/CadastroPerito/listView.seam"]', function(){
+    jQ3.initialize('nav#menu > div.nivel > ul > li a[href="/pje/UsuarioMobile/listView.seam"]', function(){
       //jQ3(this)
       PJeMenuFactory(window, jQ3);
       
@@ -2767,8 +2822,31 @@ function pjeLoad(){
     }).each(function(){
       var jT = jQ3(this);
         jT.append( ' | ' );
+        const num = jT.text()
         jT.append( createLinkWhatsApp( jT.text() , 'WhatsApp ') );
+        jT.append( ' | ' );
+        jT.append( jQ3(/*html*/`<i class="fa fa-whatsapp" j2-d="${num?.match(/\d+/g)?.join('')}" style="cursor:pointer;"></i>`) );
     });
+    jQ3('table#meioContatoPessoaGridList span div.col-sm-12').click(ev=>{
+      const $tar = jQ3(ev.target)
+      if(! $tar.is('[j2-d]') ) 
+        return
+
+      var request = {
+        j2 : true,
+        domain : { 
+          to : 'https://web.whatsapp.com',
+          from : window.location.origin
+        },
+        fowarded : false,
+        action : 'abrirContatoWhatsApp',
+        arguments :  [$tar.attr('j2-d')],
+        comment : "Requisitar abertura de chat para o contato indicado"
+      };
+
+      j2E.conn.port.postMessageJ2E(request)
+        
+    })
     
     jQ3('form#pessoaFisicaViewView div.propertyView:contains("celular") div.col-sm-12').filter(function(){
       return jQ3(this).text().match(/([0-9]{8}|[0-9]{9})/) !== null;
@@ -4097,6 +4175,7 @@ function pjeLoad(){
 
       const destinatarioAtual = _obterDestinatarioAtual()
       const destinatariosExpediente = _obterDestinatariosExpediente()
+      const $this = jQ3(this)
       const $thisContainer = jQ3(this).parent()
 
       const $WAPanel = j2EUi.createPanel(
@@ -4132,7 +4211,7 @@ function pjeLoad(){
         'col-sm-3',
         [
           `${
-            j2E.env?.getDadosCompletos.dadosBasicos.numero.value.match(/-(\d+)\./).at(1) % 2
+            j2E.env?.dadosCompletosProcesso.dadosBasicos.numero.value.match(/-(\d+)\./).at(1) % 2
             ? 'ímpar' : 'par'} - certificar leitura WhatsApp`,
           'Sem WhatsApp'
         ],
@@ -4141,6 +4220,68 @@ function pjeLoad(){
           panelAppendTo:  $thisContainer
         }
       )
+
+      function __pdfDownloadAction(){ 
+  
+        var j2ExpC = $this.find('.rich-panel-body').find('#j2Exp').clone();
+        if(!j2ExpC.length){
+          var div = $this.find('.rich-panel-body').clone()
+          var div2 = jQ3('<div>')
+          div2.append(div.children())
+          j2ExpC = div
+        }
+
+        var idPF = j2ExpC.text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.[0] || 'Documento'
+        
+        j2ExpC.find('div').filter(function() {
+            return jQ3(this).css('box-shadow').length > 0;
+          }
+        ).css('box-shadow', '');
+        j2ExpC.find('#normalizeFormtas').css('border', '');
+  
+        var _pdfWin = j2EOpW.corner( '', 'FerramentasProcessoBaixarPDF' + guid(), null, { width : 25, height: 25} );
+        var _winDoc = _pdfWin.document;
+        var _wB = jQ3('body', _pdfWin.document);
+        _wB.empty();
+        _wB.append(j2ExpC);
+
+
+        var idDocumento = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:docExistentesTable\\:tb td.success:nth-child(2)`).text().trim()
+        var tipoDocumento = jQ3(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:docExistentesTable\\:tb td.success:nth-child(3)`).text().trim()
+  
+        var opt = {
+          margin:       [0.393701, 0, 0.393701, 0],
+          filename:     `${idPF} - ${tipoDocumento} - id ${idDocumento}.pdf`,
+          image:        { type: 'jpeg', quality: 1.00 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        
+        function ___makePdf(){
+          if (typeof _pdfWin.html2pdf !== 'undefined' ) {
+            _pdfWin.html2pdf().set(opt).from(_winDoc.getElementById('j2Exp')).save(null, _winDoc);
+            setTimeout(function(){_pdfWin.close();},250);
+          }else {
+            setTimeout( ___makePdf, 50 );
+          }
+        }
+        ___makePdf();      
+  
+      }
+      const $butDownload = jQ3(/*html*/`
+        <div class="col-xs-6 col-sm-6 col-md-4" style="float: right;margin-top: -10px;">
+          <ul class="nav nav-pills btn-documento pull-right">
+            <li>
+              <a id="detalheDocumento:download" href="#" title="Download PDF simples" onclick="" class="">
+							  <i class="fa fa-file-pdf" aria-hidden="true" style="font-size: 1.2em;"></i>								
+								<span class="sr-only ">Ícone de PDF</span></a>
+            </li>
+          </ul>
+        </div>
+      `)
+      $butDownload.find('a').click(__pdfDownloadAction)
+
+      $this.find('.rich-panel-header').append($butDownload)
     })
   }
   

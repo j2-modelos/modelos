@@ -19,6 +19,7 @@ and open the template in the editor.
             <gItem id="priordItIndefinido"/>
             <gItem id="priordItAudiencia"/>
             <gItem id="priordItIdoso"/>
+            <gItem id="priordItIdosoMais80"/>
             <gItem id="priordItLiminar"/>
             <gItem id="priordItMetaCNJ"/>
             <gItem id="priordItUrgente"/>
@@ -38,6 +39,14 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     IDOSO
+                </data>
+            </itemContent>
+        </item>        
+        <item id="priordItIdosoMais80" label="Idoso +80" dataPlus="">
+            <eventFire event="SeletorPrioridade.onPrioridadeSimSelected"/>
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    IDOSO+80
                 </data>
             </itemContent>
         </item>        

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+j2
+
+adicionado por oportunidade da implemnetação de Carta Precatória
+-->
+<Definitions xmlns="http://j2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SeleectorsItemsDefinitions" targetNamespace="http://j2" xsi:schemaLocation="http://j2 ../XML/j2.xsd">
+  <selectorDef id="itIntimacaoTelefoneInfrutiferaComplemento" grouped="false">
+    <itemFormats>
+      <elemento tag="span" scope="NONE">
+         #{textContent}
+      </elemento>
+    </itemFormats>
+    <items initialSelected="meioComunicItSistema">
+        <item id="itPadrao" label="Padrão" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    a operadora de telefonia informa que "xxxxxxxxxxxxxxx"
+                </data>
+            </itemContent>
+        </item>        
+        <item id="itCaixaPostal" label="Caixa Postal" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                     a operadora de telefonia informa: "deixe sua mensagem na caixa postal"
+                </data>
+            </itemContent>
+        </item>        
+        <item id="itChamadaNaoCompleta" label="Chamada não completa" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                     a operadora de telefonia não retorna nenhuma mensagem, apenas sinal de encerramento de chamada
+                </data>
+            </itemContent>
+        </item>        
+        
+    </items>
+  </selectorDef>
+</Definitions>

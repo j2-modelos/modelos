@@ -2748,6 +2748,8 @@
                 <!--importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/-->
                 <importLib name="chosen.jquery.js" artifact="#{j2.res.lib.chosen}" scope="EDT"/> <!-- chosen -->
                 <importLib name="chosen.css" artifact="#{j2.res.CSS.chosen}" scope="EDT"/><!-- chosen -->
+
+                <constructs param="width" value="500" type="int"/>
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A4" type="string"/>
                     <constructs param="contentEditableBody" value="sim" type="string"/>
@@ -3112,7 +3114,7 @@
                     <classe id="SeletorAdvertencias" versao="1.0">
                         <constructs param="observar" value="selectorMonitorintimacaoItens" type="string"/>
                         <constructs param="itemSourceDef" value="intimacaoItens" type="string"/>
-                        <constructs param="exibirInicialmente" value="advtItAtermacaoContumacia advtItMudancaEndereco advtItTestemunhas advtItMudancaPedidos" type="string"/>
+                        <constructs param="exibirInicialmente" value="advtItAtermacaoContumacia advtItMudancaEndereco advtItTestemunhas advtItMudancaPedidos advtItAdesaoTacitaWhatsapp advtItMudancaTelefone advtItMudancaWhatsapp advtItAcusarRecebimento advtItEmendar" type="string"/>
                     </classe>
                     <classe id="AutoSave" versao="1.1">
                         <constructs param="containersType" value="fullFrameBody" type="enum"/>

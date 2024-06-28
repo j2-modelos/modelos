@@ -783,6 +783,16 @@ try {
                       id: excTemp.usuarioId,
                       portaria: excTemp.PortariaDesignacao
                     })
+                  else {
+                    //exibir anteccipadamente uma semana antes
+                    const preview = new Date(inicio.getTime() - (7 * 24 * 60 * 60 * 1000))
+                    if(preview < hoje && hoje < fim)
+                      ord.push({
+                        nominacao : 'respondente temporário',
+                        id: excTemp.usuarioId,
+                        portaria: excTemp.PortariaDesignacao
+                      })
+                  }
                 })
               }
               if(mags.Presidencia?.length){
@@ -4025,6 +4035,49 @@ try {
           _.ld.id += '.' + Math.random().toString();
       }
     }; 
+
+    pkg.LinkParaDocumento = {
+      constructor_ : function(args, el){
+        function removerAcentos(texto) {
+          return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/ç/g, 'c').replace(/Ç/g, 'C')
+            .replace(/ñ/g, 'n').replace(/Ñ/g, 'N')
+            .replace(/á|à|ã|â|ä/g, 'a').replace(/Á|À|Ã|Â|Ä/g, 'A')
+            .replace(/é|è|ê|ë/g, 'e').replace(/É|È|Ê|Ë/g, 'E')
+            .replace(/í|ì|î|ï/g, 'i').replace(/Í|Ì|Î|Ï/g, 'I')
+            .replace(/ó|ò|õ|ô|ö/g, 'o').replace(/Ó|Ò|Õ|Ô|Ö/g, 'O')
+            .replace(/ú|ù|û|ü/g, 'u').replace(/Ú|Ù|Û|Ü/g, 'U')
+            .replace(/\//g, '-')
+        }
+
+        const _ = {
+          preEspaco : jQ3(el).find('#pre-espaco'),
+          tituloDocumento : jQ3(el).find('#titulo-documento'),
+          docSpan : jQ3(el).find('#doc-span'),
+          docSpanView : jQ3(el).find('#doc-span-view'),
+        };
+        
+        if(args.preEspaco && (args.preEspaco === 'não' || args.preEspaco === 'false'))
+          _.preEspaco.remove()
+
+        if(!args.tituloDocumento)
+          throw new Error('TtiloDocumento é obrigatório para o LinkParaDocumento')
+        if(!args.linkIds)
+          throw new Error('linkIds é obrigatório para o LinkParaDocumento')
+
+        const onclick = `window.open('https://www.dropbox.com/scl/fi/${
+          args.linkIds.split(';').at(0)
+          }/${
+            encodeURIComponent(removerAcentos(args.tituloDocumentoLongo || args.tituloDocumento))
+          }.pdf?rlkey=${args.linkIds.split(';').at(1)}&raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();`
+
+
+        _.tituloDocumento.text(args.tituloDocumento)
+        _.docSpan.attr('title', `Abrir ${args.tituloDocumentoLongo || args.tituloDocumento}`)
+        _.docSpan.attr('onclick', onclick)
+        _.docSpanView.attr('onclick', onclick)
+      }
+    }
   
   
     pkg.MandadoDeOrdemJuiz = {
@@ -7371,10 +7424,20 @@ try {
         
         pkg.Documento.updateParentFields(_.monitr, _);
       },
-      loadSelectSource : function(sourceSt, select, ob, id, byExternEvent){
-        var art =  (sourceSt.indexOf('#{')!==-1) ? parseVar(sourceSt) : j2.res.selectSources[sourceSt];
+      loadSelectSource : function(sourceStOrJson, select, ob, id, byExternEvent){
+        var art 
+
+        if(typeof sourceStOrJson == 'object')
+          art = sourceStOrJson
+        else if(sourceStOrJson.indexOf('#{')!==-1) 
+          art = parseVar(sourceStOrJson) 
+        else 
+          art = j2.res.selectSources[sourceStOrJson];
+          
+          
+        
         if(!art){
-          j2.log('Erro ao carregar SelectSource ' + sourceSt);
+          j2.log('Erro ao carregar SelectSource ' + sourceStOrJson);
           return;
         }
         
@@ -7385,7 +7448,7 @@ try {
             ob.src = definitions;
             pkg.Selector.loadItems(definitions, select);
 
-            evBus.fire('Selector.loadSelectSource.' + sourceSt);
+            evBus.fire('Selector.loadSelectSource.' + sourceStOrJson);
           }
           else
             if(err)
@@ -7393,13 +7456,18 @@ try {
         }
         
         if(!(byExternEvent)){
-          evBus.once('loaded-'+art.lib, function(event, xml){
-            if(!(xml))
-              xml = window.j2.mod._._xmlDecode( art.xmlEncode.load );
+          if(typeof sourceStOrJson != 'object'){
+            evBus.once('loaded-'+art.lib, function(event, xml){
+              if(!(xml))
+                xml = window.j2.mod._._xmlDecode( art.xmlEncode.load );
 
-            window.j2.mod.j2Moddle.fromXML(xml, 'j2:Definitions', __parsedXMLHandler);
-          });
-          j2.mod.com.libLoader(art);
+              window.j2.mod.j2Moddle.fromXML(xml, 'j2:Definitions', __parsedXMLHandler);
+            });
+            j2.mod.com.libLoader(art);
+          }else{
+            const parser = pkg.Utilidades.j2JsonToSimpleSelectorXML
+            window.j2.mod.j2Moddle.fromXML(parser(art), 'j2:Definitions', __parsedXMLHandler);
+          }
         }
         else{
           evBus.on(byExternEvent, function byExternEventHandler(event, definitions){
@@ -7502,12 +7570,36 @@ try {
             if (eCompetencia(it)){
               var g = groupToOptionGroup(it);
               appd.appendChild(g);
-              forEach(arI, function(it_item){
-                forEach(it.gItem, function(it){
-                  if(it_item.id === it.id && eCompetencia(it_item))
-                    g.appendChild( itemToOption(it_item)) ;
+              if(it.ordenar){
+                it.gItem.sort((a, b) => { 
+                  const arIa = arI.find(i => i.id == a.id )
+                  const arIb = arI.find(i => i.id == b.id )
+                  return arIa.label.localeCompare( arIb.label  )      
+                })
+                const itPosAr = []  
+                it.gItem = it.gItem.filter(item => {
+                  if (item.posicao !== undefined) {
+                    itPosAr.push(item);
+                    return false; // Remove o item do gItem
+                  }
+                  return true; // Mantém o item no gItem
                 });
-              });
+                if(itPosAr.length){
+                  itPosAr.sort((a, b) => a.posicao - b.posicao)
+                  it.gItem = [...itPosAr, ...it.gItem]
+                }
+                forEach(it.gItem, function(it){
+                  const arIi = arI.find(i => i.id == it.id )
+                  if(arIi && eCompetencia(arIi))
+                    g.appendChild( itemToOption(arIi)) ;
+                });
+              }else 
+                forEach(arI, function(it_item){
+                  forEach(it.gItem, function(it){
+                    if(it_item.id === it.id && eCompetencia(it_item))
+                      g.appendChild( itemToOption(it_item)) ;
+                  });
+                });
             }
           });
         };
@@ -8611,7 +8703,72 @@ try {
         return function(string) {
             return string.replace(translate_re, translator);
         };
-      })()
+      })(),
+      j2JsonToSimpleSelectorXML: function (j2json) {
+        const j2JSONparse = window.j2.mod._._j2JSONparse
+        let json
+        try{
+          if(typeof j2json == 'string')
+            json = j2JSONparse(j2json)
+          else
+            json = j2json
+        }catch(e){
+          return undefined
+        }
+        const parser = new DOMParser();
+        const xmlDoc = document.implementation.createDocument("", "", null);
+    
+        const root = xmlDoc.createElementNS("http://j2", "Definitions");
+        root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        root.setAttribute("id", "SeleectorsItemsDefinitions");
+        root.setAttribute("targetNamespace", "http://j2");
+        root.setAttribute("xsi:schemaLocation", "http://j2 ../XML/j2.xsd");
+    
+        const selectorDef = xmlDoc.createElement("selectorDef");
+        selectorDef.setAttribute("id", json.selectorId || "itIntimacaoTelefoneInfrutiferaComplemento");
+        selectorDef.setAttribute("grouped", "false");
+    
+        const eventFire = xmlDoc.createElement("eventFire");
+        eventFire.setAttribute("event", "signatario.onChange");
+        selectorDef.appendChild(eventFire);
+    
+        const itemFormats = xmlDoc.createElement("itemFormats");
+        const elemento = xmlDoc.createElement("elemento");
+        elemento.setAttribute("tag", json.tag || "span");
+        elemento.setAttribute("scope", "NONE");
+        elemento.textContent = "#{textContent}";
+        itemFormats.appendChild(elemento);
+        selectorDef.appendChild(itemFormats);
+    
+        const items = xmlDoc.createElement("items");
+        items.setAttribute("initialSelected", json.initialSelected || "meioComunicItSistema");
+    
+        json.items.forEach(item => {
+          const itemElement = xmlDoc.createElement("item");
+          itemElement.setAttribute("id", item.id);
+          itemElement.setAttribute("label", item.label);
+          itemElement.setAttribute("dataPlus", item.dataPlus || "");
+  
+          const itemContent = xmlDoc.createElement("itemContent");
+          itemContent.setAttribute("type", "plainText");
+          itemContent.setAttribute("addtClassStyles", item.addtClassStyles || "");
+  
+          const data = xmlDoc.createElement("data");
+          data.textContent = item.data;
+  
+          itemContent.appendChild(data);
+          itemElement.appendChild(itemContent);
+          items.appendChild(itemElement);
+        });
+    
+        selectorDef.appendChild(items);
+        root.appendChild(selectorDef);
+        xmlDoc.appendChild(root);
+    
+        const serializer = new XMLSerializer();
+        const xmlString = serializer.serializeToString(xmlDoc);
+        return xmlString;
+      }
     };
     
     pkg.VistosEmCorreicao = {

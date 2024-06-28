@@ -3249,6 +3249,11 @@
                'name': 'scope',
                'isAttr': true,
                'type': 'ENUM_SCOPE'
+            },         
+            {
+               'name': 'containerTag',
+               'isAttr': true,
+               'type': 'String'
             }         
           ]
         },        
@@ -3773,6 +3778,11 @@
               'name': 'id',
               'isAttr' : true,
               'type': 'String'
+            },            
+            {
+              'name': 'posicao',
+              'isAttr' : true,
+              'type': 'Integer'
             }            
           ]
         },             
@@ -3816,7 +3826,12 @@
               'name': 'competencias',
               'isMany': false,
               'type': 'competencias'
-            }
+            },
+            {
+              'name': 'ordenar',
+              'type': 'Boolean',
+              'isAttr': true
+            }     
           ]
         },          
         {

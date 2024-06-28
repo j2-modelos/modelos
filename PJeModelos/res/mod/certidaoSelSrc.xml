@@ -57,7 +57,8 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <group label="Carta Precatória">
             
             <gItem id="certItDevolucaoPrecatoria"/>  
-            <gItem id="certItDevolucaoPrecatoriaPJe"/> 
+            <gItem id="certItPrecatoriaArquivamento"/>  
+            <!--gItem id="certItDevolucaoPrecatoriaPJe"/--> 
             
             <gItem id="certItPrecatoriaDistribuidaPJe"/>      
             
@@ -211,7 +212,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item> 
-        <item id="certCentralMandadoNotificacaoAirton" label="Notificação Ludugero" 
+        <item id="certCentralMandadoNotificacaoAirton" label="Notificação Airton" 
             dataPlus="{ 'descricaoAppend': 'notificação de oficial de justiça' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -545,8 +546,57 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         <item id="certItDevolucaoPrecatoriaPJe" label="Devolução (Pje)" dataPlus="{ 'descricaoAppend': 'Devolução de Carta Precatória (Pje)' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Certifico, #:span!j2-cert-sequencializador{nesta data,}, termos do Provimento nº 42/2019, que procedi à redistribuição da presente missiva ao juízo deprecado cumprida COM/SEM finalidade atingida.
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} termos do Provimento nº 42/2019, que procedi à redistribuição da presente missiva ao juízo deprecado cumprida COM/SEM finalidade atingida.
                 </data>
+            </itemContent>
+        </item>  
+
+        <item id="certItPrecatoriaArquivamento" label="Arquivamento" dataPlus="{ 'descricaoAppend': 'Arquivamento de carta precatória' }">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt1cm marginAtoJudicial" >
+                        <elemento tag="span" scope="NONE">
+                            Certifico, #:span!j2-cert-sequencializador{nesta data,} nos termos da
+                        </elemento>
+                        <classeImp id="LinkParaDocumento" versao="1.0" scope="NONE" containerTag="span">
+                            <constructs param="preEspaco" value="sim" type="bool"/>
+                            <constructs param="tituloDocumento" value="Resolução-GP nº 99/2023" type="string"/>
+                            <constructs param="tituloDocumentoLongo" value="Resolução-GP nº 99/2023 - Regulamenta as cartas precatórias" type="string"/>
+                            <constructs param="linkIds" value="nfozy27vur8z4759hu4o4;0nog8841pzelygdv2he4uqb40" type="string"/>
+                        </classeImp>
+                        <!--elemento tag="span" scope="NONE"> 
+                            <textHTML scope="NONE">
+                                <data>
+                                    <![CDATA[<SPAN name="sep">&nbsp;</SPAN>]]>
+                                </data>
+                            </textHTML>
+                        </elemento-->
+                        <!--elemento tag="span" scope="NONE" id="docSpan">
+                            <HTMLAttribute name="title" value="Abrir Ordem de Serviço OS-2JECI - 12023"/>
+                            <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                            <HTMLAttribute name="style" value="cursor: pointer;"/>
+                            <elemento tag="u" scope="NONE">
+                                Resolução-GP nº 99/2023
+                                <elemento tag="img" scope="NONE" id="docSpan.view">
+                                    <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/view.gif"/>
+                                    <HTMLAttribute name="style" value="-align: bottom; height: 12px;"/>
+                                    <HTMLAttribute name="onclick" value="window.open('https://www.dropbox.com/scl/fi/4scw538t1p0f95mhpnwb9/Ordem-de-Servi-o-OS-2JECI-12023.pdf?rlkey=blmn68yhd6tnxo5hz4fss7w3n&amp;raw=1', 'popOS', 'width=780, height=740, scrollbars=yes').focus();"/>
+                                </elemento>
+                            </elemento>
+                        </elemento-->
+                        <elemento tag="span" scope="NONE">
+                            , bem como na 
+                        </elemento>      
+                        <classeImp id="LinkParaDocumento" versao="1.0" scope="NONE" containerTag="span">
+                            <constructs param="preEspaco" value="sim" type="bool"/>
+                            <constructs param="tituloDocumento" value="Circular-GCGJ nº 3052023" type="string"/>
+                            <constructs param="linkIds" value="mgj2vrd5e84vc7yyd57ay;ccdih6m2secven8ai05qsymbp" type="string"/>
+                        </classeImp>
+                        <elemento tag="span" scope="NONE">
+                            , que encaminhei ao arquivo deste juizado a presente missiva #:SPAN@certItPrecatoriaArquivamento-span{cumprida #:U{COM finalidade atingida}}.
+                        </elemento>   
+                    </elemento>
+                </simpleElementsDefs>
             </itemContent>
         </item>  
         
@@ -1331,8 +1381,8 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:B{restou infrutífera} a tentativa de intimação da parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} por #:B{telefone} no(s) número(s) 
                     #:U{#:span@pessoa-meiosContato-telefone-txt{#{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}}} 
-                    indicados pela parte e constante nos autos e sistema PJe. Ao realizar a tentativa de contato, a operadora de telefonia
-                    informa que "xxxxxxxxxxxxxxx".
+                    indicados pela parte e constante nos autos e sistema PJe. Ao realizar a tentativa de contato em dias e horários diferentes, 
+                    #:span@itIntimacaoTelefoneInfrutiferaComplemento-span{a operadora de telefonia informa que "XXXTextoLivreXXXX"}. 
                 </data>
             </itemContent>
         </item>   
@@ -1344,7 +1394,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                     #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} por #:B{aplicativo WhatsApp} no(s) número(s) 
                     #:U{#:span@pessoa-meiosContato-telefone-txt{#{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}}} 
                     constantes neste sistema PJe para a parte. Ao realizar a tentativa de abertura de conversa no referido aplicativo, 
-                    o mesmo informa que "xxxxxxxxxxxxxxx".
+                    o mesmo informa que "o número de telefone compartilhado por url é inválido".
                 </data>
             </itemContent>
         </item>          

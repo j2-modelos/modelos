@@ -34,6 +34,7 @@ try {
     var isObject = new j2.mod._._201;
     var domify = new j2.mod._._233;
     var j2Conv = window.j2.mod._._j2TagsConverter;
+    const j2JSONparse = window.j2.mod._._j2JSONparse
     const convertBoolean = window.j2.mod._._convertBoolean
        
     var mod = null; // boot as new
@@ -364,7 +365,7 @@ try {
         var partDdEl;        
         var part;
         if( currPart.hasOwnProperty('scope') ){
-          part = mod.new('div');
+          part = mod.new(currPart?.containerTag || 'div');
           part.id = currPart.id;
         
           partDdEl = j2.mod.builder.setContext(ddEl, part, currPart.scope );
@@ -384,7 +385,7 @@ try {
           forEach(currPart.constructs, function(c){
             switch(c.type){
               case 'j2Json':
-                args[c.param] = JSON.parse(c.value.split("'").join('"'));
+                args[c.param] = j2JSONparse(c.value)
                 break;
               default:
                 args[c.param] = c.value || c.valueAr || c.constructKeyPair;

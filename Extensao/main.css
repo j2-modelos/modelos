@@ -1752,6 +1752,31 @@ div#ui-datepicker-div {
     display: none;
 }
 
+#j2-sets-adm {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    position: fixed;
+    top: calc(50vh - var(--el-height) / 2);
+    padding: 5px;
+    z-index: 35;
+}
+
+#j2-sets-adm[j2-hidden]  {
+    right: var(--el-width)
+}
+
+#j2-sets-adm[j2-hidden]:hover  {
+    right: 0px;
+}
+
+
+#j2-sets-adm ul.nav{
+    display: flex;
+    flex-direction: column;
+}
+
+
 #j2-doc-html-tools {
     display: flex;
     flex-direction: row;

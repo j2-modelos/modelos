@@ -1692,7 +1692,32 @@
             </elemento>
         </versao>
     </classeDef>    
-    
+
+    <classeDef id="LinkParaDocumento">
+        <versao id="1.0">
+            <elemento tag="span" scope="NONE" id="pre-espaco"> 
+                <textHTML scope="NONE">
+                    <data>
+                        <![CDATA[<SPAN name="sep">&nbsp;</SPAN>]]>
+                    </data>
+                </textHTML>
+            </elemento>
+            <elemento tag="span" scope="NONE" id="doc-span">
+                <HTMLAttribute name="title" value="XXXXXXTitleXXXXXXXXX"/>
+                <HTMLAttribute name="onclick" value="alert('Não definido')"/>
+                <HTMLAttribute name="style" value="cursor: pointer;"/>
+                <elemento tag="u" scope="NONE">
+                    <elemento tag="span" scope="NONE" id="titulo-documento">XXXTituloDoDocumento</elemento>
+                    <elemento tag="img" scope="NONE" id="doc-span-view">
+                        <HTMLAttribute name="src" value="https://pje.tjma.jus.br/pje/img/view.gif"/>
+                        <HTMLAttribute name="style" value="-align: bottom; height: 12px;"/>
+                        <HTMLAttribute name="onclick" value="alert('Não definido')"/>
+                    </elemento>
+                </elemento>
+            </elemento>
+        </versao>
+    </classeDef>
+
     <classeDef id="LocalEData">
         <versao id="1.0">
             <elemento tag="p" id="LocalEData" scope="EXP" class="p FntMod1 AlignCenter">

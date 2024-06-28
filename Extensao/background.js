@@ -231,12 +231,13 @@ chrome.runtime.onMessage.addListener(
 
 (function criarAutoEtiquetarDocumentosNaoLidos(){
   function fetchingAgrupadores(){
+    
     const urlAgrupadores = 'https://pje.tjma.jus.br/pje/Painel/painel_usuario/include/agrupadorPje2.seam'
     let viewStateId = 0
   
     async function ___getUserSets(){
       return { 
-        regex: /-0|-1|-2/, 
+        regex: /-0|-1|-2|-3|-4|-5|-6|-7|-8|-9/, 
         etiqueta: 'Documento não lido' 
       }
     }
@@ -404,6 +405,94 @@ chrome.runtime.onMessage.addListener(
         return ''
       })
     }
+
+    function _fetchRemoverEtiqueta(processo, etiqueta){
+      const data = {
+          idProcesso: parseInt(processo),
+          idTag: parseInt(etiqueta)
+      };
+      
+      // Configurações da solicitação
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      };
+      
+      
+      // Faz a solicitação POST
+      return fetch('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/remover', 
+       requestOptions)
+      .then(response => {
+        // Verifica se a resposta foi bem-sucedida (código 200)
+        if (response.ok) {
+          // Extrai o texto da resposta
+          return response.json()
+        }
+        // Se a resposta não foi bem-sucedida, lança um erro
+        throw new Error('Erro ao obter a página: ' + response.status);
+      })
+      .catch(error => {
+        return ''
+      })
+    }
+
+    function _removerEtiquetasDeDispensados(rawData){
+      function __obterDadosEtiquetaUsuario(userSets){
+        return fetch('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas', {
+            method: 'POST', // Método HTTP
+            headers: {
+                'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
+            },
+            body: JSON.stringify({ // Converte o payload para uma string JSON
+                page: 0,
+                maxResults: 30,
+                tagsString: userSets.etiqueta
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // Converte a resposta para JSON
+        })
+        .then(data => {
+            return data.entities.at(0)
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error); // Lida com os erros
+        });
+      }
+
+
+      fetch('https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/etiquetas/492777/processos')
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(async data => {
+          debugger
+          const processosComEtiqueta = data.map(proc => proc.idProcesso)
+          const processosNosAgrupadores  = rawData.unicosProcessos.map(proc => parseInt(proc.idProcesso))
+          const {  userSets } = rawData
+          const processosParaRemoverEtiqueta = processosComEtiqueta.filter(processo => !processosNosAgrupadores.includes(processo))
+          
+          const dadosEtiqueta = await __obterDadosEtiquetaUsuario(userSets)
+
+          for (let i = 0; i < processosParaRemoverEtiqueta.length; i++) {
+            const idProc = processosParaRemoverEtiqueta[i];
+            await _fetchRemoverEtiqueta(idProc, dadosEtiqueta.id )
+          }
+
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
     
     _fetchAgrupadores()
     .then(text => {
@@ -420,13 +509,13 @@ chrome.runtime.onMessage.addListener(
     .then(text => { return (async () =>{ 
       const tbodies = __extrairTabelasTBody(text)
       const maxPagina = __extrairMaximoPaginas(tbodies.at(0))
-      let trProcessos = __extrairRegistrosProcessoPaginaHTML(tbodies.at(1))
+      let trProcessos = __extrairRegistrosProcessoPaginaHTML(tbodies.length > 1 ? tbodies.at(1) : tbodies.at(0))
   
       for(let pagina = 2; pagina <= maxPagina; pagina++)
         await _fetchDocumentosNaoLidosPagina(pagina)
         .then(textPag =>{
           const tbodiesPag = __extrairTabelasTBody(textPag)
-          const trProcessosPag = __extrairRegistrosProcessoPaginaHTML(tbodiesPag.at(1))
+          const trProcessosPag = __extrairRegistrosProcessoPaginaHTML(tbodies.length > 1 ? tbodies.at(1) : tbodies.at(0))
           
           trProcessos = trProcessos.concat(trProcessosPag)
         })
@@ -471,6 +560,7 @@ chrome.runtime.onMessage.addListener(
     })()})
     .then( obj =>{
       console.log('Outras ações', obj)	
+      _removerEtiquetasDeDispensados(obj)
     })
     .catch(error => {
       // Captura e manipula qualquer erro que ocorra durante o processo
@@ -490,6 +580,10 @@ chrome.runtime.onMessage.addListener(
           // Coloque aqui o código que deseja executar periodicamente
       }
   });
+
+  self.debug__fetchingAgrupadores = function(){
+    fetchingAgrupadores()
+  }
   
 })()
 

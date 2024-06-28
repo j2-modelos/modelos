@@ -2743,7 +2743,7 @@ window.j2.mod._._j2JSONparse = function (json) {
   if(json.match(/#{[A-Za-z0-9.]+}/g)) // ndlg2 as new
     json =  j2.mod.builder.parseVars(json);
   try{
-    return JSON.parse(json.split("'").join('"'));
+    return JSON.parse(json.split('"').join('\\"').split("'").join('"'));
   }catch(e){
     debugger;
   }

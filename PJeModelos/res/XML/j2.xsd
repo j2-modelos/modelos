@@ -62,6 +62,7 @@
       <xs:attribute type="xs:string" name="id" use="required"/>
       <xs:attribute type="xs:string" name="versao" use="required"/>
       <xs:attribute type="xs:string" name="enabled" use="optional"/>
+      <xs:attribute type="xs:string" name="containerTag" use="optional"/>
       <xs:attribute type="j2:ENUM_SCOPE" name="scope" use="required" xmlns:j2="http://j2"/>
     </xs:complexType>      
   </xs:element>
@@ -429,7 +430,7 @@
         <xs:element ref="j2:eventFire" xmlns:j2="http://j2"/>
       </xs:choice>
       <xs:attribute name="j2:id" type="xs:string" use="required"/>
-      <xs:attribute name="j2:grouped" type="xs:bool" use="required"/>
+      <xs:attribute name="j2:grouped" type="xs:boolean" use="required"/>
     </xs:complexType>
   </xs:element>   
   
@@ -453,7 +454,7 @@
         <xs:element ref="j2:group" minOccurs="1" xmlns:j2="http://j2" />
       </xs:sequence>
     </xs:complexType>
-    <xs:attribute name="j2:naoOrdenado" type="xs:boolean"/>
+    <xs:attribute name="naoOrdenado" type="xs:boolean"/>
   </xs:element>  
 
   <xs:element name="group">
@@ -462,12 +463,17 @@
         <xs:element ref="j2:gItem" minOccurs="1" xmlns:j2="http://j2" />
       </xs:sequence>
       <xs:attribute name="j2:label" type="xs:string" use="required"/>
+      <xs:attribute name="ordenar" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>    
   
   <xs:element name="gItem">
     <xs:complexType>
       <xs:attribute name="j2:id" type="xs:string" use="required"/>
+      <!-- posição em relação ao topo, ordenado a partir de 1 necessita 
+           que o tipo group, atributo ordenar, seja definido como true
+      -->
+      <xs:attribute name="j2:posicao" type="xs:boolean" use="optional"/>
     </xs:complexType>
   </xs:element>      
       

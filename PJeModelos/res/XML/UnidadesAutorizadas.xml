@@ -119,6 +119,12 @@
                 <exercicioTemporario usuarioId="47202467372" dataInicio="2023-12-06" dataFim="2023-12-19">
                     <PortariaDesignacao numero="5761" ano="2023" dataAto="2023-12-05"/>
                 </exercicioTemporario>
+                <exercicioTemporario usuarioId="magisDENISE" dataInicio="2024-06-24" dataFim="2024-07-05">
+                    <PortariaDesignacao numero="2473" ano="2024" dataAto="2024-06-19"/>
+                </exercicioTemporario>
+                <exercicioTemporario usuarioId="magisDENISE" dataInicio="2024-07-08" dataFim="2024-07-12">
+                    <PortariaDesignacao numero="2474" ano="2024" dataAto="2024-06-19"/>
+                </exercicioTemporario>
             </magistrados>
             <!-- 47202467372 -DELVAN -->
             <!-- 05174785440 -DAYNA -->

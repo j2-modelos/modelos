@@ -6,12 +6,12 @@
 
 console.log("whatsapp em j2E");
 
-const ICON_PERSON = /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24px" width="24px" version="1.1" id="Capa_1" viewBox="0 0 328.5 328.5" xml:space="preserve">
+const ICON_PERSON = /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="" height="24px" width="24px" version="1.1" id="Capa_1" viewBox="0 0 328.5 328.5">
 <g>
 	<g>
-		<polygon points="96.333,150.918 96.333,135.918 55.667,135.918 55.667,95.251 40.667,95.251 40.667,135.918 0,135.918 0,150.918     40.667,150.918 40.667,191.583 55.667,191.583 55.667,150.918   "/>
-		<path d="M259.383,185.941H145.858c-38.111,0-69.117,31.006-69.117,69.117v39.928H328.5v-39.928    C328.5,216.948,297.494,185.941,259.383,185.941z M313.5,279.987H91.741v-24.928c0-29.84,24.276-54.117,54.117-54.117h113.524    c29.84,0,54.117,24.277,54.117,54.117L313.5,279.987L313.5,279.987z"/>
-		<path d="M202.621,178.84c40.066,0,72.662-32.597,72.662-72.663s-32.596-72.663-72.662-72.663s-72.663,32.596-72.663,72.663    S162.555,178.84,202.621,178.84z M202.621,48.515c31.795,0,57.662,25.867,57.662,57.663s-25.867,57.663-57.662,57.663    c-31.796,0-57.663-25.868-57.663-57.663S170.825,48.515,202.621,48.515z"/>
+		<polygon points="96.333,150.918 96.333,135.918 55.667,135.918 55.667,95.251 40.667,95.251 40.667,135.918 0,135.918 0,150.918     40.667,150.918 40.667,191.583 55.667,191.583 55.667,150.918   " fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" stroke-width="15" stroke="currentColor"></polygon>
+		<path d="M259.383,185.941H145.858c-38.111,0-69.117,31.006-69.117,69.117v39.928H328.5v-39.928    C328.5,216.948,297.494,185.941,259.383,185.941z M313.5,279.987H91.741v-24.928c0-29.84,24.276-54.117,54.117-54.117h113.524    c29.84,0,54.117,24.277,54.117,54.117L313.5,279.987L313.5,279.987z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" stroke-width="15" stroke="currentColor"></path>
+		<path d="M202.621,178.84c40.066,0,72.662-32.597,72.662-72.663s-32.596-72.663-72.662-72.663s-72.663,32.596-72.663,72.663    S162.555,178.84,202.621,178.84z M202.621,48.515c31.795,0,57.662,25.867,57.662,57.663s-25.867,57.663-57.662,57.663    c-31.796,0-57.663-25.868-57.663-57.663S170.825,48.515,202.621,48.515z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" stroke-width="15" stroke="currentColor"></path>
 	</g>
 </g>
 </svg>`;
@@ -45,12 +45,34 @@ function init() {
 
       $base.show();*/
       const telWA = prompt("Iniciar conversa com o númoero:", "55");
-      var telURL =
+      /*var telURL =
         "https://web.whatsapp.com/send?phone=" +
         (telWA.startsWith("55") ? telWA : "55" + telWA);
-      window.open(telURL, "_self");
+      window.open(telURL, "_self");*/
+
+      abrirConversa(telWA)
+
+      /*var whatsappLink = document.createElement('a');
+      whatsappLink.href = telURL;
+      var clickEvent = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+      });
+      whatsappLink.dispatchEvent(clickEvent);*/
     },
   };
+
+  function abrirConversa(telWA){
+    const numero = (telWA.startsWith("55") ? telWA : "55" + telWA);
+      if (numero) {
+          const tagA = document.createElement("a");
+          tagA.setAttribute("href", `https://api.whatsapp.com/send?phone=${numero}`);
+          /*let _tagA =*/ document.body.appendChild(tagA);
+          tagA.click();
+          tagA.remove();
+      }
+  }
 
   j2E.mods.registerNumeroUnicoReplacer('div[role="application"]');
   (function runTimeConnect() {
@@ -63,6 +85,10 @@ function init() {
         case "requisitarJ2EPJeRestResponse":
         case "pong":
           j2E.conn._responseBus.callTicket(message);
+          break;
+        
+        case 'abrirContatoWhatsApp':
+          abrirConversa(message.arguments.at(0))
           break;
 
         default:

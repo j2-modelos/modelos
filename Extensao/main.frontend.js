@@ -2530,6 +2530,7 @@ function fronendLoad(){
 
         switch(nomeTarefa){
           case 'Documentos não lidos':
+          case 'Certificar leitura WhatsApp':
             $tagLiEventIdTask.hide(750, "swing", function(){
               this.remove()
             })
@@ -2644,6 +2645,7 @@ function fronendLoad(){
         criarSentinelaAutosDigitais()
 
         switch (nomeTarefaAtual){
+          case 'Avaliar decisão de levantamento da suspensão':
           case 'Avaliar determinações do magistrado':{
             const $button = _button('Distribuir em várias telas', 'fa-window-restore', 'j2-i-distribuir-adm' )
             $j2Container.prepend($button)
