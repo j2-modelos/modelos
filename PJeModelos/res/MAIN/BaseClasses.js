@@ -2219,6 +2219,8 @@ try {
         });
       },
       createLinkWhatsApp : function(tel, preTx){ // lwapac
+        const telWA = tel.replace(/\D/g, "");
+
         var imgViewCln = mod.edt.gE('ReferenciaDocumento.View').cloneNode(true);
         
         imgViewCln.setAttribute('mce_style', '');
@@ -2228,15 +2230,16 @@ try {
         var spn = document.createElement('span');
         var u = document.createElement('u');
         spn.style.cursor = 'pointer';
-        spn.title = 'abrir conversa whatsapp com telefone' + tel;
+        spn.title = 'abrir conversa whatsapp com telefone ' + tel;
         spn.setAttribute('contenteditable', false);
+        spn.setAttribute('j2-d', telWA);
         u.innerHTML = ((typeof preTx !== 'undefined') ? preTx : 'WhatsApp ') + tel; // lwapac
 
 
         var spnBs = document.createElement('span');
         spnBs.innerHTML = '&nbsp;';
         
-        var telWA = tel.replace(/\D/g, "");
+        
         
         //var telURL = 'https://web.whatsapp.com/send?phone=55' + telWA +'&text=' + x +'&app_absent=0'; // wa
         var telURL = 'https://web.whatsapp.com/send?phone=55' + telWA; // wa
@@ -3816,7 +3819,7 @@ try {
         
         mod.sup.open('FerramentasProcessoWhatsappTool', function(){
           var _ = {
-            url : '',
+            url : 'about:blank#whatsApp',
             name : 'FerramentasProcessoWhatsappTool',
             winSize : {
               width : 335,

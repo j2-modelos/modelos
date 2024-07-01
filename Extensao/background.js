@@ -649,3 +649,23 @@ chrome.runtime.onMessage.addListener(
     createOffscreen();
   })()
 })()
+
+
+
+;(function conroladorDeInjecaoNoAboutBlank(){
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (tab.url === "about:blank#whatsApp" && changeInfo.status === 'complete') {
+      chrome.scripting.executeScript({
+        target: { tabId: tabId },
+        files: [
+          "Extensao/j2BaseLib.js",
+          "Extensao/lib.js",
+          "Extensao/jquery3.js",
+          "Extensao/jquery.initialize.js",
+          "Extensao/jquery.observe.js",
+          "Extensao/main.about-blank.js"
+        ]
+      });
+    }
+  });
+})()

@@ -63,11 +63,11 @@ function init() {
     },
   };
 
-  function abrirConversa(telWA){
+  function abrirConversa(telWA, msg){
     const numero = (telWA.startsWith("55") ? telWA : "55" + telWA);
       if (numero) {
           const tagA = document.createElement("a");
-          tagA.setAttribute("href", `https://api.whatsapp.com/send?phone=${numero}`);
+          tagA.setAttribute("href", `https://api.whatsapp.com/send?phone=${numero}${msg ? `&text=${encodeURI(msg)}`: ''}`);
           /*let _tagA =*/ document.body.appendChild(tagA);
           tagA.click();
           tagA.remove();
@@ -88,7 +88,7 @@ function init() {
           break;
         
         case 'abrirContatoWhatsApp':
-          abrirConversa(message.arguments.at(0))
+          abrirConversa(message.arguments.at(0), message.arguments.at(1))
           break;
 
         default:
@@ -107,7 +107,7 @@ function init() {
 
     (function addActionNovoConversaJ2() {
       var $buttonC = $button.clone();
-      $buttonC.find("svg").replaceWith(ICON_PERSON);
+      $buttonC.find("svg").replaceWith(WHATS_APP_ICON_SVG);
       $buttonC.attr("j2-menu", "default");
       $buttonC
         .find("> div")
