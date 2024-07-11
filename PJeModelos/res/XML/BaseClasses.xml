@@ -1749,6 +1749,41 @@
                 na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
             </elemento>    
         </versao>
+        <versao id="1.1.termo-penhora"> <!-- TEMO DE PENHORA -->
+            <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
+                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
+                promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95.
+                
+                Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, 
+                Estado do #{j2.env.PJeVars.unidade.UFFormal}, aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, 
+                na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
+            </elemento>    
+        </versao>
+        <versao id="1.2.carta-adjudicacao"> <!-- TEMO DE PENHORA -->
+            <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
+                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
+                promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95. 
+                Realizada a penhora, não houve oferecimento de embargos. Em consequência, foi requerida pela parte 
+                exequente a adjudicação dos sobreditos bens, pelo valor da avaliação, na forma do § 2º c/c § 3º, do art. 
+                53 da Lei acima mencionada que foi deferido pela MM. Juiz. E, para título e conservação dos direitos do 
+                adjudicatário, foi lavrado o presente.
+                
+                Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, 
+                Estado do #{j2.env.PJeVars.unidade.UFFormal}, aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, 
+                na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
+            </elemento>    
+        </versao>
+
+        <versao id="1.3.auto-adjudicacao"> <!-- TEMO DE PENHORA -->
+            <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
+                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
+                promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95.
+                
+                Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, 
+                Estado do #{j2.env.PJeVars.unidade.UFFormal}, aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, 
+                na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
+            </elemento>    
+        </versao>
     </classeDef>
     
     <classeDef id="MandadoDeOrdemJuiz">
@@ -1768,6 +1803,28 @@
                         <HTMLAttribute name="style" value="width:50%;" />
                         <elemento tag="p" id="deOrdemMandadoTradicional" scope="EXP" class="p FntMod1 AlignJustify">
                             DE ORDEM DE SUA EXCELÊNCIA #{j2.env.PJeVars.expediente.deOrdemCaixaAlta}, ESTADO DO MARANHÃO
+                            NA FORMA DA LEI, ETC. (ART. 250, VI, CPC)
+                        </elemento>
+                    </elemento>
+                </elemento>
+            </elemento>
+        </versao>
+        <versao id="1.1"> <!-- A ORDEM DO PRÓPRIO MAGISTARDO -->
+            <elemento tag="div" scope="EXP" id="deOrdemMandadoTradicional_div">
+                <elemento tag="div" scope="EXP">
+                    <HTMLAttribute name="style" value="width:100%;display: inline-flex;" />
+                    <elemento tag="div" scope="EXP" >
+                        <HTMLAttribute name="style" value="width:50%;" />
+                        <textHTML scope="EXP">
+                            <data>
+                                <![CDATA[<span style="display:none">&nbsp;</span>]]>
+                            </data>
+                        </textHTML>
+                    </elemento>
+                    <elemento tag="div" scope="EXP" >
+                        <HTMLAttribute name="style" value="width:50%;" />
+                        <elemento tag="p" id="deOrdemMandadoTradicional" scope="EXP" class="p FntMod1 AlignJustify">
+                            #:SPAN@deOrdemMandadoTradicional-texto{#{j2.env.PJeVars.expediente.deOrdemCaixaAltaTradicional}}, ESTADO DO MARANHÃO
                             NA FORMA DA LEI, ETC. (ART. 250, VI, CPC)
                         </elemento>
                     </elemento>

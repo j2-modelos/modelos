@@ -818,7 +818,7 @@ try {
                    (prop !== eEx)
                   ){
                   ord[ord.length] = {
-                    nominacao : !prop.startsWith('respondente') ? prop :  'Respondente fixo',
+                    nominacao : !prop.startsWith('respondente') ? prop :  'respondente fixo',
                     id : mags[prop]
                   };
                 }
@@ -843,7 +843,8 @@ try {
                   
                   nMagItem.id=usrDef.id + (((isNotTitular) && !(magId.nominacao.startsWith('resp'))) ? 'Pres' : '');
                   nMagItem.setAttribute('label', attr);
-                  nMagItem.setAttribute('dataPlus', 'mag');
+                  nMagItem.setAttribute('dataPlus', `{'id': '${usrDef.id}', 'tipo': 'mag', 'nominacao': '${magId.nominacao}'}`);
+                  
                   
                   cont.setAttribute('type', 'HTML');
                   cont.setAttribute('addtClassStyles', '');
@@ -937,7 +938,7 @@ try {
 
                   nMagItem.id=usrDef.id;
                   nMagItem.setAttribute('label', 'Secretário ' + secId.nominacao.capt());
-                  nMagItem.setAttribute('dataPlus', 'sec');
+                  nMagItem.setAttribute('dataPlus', `{'id': '${usrDef.id}', 'tipo': 'sec'}`);
                   
                   cont.setAttribute('type', 'HTML');
                   cont.setAttribute('addtClassStyles', '');
@@ -980,7 +981,7 @@ try {
                     nMagItem.id=usrDef.id + '-' + ii;
                     nMagItem.setAttribute('label', (liItVal)? usrDef.nome + ' (' + usrFuncs[ii] + ')': 'Servidor (' + usrFuncs[ii] + ')'); // pl
                   }
-                  nMagItem.setAttribute('dataPlus', 'serv');
+                  nMagItem.setAttribute('dataPlus', `{'id': '${usrDef.id}', 'tipo': 'serv'}`);
 
                   cont.setAttribute('type', 'HTML');
                   cont.setAttribute('addtClassStyles', '');
@@ -4083,7 +4084,7 @@ try {
     }
   
   
-    pkg.MandadoDeOrdemJuiz = {
+    pkg.MandadoDeOrdemJuiz = { 
       constructor_ : function(args, el){
         var _ ={
           div : (function(){
@@ -4092,16 +4093,17 @@ try {
                 return args.j2Win.gE('deOrdemMandadoTradicional_div');
             
             return mod.exp.gE('deOrdemMandadoTradicional_div');
-          })()
+          })(),
+          pSpan : args && args.j2Win ? args.j2Win.gE('deOrdemMandadoTradicional-texto') : mod.exp.gE('deOrdemMandadoTradicional-texto')
         };
         
         if(args.oculto)
             if(args.oculto === 'sim' || args.oculto === 'true')
               j2.mod._.styleSetter(_.div, 'Hidden');
           
-        pkg.MandadoDeOrdemJuiz.setEvents(_);
+        pkg.MandadoDeOrdemJuiz.setEvents(_, args);
       },
-      setEvents : function(_){
+      setEvents : function(_, args){
         /* quando da mudança do meio */
         forEach(['selectorintimacaoSelectMeio', 
                  'selectorcitacaoSelectMeio'], function(e){
@@ -4109,6 +4111,12 @@ try {
             j2.mod._.styleSetter(_.div, 'Hidden', (value === 'meioComunicItCentralMandados'));
           });
         });
+
+        if(args.atualizarAoMudarSignatario && args.atualizarAoMudarSignatario==="sim")
+          evBus.on('onChange.selectorsignatario', function(ev, value, select, selI){
+            const dataPlus = j2.mod._._j2JSONparse( selI.dataPlus )
+            _.pSpan.innerHTML = j2.env.PJeVars.expediente.deOrdemByMagId(dataPlus, 'de', {excelentissimo: true}).toUpperCase()
+          });
       }
       
     };
@@ -4806,7 +4814,8 @@ try {
         });
                 
         evBus.on('onChange.selectorsignatario', function(ev, value, select, selI){
-          j2.mod._.styleSetter(_.exp.corpo.deOrdemSpan._, 'Hidden', (selI.dataPlus !== 'mag'));
+          const dataPlus = j2.mod._._j2JSONparse( selI.dataPlus )
+          j2.mod._.styleSetter(_.exp.corpo.deOrdemSpan._, 'Hidden', (dataPlus.tipo !== 'mag'));
         });
         
         evBus.on('onChange.selectordestinatarioItens', function(event, value, obSelect, selI){
@@ -8209,31 +8218,31 @@ try {
         
       },
       prepareHTMLElements : function(keys){
-        var imgViewCln = mod.edt.gE('ReferenciaDocumento.View').cloneNode(true);
-        j2.mod._.styleSetter(imgViewCln, 'Hidden', true);
+        //var imgViewCln = mod.edt.gE('ReferenciaDocumento.View').cloneNode(true);
+        /*j2.mod._.styleSetter(imgViewCln, 'Hidden', true);
         
         imgViewCln.setAttribute('mce_style', '');
         imgViewCln.style.height = '12px';
-        imgViewCln.style.verticalAlign = 'bottom';
+        imgViewCln.style.verticalAlign = 'bottom';*/
 
         var spn = document.createElement('span');
         var u = document.createElement('u');
-        spn.style.cursor = 'pointer';
-        spn.title = 'documento id ' + keys.doc;
-        spn.setAttribute('contenteditable', false);
+        //spn.style.cursor = 'pointer';
+        //spn.title = 'documento id ' + keys.doc;
+        //spn.setAttribute('contenteditable', false);
         u.innerHTML = 'id ' + keys.doc;
 
 
         var spnBs = document.createElement('span');
         spnBs.innerHTML = '&nbsp;';
 
-        var oCSrc = 'window.open(\'' + keys.url + '\', ' + keys.id + ' + \'popUpDocumento\', \'width=780, height=740, scrollbars=yes\').focus();';
+        /*var oCSrc = 'window.open(\'' + keys.url + '\', ' + keys.id + ' + \'popUpDocumento\', \'width=780, height=740, scrollbars=yes\').focus();';
 
         spn.setAttribute('onclick', oCSrc);
-        imgViewCln.setAttribute('onclick', oCSrc);
+        imgViewCln.setAttribute('onclick', oCSrc);*/
 
         spn.appendChild( u );
-        u.appendChild( imgViewCln );
+        //u.appendChild( imgViewCln );
         keys.html = {
           spn : spn,
           spnBs : spnBs

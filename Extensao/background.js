@@ -576,7 +576,7 @@ chrome.runtime.onMessage.addListener(
   chrome.alarms.onAlarm.addListener(alarme => {
       if (alarme.name === 'fetchingAgrupadores') {
           console.log('Disparado alarme fetchingAgrupadores')
-          fetchingAgrupadores()
+          //fetchingAgrupadores()
           // Coloque aqui o código que deseja executar periodicamente
       }
   });

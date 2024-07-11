@@ -18,6 +18,7 @@
             <modeloAut id="j2Alvara" versao="3.0"/>
             <modeloAut id="j2AtoOrdinatorio" versao="3.0"/>
             <modeloAut id="j2CartaPrecatoria" versao="3.0"/>
+            <modeloAut id="j2CartaAdjudicacao" versao="3.0"/>
             <modeloAut id="j2Certidao" versao="3.1"/>
             <modeloAut id="j2CertidaoDaContadoria" versao="3.0"/>
             <modeloAut id="j2CertidaoDeDivida" versao="3.0"/>

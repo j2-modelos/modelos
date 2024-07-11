@@ -71,7 +71,9 @@ function init() {
           /*let _tagA =*/ document.body.appendChild(tagA);
           tagA.click();
           tagA.remove();
+          window.focus()
       }
+    
   }
 
   j2E.mods.registerNumeroUnicoReplacer('div[role="application"]');

@@ -418,6 +418,10 @@ try {
             }                        
             return j2.env.PJeVars.expediente.deOrdemByMagId(magId, conective, ops);
           },
+          'deOrdemCaixaAltaTradicional' : function(conective, ops){
+            return j2.env.PJeVars.expediente.deOrdem(conective || 'de', { 
+              ...ops, excelentissimo: true }).toUpperCase();
+          },          
           'deOrdemCaixaAlta' : function(conective, ops){
             return j2.env.PJeVars.expediente.deOrdem(conective, ops).toUpperCase();
           },          
@@ -440,7 +444,7 @@ try {
               var isNotTitular = (magId.nominacao!=='titular');
 
               if(ops.excelentissimo)
-                tx += ((usrDef.genr==='M')? 'O' : 'A') + ' Excelentissim' + ((usrDef.genr==='M')? 'o' : 'a') + ' ' + ((usrDef.genr==='M')? 'Juiz' : 'Juíza') + ' ';
+                tx += ((usrDef.genr==='M')? 'O' : 'A') + ' Excelentissim' + ((usrDef.genr==='M')? 'o' : 'a') + ' ' + ((usrDef.genr==='M')? 'Senhor Juiz' : 'Senhora Juíza') + ' ';
               else 
                 tx += ((usrDef.genr==='M')? 'o Doutor ' : 'a Doutora ');
               tx += '<strong>' + usrDef.nome + '</strong>, ';
