@@ -1252,7 +1252,9 @@ function pjeLoad(){
       jQ3.initialize('select', function(){
         var jEl = jQ3(this);
         
-        if( jEl.find('option').length === 2)
+        const opcaoNaoTermoInicialContagemPrazo = (op)=> !op.parent().attr('id').includes('contagemPrazoColumnBody')
+        
+        if( jEl.find('option').length === 2 && opcaoNaoTermoInicialContagemPrazo(jEl.find('option')))
           jEl.val( jEl.find('option:last').val() ).change();
         
         if (jEl.find('option:selected').text() === 'Sistema')
