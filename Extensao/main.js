@@ -903,6 +903,27 @@ var TarefasProps = {
       }
     }
   },
+  'Certificar leitura WhatsApp Negativa': {
+    aliasParaDefinicaoLogicaPseudotarefa: true,
+    personalizacao : {
+      mostraAutosDigitais : true,
+      mostraExpedientes : true,
+      obterDosAutos: {
+        mostrarPolosDoProcesso : true
+      },
+      iframeAutosDigitais: {
+        expedientes: {
+          destaqueDataLeitura: true,
+          removerDestaqueDataVencimento: true,
+          checkboxExpedienteSempreAtivo: true,
+          filtrarMeiosComunicacao: ['telefone']
+        }
+      }
+    },
+    callbackEvents: {
+      /* vide tarefa anterior */
+    }
+  },
   'Designar leilão' : {
     altNomeADM : 'Controlar leilão',
     ADMGrupo : 'outac'
@@ -1810,6 +1831,79 @@ TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
     }
   ],
   TarefasProps['Certificar leitura WhatsApp'].callbackEvents.onDoneJuntarEmUmClique
+)
+
+TarefaPersonalizadaAvancada.tarefaNumCliqueJuntadaDocumento(
+  [
+    'Certificar leitura WhatsApp Negativa'
+  ],
+  'col-sm-12',
+  'Certificar a leitura NEGATIVA por aplicativo WhatsApp',
+  'Juntar certidão de leitura negativa WhatsApp',
+  estaTarefaRequerOIframeComExpedientesComSelecaoDataLeituraCiencia,
+  {
+    idModelo: 'j2Certidao',
+    pjeTipoDocumento: 'certidão', //em lowercase
+    versao: '3.0', //versao do modelo j2
+    descricao: {
+      toEval: (dados) => { 
+        return `Leitura WhatsApp Negativa (${j2E.Expedientes.util.enumerarParteDoExpedientes(dados)})` 
+      }, 
+      contexto: [
+        'dadosExpedientes'
+      ]
+    },
+    numeroDocumento: '',
+    fonteDocumento: 'text/html' //apenas
+  }, 
+  { 
+    executarNoEvento : {
+      evento : 'afterLoadItems.selectorPessoa',
+      atrasar : 250
+    },
+    passos : [
+      {
+        tipo : 'iterarSelector',
+        instanceId: 'certidaoItens',
+        items: [
+          'certItWhatsAppLeituraNao'
+        ]
+      },             
+      {
+        tipo: 'copiarElmento',
+        elemento: '#certItWhatsAppLeituraNao_li',
+        copias: 0 // vai avaliar dadosExpedientes.length - 1
+      }, 
+      {
+        tipo: 'iterarCopias',
+        elemento: '#certItWhatsAppLeituraNao_li',
+        mapaSubstituicao : {
+            '#pessoa-polo-parte-LCase': '_obterPoloParte(it.parte).parte.LCase',
+            '#selParte': 'it.parte',
+            '#docId': 'it.idDocumentoLink'
+        },
+        fonte : {} // vai avaliar dadosExpedientes
+      },         
+      //todo robô deve ter como ultimo passo o fechamento do edt
+      {
+        tipo : 'avaliacaoDeString',
+        string: 'j2.mod.clsCnstr.DocEditorCore.closeByRobot'
+      }
+    ],
+  }, 
+  [
+    {
+      toEval : (robot, dadosExpedientes)=> {
+        robot.passos[1].copias = dadosExpedientes.length - 1
+        robot.passos[2].fonte = dadosExpedientes
+      },
+      contexto : [
+        'robot',
+        'dadosExpedientes'
+      ]
+    }
+  ],
+  //TarefasProps['Certificar leitura WhatsApp Negativa'].callbackEvents.onDoneJuntarEmUmClique
 )
 
 

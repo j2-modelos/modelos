@@ -109,7 +109,7 @@ function init() {
 
     (function addActionNovoConversaJ2() {
       var $buttonC = $button.clone();
-      $buttonC.find("svg").replaceWith(WHATS_APP_ICON_SVG);
+      $buttonC.find("svg").replaceWith(ICON_PERSON);
       $buttonC.attr("j2-menu", "default");
       $buttonC
         .find("> div")

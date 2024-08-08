@@ -2532,6 +2532,7 @@ function fronendLoad(){
         switch(nomeTarefa){
           case 'Documentos não lidos':
           case 'Certificar leitura WhatsApp':
+          case 'Leitura negativa':
             $tagLiEventIdTask.hide(750, "swing", function(){
               this.remove()
             })
