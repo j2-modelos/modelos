@@ -4308,7 +4308,7 @@ function pjeLoad(){
       listenMessages();
       //personaliazarMenu();
       //registrarServiceWorker();
-      // pje+R personalizarAtalhosADireitaAutosDigitais()
+      if(!USANDO_PJEMR ) personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
       criarEditorEtiquetasPelosAutosDigitais()
       acoesBaseadasEmMovimentosDoProcesso()

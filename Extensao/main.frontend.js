@@ -1,9 +1,10 @@
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+const USANDO_PJEMR = false
 function fronendLoad(){    
   const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
   const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;
@@ -2092,7 +2093,7 @@ function fronendLoad(){
       function(todosMovimentos){
         todosMovimentos.sort((a, b) => b.dataAtualizacao - a.dataAtualizacao)
 
-        //destacarUltimoMovimentoDoProcesso($thisTagLi, todosMovimentos.at(0))
+        if(!USANDO_PJEMR ) destacarUltimoMovimentoDoProcesso($thisTagLi, todosMovimentos.at(0))
         _sinalizarProcessoJulgado($thisTagLi, todosMovimentos)
       })
     }
@@ -2260,7 +2261,7 @@ function fronendLoad(){
 
             _acoesBaseadasEmMovimentosDoProcesso($thisTagLi, idProcesso)
             _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso)
-            //_criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
+            if(!USANDO_PJEMR )_criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
             _acoesBaseadasEmTarefasDoProcesso($thisTagLi, idProcesso, nomeTarefa)
           })
         }
@@ -2274,11 +2275,11 @@ function fronendLoad(){
 
           formatarStickerAnotacao(this);
           //formatarEtiqueta(this);
-          //formatarPrioridade(this);
-          //formatarEDestacarPrazo(this);
-          //inserirFolder(this);
+          if(!USANDO_PJEMR )formatarPrioridade(this);
+          if(!USANDO_PJEMR )formatarEDestacarPrazo(this);
+          if(!USANDO_PJEMR )inserirFolder(this);
           aplicarFiltrosJ2(this);
-          //criarCmdCopiarNumeroProcesso(this);
+          if(!USANDO_PJEMR ) criarCmdCopiarNumeroProcesso(this);
           //destacarUltimoMovimentoDoProcesso(this);
           adicionarComandoAbrirExpedientesDoProcesso(this)
 
