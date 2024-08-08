@@ -2092,7 +2092,7 @@ function fronendLoad(){
       function(todosMovimentos){
         todosMovimentos.sort((a, b) => b.dataAtualizacao - a.dataAtualizacao)
 
-        destacarUltimoMovimentoDoProcesso($thisTagLi, todosMovimentos.at(0))
+        //destacarUltimoMovimentoDoProcesso($thisTagLi, todosMovimentos.at(0))
         _sinalizarProcessoJulgado($thisTagLi, todosMovimentos)
       })
     }
@@ -2260,7 +2260,7 @@ function fronendLoad(){
 
             _acoesBaseadasEmMovimentosDoProcesso($thisTagLi, idProcesso)
             _definirIndicadorDeComposicaoPolosDemanda($thisTagLi, idProcesso)
-            _criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
+            //_criarIndicacoDeTempoEfetivoNaTarefa($thisTagLi, idProcesso, nomeTarefa)
             _acoesBaseadasEmTarefasDoProcesso($thisTagLi, idProcesso, nomeTarefa)
           })
         }
@@ -2274,11 +2274,11 @@ function fronendLoad(){
 
           formatarStickerAnotacao(this);
           //formatarEtiqueta(this);
-          formatarPrioridade(this);
-          formatarEDestacarPrazo(this);
-          inserirFolder(this);
+          //formatarPrioridade(this);
+          //formatarEDestacarPrazo(this);
+          //inserirFolder(this);
           aplicarFiltrosJ2(this);
-          criarCmdCopiarNumeroProcesso(this);
+          //criarCmdCopiarNumeroProcesso(this);
           //destacarUltimoMovimentoDoProcesso(this);
           adicionarComandoAbrirExpedientesDoProcesso(this)
 

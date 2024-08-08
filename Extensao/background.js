@@ -237,7 +237,8 @@ chrome.runtime.onMessage.addListener(
   
     async function ___getUserSets(){
       return { 
-        regex: /-0|-1|-2|-3|-4|-5|-6|-7|-8|-9/, 
+        //regex: /-0|-1|-2|-3|-4|-5|-6|-7|-8|-9/, 
+        regex: /-0|-1|-2/, 
         etiqueta: 'Documento não lido' 
       }
     }

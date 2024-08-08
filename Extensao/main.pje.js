@@ -1251,7 +1251,7 @@ function pjeLoad(){
         return;
       jQ3.initialize('select', function(){
         var jEl = jQ3(this);
-        
+
         const opcaoNaoTermoInicialContagemPrazo = (op)=> !op.parent().attr('id').includes('contagemPrazoColumnBody')
         
         if( jEl.find('option').length === 2 && opcaoNaoTermoInicialContagemPrazo(jEl.find('option')))
@@ -3095,12 +3095,12 @@ function pjeLoad(){
               _$tr.find('td:nth-child(2) div').append(`<i class="fa ${ico}" aria-hidden="true" style="font-size:1.2em"></i>`);
             }
 
-            window.j2EPJeRest.tarefas.painelUsuario(query, data => {
+            window.j2EPJeRest.tarefas.doProcesso(_idProcesso, data => {
               if(data.length === 0 )
                 setIcon('fa-not-equal');
               else
                 data.forEach(el => {
-                  if ( el.nome.toLowerCase() === 'processo com prazo em curso')
+                  if ( el.toLowerCase() === 'processo com prazo em curso')
                     window.j2EPJeRest.etiquetas.inserir(_idProcesso, 'Expediente fechado', function(){
                       setIcon('fa-tag');
                     })
@@ -4308,7 +4308,7 @@ function pjeLoad(){
       listenMessages();
       //personaliazarMenu();
       //registrarServiceWorker();
-      personalizarAtalhosADireitaAutosDigitais()
+      // pje+R personalizarAtalhosADireitaAutosDigitais()
       melhorarBotaoMarcarTodosComoLido()
       criarEditorEtiquetasPelosAutosDigitais()
       acoesBaseadasEmMovimentosDoProcesso()
