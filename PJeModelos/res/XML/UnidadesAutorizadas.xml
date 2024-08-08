@@ -65,7 +65,7 @@
                       telefone="(99) 99989-6346, (99) 2055-1344"
                       eMail="juizciv2_itz@tjma.jus.br"
             />
-            <secretarios emExercicio="substituto" titular="01682637506" substituto="05174785440" />
+            <secretarios emExercicio="titular" titular="01682637506" substituto="05174785440" />
             <!--magistrados emExercicio="magisDEBORA" titular="75827298387" 
                                                respondente="47202467372" 
                                                respondente2="maGENIVALDO"

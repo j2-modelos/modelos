@@ -673,11 +673,11 @@ function init(){
         return `${exp?.parte ? exp.parte : '[ERRO AO PROCESSAR PARTE]'}`
       },
       enumerarParteDoExpedientes: (exps)=>{
-        var _enumerarParteEVencimentoDoExpediente = j2E.Expedientes.util.enumerarParteEVencimentoDoExpediente
+        var _enumerarParteDoExpediente= j2E.Expedientes.util.enumerarParteDoExpediente
         var _exps = []
         
         exps.forEach(exp=>{
-          _exps.push(_enumerarParteEVencimentoDoExpediente(exp))
+          _exps.push(_enumerarParteDoExpediente(exp))
         })
 
         return _exps.joinListE()

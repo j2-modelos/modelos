@@ -3336,8 +3336,8 @@ try {
         
         var _pF = {
           juntDoc : {
-            desc : mod.par.gE('ipDescDecoration:ipDesc'),
-            docTipo : mod.par.gE('cbTDDecoration:cbTD'),
+            desc : mod.par.gE('ipDescDecoration:ipDesc')  || (() =>{ const input = mod.par.jQ3('label:contains("Descrição")').parent().parent().find('input'); return input.length && input.attr('id').includes('descDocDecoration') ? input : undefined })(),
+            docTipo : mod.par.gE('cbTDDecoration:cbTD') || (() =>{ const input = mod.par.jQ3('label:contains("Tipo do Documento")').parent().parent().find('select'); return input.length && input.attr('id').includes('selectMenuTipoDocumentoDecoration') ? input : undefined })(),
             numero : mod.par.gE('ipNroDecoration:ipNro')
           }
         };
