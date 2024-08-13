@@ -891,6 +891,7 @@
                                 <constructs param="bindSeletorPessoaFormats" value="Indnt0cm" type="bool"/>
                                 <constructs param="padraoApresentacao" value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
                                 <constructs param="separador" value="#:BR{}" type="string"/>
+                                <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                             </classeImp>
                         </elemento>
                     </elemento>                                                                                      
@@ -1749,19 +1750,21 @@
                 na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
             </elemento>    
         </versao>
-        <versao id="1.1.termo-penhora"> <!-- TEMO DE PENHORA -->
+        <!-- TEMO DE PENHORA -->
+        <versao id="1.1.termo-penhora"> 
             <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
-                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
-                promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95.
+                #:B{FAÇO SABER}, para conhecimento de todos, que por este #{j2.env.PJeVars.unidade.nomeFormal} da #{j2.env.PJeVars.unidade.comarca}, 
+                promove-se os termos de execução supra caracterizada, que obede ao Rito da Lei nº 9.099/95.
                 
                 Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, 
                 Estado do #{j2.env.PJeVars.unidade.UFFormal}, aos #{j2.env.PJeVars.data.dataEHoraAtualFormal}, 
                 na Secretaria Judicial deste Juizado. Eu, #{j2.env.PJeVars.usuario.nomex}, #{j2.env.PJeVars.usuario.cargoJ2}, o digitei.
             </elemento>    
         </versao>
-        <versao id="1.2.carta-adjudicacao"> <!-- TEMO DE PENHORA -->
+        <!-- CARTA DE ADJUDICAÇÃO -->
+        <versao id="1.2.carta-adjudicacao"> 
             <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
-                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
+                #:B{FAÇO SABER}, para conhecimento de todos, que por este #{j2.env.PJeVars.unidade.nomeFormal} da #{j2.env.PJeVars.unidade.comarca}, 
                 promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95. 
                 Realizada a penhora, não houve oferecimento de embargos. Em consequência, foi requerida pela parte 
                 exequente a adjudicação dos sobreditos bens, pelo valor da avaliação, na forma do § 2º c/c § 3º, do art. 
@@ -1776,7 +1779,7 @@
 
         <versao id="1.3.auto-adjudicacao"> <!-- TEMO DE PENHORA -->
             <elemento tag="p" id="dadoEPassado" scope="EXP" class="p Indnt3cm">                 
-                #:B{Faço saber}, para conhecimento de todos, que por este 2º Juizado Especial Cível da Comarca de Imperatriz, 
+                #:B{FAÇO SABER}, para conhecimento de todos, que por este #{j2.env.PJeVars.unidade.nomeFormal} da #{j2.env.PJeVars.unidade.comarca}, 
                 promoveram-se os termos de execução supra caracterizada, que obedeceu ao Rito da Lei nº 9.099/95.
                 
                 Dado e passado o presente mandado nesta cidade de #{j2.env.PJeVars.unidade.cidade}, 
@@ -2144,6 +2147,7 @@
                         <constructs param="changeList" value="default" type="string"/-->
                         <constructs param="source" value="#{j2.res.mod.oficioSelSrc}" type="bool"/>
                         <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                        <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                     </classeImp>  
                 </elemento>
                 <elemento tag="div" scope="EDT_CORE" >        

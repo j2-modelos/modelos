@@ -1420,6 +1420,13 @@
                             'dataPlus': '',
                             'addtClassStyles': '',
                             'data': 'a operadora de telefonia não retorna nenhuma mensagem, apenas sinal de encerramento de chamada'
+                        },
+                        {
+                            'id': 'itChamadaNaoPossível',
+                            'label': 'Operadora informa impossibilidade',
+                            'dataPlus': '',
+                            'addtClassStyles': '',
+                            'data': 'não foi possível completar essa ligação, tente novamente mais tarde'
                         }
                     ]
                 }" />

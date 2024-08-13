@@ -182,6 +182,8 @@ and open the template in the editor.
             <gItem id="trmAud-Deliberacoes-Conciliador-SecretariaEnviarDocsAtiva"/>
             <gItem id="trmAud-Deliberacoes-Conciliador-prazo-contestacao-replica"/>
             <gItem id="trmAud-Deliberacoes-Conciliador-consulta-endereco"/>
+            <gItem id="trmAud-Deliberacoes-Conciliador-concluso-extincao-contumacia"/>
+            <gItem id="trmAud-Deliberacoes-Conciliador-concluso-homologacao"/>
             
             
         </group>     
@@ -1210,7 +1212,7 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
         <item id="trmAud.Deliberacoes.Conciliador.ConclusaoSentenca" label="Conclusão Sentença" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
-                    Em razão do requerimento e/ou anuência das partes, os autos foram feitos conclusos para #:U{sentença}.
+                    Em razão do requerimento e/ou anuência das partes, os autos foram feitos conclusos para #:U{#:b{SENTENÇA}}.
                 </data>
             </itemContent>
         </item>
@@ -1296,7 +1298,7 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                 </data>
             </itemContent>
         </item>   
-        <item id="trmAud-Deliberacoes-Conciliador-consulta-endereco" label="consulta endereço" dataPlus="">
+        <item id="trmAud-Deliberacoes-Conciliador-consulta-endereco" label="Consultar endereço" dataPlus="">
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
                     <elemento tag="span" scope="NONE" class="p FntModDefault" >
@@ -1329,6 +1331,21 @@ Publicada e registrada com o lançamento no sistema. Intime-se.
                         </elemento>         
                     </elemento>
                 </simpleElementsDefs>
+            </itemContent>
+        </item>   
+        <!-- add 2024-08-08 -->
+        <item id="trmAud-Deliberacoes-Conciliador-concluso-extincao-contumacia" label="Conclusão Sentença | Extinção Contumácia" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em razão da ausência da parte #{j2.env.PJeVars.processo.polos.parteAtiva}, os autos foram feitos conclusos para #:B{SENTENÇA DE EXTINÇÃO}.
+                </data>
+            </itemContent>
+        </item>   
+        <item id="trmAud-Deliberacoes-Conciliador-concluso-homologacao" label="Conclusão Sentença | Homologação" dataPlus="">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Em razão do acordo entabulado pelas partes, os autos foram feitos conclusos para #:B{SENTENÇA DE HOMOLOGAÇÃO}.
+                </data>
             </itemContent>
         </item>   
 

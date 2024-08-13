@@ -36,9 +36,10 @@ try {
     var builder = j2.mod.builder;
     var this_ = pkg.monetario;
     var extend = window.j2.mod._._extend;
+    var j2ConvAndParse = (str) => window.j2.mod._._j2TagsConverter(builder.parseVars(str));
     
     pkg.monetario = extend(pkg.monetario || {}, {        
-
+      formatoGlobal: null,
       imputSetMonetario : function(id, label){
         var _this = pkg.monetario;
 
@@ -106,14 +107,18 @@ try {
       inputMask : function(){
         
       },
+      definirFromatoGlobal: (formato) => {
+        pkg.monetario.formatoGlobal = formato
+      },
       parseDoubleDinheiro : function(str){
         var num = str.replace(/\./g,"").replace(",",".");
         if (isNaN(num) || num<0)
           return null;
         return parseFloat(num);
       },
-      writeExtense : function(field, sourceField){
+      writeExtense : function(field, sourceField, formato){
         if(field){
+          formato ??= pkg.monetario.formatoGlobal 
           var num = sourceField.value.replace(/\./g,"").replace(",",".");
           //var num = document.getElementById(idOrigem).value;
           if (isNaN(num) || num<0)
@@ -121,13 +126,23 @@ try {
           else {
             var extenso = pkg.monetario.formatation.dinheiroExtenso(num);
             if (extenso !== null && extenso !== "")
-              field.innerHTML = 'R$ '+sourceField.value + ' (' + extenso + ')';
+              if(!formato)
+                field.innerHTML = 'R$ '+sourceField.value + ' (' + extenso + ')';
+              else{
+                const valores = {
+                  $moeda: sourceField.value,
+                  $extenso: extenso
+                };
+                field.innerHTML = j2ConvAndParse(formato.replace(/\$\w+/g, (match) => {
+                  return valores[match] || match;
+                }))
+              }
             else
               var sHTML = 'R$ 0,00 (zero)';
           }
         }
       },
-      createInputSetMonetario : function(id, label, container, fieldWriteExtenso, item, initialValue){
+      createInputSetMonetario : function(id, label, container, fieldWriteExtenso, item, initialValue, formato){
         window.j2.mod.j2Moddle.fromXML(pkg.monetario.imputSetMonetario(id, label), 'j2:Definitions', function(err, definitions, context){
           if(definitions){
             builder.j2ElementParse(definitions.simpleElementsDefs.elemento[0], container);
@@ -166,11 +181,11 @@ try {
                 };
                 ip.onkeyup = function(event){
                   pkg.monetario.formatation.formataValor(ip, 16, event);
-                  pkg.monetario.writeExtense(fieldWriteExtenso, ip);
+                  pkg.monetario.writeExtense(fieldWriteExtenso, ip, formato);
                 };        
                 ip.onchange = function(event){
                   pkg.monetario.formatation.formataValor(ip, 16, event);
-                  pkg.monetario.writeExtense(fieldWriteExtenso, ip);                
+                  pkg.monetario.writeExtense(fieldWriteExtenso, ip, formato);                
                 };         
                 if(initialValue){
                   ip.value = initialValue;

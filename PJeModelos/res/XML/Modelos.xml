@@ -182,7 +182,7 @@
                             <constructs param="filter" value="true" type="boolean"/>
                             <!--constructs param="label" value="Atos" type="string"/-->
                             <constructs param="hideLabel" value="true" type="boolean"/>
-                            
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>                                             
                         <classe id="Corpo" versao="1.0">
                                 <constructs param="textIndent" value="1cm" type="string"/>
@@ -354,6 +354,7 @@
                             <constructs param="filter" value="true" type="boolean"/>
                             <!--constructs param="label" value="Atos" type="string"/-->
                             <constructs param="hideLabel" value="true" type="boolean"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>                                             
                         <classe id="Corpo" versao="1.0">
                             <constructs param="newId" value="oReferidoEVerdade" type="string"/>
@@ -491,6 +492,7 @@
                                 <constructs param="changeList" value="default" type="string"/>
                                 <constructs param="source" value="#{j2.res.mod.cartaPrecatoriaSelSrc}" type="xml"/>
                                 <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft15mm" type="string"/>
+                                <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                             </classe>    
                         </classe>
                         
@@ -698,23 +700,19 @@
         </classStyles>
         <versao id="3.0">
             <classe id="Documento" versao="3.0">
-                <!--importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/>
+                <importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/>
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
-                <importLib name="mandado.js" artifact="#{j2.res.mod.mandado}"/-->
+
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A4" type="string"/>
                     <classe id="Cabecalho" versao="2.0" >
                         <constructs param="endereco" value="sim" type="bool"/>
                     </classe>
-                    <classe id="QualificacaoTable" versao="3.0">
-                        <constructs param="assuntos" value="sim" type="bool"/>
-                        <constructs param="advogados" value="nao" type="bool"/>
-                        <constructs param="idAudiencia" value="nao" type="bool" />
-                        <constructs param="buildByApi" value="sim" type="bool" />
-                    </classe>
+
                     <!-- Título -->
                     <classe id="Titulo" versao="3.0">
                         <constructs param="text" value="CARTA DE ADJUDICAÇÃO" type="string"/>
+                        <constructs param="styleClasses" value="font-14pt" type="string"/>
                     </classe>                    
                     <!-- selecionar meio -->
                     <!--classe id="Selector" versao="3.0" >
@@ -729,20 +727,29 @@
                         <constructs param="atualizarAoMudarSignatario" value="sim" type="boolean"/>
                     </classe>
 
-                    <classe id="Space" versao="1.0">
+                    <classeImp id="Space" versao="1.0" scope="EXP">
+                        <constructs param="size" value="1" type="int"/>
+                    </classeImp>
+
+                    <classe id="QualificacaoTable" versao="3.0">
+                        <constructs param="assuntos" value="sim" type="bool"/>
+                        <constructs param="advogados" value="nao" type="bool"/>
+                        <constructs param="idAudiencia" value="nao" type="bool" />
+                        <constructs param="buildByApi" value="sim" type="bool" />
+                    </classe>
+
+                    <!-- classe id="Space" versao="1.0">
                         <constructs param="newId" value="destinatarioSup.spacing" type="string"/>
                         <constructs param="size" value="1" type="int"/>
                         <constructs param="oculto" value="nao" type="boolean"/>
-                    </classe>    
+                    </classe-->    
                     
-                    <classe id="Secao" versao="1.0">
+                    <!--classe id="Secao" versao="1.0">
                         <constructs param="newId" value="destinatarioSup" type="string"/>
-                    </classe>
-                    <classe id="Space" versao="1.0">
-                        <constructs param="newId" value="destinatarioSup.spacing" type="string"/>
+                    </classe-->
+                    <classeImp id="Space" versao="1.0" scope="EXP">
                         <constructs param="size" value="1" type="int"/>
-                        <constructs param="oculto" value="sim" type="boolean"/>
-                    </classe>    
+                    </classeImp>
                     
                     <classe id="NormalizarFormatacao" versao="3.0">
                        
@@ -756,63 +763,180 @@
                         
                         <!-- PARETE ENVOLVIDA - LOCAL DA DILIGÊNCIA MAIS INFORMAÇÕES DA EXECUÇÃO -->
                         <classe id="Secao" versao="1.0">
-                            <constructs param="newId" value="destinatarioInf" type="string"/>
+                            <constructs param="newId" value="secao-juizo-expedidor" type="string"/>
+                            <constructs param="oculto" value="nao" type="string"/>
+                            <classe id="Space" versao="1.0"/>
+
                             <classe id="Corpo" versao="1.0">
-                                <constructs param="textIndent" value="3cm" type="string"/>
+                                <constructs param="newId" value="cartaPrecatoria-documentos-header" type="string"/>
+                                <constructs param="textContent" value="#:U{#:B{JUÍZO EXPEDIDOR}}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter" type="string"/>
+                            </classe>      
+                            <classe id="Corpo" versao="1.0">
+                                <constructs param="newId" value="cartaPrecatoria-documentos-corpo" type="string"/>
+                                <constructs param="textContent" value="#{j2.env.PJeVars.unidade.nomeCaixaAlta}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter marginAtoJudicial" type="string"/>
+                            </classe>      
+                        </classe>
+
+                        <classe id="Secao" versao="1.0">
+                            <constructs param="newId" value="destinatarioInf" type="string"/>
+                            <classe id="Space" versao="1.0"/>
+
+                            <classe id="Corpo" versao="1.0">
+                                <!--constructs param="textIndent" value="3cm" type="string"/ -->
                                 <constructs param="newId" value="destinatarioExpediente" type="string"/>
-                                <constructs param="textContent" value="#:span@vocativoPreText{#:B{#:U{PARTE ENVOLVIDA - LOCAL DA DILIGÊNCIA:}}}" type="string"/>
-                                <constructs param="styleClasses" value="Indnt0 pAsListItem" type="string"/>
+                                <constructs param="textContent" value="#:span@vocativoPreText{#:B{#:U{ADJUDICATARIO:}}}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter" type="string"/>
                             </classe>
                             
                             <classe id="DestinatarioExpediente" versao="1.0-mult" scope="EDT">
                                 <constructs param="bindSeletorPessoaElement" value="selectorPessoaTextP" type="bool"/>
-                                <constructs param="bindSeletorPessoaFormats" value="Indnt0cm pAsListItem" type="bool"/>
-                                <constructs param="padraoApresentacao" value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
-                                <constructs param="separador" value="#:BR{}" type="string"/>
+                                <constructs param="bindSeletorPessoaFormats" value="Indnt3cm marginAtoJudicial" type="bool"/>
+                                <constructs param="padraoApresentacao" value="
+                                    #:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}, brasileiro(a), inscrito no CPF nº 
+                                    #{j2.mod.clsCnstr.SeletorPessoa.selected.CPFCNPJ}, residente e domiciliado à
+                                    #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._}
+                                " type="string"/>
+                                <constructs param="separadorPadrao" value="sim" type="string"/>
+                                <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
+                            </classe>
+                        </classe>
+
+
+
+                        <classe id="Secao" versao="1.0">
+                            <constructs param="newId" value="dos-bens" type="string"/>
+                            <classe id="Corpo" versao="1.0">
+                                <constructs param="textIndent" value="3cm" type="string"/>
+                                <constructs param="newId" value="dos-bens-ajudicados" type="string"/>
+                                <constructs param="textContent" value="#:B{#:U{DOS BENS ADJUDICADOS}}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter" type="string"/>
+                            </classe>
+                                                
+                            <!-- DESCRIÇÃO -->
+                            <classe id="Corpo" versao="1.0">
+                                <constructs param="textIndent" value="3cm" type="string"/>
+                                <constructs param="newId" value="descricao-bens" type="string"/>
+                                <constructs param="textContent" value="#:U{DESCRIÇÃO}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter" type="string"/>
                             </classe>
                             
-                            <classe id="Secao" versao="1.0">
-                                <constructs param="newId" value="execucaoInfo" type="string"/>
-                                <constructs param="oculto" value="sim" type="string"/>
-                                <classe id="Space" versao="1.0"/>
-                                <classe id="Corpo" versao="1.0">
-                                    <constructs param="newId" value="citacao.valorExecucao" type="string"/>
-                                    <constructs param="textContent" value="#:U{#:B{VALOR DA EXECUÇÃO}}: #:span@valorExecucao.intmItCitacaoExecucaoJec{R$ 0,00 (zero)}#:BR{}" type="string"/>
-                                    <constructs param="styleClasses" value="pAsListItem Indnt0" type="string"/>
-                                </classe>      
-                            </classe>                   
+                            <!-- SELETOR PRINCIAPL DO MODELO -->
+                            <classe id="Selector" versao="3.0" >
+                                <constructs param="newId" value="mandadoItens" type="string"/>
+                                <constructs param="linkedElTag" value="UL" type="string"/>
+                                
+                                <constructs param="multiple" value="sim" type="bool"/>
+                                <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
+                                <constructs param="onAddAction" value="default" type="string"/>
+                                <constructs param="onDelAction" value="default" type="string"/>
+                                <constructs param="changeList" value="default" type="string"/>
+                                <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft15mm marginAtoJudicial" type="string"/>
+                                <constructs param="source" type="j2Json" value="{
+                                    'selectorId': 'itCartaAdjudicacao',
+                                    'tag': 'li',
+                                    'initialSelected': 'itPadrao',
+                                    'items': [
+                                        {
+                                            'id': 'imovelImperatriz',
+                                            'label': 'Terreno em Imperatriz/MA',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Terreno localizado na cidade de Imperatriz/MA, no bairro Santa Inês, especificamente situado com frente para a movimentada Avenida Newton Bello. O terreno possui uma frente e fundo de 8,00 metros cada, e laterais com 30,00 metros de extensão, resultando em uma área total de 240,00 metros quadrados. A propriedade é confrontada pelo lado direito com Sabino Fernandes de Sousa, pelo lado esquerdo com Sandra de Sousa Silva, e ao fundo com Tiago Galileu. Este terreno está matriculado sob o número 71.577 no 6º Ofício Extrajudicial de Imperatriz.'
+                                        },
+                                        {
+                                            'id': 'imovelSaoPaulo',
+                                            'label': 'Apartamento em São Paulo/SP',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Apartamento localizado em São Paulo/SP, no bairro Vila Mariana, uma região valorizada e bem servida por infraestrutura urbana. O imóvel possui uma área privativa de 85,00 metros quadrados, composto por 3 quartos amplos, 2 banheiros sociais, uma sala de estar espaçosa, cozinha planejada, e 1 vaga de garagem coberta. Este apartamento está devidamente registrado sob a matrícula número 45.123 no 1º Registro de Imóveis de São Paulo, garantindo sua legalidade e segurança jurídica para o proprietário.'
+                                        },
+                                        {
+                                            'id': 'imovelCampinas',
+                                            'label': 'Chácara em Campinas/SP',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Chácara situada na região de Sousas, em Campinas/SP, uma área conhecida por sua tranquilidade e contato com a natureza. Esta propriedade rural abrange uma área de 5.000,00 metros quadrados, incluindo uma casa principal que dispõe de 4 quartos, sendo uma suíte, sala de estar, sala de jantar, cozinha, e uma varanda ampla. Além disso, a chácara possui uma piscina, área para churrasco, e um extenso jardim arborizado. A propriedade está matriculada sob o número 32.987 no 3º Registro de Imóveis de Campinas.'
+                                        },
+                                        {
+                                            'id': 'imovelRioDeJaneiro',
+                                            'label': 'Sala Comercial no Rio de Janeiro/RJ',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Sala comercial localizada no centro da cidade do Rio de Janeiro/RJ, dentro do prestigiado Edifício Empresarial Rio Tower, um edifício moderno e bem conceituado no mercado. A sala possui uma área de 40,00 metros quadrados, ideal para abrigar escritórios de pequeno a médio porte, consultórios, ou empresas que buscam uma localização estratégica e de fácil acesso. Esta propriedade está registrada sob a matrícula número 22.456 no 2º Registro de Imóveis do Rio de Janeiro, assegurando a sua titularidade.'
+                                        },
+                                        {
+                                            'id': 'veiculoFiesta',
+                                            'label': 'Veículo Ford Fiesta',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Veículo automóvel da marca Ford, modelo Fiesta, ano de fabricação 2016, cor preta, com motor 1.6 flex, reconhecido por sua eficiência e baixo consumo de combustível. O automóvel possui ar condicionado, direção hidráulica, vidros elétricos, travas elétricas, e sistema de som original de fábrica. O veículo está registrado sob a placa ABC-1234, e o chassi é 9BFZH55P0G1234567. Este carro é uma excelente opção para quem busca um veículo compacto, econômico, e com bom desempenho.'
+                                        },
+                                        {
+                                            'id': 'motoHondaCG160',
+                                            'label': 'Motocicleta Honda CG 160',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Motocicleta da marca Honda, modelo CG 160, ano de fabricação 2019, cor vermelha, equipada com motor de 160 cilindradas, ideal para uso urbano devido à sua agilidade e baixo consumo de combustível. A motocicleta é equipada com freios ABS, painel digital, partida elétrica, e pneus resistentes. A placa do veículo é XYZ-5678, e o chassi registrado é 9C2JC4110KR123456. Esta moto é popular por sua durabilidade, baixo custo de manutenção, e desempenho confiável no dia a dia.'
+                                        },
+                                        {
+                                            'id': 'geladeiraBrastemp',
+                                            'label': 'Geladeira Brastemp Frost Free',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Geladeira da marca Brastemp, modelo Frost Free, com capacidade para 400 litros, cor branca, comprada no ano de 2020. Este eletrodoméstico é conhecido por sua eficiência energética, sistema de degelo automático, e organização interna que facilita o armazenamento de alimentos e bebidas. A geladeira possui prateleiras ajustáveis, compartimentos especiais para frutas, verduras, e congelados, além de um design moderno que se integra facilmente a qualquer cozinha.'
+                                        },
+                                        {
+                                            'id': 'computadorDellInspiron',
+                                            'label': 'Computador Dell Inspiron 3880',
+                                            'dataPlus': '',
+                                            'addtClassStyles': '',
+                                            'data': 'Computador desktop da marca Dell, modelo Inspiron 3880, equipado com processador Intel Core i7 de 10ª geração, 16GB de memória RAM, e disco rígido de 1TB, adquirido no ano de 2021. Este computador é ideal para uso profissional e doméstico, oferecendo desempenho superior para tarefas que exigem processamento rápido e capacidade de armazenamento. A cor do gabinete é preta, e o design compacto permite que seja facilmente integrado a diferentes ambientes de trabalho ou estudo.'
+                                        }
+                                    ]
+                                }" />
+                                <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
+                            </classe>  
+                        </classe>
+
+                        <classe id="Secao" versao="1.0">
+                            <constructs param="newId" value="avaliacao-bens" type="string"/>
                             <classe id="Space" versao="1.0"/>
-                        </classe>
-                                                
-                        <!-- FINALIDADE -->
-                        <classe id="Corpo" versao="1.0">
-                            <constructs param="textIndent" value="3cm" type="string"/>
-                            <constructs param="newId" value="finaliadeExpediente" type="string"/>
-                            <constructs param="textContent" value="#:B{#:U{FINALIDADE:}}" type="string"/>
-                            <constructs param="styleClasses" value="" type="string"/>
-                        </classe>
-                        
-                        <!-- SELETOR PRINCIAPL DO MODELO -->
-                        <classe id="Selector" versao="3.0" >
-                            <constructs param="newId" value="mandadoItens" type="string"/>
-                            <constructs param="linkedElTag" value="UL" type="string"/>
+
+                            <classe id="Corpo" versao="1.0">
+                                <!--constructs param="textIndent" value="3cm" type="string"/ -->
+                                <constructs param="newId" value="destinatarioExpediente" type="string"/>
+                                <constructs param="textContent" value="#:span@vocativoPreText{#:U{AVALIAÇÃO:}}" type="string"/>
+                                <constructs param="styleClasses" value="Indnt0 AlignCenter" type="string"/>
+                            </classe>
+                            <classe id="Corpo" versao="1.0">
+                                <constructs param="newId" value="citacao.valorExecucao" type="string"/>
+                                <constructs param="textContent" value="Os bens adjudicados correspondem ao valor de  #:U{
+                                #:span@valor-avaliacao-bens{R$ 0,00 (zero)}}, conforme auto de avaliação constante nos autos." type="string"/>
+                                <constructs param="styleClasses" value="Indnt3cm marginAtoJudicial" type="string"/>
+                            </classe>    
+
                             
-                            <constructs param="multiple" value="sim" type="bool"/>
-                            <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
-                            <constructs param="onAddAction" value="default" type="string"/>
-                            <constructs param="onDelAction" value="default" type="string"/>
-                            <constructs param="changeList" value="default" type="string"/>
-                            <constructs param="source" value="#{j2.res.mod.mandadoSelSrc}" type="bool"/>
-                            <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
-                        </classe>  
+
+                        </classe>
                         
                     </classe>
                     
                     <classe id="Space" versao="1.0">
-                        <constructs param="size" value="1" type="int"/>
+                        <constructs param="size" value="2" type="int"/>
                     </classe>    
                     
                     <classe id="DadoEPassado" versao="1.2.carta-adjudicacao"/>
+
+                    <classe id="AddtionalControls" versao="1.0"/>
+                    <classe id="InputMonetarioCtrl" versao="1.0">
+                        <constructs param="newId" value="valor-avaliacao" type="string"/>
+                        <constructs param="linkedElement" value="valor-avaliacao-bens" type="string"/>
+                        <constructs param="label" value="Avaliação bens:" type="string"/>
+                        <constructs param="onEventsDefault" value="sim" type="Boolean"/>
+                        <constructs param="initialValue" value="default" type="string"/>
+                    </classe>
                     
                     <classe id="LocalEData" versao="1.0">       
                         <constructs param="newId" value="default" type="string"/> 
@@ -1106,6 +1230,7 @@
                             <constructs param="changeList" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.citacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                         
                     </classe>
@@ -1273,6 +1398,7 @@
                             <constructs param="changeList" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.citacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                         
                     </classe>
@@ -1416,6 +1542,7 @@
                             <constructs param="changeList" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.citacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                         
                     </classe>
@@ -1526,6 +1653,7 @@
                             <constructs param="changeList" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.citacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                                                                    
                         <!--classe id="Corpo" versao="1.0">
@@ -1621,6 +1749,7 @@
                             <constructs param="changeList" value="default" type="string"/-->
                             <constructs param="source" value="#{j2.res.mod.decisaoSelSrc}" type="bool"/>
                             <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     </classe>  
                     <classe id="LocalEData" versao="2.0"/>
@@ -1700,6 +1829,7 @@
                             <constructs param="changeList" value="default" type="string"/-->
                             <constructs param="source" value="#{j2.res.mod.despachoSelSrc}" type="bool"/>
                             <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     </classe>
                     <classe id="LocalEData" versao="2.0"/>
@@ -1782,6 +1912,7 @@
                             <constructs param="onAddAction" value="default" type="string"/>
                             <constructs param="onDelAction" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.diligenciaSelSrc}" type="bool"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>                                             
                         <classe id="Corpo" versao="1.0">
                             <constructs param="newId" value="oReferidoEVerdade" type="string"/>
@@ -1910,6 +2041,7 @@
                             <constructs param="changeList" value="default" type="string"/>
                             <constructs param="source" value="#{j2.res.mod.intimacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                                                                    
                         <!--classe id="Corpo" versao="1.0">
@@ -2090,6 +2222,7 @@
                             <constructs param="source" value="#{j2.res.mod.intimacaoSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
                             <constructs param="filter" value="true" type="boolean"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                                                                    
                         <!--classe id="Corpo" versao="1.0">
@@ -2312,6 +2445,7 @@
                             <constructs param="filter" value="true" type="boolean"/>
                             <!-- versao 4.1 -->
                             <constructs param="hideLabel" value="true" type="boolean"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                                                                    
                         <!--classe id="Corpo" versao="1.0">
@@ -2398,6 +2532,9 @@
                 <importLib name="htmlTools.js" artifact="#{j2.res.lib.htmlTools}"/>
                 <importLib name="monetario.js" artifact="#{j2.res.lib.monetario}"/>
                 <importLib name="mandado.js" artifact="#{j2.res.mod.mandado}"/>
+
+                <constructs param="ordenarItensDescricao" value="nao" type="bool"/>
+
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A4" type="string"/>
                     <classe id="SeletorPrioridade" versao="1.0" />
@@ -2467,6 +2604,7 @@
                                 <constructs param="bindSeletorPessoaFormats" value="Indnt0cm pAsListItem" type="bool"/>
                                 <constructs param="padraoApresentacao" value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.endereco._} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.meiosContato._}" type="string"/>
                                 <constructs param="separador" value="#:BR{}" type="string"/>
+                                <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                             </classe>
                             
                             <classe id="Secao" versao="1.0">
@@ -2496,11 +2634,12 @@
                             <constructs param="linkedElTag" value="UL" type="string"/>
                             
                             <constructs param="multiple" value="sim" type="bool"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                             <!--constructs param="onChange" value="console.log('Missing onChange from certidaoItens (selector)');" type="string"/-->
                             <constructs param="onAddAction" value="default" type="string"/>
                             <constructs param="onDelAction" value="default" type="string"/>
                             <constructs param="changeList" value="default" type="string"/>
-                            <constructs param="source" value="#{j2.res.mod.mandadoSelSrc}" type="bool"/>
+                            <constructs param="source" value="#{j2.res.mod.mandadoSelSrc}" type="object"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/>
                         </classe>  
                         
@@ -2605,6 +2744,7 @@
                         <constructs param="changeList" value="default" type="string"/-->
                         <constructs param="source" value="destinatarios" type="bool"/>
                         <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                        <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                     </classe>  
                     
                     
@@ -2765,6 +2905,7 @@
                             <constructs param="changeList" value="default" type="string"/-->
                             <constructs param="source" value="#{j2.res.mod.sentencaSelSrc}" type="bool"/>
                             <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     </classe>
                     <classe id="LocalEData" versao="2.0"/>
@@ -2848,6 +2989,7 @@
                             <constructs param="linkedElStyleClasses" value="p FntModDefault Indnt1cm" type="string"/>
                             <!--constructs param="label" value="Atos" type="string"/-->
                             <constructs param="hideLabel" value="true" type="boolean"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>                                             
                         
                     </classe>
@@ -2966,6 +3108,7 @@
                             <constructs param="linkedElStyleClasses" value="p FntModDefault marginAtoJudicial" type="string"/>
                             <constructs param="newSize" value="10" type="string"/>
                             <constructs param="filter" value="true" type="boolean"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     </classe>
                     <classe id="Corpo" versao="1.0">
@@ -3067,6 +3210,7 @@
                             <!--constructs param="changedId" value="selectorPeticionante" type="string"/-->
                             <constructs param="propagateChanges" value="selParte" type="string"/>
                             <constructs param="raiseChangeAfterLoad" value="true" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>
                         <classe id="Selector" versao="3.0" >
                             <constructs param="newId" value="peticaoPedidosItems" type="string"/>
@@ -3079,6 +3223,7 @@
                             <!--constructs param="changeList" value="default" type="string"/-->
                             <constructs param="source" value="#{j2.res.mod.termoPeticaoSelSrc}" type="bool"/>
                             <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     </classe>
                     <classe id="Space" versao="1.0">
@@ -3163,6 +3308,7 @@
                         <constructs param="changeList" value="default" type="string"/-->
                         <constructs param="source" value="termoReclamacaoTitulos" type="bool"/>
                         <!--constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft35mm" type="string"/-->
+                        <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                     </classe>
                     
                     <!--- INICIA TERMO DE RELCMAÇÃO -->
@@ -3190,6 +3336,7 @@
                             <constructs param="source" value="#{j2.res.mod.termoReclamacaoFatosSelSrc}" type="bool"/>
                             <!--constructs param="linkedElStyleClasses" value="p FntModDefault marginAtoJudicial" type="string"/-->
                             <!--constructs param="newSize" value="10" type="string"/-->
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                     
                         <classe id="Space" versao="1.0">
@@ -3221,6 +3368,7 @@
                             <constructs param="source" value="#{j2.res.mod.termoReclamacaoPedidosSelSrc}" type="bool"/>
                             <constructs param="linkedElStyleClasses" value="p unorderedOrderedList FntModDefault paddingLeft25mm" type="string"/>
                             <constructs param="exibirInicialmente" value="trmRcl.Padrao.JusticaGratuita trmRcl.Padrao.CitacaoPassivo" type="string"/>
+                            <constructs param="rolarParaExibirAoInserir" value="sim" type="bool"/>
                         </classe>  
                         <classe id="Space" versao="1.0">
                             <constructs param="size" value="1" type="int"/>

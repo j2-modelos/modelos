@@ -316,6 +316,9 @@ try {
         return true; 
       },
       parseVars : function(text){
+        if( Array.isArray(text) ) 
+          return text.map(tx => this.parseVars(tx))
+        
         var isString = new window.j2.mod._._203;
         var isFunction = new window.j2.mod._._198;
         var isObject = new window.j2.mod._._201;

@@ -2433,11 +2433,12 @@ setInterval(function() {
     return _.join('');
   };
     
-  Array.prototype.joinListE = function(applyEachString){ // ndlg2
+  Array.prototype.joinListE = function(applyEachString, sort){ // ndlg2
     var isString = new window.j2.mod._._203;
     var isFunction = new window.j2.mod._._198; // pl
     
-    this.sort();
+    if(typeof sort === 'undefined' || sort === true)
+      this.sort();
     
     var _ = [];
     this.map(function(c){

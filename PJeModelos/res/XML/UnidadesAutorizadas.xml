@@ -109,6 +109,9 @@
                 <Presidencia numeroUnico="0800883-11.2023.8.10.0047" usuarioId="magisADOLFO">
                     <PortariaDesignacao numero="4872," ano="2023" dataAto="2023-10-18"/>
                 </Presidencia>
+                <Presidencia numeroUnico="0801045-69.2024.8.10.0047" usuarioId="magisDENISE">
+                    <PortariaDesignacao numero="4872," ano="2023" dataAto="2023-10-18"/>
+                </Presidencia>
 
                 <exercicioTemporario usuarioId="magisADOLFO" dataInicio="2023-11-13" dataFim="2023-11-22">
                     <PortariaDesignacao numero="5239" ano="2023" dataAto="2023-11-08"/>

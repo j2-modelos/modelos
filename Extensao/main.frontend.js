@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-const USANDO_PJEMR = false
+
 function fronendLoad(){    
   const __codificarNomeTarefa = j2.mod._.codificarNomeTarefa;
   const __prepararLinkTarefa = j2.mod._.prepararLinkTarefa;

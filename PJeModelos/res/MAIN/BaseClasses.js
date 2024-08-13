@@ -2397,7 +2397,10 @@ try {
             class : 'DestinatarioExpediente',
             super : el._.__class__.super.SeletorPessoa._this
           }
-        };        
+        };     
+        
+        if(args.rolarParaExibirAoInserir)
+          _.__class__.super.__class__.super.rolarParaExibirAoInserir = args.rolarParaExibirAoInserir
         
         el._.__class__ = { // ndlg4 as new
           super : {
@@ -3221,6 +3224,7 @@ try {
     };
     
     pkg.Documento = {
+      args: {},
       constructor_ : function(args, el){            
         /* diferenças aqui ao redor */
         if(args){
@@ -3258,6 +3262,8 @@ try {
               width : args.width,
               height : args.height
             };
+
+          this.args = args
         }
         pkg.Documento.setEvents(args);
         
@@ -3333,11 +3339,12 @@ try {
         /* PJe Window content validation */
         if(!( mod.par))
           return;
-        
+        const descEmFrameTarefa = (() =>{ const input = mod.par.jQ3('label:contains("Descrição")').parent().parent().find('input'); return input.length && input.attr('id').includes('descDocDecoration') ? input.get(0) : undefined })()
+        const docTipoEmFrameTarefa = (() =>{ const input = mod.par.jQ3('label:contains("Tipo do Documento")').parent().parent().find('select'); return input.length && input.attr('id').includes('selectMenuTipoDocumentoDecoration') ? input.get(0) : undefined })()
         var _pF = {
           juntDoc : {
-            desc : mod.par.gE('ipDescDecoration:ipDesc')  || (() =>{ const input = mod.par.jQ3('label:contains("Descrição")').parent().parent().find('input'); return input.length && input.attr('id').includes('descDocDecoration') ? input : undefined })(),
-            docTipo : mod.par.gE('cbTDDecoration:cbTD') || (() =>{ const input = mod.par.jQ3('label:contains("Tipo do Documento")').parent().parent().find('select'); return input.length && input.attr('id').includes('selectMenuTipoDocumentoDecoration') ? input : undefined })(),
+            desc : mod.par.gE('ipDescDecoration:ipDesc')  || descEmFrameTarefa,
+            docTipo : mod.par.gE('cbTDDecoration:cbTD') || docTipoEmFrameTarefa,
             numero : mod.par.gE('ipNroDecoration:ipNro')
           }
         };
@@ -3373,20 +3380,23 @@ try {
             return;
                 
           _ = j2SON(itDef.dataPlus);
-          
-          if(!(_.descricaoAppend))
+
+                    
+          if(!(_.descricaoAppend) && !_.titleAppend)
             return;
+
+          const descProp = _.descricaoAppend ? 'descricaoAppend' : 'titleAppend'
         
-          _.descricaoAppend = j2.mod.builder.parseVars(_.descricaoAppend);
+          const descOudescAR = j2.mod.builder.parseVars(_[descProp]);
           
-          if(isArray(_.descricaoAppend))
-            forEach(_.descricaoAppend, function(e){
+          if(isArray(descOudescAR))
+            forEach(descOudescAR, function(e){
               if(_a.indexOf(e)===-1)
                 _a.push(e);
             });
           else
-            if(_a.indexOf(_.descricaoAppend)===-1)
-              _a.push(_.descricaoAppend);
+            if(_a.indexOf(descOudescAR)===-1)
+              _a.push(descOudescAR);
             
           
         });
@@ -3394,11 +3404,11 @@ try {
         //(!(_.doNotSort)) && _a.sort();
         if( !(_a.length) && !(mnt._['____updateDescription']) ) 
           return;
-        
-        var tx = '';
-        for(var i = 0; i < _a.length; i++)
-          tx += (tx.length) ? ( (i===_a.length-1)? ' e ': ', ' ) + _a[i] : _a[i];
-                
+        // padrão é ordenar a descrição        
+        const ordenarItensDescricao = !this.args.ordenarItensDescricao ? true : (this.args.ordenarItensDescricao === "sim" || this.args.ordenarItensDescricao === "true")
+
+        var tx = _a.map(i => _.titleAppend ? i.toLowerCase() : i).joinListE(null, ordenarItensDescricao).captFirst(); 
+                        
         _p.desc.value = (tx.length) ? tx : _p.docTipo.options[_p.docTipo.options.selectedIndex].textContent ;
         _p.desc.title = _p.desc.value;
         mnt._['____updateDescription'] = tx.length !== 0;
@@ -6521,6 +6531,9 @@ try {
             super : el._.__class__.super.Selector._this
           }
         };
+
+        if(args.rolarParaExibirAoInserir)
+          _.__class__.super.rolarParaExibirAoInserir = args.rolarParaExibirAoInserir
         
         el._.__class__ = { // ndlg4
           super : {
@@ -7042,6 +7055,9 @@ try {
             
             if(args.salvarUltimaEscolha)
               _.salvarUltimaEscolha = args.salvarUltimaEscolha;
+
+            if(args.rolarParaExibirAoInserir)
+              _.rolarParaExibirAoInserir = args.rolarParaExibirAoInserir;
           }
           else{
             j2.log('A mudança de Id ara o novo elemnto seletor é obrigatória');
@@ -7338,7 +7354,8 @@ try {
               appd.body = container.firstChild;
             }
           }
-            
+          
+          let toScrollIntoViewEl = appd.body
           if(isObject(appd.body))
             _.lnkEl.appendChild(appd.body);
           else if (_.mode === 'unique')
@@ -7353,8 +7370,13 @@ try {
             _sab.appendChild(domify(appd.body));
     
             _.lnkEl.appendChild(_sab);
+            toScrollIntoViewEl = _sab
           }
-             
+          if(_.rolarParaExibirAoInserir?.toLowerCase() === 'sim' 
+            || 
+            _.rolarParaExibirAoInserir === true
+          )
+          toScrollIntoViewEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
           
           forEach(selI.eventFire, function(ev){
             evBus.fire(ev.event, _, selI);

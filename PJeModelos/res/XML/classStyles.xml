@@ -239,6 +239,12 @@
         <style id="FntDocEdt">
             <prop name="fontSize" value="9pt"/>
         </style> 
+        <style id="font-18pt">
+            <prop name="fontSize" value="18pt"/>
+        </style> 
+        <style id="font-14pt">
+            <prop name="fontSize" value="14pt"/>
+        </style> 
         <style id="FntHighligth">
             <prop name="fontSize" value="22pt"/>
         </style>

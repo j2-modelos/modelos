@@ -108,7 +108,7 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>                            
-                            #:{BUSCA E APREEENSÃO} do(a) XXXXDescricaoItensXXXX.
+                            #:B{BUSCA E APREEENSÃO} do(a) XXXXDescricaoItensXXXX.
                         </data>
                         <!--simpleElementsDefs>
                             <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
@@ -411,7 +411,7 @@ and open the template in the editor.
                         <data>
                             #:B{PENHORA e AVALIAÇÃO} dos bens bastantes para a satisfação da dívida, em caso de não realizado o pagamento ou não ofertado 
                             bens para a garantia da execução, devendo constar no auto também a avaliação dos bens penhorados,
-                            #:B{cujo saldo de execução importa em #:U@valorBacenjud.intmItPenhoraAvaliacaoSaldo{R$ 0,00 (zero)}}.
+                            #:B{cujo saldo de execução importa em} #:span@valorBacenjud.intmItPenhoraAvaliacaoSaldo{R$ 0,00 (zero)}.
                         </data>
                     </arElement>            
                 </selectorArray>        
@@ -497,7 +497,7 @@ and open the template in the editor.
                             <elemento tag="p" scope="NONE" class="p FntModDefault" >
                                 #:B{PENHORA e AVALIAÇÃO} do(s) bem(ns) abaixo indicado(s) para a satisfação da dívida, 
                                 devendo constar no auto também sua avaliação,
-                                #:B{cujo saldo de execução importa em #:U@valorBacenjud.intmItPenhoraAvaliacaoBensDeterminadosSaldo{R$ 0,00 (zero)}}.
+                                #:B{cujo saldo de execução importa em} #:span@valorBacenjud.intmItPenhoraAvaliacaoBensDeterminadosSaldo{R$ 0,00 (zero)}.
                             </elemento>
                             <elemento tag="ol" scope="NONE" class="" >
                                 <elemento tag="li" scope="NONE" class="" >
@@ -599,7 +599,8 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância
+                             de #:span@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -611,12 +612,15 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">1
                         <data>
-                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE parcial}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
+                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE parcial}} realizada na importância de
+                            #:span@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada 
+                            na importância de #:span@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}, 
+                            referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
                         </data>
                     </arElement>
                 </selectorArray>               

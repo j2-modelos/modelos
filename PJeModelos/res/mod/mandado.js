@@ -213,7 +213,8 @@ try {
           'intmItPenhoraAvaliacaoBensDeterminadosSaldo'
         ],
         selector : 'selectormandadoItens',
-        container : mod.edt.gE('modAddtCtrls')
+        container : mod.edt.gE('modAddtCtrls'),
+        formato: '#:B{R$ $moeda} ($extenso)'
       },
       setMonetaryListeners : function(){        
         forEach(pkg.Mandado.bindMonetary.itemsCorpo, function(i){
@@ -281,7 +282,8 @@ try {
                 else
                   /* create container */ /* existe um container padrão no documento modelo */
                   if(pkg.monetario){
-                    pkg.monetario.createInputSetMonetario('ctrlMonetario'+item, 'Valor R$', pkg.Mandado.bindMonetary.container, mod.exp.gE('valorBacenjud.'+item), item);
+                    pkg.monetario.createInputSetMonetario('ctrlMonetario'+item, 'Valor R$', pkg.Mandado.bindMonetary.container, 
+                      mod.exp.gE('valorBacenjud.'+item), item, null, pkg.Mandado.bindMonetary.formato);
                     return;
                   }
           /*  });*/

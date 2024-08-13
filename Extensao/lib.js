@@ -4,6 +4,13 @@
 if( ! (window.j2E) )
   window.j2E = {};
 
+window.USANDO_PJEMR = false
+
+chrome.storage.local.get('isPJeRActive', (data) => {
+
+  window.USANDO_PJEMR = data?.isPJeRActive || false
+});
+
 
 j2E.env = {
   urlParms : (function searchToObject() {

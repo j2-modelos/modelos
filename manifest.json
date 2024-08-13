@@ -5,6 +5,7 @@
   "description": "Extensao Modelos j2",
   "author": "Elmo de Moraes",
   "action": {
+    "default_popup": "Extensao/popup/popup.html",
     "default_icon": {
       "16": "Extensao/icon.png",
       "24": "Extensao/icon.png",

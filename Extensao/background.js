@@ -237,8 +237,8 @@ chrome.runtime.onMessage.addListener(
   
     async function ___getUserSets(){
       return { 
-        //regex: /-0|-1|-2|-3|-4|-5|-6|-7|-8|-9/, 
-        regex: /-0|-1|-2/, 
+        regex: /-0|-1|-2|-3|-4|-5|-6|-7|-8|-9/, 
+        //regex: /-0|-1|-2/, 
         etiqueta: 'Documento não lido' 
       }
     }
@@ -313,9 +313,9 @@ chrome.runtime.onMessage.addListener(
   
     function _fetchDocumentosNaoLidos(){
       const postData = new URLSearchParams();
-      postData.append('AJAXREQUEST', 'j_id320');
+      postData.append('AJAXREQUEST', 'j_id334');
       postData.append('javax.faces.ViewState', `${viewStateId}`);
-      postData.append('j_id321', 'j_id321');
+      postData.append('j_id335', 'j_id335');
       postData.append('AJAX:EVENTS_COUNT', '1');
       
       // Configurações da solicitação
@@ -343,12 +343,12 @@ chrome.runtime.onMessage.addListener(
   
     function _fetchDocumentosNaoLidosPagina(pagina){
       const postData = new URLSearchParams();
-      postData.append('AJAXREQUEST', 'j_id320');
+      postData.append('AJAXREQUEST', 'j_id334');
       postData.append('processoDocumentoNaoLidoForm', 'processoDocumentoNaoLidoForm');
       postData.append('autoScroll', '');
       postData.append('javax.faces.ViewState', `${viewStateId}`);
-      postData.append('processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id374', pagina);
-      postData.append('ajaxSingle', 'processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id374');
+      postData.append('processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id388', pagina);
+      postData.append('ajaxSingle', 'processoDocumentoNaoLidoForm:processoDocumentoNaoLidoDataTable:j_id388');
       postData.append('AJAX:EVENTS_COUNT', '1');
       
       // Configurações da solicitação
@@ -516,7 +516,7 @@ chrome.runtime.onMessage.addListener(
         await _fetchDocumentosNaoLidosPagina(pagina)
         .then(textPag =>{
           const tbodiesPag = __extrairTabelasTBody(textPag)
-          const trProcessosPag = __extrairRegistrosProcessoPaginaHTML(tbodies.length > 1 ? tbodies.at(1) : tbodies.at(0))
+          const trProcessosPag = __extrairRegistrosProcessoPaginaHTML(tbodiesPag.length > 1 ? tbodiesPag.at(1) : tbodiesPag.at(0))
           
           trProcessos = trProcessos.concat(trProcessosPag)
         })
@@ -577,7 +577,7 @@ chrome.runtime.onMessage.addListener(
   chrome.alarms.onAlarm.addListener(alarme => {
       if (alarme.name === 'fetchingAgrupadores') {
           console.log('Disparado alarme fetchingAgrupadores')
-          //fetchingAgrupadores()
+          fetchingAgrupadores()
           // Coloque aqui o código que deseja executar periodicamente
       }
   });
@@ -608,7 +608,7 @@ chrome.runtime.onMessage.addListener(
   }
 
   // Cria ou vatualiza o alarme para disparar a cada frequência definida
-  chrome.alarms.create('removerRegistrosExpirados', { periodInMinutes: 5 });
+  chrome.alarms.create('removerRegistrosExpirados', { periodInMinutes: 20 });
 
   // Adiciona um ouvinte para tratar o evento do alarme
   chrome.alarms.onAlarm.addListener(alarme => {
