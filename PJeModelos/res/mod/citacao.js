@@ -297,6 +297,7 @@ try {
             break;
             
           case 'meioComunicItSistema':
+          case 'meioComunicItDomJudE':
             changeTitulo('CITAÇÃO ELETRÔNICA');
             makeARVisible(false);
             makeSelectorOJVisible(false);

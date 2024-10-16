@@ -2512,8 +2512,14 @@ try {
       },
       processedEnderecos : [],
       processarNovosDestinatarios : function(_, args, meioComnicacao){
-        if(!(meioComnicacao))
-          meioComnicacao = (args.initialMeioComnicacao) ? args.initialMeioComnicacao : 'meioComunicItSistema';  // nct
+        debugger
+        if(!(meioComnicacao)){
+          const seletorMeioComunicacao = pkg.Selector.obterInstancia(/intimacaoSelectMeio|citacaoSelectMeio/)
+          if(seletorMeioComunicacao)
+            meioComnicacao = seletorMeioComunicacao.select.value
+          else
+            meioComnicacao = (args.initialMeioComnicacao) ? args.initialMeioComnicacao : 'meioComunicItSistema';  // nct
+        }
         
         if( !(j2.env.PJeVars.partes.list && j2.env.PJeVars.partes.list.todasPartes) )
           return;
@@ -2597,6 +2603,7 @@ try {
           case 'meioComunicItCentralMandados': prtP = args.padraoApresentacaoParteEnderecoTelefone; break;
           case 'meioComunicItTelefone':        prtP = args.padraoApresentacaoParteTelefone; break;
           case 'meioComunicItWhatsApp':        prtP = args.padraoApresentacaoParteWhatsApp; break;  // lwapac
+          case 'meioComunicItDomJudE':        prtP = args.padraoApresentacaoParteDomJudE; break;  // lwapac
           case 'meioComunicItDJe':             exbAdv = true; break;
           case 'meioComunicItSistema':         exbAdv = true; break;
         }
@@ -3355,6 +3362,44 @@ try {
           pkg.Documento.updateNumero(mnt, _objSel, _pF.juntDoc);
       },
       updateDescription : function(mnt, _obj, _p){
+        const fetchMudancaDescricao = (texto)=>{
+          if(!j2.modelo.par.jQ3('#taskInstanceForm').length)
+            return
+
+          const url = 'https://pje.tjma.jus.br/pje/Processo/movimentar.seam';
+          const body = new URLSearchParams({
+            'AJAXREQUEST': 'movimentarRegion',
+            [`taskInstanceForm:minutaProsseguimento-${new URLSearchParams(window.location.search).get('newTaskId')}:descDocDecoration:descDoc`]: texto,
+            'taskInstanceForm': 'taskInstanceForm',
+            'javax.faces.ViewState': j2.modelo.par.jQ3('#javax\\.faces\\.ViewState').val(),
+            'AJAX:EVENTS_COUNT': '1'
+          });
+
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+              'Accept': 'application/json, text/javascript, */*; q=0.01',
+              'X-Requested-With': 'XMLHttpRequest', // Cabeçalho comumente usado para requisições AJAX
+              // Outros cabeçalhos podem ser adicionados conforme necessário, como autenticação
+              'Accept-Encoding':'gzip, deflate, br, zstd'
+            },
+            body: body.toString(),
+            credentials: 'include', // Inclui cookies e credenciais de autenticação
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.text(); // Ajuste o retorno conforme a resposta esperada (JSON, text, etc.)
+            })
+            .then(data => {
+              console.log('Resposta:', data);
+            })
+            .catch(error => {
+              console.error('Erro ao realizar o fetch:', error);
+            });
+        }
         var itDef;
         var _;
         var _a = []; 
@@ -3411,6 +3456,7 @@ try {
                         
         _p.desc.value = (tx.length) ? tx : _p.docTipo.options[_p.docTipo.options.selectedIndex].textContent ;
         _p.desc.title = _p.desc.value;
+        fetchMudancaDescricao(_p.desc.value)
         mnt._['____updateDescription'] = tx.length !== 0;
         
         //jQ3(_p.desc)[(tx.length) ? 'addClass' : 'removeClass']('HLField');
@@ -4913,7 +4959,7 @@ try {
                 if(! destSemAdvogadoMap.length)
                   return true
                 
-                if( j2.env.modId.id.toLowerCase().match(/Citacao/) 
+                if( j2.env.modId.id.toLowerCase().match(/citacao/) 
                   && meioDeComunicacao.toLowerCase().match(/sistema/))
                   return true
 
@@ -4953,6 +4999,9 @@ try {
             switch(_this.PACMeioComonicacao){
               case 'Telefone':
                 return $(_.meiosComunicacaoSelector.select).find('option:selected').text().match(/Telefone|WhatsApp/) !== null;
+                break;
+              case 'Sistema':
+                return $(_.meiosComunicacaoSelector.select).find('option:selected').text().match(/Sistema|Domicílio Judicial Eletrônico/) !== null;
                 break;
               default:
                 return $(_.meiosComunicacaoSelector.select).find('option:selected').text() === _this.PACMeioComonicacao;
@@ -7376,7 +7425,7 @@ try {
             || 
             _.rolarParaExibirAoInserir === true
           )
-          toScrollIntoViewEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          toScrollIntoViewEl.scrollIntoView && toScrollIntoViewEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
           
           forEach(selI.eventFire, function(ev){
             evBus.fire(ev.event, _, selI);
@@ -7676,7 +7725,8 @@ try {
         
         _selInst.__loadedItems = true;
         defer(function(){evBus.fire('afterLoadItems.' + selct.id, _selInst, selct);});
-      }
+      },
+      obterInstancia: (idsRegExp) => pkg.Selector.instances.find(sel => sel.id.match(idsRegExp))
     };     
     
     pkg.ReferenciaDocumento = {

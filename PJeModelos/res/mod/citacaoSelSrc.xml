@@ -159,6 +159,13 @@ and open the template in the editor.
                             verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
                         </data>
                     </arElement>
+                    <arElement keyEl="meioComunicItDomJudE">
+                        <data>
+                            #:B{CITADO(A)} para tomar conhecimento dos termos da presente ação, acima especificada. Cientificado(a) 
+                            que o não comparecimento a qualquer audiência importará em sua #:B{revelia} e confissão quanto à matéria de fato, sendo consideradas 
+                            verdadeiras as alegações apresentadas pelo #{j2.env.PJeVars.processo.polos.ativo}.
+                        </data>
+                    </arElement>
                     <arElement keyEl="general">
                         <data>
                             [FINALIDADE INCOMPATÍVEL]
@@ -205,6 +212,11 @@ and open the template in the editor.
                             [FINALIDADE INCOMPATÍVEL]
                         </data>
                     </arElement>   
+                    <arElement keyEl="meioComunicItDomJudE">
+                        <data>
+                            [FINALIDADE INCOMPATÍVEL]
+                        </data>
+                    </arElement>   
                 </selectorArray>        
             </itemContent>
         </item>
@@ -245,6 +257,11 @@ and open the template in the editor.
                         </data>
                     </arElement>       
                     <arElement keyEl="meioComunicItSistema">
+                        <data>
+                            [FINALIDADE INCOMPATÍVEL]
+                        </data>
+                    </arElement>        
+                    <arElement keyEl="meioComunicItDomJudE">
                         <data>
                             [FINALIDADE INCOMPATÍVEL]
                         </data>

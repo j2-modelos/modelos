@@ -35,6 +35,7 @@ and open the template in the editor.
         <group label="Audiência">
             <gItem id="atoOrdItCancelamentoAudiencia"/>
             <gItem id="atoOrdItCancelamentoAudienciaTempoHabil"/>
+            <gItem id="atoOrdItRedesignacaoAudienciaDomJudEFrustrada"/>
             <gItem id="atoOrdItDesignacaoAudiencia"/>
             <gItem id="atoOrdItRedesignacaoAudiencia"/>
             <gItem id="atoOrdItRedesignacaoAudienciaInviabilidadeVideoConferencia"/>
@@ -606,6 +607,14 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{REDESIGNAÇÃO} da audiência de #{j2.env.PJeVars.audiencia.tipo} designada, considerando a falta de tempo hábil para citação/intimação da(s) parte(s).
+                </data>
+            </itemContent>
+        </item>   
+        <item id="atoOrdItRedesignacaoAudienciaDomJudEFrustrada" label="Redesignação Audiência | citação Domcílio Judicial frustrada" dataPlus="{ 'descricaoAppend': 'Redesignação audiência' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{REDESIGNAÇÃO DE AUDIÊNCIA} considerando a necessidade de tempo hábil para citação da(s) 
+                    parte(s) demandada(s) por modo diverso do domicílio judicial eletrônico.
                 </data>
             </itemContent>
         </item>   

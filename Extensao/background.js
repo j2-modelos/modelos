@@ -167,6 +167,20 @@ chrome.runtime.onMessage.addListener(
       return;
 
     switch(request.j2Action){
+      case 'emitir-evento-todos-frames':{
+        const tabId = sender.tab.id; // Obtém o ID da aba de onde a mensagem foi enviada
+        
+        // Envia para o frame principal
+        chrome.tabs.sendMessage(tabId, request, { frameId: 0 });
+
+        // Envia para todos os frames, incluindo iframes
+        chrome.webNavigation.getAllFrames({ tabId }, frames => {
+            frames.forEach(frame => {
+                chrome.tabs.sendMessage(tabId, request, { frameId: frame.frameId });
+            });
+        });
+        break
+      }
       case 'shareMessage':
         if(!(j2E.sharedMessages[sender.origin]))
           j2E.sharedMessages[sender.origin] = {}

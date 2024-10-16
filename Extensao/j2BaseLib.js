@@ -2,7 +2,7 @@ Array.prototype.forEachOriginal = Array.prototype.forEach;
 
 // Sobrescrevendo Array.prototype.forEach com uma versão assíncrona
 Array.prototype.forEach = async function(callbackfn, thisArg) {
-  const promises = this.map((value, index, array) => {
+  const promises = Array.prototype.map.call(this, (value, index, array) => {
     const result = callbackfn.call(thisArg, value, index, array);
 
     // Se o retorno não é uma Promise, cria uma Promise com setTimeout
@@ -12,7 +12,7 @@ Array.prototype.forEach = async function(callbackfn, thisArg) {
           // Garantia de que o callback é tratado de maneira assíncrona
           setTimeout(() => resolve(result), 0);
         });
-  });
+  }, thisArg);
   await Promise.all(promises);
 };
 

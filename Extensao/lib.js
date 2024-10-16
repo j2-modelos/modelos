@@ -6,11 +6,6 @@ if( ! (window.j2E) )
 
 window.USANDO_PJEMR = false
 
-chrome.storage.local.get('isPJeRActive', (data) => {
-
-  window.USANDO_PJEMR = data?.isPJeRActive || false
-});
-
 
 j2E.env = {
   urlParms : (function searchToObject() {
@@ -2385,6 +2380,7 @@ function UserException(message) {
 
 
 function j2EQueryTaarefas(numeroProcesso, competencia, etiquetas, successCallback){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   
   function _data(){
     return JSON.stringify({
@@ -2422,6 +2418,7 @@ function j2EQueryTaarefas(numeroProcesso, competencia, etiquetas, successCallbac
 }
 
 function j2EQueryTarefaProcessoByNumUnico(numUnico, successCallback){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   if(!(numUnico)){
     throw new Error("Não existe número único para consultar"); 
     return;
@@ -2431,6 +2428,7 @@ function j2EQueryTarefaProcessoByNumUnico(numUnico, successCallback){
 }
 
 function j2EQueryDadosTarefaDoProcesso(queryTarefa, numProcesso, successCallback, queryCriteria){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   if(!(queryTarefa)){
     throw new Error("Não existem dados de consulta da tarefa"); 
     return;
@@ -2507,6 +2505,7 @@ function j2EQueryDadosTarefaDoProcesso(queryTarefa, numProcesso, successCallback
 }
 
 function j2EQueryGetChaveAcesso(idProcesso, successCallback){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   if(!(idProcesso)){
     throw new Error("Não existe processo para consulta"); 
     return;
@@ -2539,10 +2538,12 @@ function j2EQueryGetChaveAcesso(idProcesso, successCallback){
 }
 
 function j2EQueryGetProcessoId(numProcesso, successCallback, errorCallback){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallback, true);
 }
 
 function j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallback, getOnlyId){
+  console.error('ESTA FUNÇÃO ESTÁ DEPRECIADA')
   function _alt(numProcesso, continueCallback){
     var thisW;
     //center : function(url, name, idProcesso, winSize, scrolled, callback, altTitle){
@@ -2842,7 +2843,15 @@ function loadPJeRestAndSeamInteraction(){
       }
     },
     processo : {
-      getCredentials : j2EQueryGetProcessoCredentials,
+      getCredentials : async (numeroProcesso) =>{
+        const idProc = await j2EPJeRest.processo.getIdProcesso(numeroProcesso)
+        const ca = await j2EPJeRest.processo.getChaveAcesso(idProc)
+        return {idProcesso: idProc, ca: ca}
+      },
+      getIdProcesso: (numeroProcesso, sucCB, errCB) =>{
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/numero-processo/${numeroProcesso}/validar`, 
+          sucCB, errCB, 'text');
+      },
       getChaveAcesso : (idProcesso,sucCB, errCB) =>{
         return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`, 
                             sucCB, errCB, 'text');
@@ -3941,7 +3950,7 @@ function loadPJeRestAndSeamInteraction(){
       xmlHistory : [],
       requestsIteractions : {
         baseURL : 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam',
-        listAutosDigitais : (_idProcesso)=>{
+        listAutosDigitais : (_idProcesso, aba)=>{
           var def = $.Deferred()
           var idProcesso = _idProcesso || j2E.env.urlParms.idProcesso || j2E.env.urlParms.id;
           var lockrKey = `SeamIteraction.processo-${idProcesso}.viewId`
@@ -3950,7 +3959,7 @@ function loadPJeRestAndSeamInteraction(){
           if( viewIdStore.noData ){
             j2EQueryGetChaveAcesso(idProcesso)
             .done( (ca) => {
-              const _baseURL = `${_this.processo.requestsIteractions.baseURL}?idProcesso=${idProcesso}&ca=${ca}`
+              const _baseURL = `${_this.processo.requestsIteractions.baseURL}?idProcesso=${idProcesso}&ca=${ca}${aba ? `&aba=${aba}` : ''}`
 
               _this.processo.requestsIteractions.baseURLWithCAId = _baseURL
 
@@ -4603,6 +4612,18 @@ function loadPJeRestAndSeamInteraction(){
           const acoes = j2E.SeamIteraction.processo.acoes
 
           _this.processo.requestsIteractions.listAutosDigitais()
+          .done( (it, $autosXml) => { 
+            def.resolve( it, acoes, $autosXml ) 
+          })
+          .fail( err => def.reject(err) )
+
+          return def.promise()
+        },
+        abrirProcessoNaAbaAudiencias : () =>{
+          var def = $.Deferred()
+          const acoes = j2E.SeamIteraction.processo.acoes
+
+          _this.processo.requestsIteractions.listAutosDigitais(null, 'tabProcessoAudiencia')
           .done( (it, $autosXml) => { 
             def.resolve( it, acoes, $autosXml ) 
           })
@@ -5316,7 +5337,7 @@ j2E.mods.runTimeConnect = function(){
   j2E.conn.reconnect();
 };
 
-j2E.mods.registerNumeroUnicoReplacer = function (contextObserverSelector){
+j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstituiacoNosSeletores}){
   /*if( !(jQ3) || !(jQ3.initialize) || )
     return;*/
   
@@ -5435,14 +5456,15 @@ j2E.mods.registerNumeroUnicoReplacer = function (contextObserverSelector){
             };
 
             j2E.conn.port.postMessageJ2E(request, function(loadData, loadStatus, load){
+              const {idProcesso, ca} = loadData[0]
               _lockr.set('credentials.' + numProc, { 
-                id : loadData[0],
-                ca : loadData[1],
+                id : idProcesso,
+                ca : ca,
                 timestamp : (new Date()).getTime()
               });
                             
               
-              var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", loadData[0]).replace("$", loadData[1]);
+              var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", idProcesso).replace("$", ca);
               aTag.attr('href', url);
               aTag.attr('target', '_blank');
               //parent.attr('j2-numUnico-link', 'success');
@@ -5487,11 +5509,41 @@ j2E.mods.registerNumeroUnicoReplacer = function (contextObserverSelector){
       if( ! jQ3(rec.target).text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/) )
         return;
       
-      if( !rec.target.matches(contextObserverSelector) && ! jQ3(rec.target).parents(contextObserverSelector).length )
+      if(containerPai && ! jQ3(rec.target).parents(containerPai).length && ! jQ3(rec.target).find(containerPai).length)
         return
+      
       if( rec.target.querySelectorAll ) 
-        _processNodes( rec.target.querySelectorAll('*') );
+        if(rec.target?.matches(limitarSubstituiacoNosSeletores))
+          _processNodes( rec.target.querySelectorAll('*') );
+          else
+        _processNodes( rec.target.querySelectorAll( limitarSubstituiacoNosSeletores ? `${limitarSubstituiacoNosSeletores} *` : '*') );
+      else
+        console.log('quem são vocês: ', rec, rec.target)
     }); 
+
+    function _manuallyObserve(alvoContainer){
+      const $alvosArr = alvoContainer ? jQ3(`${alvoContainer} *`) : jQ3('body *')
+      $alvosArr.filter(function(index) {
+        var regex = /[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/;
+        var hasMatch = false;
+
+        // Itera sobre os nós filhos diretos do elemento
+        $(this).contents().each(function() {
+            if (this.nodeType === Node.TEXT_NODE && regex.test(this.nodeValue)) {
+                hasMatch = true;
+                return false; // Interrompe a iteração se a correspondência for encontrada
+            }
+        });
+        
+        return hasMatch;
+      }).each(function(index, element) { 
+        _processNodes( element )
+      });
+    }
+
+    j2E.mods.registerNumeroUnicoReplacer = {
+      manuallyObserve: _manuallyObserve
+    }
   }
   
   function checkObserver() { // tappac as new

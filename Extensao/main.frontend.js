@@ -67,6 +67,7 @@ function fronendLoad(){
   window.j2E.mods.__sendMessageToPje = __sendMessageToPje
 
   function abrirAutomaticoTarefa(action){     
+    return
     function __fazerAjustesExibicaoPseudotarefaMovimentar(){
       jQ3.initialize('div#divSideBar', function(){
         jQ3(this).hide();
@@ -1670,7 +1671,8 @@ function fronendLoad(){
               const URL_DE_UMA_TAREFA_DO_PROCESSO_FRONTEND = __prepararLinkTarefa(nomeTarefa, {
                 competencia: "",
                 etiquetas:[],
-                numeroProcesso: _tarfData.num
+                numeroProcesso: _tarfData.num,
+                j2pseudotarefaMovimentar: true
               }, 'j2pseudotarefaMovimentar=true')
 
               $conteudoTarefa.find('div.row').css({
@@ -1684,7 +1686,7 @@ function fronendLoad(){
               $iframe.replaceWith($iframeC)
               
 
-              evBus.once('fowardedNotifyPseudotarefaMovimentarLoaded', function(ev, j2Action){
+              /*evBus.once('fowardedNotifyPseudotarefaMovimentarLoaded', function(ev, j2Action){
                 setTimeout(function(){
                   $conteudoTarefa.find('div.row').css({
                     filter : ''
@@ -1692,7 +1694,18 @@ function fronendLoad(){
                   $conteudoTarefa.find('spinner').empty();
                 }, 500)
                 
-              });
+              });*/
+              const ouvinte = (mensagem) => {
+                if (mensagem.j2Action === 'emitir-evento-todos-frames' && mensagem.type === 'j2-tarefa-carregada') {
+                  console.log('Evento "j2-tarefa-carregada" recebido:', mensagem.detail);
+                  $conteudoTarefa.find('div.row').css({
+                    filter : ''
+                  });
+                  $conteudoTarefa.find('spinner').empty();
+                  chrome.runtime.onMessage.removeListener(ouvinte);
+                }
+              }
+              chrome.runtime.onMessage.addListener(ouvinte);
                 
             }else{
               ;(function ___atualizarFrame(){
@@ -1969,15 +1982,17 @@ function fronendLoad(){
 
           __sendMessageToPje({
             action : 'requisitarJ2EPJeRest',
-            PJeRest : 'j2EPJeRest.processo.obterIdProcesso',
+            PJeRest : 'j2EPJeRest.processo.getCredentials',
             waitsResponse : true,
             arguments : [ numProc ] 
           }, 
           "PARENT_TOP",
-          function(idProcesso){  
+          function(cred){  
             $iframe = jQ3('<iframe>', { 
               class: 'j2-modal-expedientes-processo-iframe iframe-no-height',
-              src: `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${idProcesso}&idTaskInstance=${idTarefa}&j2-auto-selecionar=expedientes`,
+              src: `https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=${
+                cred.idProcesso
+              }&ca=${cred.ca}&idTaskInstance=${idTarefa}&aba=processoExpedienteTab&j2-auto-selecionar=expedientesModo3`,
               //sandbox: ''
             } ).on("load", function(a, b, c, d){
              /* !$iframe?.isShown && setTimeout( () => $iframe.toggleClass('iframe-no-height'), 500)
@@ -2648,6 +2663,8 @@ function fronendLoad(){
 
         switch (nomeTarefaAtual){
           case 'Avaliar decisão de levantamento da suspensão':
+          case 'Certificar prosseguimento':
+          case 'Publicar DJE_':
           case 'Avaliar determinações do magistrado':{
             const $button = _button('Distribuir em várias telas', 'fa-window-restore', 'j2-i-distribuir-adm' )
             $j2Container.prepend($button)
@@ -3636,6 +3653,36 @@ function fronendLoad(){
     });
     
   }
+
+  function fazerAjustesExibicaoPseudotarefaMovimentar(){
+    try{
+      if(! JSON.parse(atob(decodeURIComponent(window.location.hash.split('/').pop()))).j2pseudotarefaMovimentar)
+        return
+
+      jQ3.initialize('div#divSideBar', function(){
+        jQ3(this).hide();
+      })
+      
+
+      jQ3.initialize('div#divRightPanel', function(){
+        jQ3(this).css({
+          //filter : 'blur(5px)',
+          width : '100%'
+        }).attr('j2-view-pseudo-tarefa', 'true');
+        
+        jQ3.initialize('div#divProcessosTarefa', function(){
+          jQ3(this).hide();
+        }, { target : this });
+        jQ3.initialize('div#divMainPanel', function(){
+          jQ3(this).css({
+            width : '100%'
+          });
+        }, { target : this });
+      });
+    }catch(e){
+      return
+    }
+  }
     
   personaliazarPainelUsuarioECabecalhoTarefa();
   
@@ -3649,6 +3696,8 @@ function fronendLoad(){
   
   
   listenMessages();
+
+  fazerAjustesExibicaoPseudotarefaMovimentar()
 
 
   evBus.on('on-adicionar-etiqueta-via-pje', function(ev, args, toasterTitulo) {

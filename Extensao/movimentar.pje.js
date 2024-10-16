@@ -2753,8 +2753,17 @@ function init(){
     return
   }
 
-  observeParaARDigital()
+  async function emitirEventoCarregamento(){    
+    // Atrasa a emissão do evento em 1 segundo
+    setTimeout(()=> { 
+      const message = { type: 'j2-tarefa-carregada', detail: { mensagem: 'A tarefa foi carregada.' }, j2Action: 'emitir-evento-todos-frames' }
+      console.log('Mensagem emitia: ', message)
+      chrome.runtime.sendMessage(message) 
+    }, 500);
+  }
 
+  observeParaARDigital()
+  emitirEventoCarregamento()
   
   jQ3.initialize('#mpLoadingMovimentarContainer', function(){
     const $this = jQ3(this)

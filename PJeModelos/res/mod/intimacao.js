@@ -317,6 +317,7 @@ try {
             break;
             
           case 'meioComunicItSistema':
+          case 'meioComunicItDomJudE':
             changeTitulo('INTIMAÇÃO ELETRÔNICA');
             makeARVisible(false);
             makeSelectorOJVisible(false);
@@ -379,7 +380,8 @@ try {
           'intmItPenhoraOnLineParcial'
         ],
         selector : 'selectorintimacaoItens',
-        container : mod.edt.gE('modAddtCtrls')
+        container : mod.edt.gE('modAddtCtrls'),
+        formato: '#:B{R$ $moeda} ($extenso)'
       },
       setMonetaryListeners : function(){        
         forEach(pkg.Intimacao.bindMonetary.items, function(i){
@@ -404,7 +406,7 @@ try {
                 else
                   /* create container */
                   if(pkg.monetario){
-                    pkg.monetario.createInputSetMonetario('ctrlMonetario'+item, 'Valor R$', pkg.Intimacao.bindMonetary.container, mod.exp.gE('valorBacenjud.'+item), item);
+                    pkg.monetario.createInputSetMonetario('ctrlMonetario'+item, 'Valor R$', pkg.Intimacao.bindMonetary.container, mod.exp.gE('valorBacenjud.'+item), item, null, pkg.Intimacao.bindMonetary.formato);
                     return;
                   }
             //});

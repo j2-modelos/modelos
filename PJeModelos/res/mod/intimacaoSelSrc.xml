@@ -824,12 +824,12 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">1
                         <data>
-                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
+                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:span@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:span@valorBacenjud.intmItPenhoraOnLine{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
                         </data>
                     </arElement>
                 </selectorArray>               
@@ -1449,12 +1449,12 @@ and open the template in the editor.
                 <selectorArray>
                     <arElement keyEl="general">1
                         <data>
-                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE parcial}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
+                            #:B{INTIMADO(A)} da #:U{#:B{PENHORA ONLINE parcial}} realizada na importância de #:span@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível.
                         </data>
                     </arElement>
                     <arElement keyEl="meioComunicItCentralMandados">
                         <data>
-                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:U{#:B@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
+                            #:B{INTIMAÇÃO} da parte acima qualificada para tomar conhecimento da #:U{#:B{PENHORA ONLINE}} realizada na importância de #:span@valorBacenjud.intmItPenhoraOnLineParcial{R$ 0,00 (zero)}, referente à Execução dos autos epigrafados que tramita perante este Juizado Especial Cível..
                         </data>
                     </arElement>
                 </selectorArray>               

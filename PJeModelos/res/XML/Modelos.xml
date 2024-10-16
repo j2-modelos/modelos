@@ -158,7 +158,7 @@
                     <classe id="Corpo" versao="1.0">
                             <constructs param="textIndent" value="0cm" type="string"/>
                             <constructs param="newId" value="atoOrdinatorio:just" type="string"/>
-                            <constructs param="textContent" value="Nos termos do art. 93, XIV da CF, art. 203, §4º do CPC, art. 3º do Provimento 22/2018-CGJ/MA, Provimento 10/2009-CGJ/MA, Provimento 42/2019 CGJ/MA#:span@autorizacaoSpanComplemento{, #:u{encaminho} os autos para realização da(s) seguinte(s) diligência(s)}:" type="string"/>
+                            <constructs param="textContent" value="Nos termos do art. 93, XIV da CF, art. 203, §4º do CPC, art. 3º do Provimento 22/2018-CGJ/MA, Provimento 10/2009-CGJ/MA, Provimento 42/2019 CGJ/MA, Resolução CNJ 455/2022, alterada pela Resolução CNJ 569/2024#:span@autorizacaoSpanComplemento{, #:u{encaminho} os autos para realização da(s) seguinte(s) diligência(s)}:" type="string"/>
                             <constructs param="styleClasses" value="atoOrdEnunc" type="string"/>
                     </classe>
                     <classe id="Space" versao="1.0">
@@ -1171,6 +1171,8 @@
                                 <constructs param="initialMeioComnicacao" value="meioComunicItCentralMandados" type="string"/>
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
+                                <constructs param="padraoApresentacaoParteDomJudE" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} Domicílio Judicial Eletrônico (Resolução  CNJ455/2022, alterada pela Resolução CNJ 569/2024)" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
@@ -2122,6 +2124,8 @@
                                 <constructs param="bindSeletorPessoaFormats" value="Indnt0cm" type="bool"/-->
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
+                                <constructs param="padraoApresentacaoParteDomJudE" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} Domicílio Judicial Eletrônico (Resolução  CNJ455/2022, alterada pela Resolução CNJ 569/2024)" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 
@@ -2343,6 +2347,8 @@
                                 <constructs param="bindSeletorPessoaFormats" value="Indnt0cm" type="bool"/-->
                                 <constructs param="padraoApresentacaoParteGeneral" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}}" type="string"/>
+                                <constructs param="padraoApresentacaoParteDomJudE" 
+                                            value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:BR{} Domicílio Judicial Eletrônico (Resolução  CNJ455/2022, alterada pela Resolução CNJ 569/2024)" type="string"/>
                                 <constructs param="padraoApresentacaoParteEndereco" 
                                             value="#:B{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.UCase}}: #:B{#:U{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #{j2.mod.clsCnstr.SeletorPessoa.selected.outrosNomes._} #:BR{} #:U{ENDEREÇO:} #{j2.mod.clsCnstr.SeletorPessoa.selected.enderecoPAC._}" type="string"/>                                
                                 <!--constructs param="padraoApresentacaoParteEnderecoTelefone" 

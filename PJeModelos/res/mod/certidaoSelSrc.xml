@@ -117,7 +117,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         </group>        
         <group label="Outros">
             <!--<gItem id="certItApresentacaoTituloExecutivo"/>-->
-            <!--gItem id="certItRemessaPorAR"/-->
+            <gItem id="certItRemessaPorAR"/>
             <gItem id="certItDesentranhamento"/>
             <gItem id="certItRemessaDocsAudiencia"/>
             <gItem id="certItExpedienteReputadoEficaz"/>
@@ -126,6 +126,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
         </group>        
         <group label="Prazo">
             <gItem id="certItPrazoSemCump"/>
+            <gItem id="certItPrazoSemLeituraDomJudE"/>
             <gItem id="certItPrazoAbandono"/>
             <gItem id="certItPrazoInAlbisManifEmbExec"/>
             <gItem id="certItPrazoInAlbis"/>
@@ -1137,6 +1138,18 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item>
+        <item id="certItPrazoSemLeituraDomJudE" label="Decurso prazo registro ciência" dataPlus="{ 'descricaoAppend': 'Ducurso de prazo para registrar ciência na citação' }">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Certifico, #:span!j2-cert-sequencializador{nesta data,} que #:B{findou} 
+                    em #:span@certItPrazoSemLeituraDomJudE-prazoExtenso{XXXXDataXXXX} decorreu o prazo 
+                    para a parte #:span@pessoa-polo-parte-LCase{#{j2.mod.clsCnstr.SeletorPessoa.selected.polo.LCase}}
+                    #:B{#:span@selParte{#{j2.mod.clsCnstr.SeletorPessoa.selected.nome}}} #:B{registrar ciência na citação} 
+                    expedida por meio do domicílio judicial eletrônico (#:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}}), 
+                    nos termos do art. 20, §3º, da Resolução  CNJ455/2022, alterada pela Resolução CNJ 569/2024.
+                </data>
+            </itemContent>
+        </item>
         <item id="certItPrazoInAlbisManifEmbExec" label="Decurso Manifestação Embargos à Execução" dataPlus="{ 'descricaoAppend': 'Prazo decorrido' }">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
@@ -1208,7 +1221,7 @@ https://www.dropbox.com/s/60pxx9xci6rbnw3/Portaria%20Conjunta%205.2017%20-%20cum
                 </data>
             </itemContent>
         </item>     
-        <item id="certItRemessaPorAR" label="Expediente Rmessa AR" dataPlus="">
+        <item id="certItRemessaPorAR" label="Expediente Remessa AR" dataPlus="">
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     Certifico, #:span!j2-cert-sequencializador{nesta data,} que o expediente sob #:span@docId{#:span@docIdDefaulttext{id XXXXIdXXXX}} foi remetida à Empresa de Correios e Telégrafos sob o Aviso de Recebimento abaixo consignado.

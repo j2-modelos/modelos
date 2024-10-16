@@ -229,7 +229,16 @@ function pjeLoad(){
     _args.push(defaultErroCallback);
     
     defer(function(){
-      _rest.apply(null, _args);
+      if(defatulCallback || defaultErroCallback){
+        const ePromessa = _rest.apply(null, _args)
+        if(ePromessa instanceof Promise)
+          ePromessa.then(defatulCallback).catch(defaultErroCallback)
+      }else
+        try {
+          _rest.apply(null, _args)?.then(defatulCallback);
+        }catch(e){
+          defaultErroCallback(e)
+        }
     });    
     
     //console.log('rest', _rest, _args);
@@ -450,8 +459,8 @@ function pjeLoad(){
       j2E.env.tarefaAtual = _tarfProp
 
       const idProcesso = j2E.env.urlParms.idProcesso || j2E.env.urlParms.id
-      let dadosCompletosProcesso = await j2EPJeRest.processo.getDadosCompletos(idProcesso)
-      j2E.env.getDadosCompletos = dadosCompletosProcesso = dadosCompletosProcesso.status === "ok" ? dadosCompletosProcesso.result : undefined
+      /*let dadosCompletosProcesso = await j2EPJeRest.processo.getDadosCompletos(idProcesso)
+      j2E.env.getDadosCompletos = dadosCompletosProcesso = dadosCompletosProcesso.status === "ok" ? dadosCompletosProcesso.result : undefined*/
 
       var body = jQ3('#taskInstanceForm > div.rich-panel > div.rich-panel-body');
       var form = body;
@@ -684,7 +693,7 @@ function pjeLoad(){
       
         }
 
-        createTaskPresets(_tarfProp.personalizacao.presets)
+        createTaskPresets(_tarfProp.personalizacao.presetsADM)
       }
 
       const _criarCorpoParaPseudotarefaPura = ()=>{
@@ -777,7 +786,6 @@ function pjeLoad(){
       _tarfProp.personalizacao.transicaoRemover                          && _transicaoRemover();
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
       _tarfProp.personalizacao.painel                                    && _criarPainel();
-      _tarfProp.personalizacao.presets                                   && _criarTaskPresets()
       _tarfProp.personalizacao.scroller                                  && _criarTaskScroller()
       _tarfProp.personalizacao.obterDosAutos                             && _obterDosAutos()
       
@@ -942,8 +950,8 @@ function pjeLoad(){
                     _j.insertAfter(jElSet);
 
 
-                    j2E.SeamIteraction.processo.acoes.abrirProcesso()
-                    .pipe( (a, acoes) => acoes.obterAudiencasDoProcesso() )
+                    j2E.SeamIteraction.processo.acoes.abrirProcessoNaAbaAudiencias()
+                    //.pipe( (a, acoes) => acoes.obterAudiencasDoProcesso() )
                     .done((audiencias, $tabela) => { 
                       _div.empty()
                       const ___infoNenhumaAudiencia = ()=>{
@@ -1211,6 +1219,7 @@ function pjeLoad(){
 
           function depoisDeADMReorganizarTarefas(_tarfProp){
             _delayCall(ADMFaixaULtimasSelecoes, _tarfProp)
+            _tarfProp.personalizacao.presetsADM &&  _delayCall(_criarTaskPresets)
           }
           break;
       }
@@ -1249,21 +1258,49 @@ function pjeLoad(){
     jQ3.initialize('table.rich-table', function(){
       if(! (this.id.includes('destinatariosTable')) && ! (this.id.includes('tableDestinatarios')) ) 
         return;
+
+      const $this = jQ3(this)
+
+      const idTask = j2E.env.urlParms.newTaskId;
+      const idProcesso = j2E.env.urlParms.idProcesso
+
+
       jQ3.initialize('select', function(){
         var jEl = jQ3(this);
+        let valor
+        
 
         const opcaoNaoTermoInicialContagemPrazo = (op)=> !op.parent().attr('id').includes('contagemPrazoColumnBody')
         
-        if( jEl.find('option').length === 2 && opcaoNaoTermoInicialContagemPrazo(jEl.find('option')))
-          jEl.val( jEl.find('option:last').val() ).change();
+        if( jEl.find('option').length === 2 && opcaoNaoTermoInicialContagemPrazo(jEl.find('option')))          
+          valor = jEl.find('option:last').val()
+        
         
         if (jEl.find('option:selected').text() === 'Sistema')
-          jEl.val( jEl.find('option:contains("Diário Eletrônico")').val() );
+          valor = jEl.find('option:contains("Diário Eletrônico")').val()
+        
         
         if (jEl.find('option:selected').text() === 'Selecione')
           if (jEl.find('option:contains("Telefone")').length)
-            jEl.val( jEl.find('option:contains("Telefone")').val() );
+            valor = jEl.find('option:contains("Telefone")').val()
+          else if (jEl.find('option:contains("Intimação")').length && !jEl.attr('id').includes('tipoAtoCombo'))
+            valor = jEl.find('option:contains("Intimação")').val()
           
+
+        if(valor){
+          jEl.change(()=> lockrSes.set(jEl.prop('id'), jEl.val()))
+          jEl.val( valor )
+          return
+        }
+
+        if(jEl.attr('id').endsWith('tipoAtoCombo')){
+          const jaDisparou = lockrSes.get(`${jEl.prop('id')}:jaDisparou`, false)
+          if(jaDisparou) return
+
+          jEl.val( jEl.find('option:contains("Intimação")').val() )
+          lockrSes.set(`${jEl.prop('id')}:jaDisparou`, true)
+          jEl[0].dispatchEvent( new Event('change') )
+        }
       }, { target : this });
       
       
@@ -1271,7 +1308,10 @@ function pjeLoad(){
         if(! (this.id.includes('quantidadePrazoAto')) && ! (this.id.includes('prazoGeralInput')) )
           return;
         
-        var __dataList__ = '<select id="$:list"><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="30">30</option></select>';
+        var __dataList__ = `<select id="$:list">${
+          [0,2,3,5,10,15,30].map(p => `<option value="${p}">${p}</option>`)
+          .join('')
+        }</select>`;
         
         var jEl = jQ3(this);
         
@@ -1282,7 +1322,7 @@ function pjeLoad(){
           }).remove();
         }
         
-        jEl.val('10');
+        jEl.val( lockrSes.get(jEl.prop('id'), '10') )
         jEl[0].dispatchEvent( new Event('change') );
           lockrSes.set(jEl.prop('id'), jEl.val() );
         
@@ -1441,6 +1481,78 @@ function pjeLoad(){
         dl.combobox();
           
       }, { target : this });
+
+      jQ3.initialize(`th`, function(){
+        var jEl = jQ3(this);
+
+        if(jEl.text().includes('Diário Eletrônico')){
+          const jaDisparou = lockrSes.get(`${jEl.prop('id')}:jaDisparou`, false)
+          if(jaDisparou) return
+
+          lockrSes.set(`${jEl.prop('id')}:jaDisparou`, true)
+          jEl[0].dispatchEvent( new Event('click') )
+        }
+      }, { target : this });
+
+      (async ()=>{
+        if(!j2E.env.getDadosCompletos){
+          let dadosCompletosProcesso = await j2EPJeRest.processo.getDadosCompletos(idProcesso)
+          j2E.env.getDadosCompletos = dadosCompletosProcesso = dadosCompletosProcesso.status === "ok" ? dadosCompletosProcesso.result : undefined
+        }
+
+        const dadoCompletos = j2E.env.getDadosCompletos
+        
+
+      jQ3.initialize(`#taskInstanceForm\\:miniPac-${idTask}\\:poloAtivoBotao, #taskInstanceForm\\:miniPac-${idTask}\\:poloPassivoBotao`, async function(){
+        var jEl = jQ3(this);
+        const SIGLA = jQ3(this).attr('id').includes('poloAtivoBotao') ? 'AT' : jQ3(this).attr('id').includes('poloPassivoBotao') ? 'PA' : '[INDETERMINADO]'
+        
+        if(!dadoCompletos.polo.find(p=>p.polo === SIGLA).parte.some(p=> !!p.advogado))
+          return
+
+        const jaDisparou = lockrSes.get(`${jEl.prop('id')}:jaDisparou`, false)
+        if(jaDisparou) return
+
+        lockrSes.set(`${jEl.prop('id')}:jaDisparou`, true)
+        jEl[0].dispatchEvent( new Event('click') )
+        jEl[0].dispatchEvent( new Event('mousedown') )
+        jEl[0].dispatchEvent( new Event('mouseup') )
+
+        jEl.addClass('toggleButtonDown')
+        
+      }, { target : $this.parents('#taskInstanceForm').get(0) }); })()
+
+
+      jQ3.initialize(`#taskInstanceForm\\:miniPac-${idTask}\\:docVinculaveisTable`, function(){
+        var $jEl = jQ3(this);
+        const jaDisparou = lockrSes.get(`${$jEl.prop('id')}:jaDisparou`, false)
+        if(jaDisparou) return
+
+        const input = $jEl.find('td:nth-child(4)').filter(function() {
+            return jQ3(this).text().toLowerCase().match(/sentença|despacho|ato ordinatório|decisão/);
+        }).first().prevAll().last().find('input').get(0)
+        input.checked = true
+        input.dispatchEvent( new Event('change') )
+
+
+        lockrSes.set(`${$jEl.prop('id')}:jaDisparou`, true)
+          
+      }, { target : $this.parents('#taskInstanceForm').get(0) });
+
+      jQ3.initialize(`#docVinculaveis`, function(){
+
+        var $jEl = jQ3(this);
+        const key = `${$jEl.prop('id')}:jaDisparou:${idTask}`
+
+        const jaDisparou = lockrSes.get(key, false)
+        if(jaDisparou) return
+
+        $jEl.before(jQ3('#divGravar'))
+        $jEl.before(jQ3('<br>'))
+
+        lockrSes.set(key, true)
+          
+      }, { target : $this.parents('#taskInstanceForm').get(0) });
     });
   }
 
@@ -2590,9 +2702,12 @@ function pjeLoad(){
         idTask = j2E.env.urlParms.newTaskId;	
 
     if( typeof idTask !== 'undefined' && idTask != TAREFA_VAZIA )
-      j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
-        personalizarTarefa(data);	
-      });	
+      if(document.querySelector('#taskInstanceDiv.divMovimentarProcesso') && document.querySelectorAll('#taskInstanceForm input[type=checkbox]').length > 30)
+        personalizarTarefa(['Avaliar determinações do magistrado'])
+      else
+        j2EPJeRest.tarefas.descricaoNoFluxo(idTask, idProc, function(data){	
+          personalizarTarefa(data);	
+        });	
     else{
       j2E.env.urlParms.idProcesso = j2E.env.cargaHash._tarfData.idProcesso
       j2E.env.urlParms.newTaskId = 0
@@ -3301,6 +3416,10 @@ function pjeLoad(){
           !j2E.env.tempData?.autoSelecionadox?.expedientes && defer(()=>this.dispatchEvent(new Event('click')))
           j2E.env.tempData.autoSelecionadox ??={expedientes:true}
         })
+        break;
+      case 'expedientesModo3':
+        jQ3('.navbar.navbar-default.navbar-fixed-top.nav-topo').hide()
+        jQ3('#pageBody').attr('j2-limitar-autos-digitais', '')
         break;
     }
   }
@@ -4155,7 +4274,7 @@ function pjeLoad(){
 
   function observarParaCriarFerramentaWhatsApp(){
     const idTask = j2E.env.urlParms.newTaskId
-    jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:documentoExistenteDiv > .rich-panel`, function(){
+    jQ3.initialize(`#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:documentoExistenteDiv > .rich-panel`, async function(){
       const toaster = (a, msg, severity)=> { 
         jQ3.Toast ? jQ3.Toast(a, msg, severity) : alert(`${severity.toUpperCase()}: ${msg}`) 
       }
@@ -4207,6 +4326,10 @@ function pjeLoad(){
       })
 
       $thisContainer.after($WAPanel )
+
+      const idProcesso = j2E.env.urlParms.idProcesso
+      let dadosCompletosProcesso = await j2EPJeRest.processo.getDadosCompletos(idProcesso)
+      j2E.env.getDadosCompletos = dadosCompletosProcesso = dadosCompletosProcesso.status === "ok" ? dadosCompletosProcesso.result : undefined
 
       TarefaPersonalizadaAvancada.etiquetasRapidas(
         'Expedir precatório',
@@ -4302,7 +4425,7 @@ function pjeLoad(){
       //verificarSePaginaExpirou();
       observeSelectTipoDocumento();
       observarParaAcrescentarRecarregadorDeDocumento()
-      observeQualificacaoPartes();
+      if(!USANDO_PJEMR )observeQualificacaoPartes();
       //observeTarefaComPAC();
       //requisitarDadosSeTarefaEPersonalisar();
       listenMessages();
@@ -4333,7 +4456,7 @@ function pjeLoad(){
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam':
       personalizarTelefonesDasPartes();
-      observeQualificacaoPartes()
+      if(!USANDO_PJEMR ) observeQualificacaoPartes();
       break;
       
     case '/pje/Processo/update.seam':
@@ -4383,6 +4506,10 @@ function pjeLoad(){
     case '/pje/Painel/painel_usuario/include/agrupadorPje2.seam':
       preparComandoDeEtiquetagemDeAnaliseJuntada();
       break;
+    
+    case '/pje/Visita/listView.seam':
+      observeSeEModeloJ2()
+      break
       
     default:
      /* observeSeEModeloJ2();

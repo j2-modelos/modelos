@@ -13,7 +13,7 @@ function init(){
   addScript('Extensao/j2-external.js')
   
 
-  j2E.mods.registerNumeroUnicoReplacer();
+  j2E.mods.registerNumeroUnicoReplacer({containerPai: 'body', limitarSubstituiacoNosSeletores: true});
 
   
   jQ3.initialize('#formularioRD02\\:cpfCgcAutor, #formularioRD02\\:cpfCgcReu, #formularioRD02\\:numeroDeposito', function(){
@@ -37,13 +37,13 @@ function init(){
     if(jQ3('#TESTADOR').length)
       return;
 
-    var but = jQ3('<input>', { 
+    /*var but = jQ3('<input>', { 
       value : '[EM ABIENTE DE TESTES]', 
       class : 'btn btn-azul',
       id : 'TESTADOR',
       onclick : 'j2.api.actions.visualizarTestador()'
      })
-    but.insertAfter( '#formularioRD02' )
+    but.insertAfter( '#formularioRD02' )*/
   });
 }
   

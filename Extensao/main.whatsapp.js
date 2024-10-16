@@ -76,7 +76,7 @@ function init() {
     
   }
 
-  j2E.mods.registerNumeroUnicoReplacer('div[role="application"]');
+  j2E.mods.registerNumeroUnicoReplacer({containerPai: '#main', limitarSubstituiacoNosSeletores: 'div[role="application"]'});
   (function runTimeConnect() {
     j2E.mods.runTimeConnect();
 
@@ -100,7 +100,16 @@ function init() {
     });
   })();
 
-  //jQ3.initialize('span[data-testid=menu]', function(){
+  jQ3.initialize('#side', function(){
+    const $this = jQ3(this)
+    $this.click(ev=> {
+      const $target = jQ3(ev.target)
+      if( $target.parents('[role=listitem]').length )
+        j2E.mods.registerNumeroUnicoReplacer.manuallyObserve()
+    })
+  })
+
+
   jQ3.initialize(`div[aria-label='Status']`, function () {
     var $this = jQ3(this);
     var $button = $this.parent();

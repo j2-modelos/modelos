@@ -77,6 +77,16 @@ and open the template in the editor.
                 </data>
             </itemContent>
         </item> 
+        <item id="meioComunicItDomJudE" label="Domicílio Judicial Eletrônico" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>           
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    Domicílio Judicial Eletrônico
+                </data>
+            </itemContent>
+        </item> 
         
     </items>
   </selectorDef>

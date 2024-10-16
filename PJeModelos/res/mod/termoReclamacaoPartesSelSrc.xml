@@ -21,12 +21,21 @@ and open the template in the editor.
             <gItem id="poloAtivo.Demandante"/>
             <gItem id="poloAtivo.Demandante2"/>
         </group>
-        <group label="Polo Passivo">
-            <gItem id="poloPassivo.Demandado"/>
-            <gItem id="poloPassivo.Demandado2"/>
-            <gItem id="poloPassivo.Demandado3"/>
-            <!--gItem id="poloPassivo.Demandado.CAEMA"/-->
+        <!--group label="Polo Passivo" ordenar="true">
+            <gItem id="poloPassivo.Demandado" posicao="1"/>
+            <gItem id="poloPassivo.Demandado2" posicao="2"/>
+            <gItem id="poloPassivo.Demandado3" posicao="3"/-->
+        <group label="Polo Passivo" >
+            <gItem id="poloPassivo.Demandado" />
+            <gItem id="poloPassivo.Demandado2" />
+            <gItem id="poloPassivo.Demandado3" />            
+            
+            <gItem id="poloPassivo-Demandado-BANCO-BRADESCO"/>
+            <gItem id="poloPassivo-Demandado-BANCO-PAN"/>
+            <gItem id="poloPassivo-Demandado-CAEMA"/>
+            <gItem id="poloPassivo-Demandado-CLARO"/>
             <gItem id="poloPassivo-Demandado-EQUATORIAL"/>
+            <gItem id="poloPassivo-Demandado-BMG"/>
         </group>     
     </groupsDefs>
     <items naoOrdenado="true">
@@ -94,6 +103,111 @@ and open the template in the editor.
             <itemContent type="plainText" addtClassStyles="">
                 <data>
                     #:B{EQUATORIAL MARANHÃO}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo-Demandado-BANCO-PAN" label="BANCO PAN" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '59.285.411/0001-13',
+                'ParteNome': 'BANCO PAN',
+                'ParteNomeRazao': 'BANCO PAN S/A',
+                'checkBoxProcuradoria': true
+            } 
+        }
+        ">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{BANCO PAN}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo-Demandado-BANCO-BRADESCO" label="BANCO BRADESCO" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '60.746.948/0001-12',
+                'ParteNome': 'BRADESCO',
+                'ParteNomeRazao': 'BANCO BRADESCO S.A.',
+                'checkBoxProcuradoria': true
+            } 
+        }
+        ">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{BANCO BRADESCO}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo-Demandado-CAEMA" label="CAEMA" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '06.274.757/0001-50',
+                'ParteNome': 'CAEMA',
+                'ParteNomeRazao': 'COMPANHIA DE SANEAMENTO AMBIENTAL DO MARANHAO - CAEMA',
+                'checkBoxProcuradoria': false,
+                'ParteEndLograd': 'Avenida Getúlio Vargas',
+                'ParteEndNumero': '1131',
+                'ParteEndBairro': 'Centro',
+                'ParteEndCidade': 'Imperatriz',
+                'ParteEndUF': 'Maranhão'
+            } 
+        }
+        ">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{CAEMA}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo-Demandado-CLARO" label="CLARO" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '40.432.544/0001-47',
+                'ParteNome': 'CLARO',
+                'ParteNomeRazao': 'CLARO S.A.',
+                'checkBoxProcuradoria': true
+            } 
+        }
+        ">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{CLARO}
+                </data>
+            </itemContent>
+        </item>   
+        <item id="poloPassivo-Demandado-BMG" label="BMG" dataPlus="{ 
+            'polo': 'partesPoloPassivo',
+            'opt' : { 
+                'endAut' : true, 
+                'blckTpPs': true
+            },
+            'bindingValues': {
+                'ParteCNPJ': '61.186.680/0001-74',
+                'ParteNome': 'BMG',
+                'ParteNomeRazao': 'BANCO BMG SA',
+                'checkBoxProcuradoria': true
+            } 
+        }
+        ">
+            <itemContent type="plainText" addtClassStyles="">
+                <data>
+                    #:B{BMG}
                 </data>
             </itemContent>
         </item>   

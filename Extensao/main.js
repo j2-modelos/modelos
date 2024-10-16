@@ -719,25 +719,25 @@ var TarefasProps = {
       scroller: { 
         seletorBotaoMedio: '#j2eADMPanel-exps'
       },
-      presets: {
+      presetsADM: {
         items: [
           {
-            label: 'Intimar', selecoes: [
+            label: '# - Intimar', selecoes: [
               'Expedir intimação'
             ]
           },
           {
-            label: 'Citar', selecoes: [
+            label: 'PJEC - Citar', selecoes: [
               'Controlar audiência',
               'Expedir citação',
-              'Expedir vários documentos'
+              //'Expedir vários documentos'
             ]
           },
           {
-            label: 'Citar com liminar', selecoes: [
+            label: 'PJEC - Citar / liminar', selecoes: [
               'Controlar audiência',
               'Expedir citação e(ou) intimação',
-              'Expedir vários documentos'
+              //'Expedir vários documentos'
             ]
           },
           {
@@ -1056,7 +1056,7 @@ var TarefasProps = {
               data : {
                 classButton : 'btn-primary',
                 //onclickAttr : "window.open('https://siscondj.tjma.jus.br/portalsiscondj/login.jsp')",
-                callback: ()=>j2EOpW.center('https://www.dropbox.com/scl/fi/u9up2lsgs5v98s43e3ylw/2JECIVEL-Agendamento-de-ALVAR.xlsx?cloud_editor=excel&dl=0&force_role=personal&rlkey=00ysu18h9hj06amzopnoeqak6',
+                callback: ()=>j2EOpW.center('https://docs.google.com/spreadsheets/d/1W92hF6A29WnluJpuPvZDp8NRWRj-NQnI/edit#gid=705446166',
                   'j2-abrir-agendamento-alvara'),
                 id : 'j2-abrir-agendamento-alvara',
                 tag : 'a',
@@ -1143,9 +1143,9 @@ var TarefasProps = {
     altNomeADM : 'Expedir citação e(ou) intimação',
     ADMGrupo : 'exps',
     ADMShortCut : 'N'
-  },
+  }, 
   'Expedir edital' : {
-    ADMGrupo : 'exps'
+    ADMGrupo : 'dmsTrf'
   },
   'Preparar intimação' : {
     altNomeADM : 'Expedir intimação',
@@ -2280,15 +2280,21 @@ function init(){
   };
   	
   function loadOrigin(){
-    switch(window.location.origin){
-      case 'https://frontend.prd.cnj.cloud':
-        fronendLoad();
-        break;
-      case 'https://pje.tjma.jus.br':
-        loadPJeRestAndSeamInteraction()
-        pjeLoad();
-        break;
-    }  	
+    chrome.storage.local.get('isPJeRActive', (data) => {
+
+      window.USANDO_PJEMR = data?.isPJeRActive || false
+
+      switch(window.location.origin){
+        case 'https://frontend.prd.cnj.cloud':
+          fronendLoad();
+          break;
+        case 'https://pje.tjma.jus.br':
+          loadPJeRestAndSeamInteraction()
+          pjeLoad();
+          break;
+      }  	
+    });
+    
   }
   
   function runTimeConnect(){

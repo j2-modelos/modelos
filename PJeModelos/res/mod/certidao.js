@@ -117,6 +117,7 @@ try {
           'certItTempestividadeRecurso',
           'certItTempestividadeRecursoIntepest',
           'certItPrazoSemCump',
+          'certItPrazoSemLeituraDomJudE',
           'certItWhatsAppLeitura',
           'certItWhatsAppLeituraNao',
           'certItWhatsAppLeituraArt6',
@@ -151,6 +152,7 @@ try {
         
         forEach([
           'certItPrazoSemCump',
+          'certItPrazoSemLeituraDomJudE',
           'certItWhatsAppLeitura',
           'certItWhatsAppLeituraArt6',
           'certItWhatsAppLeituraArt6ccPC142020',
@@ -187,7 +189,7 @@ try {
                 
                 tx += _dpObj.inputField.val();
                 
-                if(it === 'certItPrazoSemCump')
+                if(it === 'certItPrazoSemCump' || it === 'certItPrazoSemLeituraDomJudE')
                   tx += ' às 23:59:59';
                 
                 jQ3('#' + it + '-prazoExtenso',arg.lnkEl).text(tx);
@@ -441,7 +443,7 @@ try {
           if(!(pkg.AR)){
             j2.mod.com.libLoader(j2.res.mod.AR);
             evBus.once('AR.onLoadLibs', function(event){
-              pkg.AR.append(null, null, '7.0');
+              pkg.AR.append(null, null, '7.1');
             });
           }else{
             pkg.AR.visibleOn();
