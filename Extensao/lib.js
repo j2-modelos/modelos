@@ -221,6 +221,21 @@ function addStyleSheet(name, _doc){
   
   head.appendChild(link);
 };
+function injetarEstilo(cssString, styleId) {
+  // Verifica se já existe uma tag <style> com o ID fornecido
+  let existingStyle = document.getElementById(styleId);
+
+  if (!existingStyle) {
+    // Cria a tag <style> e define seu conteúdo CSS
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.id = styleId;  // Atribui o ID fornecido à tag <style>
+    styleSheet.innerText = cssString;
+
+    // Adiciona a folha de estilos ao <head>
+    document.head.appendChild(styleSheet);
+  }
+}
 
 /*
  * Baseado no repositório Lockr
@@ -447,6 +462,261 @@ function createLockr(prefix, storage) {
       storage.clear();
     }
   };
+  return Lockr;
+
+};
+
+function createLockrAsync(prefix, storage) {
+  'use strict';
+
+  const createStorageWrapper = (type) => {
+      const sendMessage = (action, key = null, value = null, options = {}) =>
+          new Promise((resolve) => {
+              chrome.runtime.sendMessage({ action, type, key, value, options }, (response) => {
+                  resolve(response);
+              });
+          });
+
+      return {
+          getItem: async (key) => {
+              const result = await sendMessage('get', key);
+              return result;
+          },
+          setItem: async (key, value) => {
+              await sendMessage('set', key, value);
+          },
+          removeItem: async (key) => {
+              await sendMessage('remove', key);
+          },
+          clear: async () => {
+              await sendMessage('clear');
+          },
+          keys: async () => {
+              const result = await sendMessage('keys');
+              return result;
+          },
+      };
+  };
+
+
+
+  
+  var Lockr = { async: true };
+  storage = storage || 'localStorage'
+  storage = createStorageWrapper(storage);
+  
+
+
+  if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function(elt /*, from*/)
+    {
+      var len = this.length >>> 0;
+
+      var from = Number(arguments[1]) || 0;
+      from = (from < 0)
+      ? Math.ceil(from)
+      : Math.floor(from);
+      if (from < 0)
+        from += len;
+
+      for (; from < len; from++)
+      {
+        if (from in this &&
+            this[from] === elt)
+          return from;
+      }
+      return -1;
+    };
+  }
+
+  Lockr.prefix = prefix.slice(-1).includes('.') ? prefix : (prefix + '.');
+
+  Lockr._getPrefixedKey = function(key, options) {
+    options = options || {};
+
+    if (options.noPrefix) {
+      return key;
+    } else {
+      return this.prefix + key;
+    }
+
+  };
+
+  Lockr.set = async function (key, value, options) {
+    var query_key = this._getPrefixedKey(key, options);
+
+    try {
+      var toStore = {"data": value}
+      if( options?.expiration ){
+        var exp = options.expiration
+        var now = (new Date()).getTime()
+        if( exp < now ){
+          now += exp
+        }
+        toStore.expiration = now
+      }
+      await storage.setItem(query_key, JSON.stringify( toStore ));
+    } catch (e) {
+      if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the storage is full.");
+    }
+  };
+
+  Lockr.get = async function (key, missing, options) {
+    options = options || {};
+    var query_key = this._getPrefixedKey(key, options),
+        value;
+
+    try {
+      value = JSON.parse(await storage.getItem(query_key));
+    } catch (e) {
+            if(storage[query_key]) {
+              value = {data: storage.getItem(query_key)};
+            } else{
+                value = null;
+            }
+    }
+    
+    if(!value) {
+      return missing;
+    }
+    else if (typeof value === 'object' && typeof value.data !== 'undefined') {
+      if(typeof value.expiration !== 'undefined' ){
+        var now = (new Date()).getTime()
+        if( now > value.expiration ){
+          if(options.flagMissingExpiration && typeof missing === 'object' ){
+            missing.expired = true
+            missing.expiredData = value.data
+          }
+          return missing
+        }
+      }
+      return value.data;
+    }
+  };
+
+  Lockr.sadd = async function(key, value, options) {
+    var query_key = this._getPrefixedKey(key, options),
+        json;
+
+    var values = await Lockr.smembers(key);
+
+    if (values.indexOf(value) > -1) {
+      return null;
+    }
+    
+    for(var i = 0; i < values.length; i++){
+      if (JSON.stringify(values[i]) === JSON.stringify(value) )
+        return;
+    }
+
+    try {
+      values.push(value);
+      json = JSON.stringify({"data": values});
+      await storage.setItem(query_key, json);
+    } catch (e) {
+      console.log(e);
+      if (console) console.warn("Lockr didn't successfully add the "+ value +" to "+ key +" set, because the storage is full.");
+    }
+  };
+
+  Lockr.smembers = async function(key, options) {
+    var query_key = this._getPrefixedKey(key, options),
+        value;
+
+    try {
+      value = JSON.parse(await storage.getItem(query_key));
+    } catch (e) {
+      value = null;
+    }
+    
+    return (value && value.data) ? value.data : [];
+  };
+
+  Lockr.sismember = async function(key, value, options) {
+    return await Lockr.smembers(key).indexOf(value) > -1;
+  };
+
+  Lockr.keys = async function() {
+    var keys = [];
+    var allKeys = Object.keys(await storage.keys());
+
+    if (Lockr.prefix.length === 0) {
+      return allKeys;
+    }
+
+    allKeys.forEach(function (key) {
+      if (key.indexOf(Lockr.prefix) !== -1) {
+        keys.push(key.replace(Lockr.prefix, ''));
+      }
+    });
+
+    return keys;
+  };
+
+  Lockr.getAll = async function (includeKeys, keyStartsWith) {
+    var keys = await Lockr.keys();
+  
+    if (includeKeys) {
+      const accum = [];
+      for (const key of keys) {
+        const tempObj = {};
+        tempObj[key] = await Lockr.get(key);
+  
+        if (keyStartsWith) {
+          if (key.startsWith(keyStartsWith)) {
+            accum.push(tempObj);
+          }
+        } else {
+          accum.push(tempObj);
+        }
+      }
+      return accum;
+    }
+  
+    // Retorna apenas os valores sem as chaves
+    const results = await Promise.all(keys.map(async (key) => await Lockr.get(key)));
+    return results;
+  };
+  
+
+  Lockr.srem = async function(key, value, options) {
+    var query_key = this._getPrefixedKey(key, options),
+        json,
+        index;
+
+    var values = await Lockr.smembers(key, value);
+
+    index = values.indexOf(value);
+
+    if (index > -1)
+      values.splice(index, 1);
+
+    json = JSON.stringify({"data": values});
+
+    try {
+      await storage.setItem(query_key, json);
+    } catch (e) {
+      if (console) console.warn("Lockr couldn't remove the "+ value +" from the set "+ key);
+    }
+  };
+
+  Lockr.rm =  async function (key) {
+    var queryKey = this._getPrefixedKey(key);
+    
+    await storage.removeItem(queryKey);
+  };
+
+  Lockr.flush = async function () {
+    if (Lockr.prefix.length) {
+      const keys = await Lockr.keys(); // Aguarda a resolução de Lockr.keys()
+      keys.forEach(function(key) {
+        storage.removeItem(Lockr._getPrefixedKey(key)); // Remove os itens de armazenamento
+      });
+    } else {
+      storage.clear(); // Limpa o armazenamento completo se não houver prefixo
+    }
+  };
+
   return Lockr;
 
 };
@@ -4945,7 +5215,7 @@ PseudoTarefa.prototype.transporDados = function(){
 };
 
 class Servlet {
-  static _lockr = new createLockr('j2E.STORAGE')
+  static _lockr = new createLockrAsync('j2E.STORAGE')
   static DEFAULT_EXPIRATION = 10 * 60 * 1000
 
   static getStore(key){
@@ -5206,8 +5476,12 @@ function EIframe(){
   return window.frameElement !== null
 }
 
-window.sessionStorage.setItem('j2EExtensionURLPattern', chrome.runtime.getURL(''));
-window.sessionStorage.setItem('j2EExtensionID', chrome.runtime.id);
+try{
+  window.sessionStorage.setItem('j2EExtensionURLPattern', chrome.runtime.getURL(''));
+  window.sessionStorage.setItem('j2EExtensionID', chrome.runtime.id);
+}catch(e){
+  console.error('Não foi possível expor a id da extensão para os contextos de página em razão de vioações de segurança sandbox')
+}
 
 j2ELibRun = true;
 
@@ -5219,7 +5493,7 @@ j2E.mods.runTimeConnect = function(){
   
   
   j2E.conn.reconnect = function(){
-    j2E.conn.port = chrome.runtime.connect(sessionStorage.getItem('j2EExtensionID'), { 
+    j2E.conn.port = chrome.runtime.connect(chrome.runtime.id, { 
       includeTlsChannelId : true, 
       name : JSON.stringify({
         nome: window.location.origin,
@@ -5337,14 +5611,21 @@ j2E.mods.runTimeConnect = function(){
   j2E.conn.reconnect();
 };
 
-j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstituiacoNosSeletores}){
+j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstituiacoNosSeletores, storageWarper}){
   /*if( !(jQ3) || !(jQ3.initialize) || )
     return;*/
   
   function _initializeRegisterNumeroUnicoReplacer(){
     //window.defer = new createDefer();
     var _delayCall = new DelayedCall(200, 400);
-    var _lockr  = new createLockr('j2E');
+    var _lockr 
+
+    try{
+      _lockr  = new createLockr('j2E', 'localStorage', storageWarper);
+    }catch(e)
+    {
+      _lockr  = new createLockrAsync('j2E', 'localStorage', storageWarper);
+    }
 
     function isExperied(cred){
       var __TIME__ = 1000 * 60 * 10; //10 min
@@ -5354,8 +5635,9 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
     }
     
     (function _autoDeleteExpireds(){
-      function __adexp(){
-        var creds = _lockr.getAll(true, 'credentials');
+      async function __adexp(){
+        var creds = !_lockr.async ? _lockr.getAll(true, 'credentials') : (await _lockr.getAll(true, 'credentials'));
+
         for (var i = 0; i < creds.length; i++) {          
           var key;
           for(var propIt in creds[i])
@@ -5371,7 +5653,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
     })();
     
     
-    function _processNodes(nodes){
+    async function _processNodes(nodes){
       
       
       //var nodes = window.document.querySelectorAll('*');
@@ -5426,7 +5708,17 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
         if(_txt[1].length)
           toReplace.push( document.createTextNode(_txt[1]) );
         
-        var credentials = _lockr.get('credentials.' + numProc, { noData : true });
+        var credentials = !_lockr.async ? _lockr.get('credentials.' + numProc, { noData : true }) : (await _lockr.get('credentials.' + numProc, { noData : true }));
+
+        const alias = (ev, url)=>{
+          ev.stopPropagation();
+          ev.preventDefault();
+
+          const newWindow = window.open(url, '_blank'); // Abre o link em uma nova aba
+          if (newWindow) {
+            newWindow.focus(); // Garante que a nova aba receba foco
+          }
+        }
 
         if(credentials.noData || isExperied(credentials) ){
           node.j2IsRequsting = true;
@@ -5455,18 +5747,25 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
               comment : "Requisitar a extensão que envie a mensagem ao uma porta do pje.tjma.jus.br para realizar requisição das credenciais de acesso de um número de processo"
             };
 
-            j2E.conn.port.postMessageJ2E(request, function(loadData, loadStatus, load){
+            j2E.conn.port.postMessageJ2E(request, async function(loadData, loadStatus, load){
               const {idProcesso, ca} = loadData[0]
-              _lockr.set('credentials.' + numProc, { 
-                id : idProcesso,
-                ca : ca,
-                timestamp : (new Date()).getTime()
-              });
+              if(!_lockr.async) 
+                _lockr.set('credentials.' + numProc, { 
+                  id : idProcesso,
+                  ca : ca,
+                  timestamp : (new Date()).getTime()
+                });
+              else
+                await _lockr.set('credentials.' + numProc, { 
+                  id : idProcesso,
+                  ca : ca,
+                  timestamp : (new Date()).getTime()
+                });
                             
-              
               var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", idProcesso).replace("$", ca);
-              aTag.attr('href', url);
-              aTag.attr('target', '_blank');
+              //aTag.attr('href', url);
+              //aTag.attr('target', '_blank');
+              aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
               //parent.attr('j2-numUnico-link', 'success');
 
               switch(toReplace.length){
@@ -5484,9 +5783,10 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
           }, numProc, aTag, node, toReplace);
         }else{
           var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", credentials.id).replace("$", credentials.ca);
-          aTag.attr('href', url);
-          aTag.attr('target', '_blank');
-          parent.attr('j2-numUnico-link', 'success');
+          /*aTag.attr('href', url);
+          aTag.attr('target', '_blank');*/
+          //parent.attr('j2-numUnico-link', 'success');
+          aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
 
           switch(toReplace.length){
             case 1:

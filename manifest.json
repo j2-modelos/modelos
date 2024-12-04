@@ -38,6 +38,7 @@
     "https://pje.tjma.jus.br/*",
     "https://frontend.prd.cnj.cloud/*",
     "https://web.whatsapp.com/*",
+    "https://app.powerbi.com/*",
     "https://*.bb.com.com/*"
   ],
   "content_scripts": [
@@ -99,6 +100,7 @@
       "matches": [
         "https://*.bb.com.br/*",
         "https://web.whatsapp.com/*",
+        "https://app.powerbi.com/*",
         "https://sistemas.tjma.jus.br/*",
         "https://jurisconsult.tjma.jus.br/*",
 
@@ -222,6 +224,12 @@
       "matches": ["https://web.whatsapp.com/*"],
       "js": ["Extensao/main.whatsapp.js"],
       "css": ["Extensao/main.whatsapp.css"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://app.powerbi.com/*"],
+      "js": ["Extensao/main.powerbi.js"],
+      "css": [],
       "all_frames": true
     },
     {
@@ -412,7 +420,8 @@
       "https://pje.tjma.jus.br/*",
       "https://pjeh.tjma.jus.br/*",
       "https://frontend.prd.cnj.cloud/*",
-      "https://web.whatsapp.com/*"
+      "https://web.whatsapp.com/*",
+      "https://app.powerbi.com/*"
     ],
     "ids": ["*"]
   },

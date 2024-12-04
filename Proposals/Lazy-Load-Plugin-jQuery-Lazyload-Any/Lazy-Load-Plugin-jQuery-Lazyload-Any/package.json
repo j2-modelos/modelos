@@ -16,5 +16,8 @@
   "homepage": "https://github.com/emn178/jquery-lazyload-any",
   "bugs": {
     "url": "https://github.com/emn178/jquery-lazyload-any/issues"
+  },
+  "dependencies": {
+    "jquery-lazyload-any": "file:"
   }
 }
