@@ -217,6 +217,64 @@ chrome.runtime.onMessage.addListener(
             callerAction: request
           })
           break;
+      case 'load-artifact':{
+        const tabId = sender.tab.id; // Obtém o ID da aba de onde a mensagem foi enviada
+        const frameId = sender.frameId; // Obtém o ID da aba de onde a mensagem foi enviada
+        const { srcIdPath, artType, artLib } = request
+
+        switch(artType){
+          case 'j2/xml':
+            fetch(chrome.runtime.getURL(srcIdPath))
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Erro ao buscar o XML');
+              }
+              return response.text();
+            })
+            .then(xmlString => {
+              chrome.scripting.executeScript({
+                target: { tabId: tabId, frameIds: [frameId] }, // IDs da aba e do frame
+                func: (xml, srcIdPath, artType, artLib) => { 
+                  window.j2.mod.eventBus.EventBus.fire('loaded-'+artLib, xml );
+
+                  console.log(`XML carregado via background: ${xml} ${srcIdPath} ${artType} ${artLib}`);
+                },
+                args: [xmlString, srcIdPath, artType, artLib], // Passa o script como argumento para a função
+                world: 'MAIN' // Injeta no contexto principal da página
+              }, () => {
+                console.log('XML carregado para frame específico da aba.');
+              });
+            })
+            .catch(error => {
+              console.error('Erro:', error);
+            });
+            break
+          case 'j2/javascript':
+            chrome.scripting.executeScript({
+              target: { tabId: tabId, frameIds: [frameId] }, // IDs da aba e do frame
+              files: [srcIdPath], // O arquivo de script que será injetado,
+              world: 'MAIN'
+            }, () => {
+              console.log('Script injetado no frame específico da aba.');
+            });
+  
+            chrome.scripting.executeScript({
+              target: { tabId: tabId, frameIds: [frameId] }, // IDs da aba e do frame
+              func: (srcIdPath) => { 
+                const scriptTag = document.createElement('pseudoscript');
+                scriptTag.id = `${srcIdPath}`;
+                document.head.appendChild(scriptTag); // Adiciona o script ao <head>
+                console.log(`Script adicionado no head: ${srcIdPath}`);
+              },
+              args: [srcIdPath], // Passa o script como argumento para a função
+              world: 'MAIN' // Injeta no contexto principal da página
+            }, () => {
+              console.log('Script injetado inline no frame específico da aba.');
+            });
+            break
+        }
+        break
+      }
     }
   }
 );

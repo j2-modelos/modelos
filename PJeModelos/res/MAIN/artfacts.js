@@ -185,7 +185,7 @@ try {
         injectWins : ['exp', 'edt', 'par']
       },
       'bootstrap' : { 
-        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/CSS/bootstrap.css' : 'lmpvyeabc7mjvq5'; },                
+        'ref': function () { return (w.j2ModDebug)?(isHttps())? '0' : '/res/css/bootstrap.css' : 'lmpvyeabc7mjvq5'; },                
         'lib': 'ROOT/res/css/bootstrap.css',
         'type': 'j2/styleSheet',
         'version' : '4.3.1', 

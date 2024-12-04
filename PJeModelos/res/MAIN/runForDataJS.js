@@ -155,6 +155,8 @@ setInterval(function() {
   */
   window.j2.mod.com.URLGetter = new function () {
 
+    const extensaoJ2Executando =  typeof document.body.getAttribute('j2-extensao-ativa') === "string"
+
     var URL_PATERN;
     /*if (w.j2ModDebug)
       URL_PATERN = window.location.origin + '/';
@@ -164,7 +166,7 @@ setInterval(function() {
     if (window.location.protocol === 'http:')
       URL_PATERN = window.location.origin;
     else
-      URL_PATERN = window.location.protocol +  '//dl.dropboxusercontent.com/s/'; 
+      URL_PATERN = window.location.protocol +  ( extensaoJ2Executando ? '//jeitz2cvt1/j2/' : '//dl.dropboxusercontent.com/s/' ); 
     
     
     function getURL(idDropboxV1OuV2OuCaminhoLegado, nomeDoArquivo) {

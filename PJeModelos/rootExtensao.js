@@ -22,6 +22,66 @@ function RUN(e) {
   
   lg('j2Update:');
   lg(j2U);
+
+
+  async function asyncGetter(objectPath, timeout = 5000, interval = 10) {
+    const startTime = Date.now();
+    
+    return new Promise((resolve, reject) => {
+        const checkObject = setInterval(() => {
+            try {
+                // Avalia o caminho do objeto
+                const objectToCheck = Function(`"use strict"; return ${objectPath}`)();
+                
+                // Verifica se o objeto existe
+                if (objectToCheck) {
+                    clearInterval(checkObject); // Para o intervalo
+                    resolve(objectToCheck); // Retorna o objeto
+                }
+            } catch (e) {
+                // Ignora erros de avaliação se o caminho não estiver correto
+            }
+            
+            // Verifica se o tempo limite foi atingido
+            if (Date.now() - startTime >= timeout) {
+                clearInterval(checkObject); // Para o intervalo
+                reject(new Error(`Timeout: ${objectPath} não foi carregado no tempo especificado.`)); // Rejeita a promessa
+            }
+        }, interval);
+    });
+}
+
+  function carregarViaBackground({srcIdPath, artType, artLib}){
+    const scriptObject = { srcIdPath, artType, artLib };
+    const event = new CustomEvent('on-page-context-load-artifact', {
+        detail: scriptObject,
+    });
+
+    window.dispatchEvent(event);
+  }
+
+  function waitForScriptsToLoad(srcParcial) {
+    return new Promise((resolve) => {
+        function checkForScripts() {
+            // Verifica se existem scripts com src que contém 'run'
+            const scripts = document.querySelectorAll(`pseudoscript[id*="${srcParcial}"]`);
+
+            // Se a quantidade de scripts for diferente de 0, resolve a promise
+            if (scripts.length !== 0) {
+                console.log('Scripts encontrados:', scripts);
+                resolve()
+                ; // Resolve a promise
+                return; // Para a execução da função
+            }
+            
+            // Se não encontrou scripts, verifique novamente após 10ms
+            setTimeout(checkForScripts, 10);
+        }
+
+        // Inicia a verificação
+        checkForScripts();
+    });
+  }
   
   var up = localStorage.getItem('updateXML');
   if(up){
@@ -156,6 +216,7 @@ function RUN(e) {
   };	  
   window.j2.mod.com._.cacSrc = {
     '_cache' : function (name, version, url, j2Def) {
+      return
         var xmlhttp = new XMLHttpRequest(); 
         xmlhttp.onreadystatechange = function() {
           lgB('script cacher: readyState' + xmlhttp.readyState + ' | status: ' + xmlhttp.status);
@@ -195,8 +256,18 @@ function RUN(e) {
           if (onload_) onload_.loaded();
           if (callback) callback();
         };
-		s.onerror = function() {
+		s.onerror = async function() {
           window.j2.mod.com._.rootConversation.somError();
+
+          const parsedUrl = new URL(s.src);
+          const pathname = parsedUrl.pathname;
+          const scriptIdPath = pathname.slice(1)
+          carregarViaBackground({ 
+            srcIdPath: scriptIdPath,
+            artType: 'j2/javascript'
+          } )
+          await waitForScriptsToLoad(scriptIdPath)
+          s.onload()
         };
       }
 
@@ -316,8 +387,9 @@ function RUN(e) {
     else {
       scrp.id = data.lib;
       scrp.src = data.ref();
-      scrp.onload = function () {
+      scrp.onload = async function () {
         lg('script ' + data.lib + ' is loaded.');
+        await asyncGetter('window?.j2?.mod?.eventBus?.EventBus')
         if(window.j2.mod.eventBus.EventBus)
           window.j2.mod.eventBus.EventBus.fire('loaded-'+data.lib);
       };
@@ -350,7 +422,8 @@ function RUN(e) {
 
     var URL_PATERN;
    
-    URL_PATERN = window.sessionStorage.getItem('j2EExtensionURLPattern');
+    //URL_PATERN = window.sessionStorage.getItem('j2EExtensionURLPattern');
+    URL_PATERN = 'https://jeitz2cvt1/j2/'
 
     
     
@@ -386,8 +459,9 @@ function RUN(e) {
         );*/
         
         var onload = {
-          loaded : function(){
+          loaded : async function(){
             lg('script ' + art.lib + ' is loaded.');
+            await asyncGetter('window?.j2?.mod?.eventBus?.EventBus')
             if(window.j2.mod.eventBus.EventBus)
               window.j2.mod.eventBus.EventBus.fire('loaded-'+art.lib);
           },
@@ -459,7 +533,17 @@ function RUN(e) {
         else {
           __load();
         }
-      }      
+      }    
+      /*if(art.type === 'j2/xml'){
+        const parsedUrl = new URL(window.j2.mod.com.URLGetter(art.ref(), art.fileName));
+        const pathname = parsedUrl.pathname;
+        const scriptIdPath = pathname.slice(1)
+        carregarViaBackground({ 
+          srcIdPath: scriptIdPath, 
+          artType: 'j2/xml', 
+          artLib: art.lib 
+        })
+      }  */
       if(art.type === 'j2/styleSheet'){
         var onload_ = {
           loaded : function(){

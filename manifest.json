@@ -367,7 +367,13 @@
       "use_dynamic_url": true
     },
     {
-      "resources": ["PJeModelos/*", "Extensao/t/*", "Extensao/j2-external.js"],
+      "resources": [
+        "PJeModelos/res/MAIN/runForDataJS.js",
+        "PJeModelos/res/XML/Modelos.xml",
+        "PJeModelos/*", 
+        "Extensao/t/*", 
+        "Extensao/j2-external.js"
+      ],
       "matches": [
         "https://pje.tjma.jus.br/*",
         "https://pjeh.tjma.jus.br/*",

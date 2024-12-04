@@ -730,14 +730,14 @@ var TarefasProps = {
             label: 'PJEC - Citar', selecoes: [
               'Controlar audiência',
               'Expedir citação',
-              //'Expedir vários documentos'
+              'Expedir vários documentos'
             ]
           },
           {
             label: 'PJEC - Citar / liminar', selecoes: [
               'Controlar audiência',
               'Expedir citação e(ou) intimação',
-              //'Expedir vários documentos'
+              'Expedir vários documentos'
             ]
           },
           {
@@ -1286,6 +1286,23 @@ var TarefasProps = {
       },
       limpaCorpoTarefa : true,
       transicaoManterApenasIgnorarESairTarefa : true
+    },
+    ADMGrupo : {
+      org : 'dmsTrf',
+      alt : 'agdStt'
+    }
+  },
+  'Expedir RPV3' : {
+    altNome : 'Aguardando leitura Domícílio Judicial Eletrônico',
+    orgNome : 'Expedir RPV3',
+    altNomeADM : 'Expedir requisção de pequeno valor 3',
+    personalizacao : {
+      ADM : {
+        altNomeLabel : 'Aguardando leitura Domícílio Judicial Eletrônico'
+      },
+      limpaCorpoTarefa : true,
+      mostraAutosDigitaisNaAbaExpediente : true,
+      transicaoManterApenasIgnorarESairTarefa : true,
     },
     ADMGrupo : {
       org : 'dmsTrf',
@@ -2280,9 +2297,10 @@ function init(){
   };
   	
   function loadOrigin(){
-    chrome.storage.local.get('isPJeRActive', (data) => {
+    chrome.storage.local.get(['isPJeRActive', 'naoGerenciarModelos'], (data) => {
 
       window.USANDO_PJEMR = data?.isPJeRActive || false
+      window.OPCOES_EXTENSAO = data
 
       switch(window.location.origin){
         case 'https://frontend.prd.cnj.cloud':

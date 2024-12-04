@@ -198,14 +198,51 @@ function j2ExpHTMLToPlainText(){
 function addScript(name, _doc){
   if( !(chrome.runtime.getURL))
     return;
-  
+
+  const tentarViaBackground = ()=> __sendMessageToServiceWorder({
+    j2Action: 'load-artifact',
+    srcIdPath: name,
+    artType: 'j2/javascript'
+  });
+
+  try{
   var head  = (_doc || document).getElementsByTagName('head')[0];
   var script = (_doc || document).createElement("script");
   script.src = chrome.runtime.getURL(name);
   script.type = "application/javascript";
   script.id = name;
+
+   // Captura erro ao tentar carregar o script
+   script.onerror = function() {
+    // Aqui você trata o erro de carregamento do script
+    console.error('Erro ao carregar o script:', name);
+
+    // Envia a mensagem ao service worker
+    tentarViaBackground()
+  };
+
+  
   head.appendChild(script);
+}catch(e){
+
+  tentarViaBackground()
+
+}
 };
+
+// Adicionar um listener para o evento personalizado
+window.addEventListener('on-page-context-load-artifact', (event) => {
+  const detalhes = event.detail;
+  console.log('evento carregar artefato ouvido:', detalhes);
+
+
+  __sendMessageToServiceWorder({
+    j2Action: 'load-artifact',
+    ...detalhes
+  })
+});
+
+
 function addStyleSheet(name, _doc){
   if( !(chrome.runtime.getURL))
     return;

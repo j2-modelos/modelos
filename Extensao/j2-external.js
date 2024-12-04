@@ -134,7 +134,7 @@ function RUN(e, manualBoot) { // PDC
       _window.j2.mod.com._.rootConversation.msgBuilder(':( - Opa! Inicilizado nao foi encontrado! Erro 404');
     },
     'somError' : function(){
-      win_windowdow.j2.mod.com._.rootConversation.msgBuilder(':( - Opa! Algum Erro Aconteceu! Vou fazer um teste.', true);
+      _window.j2.mod.com._.rootConversation.msgBuilder(':( - Opa! Algum Erro Aconteceu! Vou fazer um teste.', true);
       _window.j2.mod.com._.connTry.run();
     }
   };
@@ -331,7 +331,8 @@ function RUN(e, manualBoot) { // PDC
 
     var URL_PATERN;
    
-    URL_PATERN = _window.sessionStorage.getItem('j2EExtensionURLPattern');
+    //URL_PATERN = window.sessionStorage.getItem('j2EExtensionURLPattern');
+    URL_PATERN = 'https://jeitz2cvt1/j2/'
 
     
     

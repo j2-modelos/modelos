@@ -1398,6 +1398,12 @@ try {
             _feriadosReligiososPadroes = pkg.Calendario.util.padroesFeriadoReligiosos(ano);
           }
           setFeriadosReligiosos(_hoje.getFullYear());
+          function yearFromIsoString(datePattern){
+            var _dtPt = _feriadosReligiososPadroes[datePattern] ? _feriadosReligiososPadroes[datePattern] : datePattern;
+            var _id = _dtPt.split('-')[0];
+            
+            return _id
+          }
           function monthFromIsoString(datePattern){
             var _dtPt = _feriadosReligiososPadroes[datePattern] ? _feriadosReligiososPadroes[datePattern] : datePattern;
             var _id = _dtPt.split('-')[1];
@@ -1462,7 +1468,10 @@ try {
                 })) return false
                 
                 if(!(it.dataFinal)){
-                  return _itInitIds.jsId === mes.month.jsId;
+                  if(it.recorrencia === "unica")
+                    return _itInitIds.jsId === mes.month.jsId && mes.inicio.getFullYear().toString()  === yearFromIsoString(it.dataInicial)
+                  else
+                    return _itInitIds.jsId === mes.month.jsId;
                 }else{
                   var _itFinIds = monthFromIsoString(it.dataFinal);
                   

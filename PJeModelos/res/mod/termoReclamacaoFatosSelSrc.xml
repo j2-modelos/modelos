@@ -66,11 +66,13 @@ and open the template in the editor.
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" >
-                        O(a) demandante informa que é credor do parte demandada no importe total de R$ xxxxxxxxxxxxx. 
-                        Crédito este resultante de XXXXServiçosVendaDescreverXXXXXX. 
-                        Narra que a demandada não honrou com sua obrigação e até a presente data permanece com débito. 
-                        Apesar de tentar compor consensualmente com a demandada por diversas vezes, não obteve êxito. 
-                        Assim, não viu alternativa senão procurar este juizado especial cível para dirimir a demanda.
+                        O(a) demandante informa que é credor da parte demandada no importe total de R$ XXXXXXXXXXXX, 
+                        devidos desde XXXXXXXXXXX. Crédito este resultante do inadimplemento parcial acerca dos 
+                        serviços de tapeçaria prestados ao devedor, contratados no importe total de R$ XXXXXXXXXX. 
+                        Narra que a demandada não honrou integralmente com sua obrigação e até a presente data 
+                        permanece com débito. Apesar de tentar compor consensualmente com a demandada por 
+                        diversas vezes, não obteve êxito. Assim, não viu alternativa senão procurar este 
+                        juizado especial cível para dirimir a demanda.
                     </elemento>
                 </simpleElementsDefs>
             </itemContent>

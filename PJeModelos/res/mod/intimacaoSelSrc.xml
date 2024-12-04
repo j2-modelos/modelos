@@ -78,6 +78,7 @@ and open the template in the editor.
             <gItem id="intmItPenhoraOnLineParcial"/>
             <gItem id="intmItPenhoraOnLineBens"/>
             <gItem id="intmItPenhoraOnLineOferecerEmbargos"/>
+            <gItem id="intmItInclusaoSERASAJUD"/>
         </group>
         <group label="Ente Público">
             <competencias>
@@ -1705,6 +1706,26 @@ and open the template in the editor.
                             #:B{CIENTIFICAÇÃO} da(s) parte(s) de que deverá(ão) participar da #:B{audiência} designada nos autos por meio de 
                             #:B{#:U{VIDEOCONFERÊNCIA}} na sala virtual de audiências deste juízo, nos moldes em que prevê a Lei 13.994/2020, 
                             que alterou os arts. 22 e 23 da lei 9.099/99.
+                        </data>
+                    </arElement>
+                </selectorArray>               
+            </itemContent>
+        </item>
+
+
+        <item id="intmItInclusaoSERASAJUD" label="Inclusão nome SERASAJUD" dataPlus="">
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+                        <data>
+                            #:B{INTIMADO(A)(S)} a tomar(em) ciência da inclusão de seu(s) nome(s) junto ao sistema SERASAJUD, 
+                            conforme ofício #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}.
+                        </data>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+                        <data>
+                            #:B{INTIMAÇÃO} da(s) parte(s) acima qualificada(s) para tomar(em) ciência da inclusão de seu(s) nome(s) junto ao sistema SERASAJUD, 
+                            conforme ofício #:span@docId{#:span@docIdDefaulttext{XXXXIdXXXX}}..
                         </data>
                     </arElement>
                 </selectorArray>               

@@ -467,6 +467,9 @@ function pjeLoad(){
       
       var iframe;
       
+      var _mostraAutosDigitaisNaAbaExpediente = function(){
+        _autosDigitais('aba=processoExpedienteTab&j2-auto-selecionar=expedientesModo3')
+      }
       var _showExpedients = function(){
         iframe.on('load', function(){
           if(! (this.contentWindow.jQ3) )
@@ -505,7 +508,7 @@ function pjeLoad(){
           this.contentWindow.jQ3('a#navbar\\:linkAbaIncluirPeticoes1')[0].click();
         });
       };
-      var _autosDigitais = function(){
+      var _autosDigitais = function(serachParamValueString){
         iframe = jQ3('<iframe>');
 
         var idProc = window.location.search.match(/idProcesso=[0-9]+&/);
@@ -523,7 +526,7 @@ function pjeLoad(){
           const _url = 
           `/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?${
             getSearch
-          }#/${
+          }${serachParamValueString ? `&${serachParamValueString}` : ''}#/${
             j2E.mods.urlHash.encode(_tarfProp)
           }`;
 
@@ -782,6 +785,7 @@ function pjeLoad(){
       _tarfProp.personalizacao.limpaCorpoTarefa                          && _limparCorpo();
       _tarfProp.personalizacao.mostraAutosDigitais                       && _autosDigitais();
       _tarfProp.personalizacao.mostraExpedientes                         && _showExpedients();
+      _tarfProp.personalizacao.mostraAutosDigitaisNaAbaExpediente        && _mostraAutosDigitaisNaAbaExpediente();
       _tarfProp.personalizacao.mostraJuntarDocumento                     && _autosDigitaisJuntarDocumento();
       _tarfProp.personalizacao.transicaoRemover                          && _transicaoRemover();
       _tarfProp.personalizacao.transicaoManterApenasIgnorarESairTarefa   && _transicaoManterApenasIgnorarESairTarefa();
@@ -1603,7 +1607,6 @@ function pjeLoad(){
           })
           //jEl.parent().removeClass('col-sm-12').addClass('col-sm-11')
           $aRefsh.click(()=>{
-            debugger;
             jEl[0].dispatchEvent(new Event('change'))
           })
           break;
@@ -2887,10 +2890,19 @@ function pjeLoad(){
       
     });
   }
+
+
   
+  function invertorOrdemMeiosContatos(){
+    jQ3.initialize('div#enderecoPessoaGridDiv', function(){
+      const meiosContatos = document.querySelector('#meioContatoPessoaGridDiv')
+      this.insertAdjacentElement('beforeBegin', meiosContatos)
+    });
+
+  }
   function personalizarTelefonesDasPartes(){
     jQ3.initialize('div#meioContatoPessoaGridList', function(){
-      debugger;
+      //debugger;
     });
     
     
@@ -3030,7 +3042,12 @@ function pjeLoad(){
   }
   
   function observeSeEModeloJ2(){
+    if(OPCOES_EXTENSAO.naoGerenciarModelos) return
+    
     jQ3.initialize('div#modeloBooterBody > button#booter', function(){
+
+      jQ3('body').attr('j2-extensao-ativa', '')
+
       addScript('PJeModelos/rootExtensao.js');
       
       var ___BUT_TEMPLATE___ = '<button id="booterAlt" onclick="RUN(event);" style="font-size: 15px; cursor: pointer; height: 50px; width: 300px; font-weight: bold; min-height: 50px;"> Carregar Modelo </button>';
@@ -3099,6 +3116,7 @@ function pjeLoad(){
   }
 
   function inserirModeloTermoReclamacao(){
+    return
     jQ3.initialize('div.conteudo', function(){
       jQ3.initialize('#editorAnexar iframe', function(){
         var $iframe = jQ3(this);
@@ -4455,6 +4473,7 @@ function pjeLoad(){
       break;
     
     case '/pje/Processo/ConsultaProcesso/Detalhe/detalheParte.seam':
+      invertorOrdemMeiosContatos();
       personalizarTelefonesDasPartes();
       if(!USANDO_PJEMR ) observeQualificacaoPartes();
       break;
