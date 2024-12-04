@@ -20,7 +20,7 @@ function pjeLoad(){
 
   function listenMessages(){
     function __listenMessageHandler(event){
-      switch(event.origin){
+      /*switch(event.origin){
         case 'https://frontend.prd.cnj.cloud':
         case 'https://web.whatsapp.com':
         case 'https://pje.tjma.jus.br':
@@ -29,7 +29,7 @@ function pjeLoad(){
         default:
           if(!(event.origin.match(/https:\/\/vcs[0-9]+\.tjma\.jus\.br/)) )
             return;
-      }
+      }*/
     
       var _load = event.data;
       if(!(_load.j2))

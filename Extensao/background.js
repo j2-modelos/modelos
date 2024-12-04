@@ -742,3 +742,38 @@ chrome.runtime.onMessage.addListener(
     }
   });
 })()
+
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const { action, type, key, value, options } = message;
+  const storage = type === 'localStorage' ? chrome.storage.local : chrome.storage.session;
+
+  if (action === 'get') {
+      storage.get(key, (result) => {
+          sendResponse(result[key] || null);
+      });
+      return true;
+  } else if (action === 'set') {
+      const toStore = { [key]: value };
+      storage.set(toStore, () => {
+          sendResponse({ success: true });
+      });
+      return true;
+  } else if (action === 'remove') {
+      storage.remove(key, () => {
+          sendResponse({ success: true });
+      });
+      return true;
+  } else if (action === 'clear') {
+      storage.clear(() => {
+          sendResponse({ success: true });
+      });
+      return true;
+  } else if (action === 'keys') {
+      storage.get(null, (items) => {
+          const keys = Object.keys(items);
+          sendResponse(keys);
+      });
+      return true;
+  }
+});
