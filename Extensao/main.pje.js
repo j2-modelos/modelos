@@ -4312,6 +4312,135 @@ function pjeLoad(){
         return { $trDestinatarioAtual }
       }
 
+      function _construirTabelaDestinatarioWhatsApp($autosXml){
+        const SPINNER = j2EUi.spinnerHTML()
+
+        const TABLE = /*html*/`<table class="rich-table " id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93" border="0" cellpadding="0" cellspacing="0">
+          <colgroup span="4"></colgroup>
+          <thead class="rich-table-thead">
+              <tr class="rich-table-subheader ">
+                  <th class="rich-table-subheadercell  " scope="col" id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id94header">
+                      <div id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id94header:sortDiv"><img src="/pje/img/toolbox.png" title="Ações"></div>
+                  </th>
+                  <th class="rich-table-subheadercell  " scope="col" id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id104header">
+                      <div id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id104header:sortDiv">Destinatário (s)</div>
+                  </th>
+                  <th class="rich-table-subheadercell  " scope="col" id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id115header">
+                      <div id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id115header:sortDiv">Número WhatsApp</div>
+                  </th>
+                  <th class="rich-table-subheadercell  " scope="col" id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id132header">
+                      <div id="taskInstanceForm:WEB-INF_xhtml_flx_exped_controleCorreios-13851831826:j_id93:j_id132header:sortDiv">Mensagem</div>
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+            <!-- linhas aqui --->
+          </tbody>
+      </table>`;
+
+      const TR = /*html*/`
+        <tr class="rich-table-row ">
+          <td class="rich-table-cell " width="5%">
+            <a j2-a-enviar-whatsapp class="btn btn-default btn-sm" href="javascript: return"  title="Enviar para whatsapp">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+            <a j2-a-editar-mensagem class="btn btn-default btn-sm" href="javascsript:return" title="Editar mensagem">
+              <i class="fa fa-pen"></i>
+            </a>
+          </td>
+          <td class="rich-table-cell " j2-td-destinatario >
+            <!-- destinatario aqui --->
+          </td>
+          <td class="rich-table-cell " width="25%" j2-td-destinatario-telefones >
+            <!-- telefones do destinatario aqui --->
+            ${SPINNER}
+            <input type="text" value="" class="inputText hidden" placeholder="(99) 98901-2345">
+          </td>
+          <td class="rich-table-cell " width="25%" j2-td-mensagem >
+            <select>
+              <option value="ato-ordinatorio">Ato ordinatório</option>
+              <option value="ato-ordinatorio">Despacho</option>
+              <option value="sentenca">Sentença</option>
+              <option value="outra">(outra)</option>
+            </select>
+          </td>
+        </tr>
+      `
+      const SELECT_TELEFONES = /*html*/`
+        <select j2-select-numero-wa >
+          <option value="outro">(outro)</option>
+        </select>
+      `
+
+      const OPTION = (numeroFormatado) => /*HTML*/`
+        <option value="${numeroFormatado.replace(/\D/g, '')}">${numeroFormatado}</option>`
+
+
+      const mapDestinatarios = destinatariosExpediente.$trDestinatarioAtual.toArray().map(e => jQ3(e).parent().find('td:nth-child(3)').text())
+      const mapDestinatariosTagA = mapDestinatarios.map(destinatario => {
+        const mappedSel =  ['#poloAtivo', '#poloPassivo', '#outrosInteressados'].map( sel =>  
+          $autosXml.find(`${sel} a:contains('${destinatario}')`).toArray().at(0))
+          return { 
+            tagA: mappedSel.filter(Boolean).at(0),
+            destinatario
+          }
+
+      }).filter(Boolean)
+
+
+       const $table =  jQ3(TABLE)
+
+       mapDestinatariosTagA.forEach(mapDest => {
+          const $row = jQ3(TR)
+
+          $row.find('[j2-td-destinatario]').append(mapDest.tagA)
+
+          const tipoDocumentoSelecionado = jQ3('[id$=docExistentesTable] td.success:nth-child(3)').text()
+          $row.find('[j2-td-mensagem]').find(`option:contains("${tipoDocumentoSelecionado}")`).first().prop('selected', true)
+
+          $table.find('tbody').append($row )
+
+          //fetch a
+          fetch(mapDest.tagA.href)  // Requisição GET
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Falha ao buscar o conteúdo');
+              }
+              return response.text();  // Converte a resposta para texto (HTML)
+          })
+          .then(html => {
+              // Expressão regular para encontrar números de telefone no formato (99) 8266-1133 ou (99) 98266-1133
+              const regex = /\(\d{2}\)\d{4,5}-\d{4}/g;
+              const telefones = html.match(regex);
+              
+              if (telefones) {
+                  return telefones
+              } else {
+                  console.log('Nenhum número de telefone encontrado.');
+              }
+          })
+          .then(telefones => {
+            const $select = jQ3(SELECT_TELEFONES)
+
+            telefones.sort().reverse().forEach(t => $select.prepend(jQ3(OPTION(t))))
+
+            $select.find('option').first().prop('selected', true);
+
+            $row.find('[j2-td-destinatario-telefones]').prepend($select)
+            $row.find('[j2-td-destinatario-telefones]').find('#uS1, .divCont').remove()
+
+          })
+          .catch(error => {
+              console.error('Erro ao buscar ou processar os dados:', error);  // Tratamento de erro
+          });
+
+       })
+
+
+       $table.find('tr:first-child').toggleClass('rich-table-firstrow')
+       return $table
+      }
+
       const destinatarioAtual = _obterDestinatarioAtual()
       const destinatariosExpediente = _obterDestinatariosExpediente()
       const $this = jQ3(this)
@@ -4325,13 +4454,204 @@ function pjeLoad(){
         'rich-panel j2-enviar-whatsapp col-sm-9'
       );
 
+      async function __pdfDownloadActionAsync() {
+        try {
+          const j2ExpC = $this.find('.rich-panel-body').find('#j2Exp').clone();
+          let content;
+      
+          if (!j2ExpC.length) {
+            const div = $this.find('.rich-panel-body').clone();
+            const div2 = jQ3('<div>');
+            div2.append(div.children());
+            content = div2;
+          } else {
+            content = j2ExpC;
+          }
+      
+          const idPF = content
+            .text()
+            .match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.[0] || 'Documento';
+      
+          content
+            .find('div')
+            .filter(function () {
+              return jQ3(this).css('box-shadow').length > 0;
+            })
+            .css('box-shadow', '');
+          content.find('#normalizeFormtas').css('border', '');
+      
+          const idDocumento = jQ3(
+            `#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:docExistentesTable\\:tb td.success:nth-child(2)`
+          )
+            .text()
+            .trim();
+          const tipoDocumento = jQ3(
+            `#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:docExistentesTable\\:tb td.success:nth-child(3)`
+          )
+            .text()
+            .trim();
+
+          const nomeDoArquivo = `${idPF} - ${tipoDocumento} - id ${idDocumento}.pdf`
+      
+          const opt = {
+            margin: [0.393701, 0, 0.393701, 0],
+            filename: nomeDoArquivo,
+            image: { type: 'jpeg', quality: 1.0 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+          };
+      
+          const pdfBlob = await new Promise((resolve, reject) => {
+            const _pdfWin = j2EOpW.corner('', 'FerramentasProcessoBaixarPDF' + guid(), null, { width: 25, height: 25 });
+            const _winDoc = _pdfWin.document;
+            const _wB = jQ3('body', _winDoc);
+            _wB.empty();
+            _wB.append(content);
+      
+            const checkAndGeneratePdf = () => {
+              if ((typeof _pdfWin.html2pdf !== 'undefined') && (_winDoc.getElementById('j2Exp'))) {
+                _pdfWin
+                  .html2pdf()
+                  .set(opt)
+                  .from(_winDoc.getElementById('j2Exp'))
+                  .outputPdf('blob')
+                  .then(
+                    resolve
+                  )
+                  .catch(reject)
+                  .finally(() => _pdfWin.close());
+              } else {
+                setTimeout(checkAndGeneratePdf, 50);
+              }
+            };
+      
+            setTimeout(checkAndGeneratePdf, 250);
+          });
+      
+          // Convert Blob to Base64 with MIME type
+          const base64Pdf = await blobToBase64(pdfBlob);
+      
+          return {
+            data: base64Pdf,
+            name: nomeDoArquivo
+          };
+        } catch (error) {
+          console.error('Erro ao gerar PDF:', error);
+          throw error;
+        }
+      }
+      
+      function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      }
+      
+
+      async function __obterBase64DoIdDocumento(idDocumento) {
+        function blobToBase64(blob) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = () => reject(reader.error);
+            reader.readAsDataURL(blob); // Inclui o tipo MIME automaticamente
+          });
+        }
+      
+        try {
+          // Passo 1: Fazer a solicitação GET usando fetch
+          const response = await fetch(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/documento/download/${idDocumento}`);
+      
+          // Verifique se a resposta foi bem-sucedida
+          if (!response.ok) {
+            throw new Error(`Erro ao fazer o fetch: ${response.statusText}`);
+          }
+      
+          // Passo 2: Obter o blob da resposta
+          const blob = await response.blob();
+      
+          // Passo 3: Converter o blob para Base64 usando FileReader
+          const base64String = await blobToBase64(blob);
+      
+          // Retorna a string Base64 com o MIME type
+          return base64String;
+        } catch (error) {
+          console.error('Erro ao processar o arquivo:', error);
+          throw new Error(`Erro ao fazer o fetch: ${error}`);
+        }
+      }
+      
+
       evBus.on('ao-obter-autos-digitais-whatsapp', function(ev, $autosXml, acoes){
         $WAPanel.$body.empty()
-        $WAPanel.$body.append($autosXml.find('#poloAtivo').toggleClass('col-sm-4 col-sm-6'))
-        $WAPanel.$body.append($autosXml.find('#poloPassivo').toggleClass('col-sm-4 col-sm-6'))
 
-        $WAPanel.$body.append( destinatariosExpediente )
+        const $destWATable = _construirTabelaDestinatarioWhatsApp($autosXml)
+        $WAPanel.$body.append($destWATable)
 
+        $destWATable.click(async $ev => {
+          const $target = jQ3($ev.target)
+
+          if( $target.is('[j2-a-enviar-whatsapp]') || $target.parent().is('[j2-a-enviar-whatsapp]') ){
+            try {
+              const $tr = $target.parents('tr').first()
+
+              const ___obterMensagemPadrao = (destinatario, documento)=> {
+                const horaAtual = new Date().getHours();
+                let saudacao;
+
+                if (horaAtual >= 6 && horaAtual < 12) {
+                  saudacao = 'Bom dia';
+                } else if (horaAtual >= 12 && horaAtual < 18) {
+                  saudacao = 'Boa tarde';
+                } else {
+                  saudacao = 'Boa noite';
+                }
+
+                return [
+                  `${saudacao}, ${destinatario}.`,
+                  '',
+                  `A seguir, encaminho *${documento}* anexado ao seu processo.`,
+                  '',
+                  '*Gentileza confirmar recebimento e leitura desta mensagem.*'
+                ].join('\n')
+              };
+              
+
+              const numero = $tr.find('[j2-select-numero-wa]').val()
+              const destinatarioMensagem = $tr.find('[j2-td-destinatario]').text().trim()
+              debugger
+              const teorMensagem = $tr.find('[j2-td-mensagem] option:selected').text().trim()
+              const mensagem = ___obterMensagemPadrao(destinatarioMensagem, teorMensagem)
+              //const idDocumento = jQ3('[id$=docExistentesTable] td.success:nth-child(2)').text()
+              const base64DocPDF = await __pdfDownloadActionAsync()
+              //const base64DocHTML = await __obterBase64DoIdDocumento(idDocumento)
+
+              var request = {
+                j2 : true,
+                domain : { 
+                  to : 'https://web.whatsapp.com',
+                  from : window.location.origin
+                },
+                fowarded : false,
+                action : 'abrirContatoWhatsAppComMensageria',
+                /**
+                 * Array<string, string, Array<{data: string, name: string}>>
+                 */
+                arguments :  [numero, mensagem, [base64DocPDF]],
+                comment : "Requisitar abertura de chat para o contato indicado"
+              };
+        
+              j2E.conn.port.postMessageJ2E(request)
+            }catch(e){
+              alert('faça-me um toast aqui')
+            }
+          }
+        })
+
+        //$WAPanel.$body.append( destinatariosExpediente )
 
       })
 

@@ -5514,8 +5514,8 @@ function EIframe(){
 }
 
 try{
-  window.sessionStorage.setItem('j2EExtensionURLPattern', chrome.runtime.getURL(''));
-  window.sessionStorage.setItem('j2EExtensionID', chrome.runtime.id);
+window.sessionStorage.setItem('j2EExtensionURLPattern', chrome.runtime.getURL(''));
+window.sessionStorage.setItem('j2EExtensionID', chrome.runtime.id);
 }catch(e){
   console.error('Não foi possível expor a id da extensão para os contextos de página em razão de vioações de segurança sandbox')
 }
@@ -5779,18 +5779,18 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
               }
               const {idProcesso, ca} = credenciais
               if(!_lockr.async) 
-                _lockr.set('credentials.' + numProc, { 
-                  id : idProcesso,
-                  ca : ca,
-                  timestamp : (new Date()).getTime()
-                });
+              _lockr.set('credentials.' + numProc, { 
+                id : idProcesso,
+                ca : ca,
+                timestamp : (new Date()).getTime()
+              });
               else
                 await _lockr.set('credentials.' + numProc, { 
                   id : idProcesso,
                   ca : ca,
                   timestamp : (new Date()).getTime()
                 });
-                            
+              
               var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", idProcesso).replace("$", ca);
               //aTag.attr('href', url);
               //aTag.attr('target', '_blank');

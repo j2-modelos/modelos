@@ -63,7 +63,37 @@ function init() {
     },
   };
 
-  function abrirConversa(telWA, msg){
+  /**
+   * parametros originados de : message.arguments: 
+   * Array<string, string, Array<{data: string, name: string}>>
+   * 
+   * @param {*} telWA string
+   * @param {*} msg string
+   * @param {*} anexo as Array<{
+   *  data: string,
+   *  name: string
+   * }>
+   * @returns 
+   */
+  async function abrirConversa(telWA, msg, anexo){
+    const conversaValida = async () => {
+      // Espera por 1 segundo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    
+      // Procura a frase no body do documento
+      const bodyText = document.body.textContent || document.body.innerText;
+      const fraseEncontrada = bodyText.includes("url é invalido");
+    
+      if (fraseEncontrada) {
+        console.log("Frase encontrada: 'url é invalido'");
+      } else {
+        console.log("Frase não encontrada.");
+      }
+    
+      return fraseEncontrada;
+    };
+    
+
     const numero = (telWA.startsWith("55") ? telWA : "55" + telWA);
       if (numero) {
           const tagA = document.createElement("a");
@@ -72,6 +102,58 @@ function init() {
           tagA.click();
           tagA.remove();
           window.focus()
+          
+      }
+    
+  }
+
+  async function abrirConversaMensageria(telWA, msg, anexo){
+    const conversaValida = async () => {
+      // Espera por 1 segundo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    };
+    
+
+    const numero = (telWA.startsWith("55") ? telWA : "55" + telWA);
+      if (numero) {
+          const tagA = document.createElement("a");
+          tagA.setAttribute("href", `https://api.whatsapp.com/send?phone=${numero}`);
+          /*let _tagA =*/ document.body.appendChild(tagA);
+          tagA.click();
+          tagA.remove();
+          window.focus()
+
+          await conversaValida()
+
+          /**
+           * detail: {
+           *    message: string,
+           *    number: string
+           * }
+           */
+          window.dispatchEvent(new CustomEvent('PRIMES::send-message', {
+            detail: { 
+              message: msg || '.',
+              number: numero
+            }
+          }))
+
+          if(anexo)
+            /**
+             * detail: {
+             *    attachments: Array<{data: string, name: string}>,
+             *    caption: Array<string>,
+             *    number: string
+             * }
+             */
+            window.dispatchEvent(new CustomEvent('j2-send-attachments', {
+              detail: { 
+                attachments: anexo,
+                caption: anexo.map(ax => ax.name),
+                number: numero
+              }
+            }))
+          
       }
     
   }
@@ -90,8 +172,19 @@ function init() {
           break;
         
         case 'abrirContatoWhatsApp':
-          abrirConversa(message.arguments.at(0), message.arguments.at(1))
+          /**
+           * message.arguments: Array<string, string, Array<{data: string, name: string}>>
+           */
+          abrirConversa(...message.arguments)
           break;
+
+        case 'abrirContatoWhatsAppComMensageria':
+          /**
+           * message.arguments: Array<string, string, Array<{data: string, name: string}>>
+           */
+          abrirConversaMensageria(...message.arguments)
+          break;
+
 
         default:
           console.warn("Não há tratamento para a mensagem recebida: ", message);

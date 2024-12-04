@@ -784,6 +784,25 @@ chrome.runtime.onMessage.addListener(
 })()
 
 
+/**
+ * Ijetor do whatsappweb
+ */
+;(function injetorDoWhatsAppWeb(){
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  // Verifica se a URL foi completamente carregada e é do WhatsApp Web
+  if (changeInfo.status === 'complete' && tab.url && tab.url.includes("web.whatsapp.com")) {
+    console.log("Página do WhatsApp Web carregada:", tab);
+
+    // Injetar o arquivo inject.whatsapp.com na página
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['Extensao/inject.whatsapp.js'],
+      world: 'MAIN' 
+    });
+  }
+});})()
+
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { action, type, key, value, options } = message;
   const storage = type === 'localStorage' ? chrome.storage.local : chrome.storage.session;
