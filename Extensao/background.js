@@ -191,6 +191,46 @@ chrome.runtime.onMessage.addListener(
           validade : request.validade
         }
         break;
+      case 'obter-credenciais-via-background':{
+        const [numProc] = request.arguments
+        async function fetchProcessoData(numeroProcesso) {
+          const baseUrl = "https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy";
+        
+          try {
+            // Primeira fetch: Valida o número do processo e retorna um número
+            const validarResponse = await fetch(`${baseUrl}/processos/numero-processo/${numeroProcesso}/validar`);
+            if (!validarResponse.ok) {
+              throw new Error(`Erro ao validar o processo: ${validarResponse.status}`);
+            }
+            const idProcesso = await validarResponse.text();
+            if (parseInt(idProcesso) === 0)
+              return { idProcesso, ca: ''}
+        
+            // Segunda fetch: Gera a chave de acesso do processo usando o número retornado
+            const chaveResponse = await fetch(`${baseUrl}/painelUsuario/gerarChaveAcessoProcesso/${idProcesso}`);
+            if (!chaveResponse.ok) {
+              throw new Error(`Erro ao gerar a chave de acesso: ${chaveResponse.status}`);
+            }
+            const ca = await chaveResponse.text();
+        
+            // Retorna os resultados em um objeto
+            return { idProcesso, ca };
+          } catch (error) {
+            console.error("Erro na fetch:", error);
+            throw error;
+          }
+        }
+
+        fetchProcessoData(numProc)
+        .then(credenciais => { 
+          sendResponse({ credenciais}) 
+        })
+        .catch(error => {
+          sendResponse({ erro: error.message });
+          console.error('Erro ao processar o cálculo:', error);
+        })
+        return true
+      }
       case 'getSharedMessage':
           if(!(j2E.sharedMessages[request.from])){
             sendResponse({

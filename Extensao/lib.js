@@ -267,7 +267,7 @@ function injetarEstilo(cssString, styleId) {
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
     styleSheet.id = styleId;  // Atribui o ID fornecido à tag <style>
-    styleSheet.innerText = cssString;
+    styleSheet.textContent  = cssString;
 
     // Adiciona a folha de estilos ao <head>
     document.head.appendChild(styleSheet);
@@ -5654,7 +5654,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
   
   function _initializeRegisterNumeroUnicoReplacer(){
     //window.defer = new createDefer();
-    var _delayCall = new DelayedCall(200, 400);
+    var _delayCall = new DelayedCall(100, 150);
     var _lockr 
 
     try{
@@ -5755,37 +5755,29 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
           if (newWindow) {
             newWindow.focus(); // Garante que a nova aba receba foco
           }
+          this.classList.add('j2-visitado');
         }
 
         if(credentials.noData || isExperied(credentials) ){
           node.j2IsRequsting = true;
           
           _delayCall(function(numProc, aTag, node, toReplace){
-            var j2Request = {
-              j2 : true,
-              action : 'requisitarJ2EPJeRest',
-              PJeRest : 'j2EPJeRest.processo.getCredentials',
-              waitsResponse : true,
-              origin : window.location.origin,
-              arguments :  [numProc],
-              runtimeRequest : true,
-              respLoadFormat : 'runtimeRequestArray'
-            };
-
             var request = {
               j2 : true,
-              responseBusTicket : guid(),  
               domain : { 
-                to : 'https://pje.tjma.jus.br',
                 from : window.location.origin
               },
-              fowarded : true,
-              j2Action : j2Request,
-              comment : "Requisitar a extensão que envie a mensagem ao uma porta do pje.tjma.jus.br para realizar requisição das credenciais de acesso de um número de processo"
+              j2Action : 'obter-credenciais-via-background',
+              arguments :  [numProc],
+              comment : "Requisitar as credenciais do processo calculada diretamente no script de background."
             };
 
-            j2E.conn.port.postMessageJ2E(request, async function(loadData, loadStatus, load){
-              const {idProcesso, ca} = loadData[0]
+            __sendMessageToServiceWorder(request, async function(resposta, loadStatus, load){
+              const {credenciais, erro} = resposta
+              if(erro){
+                throw new Error(`Erro execução j2: ${message}`)
+              }
+              const {idProcesso, ca} = credenciais
               if(!_lockr.async) 
                 _lockr.set('credentials.' + numProc, { 
                   id : idProcesso,
@@ -5804,6 +5796,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
               //aTag.attr('target', '_blank');
               aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
               //parent.attr('j2-numUnico-link', 'success');
+              if(parseInt(idProcesso) === 0)
+                aTag.addClass('j2-segredo-justica')
 
               switch(toReplace.length){
                 case 1:
@@ -5824,6 +5818,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
           aTag.attr('target', '_blank');*/
           //parent.attr('j2-numUnico-link', 'success');
           aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
+          if(parseInt(credentials.id) === 0)
+            aTag.addClass('j2-segredo-justica')
 
           switch(toReplace.length){
             case 1:
@@ -5938,7 +5934,7 @@ function __sendMessageToServiceWorder(load, responseCallback){
     load.origin = window.location.origin;
 
           
-  lg(`${window.location.origin} sending message to Service Workder`, load );  
+  console.log(`${window.location.origin} sending message to Service Workder`, load );  
 
   // Envia uma mensagem para o Service Worker
   chrome.runtime.sendMessage( load, responseCallback || void 0 );

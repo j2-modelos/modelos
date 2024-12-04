@@ -54,6 +54,13 @@ function init() {
     (function addIconPJeConversationConversaJ2() {
 
       injetarEstilo(/*css*/`
+        [j2-numero-unico].j2-segredo-justica{
+          color: red !important;
+        }
+        [j2-numero-unico].j2-visitado{
+          color: green !important;
+        }
+
         span[j2-pje] {
           position: absolute;
           top: 10px;
