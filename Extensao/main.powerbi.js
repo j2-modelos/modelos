@@ -53,7 +53,7 @@ function init() {
 
     (function addIconPJeConversationConversaJ2() {
 
-      injetarEstilo(/*css*/`
+      injetarEstilo('main.powerbi', /*css*/`
         [j2-numero-unico].j2-segredo-justica{
           color: red !important;
         }
@@ -81,7 +81,7 @@ function init() {
         span[j2-pje] svg{
           padding: 8px;
         }
-      `, 'main.powerbi')
+      `)
       
       var $spanIcon = jQ3('<span>');
       $spanIcon

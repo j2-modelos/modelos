@@ -3052,18 +3052,18 @@ function pjeLoad(){
       
       var ___BUT_TEMPLATE___ = '<button id="booterAlt" onclick="RUN(event);" style="font-size: 15px; cursor: pointer; height: 50px; width: 300px; font-weight: bold; min-height: 50px;"> Carregar Modelo </button>';
       /*var $this = jQ3(this);
-      $this.removeAttr('onclick');
-      
-      
-            
-      var $repBut = jQ3( $this.prop('outerHTML') );
-      $repBut.attr('id', 'booterAlt');
+        $this.removeAttr('onclick');
+        
+        
+              
+        var $repBut = jQ3( $this.prop('outerHTML') );
+        $repBut.attr('id', 'booterAlt');
       $repBut.attr('onclick', "alert('its done')");*/
-      
-      /*$repBut.click(function(ev){
-        alert('its done');
-        ev.preventDefault();
-      });*/
+        
+        /*$repBut.click(function(ev){
+          alert('its done');
+          ev.preventDefault();
+        });*/
       
       this.replaceWith(jQ3(___BUT_TEMPLATE___)[0]);
       
@@ -3116,32 +3116,13 @@ function pjeLoad(){
   }
 
   function inserirModeloTermoReclamacao(){
-    return
+    
     jQ3.initialize('div.conteudo', function(){
       jQ3.initialize('#editorAnexar iframe', function(){
         var $iframe = jQ3(this);
-        
-        $iframe.on("load", function(){
-          if( $iframe.contents().find('#j2Exp').length )
-            return;
-          
-          jQ3.get(chrome.runtime.getURL("/Extensao/t/termoReclamacaoFrame.html"), function(data, status, xqhr){
-            var $doc = jQ3('<div>').html(data);
 
-            $iframe.contents().find('body').html( $doc.find('#modeloBooterBody') );
-            
-            $doc.find('script').each(function(idx, el){
-              if(el.src)
-                addScript( jQ3(el).attr('srcb'),  jQuery('iframe').contents()[0]);
-              else
-                $iframe.contents().find('head').append( el );
-            });
-            
-            
-
-          });
-        });
-        
+        $iframe.attr('src', 'https://jeitz2cvt1/j2/Extensao/t/termoReclamacaoFrame.html')
+                
         
         
         //jQ3(this).attr('src', chrome.runtime.getURL("") );
@@ -4801,7 +4782,7 @@ function pjeLoad(){
     case '/pje/Processo/update.seam':
     case '/pje/Processo/cadastrar.seam':
     case '/pje/Processo/CadastroProcessoIncidente/listView.seam':
-      inserirModeloTermoReclamacao();
+      //inserirModeloTermoReclamacao();
       limitarAJurisdicaco();
       break;
     

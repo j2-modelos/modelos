@@ -18,7 +18,7 @@ app-root{
 	color : orange;
 }
 
-.j2EtiquetaEstilo{
+.j2EtiquetaEstilo:not([style]){
 	color: black;
 	background: #f6d290;
         border-radius: 0.25em;

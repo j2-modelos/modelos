@@ -2288,14 +2288,7 @@ function init(){
   window.lockrSes  = new createLockr('j2E', 'sessionStorage');
   window.defer = new createDefer();
   window.delayCall = new DelayedCall(250, 1000);
-  
-  function defaultExibicao(){
-    var div = document.createElement('div');
-      div.innerHTML = 'j2';
-      div.className = 'divTest';
-      document.body.appendChild(div);
-  };
-  	
+    	
   function loadOrigin(){
     chrome.storage.local.get(['isPJeRActive', 'naoGerenciarModelos'], (data) => {
 
@@ -2358,7 +2351,6 @@ function init(){
   };
   
   runTimeConnect();
-  defaultExibicao();
   loadOrigin();
 };
 

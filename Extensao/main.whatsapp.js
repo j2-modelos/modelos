@@ -19,6 +19,15 @@ const ICON_PERSON = /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlin
 function init() {
   addStyleSheet("Extensao/main.whatsapp.css", window.document);
 
+  injetarEstilo('main.powerbi', /*css*/`
+    [j2-numero-unico].j2-segredo-justica{
+      color: #f58c8c  !important;
+    }
+    [j2-numero-unico].j2-visitado{
+      color: #46d198  !important;
+    }
+  `)
+
   window.j2E.whatsapp = {
     openModal: function () {
       /* var __base__ = '<span j2-modal="" style=""><div class="lhggkp7q qq0sjtgm ebjesfe0 jxacihee tkdu00h0" tabindex="-1" role="dialog"><div tabindex="-1" class=""><div data-animate-modal-backdrop="true" class="overlay _2B4d4 tm2tP copyable-area" style="opacity:1"><div class="_3ev9-" data-testid="confirm-popup"><div class="_3J6wB" data-animate-modal-popup="true" style="opacity:1;transform:scaleX(1) scaleY(1)"><div class="nne8e" data-animate-modal-body="true"><div j2-modal-header="" data-testid="popup-title" class="_1bpDE">Iniciar conversa com número de whatsapp.</div><div class="_2BU3P tm2tP copyable-area"><div data-testid="compose-box" class="_1SEwr"><span></span><span><div class="_6h3Ps"><div class="_2lMWa"><div tabindex="-1" class="p3_M1"><div class="g0rxnol2"><div j2-input-telefone="" class="fd365im1 to2l77zo bbv8nyr4 mwp4sxku gfz4du6o ag5g9lrv" contenteditable="true" role="textbox" spellcheck="true" title="Mensagem" data-testid="conversation-compose-box-input" data-tab="10" data-lexical-editor="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;"><p class="selectable-text copyable-text">55</p></div><!--div class="lhggkp7q qq0sjtgm jxacihee qzp46edm b9fczbqn bze30y65 jgi8eev7 t35qvd06 m62443ks rkxvyd19 c5h0bzs2">Telefone</div--></div></div></div></div></span></div></div><div class="_2i3w0"><div class=""><div role="button" tabindex="0" data-testid="popup-controls-cancel" class="_20C5O _1zOyO"><div class="p357zi0d ktfrpxia nu7pwgvd ac2vgrno sap93d0t gndfcl4n"><div j2-action-cancel="" class="tvf2evcx m0h2a7mj lb5m6g5c j7l1k36l ktfrpxia nu7pwgvd gjuq5ydh" data-testid="content">Cancelar</div></div></div><div role="button" tabindex="0" data-testid="popup-controls-ok" class="_20C5O _2Zdgs"><div class="p357zi0d ktfrpxia nu7pwgvd ac2vgrno sap93d0t gndfcl4n"><div j2-action-submit="" class="tvf2evcx m0h2a7mj lb5m6g5c j7l1k36l ktfrpxia nu7pwgvd gjuq5ydh" data-testid="content">Chat</div></div></div></div></div></div></div></div></div></div></div></span>';

@@ -258,7 +258,7 @@ function addStyleSheet(name, _doc){
   
   head.appendChild(link);
 };
-function injetarEstilo(cssString, styleId) {
+function injetarEstilo(styleId, cssString) {
   // Verifica se já existe uma tag <style> com o ID fornecido
   let existingStyle = document.getElementById(styleId);
 
@@ -5794,7 +5794,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
               var url = 'https://pje.tjma.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam?idProcesso=$&ca=$'.replace("$", idProcesso).replace("$", ca);
               //aTag.attr('href', url);
               //aTag.attr('target', '_blank');
-              aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
+              aTag.attr('j2-url', url);
+              //aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
               //parent.attr('j2-numUnico-link', 'success');
               if(parseInt(idProcesso) === 0)
                 aTag.addClass('j2-segredo-justica')
@@ -5817,7 +5818,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
           /*aTag.attr('href', url);
           aTag.attr('target', '_blank');*/
           //parent.attr('j2-numUnico-link', 'success');
-          aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
+          aTag.attr('j2-url', url);
+          //aTag.attr('onclick', `(${alias.toString()})(event, '${url}')`);
           if(parseInt(credentials.id) === 0)
             aTag.addClass('j2-segredo-justica')
 
@@ -5877,6 +5879,25 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
     j2E.mods.registerNumeroUnicoReplacer = {
       manuallyObserve: _manuallyObserve
     }
+
+    document.addEventListener('click',  (event) => {
+      // Verifica se o alvo é um <a> com o atributo "j2-numero-unico"
+      const target = event.target.closest('a[j2-numero-unico]');
+      
+      if (! target) return
+
+      // Impede o comportamento padrão e a propagação
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Callback com lógica específica
+      const url = target.getAttribute('j2-url'); // Obtém o href do link
+      const newWindow = window.open(url, '_blank'); // Abre o link em uma nova aba
+      if (newWindow) {
+          newWindow.focus(); // Foca na nova aba
+      }
+      target.classList.add('j2-visitado'); // Marca o link como visitado
+    });
   }
   
   function checkObserver() { // tappac as new

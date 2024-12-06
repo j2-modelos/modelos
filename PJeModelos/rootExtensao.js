@@ -140,8 +140,13 @@ function RUN(e) {
     'shift' : event.shiftKey
   };
       
-  if (!window.jQ)
-    window.jQ = window.parent.jQuery_21 || window.parent.jQuery;
+  if (!window.jQ){
+    try {
+      window.jQ = window.parent.jQuery_21 || window.parent.jQuery;  
+    } catch (error) {
+      window.jQ = window.jQ3 || window.$;   
+    }
+  }
   
     window.j2.mod.com._.rootConversation = {
     'msgBuilder' : function(_tx, clear){
