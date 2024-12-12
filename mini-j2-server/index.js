@@ -15,7 +15,7 @@ const certificate = fs.readFileSync(path.join(__dirname, 'jeitz2cvt1/cert.crt'),
 const credentials = { key: privateKey, cert: certificate };
 
 // Diretório onde os arquivos estão armazenados
-const pastaArquivos = 'C:/Users/demor/Downloads/j2Modelos-develop/j2Modelos-develop';
+const pastaArquivos = path.join(__dirname, '..');;
 
 // Habilitar CORS para todas as rotas
 app.use(cors(/*{origin: 'https://pje.tjma.jus.br'}*/));

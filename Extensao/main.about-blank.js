@@ -14,9 +14,160 @@ const WHATS_APP_ICON_SVG = /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" xml
 </svg>`;
 
 function init() {
+  const $op = (sel) => jQ3(sel, window.opener.document)
+  const $opPar = (sel) => jQ3(sel, window.opener.parent.document)
 
+  function ___ObterCloseDocumentoJ2(){
+    debugger
+    return $op('#j2Exp').clone();
+  }
 
-  function abrirConversa(telWA, mensagem){
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function __pdfDownloadActionAsync() {
+    try {
+      const j2ExpC = ___ObterCloseDocumentoJ2()
+      let content;
+  
+      if (!j2ExpC.length) {
+        const div = $this.find('.rich-panel-body').clone();
+        const div2 = jQ3('<div>');
+        div2.append(div.children());
+        content = div2;
+      } else {
+        content = j2ExpC;
+      }
+  
+      const idPF = content
+        .text()
+        .match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)?.[0] || 'Documento';
+  
+      content
+        .find('div')
+        .filter(function () {
+          return jQ3(this).css('box-shadow').length > 0;
+        })
+        .css('box-shadow', '');
+      content.find('#normalizeFormtas').css('border', '');
+  
+      /*const idDocumento = jQ3(
+        `#taskInstanceForm\\:Processo_Fluxo_prepararExpediente-${idTask}\\:docExistentesTable\\:tb td.success:nth-child(2)`
+      )
+        .text()
+        .trim();*/
+
+      const idDocumento = `${
+        $opPar('[id$=edicaoExpedientePanel_header]')?.text()?.match(/\d+/g)?.at(0) || '000'
+      }#${
+        crypto.randomUUID().split('-').shift()
+      }`
+
+      const tipoDocumento = $op('#expTitle').text().captFirst()
+
+      const nomeDoArquivo = `${idPF} - ${tipoDocumento} - id ${idDocumento}.pdf`
+  
+      const opt = {
+        margin: [0.393701, 0, 0.393701, 0],
+        filename: nomeDoArquivo,
+        image: { type: 'jpeg', quality: 1.0 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+      };
+  
+      const pdfBlob = await new Promise((resolve, reject) => {
+        const _pdfWin = j2EOpW.corner('', 'FerramentasProcessoBaixarPDF' + guid(), null, { width: 25, height: 25 });
+        const _winDoc = _pdfWin.document;
+        const _wB = jQ3('body', _winDoc);
+        _wB.empty();
+        _wB.append(content);
+  
+        const checkAndGeneratePdf = () => {
+          if ((typeof _pdfWin.html2pdf !== 'undefined') && (_winDoc.getElementById('j2Exp'))) {
+            _pdfWin
+              .html2pdf()
+              .set(opt)
+              .from(_winDoc.getElementById('j2Exp'))
+              .outputPdf('blob')
+              .then(
+                resolve
+              )
+              .catch(reject)
+              .finally(() => _pdfWin.close());
+          } else {
+            setTimeout(checkAndGeneratePdf, 50);
+          }
+        };
+  
+        setTimeout(checkAndGeneratePdf, 250);
+      });
+  
+      // Convert Blob to Base64 with MIME type
+      const base64Pdf = await blobToBase64(pdfBlob);
+  
+      return {
+        data: base64Pdf,
+        name: nomeDoArquivo
+      };
+    } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+      throw error;
+    }
+  }
+
+  function __obterOutrosAnexosComunicacao() {
+    const idPreparacaoComunicacaoProcessual = $opPar('[id$=edicaoExpedientePanel_header]')?.text()?.match(/\d+/g)?.at(0) || '000'
+    const request = {
+      j2 : true,
+      domain : { 
+        from : window.location.origin
+      },
+      arguments: [idPreparacaoComunicacaoProcessual],
+      j2Action : 'main-whatsapp-obter-outros-anexos-comunicacao',
+      comment : "Requisitar outros anexos em preparacao pelo whatsappp."
+    };
+
+    return new Promise((res, rej)=>{
+      if(idPreparacaoComunicacaoProcessual === '000')
+        rej({
+          erro: 'O idPreparacaoComunicacaoProcessual é inválido',
+          error: 'O idPreparacaoComunicacaoProcessual é inválido'
+        })
+
+      __sendMessageToServiceWorder(request, async function(resposta, loadStatus, load){
+        const { resposta: _resp } = resposta
+        if(!_resp)
+          rej({
+            erro: 'Resposta vazia',
+            error: 'Resposta vazia'
+          })
+        else if(_resp.filter(r => !r.error && !r.response?.error && !r.response?.erro ).length === 0)
+          rej({
+            erro: 'Nenhma item bem sucedido',
+            error: 'Nenhma item bem sucedido',
+            resposta: _resp
+          })
+        else
+          res(_resp.filter(r=>r.response).map(r=>r.response))
+      })
+    })
+  }
+
+  async function abrirConversa(telWA, mensagem){ 
+    const base64DocPDF = await __pdfDownloadActionAsync()
+    let base64DocPDFOutros = undefined
+    try {
+      base64DocPDFOutros = await __obterOutrosAnexosComunicacao()  
+    } catch (error) {
+      base64DocPDFOutros = []
+    }
+    
     const numero = (telWA.startsWith("55") ? telWA : "55" + telWA);
     const request = {
       j2 : true,
@@ -25,8 +176,8 @@ function init() {
         from : window.location.origin
       },
       fowarded : false,
-      action : 'abrirContatoWhatsApp',
-      arguments :  [numero, mensagem],
+      action : 'abrirContatoWhatsAppComMensageria',
+      arguments :  [numero, mensagem, [base64DocPDF, ...base64DocPDFOutros]],
       comment : "Requisitar abertura de chat para o contato indicado"
     };
 

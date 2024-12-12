@@ -2371,7 +2371,7 @@ function pjeLoad(){
         })()
       }, {target:this})
 
-      jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function(){
+      jQ3.initialize('div#detalheDocumento\\:toolbarDocumento > div:last-child', function J2ToolBar(){
         function __pdfDownloadAction(){ 
           var idPF = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];    
     
@@ -2408,7 +2408,145 @@ function pjeLoad(){
           ___makePdf();      
     
         }
+        async function __pdfDownloadActionAsync() {
+          try {
+            const idPF = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];    
+            const j2ExpC = jQ3('#frameHtml').prop('contentWindow').jQ3('#j2Exp').clone();
+            let content;
+        
+            if (!j2ExpC.length) {
+              const iBody = jQ3('#frameHtml').prop('contentWindow').jQ3('body').clone();
+              const div2 = jQ3('<div id="j2Exp">');
+              div2.append(iBody.children());
+              content = div2;
+            } else {
+              content = j2ExpC;
+            }
+        
+            content
+              .find('div')
+              .filter(function () {
+                return jQ3(this).css('box-shadow').length > 0;
+              })
+              .css('box-shadow', '');
+            content.find('#normalizeFormtas').css('border', '');
   
+            const nomeDoArquivo = idPF + ' - id ' +  jQ3('div.titulo-documento span').text().trim() + '.pdf'
+        
+            const opt = {
+              margin: [0.393701, 0, 0.393701, 0],
+              filename: nomeDoArquivo,
+              image: { type: 'jpeg', quality: 1.0 },
+              html2canvas: { scale: 2 },
+              jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+            };
+        
+            const pdfBlob = await new Promise((resolve, reject) => {
+              const _pdfWin = j2EOpW.corner('', 'FerramentasProcessoBaixarPDF' + guid(), null, { width: 25, height: 25 });
+              const _winDoc = _pdfWin.document;
+              const _wB = jQ3('body', _winDoc);
+              _wB.empty();
+              _wB.append(content);
+        
+              const checkAndGeneratePdf = () => {
+                if ((typeof _pdfWin.html2pdf !== 'undefined') && (_winDoc.getElementById('j2Exp'))) {
+                  _pdfWin
+                    .html2pdf()
+                    .set(opt)
+                    .from(_winDoc.getElementById('j2Exp'))
+                    .outputPdf('blob')
+                    .then(
+                      resolve
+                    )
+                    .catch(reject)
+                    .finally(() => _pdfWin.close());
+                } else {
+                  setTimeout(checkAndGeneratePdf, 50);
+                }
+              };
+        
+              setTimeout(checkAndGeneratePdf, 250);
+            });
+        
+            // Convert Blob to Base64 with MIME type
+            const base64Pdf = await blobToBase64(pdfBlob);
+        
+            return {
+              data: base64Pdf,
+              name: nomeDoArquivo
+            };
+          } catch (error) {
+            console.error('Erro ao gerar PDF:', error);
+            throw error;
+          }
+        }
+
+        async function __pdfFetchActionAsync() {
+          try {
+            const idPF = jQ3('a.titulo-topo.dropdown-toggle.titulo-topo-desktop').text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
+            const nomeDoArquivo = idPF + ' - id ' +  jQ3('div.titulo-documento span').text().trim() + '.pdf'
+            const idDocumento = jQ3('div.titulo-documento span').text().split('-')?.at(0)?.trim() || '0'
+            const url = `https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/documento/download/${
+              idDocumento
+            }`
+            const resp = await fetch(url, {
+              method: 'GET',
+              credentials: "include"
+            })
+            if (!resp.ok) {
+              throw new Error('Rede respondeu sem o ok');
+            }
+
+            const blob = await resp.blob()
+            const base64Pdf = await blobToBase64(blob)
+
+            return {
+              data: base64Pdf,
+              name: nomeDoArquivo
+            }
+          } catch (error) {
+            throw new Error(`Erro ao obter o fetch do PDF: ${error.message}`)
+          }
+        }
+
+        const eDocumentoHTML = ()=> !!document.querySelector('#frameHtml')
+        
+        function blobToBase64(blob) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        }
+
+        function __ouvirMensagemDoBackground(_load, sender, sendResponse){
+          if(!(_load.j2))
+            return;     
+    
+          var _act = (_load.fowarded) ? _load.j2Action : _load;
+    
+          switch(_act.action){
+            case 'obterAnexoParaEnvioWhatsApp':
+              if( jQ3('#detalheDocumento\\:whatsapp-attachment i.fa-paperclip').length )
+                (eDocumentoHTML()
+                  ? __pdfDownloadActionAsync() 
+                  : __pdfFetchActionAsync()
+                )
+                .then(pdfInfo => {
+                  sendResponse(pdfInfo)
+                })
+                .catch(erroPDF => {
+                  sendResponse(erroPDF)
+                })
+              return true
+          }
+        }
+        chrome.runtime.onMessage.removeListener(J2ToolBar.__ouvinteRegistrado__)
+        J2ToolBar.__ouvinteRegistrado__ = null
+        chrome.runtime.onMessage.addListener(__ouvirMensagemDoBackground)
+        J2ToolBar.__ouvinteRegistrado__ = __ouvirMensagemDoBackground
+
         var $this = jQ3(this);
         ;(function _adicionarComandoDeBaixarPDFSimples(){
           var $li = $this.find('li:not([role])').last();
@@ -2428,6 +2566,37 @@ function pjeLoad(){
                         .attr('title', 'Download PDF simples');
           
           $liC.find('span').text('Ícone de PDF');
+                  
+          $li.parent().append( $liC );
+        })()
+
+        ;(function _adicionarComandoParaAnexoComunicacaoWhatsApp(){
+          if( !j2E.env.urlParms.PJeModelos ) return
+
+          var $li = $this.find('li:not([role])').last();
+          var $liC = $li.clone(false, false);
+          
+          $liC.find('a').attr('onclick', '');
+          $liC.find('a').attr('id', 'detalheDocumento:whatsapp-attachment');
+          $liC = jQ3( $liC.prop('outerHTML') );
+          
+          $liC.find('script').remove();
+          
+          $liC.find('i').removeClass()
+                        .addClass('fa fa-whatsapp')
+                        .css('font-size', '1.2em');
+          
+          $liC.find('a').click((e)=>{
+                          const $a = $(e.target).closest('a')
+                          if ($a.length) {
+                            $a.find('i').toggleClass('fa-whatsapp fa-paperclip')
+                            $a.toggleClass('success')
+                          }
+                        })
+                        .attr('onclick', '')
+                        .attr('title', 'Prepara como anexo de comunicação processual');
+          
+          $liC.find('span').text('Ícone de Whatsapp Anexo');
                   
           $li.parent().append( $liC );
         })()
@@ -4610,7 +4779,7 @@ function pjeLoad(){
               const base64DocPDF = await __pdfDownloadActionAsync()
               //const base64DocHTML = await __obterBase64DoIdDocumento(idDocumento)
 
-              var request = {
+              var request = { 
                 j2 : true,
                 domain : { 
                   to : 'https://web.whatsapp.com',
