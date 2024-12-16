@@ -3115,6 +3115,130 @@ function pjeLoad(){
     })
   }
 
+  function modificarAutomaticamenteCNPJParaMatriz(){
+      // Função para calcular os dígitos verificadores do CNPJ
+      function calcularDigitosVerificadores(cnpjBase) {
+        const cnpj = cnpjBase.replace(/\D/g, ''); // Remove caracteres não numéricos
+        if (cnpj.length !== 12) return ''; // Verifica se o CNPJ base tem 12 dígitos (sem os dígitos verificadores)
+    
+        // Cálculo do primeiro dígito verificador
+        let soma1 = 0;
+        let pesos1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+        for (let i = 0; i < 12; i++) {
+            soma1 += parseInt(cnpj.charAt(i)) * pesos1[i];
+        }
+        let digito1 = (soma1 % 11 < 2) ? 0 : 11 - (soma1 % 11);
+    
+        // Agora o primeiro dígito é somado ao CNPJ base para o cálculo do segundo dígito
+        let soma2 = 0;
+        let pesos2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+        // Inclui o primeiro dígito verificador já calculado (digito1)
+        for (let i = 0; i < 12; i++) {  // Percorre os 12 primeiros dígitos do CNPJ base
+            soma2 += parseInt(cnpj.charAt(i)) * pesos2[i];
+        }
+        soma2 += digito1 * pesos2[12];  // Soma o primeiro dígito verificador na posição correta para o segundo dígito
+    
+        let digito2 = (soma2 % 11 < 2) ? 0 : 11 - (soma2 % 11);
+    
+        // Retorna o CNPJ completo com os 14 dígitos (base + dígitos verificadores)
+        return cnpjBase + digito1 + digito2;
+    }
+
+    // Função para corrigir o CNPJ para garantir que seja da matriz
+    function corrigirCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');  // Remove qualquer caractere não numérico
+
+        // Verifica se os 4 últimos números são diferentes de "0001"
+        if (cnpj.length === 14 && cnpj.substr(8, 4) !== '0001') {
+            // Substitui os últimos 4 dígitos por "0001" e calcula os dígitos verificadores
+            cnpj = cnpj.substr(0, 8) + '0001';
+            cnpj = calcularDigitosVerificadores(cnpj);
+        } else {
+            // Caso já seja um CNPJ de matriz, apenas recalcula os dígitos verificadores
+            cnpj = cnpj;
+        }
+
+        return cnpj;
+    }
+
+    // Função para aplicar a máscara no CNPJ
+    function aplicarMascaraCNPJ(cnpj) {
+        return cnpj.replace(/\D/g, '')  // Remove tudo que não é número
+                    .replace(/^(\d{2})(\d)/, '$1.$2')  // Adiciona o ponto após os 2 primeiros números
+                    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')  // Adiciona o ponto após os próximos 3 números
+                    .replace(/\.(\d{3})(\d)/, '.$1/$2')  // Adiciona a barra após os 3 próximos números
+                    .replace(/(\d{4})(\d)/, '$1-$2');  // Adiciona o traço
+    }
+
+    function validaCNPJ(cnpj) {
+      // Remove caracteres não numéricos
+      cnpj = cnpj.replace(/[^\d]+/g, '');
+  
+      // Verifica se o CNPJ tem 14 dígitos
+      if (cnpj.length !== 14) {
+          return false;
+      }
+  
+      // Verifica se o CNPJ é composto por números repetidos (ex: 11111111111111)
+      if (/^(\d)\1{13}$/.test(cnpj)) {
+          return false;
+      }
+  
+      // Função para calcular os dígitos verificadores
+      function calculaDV(cnpj, pesos) {
+          let soma = 0;
+          for (let i = 0; i < pesos.length; i++) {
+              soma += parseInt(cnpj.charAt(i)) * pesos[i];
+          }
+          let resto = soma % 11;
+          return resto < 2 ? 0 : 11 - resto;
+      }
+  
+      // Pesos para os cálculos dos dois dígitos verificadores
+      const pesosPrimeiroDV = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+      const pesosSegundoDV = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  
+      // Cálculo do primeiro dígito verificador
+      const primeiroDV = calculaDV(cnpj, pesosPrimeiroDV);
+      if (parseInt(cnpj.charAt(12)) !== primeiroDV) {
+          return false;
+      }
+  
+      // Cálculo do segundo dígito verificador
+      const segundoDV = calculaDV(cnpj, pesosSegundoDV);
+      if (parseInt(cnpj.charAt(13)) !== segundoDV) {
+          return false;
+      }
+  
+      // Se passou em todas as verificações, o CNPJ é válido
+      return true;
+  }
+
+    // Função para configurar o campo de CNPJ para realizar a correção ao perder o foco
+    function configurarCampoCNPJ(input) {
+        input.addEventListener('blur', function() {
+            let cnpj = input.value;
+
+            // Remove a máscara para avaliar o CNPJ
+            let cnpjLimpo = cnpj.replace(/\D/g, '');
+
+            if(!validaCNPJ(cnpjLimpo))
+              return
+
+            // Verifica se o CNPJ tem 14 caracteres antes de tentar corrigir
+            if (cnpjLimpo.length === 14) {
+                cnpjLimpo = corrigirCNPJ(cnpjLimpo); // Corrige o CNPJ se necessário
+                // Atualiza o valor do campo com o CNPJ corrigido e aplica a máscara
+                input.value = aplicarMascaraCNPJ(cnpjLimpo);
+            }
+        });
+    }
+
+    jQ3.initialize('[id$=preCadastroPessoaFisica_nrCPJ]', function(){
+      configurarCampoCNPJ(this)
+    })
+  }
+
   function inserirModeloTermoReclamacao(){
     
     jQ3.initialize('div.conteudo', function(){
@@ -4784,6 +4908,7 @@ function pjeLoad(){
     case '/pje/Processo/CadastroProcessoIncidente/listView.seam':
       //inserirModeloTermoReclamacao();
       limitarAJurisdicaco();
+      modificarAutomaticamenteCNPJParaMatriz();
       break;
     
     case '/pje/Processo/RetificacaoAutuacao/listView.seam':
