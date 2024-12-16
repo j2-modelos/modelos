@@ -741,13 +741,26 @@ var TarefasProps = {
             ]
           },
           {
-            label: 'CumSen - início', selecoes: [
-              'Retificar processo',
-              'Expedir certidão'
-            ], etiquetas: [
-              'SISBAJUD - Ag. Bloqueio'
+            label: 'CumSen - início', 
+            selecoes: [], 
+            etiquetas: [
+              'Fluir para evolução de classe'
             ]
-          }
+          },
+          /*{
+            label: 'Suspender processo', 
+            selecoes: [], 
+            etiquetas: [
+              'Fluir para suspender tramitação do processo'
+            ]
+          },
+          {
+            label: 'Arquivar processo', 
+            selecoes: [], 
+            etiquetas: [
+              'Fluir para arquivar processo'
+            ]
+          }*/
         ]
       }
     }
