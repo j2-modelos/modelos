@@ -23,6 +23,9 @@
         <Usuario id="MAGANAPAULA" nome="ANA PAULA SILVA ARAUJO" matricula="0" cargo="Juíza de Direito" ini="APSA" genr="F">
             <titularidade unidade="Vara da Mulher e da Violência Doméstica" unidadeGenr="F" nominacao="titular"/>
         </Usuario>
+        <Usuario id="MAGANALUCRE" nome="ANA LUCRÉCIA BEZERRA SODRÉ" matricula="0" cargo="Juíza de Direito" ini="ALBS" genr="F">
+            <titularidade unidade="2ª Vara da Fazenda Pública" unidadeGenr="F" nominacao="titular"/>
+        </Usuario>
         <Usuario id="01070112399" nome="ASLAK BITAR LOBO BRAVIM" matricula="121566" cargo="Técnico Judiciário" ini="ABLB" genr="M"/>
         <Usuario id="65834500382" nome="BARTIRIA BARROS DA SILVA" matricula="1503895" cargo="Auxiliar Judicária" ini="BBS" genr="F"/>
         <Usuario id="01017894329" nome="CLOVIS MARQUES DIAS JUNIOR" matricula="150706" cargo="Analista Judiciário" ini="CMDJ" genr="M"/>
