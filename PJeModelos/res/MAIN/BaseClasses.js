@@ -7952,7 +7952,11 @@ try {
         var url = (_ctrls.selectMethod.value !== 'docAutos') ? 
                 window.location.origin + '/pje/Painel/painel_usuario/Paniel_Usuario_Oficial_Justica/list.seam?idProcessoTrf=' + j2.env.PJeVars.processo.idProcesso
                 :
-                j2.env.PJeVars.j2Api.URLs.autosDigitaisURL;
+                `${
+                j2.env.PJeVars.j2Api.URLs.autosDigitaisURL
+                }&PJeModelos=${
+                (()=> mod.par.jQ3('[id$=edicaoExpedientePanel_header]')?.text()?.match(/\d+/g)?.at(0) || '000' )()
+                }`;
 
         
         forEach(mod.sup, function(_sup){                

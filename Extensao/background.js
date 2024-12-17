@@ -231,6 +231,69 @@ chrome.runtime.onMessage.addListener(
         })
         return true
       }
+      case 'main-whatsapp-obter-outros-anexos-comunicacao':{
+        const [idPreparacaoComunicacaoProcessual] = request.arguments
+        
+        function obterAnexosPrepararComunicacao(idPreparacaoComunicacaoProcessual) {
+          return new Promise((resolve, reject) => {
+            // Consulta todas as abas abertas
+            chrome.tabs.query({}, (tabs) => {
+              if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+              }
+        
+              // Filtra as abas que possuem o parâmetro desejado
+              const matchingTabs = tabs.filter((tab) => {
+                if (tab.url) {
+                  try {
+                    const urlParams = new URLSearchParams(new URL(tab.url).search);
+                    return urlParams.get('PJeModelos') === idPreparacaoComunicacaoProcessual;
+                  } catch (e) {
+                    console.warn(`URL inválida para a aba ${tab.id}: ${tab.url}`);
+                    return false;
+                  }
+                }
+                return false;
+              });
+        
+              // Cria um array de promessas para enviar mensagens e aguardar respostas
+              const promises = matchingTabs.map((tab) =>
+                new Promise((resolve) => {
+                  chrome.tabs.sendMessage(
+                    tab.id,
+                    { 
+                      j2: true, 
+                      action: 'obterAnexoParaEnvioWhatsApp',
+                    },
+                    (response) => {
+                      if (chrome.runtime.lastError) {
+                        console.warn(`Erro ao enviar mensagem para a aba ${tab.id}:`, chrome.runtime.lastError.message);
+                        return resolve({ tabId: tab.id, response: null, error: chrome.runtime.lastError.message });
+                      }
+                      resolve({ tabId: tab.id, response });
+                    }
+                  );
+                })
+              );
+        
+              // Aguarda todas as promessas
+              Promise.all(promises)
+                .then((results) => resolve(results))
+                .catch((error) => reject(error));
+            });
+          });
+        }
+
+        obterAnexosPrepararComunicacao(idPreparacaoComunicacaoProcessual)
+        .then(resposta => { 
+          sendResponse({ resposta }) 
+        })
+        .catch(error => {
+          sendResponse({ erro: error.message });
+          console.error('Erro ao obter anexos documento.', error);
+        })
+        return true
+      }
       case 'getSharedMessage':
           if(!(j2E.sharedMessages[request.from])){
             sendResponse({
@@ -836,3 +899,4 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       return true;
   }
 });
+
