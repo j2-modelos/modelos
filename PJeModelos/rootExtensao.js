@@ -142,7 +142,7 @@ function RUN(e) {
       
   if (!window.jQ){
     try {
-      window.jQ = window.parent.jQuery_21 || window.parent.jQuery;  
+      window.jQ = window.parent.jQuery_21 || window.parent.jQuery || window.jQ3 || window.$;  
     } catch (error) {
       window.jQ = window.jQ3 || window.$;   
     }

@@ -101,7 +101,8 @@ and open the template in the editor.
                     #:BR{}
                     *PARA USO DO JUIZADO*:#:BR{}
                     #{j2.env.PJeVars.processo.numero}#:BR{}
-                    https://pje.tjma.jus.br/pje/Processo/movimentar.seam?idProcesso=#{j2.env.PJeVars.processo.idProcesso}
+                    https://pje.tjma.jus.br/pje/Processo/movimentar.seam?idProcesso=#{j2.env.PJeVars.processo.idProcesso}#:BR{}
+                    #{j2.mod._._mountedDocGuid}
                 </data>
             </itemContent>
         </item>   

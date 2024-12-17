@@ -1280,6 +1280,7 @@
             <!--classeImp id="AmostraBotaoImprimirPJe" versao="3.0" enabled="false" scope="EXP"/-->
         </versao>
         <versao id="3.1">
+            <classeImp id="j2Data" versao="1.0" scope="EXP"/>
             <classeImp id="DocEditorCore" versao="4.0" scope="EDT"/>
             <!-- value id changed from jecivelExpediente to j2Exp -->
             <elemento tag="div" scope="EXP" id="j2Exp">   
@@ -1287,6 +1288,7 @@
             </elemento>
         </versao>        
         <versao id="3.2">
+            <classeImp id="j2Data" versao="1.0" scope="EXP"/>
             <classeImp id="DocEditorCore" versao="4.0" scope="EDT"/>
             <!-- value id changed from jecivelExpediente to j2Exp -->
             <elemento tag="div" scope="EXP" id="j2Exp">   
@@ -1309,6 +1311,7 @@
             <!--classeImp id="AmostraBotaoImprimirPJe" versao="3.0" enabled="false" scope="EXP"/-->
         </versao>  
         <versao id="4.0">
+            <classeImp id="j2Data" versao="1.0" scope="EXP"/>
             <classeImp id="DocEditorCore" versao="5.0" scope="EDT">
                 <constructs param="width" value="400" type="int"/>
                 <constructs param="height" value="535" type="int"/>
@@ -1686,10 +1689,10 @@
                 <elemento id="j2Data.idProcesso" tag="input" scope="EXP" >
                     <HTMLAttribute name="type" value="text"/>
                 </elemento>
-                <!--elemento id="j2Data" tag="div" scope="EXP" class="Hidden"/>
-                <elemento id="j2Data" tag="div" scope="EXP" class="Hidden"/>
-                <elemento id="j2Data" tag="div" scope="EXP" class="Hidden"/>
-                <elemento id="j2Data" tag="div" scope="EXP" class="Hidden"/-->
+                <elemento id="j2Data.guid" tag="input" scope="EXP"   >
+                    <HTMLAttribute name="type" value="text"/>
+                    <HTMLAttribute name="value" value="#{j2.mod._._guid}"/>
+                </elemento>
             </elemento>
         </versao>
     </classeDef>    

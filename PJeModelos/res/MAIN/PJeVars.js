@@ -88,6 +88,8 @@ try {
         else
           _ = 0;
 
+      if(_ === 0 ) return 0
+      
       if(_.split('?').length < 2)
         return 0;
 

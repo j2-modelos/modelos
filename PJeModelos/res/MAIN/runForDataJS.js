@@ -2759,6 +2759,10 @@ window.j2.mod._._guid = function () {
   });
 };
 
+window.j2.mod._._mountedDocGuid = function () {
+  return j2.modelo.exp.jQ3('#j2Data\\.guid').val() || '[ ]'
+};
+
 window.j2.mod._._conversation = { //wmg as new
   bomByHora : function(){
     var day = new Date();
