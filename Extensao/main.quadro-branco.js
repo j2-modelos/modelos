@@ -19,7 +19,7 @@ const ICON_PERSON = /*html*/ `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlin
 function init() {
   //addStyleSheet("Extensao/main.whatsapp.css", window.document);
 
-  window.j2E.powerbi = {
+  window.j2E.quadroBranco = {
   };
 
 
@@ -77,22 +77,7 @@ function init() {
     })
   }
 
-  j2E.mods.registerNumeroUnicoReplacer({storageWarper: true, callback: (params)=>{
-/*
-    const {aTag, toReplace, credenciais } = params
 
-    if(credenciais.id != 0){
-      _obterEtiqueta(credenciais.id).then( etiquetas =>{
-        
-      })
-
-      _obterTarefas(credenciais.id).then( tarefas =>{
-        
-        
-      })
-    }*/
-
-  }}/*{containerPai: '#main', limitarSubstituiacoNosSeletores: 'div[role="application"]'}*/);
 
   (function runTimeConnect() {
     j2E.mods.runTimeConnect();
@@ -101,7 +86,7 @@ function init() {
       console.log("Receiving message: ", message);
 
       switch (message.action) {
-        case "requisitarJ2EPJeRestResponse":
+        //case "requisitarJ2EPJeRestResponse":
         case "pong":
           j2E.conn._responseBus.callTicket(message);
           break;
@@ -118,11 +103,40 @@ function init() {
     var $this = jQ3(this);
     var $j2PJeIcon = $this.find('[j2-pje]');
     if ($j2PJeIcon.length) return;
-  
+    
+    j2E.mods.registerNumeroUnicoReplacer({storageWarper: true, mesmoEmConteudoEditavel: true, callback: (params)=>{
+      
+          const {aTag, toReplace, credenciais } = params
+      
+          if(credenciais.id != 0){
+            _obterEtiqueta(credenciais.id).then( etiquetas =>{
+              debugger
+              const $parentTd = aTag.closest('td');
+              if ($parentTd.length > 0) {
+                  // Cria uma nova <td> com o conteúdo da array
+                  const $newTd = $('<td>').text(etiquetas.map(e=>e.nomeTagCompleto).join(', '));
+                  // Insere a nova <td> após a <td> pai
+                  $parentTd.after($newTd);
+              }
+            })
+      
+            _obterTarefas(credenciais.id).then( tarefas =>{
+              const $parentTd = aTag.closest('td');
+              if ($parentTd.length > 0) {
+                  // Cria uma nova <td> com o conteúdo da array
+                  const $newTd = $('<td>').text(tarefas.join(', '));
+                  // Insere a nova <td> após a <td> pai
+                  $parentTd.after($newTd);
+              }
+              
+            })
+          }
+      
+        }}/*{containerPai: '#main', limitarSubstituiacoNosSeletores: 'div[role="application"]'}*/);
 
     (function addIconPJeConversationConversaJ2() {
 
-      injetarEstilo('main.powerbi', /*css*/`
+      injetarEstilo('main.quadro-branco', /*css*/`
         [j2-numero-unico].j2-segredo-justica{
           color: red !important;
         }

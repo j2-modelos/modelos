@@ -231,6 +231,32 @@ chrome.runtime.onMessage.addListener(
         })
         return true
       }
+      case 'fetch-via-background':{
+        const {corpo, metodo, url, conversor} = request.arguments
+
+        const options = {
+          method: metodo.toUpperCase(), // Converte para maiúsculo para evitar problemas
+        };
+        if (metodo === 'POST' || metodo === 'PUT' || metodo === 'PATCH') {
+          options.body = JSON.stringify(corpo); // Adiciona o corpo para métodos que o suportam
+        }    
+
+
+        fetch(url, options)
+        .then(resp => { 
+          if(!resp.ok)
+            sendResponse({ erro: 'Fetch falhou'}) 
+          return resp[conversor]()
+        })
+        .then( resposta => {
+          sendResponse({ resposta })
+        })
+        .catch(error => {
+          sendResponse({ erro: `Fetch falhou: ${error.message}` });
+          console.error('Erro ao processar o cálculo:', error);
+        })
+        return true
+      }
       case 'main-whatsapp-obter-outros-anexos-comunicacao':{
         const [idPreparacaoComunicacaoProcessual] = request.arguments
         

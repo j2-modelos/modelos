@@ -2966,7 +2966,9 @@ function j2EQueryGetProcessoCredentials(numProcesso, successCallback, errorCallb
   }
 }
 
-function loadPJeRestAndSeamInteraction(){
+
+
+function loadPJeRest(){
   window.j2EPJeRest =  {
     ajax : {
       get : function(url, sucCB, errCB, dataType){
@@ -3177,16 +3179,16 @@ function loadPJeRestAndSeamInteraction(){
       },
       //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/ProcessoJudicialRestController.java
       obterTarefas: (idProcesso, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/tarefas`, 
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/tarefas`, 
                             sucCB, errCB);
       },
       movimentacoes : {
         obterTodas: (idProcesso, sucCB, errCB) =>{
-          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/movimentacoes`, 
+          return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/movimentacoes`, 
                               sucCB, errCB);
         },
         obterUltima: (idProcesso, sucCB, errCB) =>{
-          return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/ultimoMovimento`, 
+          return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/processos/${idProcesso}/ultimoMovimento`, 
                               sucCB, errCB);
         },
         obterUltimaPeloNumeroUnico: (numProc, sucCB, errCB) =>{
@@ -3217,7 +3219,7 @@ function loadPJeRestAndSeamInteraction(){
        * @returns Resultado da solicitação.
        */
       getDadosCompletos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}`, 
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}`, 
                             sucCB, errCB);
       },
       partes : {
@@ -3243,12 +3245,12 @@ function loadPJeRestAndSeamInteraction(){
         },
       },
       obterAssuntos: (idProcessoOuNumeroUnicoFormatado, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/assuntos`, 
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/api/v1/processos-judiciais/${idProcessoOuNumeroUnicoFormatado}/assuntos`, 
                             sucCB, errCB);
       },
       //https://git.cnj.jus.br/socioeducativo/sedu-pje/pje/-/blob/develop/pje-web/src/main/java/br/jus/cnj/pje/webservice/controller/painelusuariointerno/PainelUsuarioInternoRestController.java
       obterEtiquetas: (idProcesso, sucCB, errCB) =>{
-        return j2EPJeRest.ajax.get(`/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/listar/${idProcesso}`, 
+        return j2EPJeRest.ajax.get(`https://pje.tjma.jus.br/pje/seam/resource/rest/pje-legacy/painelUsuario/processoTags/listar/${idProcesso}`, 
                             sucCB, errCB);
       }
     },
@@ -3265,9 +3267,10 @@ function loadPJeRestAndSeamInteraction(){
     }
   };
 
-  if( typeof window.j2E === 'undefined')
-    window.j2E = {}
+  window.j2E.j2EPJeRest = window.j2EPJeRest
+}
 
+function loadSeamInteraction(){
   j2E.SeamIteraction = ( $ => { var _lockr  = new createLockr('j2E', 'sessionStorage'); const armazenamento = j2E.mods.Armazenamento; var _this = {
     session: [],
     util: {
@@ -5185,6 +5188,15 @@ function loadPJeRestAndSeamInteraction(){
   })(jQ3)
 }
 
+function loadPJeRestAndSeamInteraction(){
+  if( typeof window.j2E === 'undefined')
+    window.j2E = {}
+
+
+  loadPJeRest()
+  loadSeamInteraction()
+}
+
 openPopUp = function (id, url, width, height) {
   function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -5648,7 +5660,7 @@ j2E.mods.runTimeConnect = function(){
   j2E.conn.reconnect();
 };
 
-j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstituiacoNosSeletores, storageWarper}){
+j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstituiacoNosSeletores, mesmoEmConteudoEditavel, storageWarper, callback}){
   /*if( !(jQ3) || !(jQ3.initialize) || )
     return;*/
   
@@ -5699,12 +5711,12 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
       for (var i = 0; i < nodes.length; i++) {
         if ( jQ3(nodes[i]).is('[j2-numero-unico]') ) //este é o link gerado pela aplicação
           continue;
-        if ( jQ3(nodes[i]).parents().is('[contenteditable]') ) //
+        if ( !mesmoEmConteudoEditavel && jQ3(nodes[i]).parents().is('[contenteditable]') ) //
           continue;
         
         for (var j = 0; j < nodes[i].childNodes.length; j++) {
           if( nodes[i].childNodes[j].nodeType === 3 && 
-            nodes[i].childNodes[j].nodeValue.match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)){ 
+            nodes[i].childNodes[j].nodeValue.match(/[0-9]{5,7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)){ 
             
             nodesFiltered.push([
               nodes[i],
@@ -5728,7 +5740,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
             continue; */
         
         var _txt = node.nodeValue;
-        var numProc = _txt.match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0];
+        var numProc = _txt.match(/[0-9]{5,7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/)[0].padStart(25, '0');
         _txt = _txt.split( numProc );
 
         var aTag = jQ3('<a>', {
@@ -5742,7 +5754,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
         if(_txt[0].length)
           toReplace.push( document.createTextNode(_txt[0]) );
         toReplace.push(aTag[0]);
-        if(_txt[1].length)
+        if(_txt.at(1)?.length)
           toReplace.push( document.createTextNode(_txt[1]) );
         
         var credentials = !_lockr.async ? _lockr.get('credentials.' + numProc, { noData : true }) : (await _lockr.get('credentials.' + numProc, { noData : true }));
@@ -5811,6 +5823,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
                   node.replaceWith(toReplace[0], toReplace[1], toReplace[2]);
                   break;
               }
+
+              callback && callback({aTag, toReplace, credenciais: {numProc, id: idProcesso, ca}, lockr: _lockr })
             });
           }, numProc, aTag, node, toReplace);
         }else{
@@ -5834,6 +5848,8 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
               node.replaceWith(toReplace[0], toReplace[1], toReplace[2]);
               break;
           }
+
+          callback && callback({aTag, toReplace, credenciais: {numProc, id: credentials.id, ca: credentials.ca}, lockr: _lockr })
         }
       }  
     }
@@ -5841,7 +5857,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
     $('body').observe('childList subTree characterData', function(rec){
       if(!(rec.addedNodes.length) && !(rec.removedNodes.length))
         return;
-      if( ! jQ3(rec.target).text().match(/[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/) )
+      if( ! jQ3(rec.target).text().match(/[0-9]{5,7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/) )
         return;
       
       if(containerPai && ! jQ3(rec.target).parents(containerPai).length && ! jQ3(rec.target).find(containerPai).length)
@@ -5859,7 +5875,7 @@ j2E.mods.registerNumeroUnicoReplacer = function ({containerPai, limitarSubstitui
     function _manuallyObserve(alvoContainer){
       const $alvosArr = alvoContainer ? jQ3(`${alvoContainer} *`) : jQ3('body *')
       $alvosArr.filter(function(index) {
-        var regex = /[0-9]{7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/;
+        var regex = /[0-9]{5,7}\-[0-9]{2}\.[0-9]{4}\.[0-9]{1}\.[0-9]{2}\.[0-9]{4}/;
         var hasMatch = false;
 
         // Itera sobre os nós filhos diretos do elemento
