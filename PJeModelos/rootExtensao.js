@@ -4,7 +4,7 @@
 var sharedWindow;
 var myWindow;
 /***************************************/
-function RUN(e) {
+function RUN_BY_EXTENSAO(e) {
   var w = window;
   function lg(m){console.log(m);};
   function lgB(m){console.log('j2 boot: ' + m);};
