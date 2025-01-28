@@ -212,7 +212,7 @@ function init() {
   })
 
 
-  jQ3.initialize(`div[aria-label='Status']`, function () {
+  jQ3.initialize(`button[aria-label='Conversas']`, function () {
     var $this = jQ3(this);
     var $button = $this.parent();
     if ($button.is("[j2-menu]")) return;
@@ -220,6 +220,7 @@ function init() {
 
     (function addActionNovoConversaJ2() {
       var $buttonC = $button.clone();
+      $buttonC.find('span:last-child').remove()
       $buttonC.find("svg").replaceWith(ICON_PERSON);
       $buttonC.attr("j2-menu", "default");
       $buttonC
@@ -236,6 +237,7 @@ function init() {
       if ($button.parent().children().is("[j2-pje]")) return;
 
       var $buttonC = $button.clone();
+      $buttonC.find('span:last-child').remove()
       $buttonC.css("background-color", "#0078aa80");
       $buttonC
         .find("svg")

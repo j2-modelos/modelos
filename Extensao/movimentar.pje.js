@@ -2782,7 +2782,7 @@ function init(){
 }
 
 function checkit___01() { // tappac as new 
-  if (typeof jQ3 !== 'undefined' && typeof window.j2E !== 'undefined' ) {
+  if (typeof jQ3 !== 'undefined' && typeof window.j2E !== 'undefined' && typeof window.j2EPJeRest !== 'undefined' ) {
     init();
   }else {
     setTimeout( checkit___01, 100 );
