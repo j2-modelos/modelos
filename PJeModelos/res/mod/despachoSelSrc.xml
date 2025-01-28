@@ -23,6 +23,7 @@ and open the template in the editor.
             <gItem id="despItInitialtituloExecutivo"/>
             <!--<gItem id="despItInitialtituloExecutivoComConciliacao"/>-->
             <gItem id="despItPretensaoResistida"/>
+            <gItem id="despItPretensaoResistidaMaisEndereco"/>
             <gItem id="despItEmendaDescontosIndevidos"/>
         </group>
         <group label="Execução">
@@ -45,13 +46,11 @@ and open the template in the editor.
             <itemContent type="simpleElementsDefs" addtClassStyles="">
                 <simpleElementsDefs>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Nos termos do artigo 321 do CPC, verificando o juiz que a petição inicial não preenche 
-                        os requisitos exigidos nos arts. 319 e 320 do CPC, ou que apresenta defeitos e 
-                        irregularidade capazes de dificultar o julgamento de mérito, determinará que o 
-                        autor a emende, ou a complete, no prazo de 15 (quinze) dias.
+                        Da análise dos autos, verifico não ter sido demonstrada a pretensão resistida, o seu interesse processual, 
+                        vez que não consta nos autos a negativa de composição extrajudicial ou mora do requerido em solucionar o problema. 
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Conforme determina o Código de Processo Civil, quando a parte propõe uma ação só terá 
+                        Como sabido, quando a parte propõe uma ação só terá 
                         o mérito de seu processo julgado se comprovar a legitimidade e o interesse processual. 
                     </elemento> 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -63,67 +62,62 @@ and open the template in the editor.
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         O princípio do amplo acesso à justiça vem sendo objeto de estudos constantes, 
                         diante da massificação de demandas, e da utilização do Poder Judiciário como 
-                        primeira via de solução de conflitos. #:B{Os recentes estudos indicam a necessidade 
+                        primeira via de solução de conflitos. Os recentes estudos indicam a necessidade 
                         de demonstração de uma tentativa administrativa de solução do conflito para a 
-                        caracterização do interesse processual}, oriundo da doutrina de Liebman, 
+                        caracterização do interesse processual, oriundo da doutrina de Liebman, 
                         adotada pelo Código de Processo Civil.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        As mais recentes decisões do STF, já estabelecidas no RE 839353 #:B{já enfatizaram que 
-                        o prévio requerimento administrativo não significa afronta ao princípio do acesso 
-                        à justiça}. Inclusive em recente julgado, a Turma Recursal de Imperatriz decidiu 
-                        por unanimidade no sentido de que #:I{#:B{“não se pode mais admitir que demandas 
-                        que podem e merecem ser resolvidas pela via consensual sejam destinadas a ocupar 
-                        a pauta do Judiciário de forma direta} como esta em foco, sem que antes tenha a 
-                        parte comprovado ter intentado, por quaisquer dos meios possíveis e existentes, 
-                        a prévia resolução do litígio com demonstração de efetiva resistência ao direito 
-                        que alega ser titular”} (Recurso Inominado n. 0800255-84.2020.8.10.0028).
+                        Encampando a teoria moderna do Acesso à Justiça, e também a necessidade de 
+                        combate à litigância predatória, o Conselho Nacional de Justiça, por meio da
+                        #:B{Recomendação Nº 159 de 23/10/2024} elencou medidas para identificar, tratar 
+                        e sobretudo prevenir a litigância abusiva.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:B{Consagrando os estudos modernos sobre Acesso à Justiça e a correta
-                        interpretação do texto constitucional, este Juízo consolidou o entendimento quanto à necessidade
-                        de prévio requerimento administrativo, para se permitir o ajuizamento de demandas no Poder
-                        Judiciário.}
+                        Dentre as inúmeras disposições apresentadas, dispõe o normativo acima que a 
+                        parte que almeja obter a tutela jurisdicional #:B{deve demonstrar seu interesse de agir}, 
+                        sendo pois, tal requisito condição para a postulação de direito em Juízo, conforme 
+                        itens 17 e 18 da referida recomendação.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Assim sendo, #:B{#:U{há que se exigir o mínimo de interesse de agir, sob pena de se permitir 
-                        que a parte Requerida responda a processo sem lide, sem ter resistido contra qualquer 
-                        pretensão e acabe arcando com o ônus de sucumbência sem justo motivo}}, além de movimentar 
-                        advogados e o Poder Judiciário local, como todo um custo econômico e de tempo na 
-                        movimentação das pessoas que trabalham nesse processo, sem falar no incentivo à 
-                        indústria do dano moral. Utilizar diretamente o Poder Judiciário como se já existisse 
-                        conflito em relação ao um pedido que nunca foi formalmente feito, muito menos 
-                        indeferido, é incabível.
+                        Em suas decisões mais recentes, já estabelecidas no RE 839353 já enfatizou que 
+                        o prévio requerimento administrativo não significa afronta ao princípio do acesso à justiça. 
                     </elemento>
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        #:U{#:B{De forma lamentável, ocorreu a revogação da Resolução 43/2017 do TJMA, que
-                        sugeria a utilização prévia da plataforma Consumidor.gov.br.} Referida norma do TJ era apenas uma
-                        recomendação de um caminho a ser utilizado para solução do conflito, não era essa resolução que
-                        fundamentava o argumento aqui exposto, que tem amparo legal na exigência de comprovação do interesse 
-                        processual  do art. 17 do CPC, na doutrina processualista e em precedentes do STF.}
+                        O Supremo Tribunal Federal, ao julgar o RE n.º 631.240/MG, também já consagrou o 
+                        entendimento no sentido de que a instituição de condições para o regular exercício 
+                        do direito de ação é compatível com o art. 5º, inciso XXXV da CF/88, ressaltando que, 
+                        para caracterizar a presença de interesse em agir, é preciso haver necessidade de 
+                        ir a Juízo.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        A criação da plataforma foi decorrente da observância ao #:I{disposto no artigo 4º inciso V
-                        da Lei 8.078/1990 e artigo 7º, incisos I, II e III do Decreto 7.963/2013, consistente em um serviço público
-                        que permite a interlocução direta entre consumidores e empresas para solução de conflitos de consumo
-                        pela internet}.
+                        No julgado supracitado, a Corte Suprema explicitou que a ausência de prévio 
+                        requerimento extrajudicial se encaixa no plano da necessidade, tendo em vista 
+                        que tal elemento do trinômio consiste na demonstração de que a atuação do 
+                        Estado-Juiz é imprescindível para a satisfação da pretensão da parte.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Tratando-se de um serviço público, as empresas que a ela aderem assinam termo de
-                        compromisso formal, sendo acompanhados pela Secretaria Nacional de Defesa do Consumidor.
+                        A necessidade de demonstração da pretensão resistida, caracterizadora do 
+                        interesse processual, #:B{já vem sendo exigida há anos por esta magistrada}, 
+                        enquanto titular do 2º Juizado Especial Cível da Comarca de Imperatriz, tendo 
+                        sido, finalmente, chancelada pelo Conselho Nacional de Justiça.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Apesar dos inúmeros benefícios de sua utilização, infelizmente, alguns profissionais do
-                        direito tem se mostrado relutantes em adotar o uso da plataforma consumidor.gov para rápida resolução dos
-                        interesses dos respectivos clientes.
+                        Decerto, #:B{#:U{há que se exigir o mínimo de interesse de agir, sob pena de 
+                        se permitir que a parte Requerida responda a processo sem lide, sem ter resistido 
+                        contra qualquer pretensão e acabe arcando com o ônus de sucumbência sem justo motivo}}, 
+                        além de movimentar advogados e o Poder Judiciário local, como todo um custo econômico 
+                        e de tempo na movimentação das pessoas que trabalham nesse processo, sem falar no 
+                        incentivo à indústria do dano moral. Utilizar diretamente o Poder Judiciário como 
+                        se já existisse conflito em relação ao um pedido que nunca foi formalmente feito, 
+                        muito menos indeferido, é incabível.
                     </elemento>   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Pois bem, da análise dos autos, verifico que a parte autora não demonstrou interesse 
-                        processual com relação à presente demanda, pois não está evidenciada a prévia 
-                        tentativa de solução de conflitos por outros meios disponíveis ao consumidor, 
-                        tais como, uso da plataforma, procon e ouvidoria da instituição ou qualquer outro 
-                        meio de interlocução direta e oficial com a parte que supostamente lesou seu direito. 
-                        Portanto, não demonstrou a necessidade, condição para a existência da ação.
+                        Da análise dos autos, #:B{verifica-se que a parte autora não demonstrou interesse 
+                        processual com relação à presente demanda}, pois não está evidenciada a prévia 
+                        tentativa de solução de conflitos por outros meios disponíveis ao consumidor, tais 
+                        como, uso da plataforma consumidor.gov, procon, notificação extrajudical, ou qualquer 
+                        outro meio de interlocução direta e oficial com a parte que supostamente lesou seu direito.
                     </elemento>
                     <!-- AUTOMATIZAÇÃO NO PROXIMO ELEMENTO-->
                     <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -133,15 +127,142 @@ and open the template in the editor.
                     </elemento-->   
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Diante destas considerações, intime-se a 
-                        parte autora para, #:B{#:U{no prazo de 15 (quinze) dias}, EMENDAR A PETIÇÃO INICIAL}, 
-                        para comprovar o interesse processual mediante juntada aos autos comprovantes de que antes da 
-                        propositura da ação apresentou requerimento(s) administrativo(s) para solução da demanda, notadamente 
-                        em relação aos danos morais alegados, por meio da plataforma pública digital de interlocução 
-                        direta entre consumidores e empresas para solução de conflitos de consumo pela internet, 
-                        PROCON ou no próprio órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto pleiteado,
-                        com resposta de indeferimento do pedido ou omissão na resposta administrativa por prazo superior
-                        a 30 dias após a apresentação da reclamação administrativa.
+                        Cabe aqui destacar que, #:B{reclamações realizadas em sites como reclame aqui, 
+                        proteste, ou e-mails enviados, sem que tenha ocorrido resposta do suposto causador 
+                        do dano, e comprovação do seu efetivo recebimento, não demonstram a pretensão 
+                        resisitida, ou a necessidade, condição para a existência da ação}.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante destas considerações, #:B{intime-se a parte autora para, no prazo de 15 
+                        (quinze) dias, EMENDAR A PETIÇÃO INICIAL, para comprovar o interesse processual} 
+                        mediante juntada aos autos comprovantes de que antes da propositura da ação 
+                        apresentou requerimento(s) administrativo(s) para solução da demanda, 
+                        notadamente em relação aos danos morais alegados, por meio da plataforma 
+                        pública digital de interlocução direta entre consumidores e empresas para solução 
+                        de conflitos de consumo pela internet - consumidor.gov, PROCON ou no próprio 
+                        órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto 
+                        pleiteado, com resposta de indeferimento do pedido ou omissão na resposta administrativa 
+                        por prazo superior a 30 dias após a apresentação da reclamação administrativa.
+                    </elemento>    
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Caso a parte demandante já tenha apresentado pedido administrativo de resolução do
+                        conflito #:B{nos canais acima}, não obtendo êxito em solucionar a demanda, poderá peticionar nos autos
+                        demonstrando o fato para o regular prosseguimento do feito.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Comprovada a ausência de resposta satisfativa à demanda administrativa, proceda-se, 
+                        mediante ato ordinatório, a designação de audiência UNA, citando-se e intimando-se na 
+                        forma da lei processual.
+                    </elemento -->   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Não havendo manifestação da parte autora e/ou não demonstrada e prévia tentativa de 
+                        solução administrativa, voltem conclusos para sentença de extinção sem resolução do 
+                        mérito, na forma do art. 330, inciso III e do art. 485, inciso VI do CPC.
+                    </elemento>   
+                </simpleElementsDefs>
+            </itemContent>
+        </item>  
+        <item id="despItPretensaoResistidaMaisEndereco" label="Pretensão resistida + juntar comprovante endereço" dataPlus="">
+            <itemContent type="simpleElementsDefs" addtClassStyles="">
+                <simpleElementsDefs>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Da análise dos autos, verifico não ter sido demonstrada a pretensão resistida, o seu interesse processual, 
+                        vez que não consta nos autos a negativa de composição extrajudicial ou mora do requerido em solucionar o problema. 
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Como sabido, quando a parte propõe uma ação só terá 
+                        o mérito de seu processo julgado se comprovar a legitimidade e o interesse processual. 
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O interesse de agir possui três aspectos: a necessidade de buscar o Poder Judiciário; 
+                        a utilidade do provimento judicial ao demandante; e a adequação entre o meio processual 
+                        escolhido pelo requerente e a tutela jurisdicional pretendida. Tal medida é necessária 
+                        para verificar a necessidade da propositura da ação.
+                    </elemento> 
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O princípio do amplo acesso à justiça vem sendo objeto de estudos constantes, 
+                        diante da massificação de demandas, e da utilização do Poder Judiciário como 
+                        primeira via de solução de conflitos. Os recentes estudos indicam a necessidade 
+                        de demonstração de uma tentativa administrativa de solução do conflito para a 
+                        caracterização do interesse processual, oriundo da doutrina de Liebman, 
+                        adotada pelo Código de Processo Civil.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Encampando a teoria moderna do Acesso à Justiça, e também a necessidade de 
+                        combate à litigância predatória, o Conselho Nacional de Justiça, por meio da
+                        #:B{Recomendação Nº 159 de 23/10/2024} elencou medidas para identificar, tratar 
+                        e sobretudo prevenir a litigância abusiva.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Dentre as inúmeras disposições apresentadas, dispõe o normativo acima que a 
+                        parte que almeja obter a tutela jurisdicional #:B{deve demonstrar seu interesse de agir}, 
+                        sendo pois, tal requisito condição para a postulação de direito em Juízo, conforme 
+                        itens 17 e 18 da referida recomendação.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Em suas decisões mais recentes, já estabelecidas no RE 839353 já enfatizou que 
+                        o prévio requerimento administrativo não significa afronta ao princípio do acesso à justiça. 
+                    </elemento>
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        O Supremo Tribunal Federal, ao julgar o RE n.º 631.240/MG, também já consagrou o 
+                        entendimento no sentido de que a instituição de condições para o regular exercício 
+                        do direito de ação é compatível com o art. 5º, inciso XXXV da CF/88, ressaltando que, 
+                        para caracterizar a presença de interesse em agir, é preciso haver necessidade de 
+                        ir a Juízo.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        No julgado supracitado, a Corte Suprema explicitou que a ausência de prévio 
+                        requerimento extrajudicial se encaixa no plano da necessidade, tendo em vista 
+                        que tal elemento do trinômio consiste na demonstração de que a atuação do 
+                        Estado-Juiz é imprescindível para a satisfação da pretensão da parte.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        A necessidade de demonstração da pretensão resistida, caracterizadora do 
+                        interesse processual, #:B{já vem sendo exigida há anos por esta magistrada}, 
+                        enquanto titular do 2º Juizado Especial Cível da Comarca de Imperatriz, tendo 
+                        sido, finalmente, chancelada pelo Conselho Nacional de Justiça.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Decerto, #:B{#:U{há que se exigir o mínimo de interesse de agir, sob pena de 
+                        se permitir que a parte Requerida responda a processo sem lide, sem ter resistido 
+                        contra qualquer pretensão e acabe arcando com o ônus de sucumbência sem justo motivo}}, 
+                        além de movimentar advogados e o Poder Judiciário local, como todo um custo econômico 
+                        e de tempo na movimentação das pessoas que trabalham nesse processo, sem falar no 
+                        incentivo à indústria do dano moral. Utilizar diretamente o Poder Judiciário como 
+                        se já existisse conflito em relação ao um pedido que nunca foi formalmente feito, 
+                        muito menos indeferido, é incabível.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Da análise dos autos, #:B{verifica-se que a parte autora não demonstrou interesse 
+                        processual com relação à presente demanda}, pois não está evidenciada a prévia 
+                        tentativa de solução de conflitos por outros meios disponíveis ao consumidor, tais 
+                        como, uso da plataforma consumidor.gov, procon, notificação extrajudical, ou qualquer 
+                        outro meio de interlocução direta e oficial com a parte que supostamente lesou seu direito.
+                    </elemento>
+                    <!-- AUTOMATIZAÇÃO NO PROXIMO ELEMENTO-->
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Importante destacar , a esse respeito, que o autor apresentou como “reclamação
+                        administrativa”, reclamação feita em sítio denominado “#:span@despacho-canalAtendimento{Proteste}”, o qual sequer consiste em canal oficial .
+                        Ainda, a reclamação lá realizada, em nada corresponde ao tratado nessa demanda.
+                    </elemento-->   
+
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Cabe aqui destacar que, #:B{reclamações realizadas em sites como reclame aqui, 
+                        proteste, ou e-mails enviados, sem que tenha ocorrido resposta do suposto causador 
+                        do dano, e comprovação do seu efetivo recebimento, não demonstram a pretensão 
+                        resisitida, ou a necessidade, condição para a existência da ação}.
+                    </elemento>   
+                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                        Diante destas considerações, #:B{intime-se a parte autora para, no prazo de 15 
+                        (quinze) dias, EMENDAR A PETIÇÃO INICIAL, para comprovar o interesse processual} 
+                        mediante juntada aos autos comprovantes de que antes da propositura da ação 
+                        apresentou requerimento(s) administrativo(s) para solução da demanda, 
+                        notadamente em relação aos danos morais alegados, por meio da plataforma 
+                        pública digital de interlocução direta entre consumidores e empresas para solução 
+                        de conflitos de consumo pela internet - consumidor.gov, PROCON ou no próprio 
+                        órgão/instituição por meios oficiais de comunicação apto para obtenção do objeto 
+                        pleiteado, com resposta de indeferimento do pedido ou omissão na resposta administrativa 
+                        por prazo superior a 30 dias após a apresentação da reclamação administrativa.
                     </elemento>   
 
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
@@ -161,7 +282,7 @@ and open the template in the editor.
                         que pretende ver processado e julgado o seu processo.
                     </elemento>
  
-                    <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
+                    <!--elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
                         Caso a parte demandante já tenha apresentado pedido administrativo de resolução do
                         conflito #:B{nos canais acima}, não obtendo êxito em solucionar a demanda, poderá peticionar nos autos
                         demonstrando o fato para o regular prosseguimento do feito.
@@ -170,10 +291,11 @@ and open the template in the editor.
                         Comprovada a ausência de resposta satisfativa à demanda administrativa, proceda-se, 
                         mediante ato ordinatório, a designação de audiência UNA, citando-se e intimando-se na 
                         forma da lei processual.
-                    </elemento>   
+                    </elemento -->   
                     <elemento tag="p" scope="NONE" class="p FntModDefault Indnt3cm marginAtoJudicial" > 
-                        Não havendo manifestação da parte autora e/ou não demonstrada e prévia tentativa 
-                        de solução administrativa, voltem conclusos para sentença de extinção.
+                        Não havendo manifestação da parte autora e/ou não demonstrada e prévia tentativa de 
+                        solução administrativa, voltem conclusos para sentença de extinção sem resolução do 
+                        mérito, na forma do art. 330, inciso III e do art. 485, inciso VI do CPC.
                     </elemento>   
                 </simpleElementsDefs>
             </itemContent>
