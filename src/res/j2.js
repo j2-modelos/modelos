@@ -1,1 +1,0 @@
-console.warn('j2.info: proxy is on');
