@@ -1,3 +1,7 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "vsicons.associations.folders": [
+        { "icon": "src", "extensions": ["res"] }
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
