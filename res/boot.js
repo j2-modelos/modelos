@@ -366,8 +366,8 @@
     w.j2.mod.com.URLGetter = new (function (id, fn) {
       const URL_PATERN = `https://${j2MirrorAtivo ? 'localhost/j2' : 'j2.eomti.com.br'}/j2`
 
-      function getURL(_, fn) {
-        return `${URL_PATERN}/${fn}`
+      function getURL(path, _fn) {
+        return `${URL_PATERN}${path}`
       }
 
       return getURL
