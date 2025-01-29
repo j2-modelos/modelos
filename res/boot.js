@@ -20,7 +20,7 @@
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest()
         xhr.open('GET', 'https://localhost:7722/j2-r/on', true)
-        xhr.timeout = 3000 // 3 segundos de timeout
+        xhr.timeout = 500 // 3 segundos de timeout
 
         xhr.onload = function () {
           if (xhr.status === 200) {
