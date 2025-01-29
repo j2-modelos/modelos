@@ -5,7 +5,8 @@
   "main": "teste.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "pm2:initialize": "pm2 start scripts/auto-pull.mjs --name j2-modelo-auto-pull --cron '0 */4 * * *' && pm2 save && pm2 list"
   },
   "keywords": [],
   "author": "",
