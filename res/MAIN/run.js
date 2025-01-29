@@ -152,37 +152,6 @@ setInterval(function () {
    * @param string fn - file name
    * @returns {RUN.root_L205.getURL}
    */
-  window.j2.mod.com.URLGetter = new (function () {
-    const extensaoJ2Executando =
-      typeof document.body.getAttribute('j2-extensao-ativa') === 'string'
-
-    var URL_PATERN
-    /*if (w.j2ModDebug)
-      URL_PATERN = window.location.origin + '/';
-    else
-      URL_PATERN = 'https://pje.tjma.jus.br/pje/Painel/painel_usuario/documentoHTML.seam?idBin=';*/
-
-    if (window.location.protocol === 'http:')
-      URL_PATERN = window.location.origin
-    else
-      URL_PATERN =
-        window.location.protocol +
-        (extensaoJ2Executando
-          ? '//jeitz2cvt1/j2/'
-          : '//dl.dropboxusercontent.com/s/')
-
-    function getURL(idDropboxV1OuV2OuCaminhoLegado, nomeDoArquivo) {
-      if (window.location.protocol === 'https:') {
-        if (!idDropboxV1OuV2OuCaminhoLegado.includes(';'))
-          return (
-            URL_PATERN + idDropboxV1OuV2OuCaminhoLegado + '/' + nomeDoArquivo
-          )
-        else return idDropboxV1OuV2OuCaminhoLegado.toURLDropboxV2(nomeDoArquivo)
-      } else return URL_PATERN + idDropboxV1OuV2OuCaminhoLegado
-    }
-
-    return getURL
-  })() /*********************************/
 })()
 
 /* simple modules definitions */
@@ -3685,21 +3654,20 @@ window.j2.mod._._convertBoolean = function (value) {
 
 window.j2.mod._._extensaoJ2Executando = new (function () {
   return typeof document.body.getAttribute('j2-extensao-ativa') === 'string'
-})(
-  /* these are the noble modules */
-  function () {
-    if (window.j2.mod._ === 'undefined') {
-      console.error(
-        'M�dulos simples n�o est�o carregaos. Imposs�vel carrega m�dulos nobres'
-      )
-      return
-    }
-
-    window.j2.mod.forEach = new window.j2.mod._._92()
-    window.j2.mod.eventBus = new window.j2.mod._._42()
-    window.j2.mod.inherits = new window.j2.mod._._86()
+})()
+;/* these are the noble modules */
+(function () {
+  if (window.j2.mod._ === 'undefined') {
+    console.error(
+      'M�dulos simples n�o est�o carregaos. Imposs�vel carrega m�dulos nobres'
+    )
+    return
   }
-)()
+
+  window.j2.mod.forEach = new window.j2.mod._._92()
+  window.j2.mod.eventBus = new window.j2.mod._._42()
+  window.j2.mod.inherits = new window.j2.mod._._86()
+})()
 /* modelo application initializatino
  *
  * */
