@@ -21,6 +21,7 @@
     "
     onclick="
         window.__event = event;
+        document.getElementById('booter').setAttribute('disabled', '')
         
         var script = document.createElement('script');
         script.src = `https:/${'/'}j2.eomti.com.br/j2/res/boot.js`;
