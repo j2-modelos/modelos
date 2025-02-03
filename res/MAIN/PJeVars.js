@@ -282,7 +282,6 @@ try {
         idTask: getHrefParentParam('newTaskId'),
         ca: getHrefParentParam('ca'),
         distribuicao: gVG('dataDistribuicao'),
-        distribuicaoExtenso: gVG('dataDistribuicaoExtenso'),
         idProcessoTrf: gVG('idProcessoTrf'),
         prioridadeProcessoList: gVG('prioridadeProcessoList'),
         conexaoProcessos: gVG('conexaoProcessos'),
@@ -1429,7 +1428,6 @@ try {
           valor: '#{processoTrfHome.instance.valorCausaStr}',
           valorDaCausa: '#{processoTrfHome.instance.valorCausaStr}',
           distribuicao: '#{processoTrfHome.dataDistribuicao}',
-          distribuicaoExtenso: '#{processoTrfHome.dataDistribuicaoStr}',
           idProcessoTrf: '#{processoTrfHome.instance.idProcessoTrf}',
           prioridadeProcessoList:
             '#{processoTrfHome.instance.prioridadeProcessoList}',
