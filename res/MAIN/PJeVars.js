@@ -91,6 +91,9 @@ try {
     })()
 
     var getIdProcesso = function () {
+      const idProcessoTRF = window?.j2?.env?.PJeVars?.processo?.idProcessoTrf
+      if (!isNaN(idProcessoTRF)) return idProcessoTRF
+
       var _var = 'idProcesso'
 
       if (
