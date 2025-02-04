@@ -1,0 +1,171 @@
+<div
+  id="modeloBooterBody"
+  style="
+    text-align: center;
+    padding-top: 22px;
+    margin-left: auto;
+    margin-right: auto;
+  "
+  mce_style="text-align: center; padding-top: 22px; margin-left: auto; margin-right: auto;"
+>
+  <input id="idModelo" name="434" type="hidden" value="j2Citacao" />
+  <button
+    id="booter"
+    style="
+      font-size: 15px;
+      cursor: pointer;
+      height: 50px;
+      width: 300px;
+      font-weight: bold;
+      min-height: 50px;
+    "
+    onclick="
+        window.__event = event;
+        document.getElementById('booter').setAttribute('disabled', '')
+        
+        var script = document.createElement('script');
+        script.src = `https:/${'/'}j2.eomti.com.br/j2/res/boot.js`;
+        document.head.appendChild(script);
+    "
+  >
+    Carregar Modelo
+  </button>
+  <div
+    id="PJeVarsXML"
+    style="display: none; visibility: hidden"
+    mce_style="display: none; visibility: hidden;"
+  >
+    <div id="PJeVars">
+      <!-- atualização em janeiro de 2025 -->
+      <div id="dataDistribuicao">#{processoTrfHome.dataDistribuicao}</div>
+      <div id="idProcessoTrf">#{processoTrfHome.instance.idProcessoTrf}</div>
+      <div id="prioridadeProcessoList">
+        #{processoTrfHome.instance.prioridadeProcessoList}
+      </div>
+      <div id="conexaoProcessos">
+        #{processoTrfHome.instance.processoTrfConexaoList}
+      </div>
+      <div id="assuntoPrincipal">
+        #{processoTrfHome.instance.processoAssuntoPrincipal}
+      </div>
+      <div id="eIncidental">#{processoTrfHome.instance.incidental}</div>
+      <div id="competencia">#{processoTrfHome.instance.competencia}</div>
+      <div id="areaDireito">#{processoTrfHome.instance.idAreaDireito}</div>
+      <div id="objeto">#{processoTrfHome.instance.objeto}</div>
+      <div id="segredoJustica">#{processoTrfHome.instance.segredoJustica}</div>
+      <div id="justicaGratuita">
+        #{processoTrfHome.instance.justicaGratuita}
+      </div>
+      <div id="tutelaLiminar">#{processoTrfHome.instance.tutelaLiminar}</div>
+      <div id="ca">#{processoTrfHome.ca}</div>
+      <div id="classeJudicialSigla">
+        #{processoTrfHome.instance.classeJudicial.classeJudicialSigla}
+      </div>
+      <div id="documentosComId">
+        #{processoTrfHome.tabelaHashDocumentosComId}
+      </div>
+      <div id="idTaskInstanceTrfHome">#{processoTrfHome.idTaskInstance}</div>
+      <div id="eExecucao">#{processoTrfHome.processoExecucao}</div>
+      <div id="eLiquidacao">#{processoTrfHome.processoLiquidacao}</div>
+
+      <!-- versão inicial -->
+      <div id="assuntosProcesso">
+        #{processoTrfHome.instance.assuntoTrfListStr}
+      </div>
+      <div id="audienciaProcesso">
+        #{processoTrfHome.processoAudienciaListStr}
+      </div>
+      <div id="cidadeOrgaoJulgadorProcesso">
+        #{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio}
+      </div>
+      <div id="classeProcesso">#{processoTrfHome.instance.classeJudicial}</div>
+      <div id="dataAtualAbreviada">#{dataAtualAbreviada}</div>
+      <div id="dataAtualFormatada">#{dataAtual}</div>
+      <div id="dataAtualPorExtenso">#{dataAtualExtenso}</div>
+      <div id="dataAudiencia">#{processoTrfHome.dataAudiencia}</div>
+      <div id="dataEHoraAtual">#{currentDatetime}</div>
+      <div id="documentosProcesso">#{processoTrfHome.tabelaHashDocumentos}</div>
+      <div id="enderecoAdvogadoPoloAtivo">
+        #{processoTrfHome.advogadoEnderecoPoloAtivoStr}
+      </div>
+      <div id="enderecoAdvogadoPoloPassivo">
+        #{processoTrfHome.advogadoEnderecoPoloPassivoStr}
+      </div>
+      <div id="enderecoOrgaoJulgadorProcesso">
+        #{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.enderecoCompleto}
+      </div>
+      <div id="enderecoSalaAudiencia">
+        #{processoTrfHome.enderecoSalaAudiencia}
+      </div>
+      <div id="horaAtual">#{currentTime}</div>
+      <div id="localizacaoUsuarioLogado">
+        #{usuarioLogadoLocalizacaoAtual.estrutura}
+      </div>
+      <div id="loginUsuarioLogado">#{usuarioLogado.login}</div>
+      <div id="nomeAdvogadoPoloAtivo">
+        #{processoTrfHome.instance.tipoNomeAdvogadoAutorList}
+      </div>
+      <div id="nomeAdvogadoPoloAtivoCPF">
+        #{processoTrfHome.nomeCpfAutorList}
+      </div>
+      <div id="nomeAdvogadoPoloPassivo">
+        #{processoTrfHome.instance.tipoNomeAdvogadoReuList}
+      </div>
+      <div id="nomeJuizOrgaoJulgador">
+        #{processoTrfHome.nomeJuizOrgaoJulgador}
+      </div>
+      <div id="nomePoloAtivo">
+        #{processoTrfHome.instance.nomeAutorAtivoProcesso}
+      </div>
+      <div id="nomePoloPassivo">
+        #{processoTrfHome.instance.nomeReuProcesso}
+      </div>
+      <div id="numeroProcesso">#{processoTrfHome.instance.numeroProcesso}</div>
+      <div id="orgaoJulgadoProcesso">
+        #{processoTrfHome.instance.orgaoJulgador}
+      </div>
+      <div id="papelUsarioLogado">#{usuarioLogadoLocalizacaoAtual.papel}</div>
+      <div id="partesDetalhadaPoloAtivo">
+        #{processoTrfHome.processoPartePoloAtivoDetalhadoStr}
+      </div>
+      <div id="partesDetalhadaPoloPasssivo">
+        #{processoTrfHome.processoPartePassivoAtivoDetalhadoStr}
+      </div>
+      <div id="partesPoloAtivo">
+        #{processoTrfHome.processoPartePoloAtivoSemAdvogadoStr}
+      </div>
+      <div id="partesPoloPassivo">
+        #{processoTrfHome.processoPartePoloPassivoSemAdvogadoStr}
+      </div>
+      <div id="processosAssociados">
+        #{processoTrfHome.instance.processoTrfConexaoListStr}
+      </div>
+      <div id="salaAudiencia">#{processoTrfHome.salaAudiencia}</div>
+      <div id="telefoneOrgaoJulgador">
+        #{processoTrfHome.instance.orgaoJulgador.numeroTelefoneFormatado}
+      </div>
+      <div id="tipoAudiencia">#{processoTrfHome.tipoAudiencia}</div>
+      <div id="UFOrgaoJulgador">
+        #{processoTrfHome.instance.orgaoJulgador.localizacao.endereco.cep.municipio.estado.codEstado}
+      </div>
+      <div id="usuarioLogado">#{usuarioLogado.nome}</div>
+      <div id="valorCausaProcesso">
+        #{processoTrfHome.instance.valorCausaStr}
+      </div>
+
+      <!-- Manter todas as variáveis acima sincronizados com a existente na versão modelo-booter.html-->
+
+      <!-- Variáveis exclusivas PAC -->
+      <div id="destinatarioExpediente">
+        #{processoExpedienteHome.nomeEnderecoPartesSelecionadas}
+      </div>
+      <div id="enderecoPartePoloAtivo">
+        #{preparaAtoComunicacaoAction.destinatariosEnderecoPoloAtivoExpedienteStr}
+      </div>
+      <div id="enderecoPartePoloPassivo">
+        #{preparaAtoComunicacaoAction.destinatariosEnderecoPoloPassivoExpedienteStr}
+      </div>
+      <div id="prazoDaParte">#{processoExpedienteHome.partePrazoList}</div>
+    </div>
+  </div>
+</div>
