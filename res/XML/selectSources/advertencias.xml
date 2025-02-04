@@ -279,7 +279,7 @@ and open the template in the editor.
             <eventFire event="Advertencias.onAddDocumentosProcesso"/>
             <itemContent type="plainText" addClassStyles="">
                 <data>
-                    #{j2.env.PJeVars.processo.documentos}
+                    #{j2.env.PJeVars.processo.documentosComId}
                 </data>
             </itemContent>
         </item>   
