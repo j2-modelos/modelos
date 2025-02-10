@@ -36,6 +36,10 @@
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" anoVigencia="2023" refArtParInc="Art. 1º, I"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, II" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 1º, II" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     <CalendarioEvento id="YYYY-CARNAVAL-TER" descricao="Feriado Forense - Terça-feira de Carnaval" 
@@ -45,15 +49,25 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, II"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, III" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 1º, III" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
-    <CalendarioEvento id="YYYY-CARNAVAL-QUA-fer-fore" descricao="Feriado Forense - Quarta-feira de Cinzas" 
+    <!-- para os itens abaixo deve haver por ano apenas uma quartafeira de cinzas, observe os elemento CancelamentoVigencia -->
+    <CalendarioEvento id="YYYY-CARNAVAL-QUA-fer-fore" descricao="Ponto Facultativo - Quarta-feira de Cinzas" 
                       dataInicial="YYYY-CARNAVAL-QUA" tipo="ponto-facultativo" abrangencia="estadual-forense" recorrencia="anual"
                       >
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <CancelamentoVigencia anoVigencia="2023" />
         <CancelamentoVigencia anoVigencia="2024" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 3º, I" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
+    <!-- O item abaixo diz respeito ao expediente a partir de 12h da quarta-feira de cinzas -->
     <CalendarioEvento id="YYYY-CARNAVAL-QUA" descricao="Quarta-feira de Cinzas" 
                       dataInicial="YYYY-CARNAVAL-QUA" tipo="expediente-excepcional" abrangencia="estadual-forense" recorrencia="anual"
 
@@ -80,6 +94,10 @@
                          anoVigencia="2023" refArtParInc="Art. 3º, I"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 3º, I" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 3º, II" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     <CalendarioEvento id="YYYY-PASCOA-QUI" descricao="Feriado Forense - Semana Santa - quinta-feira" 
                       dataInicial="YYYY-PASCOA-QUI" tipo="feriado" abrangencia="estadual-forense" recorrencia="anual">
@@ -88,6 +106,10 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, III"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, IV" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, IV" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     <CalendarioEvento id="YYYY-PASCOA-SEX" descricao="Feriado Forense - Semana Santa - Paixão de Cristo - sexta-feira" 
                       dataInicial="YYYY-PASCOA-SEX" tipo="feriado" abrangencia="estadual-forense" recorrencia="anual">
@@ -96,6 +118,10 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, IV"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, V" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, V" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     
 
@@ -120,6 +146,10 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, V"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, VI" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     
     
@@ -134,6 +164,10 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, VI"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, VI" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, VII" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     
     
@@ -149,6 +183,10 @@
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 2º" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
 
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 2º" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, III" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
     </CalendarioEvento>
     <CalendarioEvento id="YYYY-07-28" descricao="Adesão do Maranhão à Independência do Brasil;" 
@@ -156,6 +194,10 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" refArtParInc="Art. 2º" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, VII"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, VIII" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
     </CalendarioEvento>
     
 
@@ -167,6 +209,10 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, VIII"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, IX" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
@@ -204,6 +250,10 @@
                          anoVigencia="2023" refArtParInc="Art. 2º"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 2º" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. 2º" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
 
         <DisposicaoLegal disposicao="Lei Municipal Nº 370/85" refArtParInc="Art. 1º, IV" dataAto="22/11/1985" idDropbox="uag0ltfqwu4v735" />
     </CalendarioEvento>
@@ -213,6 +263,10 @@
         <DisposicaoLegal disposicao="Resolução GP 662021" dataAto="01/09/2021" idDropbox="zyco2u2e8ylwls9" anoVigencia="2022"/>
         <DisposicaoLegal disposicao="Resolução GP nº 98/2023" anoVigencia="2024" refArtParInc="Art. 1º, VII" 
                          dataAto="23/11/2023" idDropboxV2="y7wiq8vx4z880u41rr6d2;1j584m7m8yumz4va9vf8fkaqh" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, X" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
@@ -248,6 +302,10 @@
                          anoVigencia="2023" refArtParInc="Art. 1º, XII"/>
         <DisposicaoLegal disposicao="Resolução GP nº 107/2024" refArtParInc="Art. 1º" 
                          dataAto="23/11/2023" idDropboxV2="k8u88imxslvf0mjy39iim;97y33eqr98zzc21xv3mmcpm2e" anoVigencia="2024" />
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, XI" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 14.759" dataAto="21/12/2023" url="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14759.htm" /-->
     </CalendarioEvento>
     
@@ -263,6 +321,10 @@
         </TransferenciaEvento>
         <DisposicaoLegal disposicao="Resolução GP 952022" dataAto="07/10/2021" idDropbox="tbo1n2irv6jvo0z" 
                          anoVigencia="2023" refArtParInc="Art. 1º, XIII"/>
+        <DisposicaoLegal disposicao="Resolução GP nº 120/2024" anoVigencia="2025" refArtParInc="Art. Iº, XII" 
+                         dataAto="8/11/2024" 
+                         url="https://novogerenciador.tjma.jus.br/storage/arquivos/resolucoes_2024/resolucao_gp_n_120_de_8_de_novembro_de_2024_12_11_2024_17_36_20.pdf" 
+        />
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
     
