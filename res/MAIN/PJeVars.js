@@ -936,7 +936,7 @@ try {
                       },
                     }
 
-                    jQ('tbody td', d.gE('meioContatoPessoaGridList')).each(
+                    jQ('tbody td', d.gE('panelMeioContatoPessoa')).each(
                       function () {
                         var _data = jQ(this)
                           .text()
