@@ -1058,7 +1058,7 @@ try {
                       'cep',
                     ]
                     var idx = 0
-                    jQ('tbody td', d.gE('enderecoPessoaGridList')).each(
+                    jQ('tbody td', d.gE('panelMeioContatoPessoa')).each(
                       function () {
                         _prt.endereco.existe = true
                         _prt.endereco[lbl[idx]] = jQ(this).text().trim()
