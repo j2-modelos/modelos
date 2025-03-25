@@ -375,6 +375,30 @@
 
     </CalendarioEvento>
 
+    <CalendarioEvento id="2025-02-21" descricao="Indisponibilidade do PJe" 
+                      dataInicial="2025-02-21" tipo="expediente-excepcional" abrangencia="estadual-forense" recorrencia="unica"
+                      negacaoDeMarco="true" 
+                      >
+        
+        <DisposicaoLegal disposicao="Portaria Conjunta 9/2023" refArtParInc="Art. 4º" 
+                         dataAto="14/02/2025" url="https://j2.eomti.com.br/j2/Docs/PORTARIA-CONJUNTA_92025.pdf"/>
+        <DisposicaoLegal disposicao="CPC2015" refArtParInc="Art. 224, $1º" dataAto="16/03/2015" 
+            url="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm#art224%C2%A71"/>
+        <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
+    </CalendarioEvento>
+
+    <CalendarioEvento id="2025-02-24" descricao="Indisponibilidade do PJe" 
+                      dataInicial="2025-02-24" tipo="expediente-excepcional" abrangencia="estadual-forense" recorrencia="unica"
+                      negacaoDeMarco="true" 
+                      >
+        
+        <DisposicaoLegal disposicao="Portaria Conjunta 11/2023" refArtParInc="Art. 1º" 
+                         dataAto="24/02/2025" url="https://j2.eomti.com.br/j2/Docs/PORTARIA-CONJUNTA _112025.pdf"/>
+        <DisposicaoLegal disposicao="CPC2015" refArtParInc="Art. 224, $1º" dataAto="16/03/2015" 
+            url="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm#art224%C2%A71"/>
+        <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
+    </CalendarioEvento>
+
     <!--CalendarioEvento id="9109614d-ed4d-4311-981f-3e8e05d1f26b" descricao="Suspensão Exepediente por falha no Sistema Elétrico Nacional" 
                       dataInicial="2023-08-15" tipo="suspensao-prazo" abrangencia="estadual" recorrencia="unica">
         <DisposicaoLegal disposicao="Portaria Conjunta nº 342023" refArtParInc="Art. 1º e 2º" 
