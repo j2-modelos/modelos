@@ -519,15 +519,7 @@
        },
        {
           "guid":"0",
-          "nome":"N4.0%20-%20Confirmar%20cumprimento",
-          "stared":true,
-          "ePseudo":true
-       }
-    ],
-    "99138603349":[
-       {
-          "guid":"f47ac10b-58cc-4372-a567-0e02b2c3d479",
-          "nome":"N4.0%20-%20Confirmar%20cumprimento",
+          "nome":"N4%2E0%20%2D%20Confirmar%20cumprimento",
           "stared":true,
           "ePseudo":true
        }
