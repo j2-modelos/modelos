@@ -3,7 +3,7 @@ import { exec } from 'child_process'
 console.log('====== j2-modelos/modelos ======')
 console.log('Descartando alterações locais e executando git pull...')
 console.log('cwd:', process.cwd())
-console.log('Iniciando')
+console.log('Iniciando...')
 
 // Primeiro, rodar o comando para descartar alterações locais
 try {
@@ -29,7 +29,8 @@ try {
 		console.log(`stdout: ${stdout}`)
 	  })
 	})
-
+	
+	console.log('Finalizando...')
 	console.log('timestamp: ', new Date())
 
 }catch(e){
