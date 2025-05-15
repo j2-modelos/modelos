@@ -369,29 +369,6 @@
       "guid": "c740cf84-b6fd-40c8-b233-37f919ab8768",
       "nome": "Certificar leitura WhatsApp Negativa",
       "dataCriacao": 1722279997732
-    },
-    {
-        "tipo": "ETIQUETA-VARIAS",
-        "dados": [],
-        "criteria": [
-          [
-            {
-              "nome": "Elmo de Moraes",
-              "id": 797352,
-              "entity": "etiqueta"
-            }
-          ],
-          [
-            {
-              "nome": "EOM: Confirmar cumprimento",
-              "id": 798426,
-              "entity": "etiqueta"
-            }
-          ]
-        ],
-        "guid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-        "nome": "N4.0 - Confirmar cumprimento",
-        "dataCriacao": 1711466592123
     }
   ]
 }
