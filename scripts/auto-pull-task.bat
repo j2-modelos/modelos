@@ -5,7 +5,7 @@ setlocal enabledelayedexpansion
 set TIMESTAMP=[%date% %time%]
 
 :: Sobe dois diretórios a partir da pasta onde o script está
-cd /d "%~dp0..\.."
+cd /d "%~dp0.."
 set ROOT_DIR=%cd%
 
 :: Caminho para o log
@@ -23,14 +23,14 @@ echo Diretório: !ROOT_DIR!
 echo ==============================================
 
 :: Executa o comando
-echo [INFO] Executando: npm run auto-pull
-echo !TIMESTAMP! Executando: npm run auto-pull >> !LOG_FILE!
-npm run auto-pull >> !LOG_FILE! 2>&1
+echo [INFO] Executando: node scripts/auto-pull.mjs
+echo !TIMESTAMP! Executando: node scripts/auto-pull.mjs >> !LOG_FILE!
+node scripts/auto-pull.mjs >> !LOG_FILE! 2>&1
 
 :: Verifica se deu erro (código de saída)
 if %ERRORLEVEL% neq 0 (
-    echo [ERRO] O comando npm run auto-pull terminou com erro (%ERRORLEVEL%)
-    echo !TIMESTAMP! ERRO na execução do npm run auto-pull (exit code %ERRORLEVEL%) >> !LOG_FILE!
+    echo [ERRO] O comando node scripts/auto-pull.mjs terminou com erro (%ERRORLEVEL%)
+    echo !TIMESTAMP! ERRO na execução do node scripts/auto-pull.mjs (exit code %ERRORLEVEL%) >> !LOG_FILE!
     exit /b %ERRORLEVEL%
 ) else (
     echo [SUCESSO] Comando executado com sucesso
