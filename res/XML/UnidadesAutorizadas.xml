@@ -227,7 +227,13 @@
                       eMail="varaciv2_itz@tjma.jus.br"
             />
             <secretarios emExercicio="titular" titular="62224239300" />
-            <magistrados emExercicio="titular" titular="magistraANA" respondente="magJOSCELMO"/>
+            <magistrados emExercicio="titular" titular="75827298387" 
+                                               respondente="magisDEBORA" 
+                                               respondente2="47202467372"
+
+                                               simbologiaPadraoAto="Portaria CGJ/MA"
+                                               mostrarPortaria="true"
+            >
             <OJs centralMandados="true"/>
             <listaPostagem enabled="true"/>
             <expedientes porProvimento="false"/>
