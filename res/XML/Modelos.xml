@@ -2298,7 +2298,7 @@
                 <classe id="Pagina1" versao="2.0">
                     <constructs param="largura" value="A4" type="string"/>
                     <classe id="SeletorPrioridade" versao="1.0" />
-                    <classe id="Cabecalho" versao="2.0" >
+                    <classe id="Cabecalho" versao="2.0-N40" >
                         <constructs param="endereco" value="nao" type="bool"/>
                     </classe>
                     <classe id="QualificacaoTable" versao="3.0">
