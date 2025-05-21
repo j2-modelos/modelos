@@ -200,7 +200,7 @@
         </competencias>
         <modelosAut>
             <!-- <modeloAut id="j2Certidao" versao="3.0"/> -->
-            <modeloAut id="j2Intimacao" versao="3.2"/>
+            <modeloAut id="j2Intimacao" versao="3.2-N40"/>
         </modelosAut>
         <config>
             <servidorLocal avaliable="false" domain="j2"/>

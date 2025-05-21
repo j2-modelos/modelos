@@ -1733,6 +1733,11 @@
                 #{j2.env.PJeVars.unidade.cidade}-#{j2.env.PJeVars.unidade.UF}, #{j2.env.PJeVars.data.system.extenso}
             </elemento>
         </versao>
+        <versao id="1.2">
+            <elemento tag="p" id="LocalEData" scope="EXP" class="p FntModDefault AlignCenter">
+                #{j2.env.PJeVars.unidade.nomeFormal}, #{j2.env.PJeVars.data.system.extenso}
+            </elemento>
+        </versao>
         <versao id="2.0">
             <elemento tag="p" id="LocalEData" scope="EXP" class="p FntModDefault Indnt3cm marginAtoJudicial">
                 #{j2.env.PJeVars.unidade.cidade}-#{j2.env.PJeVars.unidade.UF}, #{j2.env.PJeVars.data.formatada}
