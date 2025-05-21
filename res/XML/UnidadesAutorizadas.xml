@@ -192,4 +192,46 @@
         </config>		
         <correiosParam contrato="9912319221" codAdmin="03007170" cartaoPostagem="0066187478" codigoUnidade="18301363" unidPost="AC IMPERATRIZ" cliente="Tribunal de Justiça do Estado do Maranhão"/>
     </Unidade>
+    <Unidade id="Núcleo de Justiça 4.0 - Empréstimo Consignado" genr="M" comarca="Núcleo de Justiça 4.0" 
+             comarcaGenr="M" nomeFormal="Núcleo de Justiça 4.0 - Empréstimo Consignado" uuid="57f4d5d4-26dc-4b7d-97ef-c58911e8a7e5
+">
+        <competencias>
+            <competencia id="civel" />
+        </competencias>
+        <modelosAut>
+            <!-- <modeloAut id="j2Certidao" versao="3.0"/> -->
+            <modeloAut id="j2Intimacao" versao="3.1"/>
+        </modelosAut>
+        <config>
+            <servidorLocal avaliable="false" domain="j2"/>
+            <globalStyle>
+                <style id="p">
+                    <prop name="margin" value="0pt 0pt 0pt 0pt"/>
+                    <prop name="fontFamily" value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"  />
+                    <prop name="fontSize" value="9pt"/>
+                    <prop name="textAlign" value="justify"/>
+                </style>
+            </globalStyle>
+            <enderecoManual edificacaoENominada="false" 
+                      nomeEdificacao="Fórum Ministro Henrique de La Rocque Almeida"
+                      enderecoFormal="Rua Rui Barbosa, s/n, Centro, Imperatriz-MA CEP: 65900-440"
+                      contatosFormal="telefone: (99) 3529-2013 | e-maail: varaciv2_itz@tjma.jus.br"
+                      rua="Rua Rui Barbosa"
+                      numero="s/n"
+                      bairro="Centro"
+                      complemento=""
+                      cidade="Imperatriz"
+                      uf="MA"
+                      cep="65900-440"
+                      telefone="(99) 3529-2013"
+                      eMail="varaciv2_itz@tjma.jus.br"
+            />
+            <secretarios emExercicio="titular" titular="62224239300" />
+            <magistrados emExercicio="titular" titular="magistraANA" respondente="magJOSCELMO"/>
+            <OJs centralMandados="true"/>
+            <listaPostagem enabled="true"/>
+            <expedientes porProvimento="false"/>
+        </config>		
+        <correiosParam contrato="9912319221" codAdmin="03007170" cartaoPostagem="0066187478" codigoUnidade="18301363" unidPost="AC IMPERATRIZ" cliente="Tribunal de Justiça do Estado do Maranhão"/>
+    </Unidade>
 </Definitions>
