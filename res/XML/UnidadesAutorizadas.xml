@@ -233,7 +233,7 @@
 
                                                simbologiaPadraoAto="Portaria CGJ/MA"
                                                mostrarPortaria="true"
-            >
+            ></magistrados>
             <OJs centralMandados="true"/>
             <listaPostagem enabled="true"/>
             <expedientes porProvimento="false"/>
