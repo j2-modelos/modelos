@@ -399,6 +399,16 @@
         <!--DisposicaoLegal disposicao="Lei Federal Nº 6.802" dataAto="30/06/1980" url="https://www.planalto.gov.br/ccivil_03/leis/l6802.htm" /-->
     </CalendarioEvento>
 
+
+    <!-- ponto facultativo 2025-05-02 - pós dias do trabalho -->
+    <CalendarioEvento id="2025-05-02" descricao="Ponto facultativo" 
+                      dataInicial="2025-05-02" tipo="ponto-facultativo" abrangencia="estadual" recorrencia="unica">
+        <DisposicaoLegal disposicao="Portaria Conjunta nº 27/2025" refArtParInc="Art. 1º" 
+                         dataAto="29/04/2025" url="https://j2.eomti.com.br/j2/Docs/PORTARIA-CONJUNTA-272025.pdf" />
+        <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
+
+    </CalendarioEvento>
+
     <!--CalendarioEvento id="9109614d-ed4d-4311-981f-3e8e05d1f26b" descricao="Suspensão Exepediente por falha no Sistema Elétrico Nacional" 
                       dataInicial="2023-08-15" tipo="suspensao-prazo" abrangencia="estadual" recorrencia="unica">
         <DisposicaoLegal disposicao="Portaria Conjunta nº 342023" refArtParInc="Art. 1º e 2º" 
