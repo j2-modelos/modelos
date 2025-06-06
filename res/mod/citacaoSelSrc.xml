@@ -618,7 +618,7 @@ and open the template in the editor.
                             <elemento tag="p" scope="NONE" class="p FntModDefault" >
                                 #:B{CIENTIFICADO(A)} de que, em sendo frustrada a tentativa de conciliação,
                                 deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
-                                termos do art. 30, IX, da Lei 9.099/95.
+                                nos termos do art. 30, IX, da Lei 9.099/95.
                             </elemento>
                         </simpleElementsDefs>
                     </arElement>
@@ -628,7 +628,7 @@ and open the template in the editor.
                                 #:B{CIENTIFICAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
                                 de que, em sendo frustrada a tentativa de conciliação,
                                 deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
-                                termos do art. 30, IX, da Lei 9.099/95.
+                                nos termos do art. 30, IX, da Lei 9.099/95.
                             </elemento>
                         </simpleElementsDefs>
                     </arElement>            
