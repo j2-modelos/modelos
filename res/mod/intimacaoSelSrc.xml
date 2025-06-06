@@ -50,26 +50,36 @@ and open the template in the editor.
             <gItem id="intmItAdvertenciaRevelia"/>
             <gItem id="intmItAudienciaPresencial"/>
         </group>
-        <group label="Diversos">
-            <gItem id="intmItApresContrarrazoes"/>
-            <gItem id="intmItApresReplica"/>
-            <gItem id="intmItEndPoloPassivo"/>
-            <gItem id="intmItComprovHipossuficiente"/>
+        <group label="Carta Precatória">
             <gItem id="intmItComprimentoPrecatória"/>
+        </group>
+        <group label="Cumprimentos">
+            <gItem id="intmItEndPoloPassivo"/>
+            <gItem id="intmItJuntComprovEndereco"/>
+            <gItem id="intmItPretensaoResistida"/>
+        </group>
+        <group label="Diligencia">
+            <gItem id="intmItCienciaDiligenciaNegativa"/>
             <gItem id="intmItCitadoPorHoraCerta"/>
             <gItem id="intmItCitadoPorHoraCertaContestarAcao"/>
-            <gItem id="intmItExameCorpoDelito"/>
-            <gItem id="intmItExameCorpoDelitoComplementar"/>
-            <gItem id="intmItJuntComprovEndereco"/>
-            <gItem id="intmItDesignacaoPericia"/>
-            <gItem id="intmItJuntExtratoBancario"/>
             <gItem id="intmItOJCertificarContatos"/>
+        </group>
+        <group label="Manifestações ou respostas">
+            <gItem id="intmItIntimadoApresentarContestacao"/>
+            <gItem id="intmItApresContrarrazoes"/>
+            <gItem id="intmItApresReplica"/>
             <gItem id="intmItManifestarSe"/>
             <!--gItem id="intmItManifestarSeReplica"/-->
-            <gItem id="intmItPretensaoResistida"/>
-            <gItem id="intmItCienciaDiligenciaNegativa"/>
-            
+        </group>
+        <group label="Outros">
             <gItem id="intmItComprovPgtoCustas"/><!-- fdt-->
+            <gItem id="intmItComprovHipossuficiente"/>
+            <gItem id="intmItJuntExtratoBancario"/>
+        </group>
+        <group label="Perícia">
+            <gItem id="intmItExameCorpoDelito"/>
+            <gItem id="intmItExameCorpoDelitoComplementar"/>
+            <gItem id="intmItDesignacaoPericia"/>
         </group>
         <group label="Execucao">
             <gItem id="intmItIndicarBensExecutado"/>
@@ -1729,6 +1739,35 @@ and open the template in the editor.
                         </data>
                     </arElement>
                 </selectorArray>               
+            </itemContent>
+        </item>
+
+        <item id="intmItIntimadoApresentarContestacao" label="Apresentar Contestação" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>              
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+						<simpleElementsDefs> 
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{CIENTIFICADO(A)} de que, em sendo frustrada a tentativa de conciliação,
+                                deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
+                                termos do art. 30, IX, da Lei 9.099/95.
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+						<simpleElementsDefs> 
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{CIENTIFICAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
+                                de que, em sendo frustrada a tentativa de conciliação,
+                                deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
+                                termos do art. 30, IX, da Lei 9.099/95.
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>            
+                </selectorArray>        
             </itemContent>
         </item>
         
