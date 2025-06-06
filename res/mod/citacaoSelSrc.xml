@@ -39,6 +39,7 @@ and open the template in the editor.
             <gItem id="intmItDespacho"/>
             <gItem id="intmItDecisao"/>
             <gItem id="intmItGenerico"/>
+            <gItem id="intmItIntimadoApresentarContestacao"/>
         </group>
         <group label="Outros">     
             <!--<gItem id="intmItEndPoloPassivo"/>-->
@@ -605,6 +606,35 @@ and open the template in the editor.
                 </selectorArray>        
             </itemContent>
         </item>
+
+		<item id="intmItIntimadoApresentarContestacao" label="Apresentar Contestação" dataPlus="">
+            <competencias>
+                <competencia id="juizadoCivel"/>
+            </competencias>              
+            <itemContent type="selectorArray" addClassStyles="">
+                <selectorArray>
+                    <arElement keyEl="general">
+						<simpleElementsDefs> 
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{CIENTIFICADO(A)} de que, em sendo frustrada a tentativa de conciliação,
+                                deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
+                                termos do art. 30, IX, da Lei 9.099/95.
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>
+                    <arElement keyEl="meioComunicItCentralMandados">
+						<simpleElementsDefs> 
+                            <elemento tag="p" scope="NONE" class="p FntModDefault" >
+                                #:B{CIENTIFICAÇÃO} do #{j2.env.PJeVars.processo.polos.passivo} acima identificado, na forma da Lei, 
+                                de que, em sendo frustrada a tentativa de conciliação,
+                                deverá apresentar #:B{CONTESTAÇÃO}, por escrito ou oralmente, até a data da audiência de conciliação, 
+                                termos do art. 30, IX, da Lei 9.099/95.
+                            </elemento>
+                        </simpleElementsDefs>
+                    </arElement>            
+                </selectorArray>        
+            </itemContent>
+        </item>
           
         <item id="intmItCitacaoExecucaoExTiExAudJec" label="Citação Execucao em Audiência" dataPlus="">
             <competencias>
@@ -624,7 +654,7 @@ and open the template in the editor.
             <itemContent type="selectorArray" addClassStyles="">
                 <selectorArray>
                     <arElement keyEl="general">
-                        <data>
+                        <data>                            
                             #:B{CITADO(A)} de todo o conteúdo do despacho e da petição inicial, que podem ser consultados
                             por meio do sistema PJe (endereço https://pje.tjma.jus.br/pje/Processo/ConsultaDocumento/listView.seam), 
                             conforme chaves de acesso aos documento listados abaixo, para pagar o valor acima indicado no #:B{#:U{prazo de 3 (três) dias},} 

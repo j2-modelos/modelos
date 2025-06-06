@@ -323,7 +323,7 @@ try {
             break
 
           case 'meioComunicItDJe':
-            changeTitulo('CITAÇÃO VIA DEJN')
+            changeTitulo('CITAÇÃO')
             makeARVisible(false)
             makeSelectorOJVisible(false)
             if (j2.env.modId.modAut.versao.match(/3.2|3.3|3.4/)) {
