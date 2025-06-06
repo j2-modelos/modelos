@@ -403,8 +403,25 @@
     <!-- ponto facultativo 2025-05-02 - pós dias do trabalho -->
     <CalendarioEvento id="2025-05-02" descricao="Ponto facultativo" 
                       dataInicial="2025-05-02" tipo="ponto-facultativo" abrangencia="estadual" recorrencia="unica">
-        <DisposicaoLegal disposicao="Portaria Conjunta nº 27/2025" refArtParInc="Art. 1º" 
-                         dataAto="29/04/2025" url="https://j2.eomti.com.br/j2/Docs/PORTARIA-CONJUNTA-272025.pdf" />
+        <DisposicaoLegal disposicao="Resolução nº 91/2025" refArtParInc="Art. 1º" 
+                         dataAto="23/05/2025" url="https://j2.eomti.com.br/j2/Docs/RESOL-GP-912025.pdf" />
+        <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
+
+    </CalendarioEvento>
+
+    <!-- ponto facultativo 2025-05-02 - pós dias do trabalho -->
+    <CalendarioEvento id="2025-06-20" descricao="Ponto facultativo" 
+                      dataInicial="2025-06-20" tipo="ponto-facultativo" abrangencia="estadual" recorrencia="unica">
+        <DisposicaoLegal disposicao="Resolução nº 91/2025" refArtParInc="Art. 1º" 
+                         dataAto="23/05/2025" url="https://j2.eomti.com.br/j2/Docs/RESOL-GP-912025.pdf" />
+        <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
+
+    </CalendarioEvento>
+
+    <CalendarioEvento id="2025-11-21" descricao="Ponto facultativo" 
+                      dataInicial="2025-11-21" tipo="ponto-facultativo" abrangencia="estadual" recorrencia="unica">
+        <DisposicaoLegal disposicao="Resolução nº 91/2025" refArtParInc="Art. 1º" 
+                         dataAto="23/05/2025" url="https://j2.eomti.com.br/j2/Docs/RESOL-GP-912025.pdf" />
         <!--DisposicaoLegal disposicao="Resolução GP 672016, Art. 4º" dataAto="24/11/2016" idDropbox="x5p6uthn7a9flfr" /-->
 
     </CalendarioEvento>
